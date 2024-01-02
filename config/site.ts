@@ -1,18 +1,32 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "OpenmindAI App Store",
+  url: "https://openmindai.io",
+  ogImage: "https://openmindai.io/og.jpg",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Beautifully designed components built with Radix UI and Tailwind CSS. The only AI App Store you need to make you stay ahead of 99% of people",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Today",
+      href: "/today",
+    },
+    {
+      title: "AI Apps",
+      href: "/ai-apps",
+    },
+    {
+      title: "Reels",
+      href: "/reels",
+    },
+    {
+      title: "Search",
+      href: "/search",
     },
   ],
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
-    docs: "https://ui.shadcn.com",
+    twitter: "",
+    github: "",
+    docs: "",
   },
 }
