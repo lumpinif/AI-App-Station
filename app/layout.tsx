@@ -80,7 +80,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable
+            fontSans.className
           )}
         >
           <ThemeProvider
@@ -91,6 +91,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           >
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-screen flex-col">
+                <div className="fixed inset-x-1/2 top-0 z-50 flex w-[300px] -translate-x-1/2 translate-y-5 bg-white/50">
+                  <p>Floating Nav Bar</p>
+                </div>
                 <SiteHeader />
                 <div className="flex-1">{children}</div>
                 <SiteFooter />
