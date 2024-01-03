@@ -1,13 +1,13 @@
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
+import { ThemeProvider } from "@/provider/theme-provider"
+import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
-import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
+import { SiteFooter } from "@/components/layout/site-footer/site-footer"
+import { SiteHeader } from "@/components/layout/site-header/site-header"
+import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {
   title: {
@@ -80,7 +80,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <body
           className={cn(
             "min-h-screen bg-background font-sans antialiased",
-            fontSans.className
+            GeistSans.variable
           )}
         >
           <ThemeProvider
@@ -91,9 +91,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           >
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-screen flex-col">
-                <div className="fixed inset-x-1/2 top-0 z-50 flex w-[300px] -translate-x-1/2 translate-y-5 bg-white/50">
-                  <p>Floating Nav Bar</p>
-                </div>
                 <SiteHeader />
                 <div className="flex-1">{children}</div>
                 <SiteFooter />

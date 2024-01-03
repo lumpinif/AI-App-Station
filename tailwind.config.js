@@ -18,6 +18,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-geist-sans)"],
+        mono: ["var(--font-geist-mono)"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -58,10 +62,6 @@ module.exports = {
         md: `calc(var(--radius) - 2px)`,
         sm: "calc(var(--radius) - 4px)",
       },
-      fontFamily: {
-        sans: ["var(--font-geist-sans)"],
-        mono: ["var(--font-geist-mono)"],
-      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },
@@ -71,10 +71,108 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        flip: {
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
+        rotate: {
+          to: {
+            transform: "rotate(90deg)",
+          },
+        },
+        infiniteSlider: {
+          "0%": { transform: "translateX(0)" },
+          "100%": {
+            transform: "translateX(calc(-250px * 5))",
+          },
+        },
+        // Fade up and down
+        "fade-up": {
+          "0%": {
+            opacity: 0,
+            transform: "translateY(10px)",
+          },
+          "80%": {
+            opacity: 0.6,
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translateY(0px)",
+          },
+        },
+        "fade-down": {
+          "0%": {
+            opacity: 0,
+            transform: "translateY(-10px)",
+          },
+          "80%": {
+            opacity: 0.6,
+          },
+          "100%": {
+            opacity: 1,
+            transform: "translateY(0px)",
+          },
+        },
+        // Tooltip
+        "slide-up-fade": {
+          "0%": { opacity: 0, transform: "translateY(6px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        "slide-down-fade": {
+          "0%": { opacity: 0, transform: "translateY(-6px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        // Scale in
+        "scale-in": {
+          "0%": {
+            opacity: 0,
+            transform: "scale(0.7)",
+          },
+          "80%": {
+            opacity: 0.6,
+          },
+          "100%": {
+            opacity: 1,
+            transform: "scale(1)",
+          },
+        },
+        // Fade in
+        "fade-in": {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+
+        // Fade up and down
+        "fade-up": "fade-up 0.5s",
+        "fade-down": "fade-down 0.5s",
+        "fade-in": "fade-in 0.2s",
+        "scale-in": "scale-in 0.2s ease-out",
+
+        // Tooltip
+        "slide-up-fade": "slide-up-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        "slide-down-fade": "slide-down-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        flip: "flip 6s infinite steps(2, end)",
+        rotate: "rotate 3s linear infinite both",
+        ["infinite-slider"]: "infiniteSlider 20s linear infinite",
+      },
+      boxShadow: {
+        "card-light":
+          "0px 32px 40px -16px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.06)",
+        outline:
+          "0px 8px 6px 0px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(255,255,255,0.25) inset, 0px -1px 1px 0px rgba(255,255,255,0.1) inset",
+        "inner-outline":
+          "inset 0px -0.73px 0.73px rgba(255,255,255,0.59), inset 1.46px 2.92px 2.92px -0.73px rgba(0,0,0,0.4)",
       },
     },
   },

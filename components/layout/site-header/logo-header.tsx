@@ -2,18 +2,19 @@ import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
-import { MainNav } from "@/components/main-nav"
+import { Icons } from "@/components/icons/icons"
 
-import { DirectThemeToggle } from "./direct-theme-toggle"
-import { ThemeToggle } from "./theme-toggle"
+import { DirectThemeToggle } from "../../theme/direct-theme-toggle"
+import { ThemeToggle } from "../../theme/theme-toggle"
+import { LogoHeaderDropdown } from "./logo-header-dropdown"
 
-export function SiteHeader() {
+const LogoHeader = () => {
   return (
-    <header className="sticky top-0 z-40 w-full ">
-      <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-        {/* <MainNav items={siteConfig.mainNav} /> */}
+    <header className="w-full">
+      <div className="container flex h-20 items-center space-x-4 sm:justify-between sm:space-x-0">
+        <Icons.logo className="h-8 w-8 text-blue-500" />
         <div className="flex flex-1 items-center justify-end space-x-4">
+          <LogoHeaderDropdown />
           <nav className="flex items-center space-x-1">
             <Link
               href={siteConfig.links.github}
@@ -46,10 +47,11 @@ export function SiteHeader() {
               </div>
             </Link>
             <DirectThemeToggle />
-            {/* <ThemeToggle /> */}
           </nav>
         </div>
       </div>
     </header>
   )
 }
+
+export default LogoHeader

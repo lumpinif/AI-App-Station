@@ -1,7 +1,11 @@
 import {
+  Layers,
+  LayoutTemplate,
   LucideProps,
   Moon,
+  Search,
   SunMedium,
+  Youtube,
   type Icon as LucideIcon,
 } from "lucide-react"
 import { FaXTwitter } from "react-icons/fa6"
@@ -12,6 +16,10 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   twitter: FaXTwitter,
+  layers: Layers,
+  search: Search,
+  youtube: Youtube,
+  layout: LayoutTemplate,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path

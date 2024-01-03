@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 240 33% 99%;
     --foreground: 240 10% 6%;
 
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
 
-    --popover: 0 0% 100%;
+    --popover: 240 33% 99%;
     --popover-foreground: 240 10% 6%;
 
     --primary: 240 5.9% 10%;
@@ -71,7 +71,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground max-w-[100dvw] overflow-x-hidden m-0;
     /* font-feature-settings: "rlig" 1, "calt" 1; */
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
@@ -79,6 +79,32 @@
 }
 
 @layer utilities {
+  .nav-link {
+    @apply text-foreground/80 hover:text-blue-500/60;
+  }
+  .card-dark {
+    @apply bg-zinc-900 text-[hsl(0,0%,100%)];
+  }
+  .tab-bar-container {
+    @apply glass-card-background dark:bg-[rgba(0,0,0,0.2)] shadow-outline text-foreground min-w-[350px] sm:hidden fixed bottom-5 left-1/2 -translate-x-1/2 rounded-full z-50 py-[10px] px-[20px] flex flex-nowrap justify-center items-center shrink-0 backdrop-blur-[120px] transition-all duration-500 ease-in-out;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .glass-card-background {
+    @apply bg-[rgba(255,255,255,0.1)];
+  }
+}
+
+@layer components {
+  .all-[unset] {
+    all: unset;
+  }
 }
 
 @media (max-width: 640px) {
