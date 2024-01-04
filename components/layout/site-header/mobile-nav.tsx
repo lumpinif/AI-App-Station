@@ -39,7 +39,13 @@ const BottomNavigationBar = ({
 }: NavLinksProps) => {
   const currentPath = usePathname()
   return (
-    <nav className={cn("tab-bar-container", className)} {...props}>
+    <nav
+      className={cn(
+        "tab-bar-container fixed bottom-5 left-1/2 -translate-x-1/2",
+        className
+      )}
+      {...props}
+    >
       <div className="flex w-full items-start justify-between px-2 text-sm">
         {routes.map((route) => (
           <Link

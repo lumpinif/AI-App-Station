@@ -16,6 +16,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons/icons"
+import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
 
 export function NavigationMenuBar() {
   return (
@@ -67,6 +68,9 @@ export function NavigationMenuBar() {
             </Link>
           </NavigationMenuItem>
         ))}
+        <NavigationMenuItem className="rounded-full">
+          <DirectThemeToggle />
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   )
