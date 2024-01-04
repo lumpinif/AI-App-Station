@@ -8,7 +8,7 @@ const FloatingNav = () => {
   const { hideNavOnScroll } = useScrollAndHideNav(30)
 
   return (
-    <header className="fixed inset-x-1/2 top-0 z-40 h-20 translate-x-[-50%]">
+    <header className="sticky top-0 z-40 mx-auto hidden h-20 max-w-md sm:inline-block md:max-w-fit ">
       <div
         className={`relative flex h-full items-center justify-center transition-all duration-500 ease-in-out
             ${hideNavOnScroll ? `translate-y-[-80%] opacity-10` : ``}

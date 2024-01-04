@@ -12,15 +12,15 @@ export function SiteHeader() {
   if (isMobile)
     return (
       <>
-        <MobileNav />
         <LogoHeader />
+        <MobileNav />
       </>
     )
 
   return (
     <>
-      <FloatingNav />
       <LogoHeader />
+      {/* <FloatingNav /> */}
     </>
   )
 }
