@@ -38,7 +38,7 @@ const HeroSection = () => {
         <span className="flex text-xs text-muted-foreground sm:text-sm">
           or
         </span>
-        <Link href="/" className="sm:flex">
+        <Link href="/signin" className="sm:flex">
           <Button
             className="w-28 hover:shadow-inner-outline"
             variant={"outline"}
