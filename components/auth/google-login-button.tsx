@@ -28,7 +28,7 @@ const GoogleLoginButton = () => {
   }
 
   return (
-    <Button onClick={handleSignInClick}>
+    <Button onClick={handleSignInClick} className="rounded-full">
       Continue with Google
       <FcGoogle className="ml-4 h-5 w-5" />
       {isLoading && <Loader className="ml-4 animate-spin" />}

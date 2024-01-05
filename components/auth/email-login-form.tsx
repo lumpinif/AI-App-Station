@@ -58,7 +58,7 @@ const EmailLoginForm = () => {
           }
         />
         <Button
-          className="mt-4"
+          className="mt-4 rounded-full"
           type="submit"
           disabled={isLoading}
           onClick={() => setIsLoading(true)}
