@@ -14,7 +14,7 @@ export function SiteFooter() {
           >
             Felix Lu
           </a>{" "}
-          with ❤️
+          with coffee
         </p>
       </div>
     </footer>

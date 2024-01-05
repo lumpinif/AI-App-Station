@@ -1,3 +1,4 @@
+import { SiteFooter } from "@/components/layout/site-footer/site-footer"
 import { SiteHeader } from "@/components/layout/site-header/site-header"
 
 export const metadata = {
@@ -14,6 +15,7 @@ export default function HomePageLayout({ children }: HomePageLayoutProps) {
     <>
       <SiteHeader />
       {children}
+      <SiteFooter />
     </>
   )
 }

@@ -1,12 +1,11 @@
+import { ThemeProvider } from "@/provider/theme-provider"
+
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
-import { ThemeProvider } from "@/provider/theme-provider"
 import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { SiteFooter } from "@/components/layout/site-footer/site-footer"
-import { SiteHeader } from "@/components/layout/site-header/site-header"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {
@@ -92,7 +91,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-screen flex-col">
                 <div className="flex-1">{children}</div>
-                <SiteFooter />
               </div>
             </div>
             <TailwindIndicator />
