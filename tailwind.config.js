@@ -172,7 +172,7 @@ module.exports = {
         outline:
           "0px 8px 6px 0px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(255,255,255,0.25) inset, 0px -1px 1px 0px rgba(255,255,255,0.1) inset",
         "inner-outline":
-          "inset 0px -0.73px 0.73px rgba(255,255,255,0.59), inset 1.46px 2.92px 2.92px -0.73px rgba(0,0,0,0.4)",
+          "inset 0px -0.73px 2.73px rgba(225,225,225,0.7), inset 1.46px 2.92px 2.92px -0.73px rgba(0,0,0,0.3)",
       },
     },
   },

@@ -1,7 +1,12 @@
-import React from "react"
+import { SiteHeader } from "@/components/layout/site-header/site-header"
 
 const TodayPage = () => {
-  return <div>TodayPage</div>
+  return (
+    <>
+      <SiteHeader />
+      TodayPage
+    </>
+  )
 }
 
 export default TodayPage
