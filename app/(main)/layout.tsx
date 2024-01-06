@@ -1,6 +1,12 @@
-export const metadata = {
-  title: "Main App Page | Main App Page",
-  description: "Main App Page | Main App Page",
+import { Metadata } from "next"
+
+import { siteConfig } from "@/config/site"
+
+export const metadata: Metadata = {
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
 }
 
 interface MainAppLayoutProps {

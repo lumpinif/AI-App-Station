@@ -1,9 +1,14 @@
+import { Metadata } from "next"
+
+import { siteConfig } from "@/config/site"
 import { SiteFooter } from "@/components/layout/site-footer/site-footer"
 import { SiteHeader } from "@/components/layout/site-header/site-header"
 
-export const metadata = {
-  title: "Home Page | Landing Page",
-  description: "Home Page | Landing Page",
+export const metadata: Metadata = {
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.creator}`,
+  },
 }
 
 interface HomePageLayoutProps {

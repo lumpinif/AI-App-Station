@@ -30,13 +30,8 @@ export const metadata: Metadata = {
     "Radix UI",
     "Shadcn UI",
   ],
-  authors: [
-    {
-      name: "Felix Lu",
-      url: "",
-    },
-  ],
-  creator: "Felix Lu",
+  authors: siteConfig.authors,
+  creator: siteConfig.creator,
   openGraph: {
     type: "website",
     locale: "en_US",
