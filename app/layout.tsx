@@ -6,6 +6,7 @@ import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
+import AuthModal from "@/components/auth/auth-modal"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {
@@ -89,7 +90,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <div vaul-drawer-wrapper="">
-              <div className="relative flex min-h-screen flex-col">
+              <div className="relative flex min-h-dvh flex-col bg-background">
+                <AuthModal />
                 <div className="flex-1">{children}</div>
               </div>
             </div>
