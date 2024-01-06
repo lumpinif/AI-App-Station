@@ -9,6 +9,7 @@ import {
   type Icon as LucideIcon,
 } from "lucide-react"
 import { FaXTwitter } from "react-icons/fa6"
+import { HiUserCircle } from "react-icons/hi2"
 
 export type Icon = LucideIcon
 
@@ -59,24 +60,25 @@ export const Icons = {
   youtube: Youtube,
   layout: LayoutTemplate,
   logo: Square,
-  user: (props: LucideProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      className="lucide lucide-circle-user-round"
-    >
-      <path d="M18 20a6 6 0 0 0-12 0" />
-      <circle cx="12" cy="10" r="4" />
-      <circle cx="12" cy="12" r="10" />
-    </svg>
-  ),
+  user: HiUserCircle,
+  // user: (props: LucideProps) => (
+  //   <svg
+  //     xmlns="http://www.w3.org/2000/svg"
+  //     width={props.width || "24"}
+  //     height={props.width || "24"}
+  //     viewBox="0 0 24 24"
+  //     fill={props.fill || "none"}
+  //     stroke="currentColor"
+  //     stroke-width={props.strokeWidth || "1"}
+  //     stroke-linecap="round"
+  //     stroke-linejoin="round"
+  //     className="lucide lucide-circle-user-round"
+  //   >
+  //     <path d="M18 20a6 6 0 0 0-12 0" />
+  //     <circle cx="12" cy="10" r="4" />
+  //     <circle cx="12" cy="12" r="10" />
+  //   </svg>
+  // ),
   // logo: (props: LucideProps) => (
   //   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
   //     <path

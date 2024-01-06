@@ -3,39 +3,29 @@
 import useMediaQuery from "@/hooks/use-media-query"
 import { Drawer, DrawerClose, DrawerContent } from "@/components/ui/drawer"
 
-import { Button } from "../ui/button"
 import { Dialog, DialogContent } from "../ui/dialog"
 
-export default function Modal({
-  children,
-  className,
-  isOpen,
-  onChange,
-}: {
+interface ModalProps {
   children: React.ReactNode
-  className?: string
   isOpen: boolean
   onChange: (open: boolean) => void
-}) {
+}
+
+export default function Modal({ children, isOpen, onChange }: ModalProps) {
   const { isMobile } = useMediaQuery()
 
   if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={onChange} shouldScaleBackground>
-        <DrawerContent className="h-[93%]">
+        <DrawerContent className="h-[93%] outline-none">
           <div className="sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium">
             Account
-            <div className="">
-              {/* TODO: Refactor this className issue */}
-              <DrawerClose
-                asChild
-                className="absolute right-0 top-1/2 -translate-y-1/2 text-lg"
-              >
-                <Button variant="ghost" className="w-min text-blue-500">
-                  Done
-                </Button>
-              </DrawerClose>
-            </div>
+            <DrawerClose
+              asChild
+              className="absolute right-0 top-1/2 -translate-y-1/2 text-lg"
+            >
+              <button className="mr-4 w-min text-blue-500">Done</button>
+            </DrawerClose>
           </div>
           <div className="flex h-full flex-col items-center justify-center">
             {children}
@@ -50,6 +40,7 @@ export default function Modal({
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
+        className="rounded-2xl"
       >
         {children}
       </DialogContent>

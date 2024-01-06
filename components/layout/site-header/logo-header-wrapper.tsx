@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import AuthTrigger from "@/components/auth/auth-trigger"
 import { Icons } from "@/components/icons/icons"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
@@ -19,11 +20,11 @@ const LogoHeaderWrapper = ({ children }: { children: React.ReactNode }) => {
           </Link>
         </div>
         <div className="flex grow items-center justify-center">{children}</div>
-        <div className="flex w-24 grow-0 items-center justify-end space-x-0 ">
+        <div className="flex w-24 grow-0 items-center justify-end space-x-0">
           <div className="mr-1 sm:hidden">
             <ThemeToggle />
           </div>
-          <Icons.user width={20} />
+          <AuthTrigger />
         </div>
       </div>
     </header>
