@@ -7,7 +7,7 @@ const SignInPage = () => {
     <>
       <SignInPageHeader />
       <div className="mx-auto flex max-w-sm items-center justify-center px-4 sm:max-w-md md:max-w-lg lg:max-w-2xl">
-        <LoginCard className="shadow-inner-outline dark:shadow-outline" />
+        <LoginCard className=" dark:shadow-outline" />
       </div>
       <div className="mx-auto">
         <SignUpToggle />

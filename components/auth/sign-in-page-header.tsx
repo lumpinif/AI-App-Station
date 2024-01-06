@@ -11,7 +11,7 @@ const SignInPageHeader = () => {
   return (
     <header className="relative p-4 sm:px-8">
       <Button
-        className="h-10 w-10 items-center justify-center rounded-full shadow-inner-outline dark:shadow-outline"
+        className="h-10 w-10 items-center justify-center rounded-full shadow-outline"
         size={"icon"}
         variant={"ghost"}
         onClick={() => route.back()}
