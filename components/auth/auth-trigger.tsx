@@ -26,7 +26,7 @@ type UserAvatarTriggerProps = {
 const UserAvatarTrigger = ({ size, onClick }: UserAvatarTriggerProps) => {
   return (
     <button onClick={onClick}>
-      <Avatar className="cursor-pointer">
+      <Avatar className="cursor-pointer outline-none">
         {/* <Skeleton className={`h-10 w-10 rounded-full`} /> */}
         <Icons.user size={size} />
       </Avatar>
