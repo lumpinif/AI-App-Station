@@ -12,7 +12,7 @@ const HeroSection = () => {
           className="ease absolute top-[-30px] mx-auto justify-center rounded-full px-10 py-2 text-center text-base font-medium leading-none tracking-normal text-muted-foreground transition-all duration-300 hover:scale-105 sm:top-3 sm:text-lg md:text-xl"
         >
           <span className="hidden sm:inline-block lg:hidden">Openmind</span>AI
-          Apps and News Station
+          Apps and News
         </Link>
         <TextTypingEffectWithTextsFadeOut />
       </div>
