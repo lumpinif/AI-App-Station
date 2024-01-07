@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import AuthTrigger from "@/components/auth/auth-trigger"
+import AuthAvatarTrigger from "@/components/auth/auth-avatar-trigger"
 import { Icons } from "@/components/icons/icons"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
@@ -24,7 +24,7 @@ const LogoHeaderWrapper = ({ children }: { children: React.ReactNode }) => {
           <div className="mr-1 sm:hidden">
             <ThemeToggle />
           </div>
-          <AuthTrigger />
+          <AuthAvatarTrigger />
         </div>
       </div>
     </header>

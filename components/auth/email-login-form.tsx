@@ -18,7 +18,7 @@ const EmailLoginForm = () => {
     //   email: email,
     //   callbackUrl: `${window.location.origin}`,
     // })
-
+    console.log("Email Sign In Clicked")
     setIsLoading(false)
 
     if ("!signInResult?.ok") {

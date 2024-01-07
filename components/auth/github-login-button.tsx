@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { GithubIcon, Loader } from "lucide-react"
+import { GithubIcon } from "lucide-react"
+import { ImSpinner3 } from "react-icons/im"
 
 import { Button } from "@/components/ui/button"
 
@@ -14,7 +15,7 @@ const GithubLoginButton = () => {
     // const signInResult = await signIn("github", {
     //   callbackUrl: `${window.location.origin}`,
     // })
-    console.log("signInResult")
+    console.log("Github Sign In Clicked")
 
     // if (!signInResult?.ok) {
     //   setIsLoading(false);
@@ -31,10 +32,14 @@ const GithubLoginButton = () => {
   }
 
   return (
-    <Button onClick={handleSignInClick} className="rounded-full">
+    <Button
+      onClick={handleSignInClick}
+      className="rounded-full"
+      disabled={isLoading}
+    >
+      {isLoading && <ImSpinner3 className="mr-2 h-4 w-4 animate-spin" />}
       Continue with Github
       <GithubIcon className="ml-4 h-5 w-5" />
-      {isLoading && <Loader className="ml-4 animate-spin" />}
     </Button>
   )
 }
