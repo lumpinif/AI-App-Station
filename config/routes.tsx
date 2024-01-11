@@ -1,12 +1,13 @@
-import { LayoutTemplate, Layers, Youtube, Search } from "lucide-react";
+import { Layers, LayoutTemplate, Search, Youtube } from "lucide-react"
+import { RiOpenaiFill } from "react-icons/ri"
 
 export const mainroutes: {
-  id: string;
-  label: string;
-  href: string;
-  title: string;
-  discription: string;
-  icon: JSX.Element;
+  id: string
+  label: string
+  href: string
+  title: string
+  discription: string
+  icon: JSX.Element
 }[] = [
   {
     id: "today",
@@ -24,6 +25,14 @@ export const mainroutes: {
     discription: "Check out all the most powerful AI Apps by collections",
     icon: <Layers width={18} />,
   },
+  // {
+  //   id: "gpts",
+  //   href: "/gpts",
+  //   label: "GPTs",
+  //   title: "GPTs",
+  //   discription: "",
+  //   icon: <RiOpenaiFill size={24} />,
+  // },
   {
     id: "reels",
     href: "/reels",
@@ -41,4 +50,4 @@ export const mainroutes: {
     discription: "Search for the best AI apps for your needs",
     icon: <Search width={18} />,
   },
-];
+]
