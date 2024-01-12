@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { signUpWithEmailAndPassword } from "@/app/actions"
 
 import { InputBorderSpotlight } from "../shared/InputBorderSpotlight"
 
@@ -29,7 +30,7 @@ const FormSchema = z
     }),
   })
   .refine((data) => data.confirm === data.password, {
-    message: "Password did not match",
+    message: "Passwords did not match",
     path: ["confirm"],
   })
 export default function RegisterForm() {
@@ -42,14 +43,32 @@ export default function RegisterForm() {
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast.success("You submitted the following values:", {
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(signUpData: z.infer<typeof FormSchema>) {
+    //server action of signUpWithEmailAndPassword
+    const result = await signUpWithEmailAndPassword(signUpData)
+
+    const { data, error } = JSON.parse(result)
+
+    if (error?.message) {
+      if (
+        error.name === "AuthApiError" &&
+        error.message === "Email rate limit exceeded" &&
+        error.status === 429
+      ) {
+        // Display a user-friendly message to inform the user about the email rate limit issue
+        toast.error(
+          "Sorry, we are currently experiencing issues with email delivery. Please try again later."
+        )
+      } else {
+        toast.error("Error registering!", {
+          description: <p>{error.message}</p>,
+        })
+      }
+    } else {
+      toast.success("Successfully registered!", {
+        description: <p> Welcome {data}</p>,
+      })
+    }
   }
 
   return (
