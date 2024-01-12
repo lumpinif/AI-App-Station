@@ -1,7 +1,7 @@
 import getUserSession from "@/utils/actions"
 
 import { Icons } from "../icons/icons"
-import { Avatar } from "../ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 const UserAvatar = async () => {
   const {
@@ -9,11 +9,25 @@ const UserAvatar = async () => {
   } = await getUserSession()
 
   return (
-    <>
-      <Avatar className="cursor-pointer outline-none">
+    <Avatar className="cursor-pointer outline-none">
+      {session ? (
+        <>
+          <AvatarImage
+            src={session.user?.user_metadata?.avatar_url}
+            alt="User Avatar"
+          />
+          {session.user?.email ? (
+            <AvatarFallback>
+              {session.user.email.substring(0, 2).toUpperCase()}
+            </AvatarFallback>
+          ) : (
+            "?"
+          )}
+        </>
+      ) : (
         <Icons.user size={40} />
-      </Avatar>
-    </>
+      )}
+    </Avatar>
   )
 }
 

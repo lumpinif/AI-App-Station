@@ -9,45 +9,29 @@ import { Icons } from "../icons/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 const AuthAvatarTrigger = () => {
-  const [session, setSession] = useState<Session | null>(null)
+  // const [session, setSession] = useState<Session | null>(null)
   const OpenModal = useAuthModal((state) => state.OpenModal)
-  const supabase = createSupabaseBrowserClient()
-  const router = useRouter()
+  // const supabase = createSupabaseBrowserClient()
+  // const router = useRouter()
 
-  useEffect(() => {
-    const getUserSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
-      setSession(session)
-      router.refresh()
-    }
-    getUserSession()
-  }, [supabase.auth, router])
+  // useEffect(() => {
+  //   const getUserSession = async () => {
+  //     const {
+  //       data: { session },
+  //     } = await supabase.auth.getSession()
+  //     setSession(session)
+  //     router.refresh()
+  //   }
+  //   getUserSession()
+  // }, [supabase.auth, router])
 
-  console.log("🚀 ~ getUserSession ~ session:", session)
+  // console.log("🚀 ~ getUserSession ~ session:", session)
 
   return (
     <>
       <button onClick={OpenModal}>
         <Avatar className="cursor-pointer outline-none">
-          {session ? (
-            <>
-              <AvatarImage
-                src={session.user?.user_metadata?.avatar_url}
-                alt="User Avatar"
-              />
-              {session.user?.email ? (
-                <AvatarFallback>
-                  {session.user.email.substring(0, 2).toUpperCase()}
-                </AvatarFallback>
-              ) : (
-                "?"
-              )}
-            </>
-          ) : (
-            <Icons.user size={40} />
-          )}
+          <Icons.user size={40} />
         </Avatar>
       </button>
     </>
