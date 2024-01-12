@@ -9,7 +9,7 @@ import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-const GithubLoginButton = () => {
+const GoogleLoginButton = () => {
   const [isLoading, setIsLoading] = useState(false)
   const supabse = createSupabaseBrowserClient()
 
@@ -45,4 +45,4 @@ const GithubLoginButton = () => {
   )
 }
 
-export default GithubLoginButton
+export default GoogleLoginButton
