@@ -1,26 +1,27 @@
 "use client"
 
+import { Session } from "@supabase/auth-helpers-nextjs"
+
 import useAuthModal from "@/hooks/use-auth-modal-store"
 import Modal from "@/components/shared/Modal"
 
 import LoginCard from "./login-card"
+import SignOutButton from "./sign-out-button"
 
-const AuthModal = () => {
-  // const [isMounted,setIsMounted]=useState(false);
+const AuthModal = ({ session }: { session: Session | null }) => {
   const isOpen = useAuthModal((state) => state.isOpen)
   const CloseModal = useAuthModal((state) => state.CloseModal)
-
-  //  useEffect (()=>{ setIsMounted(true); },[])
-  //  if (!isMounted) { return null; }
 
   const onChange = (open: boolean) => {
     if (!open) CloseModal()
   }
 
   return (
-    <Modal isOpen={isOpen} onChange={onChange}>
-      <LoginCard />
-    </Modal>
+    <>
+      <Modal isOpen={isOpen} onChange={onChange}>
+        {session ? <SignOutButton /> : <LoginCard />}
+      </Modal>
+    </>
   )
 }
 

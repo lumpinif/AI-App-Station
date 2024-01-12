@@ -1,15 +1,20 @@
-import { signOut } from "@/app/(auth)/actions"
+import getUserSession from "@/utils/actions"
 
-import { Button } from "../ui/button"
+import { Icons } from "../icons/icons"
+import { Avatar } from "../ui/avatar"
 
-const AuthAvatar = () => {
+const UserAvatar = async () => {
+  const {
+    data: { session },
+  } = await getUserSession()
+
   return (
     <>
-      <form action={signOut}>
-        <Button type="submit">Sign Out</Button>
-      </form>
+      <Avatar className="cursor-pointer outline-none">
+        <Icons.user size={40} />
+      </Avatar>
     </>
   )
 }
 
-export default AuthAvatar
+export default UserAvatar

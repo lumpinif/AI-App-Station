@@ -1,9 +1,9 @@
-import AuthAvatar from "@/components/auth/auth-avatar"
+import SignOutButton from "@/components/auth/sign-out-button"
 
 const SignOutPage = () => {
   return (
     <div>
-      <AuthAvatar />
+      <SignOutButton />
     </div>
   )
 }

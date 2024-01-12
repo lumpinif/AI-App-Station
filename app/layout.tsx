@@ -70,6 +70,10 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
+  const {
+    data: { session },
+  } = await getUserSession()
+
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -88,7 +92,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           >
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
-                <AuthModal />
+                <AuthModal session={session} />
                 <main className="flex-1">{children}</main>
               </div>
             </div>
