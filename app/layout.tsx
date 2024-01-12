@@ -87,7 +87,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
                 <AuthModal />
-                <div className="flex-1">{children}</div>
+                <main className="flex-1">{children}</main>
               </div>
             </div>
             <TailwindIndicator />

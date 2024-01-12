@@ -29,12 +29,12 @@ const GoogleLoginButton = () => {
   return (
     <Button
       onClick={handleSignInClick}
-      className="rounded-full"
+      className="w-full rounded-full"
       disabled={isLoading}
     >
       {isLoading && <ImSpinner3 className="mr-2 h-4 w-4 animate-spin" />}
-      Continue with Google
-      <FcGoogle className="ml-4 h-5 w-5" />
+      Google
+      <FcGoogle className="ml-2 h-5 w-5" />
     </Button>
   )
 }

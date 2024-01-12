@@ -9,6 +9,7 @@ export const InputBorderSpotlight = ({
   type,
   placeholder,
   onChange,
+  ...props
 }: InputProps) => {
   const divRef = useRef<HTMLInputElement>(null)
   const [isFocused, setIsFocused] = useState(false)
