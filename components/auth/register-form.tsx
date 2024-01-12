@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signUpWithEmailAndPassword } from "@/app/actions"
+import { signUpWithEmailAndPassword } from "@/app/signin/actions"
 
 import { InputBorderSpotlight } from "../shared/InputBorderSpotlight"
 
