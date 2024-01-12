@@ -14,8 +14,6 @@ export async function signUpWithEmailAndPassword(signUpData: {
     password: signUpData.password,
   })
 
-  console.log("🚀 ~ result:", result)
-
   return JSON.stringify(result)
 }
 
