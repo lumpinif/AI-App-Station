@@ -3,55 +3,42 @@
 import { useState } from "react"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { GithubIcon } from "lucide-react"
-import { ImSpinner3 } from "react-icons/im"
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { toast } from "sonner"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 const GithubLoginButton = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const supabse = createSupabaseBrowserClient()
 
-  const handleSignInClick = async () => {
+  async function handleGithubLogin() {
     setIsLoading(true)
-    const supabase = createSupabaseBrowserClient()
-
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      await supabse.auth.signInWithOAuth({
         provider: "github",
+        options: {
+          redirectTo: `${location.origin}/auth/callback`,
+        },
       })
-
-      if (data) {
-        console.log("🚀 ~ handleSignInClick ~ data:", data)
-        toast.success("You are logged in.", {
-          description: "Welcome back!",
-          duration: 5000,
-        })
-      } else if (error) {
-        console.log("🚀 ~ handleSignInClick ~ error:", error)
-
-        toast.error("Something went wrong.", {
-          description: error.message || "Please try again later.",
-          duration: 5000,
-        })
-      }
     } catch (error) {
-      console.log("🚀 ~ handleSignInClick ~ error:", error)
-      toast.error("An unexpected error occurred.", {
-        description: "Please try again later.",
-        duration: 5000,
+      console.error(error)
+      toast.error("Failed to Sign In with Github!", {
+        description: !error,
       })
-    } finally {
-      setIsLoading(false)
     }
   }
 
   return (
     <Button
-      onClick={handleSignInClick}
+      onClick={handleGithubLogin}
       className="w-full rounded-full"
       disabled={isLoading}
     >
-      {isLoading && <ImSpinner3 className="mr-2 h-4 w-4 animate-spin" />}
+      <AiOutlineLoading3Quarters
+        className={cn("mr-2 h-4 w-4 animate-spin", { hidden: !isLoading })}
+      />
       Github
       <GithubIcon className="ml-2 h-5 w-5" />
     </Button>

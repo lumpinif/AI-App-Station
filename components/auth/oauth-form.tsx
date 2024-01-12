@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button"
-
 import GithubLoginButton from "./github-login-button"
 import GoogleLoginButton from "./google-login-button"
 

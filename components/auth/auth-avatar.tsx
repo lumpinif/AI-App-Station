@@ -1,10 +1,14 @@
-import { signOut } from "@/utils/actions"
+import { signOut } from "@/app/(auth)/actions"
+
+import { Button } from "../ui/button"
 
 const AuthAvatar = () => {
   return (
-    <form action={signOut}>
-      <button type="submit">Sign Out</button>
-    </form>
+    <>
+      <form action={signOut}>
+        <Button type="submit">Sign Out</Button>
+      </form>
+    </>
   )
 }
 

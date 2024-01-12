@@ -30,3 +30,9 @@ export async function signInWithEmailAndPassword(signInData: {
 
   return { data, error }
 }
+
+export async function signOut() {
+  const supabase = await createSupabaseServerClient()
+
+  return await supabase.auth.signOut()
+}
