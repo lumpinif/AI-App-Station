@@ -22,7 +22,7 @@ const LoginCard = ({
       <div className="mx-auto flex w-full flex-col justify-center space-y-6">
         {/* <UserAuthForm /> */}
         <AuthForm />
-        <p className="px-8 text-center text-sm text-muted-foreground">
+        <p className="text-center text-xs text-muted-foreground">
           By clicking, you agree to our{" "}
           <Link
             href="/"
