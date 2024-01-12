@@ -1,5 +1,7 @@
 import Link from "next/link"
+import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 
+import AuthAvatar from "@/components/auth/auth-avatar"
 import AuthAvatarTrigger from "@/components/auth/auth-avatar-trigger"
 import { Icons } from "@/components/icons/icons"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
@@ -24,6 +26,7 @@ const LogoHeaderWrapper = ({ children }: { children: React.ReactNode }) => {
           <div className="mr-1 sm:hidden">
             <ThemeToggle />
           </div>
+          <AuthAvatar />
           <AuthAvatarTrigger />
         </div>
       </div>

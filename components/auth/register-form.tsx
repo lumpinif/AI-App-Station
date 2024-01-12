@@ -1,3 +1,4 @@
+import { useTransition } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
@@ -5,6 +6,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
+import useAuthModal from "@/hooks/use-auth-modal-store"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -14,8 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { signUpWithEmailAndPassword } from "@/app/signin/actions"
+import { signUpWithEmailAndPassword } from "@/app/(auth)/actions"
 
 import { InputBorderSpotlight } from "../shared/InputBorderSpotlight"
 
@@ -33,7 +34,11 @@ const FormSchema = z
     message: "Passwords did not match",
     path: ["confirm"],
   })
+
 export default function RegisterForm() {
+  const [isPending, startTransition] = useTransition()
+  const CloseModal = useAuthModal((state) => state.CloseModal)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -43,37 +48,41 @@ export default function RegisterForm() {
     },
   })
 
-  async function onSubmit(signUpData: z.infer<typeof FormSchema>) {
-    //server action of signUpWithEmailAndPassword
-    const result = await signUpWithEmailAndPassword(signUpData)
+  function onSubmitRegisterForm(signUpData: z.infer<typeof FormSchema>) {
+    startTransition(async () => {
+      //server action of signUpWithEmailAndPassword
+      const { data, error } = await signUpWithEmailAndPassword(signUpData)
 
-    const { data, error } = JSON.parse(result)
-
-    if (error?.message) {
-      if (
-        error.name === "AuthApiError" &&
-        error.message === "Email rate limit exceeded" &&
-        error.status === 429
-      ) {
-        // Display a user-friendly message to inform the user about the email rate limit issue
-        toast.error(
-          "Sorry, we are currently experiencing issues with email delivery. Please try again later."
-        )
+      if (error?.message) {
+        if (
+          error.name === "AuthApiError" &&
+          error.message === "Email rate limit exceeded" &&
+          error.status === 429
+        ) {
+          // Display a user-friendly message to inform the user about the email rate limit issue
+          toast.error(
+            "Sorry, we are currently experiencing issues with email delivery. Please try again later."
+          )
+        } else {
+          toast.error("Error Registering!", {
+            description: error.message,
+          })
+        }
       } else {
-        toast.error("Error registering!", {
-          description: <p>{error.message}</p>,
+        CloseModal()
+        toast.success("Successfully Registered!", {
+          description: "Welcome " + data?.user?.email,
         })
       }
-    } else {
-      toast.success("Successfully registered!", {
-        description: <p> Welcome {data}</p>,
-      })
-    }
+    })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmitRegisterForm)}
+        className="w-full space-y-6"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -81,12 +90,6 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                {/* <Input
-                  placeholder="example@gmail.com"
-                  {...field}
-                  type="email"
-                  onChange={field.onChange}
-                /> */}
                 <InputBorderSpotlight
                   placeholder="example@gmail.com"
                   {...field}
@@ -105,12 +108,6 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                {/* <Input
-                  placeholder="password"
-                  {...field}
-                  type="password"
-                  onChange={field.onChange}
-                /> */}
                 <InputBorderSpotlight
                   placeholder="password"
                   {...field}
@@ -130,12 +127,6 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                {/* <Input
-                  placeholder="Confirm Password"
-                  {...field}
-                  type="password"
-                  onChange={field.onChange}
-                /> */}
                 <InputBorderSpotlight
                   placeholder="Confirm Password"
                   {...field}
@@ -150,7 +141,9 @@ export default function RegisterForm() {
         />
         <Button type="submit" className="flex w-full gap-2">
           Register
-          <AiOutlineLoading3Quarters className={cn("animate-spin")} />
+          <AiOutlineLoading3Quarters
+            className={cn("animate-spin", { hidden: !isPending })}
+          />
         </Button>
       </form>
     </Form>

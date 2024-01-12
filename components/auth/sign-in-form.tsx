@@ -1,3 +1,4 @@
+import { useTransition } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
@@ -5,6 +6,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
+import useAuthModal from "@/hooks/use-auth-modal-store"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -14,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { signInWithEmailAndPassword } from "@/app/(auth)/actions"
 
 import { InputBorderSpotlight } from "../shared/InputBorderSpotlight"
 
@@ -26,6 +28,9 @@ const FormSchema = z.object({
 })
 
 export default function SignInForm() {
+  const [isPending, startTransition] = useTransition()
+  const CloseModal = useAuthModal((state) => state.CloseModal)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -34,13 +39,28 @@ export default function SignInForm() {
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast.success("You submitted the following values:", {
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+  function onSubmitSignin(signInData: z.infer<typeof FormSchema>) {
+    startTransition(async () => {
+      const { data, error } = await signInWithEmailAndPassword(signInData)
+
+      if (error?.message) {
+        if (
+          error.name === "AuthApiError" &&
+          error.message === "Invalid login credentials" &&
+          error.status === 400
+        ) {
+          toast.error("Wrong email or password. Please try again.")
+        } else {
+          toast.error("Failed to Sign In!", {
+            description: error.message,
+          })
+        }
+      } else {
+        CloseModal()
+        toast.success("Successfully Signed In!", {
+          description: "Welcome back " + data?.user?.email,
+        })
+      }
     })
   }
 
@@ -48,7 +68,7 @@ export default function SignInForm() {
     <>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(onSubmitSignin)}
           className="w-full space-y-6"
         >
           <FormField
@@ -58,12 +78,6 @@ export default function SignInForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  {/* <Input
-                    placeholder="example@gmail.com"
-                    {...field}
-                    type="email"
-                    onChange={field.onChange}
-                  /> */}
                   <InputBorderSpotlight
                     placeholder="example@gmail.com"
                     {...field}
@@ -82,12 +96,6 @@ export default function SignInForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  {/* <Input
-                    placeholder="password"
-                    {...field}
-                    type="password"
-                    onChange={field.onChange}
-                  /> */}
                   <InputBorderSpotlight
                     placeholder="password"
                     {...field}
@@ -101,7 +109,9 @@ export default function SignInForm() {
           />
           <Button type="submit" className="flex w-full gap-2 rounded-full">
             Sign In
-            <AiOutlineLoading3Quarters className={cn("animate-spin")} />
+            <AiOutlineLoading3Quarters
+              className={cn("animate-spin", { hidden: !isPending })}
+            />
           </Button>
         </form>
       </Form>

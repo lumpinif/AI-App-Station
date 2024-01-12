@@ -7,3 +7,11 @@ export default async function getUserSession() {
 
   return supabase.auth.getSession()
 }
+
+export async function signOut() {
+  const supabase = await createSupabaseServerClient()
+
+  const { error } = await supabase.auth.signOut()
+
+  return { error }
+}

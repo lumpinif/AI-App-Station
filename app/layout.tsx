@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/provider/theme-provider"
 
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
+import getUserSession from "@/utils/actions"
 import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
@@ -68,7 +69,7 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -92,7 +93,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </div>
             </div>
             <TailwindIndicator />
-            <SonnerToaster richColors />
+            <SonnerToaster richColors position="top-center" />
           </ThemeProvider>
         </body>
       </html>

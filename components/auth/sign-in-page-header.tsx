@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { Icons } from "../icons/icons"
 import { Button } from "../ui/button"
 
-const SignInPageHeader = () => {
+const AuthPageHeader = () => {
   const route = useRouter()
   return (
     <header className="absolute p-4 sm:px-8">
@@ -21,4 +21,4 @@ const SignInPageHeader = () => {
   )
 }
 
-export default SignInPageHeader
+export default AuthPageHeader
