@@ -1,3 +1,5 @@
+"use client"
+
 import SignOutButton from "@/components/auth/sign-out-button"
 
 const SignOutPage = () => {
