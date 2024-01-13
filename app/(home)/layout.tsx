@@ -15,7 +15,9 @@ interface HomePageLayoutProps {
   children: React.ReactNode
 }
 
-export default function HomePageLayout({ children }: HomePageLayoutProps) {
+export default async function HomePageLayout({
+  children,
+}: HomePageLayoutProps) {
   return (
     <>
       <SiteHeader />

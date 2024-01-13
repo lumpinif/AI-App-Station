@@ -1,19 +1,15 @@
-"use client"
+import getUserSession from "@/utils/supabase/actions"
 
-import useMediaQuery from "@/hooks/use-media-query"
+import { ResponsiveNav } from "./responsive-nav"
 
-import FloatingNav from "./floating-nav"
-import LogoHeaderWrapper from "./logo-header-wrapper"
-import MobileNav from "./mobile-nav"
-
-export function SiteHeader() {
-  const { isMobile } = useMediaQuery()
+export async function SiteHeader() {
+  const {
+    data: { session },
+  } = await getUserSession()
 
   return (
     <>
-      <LogoHeaderWrapper>
-        {isMobile ? <MobileNav /> : <FloatingNav />}
-      </LogoHeaderWrapper>
+      <ResponsiveNav session={session} />
     </>
   )
 }

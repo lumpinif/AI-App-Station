@@ -2,7 +2,7 @@ import { ThemeProvider } from "@/provider/theme-provider"
 
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
-import getUserSession from "@/utils/actions"
+import getUserSession from "@/utils/supabase/actions"
 import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"

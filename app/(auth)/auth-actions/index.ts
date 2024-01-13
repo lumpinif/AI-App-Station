@@ -1,7 +1,6 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 export async function signUpWithEmailAndPassword(signUpData: {
@@ -36,6 +35,7 @@ export async function signInWithEmailAndPassword(signInData: {
 export async function signOut() {
   const supabase = await createSupabaseServerClient()
   const { error } = await supabase.auth.signOut()
+
   revalidatePath("/")
   return { error }
 }

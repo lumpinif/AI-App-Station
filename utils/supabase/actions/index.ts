@@ -1,6 +1,6 @@
 "use server"
 
-import createSupabaseServerClient from "../supabase/server-client"
+import createSupabaseServerClient from "../server-client"
 
 export default async function getUserSession() {
   const supabase = await createSupabaseServerClient()

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import getUserSession from "@/utils/actions"
+import getUserSession from "@/utils/supabase/actions"
 
 import LoginCard from "@/components/auth/login-card"
 

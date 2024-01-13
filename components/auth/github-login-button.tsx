@@ -3,19 +3,18 @@
 import { useState } from "react"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { GithubIcon } from "lucide-react"
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 const GithubLoginButton = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const supabse = createSupabaseBrowserClient()
 
   async function handleGithubLogin() {
-    setIsLoading(true)
     try {
+      setIsLoading(true)
+      const supabse = createSupabaseBrowserClient()
       await supabse.auth.signInWithOAuth({
         provider: "github",
         options: {
@@ -23,6 +22,7 @@ const GithubLoginButton = () => {
         },
       })
     } catch (error) {
+      setIsLoading(false)
       console.error(error)
       toast.error("Failed to Sign In with Github!", {
         description: !error,
@@ -36,9 +36,11 @@ const GithubLoginButton = () => {
       className="w-full rounded-full"
       disabled={isLoading}
     >
-      <AiOutlineLoading3Quarters
-        className={cn("mr-2 h-4 w-4 animate-spin", { hidden: !isLoading })}
-      />
+      {isLoading && (
+        <span className="mr-2">
+          <RingLoader size={15} speedMultiplier={1.5} color="gray" />
+        </span>
+      )}
       Github
       <GithubIcon className="ml-2 h-5 w-5" />
     </Button>

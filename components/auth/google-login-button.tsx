@@ -2,20 +2,19 @@
 
 import { useState } from "react"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
+import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 const GoogleLoginButton = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const supabse = createSupabaseBrowserClient()
 
   async function handleGoogleLogin() {
     setIsLoading(true)
     try {
+      const supabse = createSupabaseBrowserClient()
       await supabse.auth.signInWithOAuth({
         provider: "google",
         options: {
@@ -36,9 +35,11 @@ const GoogleLoginButton = () => {
       className="w-full rounded-full"
       disabled={isLoading}
     >
-      <AiOutlineLoading3Quarters
-        className={cn("mr-2 h-4 w-4 animate-spin", { hidden: !isLoading })}
-      />
+      {isLoading && (
+        <span className="mr-2">
+          <RingLoader size={15} speedMultiplier={1.5} color="gray" />
+        </span>
+      )}
       Google
       <FcGoogle className="ml-2 h-5 w-5" />
     </Button>

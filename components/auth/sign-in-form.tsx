@@ -3,11 +3,10 @@
 import { useTransition } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { cn } from "@/lib/utils"
 import useAuthModal from "@/hooks/use-auth-modal-store"
 import { Button } from "@/components/ui/button"
 import {
@@ -18,7 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { signInWithEmailAndPassword } from "@/app/(auth)/actions"
+import { signInWithEmailAndPassword } from "@/app/(auth)/auth-actions"
 
 import { InputBorderSpotlight } from "../shared/InputBorderSpotlight"
 
@@ -109,11 +108,17 @@ export default function SignInForm() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="flex w-full gap-2 rounded-full">
+          <Button
+            type="submit"
+            className="flex w-full gap-2 rounded-full"
+            disabled={isPending}
+          >
             Sign In
-            <AiOutlineLoading3Quarters
-              className={cn("animate-spin", { hidden: !isPending })}
-            />
+            {isPending && (
+              <span>
+                <RingLoader size={15} speedMultiplier={1.5} color="gray" />
+              </span>
+            )}
           </Button>
         </form>
       </Form>

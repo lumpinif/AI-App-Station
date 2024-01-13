@@ -4,6 +4,7 @@ import { useTransition } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
+import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
@@ -18,7 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { signUpWithEmailAndPassword } from "@/app/(auth)/actions"
+import { signUpWithEmailAndPassword } from "@/app/(auth)/auth-actions"
 
 import { InputBorderSpotlight } from "../shared/InputBorderSpotlight"
 
@@ -141,11 +142,17 @@ export default function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="flex w-full gap-2">
+        <Button
+          type="submit"
+          className="flex w-full gap-2"
+          disabled={isPending}
+        >
           Register
-          <AiOutlineLoading3Quarters
-            className={cn("animate-spin", { hidden: !isPending })}
-          />
+          {isPending && (
+            <span>
+              <RingLoader size={15} speedMultiplier={1.5} color="gray" />
+            </span>
+          )}
         </Button>
       </form>
     </Form>

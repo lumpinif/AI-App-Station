@@ -8,6 +8,7 @@ import {
   Youtube,
   type Icon as LucideIcon,
 } from "lucide-react"
+import { FaUserAlt } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6"
 import { HiUserCircle } from "react-icons/hi2"
 
@@ -60,7 +61,7 @@ export const Icons = {
   youtube: Youtube,
   layout: LayoutTemplate,
   logo: Square,
-  user: HiUserCircle,
+  user: FaUserAlt,
   // user: (props: LucideProps) => (
   //   <svg
   //     xmlns="http://www.w3.org/2000/svg"
