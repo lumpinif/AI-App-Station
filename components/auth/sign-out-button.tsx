@@ -1,3 +1,5 @@
+"use client "
+
 import { useTransition } from "react"
 import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
