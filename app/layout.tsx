@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@/provider/theme-provider"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
@@ -100,6 +101,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <TailwindIndicator />
             <SonnerToaster richColors position="top-center" />
           </ThemeProvider>
+          <SpeedInsights />
         </body>
       </html>
     </>
