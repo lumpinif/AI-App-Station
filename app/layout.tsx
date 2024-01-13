@@ -12,6 +12,7 @@ import AuthModal from "@/components/auth/auth-modal"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {
+  metadataBase: new URL("http://localhost:3000"), // Set the base URL here
   title: {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
