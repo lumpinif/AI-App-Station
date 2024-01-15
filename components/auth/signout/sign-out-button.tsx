@@ -6,7 +6,7 @@ import { toast } from "sonner"
 
 import { signOut } from "@/app/(auth)/auth-actions"
 
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
 
 const SignOutButton = () => {
   const [isPending, startTransition] = useTransition()

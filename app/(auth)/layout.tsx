@@ -1,7 +1,7 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
 
-import AuthPageHeader from "@/components/auth/sign-in-page-header"
+import AuthPageHeader from "@/components/auth/signin/sign-in-page-header"
 
 export const metadata: Metadata = {
   title: "Sign In to OpenmindAI Apps and News Station",
@@ -17,7 +17,9 @@ export default function SignInLayout({ children }: SignInLayoutProps) {
   return (
     <>
       <AuthPageHeader />
-      <div className="flex min-h-dvh flex-col justify-center">{children}</div>
+      <div className="absolute flex min-h-dvh min-w-full">
+        <div className="mx-auto flex w-full px-4">{children}</div>
+      </div>
     </>
   )
 }

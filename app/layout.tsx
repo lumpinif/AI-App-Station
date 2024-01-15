@@ -9,7 +9,7 @@ import { GeistSans } from "geist/font/sans"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
-import AuthModal from "@/components/auth/auth-modal"
+import AuthModal from "@/components/auth/avatar/auth-modal"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {

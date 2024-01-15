@@ -1,4 +1,4 @@
-import SignOutButton from "@/components/auth/sign-out-button"
+import SignOutButton from "@/components/auth/signout/sign-out-button"
 
 const SignOutPage = () => {
   return (

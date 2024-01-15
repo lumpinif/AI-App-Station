@@ -2,9 +2,9 @@ import { Session } from "@supabase/auth-helpers-nextjs"
 
 import useAuthModal from "@/hooks/use-auth-modal-store"
 
-import { Icons } from "../icons/icons"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Skeleton } from "../ui/skeleton"
+import { Icons } from "../../icons/icons"
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar"
+import { Skeleton } from "../../ui/skeleton"
 
 const UserAvatar = ({ session }: { session: Session | null }) => {
   const OpenModal = useAuthModal((state) => state.OpenModal)

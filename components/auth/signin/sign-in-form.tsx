@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form"
 import { signInWithEmailAndPassword } from "@/app/(auth)/auth-actions"
 
-import { InputBorderSpotlight } from "../shared/InputBorderSpotlight"
+import { InputBorderSpotlight } from "../../shared/InputBorderSpotlight"
 
 const FormSchema = z.object({
   email: z.string().email(),

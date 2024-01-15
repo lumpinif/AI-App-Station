@@ -1,4 +1,4 @@
-import AuthModal from "@/components/auth/auth-modal"
+import AuthModal from "@/components/auth/auth-modal/auth-modal"
 import { SiteHeader } from "@/components/layout/site-header/site-header"
 
 export const metadata = {
