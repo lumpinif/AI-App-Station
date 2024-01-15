@@ -1,17 +1,28 @@
+"use client"
+
 import { Session } from "@supabase/auth-helpers-nextjs"
 
+import { cn } from "@/lib/utils"
 import useAuthModal from "@/hooks/use-auth-modal-store"
 
 import { Icons } from "../../icons/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar"
 import { Skeleton } from "../../ui/skeleton"
 
-const UserAvatar = ({ session }: { session: Session | null }) => {
+interface UserAvatarProps {
+  session: Session | null
+  className?: string
+}
+
+const UserAvatar = ({ session, className }: UserAvatarProps) => {
   const OpenModal = useAuthModal((state) => state.OpenModal)
 
   return (
     <Avatar
-      className="cursor-pointer items-center justify-center outline-none"
+      className={cn(
+        "flex cursor-pointer items-center justify-center outline-none",
+        className
+      )}
       onClick={OpenModal}
     >
       {session ? (
@@ -22,7 +33,7 @@ const UserAvatar = ({ session }: { session: Session | null }) => {
           />
           <AvatarFallback>
             {session.user?.user_metadata?.avatar_url ? (
-              <Skeleton className="h-12 w-12 rounded-full" />
+              <Skeleton className={cn("h-12 w-12 rounded-full", className)} />
             ) : (
               session.user.email!.substring(0, 2).toUpperCase()
             )}
