@@ -8,8 +8,8 @@ import { SidebarNav } from "@/components/auth/settings/sidebar-nav"
 import { getUserData, getUserSession } from "../auth-actions"
 
 export const metadata: Metadata = {
-  title: "Forms",
-  description: "Advanced form example using react-hook-form and Zod.",
+  title: "Settings",
+  description: "Profile and Account Settings",
 }
 
 const sidebarNavItems = [
