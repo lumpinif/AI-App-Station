@@ -1,6 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 
@@ -10,16 +11,23 @@ import { Button } from "../../ui/button"
 
 const SignOutButton = () => {
   const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   function handleSignOut() {
     startTransition(async () => {
-      const { error } = await signOut()
-      if (error) {
+      try {
+        const result = await signOut()
+        if (result !== null) {
+          toast.success("Signed Out.")
+          router.push("/")
+        } else {
+          toast.error("You need to Sign In first.")
+          router.push("/signin")
+        }
+      } catch (error) {
         console.error(error)
         toast.error("Failed to Sign Out!")
       }
-
-      toast.success("Signed Out!")
     })
   }
 

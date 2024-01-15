@@ -1,4 +1,4 @@
-import getUserSession from "@/utils/supabase/actions"
+import { getUserSession } from "@/app/(auth)/auth-actions"
 
 import { ResponsiveNav } from "./responsive-nav"
 

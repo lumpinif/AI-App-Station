@@ -58,7 +58,7 @@ export default function SignInForm() {
         }
       } else {
         CloseModal()
-        toast.success("Successfully Signed In!", {
+        toast.success("Successfully Signed In !", {
           description: "Welcome back " + data?.user?.email,
         })
       }

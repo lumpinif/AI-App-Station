@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation"
-import getUserSession from "@/utils/supabase/actions"
 
 import LoginCard from "@/components/auth/signin/login-card"
+
+import { getUserSession } from "../auth-actions"
 
 const SignInPage = async () => {
   const { data } = await getUserSession()

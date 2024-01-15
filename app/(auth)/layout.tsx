@@ -13,7 +13,7 @@ interface SignInLayoutProps {
   children: React.ReactNode
 }
 
-export default function SignInLayout({ children }: SignInLayoutProps) {
+export default async function SignInLayout({ children }: SignInLayoutProps) {
   return (
     <>
       <AuthPageHeader />

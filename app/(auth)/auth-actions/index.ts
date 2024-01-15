@@ -34,8 +34,28 @@ export async function signInWithEmailAndPassword(signInData: {
 
 export async function signOut() {
   const supabase = await createSupabaseServerClient()
-  const { error } = await supabase.auth.signOut()
 
-  revalidatePath("/")
-  return { error }
+  //check if there is a session logged in
+  const {
+    data: { session },
+  } = await getUserSession()
+
+  if (session) {
+    const { error } = await supabase.auth.signOut()
+    revalidatePath("/")
+    return { error }
+  }
+
+  return null
+}
+
+export async function getUserSession() {
+  const supabase = await createSupabaseServerClient()
+
+  return supabase.auth.getSession()
+}
+
+export async function getUserData() {
+  const supabase = await createSupabaseServerClient()
+  return supabase.auth.getUser()
 }

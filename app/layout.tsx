@@ -3,7 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
-import getUserSession from "@/utils/supabase/actions"
 import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
@@ -11,6 +10,8 @@ import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import AuthModal from "@/components/auth/avatar/auth-modal"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
+
+import { getUserSession } from "./(auth)/auth-actions"
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"), // Set the base URL here

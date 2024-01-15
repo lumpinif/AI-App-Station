@@ -1,7 +1,10 @@
 import { Metadata } from "next"
+import { redirect } from "next/navigation"
 
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/components/auth/settings/sidebar-nav"
+
+import { getUserData, getUserSession } from "../auth-actions"
 
 export const metadata: Metadata = {
   title: "Forms",
@@ -23,7 +26,21 @@ interface SettingsLayoutProps {
   children: React.ReactNode
 }
 
-export default function SettingsLayout({ children }: SettingsLayoutProps) {
+export default async function SettingsLayout({
+  children,
+}: SettingsLayoutProps) {
+  const {
+    data: { user },
+  } = await getUserData()
+
+  const {
+    data: { session },
+  } = await getUserSession()
+
+  if (!session && !user) {
+    return redirect("/signin")
+  }
+
   return (
     <>
       <div className="mb-10 sm:container">
