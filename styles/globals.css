@@ -70,11 +70,11 @@
 @layer base {
   * {
     @apply border-border
-    /* min-w-0 */;
+    min-w-0;
   }
 
   html {
-    @apply overflow-hidden scroll-smooth antialiased;
+    @apply scroll-smooth antialiased bg-background;
     text-size-adjust: 100%;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;

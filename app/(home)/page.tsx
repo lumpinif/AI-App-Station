@@ -1,4 +1,5 @@
 import HeroSection from "@/components/home/HeroSection"
+import { LoadingSpinner } from "@/components/layout/loading-spinner"
 import { SiteFooter } from "@/components/layout/site-footer/site-footer"
 import { SiteHeader } from "@/components/layout/site-header/site-header"
 
@@ -10,6 +11,7 @@ export default function IntroductionPage() {
         <section className="container grid items-center gap-6 pb-8 sm:pt-6 md:py-10 ">
           <HeroSection />
         </section>
+        <LoadingSpinner />
       </div>
       <SiteFooter />
     </>
