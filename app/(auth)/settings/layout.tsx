@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { Separator } from "@/components/ui/separator"
+import AuthPageHeader from "@/components/auth/auth-page-header"
 import UserAvatar from "@/components/auth/avatar/auth-avatar"
 import { SidebarNav } from "@/components/auth/settings/sidebar-nav"
 
@@ -45,7 +46,7 @@ export default async function SettingsLayout({
   return (
     <>
       <div className="mb-10 sm:container">
-        <div className="w-full space-y-6 rounded-3xl p-10 pb-16 shadow-outline sm:mx-4">
+        <div className="w-full space-y-6 rounded-3xl p-10 pb-16 dark:shadow-outline sm:mx-4">
           <div className="space-y-0.5">
             {user && (
               <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
@@ -66,8 +67,11 @@ export default async function SettingsLayout({
           </div>
           <Separator className="my-6" />
           {user && (
-            <div className="flex items-center">
-              <h1 className="text-xl font-bold">{user.email?.toUpperCase()}</h1>
+            <div>
+              <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
+                {user?.user_metadata?.full_name || user?.email}
+              </h2>
+              <p className="text-muted-foreground">{user?.email}</p>
             </div>
           )}
           <Separator className="my-6" />

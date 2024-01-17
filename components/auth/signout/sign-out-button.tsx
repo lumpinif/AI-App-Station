@@ -34,7 +34,7 @@ const SignOutButton = () => {
   return (
     <>
       <form action={handleSignOut}>
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" disabled={isPending} variant={"destructive"}>
           Sign Out
           {isPending && (
             <span className="ml-1">

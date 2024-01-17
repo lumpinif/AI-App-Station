@@ -9,6 +9,7 @@ import { Dialog, DialogContent } from "../ui/dialog"
 interface ModalProps {
   children: React.ReactNode
   isOpen: boolean
+  title: string
   className?: string
   onChange: (open: boolean) => void
 }
@@ -16,6 +17,7 @@ interface ModalProps {
 export default function Modal({
   children,
   isOpen,
+  title,
   onChange,
   className,
 }: ModalProps) {
@@ -26,7 +28,7 @@ export default function Modal({
       <Drawer open={isOpen} onOpenChange={onChange} shouldScaleBackground>
         <DrawerContent className={cn("h-[80%] outline-none", className)}>
           <div className="sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium">
-            Account
+            {title}
             <DrawerClose
               asChild
               className="absolute right-0 top-1/2 -translate-y-1/2 text-lg"
@@ -47,7 +49,7 @@ export default function Modal({
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
-        className="rounded-2xl"
+        className="rounded-2xl outline-none"
       >
         {children}
       </DialogContent>

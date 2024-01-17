@@ -6,7 +6,7 @@ import useAuthModal from "@/hooks/use-auth-modal-store"
 import Modal from "@/components/shared/Modal"
 
 import LoginCard from "../signin/login-card"
-import SignOutButton from "../signout/sign-out-button"
+import UserCard from "./user-card"
 
 const AuthModal = ({ session }: { session: Session | null }) => {
   const isOpen = useAuthModal((state) => state.isOpen)
@@ -18,8 +18,13 @@ const AuthModal = ({ session }: { session: Session | null }) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onChange={onChange} className="h-[95%]">
-        {session ? <SignOutButton /> : <LoginCard />}
+      <Modal
+        isOpen={isOpen}
+        onChange={onChange}
+        className="h-[95%]"
+        title="Profile"
+      >
+        {session ? <UserCard session={session} /> : <LoginCard />}
       </Modal>
     </>
   )
