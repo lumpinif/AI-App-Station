@@ -1,12 +1,13 @@
+import { Suspense } from "react"
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { Separator } from "@/components/ui/separator"
-import AuthPageHeader from "@/components/auth/auth-page-header"
 import UserAvatar from "@/components/auth/avatar/auth-avatar"
 import { SidebarNav } from "@/components/auth/settings/sidebar-nav"
 
 import { getUserData, getUserSession } from "../auth-actions"
+import Loading from "./loading"
 
 export const metadata: Metadata = {
   title: "Settings",
@@ -79,7 +80,10 @@ export default async function SettingsLayout({
             <aside className="-mx-4 lg:w-1/6">
               <SidebarNav items={sidebarNavItems} />
             </aside>
-            <div className="flex-1 lg:max-w-2xl">{children}</div>
+            <div className="flex-1 lg:max-w-2xl">
+              <Suspense fallback={<Loading />}></Suspense>
+              {children}
+            </div>
           </div>
         </div>
       </div>
