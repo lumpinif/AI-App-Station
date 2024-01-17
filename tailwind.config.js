@@ -146,8 +146,22 @@ module.exports = {
             opacity: 1,
           },
         },
+        // Reveal Effect
+        reveal: {
+          "0%": {
+            opacity: 0,
+            filter: "brightness(1) blur(15px)",
+            scale: "1.0125",
+          },
+          "10%": { opacity: 1, filter: "brightness(1.25) blur(10px)" },
+          "100%": { opacity: 1, filter: "brightness(1) blur(0)", scale: "1" },
+        },
       },
       animation: {
+        // Reveal Effect
+        reveal: "reveal 0.7s ease-in-out",
+
+        // Accordion
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
 
@@ -166,6 +180,7 @@ module.exports = {
         rotate: "rotate 3s linear infinite both",
         ["infinite-slider"]: "infiniteSlider 20s linear infinite",
       },
+
       boxShadow: {
         "card-light":
           "0px 32px 40px -16px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.06)",

@@ -30,6 +30,8 @@ const UserAvatar = ({ session, className }: UserAvatarProps) => {
           <AvatarImage
             src={session.user?.user_metadata?.avatar_url}
             alt="User Avatar Image"
+            className="animate-reveal"
+            loading="eager"
           />
           <AvatarFallback>
             {session.user?.user_metadata?.avatar_url ? (
