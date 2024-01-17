@@ -18,7 +18,7 @@ const AuthModal = ({ session }: { session: Session | null }) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onChange={onChange}>
+      <Modal isOpen={isOpen} onChange={onChange} className="h-[95%]">
         {session ? <SignOutButton /> : <LoginCard />}
       </Modal>
     </>
