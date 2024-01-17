@@ -17,7 +17,7 @@ export default function Modal({ children, isOpen, onChange }: ModalProps) {
   if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={onChange} shouldScaleBackground>
-        <DrawerContent className="h-[93%] outline-none">
+        <DrawerContent className="h-[90%] outline-none">
           <div className="sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium">
             Account
             <DrawerClose
@@ -27,7 +27,7 @@ export default function Modal({ children, isOpen, onChange }: ModalProps) {
               <button className="mr-4 w-min text-blue-500">Done</button>
             </DrawerClose>
           </div>
-          <div className="flex h-full flex-col items-center justify-center">
+          <div className="flex-1 items-center justify-center overflow-y-auto rounded-t-[10px]">
             {children}
           </div>
         </DrawerContent>
