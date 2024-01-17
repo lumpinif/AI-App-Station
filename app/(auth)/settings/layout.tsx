@@ -81,8 +81,7 @@ export default async function SettingsLayout({
               <SidebarNav items={sidebarNavItems} />
             </aside>
             <div className="flex-1 lg:max-w-2xl">
-              <Suspense fallback={<Loading />}></Suspense>
-              {children}
+              <Suspense fallback={<Loading />}>{children}</Suspense>
             </div>
           </div>
         </div>
