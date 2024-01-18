@@ -9,7 +9,11 @@ const nextConfig = {
         hostname: "images.unsplash.com",
       },
     ],
-    domains: ["avatars.githubusercontent.com", "images.unsplash.com"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "images.unsplash.com",
+      "pbs.twimg.com",
+    ],
   },
   async headers() {
     return [

@@ -13,7 +13,7 @@ export default function TodayPageLayout({ children }: TodayPageLayoutProps) {
   return (
     <>
       <SiteHeader />
-      <section className="container grid items-center gap-6 pb-8 sm:pt-6 md:py-10 ">
+      <section className="contianer grid items-center gap-6 px-4 pb-8 sm:pt-6 md:py-10 ">
         {children}
       </section>
     </>
