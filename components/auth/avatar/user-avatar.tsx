@@ -4,10 +4,10 @@ import { Session } from "@supabase/auth-helpers-nextjs"
 
 import { cn } from "@/lib/utils"
 import useAuthModal from "@/hooks/use-auth-modal-store"
+import { useUserProfile } from "@/hooks/use-user-profile"
 
 import { Icons } from "../../icons/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar"
-import { Skeleton } from "../../ui/skeleton"
 
 interface UserAvatarProps {
   session: Session | null
@@ -15,6 +15,8 @@ interface UserAvatarProps {
 }
 
 const UserAvatar = ({ session, className }: UserAvatarProps) => {
+  const { avatarUrl, fullname } = useUserProfile(session?.user ?? null)
+
   const OpenModal = useAuthModal((state) => state.OpenModal)
 
   return (
@@ -28,16 +30,13 @@ const UserAvatar = ({ session, className }: UserAvatarProps) => {
       {session ? (
         <>
           <AvatarImage
-            src={session.user?.user_metadata?.avatar_url}
+            src={avatarUrl || session.user?.user_metadata?.avatar_url}
             alt="User Avatar Image"
             loading="eager"
           />
           <AvatarFallback>
-            {session.user?.user_metadata?.avatar_url ? (
-              <Skeleton className={cn("h-12 w-12 rounded-full", className)} />
-            ) : (
-              session.user.email!.substring(0, 2).toUpperCase()
-            )}
+            {fullname?.substring(0, 2).toUpperCase() ||
+              session.user?.email?.substring(0, 2).toUpperCase()}
           </AvatarFallback>
         </>
       ) : (

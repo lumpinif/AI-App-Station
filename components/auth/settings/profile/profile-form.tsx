@@ -76,7 +76,7 @@ export function ProfileForm() {
 
   function onSubmit(data: ProfileFormValues) {
     toast.success("Profile updated for", {
-      description: <text className="text-white">{`${data.username}`}</text>,
+      description: <text>{`${data.username}`}</text>,
     })
   }
 

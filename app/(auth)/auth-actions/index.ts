@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
+import { User } from "@supabase/auth-helpers-nextjs"
 
 export async function signUpWithEmailAndPassword(signUpData: {
   email: string
@@ -58,4 +59,13 @@ export async function getUserSession() {
 export async function getUserData() {
   const supabase = await createSupabaseServerClient()
   return supabase.auth.getUser()
+}
+
+export async function getUserProfile(user: User | null) {
+  const supabase = await createSupabaseServerClient()
+  return supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user?.id as string)
+    .single()
 }

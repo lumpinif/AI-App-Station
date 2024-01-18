@@ -3,10 +3,11 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { Separator } from "@/components/ui/separator"
-import UserAvatar from "@/components/auth/avatar/auth-avatar"
-import { SidebarNav } from "@/components/auth/settings/sidebar-nav"
+import UserAvatar from "@/components/auth/avatar/user-avatar"
+import { SidebarNav } from "@/components/auth/settings/layout/sidebar-nav"
+import UserNameEmail from "@/components/auth/settings/layout/user-name-email"
 
-import { getUserData, getUserSession } from "../auth-actions"
+import { getUserData, getUserProfile, getUserSession } from "../auth-actions"
 import Loading from "./loading"
 
 export const metadata: Metadata = {
@@ -36,6 +37,8 @@ export default async function SettingsLayout({
     data: { user },
   } = await getUserData()
 
+  const { data: profileData } = await getUserProfile(user)
+
   const {
     data: { session },
   } = await getUserSession()
@@ -47,34 +50,23 @@ export default async function SettingsLayout({
   return (
     <>
       <div className="mb-10 sm:container">
-        <div className="w-full space-y-6 rounded-3xl p-10 pb-16 dark:shadow-outline sm:mx-4">
-          <div className="space-y-0.5">
-            {user && (
-              <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
-                <UserAvatar
-                  session={session}
-                  className="h-20 w-20 sm:h-32 sm:w-32"
-                />
-                <div>
-                  <h2 className="text-3xl font-bold  tracking-tight sm:text-4xl">
-                    Settings
-                  </h2>
-                  <p className="text-muted-foreground">
-                    Manage your profile and account preferences.
-                  </p>
-                </div>
-              </div>
-            )}
+        <div className="w-full rounded-3xl p-10 pb-16 dark:shadow-outline sm:mx-4">
+          <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
+            <UserAvatar
+              session={session}
+              className="h-20 w-20 sm:h-32 sm:w-32"
+            />
+            <div>
+              <h2 className="text-3xl font-bold  tracking-tight sm:text-4xl">
+                Settings
+              </h2>
+              <p className="text-muted-foreground">
+                Manage your profile and account preferences.
+              </p>
+            </div>
           </div>
           <Separator className="my-6" />
-          {user && (
-            <div>
-              <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
-                {user?.user_metadata?.full_name || user?.email}
-              </h2>
-              <p className="text-muted-foreground">{user?.email}</p>
-            </div>
-          )}
+          <UserNameEmail session={session} userData={profileData} />
           <Separator className="my-6" />
           <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
             <aside className="-mx-4 lg:w-1/6">

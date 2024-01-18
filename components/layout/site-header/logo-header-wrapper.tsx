@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Session } from "@supabase/auth-helpers-nextjs"
 
-import UserAvatar from "@/components/auth/avatar/auth-avatar"
+import UserAvatar from "@/components/auth/avatar/user-avatar"
 import { Icons } from "@/components/icons/icons"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
