@@ -15,7 +15,7 @@ interface UserAvatarProps {
 }
 
 const UserAvatar = ({ session, className }: UserAvatarProps) => {
-  const { avatarUrl, fullname } = useUserProfile(session?.user ?? null)
+  const { avatarUrl } = useUserProfile(session?.user ?? null)
 
   const OpenModal = useAuthModal((state) => state.OpenModal)
 
@@ -35,8 +35,7 @@ const UserAvatar = ({ session, className }: UserAvatarProps) => {
             loading="eager"
           />
           <AvatarFallback>
-            {fullname?.substring(0, 2).toUpperCase() ||
-              session.user?.email?.substring(0, 2).toUpperCase()}
+            <span>{session.user?.email?.substring(0, 2).toUpperCase()}</span>
           </AvatarFallback>
         </>
       ) : (
