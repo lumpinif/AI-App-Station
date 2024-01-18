@@ -1,13 +1,15 @@
 import { Separator } from "@/components/ui/separator"
 import { AccountForm } from "@/components/auth/settings/account/account-form"
 
-import { getUserData } from "../../auth-actions"
+import { getUserData, getUserProfile } from "../../auth-actions"
 import AccountFormSupabase from "./account-form"
 
 export default async function SettingsAccountPage() {
   const {
     data: { user },
   } = await getUserData()
+
+  const { data: profileData } = await getUserProfile(user)
 
   return (
     <div className="space-y-6">
@@ -19,7 +21,7 @@ export default async function SettingsAccountPage() {
         </p>
       </div>
       <Separator />
-      <AccountForm user={user} />
+      <AccountForm user={user} profile={profileData} />
       <AccountFormSupabase user={user} />
     </div>
   )

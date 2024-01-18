@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { Database } from "@/types/supabase"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -27,6 +28,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+
+type Profiles = Database["public"]["Tables"]["profiles"]["Row"]
 
 // const languages = [
 //   { label: "English", value: "en" },
@@ -68,8 +71,12 @@ const defaultValues: Partial<AccountFormValues> = {
   // name: "Your name",
   // dob: new Date("2023-01-23"),
 }
+interface AccountFormProps {
+  user: User | null
+  profile: Profiles | null
+}
 
-export function AccountForm({ user }: { user: User | null }) {
+export function AccountForm({ user, profile }: AccountFormProps) {
   const supabase = createSupabaseBrowserClient()
 
   const form = useForm<AccountFormValues>({
