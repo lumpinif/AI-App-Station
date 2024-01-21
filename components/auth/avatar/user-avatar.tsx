@@ -5,6 +5,7 @@ import { Session } from "@supabase/auth-helpers-nextjs"
 import { cn } from "@/lib/utils"
 import useAuthModal from "@/hooks/use-auth-modal-store"
 import { useUserProfile } from "@/hooks/use-user-profile"
+import { Skeleton } from "@/components/ui/skeleton"
 
 import { Icons } from "../../icons/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar"
@@ -15,9 +16,20 @@ interface UserAvatarProps {
 }
 
 const UserAvatar = ({ session, className }: UserAvatarProps) => {
-  const { avatarUrl } = useUserProfile(session?.user ?? null)
-
   const OpenModal = useAuthModal((state) => state.OpenModal)
+  const { avatarUrl, loading } = useUserProfile(session?.user ?? null)
+
+  if (loading)
+    return (
+      <Avatar
+        className={cn(
+          "flex cursor-pointer items-center justify-center outline-none",
+          className
+        )}
+      >
+        <Skeleton className="h-full w-full rounded-full" />
+      </Avatar>
+    )
 
   return (
     <Avatar

@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/provider/theme-provider"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
+import { Suspense } from "react"
 import { Metadata, Viewport } from "next"
 import { GeistSans } from "geist/font/sans"
 
@@ -95,7 +96,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           >
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
-                <AuthModal session={session} />
+                <Suspense>
+                  <AuthModal session={session} />
+                </Suspense>
                 <main className="flex-1">{children}</main>
               </div>
             </div>

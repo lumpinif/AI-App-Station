@@ -1,5 +1,4 @@
 import { Layers, LayoutTemplate, Search, Youtube } from "lucide-react"
-import { RiOpenaiFill } from "react-icons/ri"
 
 export const mainroutes: {
   id: string
@@ -34,10 +33,10 @@ export const mainroutes: {
   //   icon: <RiOpenaiFill size={24} />,
   // },
   {
-    id: "reels",
-    href: "/reels",
-    label: "Reels",
-    title: "Reels",
+    id: "discorver",
+    href: "/discorver",
+    label: "Discover",
+    title: "Discover",
     discription:
       "Check out all the most powerful AI Apps by scrolling reels just like TikTok",
     icon: <Youtube width={18} />,

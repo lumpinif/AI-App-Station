@@ -1,6 +1,7 @@
+import UserAvatar from "@/components/auth/avatar/user-avatar"
 import { getUserSession } from "@/app/(auth)/auth-actions"
 
-import { ResponsiveNav } from "./responsive-nav"
+import MainNav from "./main-nav"
 
 export async function SiteHeader() {
   const {
@@ -9,7 +10,9 @@ export async function SiteHeader() {
 
   return (
     <>
-      <ResponsiveNav session={session} />
+      <MainNav>
+        <UserAvatar session={session} />
+      </MainNav>
     </>
   )
 }

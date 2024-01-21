@@ -5,7 +5,6 @@ import Link from "next/link"
 
 import { mainroutes } from "@/config/routes"
 import { cn } from "@/lib/utils"
-import { useScrollAndHideNav } from "@/hooks/use-scroll"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -68,6 +67,7 @@ export function NavigationMenuBar() {
             </Link>
           </NavigationMenuItem>
         ))}
+
         <NavigationMenuItem className="rounded-full">
           <DirectThemeToggle />
         </NavigationMenuItem>
