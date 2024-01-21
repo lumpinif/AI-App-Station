@@ -1,5 +1,3 @@
-import { SiteHeader } from "@/components/layout/site-header/site-header"
-
 export const metadata = {
   title: "Today's AI Page | Today's AI Page",
   description: "Today's AI Page | Today's AI Page",
@@ -12,7 +10,6 @@ interface TodayPageLayoutProps {
 export default function TodayPageLayout({ children }: TodayPageLayoutProps) {
   return (
     <>
-      <SiteHeader />
       <section className="contianer grid items-center gap-6 px-4 pb-8 sm:pt-6 md:py-10 ">
         {children}
       </section>

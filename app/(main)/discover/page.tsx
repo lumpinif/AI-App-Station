@@ -1,7 +1,7 @@
 import React from "react"
 
 const ReelsPage = () => {
-  return <div>ReelsPage</div>
+  return <div>Discover Page</div>
 }
 
 export default ReelsPage

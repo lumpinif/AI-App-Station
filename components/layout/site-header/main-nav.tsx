@@ -24,7 +24,7 @@ const MainNav = ({ children }: LogoHeaderWrapperProps) => {
           </Link>
           <Link
             href="/"
-            className="font-semibold sm:hidden md:text-lg lg:flex "
+            className="md:text text-nowrap font-semibold sm:hidden lg:flex"
           >
             AI App Station
           </Link>

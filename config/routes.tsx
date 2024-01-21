@@ -33,8 +33,8 @@ export const mainroutes: {
   //   icon: <RiOpenaiFill size={24} />,
   // },
   {
-    id: "discorver",
-    href: "/discorver",
+    id: "discover",
+    href: "/discover",
     label: "Discover",
     title: "Discover",
     discription:

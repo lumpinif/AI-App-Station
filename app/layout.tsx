@@ -9,10 +9,8 @@ import { GeistSans } from "geist/font/sans"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
-import AuthModal from "@/components/auth/avatar/auth-modal"
+import { SiteHeader } from "@/components/layout/site-header/site-header"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
-
-import { getUserSession } from "./(auth)/auth-actions"
 
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"), // Set the base URL here
@@ -74,10 +72,6 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const {
-    data: { session },
-  } = await getUserSession()
-
   return (
     <>
       <html lang="en" suppressHydrationWarning>
@@ -97,7 +91,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
                 <Suspense>
-                  <AuthModal session={session} />
+                  <SiteHeader />
                 </Suspense>
                 <main className="flex-1">{children}</main>
               </div>
