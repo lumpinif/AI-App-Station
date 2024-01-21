@@ -148,6 +148,7 @@ export const Icons = {
       stroke-linecap="round"
       stroke-linejoin="round"
       className="lucide lucide-chevron-left"
+      {...props}
     >
       <path d="m15 18-6-6 6-6" />
     </svg>
@@ -164,6 +165,7 @@ export const Icons = {
       stroke-linecap="round"
       stroke-linejoin="round"
       className="lucide lucide-chevron-right"
+      {...props}
     >
       <path d="m9 18 6-6-6-6" />
     </svg>

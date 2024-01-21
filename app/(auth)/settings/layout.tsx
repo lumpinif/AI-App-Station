@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator"
 import UserAvatar from "@/components/auth/avatar/user-avatar"
 import { SidebarNav } from "@/components/auth/settings/layout/sidebar-nav"
 import UserNameEmail from "@/components/auth/settings/layout/user-name-email"
+import BackButton from "@/components/shared/back-button"
 
 import { getUserData, getUserProfile, getUserSession } from "../auth-actions"
 import Loading from "./loading"
@@ -49,8 +50,11 @@ export default async function SettingsLayout({
 
   return (
     <>
-      <div className="mb-10 sm:container">
-        <div className="w-full rounded-3xl p-10 pb-16 dark:shadow-outline sm:mx-4">
+      <header className="flex w-full items-center p-4 sm:px-8">
+        <BackButton href="/" className=" dark:shadow-outline" />
+      </header>
+      <div className="flex flex-col items-center justify-center px-4 sm:container">
+        <div className="w-full rounded-3xl p-10 pb-16 dark:shadow-outline">
           <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
             <UserAvatar
               session={session}

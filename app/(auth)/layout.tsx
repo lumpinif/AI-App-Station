@@ -1,8 +1,6 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
 
-import AuthPageHeader from "@/components/auth/auth-page-header"
-
 export const metadata: Metadata = {
   title: "Sign In to OpenmindAI Apps and News Station",
   description:
@@ -16,10 +14,7 @@ interface SignInLayoutProps {
 export default async function AuthLayout({ children }: SignInLayoutProps) {
   return (
     <>
-      <AuthPageHeader />
-      <div className="absolute flex min-h-dvh min-w-full">
-        <div className="mx-auto flex w-full px-4">{children}</div>
-      </div>
+      <div className="min-h-dvh">{children}</div>
     </>
   )
 }
