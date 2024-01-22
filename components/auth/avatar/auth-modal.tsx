@@ -3,7 +3,6 @@
 import { Session } from "@supabase/auth-helpers-nextjs"
 
 import useAuthModal from "@/hooks/use-auth-modal-store"
-import Modal from "@/components/shared/modal"
 
 import LoginCard from "../signin/login-card"
 import UserCard from "./user-card"
