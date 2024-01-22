@@ -144,6 +144,11 @@
   .all-[unset] {
     all: unset;
   }
+
+  /*  */
+  .link-card {
+    @apply -mx-1.5 -my-1 rounded bg-transparent px-1.5 py-1 transition-colors duration-300 hover:bg-muted;
+  }
 }
 
 @media (max-width: 640px) {

@@ -6,7 +6,7 @@ import {
   Search,
   Square,
   Youtube,
-  type Icon as LucideIcon,
+  type LucideIcon,
 } from "lucide-react"
 import { FaUserAlt } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6"
