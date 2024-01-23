@@ -1,6 +1,9 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
+import { Button } from "@/components/ui/button"
 import LoginCard from "@/components/auth/signin/login-card"
+import { Icons } from "@/components/icons/icons"
 import BackButton from "@/components/shared/back-button"
 
 import { getUserSession } from "../auth-actions"
@@ -19,6 +22,7 @@ const SignInPage = async () => {
           href="/"
           className="absolute left-4 top-4 dark:shadow-outline md:left-8 md:top-8"
         />
+
         <LoginCard className=" dark:shadow-outline" />
       </div>
     </>
