@@ -6,11 +6,7 @@ import { SideMenu } from "@/components/layout/side-menu/side-menu"
 export default function AiAppsPage() {
   return (
     <>
-      <SideMenu title="AI Apps" href="/writing" isInner>
-        <Suspense fallback={<LoadingSpinner />}>
-          {/* <WritingListLayout list={sortedPosts} /> */}
-        </Suspense>
-      </SideMenu>
+      <div>AI apps page</div>
     </>
   )
 }

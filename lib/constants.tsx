@@ -72,3 +72,5 @@ export const PROFILES: Record<string, Profile> = {
     url: "https://nl.pinterest.com/onurschu",
   },
 }
+
+export const SCROLL_AREA_ID = "scroll-area"

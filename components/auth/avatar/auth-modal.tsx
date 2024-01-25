@@ -8,7 +8,7 @@ import Modal from "@/components/shared/modal"
 import LoginCard from "../signin/login-card"
 import UserCard from "./user-card"
 
-const AuthModal = ({ session }: { session: Session | null }) => {
+const AuthModalProvider = ({ session }: { session: Session | null }) => {
   const isOpen = useAuthModal((state) => state.isOpen)
   const CloseModal = useAuthModal((state) => state.CloseModal)
 
@@ -30,4 +30,4 @@ const AuthModal = ({ session }: { session: Session | null }) => {
   )
 }
 
-export default AuthModal
+export default AuthModalProvider

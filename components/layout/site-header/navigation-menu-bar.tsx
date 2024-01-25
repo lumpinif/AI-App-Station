@@ -20,7 +20,7 @@ import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
 export function NavigationMenuBar() {
   return (
     <NavigationMenu>
-      <NavigationMenuList className="glass-card-background mx-4 h-14 rounded-full p-2 bg-blend-luminosity  backdrop-blur-[100px] transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
+      <NavigationMenuList className="glass-card-background mx-4 h-14 rounded-full p-2 bg-blend-luminosity transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
         <NavigationMenuItem className="rounded-full">
           <NavigationMenuTrigger className="bg-transparent">
             Getting started

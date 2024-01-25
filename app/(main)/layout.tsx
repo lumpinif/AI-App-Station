@@ -1,5 +1,8 @@
+import Image from "next/image"
+import Link from "next/link"
+
 import { SideMenu } from "@/components/layout/side-menu/side-menu"
-import { SideMenuRoutes } from "@/components/layout/side-menu/side-menu-routes"
+import { SideMenuContent } from "@/components/layout/side-menu/side-menu-content"
 
 interface MainAppLayout {
   children: React.ReactNode
@@ -7,11 +10,11 @@ interface MainAppLayout {
 
 const MainAppLayout = ({ children }: MainAppLayout) => {
   return (
-    <div className="h-screen lg:flex">
-      <SideMenu className="relative hidden lg:flex">
-        <SideMenuRoutes />
+    <div className="lg:flex">
+      <SideMenu className="relative">
+        <SideMenuContent />
       </SideMenu>
-      <div className="flex flex-1">{children}</div>
+      <main className="flex flex-1">{children}</main>
     </div>
   )
 }

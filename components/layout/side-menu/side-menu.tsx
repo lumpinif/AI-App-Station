@@ -1,13 +1,12 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { RadioIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/shared/scroll-area"
 
 type SideMenuProps = {
   children: React.ReactNode
@@ -35,17 +34,13 @@ export const SideMenu = ({
     event.preventDefault()
 
     if (event.code === "Digit1") {
-      // router.push("/")
-      console.log("keypressed Digit1")
+      router.push("/today")
     } else if (event.code === "Digit2") {
-      // router.push("/writing")
-      console.log("keypressed Digit2")
+      router.push("/ai-apps")
     } else if (event.code === "Digit3") {
-      // router.push("/journey")
-      console.log("keypressed Digit3")
+      router.push("/discover")
     } else if (event.code === "Digit4") {
-      // router.push("/stack")
-      console.log("keypressed Digit4")
+      router.push("/search")
     } else if (event.code === "Digit5") {
       // router.push("/workspace")
       console.log("keypressed Digit5")
@@ -55,42 +50,26 @@ export const SideMenu = ({
     }
   }
 
-  const isWritingHref = href === "/writing"
-  const isBookmarksHref = href === "/bookmarks"
-
   return (
-    <ScrollArea
-      className={cn(
-        "hidden bg-muted lg:flex lg:flex-col",
-        isInner ? "lg:w-80 xl:w-96" : "lg:w-48 xl:w-60",
-        className
-      )}
-    >
-      {title && (
-        <div className="glass-card-background sticky top-0 z-10 border-b px-5 py-3">
-          <div className="flex items-center justify-between">
-            <div className="text-sm font-semibold tracking-tight">
-              {href ? <Link href={href}>{title}</Link> : <span>{title}</span>}
+    <>
+      <ScrollArea
+        className={cn(
+          "hidden transition-all duration-200 ease-in lg:flex lg:flex-col",
+          className,
+          isInner ? "lg:w-48 xl:w-52" : "lg:w-48 xl:w-52"
+        )}
+      >
+        {title && (
+          <div className="sticky top-0 z-10 px-5 py-3">
+            <div className="flex items-center justify-between">
+              <div className="text-sm font-semibold tracking-tight">
+                {href ? <Link href={href}>{title}</Link> : <span>{title}</span>}
+              </div>
             </div>
-            {(isWritingHref || isBookmarksHref) && (
-              <Button variant="outline" size="icon" asChild>
-                <Link
-                  href={isWritingHref ? "/writing.xml" : "/bookmarks.xml"}
-                  title="RSS feed"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <RadioIcon size={16} className="mr-2" />
-                  RSS feed
-                </Link>
-              </Button>
-            )}
           </div>
-        </div>
-      )}
-      <div className="glass-card-background w-full rounded-3xl border p-3 bg-blend-luminosity  backdrop-blur-[100px] transition-all duration-500 ease-in-out hover:opacity-100 dark:border-none dark:shadow-outline">
-        {children}
-      </div>
-    </ScrollArea>
+        )}
+        <div className="flex flex-1 p-3">{children}</div>
+      </ScrollArea>
+    </>
   )
 }

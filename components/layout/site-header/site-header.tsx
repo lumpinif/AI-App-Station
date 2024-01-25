@@ -1,4 +1,3 @@
-import AuthModal from "@/components/auth/avatar/auth-modal"
 import UserAvatar from "@/components/auth/avatar/user-avatar"
 import { getUserSession } from "@/app/(auth)/auth-actions"
 
@@ -11,7 +10,6 @@ export async function SiteHeader() {
 
   return (
     <>
-      <AuthModal session={session} />
       <MainNav>
         <UserAvatar session={session} />
       </MainNav>
