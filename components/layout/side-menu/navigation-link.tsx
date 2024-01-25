@@ -3,14 +3,14 @@
 import { memo } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ArrowUpRightIcon, AtSignIcon } from "lucide-react"
+import { ArrowUpRightIcon, AtSignIcon, LucideIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
 interface NavigationLinkProps {
   href: string
   label: string
-  icon?: React.ReactNode
+  icon?: JSX.Element
   shortcutNumber?: number
 }
 

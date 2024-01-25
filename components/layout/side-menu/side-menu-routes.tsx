@@ -1,12 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
+import { Compass, Layout } from "lucide-react"
 
-import { LINKS, PROFILES } from "@/lib/constants"
+import { MAINROUTES } from "@/config/routes"
+import { PROFILES } from "@/lib/constants"
 import { Separator } from "@/components/ui/separator"
 
 import { NavigationLink } from "./navigation-link"
 
-export const MenuContent = () => {
+export const SideMenuRoutes = () => {
   return (
     <div className="flex w-full flex-col text-sm">
       <div className="flex flex-col gap-4">
@@ -25,12 +27,12 @@ export const MenuContent = () => {
           </div>
         </Link>
         <div className="flex flex-col gap-1">
-          {LINKS.map((link, linkIndex) => (
+          {MAINROUTES.map((route, linkIndex) => (
             <NavigationLink
-              key={link.href}
-              href={link.href}
-              label={link.label}
-              icon={link.icon}
+              key={route.href}
+              href={route.href}
+              label={route.label}
+              icon={route.icon}
               shortcutNumber={linkIndex + 1}
             />
           ))}

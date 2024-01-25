@@ -1,10 +1,10 @@
 import { Suspense } from "react"
 
-import HeroSection from "@/components/home/HeroSection"
+import HeroSection from "@/components/landing/HeroSection"
 import { LoadingSpinner } from "@/components/layout/loading-spinner"
 import { SiteFooter } from "@/components/layout/site-footer/site-footer"
 
-export default function IntroductionPage() {
+export default function LandingPage() {
   return (
     <>
       <div className="h-[2000px]">

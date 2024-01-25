@@ -90,9 +90,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           >
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
-                <Suspense>
-                  <SiteHeader />
-                </Suspense>
                 <main className="flex-1">{children}</main>
               </div>
             </div>

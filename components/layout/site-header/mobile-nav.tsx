@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import classNames from "classnames"
 
-import { mainroutes } from "@/config/routes"
+import { MAINROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import { useScrollAndHideNav } from "@/hooks/use-scroll"
 
@@ -13,7 +13,7 @@ const MobileNav = () => {
 
   return (
     <BottomNavigationBar
-      routes={mainroutes}
+      routes={MAINROUTES}
       className={`${scrolled ? "translate-y-[80%] opacity-30" : ``} ${
         !hideNavOnScroll ? `translate-y-0 opacity-100` : ``
       }`}

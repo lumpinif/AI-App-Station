@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 
-import { mainroutes } from "@/config/routes"
+import { MAINROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
@@ -58,7 +58,7 @@ export function NavigationMenuBar() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {mainroutes.map((route) => (
+        {MAINROUTES.map((route) => (
           <NavigationMenuItem key={route.id}>
             <Link href={route.href} legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>

@@ -1,13 +1,15 @@
 import { Layers, LayoutTemplate, Search, Youtube } from "lucide-react"
 
-export const mainroutes: {
+export type MAINROUTESProps = {
   id: string
-  label: string
   href: string
+  label: string
   title: string
   discription: string
   icon: JSX.Element
-}[] = [
+}[]
+
+export const MAINROUTES: MAINROUTESProps = [
   {
     id: "today",
     href: "/today",

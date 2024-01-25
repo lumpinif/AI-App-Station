@@ -3,12 +3,17 @@ import {
   BookmarkIcon,
   GithubIcon,
   InstagramIcon,
+  Layers,
+  LayoutTemplate,
   LinkedinIcon,
+  LucideIcon,
   NavigationIcon,
   PencilLineIcon,
+  Search,
   SparklesIcon,
   TwitterIcon,
   Wand2Icon,
+  Youtube,
   YoutubeIcon,
 } from "lucide-react"
 
@@ -16,13 +21,7 @@ interface Profile {
   title: string
   username?: string
   url: string
-  icon?: React.ReactNode // Icon is optional
-}
-
-interface Link {
-  href: string
-  label: string
-  icon: React.ReactNode
+  icon?: JSX.Element // Icon is optional
 }
 
 export const PROFILES: Record<string, Profile> = {
@@ -73,36 +72,3 @@ export const PROFILES: Record<string, Profile> = {
     url: "https://nl.pinterest.com/onurschu",
   },
 }
-
-export const LINKS: Link[] = [
-  {
-    href: "/",
-    label: "Home",
-    icon: <SparklesIcon size={16} />,
-  },
-  {
-    href: "/writing",
-    label: "Writing",
-    icon: <PencilLineIcon size={16} />,
-  },
-  {
-    href: "/journey",
-    label: "Journey",
-    icon: <NavigationIcon size={16} />,
-  },
-  {
-    href: "/stack",
-    label: "Stack",
-    icon: <Wand2Icon size={16} />,
-  },
-  {
-    href: "/workspace",
-    label: "Workspace",
-    icon: <ArmchairIcon size={16} />,
-  },
-  {
-    href: "/bookmarks",
-    label: "Bookmarks",
-    icon: <BookmarkIcon size={16} />,
-  },
-]
