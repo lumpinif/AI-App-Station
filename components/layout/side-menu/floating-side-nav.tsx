@@ -7,14 +7,14 @@ import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import useSearchDialog from "@/hooks/use-search-dialog-store"
 import useSideNav from "@/hooks/use-side-nav-store"
-import { FloatingSideNavContent } from "@/components/ai-apps/floating-side-nav-content"
+import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../ui/tooltip"
+} from "../../ui/tooltip"
 
 const buttonClassBase =
   "flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-300 ease-in hover:cursor-pointer hover:bg-foreground/30 hover:text-foreground"
@@ -29,7 +29,7 @@ const FloatingSideNav: React.FC = () => {
 
   return (
     <TooltipProvider>
-      <div className="mx-16">
+      <div className="">
         <div className={sideNavClass}>
           <SideNavToggle isOpen={isOpen} />
           <SearchTrigger isOpen={isOpen} />

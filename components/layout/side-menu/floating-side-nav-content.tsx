@@ -10,13 +10,8 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip"
+} from "../../ui/collapsible"
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip"
 
 type FloatingSideNavContentProps = {
   items: SIDENAVROUTESProps
@@ -33,7 +28,7 @@ export const FloatingSideNavContent: React.FC<FloatingSideNavContentProps> =
         {items.map((item, index) => (
           <div
             key={index}
-            className="relative flex items-center justify-start"
+            className="relative flex items-center justify-start transition-all duration-200 ease-linear"
             onClick={OpenSideNav}
           >
             <FloatingSideNavCollapsible item={item} isOpen={isOpen}>
@@ -126,7 +121,7 @@ type FloatingSideNavCollapsibleProps = {
 
 const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
   memo(({ children, item, isOpen }) => {
-    const [isCollapsible, setIsCollapsible] = useState(false)
+    const [isCollapsible, setIsCollapsible] = useState(true)
 
     return (
       <Tooltip delayDuration={0}>

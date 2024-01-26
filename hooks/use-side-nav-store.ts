@@ -8,7 +8,7 @@ type SideNavStore = {
 }
 
 const useSideNav = create<SideNavStore>((set) => ({
-  isOpen: false,
+  isOpen: true,
   OpenSideNav: () => set({ isOpen: true }),
   CloseSideNav: () => set({ isOpen: false }),
   ToggleSideNav: () => set((state) => ({ isOpen: !state.isOpen })),

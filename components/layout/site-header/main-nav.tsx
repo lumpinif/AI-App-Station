@@ -17,7 +17,7 @@ const MainNav = ({ children }: LogoHeaderWrapperProps) => {
   const { isMobile } = useMediaQuery()
   return (
     <header className="relative w-screen">
-      <div className="flex h-24 items-center justify-between space-x-4 px-8 sm:space-x-0">
+      <div className="z-50 flex h-24 items-center justify-between space-x-4 px-8 sm:space-x-0">
         <div className="flex grow-0 items-center space-x-4 sm:w-24 md:flex">
           <Link href="/">
             <Icons.logo className="h-8 w-8 stroke-[1.5px]" />
