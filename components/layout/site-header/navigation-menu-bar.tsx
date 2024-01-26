@@ -15,6 +15,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons/icons"
+import { SearchCommandDialog } from "@/components/shared/search-command-dialog"
 import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
 
 export function NavigationMenuBar() {
@@ -60,11 +61,17 @@ export function NavigationMenuBar() {
 
         {MAINROUTES.map((route) => (
           <NavigationMenuItem key={route.id}>
-            <Link href={route.href} legacyBehavior passHref>
+            {route.href !== "/search" ? (
+              <Link href={route.href} legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  {route.title}
+                </NavigationMenuLink>
+              </Link>
+            ) : (
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                {route.title !== "Search" ? route.title : route.icon}
+                <SearchCommandDialog />
               </NavigationMenuLink>
-            </Link>
+            )}
           </NavigationMenuItem>
         ))}
 

@@ -94,12 +94,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
-            <main vaul-drawer-wrapper="">
+            <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
                 <AuthModalProvider session={session} />
-                <div className="flex-1">{children}</div>
+                <main className="flex-1">{children}</main>
               </div>
-            </main>
+            </div>
             <TailwindIndicator />
             <SonnerToaster richColors position="top-center" />
           </ThemeProvider>

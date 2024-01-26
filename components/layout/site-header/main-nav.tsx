@@ -17,7 +17,7 @@ const MainNav = ({ children }: LogoHeaderWrapperProps) => {
   const { isMobile } = useMediaQuery()
   return (
     <header className="relative w-screen">
-      <div className="flex h-24 items-center space-x-4 px-8 sm:justify-between sm:space-x-0">
+      <div className="flex h-24 items-center justify-between space-x-4 px-8 sm:space-x-0">
         <div className="flex grow-0 items-center space-x-4 sm:w-24 md:flex">
           <Link href="/">
             <Icons.logo className="h-8 w-8 stroke-[1.5px]" />
@@ -29,9 +29,6 @@ const MainNav = ({ children }: LogoHeaderWrapperProps) => {
             AI App Station
           </Link>
         </div>
-        <div className="flex grow items-center justify-center">
-          {isMobile ? <MobileNav /> : <FloatingNav />}
-        </div>
         <div className="flex w-24 grow-0 items-center justify-end space-x-0">
           <div className="mr-1 sm:hidden">
             <ThemeToggle />
@@ -39,6 +36,9 @@ const MainNav = ({ children }: LogoHeaderWrapperProps) => {
           {children}
         </div>
       </div>
+      <header className="flex items-center justify-center">
+        {isMobile ? <MobileNav /> : <FloatingNav />}
+      </header>
     </header>
   )
 }

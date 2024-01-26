@@ -6,11 +6,11 @@ import { getUserSession } from "@/app/(auth)/auth-actions"
 const TodayPage = async () => {
   return (
     <>
-      <ScrollArea>
-        <section className="contianer grid items-center gap-6 px-4 pb-8 sm:pt-6 md:py-10 ">
-          <BentoGridSecondDemo />
-        </section>
-      </ScrollArea>
+      {/* <ScrollArea> */}
+      <section className="contianer grid items-center gap-6 px-4 pb-8 sm:pt-6 md:py-10 ">
+        <BentoGridSecondDemo />
+      </section>
+      {/* </ScrollArea> */}
     </>
   )
 }

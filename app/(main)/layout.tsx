@@ -1,8 +1,6 @@
-import Image from "next/image"
-import Link from "next/link"
+import { Suspense } from "react"
 
-import { SideMenu } from "@/components/layout/side-menu/side-menu"
-import { SideMenuContent } from "@/components/layout/side-menu/side-menu-content"
+import { SiteHeader } from "@/components/layout/site-header/site-header"
 
 interface MainAppLayout {
   children: React.ReactNode
@@ -10,12 +8,12 @@ interface MainAppLayout {
 
 const MainAppLayout = ({ children }: MainAppLayout) => {
   return (
-    <div className="lg:flex">
-      <SideMenu className="relative">
-        <SideMenuContent />
-      </SideMenu>
-      <main className="flex flex-1">{children}</main>
-    </div>
+    <>
+      <Suspense>
+        <SiteHeader />
+      </Suspense>
+      <main>{children}</main>
+    </>
   )
 }
 
