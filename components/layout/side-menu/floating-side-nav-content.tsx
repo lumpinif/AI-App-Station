@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react"
+import React, { memo, useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -21,7 +21,12 @@ type FloatingSideNavContentProps = {
 export const FloatingSideNavContent: React.FC<FloatingSideNavContentProps> =
   memo(({ items, isOpen }) => {
     const OpenSideNav = useSideNav((state) => state.OpenSideNav)
+    const CloseSideNav = useSideNav((state) => state.CloseSideNav)
     const pathname = usePathname()
+
+    useEffect(() => {
+      CloseSideNav()
+    }, [pathname, CloseSideNav])
 
     return (
       <div className="w-full">
@@ -64,7 +69,7 @@ export const FloatingSideNavCollapsibleContent: React.FC<FloatingSideNavCollapsi
               href={item.href}
               key={index}
               className={cn(
-                "flex w-full items-center rounded-md border border-transparent px-2 py-1 hover:underline",
+                "flex w-full items-center rounded-md px-2 py-1 hover:text-foreground/80 hover:underline dark:hover:bg-background/50 dark:hover:no-underline dark:hover:shadow-outline",
                 item.disabled && "cursor-not-allowed opacity-60",
                 pathname === item.href
                   ? "font-medium text-foreground"
@@ -97,21 +102,33 @@ type ItemContentProps = {
   isOpen?: boolean
 }
 
-const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => (
-  <>
-    <div className="flex items-center gap-2">
-      <div className="flex h-5 w-5 items-center group-hover:text-foreground">
-        {item.icon}
+const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => {
+  return (
+    <>
+      <div className="flex w-full items-center justify-between gap-4 text-nowrap">
+        <div className="flex items-center gap-2">
+          {item.icon && (
+            <div className="flex h-5 w-5 items-center group-hover:text-foreground">
+              {item.icon}
+            </div>
+          )}
+          {isOpen && <div>{item.title}</div>}
+        </div>
+
+        {item.shortcutNumber && isOpen && (
+          <kbd className="pointer-events-none flex h-5 w-5 select-none items-center justify-center rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/30">
+            <span className="text-xs">{item.shortcutNumber}</span>
+          </kbd>
+        )}
       </div>
-      {isOpen && <div>{item.title}</div>}
-    </div>
-    {item.label && isOpen && (
-      <span className="ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-black no-underline group-hover:no-underline">
-        {item.label}
-      </span>
-    )}
-  </>
-)
+      {item.label && isOpen && (
+        <span className="ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-black no-underline group-hover:no-underline">
+          {item.label}
+        </span>
+      )}
+    </>
+  )
+}
 
 type FloatingSideNavCollapsibleProps = {
   children: React.ReactNode
@@ -140,9 +157,12 @@ const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
               </TooltipTrigger>
             </CollapsibleTrigger>
             {isOpen ? (
-              <h1 className="pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm font-medium text-foreground">
+              <Link
+                href={`${item.href}` || "/"}
+                className="absolute right-4 origin-left select-none text-nowrap text-sm font-medium text-foreground hover:cursor-pointer hover:text-foreground/80"
+              >
                 {item.title}
-              </h1>
+              </Link>
             ) : (
               <TooltipContent
                 side="right"

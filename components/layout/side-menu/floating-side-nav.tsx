@@ -1,10 +1,12 @@
 "use client"
 
 import React, { useCallback, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { ArrowLeftFromLine, ArrowRightFromLine, Search } from "lucide-react"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
+import { useKeyPress } from "@/hooks/use-key-press"
 import useSearchDialog from "@/hooks/use-search-dialog-store"
 import useSideNav from "@/hooks/use-side-nav-store"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
@@ -21,6 +23,39 @@ const buttonClassBase =
 
 const FloatingSideNav: React.FC = () => {
   const isOpen = useSideNav((state) => state.isOpen)
+  const router = useRouter()
+
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (isOpen) {
+      switch (event.code) {
+        case "Digit1":
+          router.push("/ai-apps/create")
+          break
+        case "Digit2":
+          router.push("/ai-apps/discovery")
+          break
+        case "Digit3":
+          router.push("/ai-apps/develop")
+          break
+        case "Digit4":
+          router.push("/ai-apps/design")
+          break
+        case "Digit5":
+          router.push("/ai-apps/gpts")
+          break
+        case "Digit6":
+          router.push("/ai-apps/work")
+          break
+        default:
+          break
+      }
+    }
+  }
+
+  useKeyPress({
+    callback: handleKeyPress,
+    keyCodes: ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6"],
+  })
 
   const sideNavClass = cn(
     "dark:glass-card-background relative inline-flex flex-col gap-2.5 p-2.5 backdrop-blur-lg transition-all duration-300 ease-in dark:shadow-outline dark:backdrop-blur-sm",
@@ -73,9 +108,12 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
         {!isOpen && (
           <TooltipContent
             side="right"
-            className="flex items-center gap-4 dark:bg-foreground dark:text-background"
+            className="flex items-center gap-2 dark:bg-foreground dark:text-background"
           >
             Open
+            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
+              <span className="text-xs">⌘</span>space
+            </kbd>
           </TooltipContent>
         )}
         <h1
@@ -118,9 +156,12 @@ const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
         {!isOpen && (
           <TooltipContent
             side="right"
-            className="flex items-center gap-4 dark:bg-foreground dark:text-background"
+            className="flex items-center gap-2 dark:bg-foreground dark:text-background"
           >
             Search
+            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
+              <span className="text-xs">⌘</span>K
+            </kbd>
           </TooltipContent>
         )}
         <h1

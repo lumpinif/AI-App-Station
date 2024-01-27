@@ -11,6 +11,7 @@ import {
   Tags,
   Youtube,
 } from "lucide-react"
+import { RiOpenaiFill } from "react-icons/ri"
 
 export type MAINROUTESProps = {
   id: string
@@ -28,11 +29,13 @@ export type SideNavItemProps = {
   label?: string
   disabled?: boolean
   icon?: JSX.Element
+  shortcutNumber?: number
 }
 
 export type SIDENAVROUTESProps = {
   title: string
   icon?: JSX.Element
+  href?: string
   items: SideNavItemProps[]
 }[]
 
@@ -81,45 +84,61 @@ export const MAINROUTES: MAINROUTESProps = [
 ]
 
 export const SIDENAVROUTES: SIDENAVROUTESProps = [
+  // ***** IMPORTANT FOR UPDATING href AND shortcutNumber *****//
+  // REMEMBER TO MANUELLY UPDATE THE FLOAITNG SIDE NAV COMPONENT CONFIG FOR THE ROUTES//
   {
     title: "Collections",
+    href: "/ai-apps/collections",
     icon: <Library />,
     items: [
-      {
-        title: "Discovery",
-        href: "/ai-apps/discovery",
-        items: [],
-        label: "New",
-        icon: <Sparkles />,
-      },
       {
         title: "Create",
         href: "/ai-apps/create",
         items: [],
-        icon: <Paintbrush2 />,
+        icon: <Paintbrush2 width={"20"} />,
+        shortcutNumber: 1,
       },
       {
-        title: "Work",
-        href: "/ai-apps/work",
+        title: "Discovery",
+        href: "/ai-apps/discovery",
         items: [],
-        icon: <Briefcase />,
+        // label: "New",
+        icon: <Sparkles width={"20"} />,
+        shortcutNumber: 2,
       },
       {
         title: "Develop",
         href: "/ai-apps/develop",
         items: [],
-        icon: <Hammer />,
+        icon: <Hammer width={"20"} />,
+        shortcutNumber: 3,
       },
       {
         title: "Design",
         href: "/ai-apps/design",
         items: [],
-        icon: <PencilRuler />,
+        icon: <PencilRuler width={"18"} />,
+        shortcutNumber: 4,
+      },
+      {
+        title: "GPTs",
+        href: "/ai-apps/gpts",
+        items: [],
+        icon: <RiOpenaiFill size={"24"} />,
+        shortcutNumber: 5,
+      },
+      {
+        title: "Work",
+        href: "/ai-apps/work",
+        items: [],
+        icon: <Briefcase width={"20"} />,
+        shortcutNumber: 6,
       },
     ],
   },
   {
     title: "Categories",
+    href: "/ai-apps/categories",
     icon: <Tags />,
     items: [
       {
