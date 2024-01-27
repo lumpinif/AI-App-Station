@@ -133,7 +133,7 @@ const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
           <div className="flex items-center">
             <CollapsibleTrigger asChild>
               <TooltipTrigger asChild>
-                <button className="flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-300 ease-in hover:cursor-pointer hover:bg-foreground/30 hover:text-foreground">
+                <button className="flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-300 ease-in hover:cursor-pointer hover:bg-foreground/10 hover:text-foreground">
                   {item.icon}
                   <span className="sr-only">{item.title}</span>
                 </button>

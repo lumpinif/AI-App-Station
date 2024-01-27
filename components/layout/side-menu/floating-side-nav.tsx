@@ -17,13 +17,13 @@ import {
 } from "../../ui/tooltip"
 
 const buttonClassBase =
-  "flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-300 ease-in hover:cursor-pointer hover:bg-foreground/30 hover:text-foreground"
+  "flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-300 ease-in hover:cursor-pointer hover:bg-foreground/10 hover:text-foreground"
 
 const FloatingSideNav: React.FC = () => {
   const isOpen = useSideNav((state) => state.isOpen)
 
   const sideNavClass = cn(
-    "glass-card-background relative inline-flex flex-col gap-2.5 p-2.5 transition-all duration-300 ease-in dark:shadow-outline",
+    "dark:glass-card-background relative inline-flex flex-col gap-2.5 p-2.5 backdrop-blur-lg transition-all duration-300 ease-in dark:shadow-outline dark:backdrop-blur-sm",
     isOpen ? "w-48 rounded-3xl" : "w-20 rounded-[2.5rem]"
   )
 
@@ -90,7 +90,7 @@ const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
     OpenSearchDialog()
   }, [isOpen, OpenSideNav, OpenSearchDialog])
 
-  const buttonClass = cn(buttonClassBase, isOpen && "text-foreground")
+  const buttonClass = cn(buttonClassBase)
 
   return (
     <Tooltip delayDuration={0}>
