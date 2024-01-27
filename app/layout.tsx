@@ -2,7 +2,6 @@ import { ThemeProvider } from "@/provider/theme-provider"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
-import { Suspense } from "react"
 import { Metadata, Viewport } from "next"
 import { GeistSans } from "geist/font/sans"
 
@@ -10,7 +9,6 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import AuthModalProvider from "@/components/auth/avatar/auth-modal"
-import { SiteHeader } from "@/components/layout/site-header/site-header"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 import { getUserSession } from "./(auth)/auth-actions"
