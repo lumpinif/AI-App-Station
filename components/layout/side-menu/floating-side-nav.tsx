@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback } from "react"
+import React, { useCallback, useEffect } from "react"
 import { ArrowLeftFromLine, ArrowRightFromLine, Search } from "lucide-react"
 
 import { SIDENAVROUTES } from "@/config/routes"
@@ -49,6 +49,19 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
 
   const buttonClass = cn(buttonClassBase, isOpen && "text-foreground")
 
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === " " && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        ToggleSideNav()
+      }
+    }
+
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Tooltip delayDuration={0}>
       <div className={cn("relative flex items-center justify-start")}>
@@ -70,7 +83,9 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
             !isOpen && "hidden scale-0"
           }`}
         >
-          AI Apps
+          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
+            <span className="text-xs">⌘</span>space
+          </kbd>
         </h1>
       </div>
     </Tooltip>
@@ -113,7 +128,7 @@ const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
             !isOpen && "hidden scale-0"
           }`}
         >
-          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
+          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
             <span className="text-xs">⌘</span>K
           </kbd>
         </h1>
