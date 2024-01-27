@@ -135,6 +135,10 @@
   .glass-card-background {
     @apply bg-[rgba(255,255,255,0.1)];
   }
+
+  .typing-effect {
+    transition: opacity 0.4s ease;
+  }
 }
 
 @layer components {

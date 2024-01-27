@@ -31,18 +31,13 @@ const HeroSection = () => {
 
       <div className="mt-3 flex min-w-[350px] items-center justify-center gap-4 text-center text-xl drop-shadow-sm sm:mt-20 lg:min-w-full">
         <Link href="/today">
-          <Button className="w-28 hover:shadow-inner-outline">
-            Get Started
-          </Button>
+          <Button className="w-28">Get Started</Button>
         </Link>
         <span className="flex text-xs text-muted-foreground sm:text-sm">
           or
         </span>
         <Link href="/signin" className="sm:flex">
-          <Button
-            className="w-28 hover:shadow-inner-outline"
-            variant={"outline"}
-          >
+          <Button className="w-28" variant={"outline"}>
             Sign In
           </Button>
         </Link>
