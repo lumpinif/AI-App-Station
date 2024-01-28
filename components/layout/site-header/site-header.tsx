@@ -1,5 +1,6 @@
+import { getUserSession } from "@/utils/supabase/actions/auth"
+
 import UserAvatar from "@/components/auth/avatar/user-avatar"
-import { getUserSession } from "@/app/(auth)/auth-actions"
 
 import MainNav from "./main-nav"
 

@@ -2,10 +2,9 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { signOut } from "@/utils/supabase/actions/auth"
 import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
-
-import { signOut } from "@/app/(auth)/auth-actions"
 
 import { Button } from "../../ui/button"
 

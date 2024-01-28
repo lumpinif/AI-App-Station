@@ -1,7 +1,10 @@
 import { Separator } from "@/components/ui/separator"
 import { AccountForm } from "@/components/auth/settings/account/account-form"
 
-import { getUserData, getUserProfile } from "../../auth-actions"
+import {
+  getUserData,
+  getUserProfile,
+} from "../../../../../utils/supabase/actions/auth"
 import AccountFormSupabase from "./account-form"
 
 export default async function SettingsAccountPage() {

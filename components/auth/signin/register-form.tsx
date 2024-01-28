@@ -1,6 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
+import { signUpWithEmailAndPassword } from "@/utils/supabase/actions/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
@@ -19,7 +20,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { signUpWithEmailAndPassword } from "@/app/(auth)/auth-actions"
 
 import { InputBorderSpotlight } from "../../shared/InputBorderSpotlight"
 

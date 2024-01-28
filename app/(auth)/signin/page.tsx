@@ -6,7 +6,7 @@ import LoginCard from "@/components/auth/signin/login-card"
 import { Icons } from "@/components/icons/icons"
 import BackButton from "@/components/shared/back-button"
 
-import { getUserSession } from "../auth-actions"
+import { getUserSession } from "../../../utils/supabase/actions/auth"
 
 const SignInPage = async () => {
   const { data } = await getUserSession()

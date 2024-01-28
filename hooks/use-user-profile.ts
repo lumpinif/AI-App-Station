@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
+import { getUserProfile } from "@/utils/supabase/actions/auth"
 import { User } from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
-
-import { getUserProfile } from "@/app/(auth)/auth-actions"
 
 // Function for fetching user profile
 const fetchUserProfile = async (user: User | null) => {

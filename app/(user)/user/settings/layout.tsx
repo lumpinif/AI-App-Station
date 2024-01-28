@@ -8,7 +8,11 @@ import { SidebarNav } from "@/components/auth/settings/layout/sidebar-nav"
 import UserNameEmail from "@/components/auth/settings/layout/user-name-email"
 import BackButton from "@/components/shared/back-button"
 
-import { getUserData, getUserProfile, getUserSession } from "../auth-actions"
+import {
+  getUserData,
+  getUserProfile,
+  getUserSession,
+} from "../../../../utils/supabase/actions/auth"
 import Loading from "./loading"
 
 export const metadata: Metadata = {

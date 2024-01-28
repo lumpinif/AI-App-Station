@@ -9,7 +9,7 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import SignOutButton from "@/components/auth/signout/sign-out-button"
 
-import { getUserProfile } from "../../auth-actions"
+import { getUserProfile } from "../../../../../utils/supabase/actions/auth"
 
 export default function AccountFormSupabase({ user }: { user: User | null }) {
   const supabase = createSupabaseBrowserClient()
