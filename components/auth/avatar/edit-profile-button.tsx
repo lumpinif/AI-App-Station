@@ -4,7 +4,7 @@ const EditProfileButton = () => {
   return (
     <>
       <Button>
-        <a href="/settings/profile">Edit Profile</a>
+        <a href="/user/settings/profile">Edit Profile</a>
       </Button>
     </>
   )
