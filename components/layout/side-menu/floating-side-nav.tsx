@@ -10,6 +10,7 @@ import { useKeyPress } from "@/hooks/use-key-press"
 import useSearchDialog from "@/hooks/use-search-dialog-store"
 import useSideNav from "@/hooks/use-side-nav-store"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
+import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 
 import {
   Tooltip,
@@ -76,7 +77,7 @@ const FloatingSideNav: React.FC = () => {
 }
 
 interface SideNavToggleProps {
-  isOpen: boolean
+  isOpen?: boolean
 }
 
 const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
@@ -118,7 +119,7 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
         )}
         <h1
           className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm font-medium text-foreground opacity-100 duration-300 ${
-            !isOpen && "hidden scale-0"
+            !isOpen && "scale-0"
           }`}
         >
           <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
@@ -132,51 +133,28 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
 
 SideNavToggle.displayName = "SideNavToggle"
 
-const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
-  const OpenSideNav = useSideNav((state) => state.OpenSideNav)
-  const OpenSearchDialog = useSearchDialog((state) => state.OpenSearchDialog)
+export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
+  ({ isOpen }) => {
+    const buttonClass = cn(buttonClassBase)
 
-  const handleClick = useCallback(() => {
-    if (!isOpen) {
-      OpenSideNav()
-    }
-    OpenSearchDialog()
-  }, [isOpen, OpenSideNav, OpenSearchDialog])
-
-  const buttonClass = cn(buttonClassBase)
-
-  return (
-    <Tooltip delayDuration={0}>
-      <div className={cn("relative flex items-center justify-start")}>
-        <TooltipTrigger asChild>
-          <button onClick={handleClick} className={buttonClass}>
-            <Search />
-          </button>
-        </TooltipTrigger>
-        {!isOpen && (
-          <TooltipContent
-            side="right"
-            className="flex items-center gap-2 dark:bg-foreground dark:text-background"
+    return (
+      <Tooltip delayDuration={0}>
+        <div className={cn("relative flex items-center justify-start")}>
+          <SearchDialogTrigger className={buttonClass} />
+          <h1
+            className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm font-medium text-foreground opacity-100 duration-300 ${
+              !isOpen && "scale-0"
+            }`}
           >
-            Search
             <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
               <span className="text-xs">⌘</span>K
             </kbd>
-          </TooltipContent>
-        )}
-        <h1
-          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm font-medium text-foreground opacity-100 duration-300 ${
-            !isOpen && "hidden scale-0"
-          }`}
-        >
-          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
-            <span className="text-xs">⌘</span>K
-          </kbd>
-        </h1>
-      </div>
-    </Tooltip>
-  )
-})
+          </h1>
+        </div>
+      </Tooltip>
+    )
+  }
+)
 
 SearchTrigger.displayName = "SearchTrigger"
 

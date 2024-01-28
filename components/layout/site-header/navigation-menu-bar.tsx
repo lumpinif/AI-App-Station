@@ -15,7 +15,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons/icons"
-import { SearchCommandDialog } from "@/components/shared/search-command-dialog"
+import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
 
 export function NavigationMenuBar() {
@@ -69,7 +69,7 @@ export function NavigationMenuBar() {
               </Link>
             ) : (
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                <SearchCommandDialog />
+                <SearchDialogTrigger className="rounded-full text-sm" />
               </NavigationMenuLink>
             )}
           </NavigationMenuItem>

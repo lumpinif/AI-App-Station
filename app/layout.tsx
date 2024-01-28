@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import AuthModalProvider from "@/components/auth/auth-modal/auth-modal-provider"
+import { SearchCommandDialogProvider } from "@/components/shared/search-command-dialog"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {
@@ -89,6 +90,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           >
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
+                {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
+                <SearchCommandDialogProvider />
                 <AuthModalProvider />
                 <main className="flex-1">{children}</main>
               </div>

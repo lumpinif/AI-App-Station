@@ -1,12 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import {
   Calculator,
   Calendar,
   CreditCard,
-  Search,
   Settings,
   Smile,
   User,
@@ -24,9 +23,8 @@ import {
   CommandShortcut,
 } from "@/components/ui/command"
 
-export function SearchCommandDialog() {
+export function SearchCommandDialogProvider() {
   const isOpen = useSearchDialog((state) => state.isOpen)
-  const OpenSearchDialog = useSearchDialog((state) => state.OpenSearchDialog)
   const ToggleSearchDialog = useSearchDialog(
     (state) => state.ToggleSearchDialog
   )
@@ -54,9 +52,6 @@ export function SearchCommandDialog() {
 
   return (
     <>
-      <button className="rounded-full text-sm" onClick={OpenSearchDialog}>
-        <Search />
-      </button>
       <CommandDialog open={isOpen} onOpenChange={ToggleSearchDialog}>
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
