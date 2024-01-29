@@ -19,17 +19,19 @@ const UserAvatar = ({ session, className }: UserAvatarProps) => {
   const OpenModal = useAuthModal((state) => state.OpenModal)
   const { avatarUrl, loading } = useUserProfile(session?.user ?? null)
 
-  if (loading)
-    return (
-      <Avatar
-        className={cn(
-          "flex cursor-pointer items-center justify-center outline-none",
-          className
-        )}
-      >
-        <Skeleton className="h-full w-full rounded-full" />
-      </Avatar>
-    )
+  // TODO: REFACTOR THE LOADING STATUS SKELETON / CHECK THE useUserProfile hook
+
+  // if (loading)
+  //   return (
+  //     <Avatar
+  //       className={cn(
+  //         "flex cursor-pointer items-center justify-center outline-none",
+  //         className
+  //       )}
+  //     >
+  //       <Skeleton className="h-full w-full rounded-full" />
+  //     </Avatar>
+  //   )
 
   return (
     <Avatar

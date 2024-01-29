@@ -1,14 +1,14 @@
 "use client"
 
-import React, { useCallback, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeftFromLine, ArrowRightFromLine, Search } from "lucide-react"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
-import useSearchDialog from "@/hooks/use-search-dialog-store"
 import useSideNav from "@/hooks/use-side-nav-store"
+import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 
@@ -68,8 +68,11 @@ const FloatingSideNav: React.FC = () => {
       <div className="">
         <div className={sideNavClass}>
           <SideNavToggle isOpen={isOpen} />
-          <SearchTrigger isOpen={isOpen} />
+          {isOpen && <AuthTrigger isOpen={isOpen} />}
+          {isOpen && <SearchTrigger isOpen={isOpen} />}
           <FloatingSideNavContent items={SIDENAVROUTES} isOpen={isOpen} />
+          {!isOpen && <SearchTrigger isOpen={isOpen} />}
+          {!isOpen && <AuthTrigger isOpen={isOpen} />}
         </div>
       </div>
     </TooltipProvider>
@@ -157,5 +160,26 @@ export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
 )
 
 SearchTrigger.displayName = "SearchTrigger"
+
+export const AuthTrigger: React.FC<SideNavToggleProps> = React.memo(
+  ({ isOpen }) => {
+    const buttonClass = cn(buttonClassBase)
+
+    return (
+      <div className={cn("relative flex items-center justify-start")}>
+        <AuthModalTrigger className={buttonClass} />
+        <h1
+          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm font-medium text-foreground opacity-100 duration-300 ${
+            !isOpen && "scale-0"
+          }`}
+        >
+          Account
+        </h1>
+      </div>
+    )
+  }
+)
+
+AuthTrigger.displayName = "SearchTrigger"
 
 export default FloatingSideNav
