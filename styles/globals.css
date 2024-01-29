@@ -38,33 +38,33 @@
 
   .dark {
     /* --background: 240 10% 6%; */
-    --background: 216 2% 14%;
+    --background: 0 0.5% 16%;
     --foreground: 0 0% 99%;
 
-    --card: 216 2% 14%;
+    --card: 0 0.5% 16%;
     --card-foreground: 0 0% 99%;
 
     --popover: 0 1% 16%;
     --popover-foreground: 0 0% 99%;
 
     --primary: 0 0% 99%;
-    --primary-foreground: 216 5.9% 10%;
+    --primary-foreground: 168 4% 10%;
 
-    --secondary: 216 2% 20%;
+    --secondary: 0 0.5% 28%;
     --secondary-foreground: 0 0% 99%;
 
-    --muted: 216 2% 23.5%;
-    --muted-foreground: 216 5% 68.7%;
+    --muted: 0 0.5% 28%;
+    --muted-foreground: 0 1% 70%;
 
-    --accent: 216 2% 23.5%;
+    --accent: 0 0.5% 28%;
     --accent-foreground: 0 0% 99%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
+    --destructive-foreground: 0 0% 99%;
 
-    --border: 216 2% 23.5%;
-    --input: 216 2% 23.5%;
-    --ring: 216 4.9% 83.9%;
+    --border: 0 0.5% 30%;
+    --input: 0 0.5% 28%;
+    --ring: 0 4.9% 83.9%;
   }
 }
 
@@ -138,7 +138,7 @@
   }
 
   .glass-card-background {
-    @apply bg-[rgba(255,255,255,0.1)];
+    @apply bg-[rgba(235,235,235,0.15)];
   }
 
   .typing-effect {

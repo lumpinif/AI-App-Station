@@ -185,7 +185,9 @@ module.exports = {
         "card-light":
           "0px 32px 40px -16px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.06)",
         outline:
-          "0px 8px 6px 0px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(255,255,255,0.25) inset, 0px -1px 1px 0px rgba(255,255,255,0.1) inset",
+          // "4px 8px 9px 0.5px rgba(0,0,0,0.08), 0.05px 1px 2.55px 0px rgba(255,255,255,0.25) inset, 0px -1.55px 1px 0px rgba(255,255,255,0.1) inset",
+          // "0px 8px 6px 0px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(255,255,255,0.25) inset, 0px -1px 1px 0px rgba(255,255,255,0.1) inset",
+          "5px 8px 9px 0.8px rgba(0, 0, 0, 0.09),0px 1px 0.5px 0px rgba(255 , 255, 255,0.15) inset, 0px 1.551px 1.201px 0px rgba(255, 255, 255, 0.10) inset, 1.15px 0px 1.551px 0px rgba(255, 255, 255, 0.20) inset",
         "inner-outline":
           "inset 0px -0.73px 0.73px rgba(255,255,255,0.59), inset 1.46px 2.92px 2.92px -0.73px rgba(0,0,0,0.4)",
       },
