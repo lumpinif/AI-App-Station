@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { SIDENAVROUTESProps, SideNavItemProps } from "@/config/routes"
+import { NavItemProps, SIDENAVROUTESProps } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import useSideNav from "@/hooks/use-side-nav-store"
 
@@ -12,6 +12,7 @@ import {
   CollapsibleTrigger,
 } from "../../ui/collapsible"
 import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip"
+import { buttonClassBase } from "./floating-side-nav"
 
 type FloatingSideNavContentProps = {
   items: SIDENAVROUTESProps
@@ -21,32 +22,35 @@ type FloatingSideNavContentProps = {
 export const FloatingSideNavContent: React.FC<FloatingSideNavContentProps> =
   memo(({ items, isOpen }) => {
     const OpenSideNav = useSideNav((state) => state.OpenSideNav)
-    const CloseSideNav = useSideNav((state) => state.CloseSideNav)
+    // const CloseSideNav = useSideNav((state) => state.CloseSideNav)
     const pathname = usePathname()
 
-    useEffect(() => {
-      CloseSideNav()
-    }, [pathname, CloseSideNav])
+    // TODO: THIS IS USED TO CLOSE THE SIDENAV WHENEVER USE NAVIGATE TO OTHER PAGES
+    // useEffect(() => {
+    //   CloseSideNav()
+    // }, [pathname, CloseSideNav])
 
     return (
       <div className="w-full">
-        {items.map((item, index) => (
-          <div
-            key={index}
-            className="relative flex items-center justify-start transition-all duration-200 ease-linear"
-            onClick={OpenSideNav}
-          >
-            <FloatingSideNavCollapsible item={item} isOpen={isOpen}>
-              {item.items?.length > 0 && (
-                <FloatingSideNavCollapsibleContent
-                  items={item.items}
-                  pathname={pathname}
-                  isOpen={isOpen}
-                />
-              )}
-            </FloatingSideNavCollapsible>
-          </div>
-        ))}
+        <div className="space-y-2.5">
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="relative flex items-center justify-start transition-all duration-200 ease-linear"
+              onClick={OpenSideNav}
+            >
+              <FloatingSideNavCollapsible item={item} isOpen={isOpen}>
+                {item.items?.length > 0 && (
+                  <FloatingSideNavCollapsibleContent
+                    items={item.items}
+                    pathname={pathname}
+                    isOpen={isOpen}
+                  />
+                )}
+              </FloatingSideNavCollapsible>
+            </div>
+          ))}
+        </div>
       </div>
     )
   })
@@ -54,7 +58,7 @@ export const FloatingSideNavContent: React.FC<FloatingSideNavContentProps> =
 FloatingSideNavContent.displayName = "FloatingSideNavContent"
 
 type FloatingSideNavCollapsibleContentProps = {
-  items: SideNavItemProps[]
+  items: NavItemProps[]
   isOpen?: boolean
   pathname?: string
 }
@@ -62,7 +66,7 @@ type FloatingSideNavCollapsibleContentProps = {
 export const FloatingSideNavCollapsibleContent: React.FC<FloatingSideNavCollapsibleContentProps> =
   memo(({ items, pathname, isOpen }) => {
     return (
-      <div className="relative inline-flex flex-col gap-2.5 p-2.5 transition-all duration-300 ease-in">
+      <div className="relative inline-flex w-full flex-col gap-2.5 p-2.5 transition-all duration-300 ease-in">
         {items.map((item, index) =>
           item.href && !item.disabled ? (
             <Link
@@ -72,7 +76,7 @@ export const FloatingSideNavCollapsibleContent: React.FC<FloatingSideNavCollapsi
                 "flex w-full items-center rounded-md px-2 py-1 hover:text-foreground/80 hover:underline dark:hover:bg-background/50 dark:hover:no-underline dark:hover:shadow-outline",
                 item.disabled && "cursor-not-allowed opacity-60",
                 pathname === item.href
-                  ? "font-medium text-foreground"
+                  ? "text-foreground"
                   : "text-muted-foreground"
               )}
             >
@@ -98,14 +102,14 @@ FloatingSideNavCollapsibleContent.displayName =
   "FloatingSideNavCollapsibleContent"
 
 type ItemContentProps = {
-  item: SideNavItemProps
+  item: NavItemProps
   isOpen?: boolean
 }
 
 const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => {
   return (
     <>
-      <div className="flex w-full items-center justify-between gap-4 text-nowrap">
+      <div className="flex min-w-full items-center justify-between gap-4 text-nowrap">
         <div className="flex items-center gap-2">
           {item.icon && (
             <div className="flex h-5 w-5 items-center group-hover:text-foreground">
@@ -120,19 +124,19 @@ const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => {
             <span className="text-xs">{item.shortcutNumber}</span>
           </kbd>
         )}
+        {item.label && isOpen && (
+          <span className="rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-black no-underline group-hover:no-underline">
+            {item.label}
+          </span>
+        )}
       </div>
-      {item.label && isOpen && (
-        <span className="ml-2 rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-black no-underline group-hover:no-underline">
-          {item.label}
-        </span>
-      )}
     </>
   )
 }
 
 type FloatingSideNavCollapsibleProps = {
   children: React.ReactNode
-  item: SideNavItemProps
+  item: NavItemProps
   isOpen?: boolean
 }
 
@@ -147,10 +151,10 @@ const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
           onOpenChange={setIsCollapsible}
           className="w-[350px] space-y-2"
         >
-          <div className="flex items-center">
+          <div className="relative flex items-center justify-start">
             <CollapsibleTrigger asChild>
               <TooltipTrigger asChild>
-                <button className="flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-300 ease-in hover:cursor-pointer hover:bg-foreground/10 hover:text-foreground">
+                <button className={buttonClassBase}>
                   {item.icon}
                   <span className="sr-only">{item.title}</span>
                 </button>
@@ -159,7 +163,7 @@ const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
             {isOpen ? (
               <Link
                 href={`${item.href}` || "/"}
-                className="absolute right-4 origin-left select-none text-nowrap text-sm font-medium text-foreground hover:cursor-pointer hover:text-foreground/80"
+                className="absolute right-4 origin-left select-none text-nowrap text-sm text-foreground hover:cursor-pointer hover:text-foreground/80"
               >
                 {item.title}
               </Link>

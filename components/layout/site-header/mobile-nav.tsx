@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import classNames from "classnames"
 
-import { MAINROUTES } from "@/config/routes"
+import { MAINROUTES, NavItemProps } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import { useScrollAndHideNav } from "@/hooks/use-scroll"
 
@@ -12,9 +12,9 @@ const MobileNav = () => {
   const { scrolled, hideNavOnScroll } = useScrollAndHideNav(5)
 
   return (
-    <BottomNavigationBar
+    <MobileNavBar
       routes={MAINROUTES}
-      className={`${scrolled ? "translate-y-[80%] opacity-30" : ``} ${
+      className={`${scrolled ? "translate-y-full opacity-30" : ``} ${
         !hideNavOnScroll ? `translate-y-0 opacity-100` : ``
       }`}
     />
@@ -23,20 +23,12 @@ const MobileNav = () => {
 
 export default MobileNav
 
-interface NavLinksProps {
-  routes: {
-    href: string
-    label: string
-    icon: JSX.Element
-  }[]
+interface MobileNavBarProps {
+  routes: NavItemProps[]
   className?: string | undefined
 }
 
-const BottomNavigationBar = ({
-  routes,
-  className,
-  ...props
-}: NavLinksProps) => {
+const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
   const currentPath = usePathname()
   return (
     <nav
@@ -49,16 +41,16 @@ const BottomNavigationBar = ({
       <div className="flex w-full items-start justify-between px-2 text-sm">
         {routes.map((route) => (
           <Link
-            href={route.href}
+            href={`${route.href}`}
             key={route.label}
             className={classNames({
               "nav-link": true,
-              "!text-blue-500": currentPath === route.href,
+              "!text-blue-500 rounded-full": currentPath === route.href,
             })}
           >
             <div className="flex flex-col items-center justify-center">
               {route.icon}
-              {route.label}
+              {route.title}
             </div>
           </Link>
         ))}

@@ -9,8 +9,8 @@ const FloatingNav = () => {
 
   return (
     <header
-      className={`fixed top-5 z-40 hidden h-fit max-w-fit transition-all duration-500 ease-in-out sm:block ${
-        hideNavOnScroll ? `translate-y-[-100%] opacity-10` : ``
+      className={`fixed top-8 z-40 hidden h-fit max-w-fit transition-all duration-500 ease-in-out sm:block ${
+        hideNavOnScroll ? `translate-y-[-150%] opacity-10` : ``
       }`}
     >
       <NavigationMenuBar />

@@ -3,9 +3,10 @@
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-export function DirectThemeToggle() {
+export function DirectThemeToggle({ className }: { className?: string }) {
   const { setTheme, theme } = useTheme()
 
   return (
@@ -13,10 +14,10 @@ export function DirectThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="rounded-full dark:hover:bg-foreground/10"
+      className={cn("rounded-full dark:hover:bg-foreground/10", className)}
     >
-      <Sun className="h-[1.5rem] w-[1.3rem] stroke-[1.5px] dark:hidden" />
-      <Moon className="hidden h-5 w-5 stroke-[1.5px] dark:block" />
+      <Sun className="h-6 w-6 stroke-[1.5px] dark:hidden" />
+      <Moon className="hidden h-6 w-6 stroke-[1.5px] dark:block" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   )

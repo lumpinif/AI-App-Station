@@ -11,9 +11,7 @@ export async function SiteHeader() {
 
   return (
     <>
-      <MainNav>
-        <UserAvatar session={session} />
-      </MainNav>
+      <MainNav>{/* <UserAvatar session={session} /> */}</MainNav>
     </>
   )
 }

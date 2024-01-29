@@ -8,7 +8,7 @@ const AuthModalTrigger = ({ className }: { className?: string }) => {
 
   return (
     <Avatar className={cn(className)} onClick={OpenModal}>
-      <Icons.user className="h-6 w-6 rounded-full" />
+      <Icons.user className="h-[22px] w-[22px] rounded-full" />
     </Avatar>
   )
 }

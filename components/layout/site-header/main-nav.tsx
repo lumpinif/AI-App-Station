@@ -10,14 +10,15 @@ import FloatingNav from "./floating-nav"
 import MobileNav from "./mobile-nav"
 
 interface LogoHeaderWrapperProps {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const MainNav = ({ children }: LogoHeaderWrapperProps) => {
   const { isMobile } = useMediaQuery()
   return (
     <header className="relative w-screen">
-      <div className="z-50 flex h-24 items-center justify-between space-x-4 px-8 sm:space-x-0">
+      {/* TODO: REFACTOR THIS LOGO COMPONENT */}
+      {/* <div className="z-50 flex h-24 items-center justify-between space-x-4 px-8 sm:space-x-0">
         <div className="flex grow-0 items-center space-x-4 sm:w-24 md:flex">
           <Link href="/">
             <Icons.logo className="h-8 w-8 stroke-[1.5px]" />
@@ -29,13 +30,15 @@ const MainNav = ({ children }: LogoHeaderWrapperProps) => {
             AI App Station
           </Link>
         </div>
-        <div className="flex w-24 grow-0 items-center justify-end space-x-0">
-          <div className="mr-1 sm:hidden">
-            <ThemeToggle />
-          </div>
-          {children}
+      </div> */}
+
+      {/* TODO: NEED TO REFACTOR THE MOBILE THEME TOGGLE */}
+      {/* <div className="flex w-24 grow-0 items-center justify-end space-x-0">
+        <div className="mr-1 sm:hidden">
+          <ThemeToggle />
         </div>
-      </div>
+        {children}
+      </div> */}
       <header className="flex items-center justify-center">
         {isMobile ? <MobileNav /> : <FloatingNav />}
       </header>
