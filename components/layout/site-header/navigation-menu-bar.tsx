@@ -62,7 +62,7 @@ export function NavigationMenuBar() {
         {MAINROUTES.map((route) => (
           <NavigationMenuItem key={route.id}>
             {route.href !== "/search" ? (
-              <Link href={route.href} legacyBehavior passHref>
+              <Link href={`${route.href}`} legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   {route.title}
                 </NavigationMenuLink>
