@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { SubmitApp } from "@/server/data/supabase"
@@ -27,6 +28,7 @@ const formSchema = z.object({
 })
 
 const AppSubmitPage = () => {
+  const [existingError, setexistingError] = useState("")
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,11 +42,13 @@ const AppSubmitPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { newApp, error } = await SubmitApp(values.title)
 
-    {
-      newApp && toast.success(`${newApp[0].title} - App Submited`)
+    if (newApp) {
+      setexistingError("")
+      toast.success(`${newApp[0].title} - App Submited`)
     }
 
     if (typeof error === "string") {
+      setexistingError(error)
       toast.error(`${error} 🥲`)
     } else if (error) {
       toast.error(`${error?.message} - Contact Support 🥲`)
@@ -52,11 +56,12 @@ const AppSubmitPage = () => {
   }
 
   return (
-    <div className="mx-auto flex h-full max-w-xl items-center justify-center p-6">
-      <div className="h-full w-full bg-blue-200/20">
+    <div className="mx-auto flex h-full max-w-2xl items-center justify-center p-6">
+      <div className="h-full w-full">
         <h1 className="text-2xl font-medium">Submit the AI App</h1>
-        <p className="text-sm text-foreground">
-          What is the name of this AI App ?
+        <p className="mt-1 text-sm text-muted-foreground">
+          Help us to expand our knowledge for the humanity. What is the name of
+          this AI App?
         </p>
         <Form {...form}>
           <form
@@ -77,7 +82,13 @@ const AppSubmitPage = () => {
                     />
                   </FormControl>
                   <FormDescription>
-                    Don&apos;t worry, you can change this later.
+                    {!existingError ? (
+                      <span>Don&apos;t worry, you can change this later.</span>
+                    ) : (
+                      <span className="font-medium text-red-600/80 transition-all duration-300 ease-in">
+                        {existingError}
+                      </span>
+                    )}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

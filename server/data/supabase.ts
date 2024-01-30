@@ -18,7 +18,7 @@ export async function SubmitApp(title: title) {
   const { data: existingApp, error: existingAppError } = await supabase
     .from("app")
     .select("title")
-    .ilike("title", `%${title.toLowerCase()}%`)
+    .ilike("title", title)
 
   if (existingAppError) {
     // console.log("🚀 ~ SubmitApp ~ existingAppError:", existingAppError)
@@ -26,8 +26,14 @@ export async function SubmitApp(title: title) {
   }
 
   if (existingApp && existingApp.length > 0) {
+    // NO NEED FOR THIS, AS WE ARE USING .ilike("title", title) NOT .ilike("title", `%${title}%`)
+    // Perform an exact case-insensitive comparison of the titles
+    // const titleExists = existingApp.some(
+    //   (app) => app.title?.toLowerCase() === title.toLowerCase()
+    // )
+    // if (titleExists){}
     // console.log("🚀 ~ Error: Submiting App ~ error: The App already exists")
-    return { newApp: null, error: "The App already exists" }
+    return { newApp: null, error: "The App already exists. Please try again." }
   }
 
   const { data: newApp, error } = await supabase
