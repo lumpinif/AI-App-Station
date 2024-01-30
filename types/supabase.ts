@@ -9,6 +9,203 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      app: {
+        Row: {
+          created_at: string
+          id: string
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string | null
+        }
+        Relationships: []
+      }
+      app_categories: {
+        Row: {
+          app_id: string
+          category_id: string
+        }
+        Insert: {
+          app_id: string
+          category_id: string
+        }
+        Update: {
+          app_id?: string
+          category_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "app_categories_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["app_id"]
+          },
+          {
+            foreignKeyName: "app_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["category_id"]
+          }
+        ]
+      }
+      app_developers: {
+        Row: {
+          app_id: string
+          developer_id: string
+        }
+        Insert: {
+          app_id: string
+          developer_id: string
+        }
+        Update: {
+          app_id?: string
+          developer_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "app_developers_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["app_id"]
+          },
+          {
+            foreignKeyName: "app_developers_developer_id_fkey"
+            columns: ["developer_id"]
+            isOneToOne: false
+            referencedRelation: "developers"
+            referencedColumns: ["developer_id"]
+          }
+        ]
+      }
+      apps: {
+        Row: {
+          app_id: string
+          app_logo: string | null
+          app_url: string
+          click_count: number | null
+          created_at: string | null
+          description: string
+          introduction: string | null
+          last_updated_at: string | null
+          likes: number | null
+          pricing: string | null
+          ratings: number | null
+          thumb_nail: string | null
+          title: string
+          view_count: number | null
+        }
+        Insert: {
+          app_id?: string
+          app_logo?: string | null
+          app_url: string
+          click_count?: number | null
+          created_at?: string | null
+          description: string
+          introduction?: string | null
+          last_updated_at?: string | null
+          likes?: number | null
+          pricing?: string | null
+          ratings?: number | null
+          thumb_nail?: string | null
+          title: string
+          view_count?: number | null
+        }
+        Update: {
+          app_id?: string
+          app_logo?: string | null
+          app_url?: string
+          click_count?: number | null
+          created_at?: string | null
+          description?: string
+          introduction?: string | null
+          last_updated_at?: string | null
+          likes?: number | null
+          pricing?: string | null
+          ratings?: number | null
+          thumb_nail?: string | null
+          title?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          category_id: string
+          category_name: string
+          top_ranking_board: string | null
+        }
+        Insert: {
+          category_id?: string
+          category_name: string
+          top_ranking_board?: string | null
+        }
+        Update: {
+          category_id?: string
+          category_name?: string
+          top_ranking_board?: string | null
+        }
+        Relationships: []
+      }
+      developers: {
+        Row: {
+          developer_email: string | null
+          developer_icon: string | null
+          developer_id: string
+          developer_name: string
+          developer_url: string | null
+        }
+        Insert: {
+          developer_email?: string | null
+          developer_icon?: string | null
+          developer_id?: string
+          developer_name: string
+          developer_url?: string | null
+        }
+        Update: {
+          developer_email?: string | null
+          developer_icon?: string | null
+          developer_id?: string
+          developer_name?: string
+          developer_url?: string | null
+        }
+        Relationships: []
+      }
+      images: {
+        Row: {
+          app_id: string | null
+          id: string
+          image_url: string | null
+        }
+        Insert: {
+          app_id?: string | null
+          id?: string
+          image_url?: string | null
+        }
+        Update: {
+          app_id?: string | null
+          id?: string
+          image_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "images_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["app_id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -50,12 +247,113 @@ export interface Database {
           }
         ]
       }
+      user_app_likes: {
+        Row: {
+          app_id: string
+          user_id: string
+        }
+        Insert: {
+          app_id: string
+          user_id: string
+        }
+        Update: {
+          app_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_app_likes_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["app_id"]
+          },
+          {
+            foreignKeyName: "user_app_likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      user_collections: {
+        Row: {
+          app_id: string
+          collection_id: string
+          user_id: string
+        }
+        Insert: {
+          app_id: string
+          collection_id?: string
+          user_id: string
+        }
+        Update: {
+          app_id?: string
+          collection_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_collections_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["app_id"]
+          },
+          {
+            foreignKeyName: "user_collections_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      videos: {
+        Row: {
+          app_id: string | null
+          id: string
+          video_url: string | null
+        }
+        Insert: {
+          app_id?: string | null
+          id?: string
+          video_url?: string | null
+        }
+        Update: {
+          app_id?: string | null
+          id?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "videos_app_id_fkey"
+            columns: ["app_id"]
+            isOneToOne: false
+            referencedRelation: "apps"
+            referencedColumns: ["app_id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      delete_avatar: {
+        Args: {
+          avatar_url: string
+        }
+        Returns: Record<string, unknown>
+      }
+      delete_storage_object: {
+        Args: {
+          bucket: string
+          object: string
+        }
+        Returns: Record<string, unknown>
+      }
     }
     Enums: {
       [_ in never]: never

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { SubmitApp } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -37,10 +38,16 @@ const AppSubmitPage = () => {
   const { isSubmitting, isValid } = form.formState
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      toast.success(`${values.title} - App Submited`)
-    } catch {
-      toast.error("Something went wrong")
+    const { newApp, error } = await SubmitApp(values.title)
+
+    {
+      newApp && toast.success(`${newApp[0].title} - App Submited`)
+    }
+
+    if (typeof error === "string") {
+      toast.error(`${error} 🥲`)
+    } else if (error) {
+      toast.error(`${error?.message} - Contact Support 🥲`)
     }
   }
 
