@@ -1,7 +1,6 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
-import { revalidatePath } from "next/cache"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { User } from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
@@ -9,7 +8,7 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import SignOutButton from "@/components/auth/signout/sign-out-button"
 
-import { getUserProfile } from "../../../../../utils/supabase/actions/auth"
+import { getUserProfile } from "../../../../../server/auth"
 
 export default function AccountFormSupabase({ user }: { user: User | null }) {
   const supabase = createSupabaseBrowserClient()

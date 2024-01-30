@@ -1,4 +1,4 @@
-import { getUserSession } from "@/utils/supabase/actions/auth"
+import { getUserSession } from "@/server/auth"
 
 import AuthModal from "./auth-modal"
 

@@ -45,8 +45,8 @@ const AppSubmitPage = () => {
   }
 
   return (
-    <div className="mx-auto flex h-screen max-w-7xl items-center justify-center p-6">
-      <div>
+    <div className="mx-auto flex h-full max-w-xl items-center justify-center p-6">
+      <div className="h-full w-full bg-blue-200/20">
         <h1 className="text-2xl font-medium">Submit the AI App</h1>
         <p className="text-sm text-foreground">
           What is the name of this AI App ?

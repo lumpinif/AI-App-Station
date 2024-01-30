@@ -12,7 +12,7 @@ import {
   getUserData,
   getUserProfile,
   getUserSession,
-} from "../../../../utils/supabase/actions/auth"
+} from "../../../../server/auth"
 import Loading from "./loading"
 
 export const metadata: Metadata = {

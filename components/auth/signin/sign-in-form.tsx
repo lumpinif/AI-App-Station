@@ -1,7 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
-import { signInWithEmailAndPassword } from "@/utils/supabase/actions/auth"
+import { signInWithEmailAndPassword } from "@/server/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { RingLoader } from "react-spinners"

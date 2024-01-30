@@ -1,12 +1,9 @@
-import Link from "next/link"
 import { redirect } from "next/navigation"
 
-import { Button } from "@/components/ui/button"
 import LoginCard from "@/components/auth/signin/login-card"
-import { Icons } from "@/components/icons/icons"
 import BackButton from "@/components/shared/back-button"
 
-import { getUserSession } from "../../../utils/supabase/actions/auth"
+import { getUserSession } from "../../../server/auth"
 
 const SignInPage = async () => {
   const { data } = await getUserSession()

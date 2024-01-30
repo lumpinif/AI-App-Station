@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { getUserProfile } from "@/utils/supabase/actions/auth"
+import { getUserProfile } from "@/server/auth"
 import { User } from "@supabase/auth-helpers-nextjs"
 import { toast } from "sonner"
 

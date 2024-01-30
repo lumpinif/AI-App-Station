@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { getUserData, signOut } from "@/utils/supabase/actions/auth"
+import { getUserData, signOut } from "@/server/auth"
 
 // import { PlusIcon } from "@radix-ui/react-icons"
 
@@ -31,7 +31,6 @@ export default async function UserMainLayout({
 
   const handleSignOut = async () => {
     "use server"
-
     await signOut()
     return redirect("/login")
   }
