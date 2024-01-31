@@ -39,7 +39,9 @@ const AppSubmitPage = () => {
 
   const { isSubmitting, isValid } = form.formState
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof formSchema>
+  ): Promise<void> => {
     const { newApp, error } = await SubmitApp(values.title)
 
     if (newApp) {
@@ -56,7 +58,7 @@ const AppSubmitPage = () => {
   }
 
   return (
-    <div className="mx-auto flex h-full max-w-2xl items-center justify-center p-6">
+    <div className="mx-auto flex max-w-2xl items-center justify-center p-6">
       <div className="h-full w-full">
         <h1 className="text-2xl font-medium">Submit the AI App</h1>
         <p className="mt-1 text-sm text-muted-foreground">

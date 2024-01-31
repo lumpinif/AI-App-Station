@@ -1,5 +1,7 @@
+"use client"
+
 import React from "react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 
@@ -7,10 +9,10 @@ import { Icons } from "../icons/icons"
 import { buttonVariants } from "../ui/button"
 
 type BackButtonProps = {
-  href: string
   className?: string
 }
-function BackButton({ href, className }: BackButtonProps) {
+function BackButton({ className }: BackButtonProps) {
+  const route = useRouter()
   return (
     // <Link
     //   href={href}
@@ -25,13 +27,13 @@ function BackButton({ href, className }: BackButtonProps) {
     //     <span className="hidden sm:block">Back</span>
     //   </div>
     // </Link>
-    <Link
-      href={href}
+    <div
       className={cn(
         buttonVariants({ variant: "ghost" }),
         "group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full font-medium  transition-all duration-300 hover:w-24",
         className
       )}
+      onClick={() => route.back()}
     >
       <div className="inline-flex whitespace-nowrap opacity-0 transition-all duration-200 group-hover:translate-x-3 group-hover:opacity-100">
         Back
@@ -39,7 +41,7 @@ function BackButton({ href, className }: BackButtonProps) {
       <div className="absolute left-[12px]">
         <Icons.left className="h-4 w-4" />
       </div>
-    </Link>
+    </div>
   )
 }
 

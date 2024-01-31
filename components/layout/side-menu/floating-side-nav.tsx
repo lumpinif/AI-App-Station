@@ -76,7 +76,7 @@ const FloatingSideNav: React.FC = () => {
   return (
     <aside
       className={cn(
-        "z-50 hidden max-h-[calc(80vh)] w-[200px] shrink-0 transition-all duration-300 ease-linear sm:flex",
+        "z-50 hidden max-h-[calc(80vh)] w-[200px] transition-all duration-300 ease-linear sm:flex",
         !isOpen ? "mb-2 ml-4" : "mb-6 ml-6"
       )}
     >
@@ -92,7 +92,6 @@ const FloatingSideNav: React.FC = () => {
             {!isOpen && <AuthTrigger isOpen={isOpen} />}
           </div>
         </TooltipProvider>
-        <ScrollBar className="w-1.5 opacity-100 dark:w-1 dark:opacity-50" />
       </ScrollArea>
     </aside>
   )

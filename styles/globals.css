@@ -167,9 +167,9 @@
   }
 
   /*  for scrollArea compoenent */
-  .scrollable-area {
+  /* .scrollable-area {
     @apply h-full max-h-dvh min-h-dvh overflow-y-auto overflow-x-hidden;
-  }
+  } */
 }
 
 @media (max-width: 640px) {
