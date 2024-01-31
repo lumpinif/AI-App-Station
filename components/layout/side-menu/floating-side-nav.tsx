@@ -3,13 +3,12 @@
 import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeftFromLine, ArrowRightFromLine, Search } from "lucide-react"
-import { useTheme } from "next-themes"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
 import useSideNav from "@/hooks/use-side-nav-store"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
@@ -69,19 +68,19 @@ const FloatingSideNav: React.FC = () => {
   })
 
   const sideNavClass = cn(
-    "dark:glass-card-background relative inline-flex flex-col gap-2.5 p-2.5 backdrop-blur-lg transition-all duration-300 ease-in dark:shadow-outline dark:backdrop-blur-md",
-    isOpen ? "w-48 rounded-3xl" : "w-20 rounded-[2.5rem]"
+    "dark:glass-card-background inline-flex flex-col gap-2.5 p-2.5 dark:shadow-outline",
+    !isOpen ? "w-20 rounded-[2.5rem]" : "w-48 rounded-3xl"
   )
 
   return (
     <aside
       className={cn(
-        "z-50 hidden max-h-[calc(80vh)] w-[200px] transition-all duration-300 ease-linear sm:flex",
-        !isOpen ? "mb-2 ml-4" : "mb-6 ml-6"
+        "hidden max-h-[calc(80vh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-300 ease-linear sm:flex",
+        !isOpen ? "mb-2 ml-4 rounded-[2.5rem] " : "z-50 mb-6 ml-6"
       )}
     >
-      <ScrollArea className="h-full w-full rounded-3xl p-1">
-        <TooltipProvider>
+      <TooltipProvider>
+        <ScrollArea className="h-full w-full rounded-3xl">
           <div className={sideNavClass}>
             <SideNavToggle isOpen={isOpen} />
             {isOpen && <AuthTrigger isOpen={isOpen} />}
@@ -91,8 +90,8 @@ const FloatingSideNav: React.FC = () => {
             <SideNavThemeToggle isOpen={isOpen} />
             {!isOpen && <AuthTrigger isOpen={isOpen} />}
           </div>
-        </TooltipProvider>
-      </ScrollArea>
+        </ScrollArea>
+      </TooltipProvider>
     </aside>
   )
 }

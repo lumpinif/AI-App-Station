@@ -28,16 +28,14 @@ export default async function MainAppLayout({ children }: MainAppLayoutProps) {
             <MobileNav />
           </div>
         </header>
-        <div className="h-full w-full flex-1 ">
-          <div className="h-full gap-2 sm:grid sm:grid-cols-[110px_minmax(0,1fr)]">
-            <div className="hidden h-full flex-col justify-center sm:flex">
-              <FloatingSideNav />
-            </div>
-            <main className="h-full">
-              {/* TODO: CONSIDERIGN ADD PROGRESSIVE BLUR TO THE EDGE OF THE SCROLLAREA */}
-              {children}
-            </main>
+        <div className="h-full flex-1 gap-2 sm:grid sm:grid-cols-[110px_minmax(0,1fr)]">
+          <div className="hidden h-full flex-col justify-center bg-blue-300/30 sm:flex">
+            <FloatingSideNav />
           </div>
+          <main className="h-full bg-green-300/20 ">
+            {/* TODO: CONSIDERIGN ADD PROGRESSIVE BLUR TO THE EDGE OF THE SCROLLAREA */}
+            {children}
+          </main>
         </div>
       </div>
     </>
