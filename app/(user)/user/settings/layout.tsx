@@ -55,7 +55,7 @@ export default async function SettingsLayout({
   return (
     <>
       <header className="flex w-full items-center p-4 sm:px-8">
-        <BackButton href="/" className=" dark:shadow-outline" />
+        <BackButton className=" dark:shadow-outline" />
       </header>
       <div className="flex flex-col items-center justify-center px-4 sm:container">
         <div className="w-full rounded-3xl p-10 pb-16 dark:shadow-outline">

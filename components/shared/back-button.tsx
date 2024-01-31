@@ -14,19 +14,6 @@ type BackButtonProps = {
 function BackButton({ className }: BackButtonProps) {
   const route = useRouter()
   return (
-    // <Link
-    //   href={href}
-    //   className={cn(
-    //     buttonVariants({ variant: "ghost" }),
-    //     "rounded-full",
-    //     className
-    //   )}
-    // >
-    //   <div className="flex items-center justify-center">
-    //     <Icons.left className="h-4 w-4" />
-    //     <span className="hidden sm:block">Back</span>
-    //   </div>
-    // </Link>
     <div
       className={cn(
         buttonVariants({ variant: "ghost" }),
