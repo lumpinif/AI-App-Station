@@ -2,7 +2,7 @@ import { RingLoader } from "react-spinners"
 
 export const LoadingSpinner = () => {
   return (
-    <div className="grid h-screen w-full place-content-center">
+    <div className="grid h-full w-full place-content-center">
       <div
         role="status"
         aria-label="loading"

@@ -20,6 +20,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
 
 const formSchema = z.object({
   title: z
@@ -73,7 +74,7 @@ const AppSubmitForm = () => {
               <FormItem>
                 <FormLabel>App title</FormLabel>
                 <FormControl>
-                  <Input
+                  <InputBorderSpotlight
                     disabled={isSubmitting}
                     placeholder="e.g. 'ChatGPT'"
                     {...field}
@@ -93,11 +94,6 @@ const AppSubmitForm = () => {
             )}
           />
           <div className="flex items-center gap-x-2">
-            <Link href="/ai-apps">
-              <Button type="button" variant="ghost">
-                Cancel
-              </Button>
-            </Link>
             <Button type="submit" disabled={!isValid || isSubmitting}>
               Continue
             </Button>

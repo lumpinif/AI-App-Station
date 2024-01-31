@@ -17,7 +17,7 @@ function BackButton({ className }: BackButtonProps) {
     <div
       className={cn(
         buttonVariants({ variant: "ghost" }),
-        "group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full font-medium  transition-all duration-300 hover:w-24",
+        "group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full font-medium transition-all duration-300 hover:w-24 hover:cursor-pointer",
         className
       )}
       onClick={() => route.back()}

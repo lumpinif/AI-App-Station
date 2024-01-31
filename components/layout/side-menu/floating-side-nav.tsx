@@ -75,8 +75,8 @@ const FloatingSideNav: React.FC = () => {
   return (
     <aside
       className={cn(
-        "hidden max-h-[calc(80vh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-300 ease-linear sm:flex",
-        !isOpen ? "mb-2 ml-4 rounded-[2.5rem] " : "z-50 mb-6 ml-6"
+        "z-50 hidden max-h-[calc(80vh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-300 ease-linear sm:flex",
+        !isOpen ? "mb-2 ml-4 rounded-[2.5rem] " : "mb-6 ml-6"
       )}
     >
       <TooltipProvider>
