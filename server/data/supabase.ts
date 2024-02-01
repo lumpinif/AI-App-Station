@@ -77,7 +77,7 @@ export async function SubmitApp(title: Apps["title"]) {
   return { newApp, error }
 }
 
-export async function UpdateApp(
+export async function UpdateAppByTitle(
   app_id: Apps["app_id"],
   newTitle: Apps["title"]
 ) {
@@ -100,12 +100,12 @@ export async function UpdateApp(
     .eq("title", newTitle)
 
   if (existingAppError) {
-    return { newApp: null, error: existingAppError }
+    return { updatedApp: null, error: existingAppError }
   }
 
   if (existingApp && existingApp.length > 0) {
     return {
-      newApp: null,
+      updatedApp: null,
       error: "No need to change the title. Please try again.",
     }
   }

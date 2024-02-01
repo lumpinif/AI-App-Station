@@ -64,6 +64,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
             <h2 className="text-xl">Customize the app you submitted</h2>
           </div>
           <TitleForm initialData={app} appId={app.app_id} />
+          <TitleForm initialData={app} appId={app.app_id} />
         </div>
       </div>
     </div>
