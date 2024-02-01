@@ -63,13 +63,18 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
     <div className="mt-6 p-4">
       <div className="flex items-center justify-start gap-2 font-medium">
         <span className="text-xl">{initialData.title}</span>
-        <Button onClick={toggleEdit} variant="ghost">
+        <Button
+          onClick={toggleEdit}
+          variant="ghost"
+          className="group"
+          size={"sm"}
+        >
           {isEditing ? (
-            <>Cancel</>
+            <span className="text-muted-foreground group-hover:text-foreground">
+              Cancel
+            </span>
           ) : (
-            <>
-              <Pencil className="h-4 w-4" />
-            </>
+            <Pencil className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
           )}
         </Button>
       </div>
