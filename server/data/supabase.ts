@@ -17,7 +17,6 @@ export async function SubmitApp(title: Apps["title"]) {
   }
 
   if (title === null) {
-    // console.log("Title is null")
     return { newApp: null, error: "Title is null" }
   }
 
@@ -28,7 +27,6 @@ export async function SubmitApp(title: Apps["title"]) {
     .ilike("title", title)
 
   if (existingAppError) {
-    // console.log("🚀 ~ SubmitApp ~ existingAppError:", existingAppError)
     return { newApp: null, error: existingAppError }
   }
 
@@ -39,7 +37,6 @@ export async function SubmitApp(title: Apps["title"]) {
     //   (app) => app.title?.toLowerCase() === title.toLowerCase()
     // )
     // if (titleExists){}
-    // console.log("🚀 ~ Error: Submiting App ~ error: The App already exists")
     return { newApp: null, error: "The App already exists. Please try again." }
   }
 
@@ -55,10 +52,6 @@ export async function SubmitApp(title: Apps["title"]) {
   if (error) {
     console.log("🚀 ~ Error: Submiting App ~ error:", error)
   }
-
-  // if (newApp) {
-  //   console.log("🚀 ~ New App Submited ~ newApp:", newApp)
-  // }
 
   return { newApp, error }
 }
