@@ -4,10 +4,17 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Database } from "@/types/supabase"
 
-type title = Database["public"]["Tables"]["app"]["Row"]["title"]
+type Apps = Database["public"]["Tables"]["apps"]["Row"]
 
-export async function SubmitApp(title: title) {
+export async function SubmitApp(title: Apps["title"]) {
   const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return { newApp: null, error: "Unauthorized" }
+  }
 
   if (title === null) {
     // console.log("Title is null")
@@ -16,7 +23,7 @@ export async function SubmitApp(title: title) {
 
   // Check if title already exists
   const { data: existingApp, error: existingAppError } = await supabase
-    .from("app")
+    .from("apps")
     .select("title")
     .ilike("title", title)
 
@@ -37,9 +44,11 @@ export async function SubmitApp(title: title) {
   }
 
   const { data: newApp, error } = await supabase
-    .from("app")
-    .insert([{ title: title }])
-    .select()
+    .from("apps")
+    .insert([
+      { title: title, submitted_by_user_id: user.id, submitted_by: user.email },
+    ])
+    .select("*")
 
   // TODO: REMOVE THIE BEFORE PRODUCTION
 
@@ -47,9 +56,9 @@ export async function SubmitApp(title: title) {
     console.log("🚀 ~ Error: Submiting App ~ error:", error)
   }
 
-  if (newApp) {
-    console.log("🚀 ~ New App Submited ~ newApp:", newApp)
-  }
+  // if (newApp) {
+  //   console.log("🚀 ~ New App Submited ~ newApp:", newApp)
+  // }
 
   return { newApp, error }
 }

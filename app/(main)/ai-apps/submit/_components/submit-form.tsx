@@ -4,7 +4,6 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { SubmitApp } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -19,7 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
 
 const formSchema = z.object({
@@ -52,14 +50,14 @@ const AppSubmitForm = () => {
     if (newApp) {
       setexistingError("")
       toast.success(`${newApp[0].title} - App Submited`)
-      router.push(`/ai-apps/submit/${newApp[0].id}`)
+      router.push(`/user/apps/${newApp[0].app_id}`)
     }
 
     if (typeof error === "string") {
       setexistingError(error)
       toast.error(`${error} 🥲`)
     } else if (error) {
-      toast.error(`${error?.message} - Contact Support 🥲`)
+      toast.error(`${error?.message} - Please Contact Support 🥲`)
     }
   }
 
