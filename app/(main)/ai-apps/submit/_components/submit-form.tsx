@@ -52,7 +52,7 @@ const AppSubmitForm = () => {
     if (newApp) {
       setexistingError("")
       toast.success(`${newApp[0].title} - App Submited`)
-      router.push(`/ai-apps/${newApp[0].id}`)
+      router.push(`/ai-apps/submit/${newApp[0].id}`)
     }
 
     if (typeof error === "string") {
