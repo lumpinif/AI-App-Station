@@ -82,7 +82,13 @@ export async function UpdateApp(
   newTitle: Apps["title"]
 ) {
   const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
+  if (!user) {
+    return { newApp: null, error: "Unauthorized" }
+  }
   if (newTitle === null) {
     return { updatedApp: null, error: "Title is null" }
   }

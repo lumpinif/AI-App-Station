@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { GetAppByUserId } from "@/server/data/supabase"
-import { Sparkle, Sparkles } from "lucide-react"
+import { Sparkle } from "lucide-react"
 import { toast } from "sonner"
 
 import TitleForm from "./_components/title-form"
