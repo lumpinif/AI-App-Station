@@ -47,6 +47,7 @@ export interface Database {
           created_at: string | null
           description: string | null
           introduction: string | null
+          is_published: boolean | null
           pricing: string | null
           submitted_by: string | null
           submitted_by_user_id: string | null
@@ -60,6 +61,7 @@ export interface Database {
           created_at?: string | null
           description?: string | null
           introduction?: string | null
+          is_published?: boolean | null
           pricing?: string | null
           submitted_by?: string | null
           submitted_by_user_id?: string | null
@@ -73,6 +75,7 @@ export interface Database {
           created_at?: string | null
           description?: string | null
           introduction?: string | null
+          is_published?: boolean | null
           pricing?: string | null
           submitted_by?: string | null
           submitted_by_user_id?: string | null
