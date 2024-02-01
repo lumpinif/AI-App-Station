@@ -1,3 +1,4 @@
 export { SubmitApp } from "./supabase"
-export { UpdateAppByTitle as UpdateApp } from "./supabase"
-export { GetAppByUserId as GetApps } from "./supabase"
+export { GetAppsByUserId } from "./supabase"
+export { UpdateAppByTitle } from "./supabase"
+// export { UpdateAppByDescription } from "./supabase"

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { UpdateAppByTitle } from "@/server/data"
+import { Apps, UpdateAppByDescription } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -9,6 +9,7 @@ import { PulseLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -17,38 +18,41 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
+import { Textarea } from "@/components/ui/textarea"
 
-interface TitleFormProps {
-  initialData: {
-    title: string
-  }
+interface DescriptionFormProps {
+  initialData: Apps
   appId: string
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
+  description: z.string().min(1, {
+    message: "Description is required",
   }),
 })
 
-const TitleForm = ({ initialData, appId }: TitleFormProps) => {
+const DescriptionForm = ({ initialData, appId }: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      description: initialData?.description || "",
+    },
   })
   const { isSubmitting, isValid } = form.formState
   const toggleEdit = () => setIsEditing((current) => !current)
 
   const onSubmit = async ({
-    title,
+    description,
   }: z.infer<typeof formSchema>): Promise<void> => {
-    const { updatedApp, error } = await UpdateAppByTitle(appId, title)
+    const { updatedApp, error } = await UpdateAppByDescription(
+      appId,
+      description
+    )
 
     if (updatedApp) {
-      toast.success(`${updatedApp[0].title} - App Updated`)
+      toast.success(`App Description Updated`)
       toggleEdit()
     }
 
@@ -62,7 +66,19 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
   return (
     <div className="mt-6 p-4">
       <div className="flex items-center justify-start gap-2 font-medium">
-        <span className="text-xl">{initialData.title}</span>
+        {!isEditing ? (
+          <span
+            className={cn(
+              "text-sm text-muted-foreground",
+              !initialData.description && "italic"
+            )}
+          >
+            {initialData.description || "No description"}
+          </span>
+        ) : (
+          <span className="text-xl">{initialData.description}</span>
+        )}
+
         <Button
           onClick={toggleEdit}
           variant="ghost"
@@ -86,14 +102,13 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <InputBorderSpotlight
-                      defaultValue={initialData.title}
+                    <Textarea
                       disabled={isSubmitting}
-                      placeholder="e.g. 'Perplexity'"
+                      placeholder="e.g. 'This App is about...'"
                       {...field}
                     />
                   </FormControl>
@@ -103,11 +118,7 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
             />
             <div className="flex items-center gap-x-2">
               <Button disabled={!isValid || isSubmitting} type="submit">
-                {isSubmitting ? (
-                  <PulseLoader size={6} margin={1} />
-                ) : (
-                  <span>Save</span>
-                )}
+                {isSubmitting ? <PulseLoader size={3} /> : <span>Save</span>}
               </Button>
             </div>
           </form>
@@ -117,4 +128,4 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
   )
 }
 
-export default TitleForm
+export default DescriptionForm

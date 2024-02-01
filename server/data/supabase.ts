@@ -5,16 +5,16 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Database } from "@/types/supabase"
 
-type Apps = Database["public"]["Tables"]["apps"]["Row"]
+export type Apps = Database["public"]["Tables"]["apps"]["Row"]
 
-export async function GetAppByUserId(
+export async function GetAppsByUserId(
   app_id: Apps["app_id"],
   user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
 
   if (!user_id) {
-    return { app: null, error: "Unauthorized" }
+    return { app: null, error: "Unauthorized!" }
   }
 
   const { data: app, error } = await supabase
@@ -34,11 +34,11 @@ export async function SubmitApp(title: Apps["title"]) {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return { newApp: null, error: "Unauthorized" }
+    return { newApp: null, error: "Unauthorized!" }
   }
 
   if (title === null) {
-    return { newApp: null, error: "Title is null" }
+    return { newApp: null, error: "Title is required." }
   }
 
   // Check if title already exists
@@ -52,12 +52,6 @@ export async function SubmitApp(title: Apps["title"]) {
   }
 
   if (existingApp && existingApp.length > 0) {
-    // NO NEED FOR THIS, AS WE ARE USING .ilike("title", title) NOT .ilike("title", `%${title}%`)
-    // Perform an exact case-insensitive comparison of the titles
-    // const titleExists = existingApp.some(
-    //   (app) => app.title?.toLowerCase() === title.toLowerCase()
-    // )
-    // if (titleExists){}
     return { newApp: null, error: "The App already exists. Please try again." }
   }
 
@@ -87,10 +81,10 @@ export async function UpdateAppByTitle(
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return { newApp: null, error: "Unauthorized" }
+    return { updatedApp: null, error: "Unauthorized!" }
   }
-  if (newTitle === null) {
-    return { updatedApp: null, error: "Title is null" }
+  if (!newTitle) {
+    return { updatedApp: null, error: "Title is required." }
   }
 
   // Check if title already exists with exactly matching case-sensitive comparison
@@ -113,6 +107,38 @@ export async function UpdateAppByTitle(
   const { data: updatedApp, error } = await supabase
     .from("apps")
     .update({ title: newTitle })
+    .eq("app_id", app_id)
+    .select()
+
+  if (updatedApp) revalidatePath(`/user/apps/${app_id}`)
+
+  // TODO: REMOVE THIE BEFORE PRODUCTION
+  if (error) {
+    console.log("🚀 ~ Error: Submiting App ~ error:", error)
+  }
+
+  return { updatedApp, error }
+}
+
+export async function UpdateAppByDescription(
+  app_id: Apps["app_id"],
+  description: Apps["description"]
+) {
+  const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return { updatedApp: null, error: "Unauthorized!" }
+  }
+  if (!description) {
+    return { updatedApp: null, error: "Description is required." }
+  }
+
+  const { data: updatedApp, error } = await supabase
+    .from("apps")
+    .update({ description: description })
     .eq("app_id", app_id)
     .select()
 

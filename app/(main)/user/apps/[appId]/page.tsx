@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { GetAppByUserId } from "@/server/data/supabase"
+import { GetAppsByUserId } from "@/server/data/supabase"
 import { Sparkle } from "lucide-react"
 import { toast } from "sonner"
 
+import DescriptionForm from "./_components/description-form"
 import TitleForm from "./_components/title-form"
 
 type SubmittedAppIdPageProps = {
@@ -19,7 +20,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     return redirect("/login")
   }
 
-  const { app, error } = await GetAppByUserId(params.appId, user.id)
+  const { app, error } = await GetAppsByUserId(params.appId, user.id)
 
   if (!app) {
     return redirect("/ai-apps")
@@ -64,7 +65,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
             <h2 className="text-xl">Customize the app you submitted</h2>
           </div>
           <TitleForm initialData={app} appId={app.app_id} />
-          <TitleForm initialData={app} appId={app.app_id} />
+          <DescriptionForm initialData={app} appId={app.app_id} />
         </div>
       </div>
     </div>
