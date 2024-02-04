@@ -68,15 +68,15 @@ const FloatingSideNav: React.FC = () => {
   })
 
   const sideNavClass = cn(
-    "dark:glass-card-background inline-flex flex-col gap-2.5 p-2.5 dark:shadow-outline",
+    "dark:glass-card-background inline-flex flex-col gap-2.5 p-2.5 transition-all duration-300 ease-in-out dark:shadow-outline",
     !isOpen ? "w-20 rounded-[2.5rem]" : "w-48 rounded-3xl"
   )
 
   return (
     <aside
       className={cn(
-        "z-50 hidden max-h-[calc(80vh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-300 ease-linear sm:flex",
-        !isOpen ? "mb-2 ml-4 rounded-[2.5rem] " : "mb-6 ml-6"
+        "z-50 ml-6 hidden max-h-[calc(80vh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-300 ease-linear sm:flex",
+        !isOpen ? "rounded-[2.5rem]" : "ml-5"
       )}
     >
       <TooltipProvider>

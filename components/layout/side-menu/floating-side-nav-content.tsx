@@ -142,7 +142,7 @@ type FloatingSideNavCollapsibleProps = {
 
 const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
   memo(({ children, item, isOpen }) => {
-    const [isCollapsible, setIsCollapsible] = useState(true)
+    const [isCollapsible, setIsCollapsible] = useState(false)
 
     return (
       <Tooltip delayDuration={0}>
