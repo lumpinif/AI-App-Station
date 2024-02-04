@@ -108,6 +108,14 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === " " && (e.metaKey || e.ctrlKey)) {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return
+        }
         e.preventDefault()
         ToggleSideNav()
       }
