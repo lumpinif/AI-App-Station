@@ -5,7 +5,7 @@ import { TextTypingEffectWithTextsFadeOut } from "./TypingEffect"
 
 const HeroSection = () => {
   return (
-    <>
+    <div className="flex h-5/6 flex-col items-center justify-between gap-6 bg-green-300/30">
       <div className="relative mt-16 flex h-[150px] select-none items-center justify-center text-center text-4xl font-extrabold leading-tight tracking-tighter sm:h-[200px] md:h-[300px] md:text-5xl lg:text-6xl xl:text-7xl">
         <Link
           href="/today"
@@ -42,7 +42,7 @@ const HeroSection = () => {
           </Button>
         </Link>
       </div>
-    </>
+    </div>
   )
 }
 

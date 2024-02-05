@@ -3,6 +3,7 @@ import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
 import useSearchDialog from "@/hooks/use-search-dialog-store"
 
+import { Button } from "../ui/button"
 import {
   Tooltip,
   TooltipContent,
@@ -21,9 +22,14 @@ export default function SearchDialogTrigger({
     <TooltipProvider>
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>
-          <button className={cn(className)} onClick={OpenSearchDialog}>
-            <Search />
-          </button>
+          <Button
+            className={cn("hover:bg-foreground/10", className)}
+            onClick={OpenSearchDialog}
+            variant={"ghost"}
+            size={"icon"}
+          >
+            <Search className="" />
+          </Button>
         </TooltipTrigger>
 
         <TooltipContent

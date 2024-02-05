@@ -83,12 +83,12 @@ const FloatingSideNav: React.FC = () => {
         <ScrollArea className="h-full w-full rounded-3xl">
           <div className={sideNavClass}>
             <SideNavToggle isOpen={isOpen} />
-            {isOpen && <AuthTrigger isOpen={isOpen} />}
             {isOpen && <SearchTrigger isOpen={isOpen} />}
+
             <FloatingSideNavContent items={SIDENAVROUTES} isOpen={isOpen} />
             {!isOpen && <SearchTrigger isOpen={isOpen} />}
             <SideNavThemeToggle isOpen={isOpen} />
-            {!isOpen && <AuthTrigger isOpen={isOpen} />}
+            <AuthTrigger isOpen={isOpen} />
           </div>
         </ScrollArea>
       </TooltipProvider>

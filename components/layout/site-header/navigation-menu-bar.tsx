@@ -5,6 +5,7 @@ import Link from "next/link"
 
 import { MAINROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,6 +15,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
 import { Icons } from "@/components/icons/icons"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
@@ -61,22 +63,32 @@ export function NavigationMenuBar() {
 
         {MAINROUTES.map((route) => (
           <NavigationMenuItem key={route.id}>
-            {route.href !== "/search" ? (
+            {route.href !== "/search" && (
               <Link href={`${route.href}`} legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   {route.title}
                 </NavigationMenuLink>
               </Link>
-            ) : (
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                <SearchDialogTrigger className="rounded-full text-sm" />
-              </NavigationMenuLink>
             )}
           </NavigationMenuItem>
         ))}
 
         <NavigationMenuItem className="rounded-full">
+          {/* <Button
+            variant={"ghost"}
+            size={"icon"}
+            className="rounded-full hover:bg-foreground/10"
+          > */}
+          <SearchDialogTrigger className="flex items-center justify-center rounded-full" />
+          {/* </Button> */}
+        </NavigationMenuItem>
+
+        <NavigationMenuItem className="rounded-full">
           <DirectThemeToggle />
+        </NavigationMenuItem>
+
+        <NavigationMenuItem className="rounded-full">
+          <AuthModalTrigger className="flex items-center justify-center hover:bg-foreground/10" />
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
