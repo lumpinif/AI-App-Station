@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 import { Icons } from "@/components/icons/icons"
-import MobileNav from "@/components/layout/site-header/mobile-nav"
+import MobileNav from "@/components/layout/landing-page-header/mobile-nav"
 
 import FloatingSideNav from "../../components/layout/side-menu/floating-side-nav"
 

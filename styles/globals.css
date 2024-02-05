@@ -126,7 +126,7 @@
     @apply bg-zinc-900 text-[hsl(0,0%,100%)];
   }
   .tab-bar-container {
-    @apply glass-card-background dark:bg-[rgba(0,0,0,0.2)] shadow-outline text-foreground min-w-[350px] rounded-full z-50 py-[10px] px-[20px] flex flex-nowrap justify-center items-center shrink-0 backdrop-blur-[120px] transition-all duration-500 ease-in-out;
+    @apply glass-card-background shadow-outline text-foreground min-w-[350px] rounded-full z-50 py-[10px] px-[20px] flex flex-nowrap justify-center items-center shrink-0 backdrop-blur-[120px] transition-all duration-500 ease-in-out;
   }
   .no-scrollbar {
     scrollbar-width: none;
