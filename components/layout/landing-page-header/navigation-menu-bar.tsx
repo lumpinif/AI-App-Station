@@ -5,7 +5,6 @@ import Link from "next/link"
 
 import { MAINROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -74,13 +73,7 @@ export function NavigationMenuBar() {
         ))}
 
         <NavigationMenuItem className="rounded-full">
-          {/* <Button
-            variant={"ghost"}
-            size={"icon"}
-            className="rounded-full hover:bg-foreground/10"
-          > */}
           <SearchDialogTrigger className="flex items-center justify-center rounded-full" />
-          {/* </Button> */}
         </NavigationMenuItem>
 
         <NavigationMenuItem className="rounded-full">

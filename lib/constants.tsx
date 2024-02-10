@@ -74,3 +74,5 @@ export const PROFILES: Record<string, Profile> = {
 }
 
 export const SCROLL_AREA_ID = "scroll-area"
+
+export const PROTECTED_PATH = ["/dashboard", "/profile"]

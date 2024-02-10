@@ -28,7 +28,7 @@ export default function SearchDialogTrigger({
             variant={"ghost"}
             size={"icon"}
           >
-            <Search className="" />
+            <Search />
           </Button>
         </TooltipTrigger>
 

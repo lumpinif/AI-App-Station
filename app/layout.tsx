@@ -3,6 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
 import { Metadata, Viewport } from "next"
+import QueryProvider from "@/provider/query-provider"
 import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
@@ -93,7 +94,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
                 <SearchCommandDialogProvider />
                 <AuthModalProvider />
-                <main className="flex-1">{children}</main>
+                <QueryProvider>
+                  <main className="flex-1">{children}</main>
+                </QueryProvider>
               </div>
             </div>
             <TailwindIndicator />
