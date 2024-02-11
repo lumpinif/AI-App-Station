@@ -79,10 +79,6 @@ export function NavigationMenuBar() {
         <NavigationMenuItem className="rounded-full">
           <DirectThemeToggle />
         </NavigationMenuItem>
-
-        <NavigationMenuItem className="rounded-full">
-          <AuthModalTrigger className="flex items-center justify-center hover:bg-foreground/10" />
-        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   )

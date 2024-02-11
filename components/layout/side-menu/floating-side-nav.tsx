@@ -88,7 +88,7 @@ const FloatingSideNav: React.FC = () => {
             <FloatingSideNavContent items={SIDENAVROUTES} isOpen={isOpen} />
             {!isOpen && <SearchTrigger isOpen={isOpen} />}
             <SideNavThemeToggle isOpen={isOpen} />
-            <AuthTrigger isOpen={isOpen} />
+            <SideMenuAuthTrigger isOpen={isOpen} />
           </div>
         </ScrollArea>
       </TooltipProvider>
@@ -186,7 +186,7 @@ export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
 
 SearchTrigger.displayName = "SearchTrigger"
 
-export const AuthTrigger: React.FC<SideNavToggleProps> = React.memo(
+export const SideMenuAuthTrigger: React.FC<SideNavToggleProps> = React.memo(
   ({ isOpen }) => {
     const buttonClass = cn(buttonClassBase)
 
@@ -205,7 +205,7 @@ export const AuthTrigger: React.FC<SideNavToggleProps> = React.memo(
   }
 )
 
-AuthTrigger.displayName = "AuthTrigger"
+SideMenuAuthTrigger.displayName = "AuthTrigger"
 
 export const SideNavThemeToggle: React.FC<SideNavToggleProps> = React.memo(
   ({ isOpen }) => {

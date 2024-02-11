@@ -77,8 +77,6 @@ interface AccountFormProps {
 }
 
 export function AccountForm({ user, profile }: AccountFormProps) {
-  const supabase = createSupabaseBrowserClient()
-
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues,

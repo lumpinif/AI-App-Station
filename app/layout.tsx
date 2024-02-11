@@ -92,9 +92,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
                 {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
-                <SearchCommandDialogProvider />
-                <AuthModalProvider />
                 <QueryProvider>
+                  <SearchCommandDialogProvider />
+                  <AuthModalProvider />
                   <main className="flex-1">{children}</main>
                 </QueryProvider>
               </div>

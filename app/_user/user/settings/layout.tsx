@@ -42,7 +42,7 @@ export default async function SettingsLayout({
     data: { user },
   } = await getUserData()
 
-  const { data: profileData } = await getUserProfile(user)
+  const { profile: profileData } = await getUserProfile()
 
   const {
     data: { session },

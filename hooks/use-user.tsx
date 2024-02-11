@@ -4,15 +4,14 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { useQuery } from "@tanstack/react-query"
 
 const initUser = {
-  id: "",
+  avatar_url: "",
+  created_at: "",
+  data_of_birth: "",
+  display_name: "",
   email: "",
   full_name: "",
-  display_name: "",
-  avatar_url: "",
-  data_of_birth: "",
+  id: "",
   job: "",
-  website: "",
-  created_at: "",
   updated_at: "",
 }
 
@@ -21,7 +20,6 @@ export default function useUser() {
     queryKey: ["user"],
     queryFn: async () => {
       const supabase = createSupabaseBrowserClient()
-
       const {
         data: { session },
       } = await supabase.auth.getSession()

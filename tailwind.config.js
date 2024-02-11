@@ -114,6 +114,10 @@ module.exports = {
             transform: "translateY(0px)",
           },
         },
+        fade: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
         // Tooltip
         "slide-up-fade": {
           "0%": { opacity: 0, transform: "translateY(6px)" },
@@ -166,6 +170,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
 
         // Fade up and down
+        fade: "fade 0.6s linear forwards",
         "fade-up": "fade-up 0.5s",
         "fade-down": "fade-down 0.5s",
         "fade-in": "fade-in 0.2s",

@@ -7,26 +7,21 @@ import { toast } from "sonner"
 const fetchUserProfile = async (user: User | null) => {
   if (!user) return null
 
-  try {
-    const { data, error, status } = await getUserProfile(user)
+  const { profile, error } = await getUserProfile()
 
-    if (error && status !== 406) {
-      toast.error(`Error loading user data: ${error || "Unknown error"}`)
-      return null
-    }
-
-    // check avatar_url is same as the one from user_metadata
-
-    const avatarUrl =
-      data && data.avatar_url !== user.user_metadata?.avatar_url
-        ? user.user_metadata?.avatar_url
-        : data?.avatar_url
-
-    return data ? { avatarUrl: avatarUrl, fullname: data.full_name } : null
-  } catch (error) {
+  if (error) {
     toast.error(`Error loading user data: ${error || "Unknown error"}`)
     return null
   }
+
+  // check avatar_url is same as the one from user_metadata
+
+  const avatarUrl =
+    profile && profile.avatar_url !== user.user_metadata?.avatar_url
+      ? user.user_metadata?.avatar_url
+      : profile?.avatar_url
+
+  return profile ? { avatarUrl: avatarUrl, fullname: profile.full_name } : null
 }
 
 // Custom hook for fetching user profile

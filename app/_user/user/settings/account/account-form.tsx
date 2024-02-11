@@ -15,31 +15,31 @@ export default function AccountFormSupabase({ user }: { user: User | null }) {
   const [loading, setLoading] = useState(true)
   const [fullname, setFullname] = useState<string | null>(null)
   const [username, setUsername] = useState<string | null>(null)
-  const [website, setWebsite] = useState<string | null>(null)
+  // const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
 
   const getProfile = useCallback(async () => {
     try {
       setLoading(true)
 
-      const { data, error, status } = await getUserProfile(user)
+      const { profile, error } = await getUserProfile()
 
-      if (error && status !== 406) {
+      if (error) {
         throw error
       }
 
-      if (data) {
-        setFullname(data.full_name)
-        setUsername(data.username)
-        setWebsite(data.website)
-        setAvatarUrl(data.avatar_url)
+      if (profile) {
+        setFullname(profile.full_name)
+        setUsername(profile.display_name)
+        // setWebsite(data.website)
+        setAvatarUrl(profile.avatar_url)
       }
     } catch (error) {
       alert("Error loading user data!")
     } finally {
       setLoading(false)
     }
-  }, [user])
+  }, [])
 
   useEffect(() => {
     getProfile()

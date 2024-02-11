@@ -9,7 +9,7 @@ export default async function SettingsAccountPage() {
     data: { user },
   } = await getUserData()
 
-  const { data: profileData } = await getUserProfile(user)
+  const { profile: profileData } = await getUserProfile()
 
   return (
     <div className="space-y-6">

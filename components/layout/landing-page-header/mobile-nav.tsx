@@ -42,7 +42,7 @@ const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
         {routes.map((route) => (
           <Link
             href={`${route.href}`}
-            key={route.label}
+            key={route.id}
             className={classNames({
               "nav-link": true,
               "!text-blue-500 rounded-full": currentPath === route.href,

@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
-import { User } from "@supabase/auth-helpers-nextjs"
 
 export async function signUpWithEmailAndPassword(signUpData: {
   email: string
@@ -15,6 +14,10 @@ export async function signUpWithEmailAndPassword(signUpData: {
     email: signUpData.email,
     password: signUpData.password,
   })
+
+  if (data) {
+    revalidatePath("/")
+  }
 
   return { data, error }
 }
@@ -29,6 +32,10 @@ export async function signInWithEmailAndPassword(signInData: {
     email: signInData.email,
     password: signInData.password,
   })
+
+  if (data) {
+    revalidatePath("/")
+  }
 
   return { data, error }
 }
@@ -61,11 +68,23 @@ export async function getUserData() {
   return supabase.auth.getUser()
 }
 
-export async function getUserProfile(user: User | null) {
+export async function getUserProfile() {
   const supabase = await createSupabaseServerClient()
-  return supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user?.id as string)
-    .single()
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (session?.user) {
+    // fetch user information profile
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", session.user.id)
+      .single()
+
+    return { profile }
+  }
+
+  return { profile: null, error: "No user session" }
 }
