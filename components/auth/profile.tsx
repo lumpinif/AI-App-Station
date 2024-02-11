@@ -54,13 +54,13 @@ export default function Profile() {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <>
-              {data?.image_url ? (
+              {data?.avatar_url ? (
                 <Image
-                  src={data.image_url || ""}
+                  src={data?.avatar_url || ""}
                   alt={data.display_name || ""}
                   width={50}
                   height={50}
-                  className=" animate-fade  cursor-pointer rounded-full ring-2"
+                  className="animate-fade cursor-pointer rounded-full ring-2"
                 />
               ) : (
                 <div className="flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-full text-2xl font-bold ring-2">
