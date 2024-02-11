@@ -46,13 +46,12 @@ export default function AccountFormSupabase({ user }: { user: User | null }) {
   }, [user, getProfile])
 
   async function updateProfile({
+    fullname,
     username,
-    website,
     avatar_url,
   }: {
     username: string | null
     fullname: string | null
-    website: string | null
     avatar_url: string | null
   }) {
     try {
@@ -60,9 +59,9 @@ export default function AccountFormSupabase({ user }: { user: User | null }) {
 
       const { error } = await supabase.from("profiles").upsert({
         id: user?.id as string,
+        email: user?.email as string,
         full_name: fullname,
-        username,
-        website,
+        display_name: username,
         avatar_url,
         updated_at: new Date().toISOString(),
       })
@@ -106,16 +105,14 @@ export default function AccountFormSupabase({ user }: { user: User | null }) {
         <input
           id="website"
           type="url"
-          value={website || ""}
-          onChange={(e) => setWebsite(e.target.value)}
+          // value={website || ""}
+          // onChange={(e) => setWebsite(e.target.value)}
         />
       </div>
 
       <div>
         <Button
-          onClick={() =>
-            updateProfile({ fullname, username, website, avatar_url })
-          }
+          onClick={() => updateProfile({ fullname, username, avatar_url })}
           disabled={loading}
         >
           {loading ? "Loading ..." : "Update"}
