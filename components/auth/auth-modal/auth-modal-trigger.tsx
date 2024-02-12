@@ -1,7 +1,5 @@
 "use client"
 
-import Image from "next/image"
-
 import { cn } from "@/lib/utils"
 import useAuthModal from "@/hooks/use-auth-modal-store"
 import useUser from "@/hooks/use-user"
@@ -10,7 +8,7 @@ import { Icons } from "@/components/icons/icons"
 
 const AuthModalTrigger = ({ className }: { className?: string }) => {
   const OpenModal = useAuthModal((state) => state.OpenModal)
-  const { isFetching, data: user } = useUser()
+  const { isFetching, data: profile } = useUser()
 
   if (isFetching) {
     return (
@@ -34,12 +32,12 @@ const AuthModalTrigger = ({ className }: { className?: string }) => {
       )}
       onClick={OpenModal}
     >
-      {!user?.avatar_url ? (
+      {!profile?.avatar_url ? (
         <Icons.user className="h-[22px] w-[22px] animate-fade rounded-full hover:cursor-pointer" />
       ) : (
         <AvatarImage
-          src={`${user.avatar_url}`}
-          alt={`${user.display_name}`}
+          src={`${profile.avatar_url}`}
+          alt={`${profile.display_name}`}
           className="animate-fade"
         />
       )}

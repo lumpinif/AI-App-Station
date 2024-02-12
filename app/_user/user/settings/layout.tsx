@@ -3,16 +3,12 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { Separator } from "@/components/ui/separator"
-import UserAvatar from "@/components/auth/avatar/user-avatar"
+import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
 import { SidebarNav } from "@/components/auth/settings/layout/sidebar-nav"
 import UserNameEmail from "@/components/auth/settings/layout/user-name-email"
 import BackButton from "@/components/shared/back-button"
 
-import {
-  getUserData,
-  getUserProfile,
-  getUserSession,
-} from "../../../../server/auth"
+import { getUserSession } from "../../../../server/auth"
 import Loading from "./loading"
 
 export const metadata: Metadata = {
@@ -39,16 +35,10 @@ export default async function SettingsLayout({
   children,
 }: SettingsLayoutProps) {
   const {
-    data: { user },
-  } = await getUserData()
-
-  const { profile: profileData } = await getUserProfile()
-
-  const {
     data: { session },
   } = await getUserSession()
 
-  if (!session && !user) {
+  if (!session) {
     return redirect("/signin")
   }
 
@@ -60,10 +50,7 @@ export default async function SettingsLayout({
       <div className="flex flex-col items-center justify-center px-4 sm:container">
         <div className="w-full rounded-3xl p-10 pb-16 dark:shadow-outline">
           <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
-            <UserAvatar
-              session={session}
-              className="h-20 w-20 sm:h-32 sm:w-32"
-            />
+            <AuthModalTrigger className="h-20 w-20 sm:h-32 sm:w-32" />
             <div>
               <h2 className="text-3xl font-bold  tracking-tight sm:text-4xl">
                 Settings
@@ -74,7 +61,7 @@ export default async function SettingsLayout({
             </div>
           </div>
           <Separator className="my-6" />
-          <UserNameEmail session={session} userData={profileData} />
+          <UserNameEmail />
           <Separator className="my-6" />
           <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
             <aside className="-mx-4 lg:w-1/6">

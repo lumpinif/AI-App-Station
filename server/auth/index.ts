@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
+import { toast } from "sonner"
 
 export async function signUpWithEmailAndPassword(signUpData: {
   email: string
@@ -73,18 +74,17 @@ export async function getUserProfile() {
 
   const {
     data: { session },
-  } = await supabase.auth.getSession()
+  } = await getUserSession()
 
   if (session?.user) {
-    // fetch user information profile
-    const { data: profile } = await supabase
+    const { data: profile, error } = await supabase
       .from("profiles")
       .select("*")
       .eq("id", session.user.id)
       .single()
 
-    return { profile }
+    return { profile, error }
   }
 
-  return { profile: null, error: "No user session" }
+  return { profile: null }
 }

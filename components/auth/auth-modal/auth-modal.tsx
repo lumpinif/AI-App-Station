@@ -24,7 +24,7 @@ const AuthModal = ({ session }: { session: Session | null }) => {
         className="h-[95%]"
         title="Profile"
       >
-        {session ? <UserCard session={session} /> : <LoginCard />}
+        {session ? <UserCard /> : <LoginCard />}
       </Modal>
     </>
   )

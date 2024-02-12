@@ -1,17 +1,8 @@
-import { Session } from "@supabase/auth-helpers-nextjs"
-
-import { Database } from "@/types/supabase"
 import { cn } from "@/lib/utils"
+import useUser from "@/hooks/use-user"
 
-type Profiles = Database["public"]["Tables"]["profiles"]["Row"]
-
-interface UserNameEmail {
-  session: Session | null
-  userData?: Profiles | null
-  className?: string
-}
-
-function UserNameEmail({ session, userData, className }: UserNameEmail) {
+function UserNameEmail({ className }: { className?: string }) {
+  const { data: profile } = useUser()
   return (
     <div>
       <h2
@@ -20,11 +11,9 @@ function UserNameEmail({ session, userData, className }: UserNameEmail) {
           className
         )}
       >
-        {userData?.full_name ||
-          session?.user?.user_metadata?.full_name ||
-          session?.user.email}
+        {profile?.full_name || profile?.email}
       </h2>
-      <p className="text-muted-foreground">{session?.user.email}</p>
+      <p className="text-muted-foreground">{profile?.email}</p>
     </div>
   )
 }

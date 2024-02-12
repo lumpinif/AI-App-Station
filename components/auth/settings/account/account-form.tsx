@@ -73,10 +73,9 @@ const defaultValues: Partial<AccountFormValues> = {
 }
 interface AccountFormProps {
   user: User | null
-  profile: Profiles | null
 }
 
-export function AccountForm({ user, profile }: AccountFormProps) {
+export function AccountForm() {
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues,
