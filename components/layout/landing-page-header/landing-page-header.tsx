@@ -3,7 +3,6 @@ import Link from "next/link"
 import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
 import { Icons } from "@/components/icons/icons"
 
-import { SideMenuAuthTrigger } from "../side-menu/floating-side-nav"
 import FloatingNav from "./floating-nav"
 import MobileNav from "./mobile-nav"
 
