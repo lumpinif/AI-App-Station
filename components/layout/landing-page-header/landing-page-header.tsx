@@ -23,7 +23,7 @@ const Logo = () => (
 
 const LandingPageFloatingNav = () => {
   return (
-    <header className="relative w-screen">
+    <header className="relative max-w-full">
       <div className="z-50 flex items-center justify-between space-x-4 px-8 py-4 sm:space-x-0 sm:py-12">
         <Logo />
         <AuthModalTrigger />
