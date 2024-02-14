@@ -10,6 +10,7 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import AuthModalProvider from "@/components/auth/auth-modal/auth-modal-provider"
+import { LogoAuthHeader } from "@/components/layout/site-header/logo-auth-header"
 import { SearchCommandDialogProvider } from "@/components/shared/search-command-dialog"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
@@ -79,7 +80,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <head />
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased",
+            "min-h-dvh bg-background font-sans antialiased",
             GeistSans.variable
           )}
         >
@@ -90,11 +91,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <div vaul-drawer-wrapper="">
-              <div className="relative flex min-h-dvh flex-col bg-background">
+              <div className="relative flex h-dvh flex-col bg-background">
                 {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
                 <QueryProvider>
                   <SearchCommandDialogProvider />
                   <AuthModalProvider />
+                  <LogoAuthHeader />
                   <main className="flex-1">{children}</main>
                 </QueryProvider>
               </div>
