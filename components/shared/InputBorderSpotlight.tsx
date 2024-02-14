@@ -9,6 +9,7 @@ export const InputBorderSpotlight = ({
   type,
   placeholder,
   onChange,
+  defaultValue,
   ...props
 }: InputProps) => {
   const divRef = useRef<HTMLInputElement>(null)
@@ -58,6 +59,7 @@ export const InputBorderSpotlight = ({
           name={name}
           className="h-10 w-full cursor-default rounded-md border bg-background p-3.5 transition-colors  duration-500 placeholder:select-none focus:border-[rgb(207_174_255)] focus:outline-none"
           onChange={onChange}
+          defaultValue={defaultValue}
         />
         <input
           ref={divRef}

@@ -64,16 +64,16 @@ const DescriptionForm = ({ initialData, appId }: DescriptionFormProps) => {
   }
 
   return (
-    <div className="mt-6 p-4">
+    <section>
       <div className="flex items-center justify-start gap-2 font-medium">
         {!isEditing ? (
           <span
             className={cn(
-              "text-sm text-muted-foreground",
-              !initialData.description && "italic"
+              "text-sm",
+              !initialData.description && "italic text-muted-foreground"
             )}
           >
-            {initialData.description || "No description"}
+            {initialData.description || "Add some description ..."}
           </span>
         ) : (
           <span className="text-xl">{initialData.description}</span>
@@ -124,7 +124,7 @@ const DescriptionForm = ({ initialData, appId }: DescriptionFormProps) => {
           </form>
         </Form>
       )}
-    </div>
+    </section>
   )
 }
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { UpdateAppByTitle } from "@/server/data"
+import { Apps, UpdateAppByTitle } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -20,9 +20,7 @@ import {
 import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
 
 interface TitleFormProps {
-  initialData: {
-    title: string
-  }
+  initialData: Apps
   appId: string
 }
 
@@ -37,7 +35,9 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      title: initialData.title,
+    },
   })
   const { isSubmitting, isValid } = form.formState
   const toggleEdit = () => setIsEditing((current) => !current)
@@ -60,7 +60,7 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
   }
 
   return (
-    <div className="mt-6 p-4">
+    <section>
       <div className="flex items-center justify-start gap-2 font-medium">
         <span className="text-xl">{initialData.title}</span>
         <Button
@@ -113,7 +113,7 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
           </form>
         </Form>
       )}
-    </div>
+    </section>
   )
 }
 

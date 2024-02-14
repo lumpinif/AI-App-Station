@@ -1,8 +1,6 @@
 import { Suspense } from "react"
 
-import { LoadingSpinner } from "@/components/layout/loading-spinner"
-
-import AppSubmitForm from "./_components/submit-form"
+import AppSubmitForm from "./_components/app-submit-form"
 
 const AppSubmitPage = () => {
   return (
@@ -10,10 +8,9 @@ const AppSubmitPage = () => {
       <div className="h-full w-full">
         <h1 className="text-2xl font-medium">Submit the AI App</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Help us to expand our knowledge for the humanity. What is the name of
-          this AI App?
+          Help us to expand our knowledge for the whole humanity.
         </p>
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense>
           <AppSubmitForm />
         </Suspense>
       </div>

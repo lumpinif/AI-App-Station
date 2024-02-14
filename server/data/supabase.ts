@@ -100,7 +100,7 @@ export async function UpdateAppByTitle(
   if (existingApp && existingApp.length > 0) {
     return {
       updatedApp: null,
-      error: "No need to change the title. Please try again.",
+      error: "There exists an app with this name. Please try again.",
     }
   }
 

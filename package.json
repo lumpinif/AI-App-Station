@@ -84,6 +84,7 @@
     "husky": "^9.0.6",
     "postcss": "^8.4.33",
     "prettier": "^2.8.8",
+    "react-loader-spinner": "^6.1.6",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   }

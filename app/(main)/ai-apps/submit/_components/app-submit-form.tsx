@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { SubmitApp } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { ThreeDots } from "react-loader-spinner"
 import { toast } from "sonner"
 import * as z from "zod"
 
@@ -93,7 +94,21 @@ const AppSubmitForm = () => {
           />
           <div className="flex items-center gap-x-2">
             <Button type="submit" disabled={!isValid || isSubmitting}>
-              Continue
+              {isSubmitting ? (
+                <>
+                  Please wait{" "}
+                  <ThreeDots
+                    color="gray"
+                    visible={true}
+                    height="20"
+                    width="20"
+                    ariaLabel="three-dots-loading"
+                    wrapperClass="ml-2"
+                  />
+                </>
+              ) : (
+                <>Continue</>
+              )}
             </Button>
           </div>
         </form>
