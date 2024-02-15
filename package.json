@@ -40,7 +40,6 @@
     "@tanstack/react-query-devtools": "^5.18.1",
     "@vercel/speed-insights": "^1.0.6",
     "class-variance-authority": "^0.7.0",
-    "classnames": "^2.5.1",
     "clsx": "^1.2.1",
     "cmdk": "^0.2.0",
     "date-fns": "^3.3.1",

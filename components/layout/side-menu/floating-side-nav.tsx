@@ -32,23 +32,23 @@ const FloatingSideNav: React.FC = () => {
     if (isOpen) {
       switch (event.code) {
         case "Digit1":
-          router.push("/today")
+          router.push("/ai-apps/create")
           break
         case "Digit2":
-          router.push("/ai-apps")
+          router.push("/ai-apps/discovery")
           break
         case "Digit3":
-          router.push("/discover")
+          router.push("/ai-apps/develop")
           break
         case "Digit4":
-          router.push("/search")
+          router.push("/ai-apps/design")
           break
-        // case "Digit5":
-        //   router.push("/ai-apps/gpts")
-        //   break
-        // case "Digit6":
-        //   router.push("/ai-apps/work")
-        //   break
+        case "Digit5":
+          router.push("/ai-apps/gpts")
+          break
+        case "Digit6":
+          router.push("/ai-apps/work")
+          break
         default:
           break
       }
@@ -57,26 +57,19 @@ const FloatingSideNav: React.FC = () => {
 
   useKeyPress({
     callback: handleKeyPress,
-    keyCodes: [
-      "Digit1",
-      "Digit2",
-      "Digit3",
-      "Digit4",
-      // "Digit5",
-      // "Digit6"
-    ],
+    keyCodes: ["Digit1", "Digit2", "Digit3", "Digit4", "Digit5", "Digit6"],
   })
 
   const sideNavClass = cn(
-    "dark:glass-card-background inline-flex flex-col gap-2.5 p-2.5 transition-all duration-300 ease-in-out dark:shadow-outline",
+    "dark:glass-card-background cubic-bezier(0.32, 0.72, 0, 1) inline-flex flex-col gap-2.5 p-2.5 transition-all duration-500 dark:shadow-outline",
     !isOpen ? "w-20 rounded-[2.5rem]" : "w-48 rounded-3xl"
   )
 
   return (
     <aside
       className={cn(
-        "z-50 ml-6 hidden max-h-[calc(80vh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-300 ease-linear sm:flex",
-        !isOpen ? "rounded-[2.5rem]" : "ml-5"
+        "cubic-bezier(0.32, 0.72, 0, 1) z-50 ml-6 hidden max-h-[calc(70vh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 sm:flex",
+        !isOpen ? "rounded-[2.5rem]" : "ml-2"
       )}
     >
       <TooltipProvider>
@@ -84,7 +77,6 @@ const FloatingSideNav: React.FC = () => {
           <div className={sideNavClass}>
             <SideNavToggle isOpen={isOpen} />
             {isOpen && <SearchTrigger isOpen={isOpen} />}
-
             <FloatingSideNavContent items={SIDENAVROUTES} isOpen={isOpen} />
             {!isOpen && <SearchTrigger isOpen={isOpen} />}
             <SideNavThemeToggle isOpen={isOpen} />

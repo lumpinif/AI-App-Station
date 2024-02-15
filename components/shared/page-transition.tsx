@@ -11,8 +11,8 @@ const PageTransition = ({ children }: PageTransitionProps) => {
     <motion.div
       initial={{ x: "80%", opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.4, ease: "easeInOut" }}
-      className="absolute inset-0 bg-background/25"
+      transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+      className="absolute inset-0 z-50 bg-background/20 backdrop-blur-lg"
     >
       {children}
     </motion.div>

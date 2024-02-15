@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import classNames from "classnames"
 
 import { MAINROUTES, NavItemProps } from "@/config/routes"
 import { cn } from "@/lib/utils"
@@ -14,9 +13,10 @@ const MobileNav = () => {
   return (
     <MobileNavBar
       routes={MAINROUTES}
-      className={`${scrolled ? "translate-y-full opacity-30" : ``} ${
+      className={cn(
+        scrolled ? "translate-y-[110%] opacity-30" : ``,
         !hideNavOnScroll ? `translate-y-0 opacity-100` : ``
-      }`}
+      )}
     />
   )
 }
@@ -43,7 +43,7 @@ const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
           <Link
             href={`${route.href}`}
             key={route.id}
-            className={classNames({
+            className={cn({
               "nav-link": true,
               "!text-blue-500 rounded-full": currentPath === route.href,
             })}

@@ -38,10 +38,10 @@
 
   .dark {
     /* --background: 240 10% 6%; */
-    --background: 0 0.5% 16%;
+    --background: 60 4% 8%;
     --foreground: 0 0% 99%;
 
-    --card: 0 0.5% 16%;
+    --card: 60 4% 16%;
     --card-foreground: 0 0% 99%;
 
     --popover: 0 1% 16%;
@@ -50,20 +50,20 @@
     --primary: 0 0% 99%;
     --primary-foreground: 168 4% 10%;
 
-    --secondary: 0 0.5% 28%;
+    --secondary: 60 0.5% 28%;
     --secondary-foreground: 0 0% 99%;
 
-    --muted: 0 0.5% 28%;
+    --muted: 60 0.5% 28%;
     --muted-foreground: 0 1% 70%;
 
-    --accent: 0 0.5% 28%;
+    --accent: 60 0.5% 28%;
     --accent-foreground: 0 0% 99%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 99%;
 
-    --border: 0 0.5% 35%;
-    --input: 0 0.5% 35%;
+    --border: 60 0.5% 35%;
+    --input: 60 0.5% 35%;
     --ring: 0 4.9% 83.9%;
   }
 }

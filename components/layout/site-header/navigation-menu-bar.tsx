@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { MAINROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
@@ -14,15 +15,15 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
 import { Icons } from "@/components/icons/icons"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
 
 export function NavigationMenuBar() {
+  const currentPath = usePathname()
   return (
     <NavigationMenu>
-      <NavigationMenuList className="glass-card-background mx-4 h-14 rounded-full p-2 bg-blend-luminosity backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
+      <NavigationMenuList className="glass-card-background mx-2 h-14 rounded-full p-2 text-foreground/80 bg-blend-luminosity backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
         <NavigationMenuItem className="rounded-full">
           <NavigationMenuTrigger className="bg-transparent">
             Getting started
@@ -64,7 +65,11 @@ export function NavigationMenuBar() {
           <NavigationMenuItem key={route.id}>
             {route.href !== "/search" && (
               <Link href={`${route.href}`} legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink
+                  className={cn(navigationMenuTriggerStyle(), {
+                    "!text-blue-500 rounded-full": currentPath === route.href,
+                  })}
+                >
                   {route.title}
                 </NavigationMenuLink>
               </Link>

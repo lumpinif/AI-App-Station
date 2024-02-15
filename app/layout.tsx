@@ -10,7 +10,8 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import AuthModalProvider from "@/components/auth/auth-modal/auth-modal-provider"
-import { LogoAuthHeader } from "@/components/layout/site-header/logo-auth-header"
+import { SiteFooter } from "@/components/layout/site-footer/site-footer"
+import { SiteHeader } from "@/components/layout/site-header/site-header"
 import { SearchCommandDialogProvider } from "@/components/shared/search-command-dialog"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
@@ -96,8 +97,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 <QueryProvider>
                   <SearchCommandDialogProvider />
                   <AuthModalProvider />
-                  <LogoAuthHeader />
-                  <main className="flex-1">{children}</main>
+                  <main className="flex-1">
+                    <div className="flex h-full flex-col">
+                      <SiteHeader />
+                      <main className="h-full flex-1">{children}</main>
+                    </div>
+                  </main>
+                  <SiteFooter />
                 </QueryProvider>
               </div>
             </div>
