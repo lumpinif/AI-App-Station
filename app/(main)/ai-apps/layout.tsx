@@ -10,7 +10,7 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
       <div className="fixed bottom-1/2 top-1/2 hidden -translate-y-1/2 flex-col justify-center sm:flex">
         <FloatingSideNav />
       </div>
-      <main className="glass-card-background h-full rounded-2xl shadow-outline sm:ml-32">
+      <main className="h-full rounded-2xl p-2 shadow-outline sm:ml-32">
         {/* TODO: CONSIDERIGN ADD PROGRESSIVE BLUR TO THE EDGE OF THE SCROLLAREA */}
         {children}
       </main>

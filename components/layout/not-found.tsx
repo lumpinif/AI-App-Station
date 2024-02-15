@@ -4,18 +4,16 @@ import { PageTitle } from "./page-title"
 
 export function NotFound() {
   return (
-    <div className="relative flex w-full flex-col">
-      <div className="z-[1] w-full px-6 py-8 lg:px-8 lg:pb-16 lg:pt-24">
-        <div className="mx-auto w-full lg:mb-0 lg:max-w-3xl">
-          <div className="mb-6 flex flex-col gap-6">
-            <FileSearch size="60px" />
-            <PageTitle title="Not found 404" className="font-semibold" />
-          </div>
-          <p>
-            This link might be broken, deleted, or moved. Nevertheless, there’s
-            nothing to see here...
-          </p>
+    <div className="flex flex-col sm:pl-20">
+      <div className="container lg:max-w-4xl">
+        <div className="flex items-center gap-10">
+          <FileSearch size="40px" />
+          <PageTitle title="Page Not found - 404" className="font-medium" />
         </div>
+        <p className="mt-4 pl-1">
+          This link might be broken, deleted, or moved. Nevertheless, there’s
+          nothing to see here...
+        </p>
       </div>
     </div>
   )

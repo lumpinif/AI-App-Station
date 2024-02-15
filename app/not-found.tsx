@@ -5,10 +5,10 @@ export default function NotFoundPage() {
   return (
     <>
       <div className="flex h-dvh flex-col">
-        <div className="p-8 pl-10">
+        <div className="px-6">
           <BackButton className="dark:shadow-outline" />
         </div>
-        <div className="flex h-full flex-1 items-center justify-center">
+        <div className="-mt-24 flex h-full flex-1 items-center justify-center">
           <NotFound />
         </div>
       </div>

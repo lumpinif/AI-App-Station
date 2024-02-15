@@ -31,14 +31,14 @@ export function NavigationMenuBar() {
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
-                <NavigationMenuLink asChild>
+                <NavigationMenuLink asChild className="">
                   <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none hover:shadow-lg"
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none hover:cursor-pointer"
                     href="/"
                   >
                     <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg  font-medium">
-                      shadcn/ui
+                    <div className="mb-2 mt-4 text-lg font-medium">
+                      AI App Station
                     </div>
                     <p className="text-sm leading-tight text-muted-foreground">
                       Beautifully designed components that you can copy and
@@ -96,8 +96,8 @@ const ListItem = React.forwardRef<
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
-          ref={ref}
+        <Link
+          href={`${ref}`}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
@@ -108,7 +108,7 @@ const ListItem = React.forwardRef<
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
             {children}
           </p>
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   )

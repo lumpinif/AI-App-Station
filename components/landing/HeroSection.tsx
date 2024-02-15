@@ -5,11 +5,13 @@ import { TextTypingEffectWithTextsFadeOut } from "./TypingEffect"
 
 const HeroSection = () => {
   return (
-    <div className="container relative my-auto flex h-5/6 w-full flex-col items-center gap-14 sm:justify-center sm:gap-20">
-      {/* <HeroLogo /> */}
-      <TypingEffect />
-      <Banner />
-      <LandingActions />
+    <div className="h-dvh">
+      <div className="container relative my-auto flex h-5/6 w-full flex-col items-center gap-14 sm:justify-center sm:gap-20">
+        {/* <HeroLogo /> */}
+        <TypingEffect />
+        <Banner />
+        <LandingActions />
+      </div>
     </div>
   )
 }

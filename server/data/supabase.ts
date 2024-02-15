@@ -34,7 +34,7 @@ export async function SubmitApp(title: Apps["title"]) {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return { newApp: null, error: "Unauthorized!" }
+    return { newApp: null, error: "You need to login to continue." }
   }
 
   if (title === null) {
@@ -64,9 +64,9 @@ export async function SubmitApp(title: Apps["title"]) {
 
   // TODO: REMOVE THIE BEFORE PRODUCTION
 
-  if (error) {
-    console.log("🚀 ~ Error: Submiting App ~ error:", error)
-  }
+  // if (error) {
+  //   console.log("🚀 ~ Error: Submiting App ~ error:", error)
+  // }
 
   return { newApp, error }
 }

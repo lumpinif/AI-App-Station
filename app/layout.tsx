@@ -92,15 +92,15 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <div vaul-drawer-wrapper="">
-              <div className="relative flex h-dvh flex-col bg-background">
+              <div className="relative flex min-h-dvh flex-col bg-background">
                 {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
                 <QueryProvider>
                   <SearchCommandDialogProvider />
                   <AuthModalProvider />
-                  <main className="flex-1">
+                  <main className="min-h-dvh flex-1">
                     <div className="flex h-full flex-col">
                       <SiteHeader />
-                      <main className="h-full flex-1">{children}</main>
+                      <main className="mb-2 h-full flex-1">{children}</main>
                     </div>
                   </main>
                   <SiteFooter />

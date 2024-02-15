@@ -170,7 +170,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
 
         // Fade up and down
-        fade: "fade 0.6s linear forwards",
+        fade: "fade 0.8s cubic-bezier(0.32, 0.72, 0, 1) forwards",
         "fade-up": "fade-up 0.5s",
         "fade-down": "fade-down 0.5s",
         "fade-in": "fade-in 0.2s",

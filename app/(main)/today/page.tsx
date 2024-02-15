@@ -5,7 +5,7 @@ const TodayPage = async () => {
   return (
     <>
       {/* <ScrollArea className="h-[calc(100vh-66px)] rounded-3xl"> */}
-      <section className="grid h-full items-center bg-blue-200/20 px-4 pb-8">
+      <section className="grid h-full items-center p-4 pb-8">
         <BentoGridSecondDemo />
       </section>
       {/* </ScrollArea> */}
