@@ -8,7 +8,7 @@ export function NotFound() {
       <div className="container lg:max-w-4xl">
         <div className="flex items-center gap-10">
           <FileSearch size="40px" />
-          <PageTitle title="Page Not found - 404" className="font-medium" />
+          <PageTitle title="Page Not found" className="text-3xl font-medium" />
         </div>
         <p className="mt-4 pl-1">
           This link might be broken, deleted, or moved. Nevertheless, there’s

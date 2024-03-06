@@ -15,10 +15,15 @@ export const PageTitle = ({
   ...rest
 }: PageTitleProps) => {
   return (
-    <div className={cn("", className)}>
-      <Balancer as="h1" {...rest}>
-        {title}
-      </Balancer>
+    <div
+      className={cn(
+        "text-4xl font-bold tracking-[-.016em] md:leading-[48px] md:tracking-[-.024em]",
+        className
+      )}
+    >
+      {/* <Balancer as="h1" {...rest}> */}
+      {title}
+      {/* </Balancer> */}
       {subtitle}
     </div>
   )

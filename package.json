@@ -43,6 +43,7 @@
     "clsx": "^2.1.0",
     "cmdk": "^0.2.0",
     "date-fns": "^3.3.1",
+    "embla-carousel-react": "^8.0.0",
     "framer-motion": "^11.0.8",
     "geist": "^1.2.1",
     "lucide": "^0.304.0",

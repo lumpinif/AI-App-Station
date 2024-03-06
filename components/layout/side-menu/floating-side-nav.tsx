@@ -32,22 +32,22 @@ const FloatingSideNav: React.FC = () => {
     if (isOpen) {
       switch (event.code) {
         case "Digit1":
-          router.push("/ai-apps/create")
+          router.push("/ai-apps/collections/create")
           break
+        // case "Digit2":
+        //   router.push("/ai-apps/collections/discovery")
+        //   break
         case "Digit2":
-          router.push("/ai-apps/discovery")
+          router.push("/ai-apps/collections/develop")
           break
         case "Digit3":
-          router.push("/ai-apps/develop")
+          router.push("/ai-apps/collections/design")
           break
         case "Digit4":
-          router.push("/ai-apps/design")
+          router.push("/ai-apps/collections/gpts")
           break
         case "Digit5":
-          router.push("/ai-apps/gpts")
-          break
-        case "Digit6":
-          router.push("/ai-apps/work")
+          router.push("/ai-apps/collections/work")
           break
         default:
           break
@@ -68,8 +68,8 @@ const FloatingSideNav: React.FC = () => {
   return (
     <aside
       className={cn(
-        "cubic-bezier(0.32, 0.72, 0, 1) z-50 ml-6 hidden max-h-[calc(85svh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 sm:flex",
-        !isOpen ? "rounded-[2.5rem]" : "ml-5 mt-5"
+        "cubic-bezier(0.32, 0.72, 0, 1) z-50 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 sm:flex",
+        !isOpen ? "rounded-[2.5rem]" : "-ml-2 mt-16"
       )}
     >
       <TooltipProvider>
