@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation"
 
 import { MAINROUTES, NavItemProps } from "@/config/routes"
 import { cn } from "@/lib/utils"
-import { useScrollAndHideNav } from "@/hooks/use-scroll"
+import { useScroll } from "@/hooks/use-scroll"
 
 const MobileNav = () => {
-  const { scrolled, hideNavOnScroll } = useScrollAndHideNav(5)
+  const { scrolled, hideNavOnScroll } = useScroll(5)
 
   return (
     <MobileNavBar

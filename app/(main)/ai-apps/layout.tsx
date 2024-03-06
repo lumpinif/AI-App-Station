@@ -11,7 +11,7 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
   return (
     <>
       {/* Mobile scrolling nav */}
-      <div className="container">
+      <div className="container ">
         <AiAppsPageTitle />
         <MobileCategoryNav />
         <div className="flex h-full w-full gap-4">

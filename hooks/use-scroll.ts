@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from "react"
  *  - hideNavOnScroll: boolean for if navbar should be hidden
  */
 
-export const useScrollAndHideNav = (scrollThreshold: number) => {
+export const useScroll = (scrollThreshold: number) => {
   const [scrolled, setScrolled] = useState<boolean>(false)
   const [hideNavOnScroll, setHideNavOnScroll] = useState<boolean>(false)
   const [lastScroll, setLastScroll] = useState<number>(0)

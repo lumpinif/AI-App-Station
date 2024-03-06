@@ -3,7 +3,9 @@ type collectionPageProps = {
 }
 
 const collectionPage = ({ params }: collectionPageProps) => {
-  return <div>{params.collection} Page</div>
+  return (
+    <div className="sticky top-0 w-full bg-slate-400">{params.collection}</div>
+  )
 }
 
 export default collectionPage

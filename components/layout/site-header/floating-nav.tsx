@@ -1,11 +1,11 @@
 "use client"
 
-import { useScrollAndHideNav } from "@/hooks/use-scroll"
+import { useScroll } from "@/hooks/use-scroll"
 
 import { NavigationMenuBar } from "./navigation-menu-bar"
 
 const FloatingNav = () => {
-  const { hideNavOnScroll } = useScrollAndHideNav(20)
+  const { hideNavOnScroll } = useScroll(20)
 
   return (
     <header

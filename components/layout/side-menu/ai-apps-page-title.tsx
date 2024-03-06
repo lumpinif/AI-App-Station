@@ -13,7 +13,7 @@ const AiAppsPageTitle = ({}: AiAppsPageTitleProps) => {
   const isOpen = useSideNav((state) => state.isOpen)
 
   return (
-    <div className={cn("mb-5 w-full", !isOpen ? "sm:ml-28" : "sm:ml-52")}>
+    <div className={cn("mb-5 w-full", !isOpen ? "sm:pl-28" : "sm:pl-52")}>
       <Link href="/ai-apps">
         <PageTitle title="Apps" className="w-fit text-start" />
       </Link>
