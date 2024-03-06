@@ -177,3 +177,10 @@
     @apply px-4;
   }
 }
+
+@media (min-width: 1400px) {
+  .container {
+    /* old: 1400px */
+    max-width: 100%;
+  }
+}

@@ -1,6 +1,3 @@
-import Link from "next/link"
-
-import { PageTitle } from "@/components/layout/page-title"
 import AiAppsPageTitle from "@/components/layout/side-menu/ai-apps-page-title"
 import AiAppsPageWrapper from "@/components/layout/side-menu/ai-apps-page-wrapper"
 

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import {
   Carousel,
   CarouselContent,
