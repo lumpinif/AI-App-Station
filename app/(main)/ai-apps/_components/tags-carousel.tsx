@@ -3,6 +3,7 @@
 import React, { Suspense } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { motion } from "framer-motion"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
@@ -23,6 +24,7 @@ export function TagsCarousel() {
   const [scrollPrev, setScrollPrev] = React.useState(false)
   const [scrollNext, setScrollNext] = React.useState(true)
   const pathname = usePathname()
+  const isActive = (href: string) => pathname === href
 
   const filteredRoutes = React.useMemo(
     () => SIDENAVROUTES.filter((route) => pathname.includes(`${route.href}`)),
@@ -86,18 +88,31 @@ export function TagsCarousel() {
                     key={item.href}
                     className="basis-auto pl-2 first:pl-5 last:pr-1"
                   >
-                    {item.href === pathname ? (
+                    {isActive(`${item.href}`) ? (
                       <Suspense fallback={<div>Loading...</div>}>
                         <Link
                           href={`${item.href}`}
                           className={cn(
                             buttonVariants({
-                              variant: "default",
+                              variant: "ghost",
                               size: "sm",
-                              className: "rounded-full",
+                              className: "relative rounded-full",
                             })
                           )}
                         >
+                          {isActive(`${item.href}`) && (
+                            <motion.span
+                              layoutId="bubble"
+                              className="absolute inset-0 z-10 bg-white mix-blend-difference"
+                              style={{ borderRadius: 9999 }}
+                              transition={{
+                                type: "spring",
+                                bounce: 0.3,
+                                duration: 0.6,
+                                ease: [0.32, 0.72, 0, 1],
+                              }}
+                            />
+                          )}
                           {item.title}
                         </Link>
                       </Suspense>
@@ -107,9 +122,9 @@ export function TagsCarousel() {
                           href={`${item.href}`}
                           className={cn(
                             buttonVariants({
-                              variant: "outline",
+                              variant: "ghost",
                               size: "sm",
-                              className: "rounded-full",
+                              className: "rounded-full text-muted-foreground",
                             })
                           )}
                         >

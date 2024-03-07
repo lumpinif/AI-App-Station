@@ -4,7 +4,11 @@ type collectionPageProps = {
 
 const collectionPage = ({ params }: collectionPageProps) => {
   return (
-    <div className="sticky top-0 w-full bg-slate-400">{params.collection}</div>
+    <>
+      <div className="m-2 text-2xl font-bold uppercase">
+        {params.collection}
+      </div>
+    </>
   )
 }
 
