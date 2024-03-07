@@ -63,20 +63,35 @@ export function TagsCarousel() {
             <CarouselItem className="basis-auto pl-2 first:pl-5 last:pr-1">
               {filteredRoutes &&
                 filteredRoutes.map((route) => (
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <div
-                      // href={`${route.href}`}
-                      className={cn(
-                        buttonVariants({
-                          variant: "default",
-                          size: "sm",
-                          className: "rounded-full",
-                        })
-                      )}
-                    >
-                      All
-                    </div>
-                  </Suspense>
+                  <>
+                    {isActive(`${route.href}`) ? (
+                      <Link
+                        href={`${route.href}`}
+                        className={cn(
+                          buttonVariants({
+                            variant: "default",
+                            size: "sm",
+                            className: "rounded-full",
+                          })
+                        )}
+                      >
+                        All
+                      </Link>
+                    ) : (
+                      <Link
+                        href={`${route.href}`}
+                        className={cn(
+                          buttonVariants({
+                            variant: "ghost",
+                            size: "sm",
+                            className: "rounded-full text-muted-foreground",
+                          })
+                        )}
+                      >
+                        All
+                      </Link>
+                    )}
+                  </>
                 ))}
             </CarouselItem>
 
@@ -90,61 +105,57 @@ export function TagsCarousel() {
                       className="basis-auto pl-2 first:pl-5 last:pr-1"
                     >
                       {isActive(`${item.href}`) ? (
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <motion.div
-                            className={cn(
-                              buttonVariants({
-                                variant: "tag",
-                                size: "sm",
-                                className:
-                                  "relative rounded-full transition-colors duration-300",
-                              })
-                            )}
-                            initial={{ color: "hsl(var(--muted-foreground))" }}
-                            animate={{
-                              color: [
-                                "hsl(var(--muted-foreground))",
-                                "hsl(var(--primary-foreground))",
-                              ],
-                            }}
-                          >
-                            {isActive(`${item.href}`) && (
-                              <motion.span
-                                layoutId="bubble"
-                                className={cn(
-                                  buttonVariants({
-                                    variant: "default",
-                                    size: "sm",
-                                    className:
-                                      "rounded-full absolute inset-0 -z-10 mix-blend-difference",
-                                  })
-                                )}
-                                transition={{
-                                  type: "spring",
-                                  bounce: 0.2,
-                                  duration: 0.35,
-                                  ease: [0.32, 0.72, 0, 1],
-                                }}
-                              />
-                            )}
-                            {item.title}
-                          </motion.div>
-                        </Suspense>
+                        <motion.div
+                          className={cn(
+                            buttonVariants({
+                              variant: "tag",
+                              size: "sm",
+                              className:
+                                "relative rounded-full transition-colors duration-300",
+                            })
+                          )}
+                          initial={{ color: "hsl(var(--muted-foreground))" }}
+                          animate={{
+                            color: [
+                              "hsl(var(--muted-foreground))",
+                              "hsl(var(--primary-foreground))",
+                            ],
+                          }}
+                        >
+                          {isActive(`${item.href}`) && (
+                            <motion.span
+                              layoutId="bubble"
+                              className={cn(
+                                buttonVariants({
+                                  variant: "default",
+                                  size: "sm",
+                                  className:
+                                    "rounded-full absolute inset-0 -z-10",
+                                })
+                              )}
+                              transition={{
+                                type: "spring",
+                                bounce: 0.2,
+                                duration: 0.35,
+                                ease: [0.32, 0.72, 0, 1],
+                              }}
+                            />
+                          )}
+                          {item.title}
+                        </motion.div>
                       ) : (
-                        <Suspense fallback={<div>Loading...</div>}>
-                          <Link
-                            href={`${item.href}`}
-                            className={cn(
-                              buttonVariants({
-                                variant: "ghost",
-                                size: "sm",
-                                className: "rounded-full text-muted-foreground",
-                              })
-                            )}
-                          >
-                            {item.title}
-                          </Link>
-                        </Suspense>
+                        <Link
+                          href={`${item.href}`}
+                          className={cn(
+                            buttonVariants({
+                              variant: "ghost",
+                              size: "sm",
+                              className: "rounded-full text-muted-foreground",
+                            })
+                          )}
+                        >
+                          {item.title}
+                        </Link>
                       )}
                     </MemoizedCarouselItem>
                   ))}
