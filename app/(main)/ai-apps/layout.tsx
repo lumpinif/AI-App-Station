@@ -3,7 +3,7 @@ import AiAppsPageWrapper from "@/components/layout/side-menu/ai-apps-page-wrappe
 
 import FloatingSideNav from "../../../components/layout/side-menu/floating-side-nav"
 import { MobileCategoryNav } from "./_components/mobile-category-nav"
-import StickyBar from "./collections/[collection]/sticky-bar"
+import StickyFloatingHeader from "./collections/[collection]/sticky-bar"
 
 interface AiAppsLayoutProps {
   children: React.ReactNode
@@ -11,6 +11,8 @@ interface AiAppsLayoutProps {
 export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
   return (
     <>
+      {/* TODO: Continue building sticky floating header */}
+      {/* <StickyFloatingHeader /> */}
       {/* Mobile scrolling nav */}
       <div className="container">
         <AiAppsPageTitle />
@@ -18,7 +20,6 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
       <div className="container">
         <MobileCategoryNav />
       </div>
-      <StickyBar />
       <div className="container">
         <div className="flex h-full w-full gap-4">
           {/* Floating Side Nav */}

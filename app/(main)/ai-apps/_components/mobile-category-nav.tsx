@@ -1,29 +1,36 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 
-import { TagsList } from "./tags-list"
+import { TagsCarousel } from "./tags-carousel"
 
 export function MobileCategoryNav() {
+  const router = useRouter()
   const pathname = usePathname()
-  const isActive = (href: string) => pathname.includes(href)
+
+  // Function to handle tab selection
+  const handleTabSelection = (href: string) => {
+    router.push(href) // Update the URL
+  }
 
   return (
     <div className="sm:hidden">
       <div className="flex flex-col">
         <div className="scrollbar-none flex gap-x-6 overflow-x-auto py-1 sm:hidden">
           {SIDENAVROUTES.map((route) => (
-            <Link
-              key={route.href}
-              href={`${route.href}`}
+            <div
+              key={route.title}
+              onClick={() => {
+                handleTabSelection(`${route.href}`)
+              }}
+              // href={`${route.href}`}
               className={cn(
-                "relative flex items-center gap-x-2 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
-                isActive(`${route.href}`)
+                "relative flex cursor-pointer items-center gap-x-2 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
+                pathname.includes(`${route.href}`)
                   ? "border-primary text-primary"
                   : "border-transparent text-muted-foreground hover:text-primary"
               )}
@@ -31,10 +38,10 @@ export function MobileCategoryNav() {
                 WebkitTapHighlightColor: "transparent",
               }}
             >
-              {isActive(`${route.href}`) && (
+              {pathname.includes(`${route.href}`) && (
                 <motion.span
                   layoutId="bubble_underline"
-                  className="absolute inset-0 z-10 border-b-2 border-primary pb-1 mix-blend-difference"
+                  className="absolute inset-0 z-10 border-b-2 border-primary pb-1"
                   transition={{
                     type: "spring",
                     bounce: 0.2,
@@ -44,11 +51,11 @@ export function MobileCategoryNav() {
                 />
               )}
               <span>{route.title}</span>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
-      {pathname === "/ai-apps" ? null : <TagsList />}
+      {pathname === "/ai-apps" ? null : <TagsCarousel />}
     </div>
   )
 }

@@ -1,27 +1,30 @@
 "use client"
 
+import Link from "next/link"
 // interface StickyBarProps {
 //   param: string
 // }
 import { usePathname } from "next/navigation"
 
-const StickyBar = () => {
+const StickyFloatingHeader = () => {
   const currentPath = usePathname()
   const path = currentPath.split("/").slice(1)
   const lastSegment = path.length - 1
 
   return (
     <>
-      <div className="sticky left-0 right-0 top-0 hidden h-14 w-full bg-muted/50 backdrop-blur-sm sm:block">
-        <div className="flex h-full items-center justify-center gap-x-2">
+      <div className="glass-card-background sticky inset-x-0 top-0 hidden h-14 w-full border-b text-sm font-semibold tracking-tight backdrop-blur-sm sm:block">
+        <div className="line-clamp-2 flex h-full shrink-0 items-center justify-center gap-x-2">
           {path.map((path, index) =>
             index === lastSegment ? (
-              <span key={index}>{path}</span>
+              <Link href={`/${path}`} key={index}>
+                {path}
+              </Link>
             ) : (
-              <span className="flex gap-x-2">
+              <Link href={`/${path}`} className="flex gap-x-2">
                 <span key={index}>{path}</span>
                 <span>-</span>
-              </span>
+              </Link>
             )
           )}
         </div>
@@ -30,4 +33,4 @@ const StickyBar = () => {
   )
 }
 
-export default StickyBar
+export default StickyFloatingHeader

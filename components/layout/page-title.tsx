@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Balancer from "react-wrap-balancer"
 
 import { cn } from "@/lib/utils"
@@ -6,12 +7,14 @@ interface PageTitleProps {
   title: string
   subtitle?: string
   className?: string
+  href?: string
 }
 
 export const PageTitle = ({
   title,
   subtitle,
   className,
+  href,
   ...rest
 }: PageTitleProps) => {
   return (
@@ -21,10 +24,20 @@ export const PageTitle = ({
         className
       )}
     >
+      {href ? (
+        <Link href={href}>
+          {title}
+          {subtitle}
+        </Link>
+      ) : (
+        <>
+          {title}
+          {subtitle}
+        </>
+      )}
+
       {/* <Balancer as="h1" {...rest}> */}
-      {title}
       {/* </Balancer> */}
-      {subtitle}
     </div>
   )
 }

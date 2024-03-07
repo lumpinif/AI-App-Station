@@ -46,113 +46,128 @@ export function TagsCarousel() {
   }, [api])
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Carousel
-        opts={{
-          duration: 20,
-          containScroll: "trimSnaps",
-          align: "start",
-          slidesToScroll: "auto",
-        }}
-        setApi={setApi}
-        className="py-3 transition-all duration-300 ease-in-out"
-      >
-        <CarouselContent className="relative">
-          {/* All button */}
-          <CarouselItem className="basis-auto pl-2 first:pl-5 last:pr-1">
+    <div className="flex items-center gap-4">
+      <div className="-ml-1 grow overflow-hidden transition-all duration-300 ease-linear sm:hidden">
+        <Carousel
+          opts={{
+            duration: 20,
+            containScroll: "trimSnaps",
+            align: "start",
+            slidesToScroll: "auto",
+          }}
+          setApi={setApi}
+          className="py-3 transition-all duration-300 ease-in-out"
+        >
+          <CarouselContent className="relative">
+            {/* All button */}
+            <CarouselItem className="basis-auto pl-2 first:pl-5 last:pr-1">
+              {filteredRoutes &&
+                filteredRoutes.map((route) => (
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <div
+                      // href={`${route.href}`}
+                      className={cn(
+                        buttonVariants({
+                          variant: "default",
+                          size: "sm",
+                          className: "rounded-full",
+                        })
+                      )}
+                    >
+                      All
+                    </div>
+                  </Suspense>
+                ))}
+            </CarouselItem>
+
+            {/* Tags buttons */}
             {filteredRoutes &&
               filteredRoutes.map((route) => (
-                <Suspense fallback={<div>Loading...</div>}>
-                  <Link
-                    href={`${route.href}`}
-                    className={cn(
-                      buttonVariants({
-                        variant: "default",
-                        size: "sm",
-                        className: "rounded-full",
-                      })
-                    )}
-                  >
-                    All
-                  </Link>
-                </Suspense>
+                <>
+                  {route.items?.map((item) => (
+                    <MemoizedCarouselItem
+                      key={item.href}
+                      className="basis-auto pl-2 first:pl-5 last:pr-1"
+                    >
+                      {isActive(`${item.href}`) ? (
+                        <Suspense fallback={<div>Loading...</div>}>
+                          <motion.div
+                            className={cn(
+                              buttonVariants({
+                                variant: "tag",
+                                size: "sm",
+                                className:
+                                  "relative rounded-full transition-colors duration-300",
+                              })
+                            )}
+                            initial={{ color: "hsl(var(--muted-foreground))" }}
+                            animate={{
+                              color: [
+                                "hsl(var(--muted-foreground))",
+                                "hsl(var(--primary-foreground))",
+                              ],
+                            }}
+                          >
+                            {isActive(`${item.href}`) && (
+                              <motion.span
+                                layoutId="bubble"
+                                className={cn(
+                                  buttonVariants({
+                                    variant: "default",
+                                    size: "sm",
+                                    className:
+                                      "rounded-full absolute inset-0 -z-10 mix-blend-difference",
+                                  })
+                                )}
+                                transition={{
+                                  type: "spring",
+                                  bounce: 0.2,
+                                  duration: 0.35,
+                                  ease: [0.32, 0.72, 0, 1],
+                                }}
+                              />
+                            )}
+                            {item.title}
+                          </motion.div>
+                        </Suspense>
+                      ) : (
+                        <Suspense fallback={<div>Loading...</div>}>
+                          <Link
+                            href={`${item.href}`}
+                            className={cn(
+                              buttonVariants({
+                                variant: "ghost",
+                                size: "sm",
+                                className: "rounded-full text-muted-foreground",
+                              })
+                            )}
+                          >
+                            {item.title}
+                          </Link>
+                        </Suspense>
+                      )}
+                    </MemoizedCarouselItem>
+                  ))}
+                </>
               ))}
-          </CarouselItem>
+          </CarouselContent>
 
-          {/* Tags buttons */}
-          {filteredRoutes &&
-            filteredRoutes.map((route) => (
-              <>
-                {route.items?.map((item) => (
-                  <MemoizedCarouselItem
-                    key={item.href}
-                    className="basis-auto pl-2 first:pl-5 last:pr-1"
-                  >
-                    {isActive(`${item.href}`) ? (
-                      <Suspense fallback={<div>Loading...</div>}>
-                        <Link
-                          href={`${item.href}`}
-                          className={cn(
-                            buttonVariants({
-                              variant: "ghost",
-                              size: "sm",
-                              className: "relative rounded-full",
-                            })
-                          )}
-                        >
-                          {isActive(`${item.href}`) && (
-                            <motion.span
-                              layoutId="bubble"
-                              className="absolute inset-0 z-10 bg-white mix-blend-difference"
-                              style={{ borderRadius: 9999 }}
-                              transition={{
-                                type: "spring",
-                                bounce: 0.3,
-                                duration: 0.6,
-                                ease: [0.32, 0.72, 0, 1],
-                              }}
-                            />
-                          )}
-                          {item.title}
-                        </Link>
-                      </Suspense>
-                    ) : (
-                      <Suspense fallback={<div>Loading...</div>}>
-                        <Link
-                          href={`${item.href}`}
-                          className={cn(
-                            buttonVariants({
-                              variant: "ghost",
-                              size: "sm",
-                              className: "rounded-full text-muted-foreground",
-                            })
-                          )}
-                        >
-                          {item.title}
-                        </Link>
-                      </Suspense>
-                    )}
-                  </MemoizedCarouselItem>
-                ))}
-              </>
-            ))}
-        </CarouselContent>
-
-        <CarouselPrevious
-          variant="ghost"
-          className={cn(
-            "ml-12 size-8 bg-background/20 backdrop-blur-[1px]",
-            scrollPrev ? "" : "hidden"
-          )}
-        />
-        <CarouselNext
-          variant="ghost"
-          className={cn(
-            "mr-12 size-8 bg-background/20 backdrop-blur-[1px]",
-            scrollNext ? "" : "hidden"
-          )}
-        />
-      </Carousel>
-    </Suspense>
+          <CarouselPrevious
+            variant="ghost"
+            className={cn(
+              "ml-12 size-8 bg-background/20 backdrop-blur-[1px]",
+              scrollPrev ? "" : "hidden"
+            )}
+          />
+          <CarouselNext
+            variant="ghost"
+            className={cn(
+              "mr-12 size-8 bg-background/20 backdrop-blur-[1px]",
+              scrollNext ? "" : "hidden"
+            )}
+          />
+        </Carousel>
+      </div>
+    </div>
   )
 }
