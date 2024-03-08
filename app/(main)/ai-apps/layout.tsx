@@ -1,5 +1,5 @@
-import AiAppsPageTitle from "@/components/layout/side-menu/ai-apps-page-title"
 import AiAppsPageWrapper from "@/components/layout/side-menu/ai-apps-page-wrapper"
+import AiAppsPageTitle from "@/app/(main)/ai-apps/_components/ai-apps-page-title"
 
 import FloatingSideNav from "../../../components/layout/side-menu/floating-side-nav"
 import { MobileCategoryNav } from "./_components/mobile-category-nav"

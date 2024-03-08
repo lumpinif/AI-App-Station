@@ -1,5 +1,4 @@
 import Link from "next/link"
-import Balancer from "react-wrap-balancer"
 
 import { cn } from "@/lib/utils"
 
@@ -18,26 +17,34 @@ export const PageTitle = ({
   ...rest
 }: PageTitleProps) => {
   return (
-    <div
-      className={cn(
-        "text-4xl font-bold tracking-[-.016em] md:leading-[48px] md:tracking-[-.024em]",
-        className
-      )}
-    >
+    <div className={cn("border-b pb-2 text-4xl ", className)}>
       {href ? (
-        <Link href={href}>
-          {title}
-          {subtitle}
+        <Link href={href} className="inline-block">
+          <div className="flex flex-col">
+            {subtitle && (
+              <span className="mt-2 text-sm font-medium uppercase text-muted-foreground">
+                {subtitle}
+              </span>
+            )}
+            <span className="font-bold tracking-[-.016em] md:leading-[48px] md:tracking-[-.024em]">
+              {title}
+            </span>
+          </div>
         </Link>
       ) : (
         <>
-          {title}
-          {subtitle}
+          <div className="flex flex-col">
+            {subtitle && (
+              <span className="mt-2 text-sm font-medium uppercase text-muted-foreground">
+                {subtitle}
+              </span>
+            )}
+            <span className="font-bold tracking-[-.016em] md:leading-[48px] md:tracking-[-.024em]">
+              {title}
+            </span>
+          </div>
         </>
       )}
-
-      {/* <Balancer as="h1" {...rest}> */}
-      {/* </Balancer> */}
     </div>
   )
 }
