@@ -45,7 +45,9 @@ const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
             key={route.id}
             className={cn({
               "nav-link": true,
-              "!text-blue-500 rounded-full": currentPath === route.href,
+              "!text-blue-500 rounded-full": currentPath.includes(
+                `${route.href}`
+              ),
             })}
           >
             <div className="flex flex-col items-center justify-center">
