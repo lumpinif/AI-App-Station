@@ -45,7 +45,7 @@ export function MobileCategoryNav() {
                   transition={{
                     type: "spring",
                     bounce: 0.2,
-                    duration: 0.5,
+                    duration: 0.35,
                     ease: [0.32, 0.72, 0, 1],
                   }}
                 />

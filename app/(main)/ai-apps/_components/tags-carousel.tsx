@@ -65,18 +65,44 @@ export function TagsCarousel() {
                 filteredRoutes.map((route) => (
                   <>
                     {isActive(`${route.href}`) ? (
-                      <Link
-                        href={`${route.href}`}
+                      <motion.div
                         className={cn(
                           buttonVariants({
-                            variant: "default",
+                            variant: "tag",
                             size: "sm",
-                            className: "rounded-full",
+                            className:
+                              "relative rounded-full transition-colors duration-300",
                           })
                         )}
+                        initial={{ color: "hsl(var(--muted-foreground))" }}
+                        animate={{
+                          color: [
+                            "hsl(var(--muted-foreground))",
+                            "hsl(var(--primary-foreground))",
+                          ],
+                        }}
                       >
+                        {isActive(`${route.href}`) && (
+                          <motion.span
+                            layoutId="bubble"
+                            className={cn(
+                              buttonVariants({
+                                variant: "default",
+                                size: "sm",
+                                className:
+                                  "rounded-full absolute inset-0 -z-10",
+                              })
+                            )}
+                            transition={{
+                              type: "spring",
+                              bounce: 0.2,
+                              duration: 0.35,
+                              ease: [0.32, 0.72, 0, 1],
+                            }}
+                          />
+                        )}
                         All
-                      </Link>
+                      </motion.div>
                     ) : (
                       <Link
                         href={`${route.href}`}
