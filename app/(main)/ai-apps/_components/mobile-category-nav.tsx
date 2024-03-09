@@ -60,7 +60,7 @@ export function MobileCategoryNav() {
           ))}
         </div>
       </div>
-      {pathname === "/ai-apps" ? null : <TagsCarousel />}
+      {pathname === "/ai-apps" ? null : <TagsCarousel currentPath={pathname} />}
     </div>
   )
 }
