@@ -26,7 +26,7 @@ type TagsCarouselProps = {
 export function TagsCarousel({ currentPath }: TagsCarouselProps) {
   const [api, setApi] = React.useState<CarouselApi>()
   const [scrollPrev, setScrollPrev] = React.useState(false)
-  const [scrollNext, setScrollNext] = React.useState(true)
+  const [scrollNext, setScrollNext] = React.useState(false)
 
   const isActive = React.useCallback(
     (href: string) => currentPath === href,
@@ -49,29 +49,45 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
   }, [currentPath])
 
   // Use `filteredRoutes.href` for the "All" link's href
-  const allHref = filteredRoutes ? filteredRoutes.href : "/"
+  const allHref = filteredRoutes?.href || "/"
+
+  // Function to update scroll states with optional delay
+  const updateScrollStatesWithDelay = React.useCallback(() => {
+    if (!api) return
+    setTimeout(() => {
+      setScrollPrev(api.canScrollPrev())
+      setScrollNext(api.canScrollNext())
+    }, 0)
+  }, [api, setScrollPrev, setScrollNext])
 
   React.useEffect(() => {
-    if (!api) {
-      return
-    }
+    if (!api) return
 
-    const checkScroll = () => {
+    const updateScrollStates = () => {
       setScrollPrev(api.canScrollPrev())
       setScrollNext(api.canScrollNext())
     }
 
-    // Immediately check scroll availability on component mount
-    checkScroll()
+    // Assuming api.on is correctly implemented
+    api.on("select", updateScrollStates)
 
-    api.on("select", () => {
-      setTimeout(checkScroll, 500) // Adjust based on your animation duration
-    })
-
+    // Return a cleanup function that correctly removes the event listener
     return () => {
-      api.off("select", checkScroll)
+      api.off("select", updateScrollStates)
     }
   }, [api])
+
+  // Assuming navigation might impact scrollability, update on path changes with delay
+  React.useEffect(() => {
+    if (api && currentPath === allHref) {
+      // Delay updating scroll states to accommodate any transitions/animations
+      // that occur as a result of the navigation.
+      updateScrollStatesWithDelay() // Reuse the function with delay
+    }
+    // Since `updateScrollStatesWithDelay` is defined inside another effect,
+    // it cannot be reused here directly without extracting it to a broader scope
+    // or defining it anew. Ensure you manage this scope appropriately.
+  }, [currentPath, api, updateScrollStatesWithDelay, allHref])
 
   // Fallback content if no filteredRoutes are found
   if (!filteredRoutes) {
@@ -121,6 +137,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
           </motion.div>
         ) : (
           <Link
+            key={href}
             href={href}
             className={cn(
               buttonVariants({
@@ -154,6 +171,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
             {renderLink("All")}
             {filteredRoutes?.items.map((item) => renderLink(item))}
           </CarouselContent>
+
           <CarouselPrevious
             variant="ghost"
             className={cn(
