@@ -1,12 +1,13 @@
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
+import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 export function SiteFooter() {
   return (
-    <footer className="block py-10 md:px-8 md:py-0">
-      <div className="flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-        <p className="text-balance text-center text-xs leading-loose text-muted-foreground md:text-left">
+    <footer className="container flex h-24 items-center justify-between">
+      <div className="flex w-full flex-1 items-center justify-start gap-4  sm:justify-start">
+        <span className="flex items-center justify-center gap-1 text-balance text-center text-xs leading-loose text-muted-foreground md:text-left">
           © 2024 OpenmindAI.io All rights reserved. Built by{" "}
           <Link
             href={siteConfig.links.twitter}
@@ -16,8 +17,9 @@ export function SiteFooter() {
           >
             Felix Lu.
           </Link>{" "}
-        </p>
+        </span>
       </div>
+      <ThemeToggle />
     </footer>
   )
 }

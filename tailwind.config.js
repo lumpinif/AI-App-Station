@@ -55,6 +55,7 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          hover: "hsl(var(--card-hover))",
         },
       },
       borderRadius: {
@@ -185,7 +186,9 @@ module.exports = {
         rotate: "rotate 3s linear infinite both",
         ["infinite-slider"]: "infiniteSlider 20s linear infinite",
       },
-
+      scale: {
+        102: "1.02",
+      },
       boxShadow: {
         "card-light":
           "0px 32px 40px -16px rgba(0, 0, 0, 0.12), 0px 2px 6px rgba(0, 0, 0, 0.06)",

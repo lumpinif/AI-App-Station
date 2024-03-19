@@ -3,7 +3,7 @@ import { Metadata } from "next"
 import { redirect } from "next/navigation"
 
 import { Separator } from "@/components/ui/separator"
-import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
+import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { SidebarNav } from "@/components/auth/settings/layout/sidebar-nav"
 import UserNameEmail from "@/components/auth/settings/layout/user-name-email"
 import BackButton from "@/components/shared/back-button"
@@ -50,7 +50,7 @@ export default async function SettingsLayout({
       <div className="flex flex-col items-center justify-center px-4 sm:container">
         <div className="w-full rounded-3xl p-10 pb-16 dark:shadow-outline">
           <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
-            <AuthModalTrigger className="h-20 w-20 sm:h-32 sm:w-32" />
+            <AccountModalTrigger className="h-20 w-20 sm:h-32 sm:w-32" />
             <div>
               <h2 className="text-3xl font-bold  tracking-tight sm:text-4xl">
                 Settings

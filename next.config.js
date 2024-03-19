@@ -16,11 +16,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
-    ],
-    domains: [
-      "avatars.githubusercontent.com",
-      "images.unsplash.com",
-      "pbs.twimg.com",
+      {
+        protocol: "https",
+        hostname: "pbs.twimg.com",
+      },
     ],
   },
   async headers() {

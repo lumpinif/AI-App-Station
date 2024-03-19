@@ -6,10 +6,10 @@ type ModalStore = {
   CloseModal: () => void
 }
 
-const useAuthModal = create<ModalStore>((set) => ({
+const useAccountModal = create<ModalStore>((set) => ({
   isOpen: false,
   OpenModal: () => set({ isOpen: true }),
   CloseModal: () => set({ isOpen: false }),
 }))
 
-export default useAuthModal
+export default useAccountModal

@@ -9,7 +9,7 @@ import { Drawer, DrawerClose, DrawerContent } from "../ui/drawer"
 interface ModalProps {
   children: React.ReactNode
   isOpen: boolean
-  title: string
+  title?: string
   className?: string
   onChange: (open: boolean) => void
 }
@@ -49,7 +49,7 @@ export default function Modal({
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
-        className="rounded-2xl outline-none"
+        className="max-w-xl rounded-2xl shadow-outline"
       >
         {children}
       </DialogContent>

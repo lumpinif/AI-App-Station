@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons/icons"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
-import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
+import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 export function NavigationMenuBar() {
   const currentPath = usePathname()
@@ -83,9 +83,9 @@ export function NavigationMenuBar() {
           <SearchDialogTrigger className="flex items-center justify-center rounded-full" />
         </NavigationMenuItem>
 
-        <NavigationMenuItem className="rounded-full">
-          <DirectThemeToggle />
-        </NavigationMenuItem>
+        {/* <NavigationMenuItem className="rounded-full">
+          <ThemeToggle isDropDown />
+        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   )

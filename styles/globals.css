@@ -9,6 +9,7 @@
 
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
+    --card-hover: 0 0% 96%;
 
     --popover: 240 15% 95%;
     --popover-foreground: 265 2% 14%;
@@ -43,6 +44,7 @@
 
     --card: 60 4% 16%;
     --card-foreground: 0 0% 99%;
+    --card-hover: 60 4% 20%;
 
     --popover: 0 1% 16%;
     --popover-foreground: 0 0% 99%;
@@ -178,9 +180,10 @@
   }
 }
 
+/*
 @media (min-width: 1400px) {
   .container {
     /* old: 1400px */
-    max-width: 100%;
-  }
-}
+/* max-width: 100%; */
+/* } */
+/* } */

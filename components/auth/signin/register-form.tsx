@@ -9,7 +9,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
-import useAuthModal from "@/hooks/use-auth-modal-store"
+import useAccountModal from "@/hooks/use-account-modal-store"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -39,7 +39,7 @@ const FormSchema = z
 
 export default function RegisterForm() {
   const [isPending, startTransition] = useTransition()
-  const CloseModal = useAuthModal((state) => state.CloseModal)
+  const CloseModal = useAccountModal((state) => state.CloseModal)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

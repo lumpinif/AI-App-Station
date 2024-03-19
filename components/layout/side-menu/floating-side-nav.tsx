@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
 import useSideNav from "@/hooks/use-side-nav-store"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import AuthModalTrigger from "@/components/auth/auth-modal/auth-modal-trigger"
+import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
-import { DirectThemeToggle } from "@/components/theme/direct-theme-toggle"
+import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import {
   Tooltip,
@@ -184,7 +184,7 @@ export const SideMenuAuthTrigger: React.FC<SideNavToggleProps> = React.memo(
 
     return (
       <div className={cn("relative flex items-center justify-start")}>
-        <AuthModalTrigger className={buttonClass} />
+        <AccountModalTrigger className={buttonClass} />
         <h1
           className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm  text-foreground opacity-100 duration-300 ${
             !isOpen && "scale-0"
@@ -205,7 +205,7 @@ export const SideNavThemeToggle: React.FC<SideNavToggleProps> = React.memo(
 
     return (
       <div className={cn("relative flex items-center justify-start")}>
-        <DirectThemeToggle className={buttonClass} />
+        <ThemeToggle isDirect className={buttonClass} />
         <h1
           className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
             !isOpen && "scale-0"
