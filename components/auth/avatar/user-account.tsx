@@ -1,6 +1,5 @@
-import { cardVariants } from "@/lib/constants"
-import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
+import { ThemeToggle } from "@/components/theme/theme-toggle"
 import UserCard from "@/app/(main)/today/_components/widgets-grid/user-card"
 
 import SignOutButton from "../signout/sign-out-button"
@@ -17,6 +16,9 @@ const UserAccount = () => {
             <EditProfileButton />
             <SignOutButton />
           </footer>
+          <div className="flex justify-end">
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </>

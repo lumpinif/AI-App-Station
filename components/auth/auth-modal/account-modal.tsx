@@ -4,6 +4,7 @@ import { Session } from "@supabase/auth-helpers-nextjs"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
 import Modal from "@/components/shared/modal"
+import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import UserAccount from "../avatar/user-account"
 import LoginCard from "../signin/login-card"
@@ -24,7 +25,15 @@ const AccountModal = ({ session }: { session: Session | null }) => {
         className="h-[95%]"
         title="Account"
       >
-        {session ? <UserAccount /> : <LoginCard />}
+        {session ? (
+          <UserAccount />
+        ) : (
+          <LoginCard className="flex flex-col gap-10">
+            <div className="flex justify-end sm:hidden">
+              <ThemeToggle />
+            </div>
+          </LoginCard>
+        )}
       </Modal>
     </>
   )

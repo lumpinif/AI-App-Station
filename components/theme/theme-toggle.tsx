@@ -75,7 +75,7 @@ export function ThemeToggle({
 
   return (
     <>
-      <div className="dark:glass-card-background flex flex-row items-center space-x-2 rounded-full p-1 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline">
+      <div className="dark:glass-card-background flex w-fit flex-row items-center space-x-2 rounded-full p-1 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline">
         <button
           type="button"
           className={cn(

@@ -1,3 +1,5 @@
+import PageTransition from "@/components/shared/page-transition"
+
 import "@/styles/globals.css"
 import { Metadata } from "next"
 
@@ -14,7 +16,9 @@ interface SignInLayoutProps {
 export default async function AuthLayout({ children }: SignInLayoutProps) {
   return (
     <>
-      <div className="min-h-dvh">{children}</div>
+      <PageTransition>
+        <div className="min-h-dvh">{children}</div>
+      </PageTransition>
     </>
   )
 }

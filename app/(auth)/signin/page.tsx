@@ -17,7 +17,7 @@ const SignInPage = async () => {
       <div className="container flex h-screen w-screen flex-col items-center justify-center px-4 sm:max-w-xl">
         <BackButton className="absolute left-4 top-4 dark:shadow-outline md:left-8 md:top-8" />
 
-        <LoginCard className=" dark:shadow-outline" />
+        <LoginCard className="w-full rounded-2xl dark:shadow-outline" />
       </div>
     </>
   )

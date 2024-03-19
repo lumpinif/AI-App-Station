@@ -2,20 +2,23 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import OAuthForm from "./oauth-form"
 import RegisterForm from "./register-form"
 import SignInForm from "./sign-in-form"
 
-const LoginCard = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLElement>) => {
+type LoginCardProps = {
+  children?: React.ReactNode
+  className?: string
+}
+
+const LoginCard = ({ children, className }: LoginCardProps) => {
   return (
-    <div className={cn("w-full rounded-2xl p-8", className)} {...props}>
+    <div className={cn("w-full p-8", className)}>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6">
         <AuthForm />
-        <p className="text-center text-xs text-muted-foreground">
+        <p className="text-balance text-center text-xs text-muted-foreground">
           By clicking, you agree to our{" "}
           <Link
             href="/"
@@ -33,6 +36,7 @@ const LoginCard = ({
           .
         </p>
       </div>
+      {children}
     </div>
   )
 }

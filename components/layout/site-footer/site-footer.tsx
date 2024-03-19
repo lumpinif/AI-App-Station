@@ -19,7 +19,9 @@ export function SiteFooter() {
           </Link>{" "}
         </span>
       </div>
-      <ThemeToggle />
+      <div className="hidden sm:flex">
+        <ThemeToggle />
+      </div>
     </footer>
   )
 }
