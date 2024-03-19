@@ -31,3 +31,5 @@ export const cardVariants = cva(
     },
   }
 )
+
+export const PROTECTED_PATH = "/dashboard"
