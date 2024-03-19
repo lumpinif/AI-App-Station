@@ -17,7 +17,7 @@ export const PageTitle = ({
   ...rest
 }: PageTitleProps) => {
   return (
-    <div className={cn("border-b pb-4 text-4xl ", className)}>
+    <div className={cn("border-b text-4xl ", className)}>
       {href ? (
         <Link href={href} className="inline-block">
           <div className="flex flex-col">
