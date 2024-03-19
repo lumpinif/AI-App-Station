@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { SubmitApp } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -9,6 +9,7 @@ import { ThreeDots } from "react-loader-spinner"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import useAccountModal from "@/hooks/use-account-modal-store"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -32,7 +33,14 @@ const formSchema = z.object({
 
 const AppSubmitForm = () => {
   const [existingError, setexistingError] = useState("")
+  const OpenModal = useAccountModal((state) => state.OpenModal)
   const router = useRouter()
+
+  useEffect(() => {
+    if (existingError === "You need to login to continue.") {
+      OpenModal()
+    }
+  }, [OpenModal, existingError])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

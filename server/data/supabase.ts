@@ -34,7 +34,10 @@ export async function SubmitApp(title: Apps["title"]) {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return { newApp: null, error: "You need to login to continue." }
+    return {
+      newApp: null,
+      error: "You need to login to continue.",
+    }
   }
 
   if (title === null) {
