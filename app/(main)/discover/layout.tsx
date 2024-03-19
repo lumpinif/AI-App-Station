@@ -11,7 +11,7 @@ export default async function DiscoverPageLayout({
       <div className="container">
         <DiscoverPageTitle />
       </div>
-      <main>{children}</main>
+      <main className="container">{children}</main>
     </>
   )
 }

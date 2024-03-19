@@ -20,17 +20,16 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
       <div className="container">
         <MobileCategoryNav />
       </div>
-      <div className="container">
-        <div className="flex h-full w-full gap-4">
-          {/* Floating Side Nav */}
-          <nav className="fixed bottom-1/2 top-1/2 hidden w-fit -translate-y-1/2 flex-col justify-center sm:flex">
-            <FloatingSideNav />
-          </nav>
-          <AiAppsPageWrapper className="h-[2000px]">
-            {/* TODO: CONSIDERIGN ADD PROGRESSIVE BLUR TO THE EDGE OF THE SCROLLAREA */}
-            {children}
-          </AiAppsPageWrapper>
-        </div>
+
+      <div className="container flex h-full w-full gap-4">
+        {/* Floating Side Nav */}
+        <nav className="fixed bottom-1/2 top-1/2 hidden w-fit -translate-y-1/2 flex-col justify-center sm:flex">
+          <FloatingSideNav />
+        </nav>
+        <AiAppsPageWrapper className="h-[2000px] ">
+          {/* TODO: CONSIDERIGN ADD PROGRESSIVE BLUR TO THE EDGE OF THE SCROLLAREA */}
+          {children}
+        </AiAppsPageWrapper>
       </div>
     </>
   )

@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import useSideNav from "@/hooks/use-side-nav-store"
+import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 
 import { PageTitle } from "../../../../components/layout/page-title"
 

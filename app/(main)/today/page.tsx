@@ -20,7 +20,7 @@ const TodayPage = () => {
       {/* <main className="relative flex h-full w-full"> */}
       <main>
         {/* <GridPanel /> */}
-        <ul className="mt-10 grid auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <ul className="grid auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {photos.map(({ id, imageSrc }) => (
             <li key={id}>
               <Link href={`/today/${id}`} scroll={false}>

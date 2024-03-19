@@ -24,6 +24,8 @@ export const LogoAuthHeader = () => (
         AI App Station
       </Link>
     </div>
-    <AccountModalTrigger />
+    <div className="hidden sm:flex">
+      <AccountModalTrigger />
+    </div>
   </div>
 )

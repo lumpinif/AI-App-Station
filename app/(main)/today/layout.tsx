@@ -10,15 +10,15 @@ export default async function TodayPageLayout({
 }: TodayPageLayoutProps) {
   return (
     <>
-      <div className="container">
+      <div className="container flex flex-col">
         <TodayPageTitle />
+        <main className="mt-5 flex-1">
+          <>
+            {children}
+            {modal}
+          </>
+        </main>
       </div>
-      <main className="container mt-3 flex h-full flex-col">
-        <>
-          {children}
-          {modal}
-        </>
-      </main>
     </>
   )
 }
