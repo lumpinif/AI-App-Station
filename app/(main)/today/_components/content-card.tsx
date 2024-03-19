@@ -9,13 +9,12 @@ export default function ContentCard({ photo }: { photo: Photo }) {
         <div className="grid w-full gap-4 lg:grid-cols-2 ">
           {/* Left Image Area */}
           <div className="relative hidden w-full border lg:col-span-1 lg:flex lg:items-center lg:justify-center">
-            <div className="top-1/2 w-1/2 -translate-y-1/2 border lg:fixed">
+            <div className="top-1/2 w-1/5 -translate-y-1/2 lg:fixed">
               <Image
                 alt=""
                 src={photo.imageSrc}
                 height={600}
                 width={600}
-                layout="responsive"
                 className="rounded-xl object-cover"
               />
             </div>
