@@ -29,8 +29,10 @@ const AccountModal = ({ session }: { session: Session | null }) => {
           <UserAccount />
         ) : (
           <LoginCard className="flex flex-col gap-10">
-            <div className="flex justify-end sm:hidden">
-              <ThemeToggle />
+            <div className="mt-5 flex justify-end border-t sm:hidden">
+              <div className="mt-4">
+                <ThemeToggle />
+              </div>
             </div>
           </LoginCard>
         )}
