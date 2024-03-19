@@ -14,7 +14,7 @@ const MobileNav = () => {
     <MobileNavBar
       routes={MAINROUTES}
       className={cn(
-        scrolled ? "translate-y-[110%] opacity-30" : ``,
+        scrolled ? "translate-y-[115%] opacity-30" : ``,
         !hideNavOnScroll ? `translate-y-0 opacity-100` : ``
       )}
     />
