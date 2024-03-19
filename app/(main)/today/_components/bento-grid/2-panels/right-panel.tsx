@@ -44,7 +44,11 @@ const RightPanel = () => {
     >
       {siteConfig.items.map((item, index) => {
         return (
-          <GridItem key={item.title + item.type + index} size={item.layout}>
+          <GridItem
+            key={item.title + item.type + index}
+            size="1" // {item.layout}
+            // TODO: Fix the layout issue
+          >
             {item.type === "social" ? (
               <Social item={item} />
             ) : item.type === "mentor" ? (
