@@ -2,17 +2,24 @@
 
 import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeftFromLine, ArrowRightFromLine, Search } from "lucide-react"
+import {
+  ArrowLeftFromLine,
+  ArrowRightFromLine,
+  Search,
+  Upload,
+} from "lucide-react"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
 import useSideNav from "@/hooks/use-side-nav-store"
+import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
+import AppSubmitButton from "@/app/(main)/ai-apps/_components/app-submit-button"
 
 import {
   Tooltip,
@@ -22,7 +29,7 @@ import {
 } from "../../ui/tooltip"
 
 export const buttonClassBase =
-  "flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-300 ease-in hover:cursor-pointer hover:bg-foreground/10 hover:text-foreground"
+  "flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-200 ease-out hover:cursor-pointer hover:bg-foreground/10 hover:text-foreground"
 
 const FloatingSideNav: React.FC = () => {
   const isOpen = useSideNav((state) => state.isOpen)
@@ -79,7 +86,9 @@ const FloatingSideNav: React.FC = () => {
             {isOpen && <SearchTrigger isOpen={isOpen} />}
             <FloatingSideNavContent items={SIDENAVROUTES} isOpen={isOpen} />
             {!isOpen && <SearchTrigger isOpen={isOpen} />}
+            {/* TODO: Consider remove the theme toggle before production */}
             <SideNavThemeToggle isOpen={isOpen} />
+            <SideNavAppSubmit isOpen={isOpen} />
             <SideMenuAuthTrigger isOpen={isOpen} />
           </div>
         </ScrollArea>
@@ -219,5 +228,38 @@ export const SideNavThemeToggle: React.FC<SideNavToggleProps> = React.memo(
 )
 
 SideNavThemeToggle.displayName = "SideNavThemeToggle"
+
+export const SideNavAppSubmit: React.FC<SideNavToggleProps> = React.memo(
+  ({ isOpen }) => {
+    const buttonClass = cn(buttonClassBase)
+
+    return (
+      <Tooltip delayDuration={0}>
+        <div className={cn("relative flex items-center justify-start")}>
+          <TooltipTrigger asChild>
+            <AppSubmitButton className={buttonClass} />
+          </TooltipTrigger>
+
+          <TooltipContent
+            side="right"
+            className="flex items-center gap-2 dark:bg-foreground dark:text-background"
+          >
+            Submit AI Apps
+          </TooltipContent>
+
+          <h1
+            className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
+              !isOpen && "scale-0"
+            }`}
+          >
+            Submit Apps
+          </h1>
+        </div>
+      </Tooltip>
+    )
+  }
+)
+
+SideNavAppSubmit.displayName = "SideNavAppSubmit"
 
 export default FloatingSideNav
