@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useCallback, useEffect } from "react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { motion } from "framer-motion"
@@ -28,70 +28,50 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
   const [scrollPrev, setScrollPrev] = React.useState(false)
   const [scrollNext, setScrollNext] = React.useState(false)
 
-  const isActive = React.useCallback(
+  const isActive = useCallback(
     (href: string) => currentPath === href,
     [currentPath]
   )
 
-  // Attempt to find the relevant route, with fallback handling for unexpected paths
-  const filteredRoutes = React.useMemo(() => {
-    const route = SIDENAVROUTES.find((route) =>
-      currentPath.startsWith(route.href)
-    )
-    if (!route) {
-      // Log the issue or handle the error as appropriate for your application
-      console.error(
-        "No matching route found for the current path:",
-        currentPath
-      )
-    }
-    return route
-  }, [currentPath])
+  // Optimization: useMemo to avoid unnecessary recalculations
+  const filteredRoutes = React.useMemo(
+    () => SIDENAVROUTES.find((route) => currentPath.startsWith(route.href)),
+    [currentPath]
+  )
 
-  // Use `filteredRoutes.href` for the "All" link's href
   const allHref = filteredRoutes?.href || "/"
 
-  // Function to update scroll states with optional delay
-  const updateScrollStatesWithDelay = React.useCallback(() => {
-    if (!api) return
-    setTimeout(() => {
+  // Use useCallback to ensure these functions don't trigger unnecessary re-renders
+  const updateScrollStates = useCallback(() => {
+    if (api) {
       setScrollPrev(api.canScrollPrev())
       setScrollNext(api.canScrollNext())
-    }, 0)
-  }, [api, setScrollPrev, setScrollNext])
-
-  React.useEffect(() => {
-    if (!api) return
-
-    const updateScrollStates = () => {
-      setScrollPrev(api.canScrollPrev())
-      setScrollNext(api.canScrollNext())
-    }
-
-    // Assuming api.on is correctly implemented
-    api.on("select", updateScrollStates)
-
-    // Return a cleanup function that correctly removes the event listener
-    return () => {
-      api.off("select", updateScrollStates)
     }
   }, [api])
 
-  // Assuming navigation might impact scrollability, update on path changes with delay
-  React.useEffect(() => {
-    if (api && currentPath === allHref) {
-      // Delay updating scroll states to accommodate any transitions/animations
-      // that occur as a result of the navigation.
-      updateScrollStatesWithDelay() // Reuse the function with delay
-    }
-    // Since `updateScrollStatesWithDelay` is defined inside another effect,
-    // it cannot be reused here directly without extracting it to a broader scope
-    // or defining it anew. Ensure you manage this scope appropriately.
-  }, [currentPath, api, updateScrollStatesWithDelay, allHref])
+  useEffect(() => {
+    if (!api) return
 
-  // Fallback content if no filteredRoutes are found
+    // Update immediately without waiting for events
+    updateScrollStates()
+
+    // Event listeners for real-time updates
+    api.on("select", updateScrollStates)
+    api.on("reInit", updateScrollStates)
+
+    // Cleanup
+    return () => {
+      api.off("select", updateScrollStates)
+      api.off("reInit", updateScrollStates)
+    }
+  }, [api, updateScrollStates])
+
+  // Conditional rendering moved to the end.
+  // Early return if no filteredRoutes are found
   if (!filteredRoutes) {
-    return notFound()
+    return (
+      <div>No matching route found for the current path: {currentPath}</div>
+    )
   }
 
   const renderLink = (item: NavItemProps | "All") => {
