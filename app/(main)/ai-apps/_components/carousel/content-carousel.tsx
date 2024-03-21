@@ -13,7 +13,13 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 
-const HeroCarousel = () => {
+type ContentCarousel = {
+  children?: React.ReactNode
+  className?: string
+  isLoop?: boolean
+}
+
+const ContentCarousel = ({ children, className, isLoop }: ContentCarousel) => {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
@@ -54,8 +60,8 @@ const HeroCarousel = () => {
       <Carousel
         setApi={setApi}
         opts={{
-          loop: true,
-          align: "center",
+          loop: isLoop ? true : false,
+          align: "start",
           startIndex: 0,
           containScroll: "trimSnaps",
         }}
@@ -65,7 +71,7 @@ const HeroCarousel = () => {
       >
         <CarouselContent>
           {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index} className="">
+            <CarouselItem key={index} className={cn(className)}>
               <Card>
                 <CardContent className="flex items-center justify-center p-6">
                   <span className="text-4xl font-semibold">{index + 1}</span>
@@ -96,4 +102,4 @@ const HeroCarousel = () => {
   )
 }
 
-export default HeroCarousel
+export default ContentCarousel

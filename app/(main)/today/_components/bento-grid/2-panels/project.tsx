@@ -14,7 +14,7 @@ const Project = ({ item }: { item: GridItemInterface }) => {
       )} */}
       <div className="@lg:text-lg w-full  font-semibold">{item.title}</div>
       <div className="flex items-center gap-1">
-        <div className="mt-[1px]">{item.stars}</div>
+        <div className="mt-px">{item.stars}</div>
         <Star fill="currentColor" size={16} />
       </div>
     </Link>

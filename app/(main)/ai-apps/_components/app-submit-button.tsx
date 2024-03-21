@@ -19,7 +19,7 @@ const AppSubmitButton = ({
   return (
     <>
       {children ? (
-        <Link className={cn("mr-1 text-sm", className)} href={"/submit"}>
+        <Link className={cn("text-sm", className)} href={"/submit"}>
           {children}
         </Link>
       ) : null}

@@ -23,7 +23,7 @@ export function MobileCategoryNav() {
     <div className="sm:hidden">
       <div className="flex flex-col">
         <div className="scrollbar-none flex items-center  justify-between overflow-x-auto py-1 sm:hidden">
-          <div className="flex gap-x-6">
+          <div className="flex gap-x-1">
             {SIDENAVROUTES.map((route) => (
               <div
                 key={route.title}
@@ -31,7 +31,7 @@ export function MobileCategoryNav() {
                   handleTabSelection(`${route.href}`)
                 }}
                 className={cn(
-                  "relative flex cursor-pointer items-center gap-x-2 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
+                  "relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
                   pathname.includes(`${route.href}`)
                     ? "border-primary text-primary"
                     : "border-transparent text-muted-foreground hover:text-primary"
@@ -61,12 +61,12 @@ export function MobileCategoryNav() {
               </div>
             ))}
           </div>
-          <div className="group flex items-center gap-x-1">
+          <div className="group flex items-center">
             <AppSubmitButton
               className="whitespace-nowrap text-muted-foreground transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring group-hover:text-primary"
               size={"xs"}
             >
-              <span>Submit Apps</span>
+              <span className="text-xs">Submit Apps</span>
             </AppSubmitButton>
           </div>
         </div>
