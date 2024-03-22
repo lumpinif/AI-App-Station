@@ -6,23 +6,23 @@ import ContentCarousel from "./_components/carousel/content-carousel"
 
 const AIAppsPage = async () => {
   // fetch Posts
-  const { posts, error } = await getAllPosts()
+  // const { posts, error } = await getAllPosts()
 
-  if (error) {
-    toast.error(`Error loading the post! Please try again later.`)
-  }
+  // if (error) {
+  //   toast.error(`Error loading the post! Please try again later.`)
+  // }
 
-  if (!posts) {
-    return null
-  }
+  // if (!posts) {
+  //   return null
+  // }
 
   return (
     <section className="">
-      <Suspense>
+      {/* <Suspense>
         <ContentCarousel isLoop noMarginRight data={posts} />
-      </Suspense>
-      <ContentCarousel className="md:basis-1/2" />
-      <ContentCarousel className="md:basis-1/2 lg:basis-1/3" />
+      </Suspense> */}
+      {/* <ContentCarousel className="md:basis-1/2" />
+      <ContentCarousel className="md:basis-1/2 lg:basis-1/3" /> */}
     </section>
   )
 }
