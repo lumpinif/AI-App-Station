@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Apps } from "@/server/data"
+import { Apps } from "@/types/db_tables"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
 import { SubmitHandler, useForm } from "react-hook-form"
