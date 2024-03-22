@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Apps, UpdateAppByDescription } from "@/server/data"
+import { UpdateAppByDescription } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
+import { Apps } from "@/types/db_tables"
 
 interface DescriptionFormProps {
   initialData: Apps

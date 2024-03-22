@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Apps, UpdateAppByTitle } from "@/server/data"
+import { UpdateAppByTitle } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Pencil } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
+import { Apps } from "@/types/db_tables"
 
 interface TitleFormProps {
   initialData: Apps
