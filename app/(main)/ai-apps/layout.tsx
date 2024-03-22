@@ -23,7 +23,7 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
 
       <div className="container flex h-full w-full gap-4">
         {/* Floating Side Nav */}
-        <nav className="fixed bottom-1/2 top-1/2 hidden w-fit -translate-y-1/2 flex-col justify-center sm:flex">
+        <nav className="fixed bottom-1/2 top-1/2 z-50 hidden w-fit -translate-y-1/2 flex-col justify-center sm:flex">
           <FloatingSideNav />
         </nav>
         <AiAppsPageWrapper className="h-[2000px] ">

@@ -3,7 +3,6 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
@@ -13,13 +12,19 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 
+import HeroCard from "../cards/hero-card"
+
 type ContentCarousel = {
-  children?: React.ReactNode
   className?: string
   isLoop?: boolean
+  noMarginRight?: boolean
 }
 
-const ContentCarousel = ({ children, className, isLoop }: ContentCarousel) => {
+const ContentCarousel = ({
+  className,
+  isLoop,
+  noMarginRight = false,
+}: ContentCarousel) => {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
@@ -69,14 +74,10 @@ const ContentCarousel = ({ children, className, isLoop }: ContentCarousel) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <CarouselContent>
+        <CarouselContent className={noMarginRight ? "" : "mr-6"}>
           {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index} className={cn(className)}>
-              <Card>
-                <CardContent className="flex items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
-                </CardContent>
-              </Card>
+            <CarouselItem key={index} className={cn("", className)}>
+              <HeroCard />
             </CarouselItem>
           ))}
         </CarouselContent>
