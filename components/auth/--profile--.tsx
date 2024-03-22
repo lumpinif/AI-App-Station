@@ -8,7 +8,7 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { PROTECTED_PATH } from "@/lib/constants"
-import useUser from "@/hooks/use-user"
+import useUser from "@/hooks/react-hooks/use-user"
 import {
   DropdownMenu,
   DropdownMenuContent,

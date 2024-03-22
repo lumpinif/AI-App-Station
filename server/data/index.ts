@@ -1,5 +1,5 @@
-export type { Apps } from "./supabase"
 export { SubmitApp } from "./supabase"
 export { GetAppsByUserId } from "./supabase"
 export { UpdateAppByTitle } from "./supabase"
 export { UpdateAppByDescription } from "./supabase"
+export { getAllPosts as getPosts } from "./supabase"

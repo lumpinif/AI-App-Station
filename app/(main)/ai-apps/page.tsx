@@ -1,14 +1,26 @@
-import Image from "next/image"
-import Link from "next/link"
-
-import { Card } from "@/components/ui/card"
+import { Suspense } from "react"
+import { getAllPosts } from "@/server/data/supabase"
+import { toast } from "sonner"
 
 import ContentCarousel from "./_components/carousel/content-carousel"
 
 const AIAppsPage = async () => {
+  // fetch Posts
+  const { posts, error } = await getAllPosts()
+
+  if (error) {
+    toast.error(`Error loading the post! Please try again later.`)
+  }
+
+  if (!posts) {
+    return null
+  }
+
   return (
     <section className="">
-      <ContentCarousel isLoop noMarginRight />
+      <Suspense>
+        <ContentCarousel isLoop noMarginRight data={posts} />
+      </Suspense>
       <ContentCarousel className="md:basis-1/2" />
       <ContentCarousel className="md:basis-1/2 lg:basis-1/3" />
     </section>

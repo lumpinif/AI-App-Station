@@ -2,7 +2,7 @@
 
 import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/use-user"
+import useUser from "@/hooks/react-hooks/use-user"
 import { Skeleton } from "@/components/ui/skeleton"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 

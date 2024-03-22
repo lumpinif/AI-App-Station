@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/use-user"
+import useUser from "@/hooks/react-hooks/use-user"
 
 function UserNameEmail({ className }: { className?: string }) {
   const { data: profile } = useUser()

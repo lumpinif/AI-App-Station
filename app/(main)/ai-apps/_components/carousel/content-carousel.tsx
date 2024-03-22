@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -15,12 +16,16 @@ import {
 import HeroCard from "../cards/hero-card"
 
 type ContentCarousel = {
+  data?: Posts[]
+  children?: React.ReactNode
   className?: string
   isLoop?: boolean
   noMarginRight?: boolean
 }
 
 const ContentCarousel = ({
+  data,
+  children,
   className,
   isLoop,
   noMarginRight = false,
@@ -70,14 +75,13 @@ const ContentCarousel = ({
           startIndex: 0,
           containScroll: "trimSnaps",
         }}
-        className=""
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <CarouselContent className={noMarginRight ? "" : "mr-6"}>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {data?.map((post, index) => (
             <CarouselItem key={index} className={cn("", className)}>
-              <HeroCard />
+              <HeroCard cardData={post as Posts} />
             </CarouselItem>
           ))}
         </CarouselContent>

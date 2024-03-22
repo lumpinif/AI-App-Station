@@ -4,8 +4,8 @@ import { MouseEvent } from "react"
 
 import { Database } from "@/types/supabase"
 import { cn } from "@/lib/utils"
+import useUser from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
-import useUser from "@/hooks/use-user"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons/icons"
 

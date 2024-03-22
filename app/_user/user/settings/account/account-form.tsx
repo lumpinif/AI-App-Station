@@ -4,7 +4,7 @@ import { useState } from "react"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { toast } from "sonner"
 
-import useUser from "@/hooks/use-user"
+import useUser from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
 import SignOutButton from "@/components/auth/signout/sign-out-button"
 

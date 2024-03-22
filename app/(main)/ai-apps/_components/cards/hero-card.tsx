@@ -1,7 +1,16 @@
+"use server"
+
 import Image from "next/image"
 import Link from "next/link"
 
-const HeroCard = () => {
+import { Posts } from "@/types/db_tables"
+
+type HeroCardProps = {
+  // TODO: define the types of cardData
+  cardData: Posts
+}
+
+const HeroCard = async ({ cardData }: HeroCardProps) => {
   return (
     <div>
       <Link href={"/ai-apps/#"}>
@@ -21,13 +30,13 @@ const HeroCard = () => {
           {/* Text */}
           <div className="absolute top-[15%] z-20 flex max-w-xs flex-col items-start justify-between gap-y-3">
             <span className="text-xs font-medium uppercase leading-none tracking-tight mix-blend-difference">
-              Get Started
+              {cardData?.label}
             </span>
             <span className="text-2xl font-medium leading-none tracking-tight">
-              New to AI ?
+              {cardData?.title}
             </span>
             <span className=" text-xs uppercase tracking-tight mix-blend-difference">
-              Get the best apps for every task.
+              {cardData?.description}
             </span>
           </div>
         </div>

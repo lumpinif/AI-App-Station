@@ -3,9 +3,7 @@
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { Database } from "@/types/supabase"
-
-export type Apps = Database["public"]["Tables"]["apps"]["Row"]
+import { Apps } from "@/types/db_tables"
 
 export async function GetAppsByUserId(
   app_id: Apps["app_id"],
@@ -153,4 +151,17 @@ export async function UpdateAppByDescription(
   }
 
   return { updatedApp, error }
+}
+
+// fetch Posts
+export async function getAllPosts() {
+  const supabase = await createSupabaseServerClient()
+
+  const { data: posts, error } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("published", true)
+    .order("created_at", { ascending: false })
+
+  return { posts, error }
 }
