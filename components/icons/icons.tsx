@@ -2,10 +2,10 @@ import {
   Layers,
   LayoutTemplate,
   LucideProps,
+  MonitorPlay,
   Moon,
   Search,
   Square,
-  Youtube,
   type LucideIcon,
 } from "lucide-react"
 import { FaUserAlt } from "react-icons/fa"
@@ -58,7 +58,7 @@ export const Icons = {
   twitter: FaXTwitter,
   layers: Layers,
   search: Search,
-  youtube: Youtube,
+  youtube: MonitorPlay,
   layout: LayoutTemplate,
   logo: Square,
   user: FaUserAlt,

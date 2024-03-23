@@ -67,9 +67,7 @@ export function NavigationMenuBar() {
               <Link href={`${route.href}`} legacyBehavior passHref>
                 <NavigationMenuLink
                   className={cn(navigationMenuTriggerStyle(), {
-                    "!text-blue-500 rounded-full": currentPath.includes(
-                      `${route.href}`
-                    ),
+                    "!text-blue-500 ": currentPath.includes(`${route.href}`),
                   })}
                 >
                   {route.title}

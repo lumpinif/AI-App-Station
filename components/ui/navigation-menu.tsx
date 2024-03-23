@@ -41,7 +41,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-10 w-max items-center justify-center rounded-full bg-transparent px-4 py-1 text-sm font-medium hover:bg-foreground/10 hover:shadow-inner-outline dark:hover:shadow-none dark:focus:bg-foreground/20 disabled:pointer-events-none disabled:opacity-50 dark:data-[active]:bg-foreground/20 data-[state=open]:bg-foreground/20 transition-all ease-linear duration-200"
+  "group inline-flex h-10 w-max items-center justify-center rounded-full bg-transparent px-4 py-1 text-sm font-normal hover:bg-foreground/10 hover:shadow-inner-outline dark:hover:shadow-none dark:focus:bg-foreground/20 disabled:pointer-events-none disabled:opacity-50 dark:data-[active]:bg-foreground/20 data-[state=open]:bg-foreground/20 transition-all ease-linear duration-200"
 )
 
 const NavigationMenuTrigger = React.forwardRef<
@@ -59,7 +59,7 @@ const NavigationMenuTrigger = React.forwardRef<
   >
     {children}{" "}
     <ChevronDown
-      className="relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
+      className="relative top-px ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180"
       aria-hidden="true"
     />
   </NavigationMenuPrimitive.Trigger>
@@ -90,7 +90,7 @@ const NavigationMenuViewport = React.forwardRef<
   <div className={cn("absolute left-0 top-full flex justify-center")}>
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        "origin-top-center glass-card-background relative mt-3 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-xl border-[1px] text-popover-foreground shadow-lg backdrop-blur-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 dark:border-0 dark:shadow-outline md:w-[var(--radix-navigation-menu-viewport-width)]",
+        "origin-top-center glass-card-background relative mt-3 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-xl border-DEFAULT text-popover-foreground shadow-lg backdrop-blur-xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 dark:border-0 dark:shadow-outline md:w-[var(--radix-navigation-menu-viewport-width)]",
         className
       )}
       ref={ref}

@@ -2,12 +2,7 @@
 
 import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import {
-  ArrowLeftFromLine,
-  ArrowRightFromLine,
-  Search,
-  Upload,
-} from "lucide-react"
+import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react"
 
 import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
