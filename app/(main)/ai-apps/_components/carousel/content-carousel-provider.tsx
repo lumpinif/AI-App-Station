@@ -23,7 +23,7 @@ type ContentCarouselWrapperProps = {
   isDotButtons?: boolean
 }
 
-const ContentCarouselWrapper: React.FC<ContentCarouselWrapperProps> = ({
+const ContentCarouselProvider: React.FC<ContentCarouselWrapperProps> = ({
   children,
   isLoop = false,
   isMarginRight = true,
@@ -195,4 +195,4 @@ const ContentCarouselWrapper: React.FC<ContentCarouselWrapperProps> = ({
   )
 }
 
-export default ContentCarouselWrapper
+export default ContentCarouselProvider

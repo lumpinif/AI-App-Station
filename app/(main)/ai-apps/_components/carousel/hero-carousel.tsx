@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { CarouselItem } from "@/components/ui/carousel"
 
 import HeroCard from "../cards/hero-card"
-import ContentCarouselWrapper from "./content-carousel-wrapper"
+import ContentCarouselProvider from "./content-carousel-provider"
 
 type HeroCarouselProps = {
   data: any[]
@@ -22,7 +22,7 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
   isLoop,
 }) => {
   return (
-    <ContentCarouselWrapper
+    <ContentCarouselProvider
       isMarginRight={isMarginRight}
       isLoop={isLoop}
       isAutoPlay={true}
@@ -38,6 +38,6 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
           />
         </CarouselItem>
       ))}
-    </ContentCarouselWrapper>
+    </ContentCarouselProvider>
   )
 }
