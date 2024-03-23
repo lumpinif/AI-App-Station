@@ -1,7 +1,7 @@
 import photos, { Photo } from "@/config/dummy-photos"
+import CardModal from "@/components/shared/card-modal"
 
 import ContentCard from "../../_components/content-card"
-import CardModal from "../_components/card-modal"
 
 export default function ContentCardModal({
   params: { id: photoId },

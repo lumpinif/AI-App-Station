@@ -22,16 +22,16 @@ export const PageTitle = ({
     <div className="flex w-full items-end justify-between border-b pb-2">
       <div className={cn("text-4xl", className)}>
         {href ? (
-          <Link href={href} className="inline-block">
-            <div className="flex flex-col">
+          <Link href={href}>
+            <div className="flex items-baseline gap-2">
+              <span className="font-bold tracking-[-.016em] md:tracking-[-.024em]">
+                {title}
+              </span>
               {subtitle && (
-                <span className="mb-2 text-sm font-medium uppercase text-muted-foreground">
+                <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
                   {subtitle}
                 </span>
               )}
-              <span className="font-bold tracking-[-.016em] md:leading-[48px] md:tracking-[-.024em]">
-                {title}
-              </span>
             </div>
           </Link>
         ) : (
@@ -42,7 +42,7 @@ export const PageTitle = ({
                   {subtitle}
                 </span>
               )}
-              <span className="font-bold tracking-[-.016em] md:leading-[48px] md:tracking-[-.024em]">
+              <span className="font-bold tracking-[-.016em] md:tracking-[-.024em]">
                 {title}
               </span>
             </div>

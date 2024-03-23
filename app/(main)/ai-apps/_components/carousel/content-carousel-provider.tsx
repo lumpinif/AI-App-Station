@@ -15,15 +15,15 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 
-type ContentCarouselWrapperProps = {
-  children?: React.ReactNode
+export type ContentCarouselProviderProps = {
+  children: React.ReactNode
   isLoop?: boolean
   isMarginRight?: boolean
   isAutoPlay?: boolean
   isDotButtons?: boolean
 }
 
-const ContentCarouselProvider: React.FC<ContentCarouselWrapperProps> = ({
+const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
   children,
   isLoop = false,
   isMarginRight = true,

@@ -1,0 +1,86 @@
+import Image from "next/image"
+import { notFound } from "next/navigation"
+import { getPost } from "@/server/data"
+
+import { titleToSlug } from "@/lib/utils"
+
+export type StoryPageProps = {
+  params: { slug: string }
+}
+
+export default async function StoryPage({ params }: StoryPageProps) {
+  const slug = titleToSlug(params.slug)
+
+  const { post, error } = await getPost(slug)
+
+  if (!post) {
+    notFound()
+  }
+
+  if (error) {
+    console.error(error)
+  }
+
+  //TODO: Check and get user session
+
+  return (
+    <>
+      {/* <pre>{JSON.stringify(post, null, 2)}</pre> */}
+      <>
+        <section className="flex w-full flex-col p-2 sm:p-4">
+          <div className="grid w-full gap-4 lg:grid-cols-2 ">
+            {/* Left Image Area */}
+            <div className="relative hidden w-full border lg:col-span-1 lg:flex lg:items-center lg:justify-center">
+              <div className="top-1/2 w-1/5 -translate-y-1/2 lg:fixed">
+                <Image
+                  alt=""
+                  src={"/images/tool-preview.png"}
+                  height={600}
+                  width={600}
+                  className="rounded-xl object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Content Area */}
+            <div className="w-full  p-2 px-4 lg:col-span-1">
+              <Image
+                alt=""
+                src={"/images/tool-preview.png"}
+                height={600}
+                width={600}
+                className="aspect-square w-full rounded-xl object-cover lg:hidden"
+              />
+              <h3 className="text-xl font-medium">{post.title}</h3>
+              <p className="text-sm text-muted-foreground">
+                Created by {post.profiles?.full_name || post.profiles?.email}
+              </p>
+              <p>
+                {post.content}
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel
+                aliquam, iure eum, exercitationem possimus hic perspiciatis
+                earum architecto, veritatis iste dolores aspernatur. Neque
+                distinctio temporibus quod cupiditate corporis sequi quos. Lorem
+                ipsum dolor sit amet consectetur adipisicing elit. Distinctio
+                enim, quas veniam omnis corrupti rerum beatae suscipit quod
+                quisquam, temporibus esse labore, sapiente eaque eveniet porro
+                explicabo unde dolorem deserunt!
+              </p>
+
+              <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel
+                aliquam, iure eum, exercitationem possimus hic perspiciatis
+                earum architecto, veritatis iste dolores aspernatur. Neque
+                distinctio temporibus quod cupiditate corporis sequi quos. Lorem
+                ipsum dolor sit amet consectetur adipisicing elit. Distinctio
+                enim, quas veniam omnis corrupti rerum beatae suscipit quod
+                quisquam, temporibus esse labore, sapiente eaque eveniet porro
+                explicabo unde dolorem deserunt!
+              </p>
+            </div>
+          </div>
+        </section>
+      </>
+    </>
+  )
+}

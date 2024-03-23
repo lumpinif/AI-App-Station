@@ -14,8 +14,14 @@ const AIAppsPage = async () => {
 
   return (
     <section className="">
-      <Suspense>
-        <HeroCarousel data={posts} isMarginRight={false} isLoop />
+      <Suspense fallback={<div>Loading...</div>}>
+        <HeroCarousel
+          data={posts}
+          isMarginRight={false}
+          isLoop
+          isDotButtons
+          isAutoPlay
+        />
       </Suspense>
 
       {/* <ContentCarousel className="md:basis-1/2" />

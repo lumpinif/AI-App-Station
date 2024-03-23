@@ -165,3 +165,21 @@ export async function getAllPosts() {
 
   return { posts, error }
 }
+
+export async function getPost(slug: string) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: post, error } = await supabase
+    .from("posts")
+    .select(
+      `*,
+    posts_categories(*),
+    profiles(*)
+    `
+    )
+    .eq("slug", slug)
+    .eq("published", true)
+    .single()
+
+  return { post, error }
+}

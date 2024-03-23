@@ -2,17 +2,19 @@
 
 import * as React from "react"
 
+import { Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { CarouselItem } from "@/components/ui/carousel"
 
-import HeroCard from "../cards/hero-card"
-import ContentCarouselProvider from "./content-carousel-provider"
+import HeroCard from "../cards/hero-posts-card"
+import ContentCarouselProvider, {
+  ContentCarouselProviderProps,
+} from "./content-carousel-provider"
 
-type HeroCarouselProps = {
-  data: any[]
+interface HeroCarouselProps
+  extends Omit<ContentCarouselProviderProps, "children"> {
+  data: Posts[]
   className?: string
-  isMarginRight?: boolean
-  isLoop?: boolean
 }
 
 export const HeroCarousel: React.FC<HeroCarouselProps> = ({
@@ -20,13 +22,15 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
   className,
   isMarginRight,
   isLoop,
+  isAutoPlay,
+  isDotButtons,
 }) => {
   return (
     <ContentCarouselProvider
       isMarginRight={isMarginRight}
       isLoop={isLoop}
-      isAutoPlay={true}
-      isDotButtons={true}
+      isAutoPlay={isAutoPlay}
+      isDotButtons={isDotButtons}
     >
       {data?.map((post, index) => (
         <CarouselItem key={index} className={cn("", className)}>
@@ -34,7 +38,8 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
             label={post.label}
             title={post.title}
             description={post.description}
-            image={post.image}
+            image_src={post.image_src}
+            slug={post.slug}
           />
         </CarouselItem>
       ))}

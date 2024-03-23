@@ -3,18 +3,21 @@ import Link from "next/link"
 
 import { Posts } from "@/types/db_tables"
 
-type HeroCardProps = {
-  // TODO: define the types of cardData
-  label?: string
-  title?: string
-  description?: string
-  image?: string
-}
+type HeroPostsCardProps = Pick<
+  Posts,
+  "label" | "title" | "description" | "image_src" | "slug"
+>
 
-const HeroCard: React.FC<HeroCardProps> = ({ label, title, description }) => {
+const HeroPostsCard: React.FC<HeroPostsCardProps> = ({
+  label,
+  title,
+  description,
+  image_src,
+  slug,
+}) => {
   return (
     <>
-      <Link href={"/ai-apps/#"}>
+      <Link href={`/story/${slug}`} scroll={false}>
         <div className="relative h-96 w-full cursor-pointer rounded-lg bg-card px-8">
           {/* Image */}
           <Image
@@ -46,4 +49,4 @@ const HeroCard: React.FC<HeroCardProps> = ({ label, title, description }) => {
   )
 }
 
-export default HeroCard
+export default HeroPostsCard

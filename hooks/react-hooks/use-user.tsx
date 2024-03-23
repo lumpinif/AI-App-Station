@@ -1,6 +1,6 @@
 "use client"
 
-import { getUserProfile, getUserSession } from "@/server/auth"
+import { getUserProfile } from "@/server/auth"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 
