@@ -2,7 +2,6 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import OAuthForm from "./oauth-form"
 import RegisterForm from "./register-form"
