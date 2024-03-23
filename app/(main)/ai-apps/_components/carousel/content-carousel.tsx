@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
+import Link from "next/link"
 
 import { Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -15,7 +17,7 @@ import {
 
 import HeroCard from "../cards/hero-card"
 
-type ContentCarousel = {
+type ContentCarouselProps = {
   data?: Posts[]
   children?: React.ReactNode
   className?: string
@@ -23,19 +25,22 @@ type ContentCarousel = {
   noMarginRight?: boolean
 }
 
-const ContentCarousel = ({
+const ContentCarousel: React.FC<ContentCarouselProps> = ({
   data,
   children,
   className,
   isLoop,
   noMarginRight = false,
-}: ContentCarousel) => {
+}) => {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
+  const [isHovered, setIsHovered] = React.useState(false)
+
+  // TODO: remove this before ship
+  // this is to check if the carousel can scroll
   // const [canScrollPrev, setCanScrollPrev] = React.useState(false)
   // const [canScrollNext, setCanScrollNext] = React.useState(false)
-  const [isHovered, setIsHovered] = React.useState(false)
 
   // const updateScrollButtons = React.useCallback(() => {
   //   if (!api) return
@@ -81,7 +86,7 @@ const ContentCarousel = ({
         <CarouselContent className={noMarginRight ? "" : "mr-6"}>
           {data?.map((post, index) => (
             <CarouselItem key={index} className={cn("", className)}>
-              <HeroCard cardData={post as Posts} />
+              {children}
             </CarouselItem>
           ))}
         </CarouselContent>

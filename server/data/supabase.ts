@@ -15,7 +15,7 @@ export async function GetAppsByUserId(
     return { app: null, error: "Unauthorized!" }
   }
 
-  const { data: app, error } = await supabase
+  let { data: app, error } = await supabase
     .from("apps")
     .select("*")
     .eq("app_id", app_id)
@@ -157,7 +157,7 @@ export async function UpdateAppByDescription(
 export async function getAllPosts() {
   const supabase = await createSupabaseServerClient()
 
-  const { data: posts, error } = await supabase
+  let { data: posts, error } = await supabase
     .from("posts")
     .select("*")
     .eq("published", true)
