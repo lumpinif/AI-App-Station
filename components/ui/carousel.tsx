@@ -76,11 +76,43 @@ const Carousel = React.forwardRef<
     }, [])
 
     const scrollPrev = React.useCallback(() => {
+      // Scroll to the previous item
       api?.scrollPrev()
-    }, [api])
+
+      // Get the autoplay plugin
+      const autoplay = api?.plugins()?.autoplay
+
+      // If there's no autoplay plugin, stop here
+      if (!autoplay) return
+
+      // Depending on the autoplay options, either reset or stop the autoplay
+      const resetOrStop =
+        autoplay.options.stopOnInteraction === false
+          ? autoplay.reset
+          : autoplay.stop
+
+      // Execute the chosen action
+      resetOrStop()
+    }, [api]) // Recreate the function whenever `api` changes
 
     const scrollNext = React.useCallback(() => {
+      // Scroll to the next item
       api?.scrollNext()
+
+      // Get the autoplay plugin
+      const autoplay = api?.plugins()?.autoplay
+
+      // If there's no autoplay plugin, stop here
+      if (!autoplay) return
+
+      // Depending on the autoplay options, either reset or stop the autoplay
+      const resetOrStop =
+        autoplay.options.stopOnInteraction === false
+          ? autoplay.reset
+          : autoplay.stop
+
+      // Execute the chosen action
+      resetOrStop()
     }, [api])
 
     const handleKeyDown = React.useCallback(
@@ -204,14 +236,15 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute  h-8 w-8 rounded-full",
+        "absolute h-8 w-8 rounded-full",
         orientation === "horizontal"
           ? "-left-12 top-1/2 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        !canScrollPrev ? "cursor-default opacity-50" : "",
         className
       )}
-      disabled={!canScrollPrev}
-      onClick={scrollPrev}
+      // disabled={!canScrollPrev}
+      onClick={canScrollPrev ? scrollPrev : undefined}
       {...props}
     >
       <ArrowLeft className="h-4 w-4" />
@@ -237,10 +270,11 @@ const CarouselNext = React.forwardRef<
         orientation === "horizontal"
           ? "-right-12 top-1/2 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        !canScrollNext ? "cursor-default opacity-50" : "",
         className
       )}
-      disabled={!canScrollNext}
-      onClick={scrollNext}
+      // disabled={!canScrollNext}
+      onClick={canScrollNext ? scrollNext : undefined}
       {...props}
     >
       <ArrowRight className="h-4 w-4" />

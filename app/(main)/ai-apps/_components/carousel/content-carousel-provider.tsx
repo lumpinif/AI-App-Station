@@ -50,6 +50,21 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
     (index: number) => {
       if (!api) return
       api.scrollTo(index)
+
+      // Get the autoplay plugin
+      const autoplay = api?.plugins()?.autoplay
+
+      // If there's no autoplay plugin, stop here
+      if (!autoplay) return
+
+      // Depending on the autoplay options, either reset or stop the autoplay
+      const resetOrStop =
+        autoplay.options.stopOnInteraction === false
+          ? autoplay.reset
+          : autoplay.stop
+
+      // Execute the chosen action
+      resetOrStop()
     },
     [api]
   )
@@ -120,7 +135,6 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
             ? [
                 Autoplay({
                   playOnInit: true,
-                  stopOnInteraction: true,
                   delay: 3500,
                 }),
                 WheelGesturesPlugin({
