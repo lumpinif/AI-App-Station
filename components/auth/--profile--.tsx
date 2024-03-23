@@ -46,7 +46,7 @@ export default function Profile() {
 
   return (
     <div>
-      {!data?.id ? (
+      {!data?.user_id ? (
         <Link href="/auth" className=" animate-fade">
           <Button variant="outline">SignIn</Button>
         </Link>

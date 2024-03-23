@@ -11,7 +11,7 @@ const initUser = {
   display_name: "",
   email: "",
   full_name: "",
-  id: "",
+  user_id: "",
   job: "",
   updated_at: "",
 }

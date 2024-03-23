@@ -2,16 +2,14 @@
 
 import { MouseEvent } from "react"
 
-import { Database } from "@/types/supabase"
+import { Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons/icons"
 
-type profile = Database["public"]["Tables"]["profiles"]["Row"]
-
-type typeOfProfile = profile | { [key: string]: any }
+type typeOfProfile = Profiles | { [key: string]: any }
 
 type AccountModalTriggerProps = {
   className?: string

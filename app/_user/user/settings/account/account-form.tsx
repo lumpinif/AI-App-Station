@@ -42,7 +42,7 @@ export default function AccountFormSupabase() {
       setLoading(true)
 
       const { error } = await supabase.from("profiles").upsert({
-        id: profile?.id as string,
+        user_id: profile?.user_id as string,
         email: profile?.email as string,
         full_name: fullname,
         display_name: username,
