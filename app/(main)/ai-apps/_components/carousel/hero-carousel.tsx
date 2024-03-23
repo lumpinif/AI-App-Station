@@ -26,6 +26,7 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
       isMarginRight={isMarginRight}
       isLoop={isLoop}
       isAutoPlay={true}
+      isDotButtons={true}
     >
       {data?.map((post, index) => (
         <CarouselItem key={index} className={cn("", className)}>
