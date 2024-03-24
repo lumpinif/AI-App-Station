@@ -1,31 +1,32 @@
 import { Suspense } from "react"
-import { getAllPosts } from "@/server/data/supabase"
+import { getAllHeroFeaturedPosts, getAllPosts } from "@/server/data/supabase"
 
 import { HeroCarousel } from "./_components/carousel/hero-carousel"
 
 const AIAppsPage = async () => {
   // fetch Posts
-  let { posts, error } = await getAllPosts()
-  // console.log("🚀 ~ AIAppsPage ~ posts:", posts)
+  let { posts: heroPosts, error: allHeroFeaturedPostsError } =
+    await getAllHeroFeaturedPosts()
+  let { posts: allPosts, error: allPostsError } = await getAllPosts()
 
-  if (!posts || error) {
+  if (!allPosts || !heroPosts) {
     return null
   }
 
   return (
     <section className="flex flex-col gap-y-4">
-      <Suspense fallback={<div>Loading...</div>}>
+      {/* <Suspense fallback={<div>Loading...</div>}>
         <HeroCarousel
-          data={posts}
+          data={heroPosts}
           isMarginRight={false}
           isLoop
           isDotButtons
           isAutoPlay
         />
-      </Suspense>
+      </Suspense> */}
       <Suspense fallback={<div>Loading...</div>}>
         <HeroCarousel
-          data={posts}
+          data={allPosts}
           isMarginRight={false}
           className="md:basis-1/2"
         />

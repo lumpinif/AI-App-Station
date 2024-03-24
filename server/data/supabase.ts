@@ -5,6 +5,22 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Apps } from "@/types/db_tables"
 
+const getErrorMessage = (error: unknown) => {
+  let message: string
+
+  if (error instanceof Error) {
+    message = error.message
+  } else if (error && typeof error === "object" && "message" in error) {
+    message = String(error.message)
+  } else if (typeof error === "string") {
+    message = error
+  } else {
+    message = "Something went wrong"
+  }
+
+  return message
+}
+
 export async function GetAppsByUserId(
   app_id: Apps["app_id"],
   user_id: Apps["submitted_by_user_id"]
@@ -154,14 +170,36 @@ export async function UpdateAppByDescription(
 }
 
 // fetch Posts
-export async function getAllPosts() {
+export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {
   const supabase = await createSupabaseServerClient()
 
   let { data: posts, error } = await supabase
     .from("posts")
     .select("*")
     .eq("published", true)
+    .eq("hero_featured", noHeroFeaturedPosts)
     .order("created_at", { ascending: false })
+
+  // error handling
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return { posts, error }
+}
+
+export async function getAllHeroFeaturedPosts() {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: posts, error } = await supabase
+    .from("posts")
+    .select("*")
+    .eq("published", true)
+    .eq("hero_featured", true)
+    .order("created_at", { ascending: false })
+
+  // error handling
+  if (error) return { posts: null, error: getErrorMessage(error) }
 
   return { posts, error }
 }
@@ -171,15 +209,13 @@ export async function getPost(slug: string) {
 
   let { data: post, error } = await supabase
     .from("posts")
-    .select(
-      `*,
-    posts_categories(*),
-    profiles(*)
-    `
-    )
+    .select(`*, posts_categories(*), profiles(*)`)
     .eq("slug", slug)
     .eq("published", true)
     .single()
+
+  // error handling
+  if (error) return { post: null, error: getErrorMessage(error) }
 
   return { post, error }
 }
