@@ -1,8 +1,9 @@
 import * as React from "react"
+import { set } from "date-fns"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -75,45 +76,25 @@ const Carousel = React.forwardRef<
       setCanScrollNext(api.canScrollNext())
     }, [])
 
+    const toggleAutoplay = React.useCallback(() => {
+      const autoplay = api?.plugins()?.autoplay
+      if (!autoplay) return
+
+      const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play
+      playOrStop()
+    }, [api])
+
     const scrollPrev = React.useCallback(() => {
       // Scroll to the previous item
       api?.scrollPrev()
-
-      // Get the autoplay plugin
-      const autoplay = api?.plugins()?.autoplay
-
-      // If there's no autoplay plugin, stop here
-      if (!autoplay) return
-
-      // Depending on the autoplay options, either reset or stop the autoplay
-      const resetOrStop =
-        autoplay.options.stopOnInteraction === false
-          ? autoplay.reset
-          : autoplay.stop
-
-      // Execute the chosen action
-      resetOrStop()
-    }, [api]) // Recreate the function whenever `api` changes
+      toggleAutoplay()
+    }, [api, toggleAutoplay]) // Recreate the function whenever `api` changes
 
     const scrollNext = React.useCallback(() => {
       // Scroll to the next item
       api?.scrollNext()
-
-      // Get the autoplay plugin
-      const autoplay = api?.plugins()?.autoplay
-
-      // If there's no autoplay plugin, stop here
-      if (!autoplay) return
-
-      // Depending on the autoplay options, either reset or stop the autoplay
-      const resetOrStop =
-        autoplay.options.stopOnInteraction === false
-          ? autoplay.reset
-          : autoplay.stop
-
-      // Execute the chosen action
-      resetOrStop()
-    }, [api])
+      toggleAutoplay()
+    }, [api, toggleAutoplay])
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -224,64 +205,107 @@ const CarouselItem = React.forwardRef<
 })
 CarouselItem.displayName = "CarouselItem"
 
+type CarouselPreviousProps = React.ComponentProps<typeof Button> & {
+  hiddenOnCanNotScroll?: boolean
+}
+
 const CarouselPrevious = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+  CarouselPreviousProps
+>(
+  (
+    {
+      className,
+      variant = "outline",
+      size = "icon",
+      hiddenOnCanNotScroll = false,
+      ...props
+    },
+    ref
+  ) => {
+    const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+    const [hidden, setHidden] = React.useState(false)
 
-  return (
-    <Button
-      ref={ref}
-      variant={variant}
-      size={size}
-      className={cn(
-        "absolute h-8 w-8 rounded-full",
-        orientation === "horizontal"
-          ? "-left-12 top-1/2 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
-        !canScrollPrev ? "cursor-default opacity-50" : "",
-        className
-      )}
-      // disabled={!canScrollPrev}
-      onClick={canScrollPrev ? scrollPrev : undefined}
-      {...props}
-    >
-      <ArrowLeft className="h-4 w-4" />
-      <span className="sr-only">Previous slide</span>
-    </Button>
-  )
-})
+    React.useEffect(() => {
+      if (hiddenOnCanNotScroll) {
+        setHidden(!canScrollPrev)
+      }
+    }, [canScrollPrev, hiddenOnCanNotScroll])
+
+    return (
+      <Button
+        ref={ref}
+        variant={variant}
+        size={size}
+        className={cn(
+          "absolute h-8 w-8 rounded-full",
+          orientation === "horizontal"
+            ? "-left-12 top-1/2 -translate-y-1/2"
+            : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          !canScrollPrev ? "cursor-default opacity-50" : "",
+          hidden ? "hidden" : "",
+          className
+        )}
+        // disabled={!canScrollPrev}
+        onClick={canScrollPrev ? scrollPrev : undefined}
+        {...props}
+      >
+        <ArrowLeft className="h-4 w-4" />
+        <span className="sr-only">Previous slide</span>
+      </Button>
+    )
+  }
+)
 CarouselPrevious.displayName = "CarouselPrevious"
 
-const CarouselNext = React.forwardRef<
-  HTMLButtonElement,
-  React.ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-  const { orientation, scrollNext, canScrollNext } = useCarousel()
+type CarouselNextProps = React.ComponentProps<typeof Button> & {
+  hiddenOnCanNotScroll?: boolean
+}
 
-  return (
-    <Button
-      ref={ref}
-      variant={variant}
-      size={size}
-      className={cn(
-        "absolute h-8 w-8 rounded-full",
-        orientation === "horizontal"
-          ? "-right-12 top-1/2 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
-        !canScrollNext ? "cursor-default opacity-50" : "",
-        className
-      )}
-      // disabled={!canScrollNext}
-      onClick={canScrollNext ? scrollNext : undefined}
-      {...props}
-    >
-      <ArrowRight className="h-4 w-4" />
-      <span className="sr-only">Next slide</span>
-    </Button>
-  )
-})
+const CarouselNext = React.forwardRef<HTMLButtonElement, CarouselNextProps>(
+  (
+    {
+      className,
+      variant = "outline",
+      size = "icon",
+      hiddenOnCanNotScroll = false,
+      ...props
+    },
+    ref
+  ) => {
+    const { orientation, scrollNext, canScrollNext } = useCarousel()
+    const [hidden, setHidden] = React.useState(false)
+
+    React.useEffect(() => {
+      if (hiddenOnCanNotScroll) {
+        setHidden(!canScrollNext)
+      }
+    }, [canScrollNext, hiddenOnCanNotScroll])
+
+    return (
+      <Button
+        ref={ref}
+        variant={variant}
+        size={size}
+        className={cn(
+          "absolute h-8 w-8 rounded-full",
+          orientation === "horizontal"
+            ? "-right-12 top-1/2 -translate-y-1/2"
+            : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          !canScrollNext ? "cursor-default opacity-50" : "",
+          hidden ? "hidden" : "",
+          className
+        )}
+        // disabled={!canScrollNext}
+        onClick={canScrollNext ? scrollNext : undefined}
+        {...props}
+      >
+        <ArrowRight className="h-4 w-4" />
+        <span className="sr-only">Next slide</span>
+      </Button>
+    )
+  }
+)
 CarouselNext.displayName = "CarouselNext"
 
 export {

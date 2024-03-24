@@ -8,7 +8,7 @@ export type Bookmarks = Database["public"]["Tables"]["bookmarks"]["Row"]
 export type Comments = Database["public"]["Tables"]["comments"]["Row"]
 
 // About the Apps
-export type Apps = Database["public"]["Tables"]["apps"]["Row"]
+export type App = Database["public"]["Tables"]["apps"]["Row"]
 export type AppsCategories =
   Database["public"]["Tables"]["apps_categories"]["Row"]
 export type AppDevelopers =
@@ -16,11 +16,13 @@ export type AppDevelopers =
 export type Categories = Database["public"]["Tables"]["categories"]["Row"]
 export type Developers = Database["public"]["Tables"]["developers"]["Row"]
 
+export type AppCardProps = Pick<App, "title" | "categories">
+
 // About the Posts
-export type Posts = Database["public"]["Tables"]["posts"]["Row"]
+export type Post = Database["public"]["Tables"]["posts"]["Row"]
 export type PostsCategories =
   Database["public"]["Tables"]["posts_categories"]["Row"]
-export type HeroPostsCardProps = Pick<
-  Posts,
+export type PostCardProps = Pick<
+  Post,
   "label" | "title" | "description" | "image_src" | "slug"
 >

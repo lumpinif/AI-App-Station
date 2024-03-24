@@ -1,17 +1,17 @@
 import * as React from "react"
 
-import { Posts } from "@/types/db_tables"
+import { Post } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { CarouselItem } from "@/components/ui/carousel"
 
-import HeroPostsCard from "../cards/hero-posts-card"
+import PostCard from "../../cards/post-card"
 import ContentCarouselProvider, {
   ContentCarouselProviderProps,
 } from "./content-carousel-provider"
 
 interface HeroCarouselProps
   extends Omit<ContentCarouselProviderProps, "children"> {
-  data: Posts[]
+  data: Post[]
   className?: string
 }
 
@@ -32,7 +32,7 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
     >
       {data?.map((post, index) => (
         <CarouselItem key={index} className={cn("", className)}>
-          <HeroPostsCard
+          <PostCard
             key={index}
             label={post.label}
             title={post.title}

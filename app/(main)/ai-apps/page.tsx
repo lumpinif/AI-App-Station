@@ -1,9 +1,8 @@
-import React, { lazy, Suspense } from "react"
-import { getAllHeroFeaturedPosts, getAllPosts } from "@/server/data/supabase"
+import { getAllApps, getAllHeroFeaturedPosts, getAllPosts } from "@/server/data"
+import { EmblaOptionsType } from "embla-carousel"
 
-const HeroCarouselClient = lazy(
-  () => import("./_components/carousel/hero-carousel-client")
-)
+import AppCardsCarousel from "./_components/carousel/app-card-carousel/app-cards-carousel"
+import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 
 const AIAppsPage = async () => {
   // fetch Posts
@@ -11,28 +10,39 @@ const AIAppsPage = async () => {
     await getAllHeroFeaturedPosts()
   let { posts: allPosts, error: allPostsError } = await getAllPosts()
 
+  let { apps: allApps, error: allAppsError } = await getAllApps()
+
   if (!allPosts || !heroPosts) {
     return null
   }
 
+  if (!allApps) {
+    return null
+  }
+
+  const OPTIONS_LOOP: EmblaOptionsType = {
+    loop: true,
+  }
+
   return (
     <section className="flex flex-col gap-y-4">
-      <Suspense fallback={<div>Loading...</div>}>
-        <HeroCarouselClient
-          data={heroPosts}
-          isMarginRight={false}
-          isLoop
-          // isDotButtons
-          // isAutoPlay
-        />
-      </Suspense>
-      <Suspense fallback={<div>Loading...</div>}>
-        <HeroCarouselClient
-          data={allPosts}
-          isMarginRight={false}
-          className="md:basis-1/2"
-        />
-      </Suspense>
+      <PostsCarousel
+        data={heroPosts}
+        options={OPTIONS_LOOP}
+        isAutpPlay={true}
+        isMarginRight={false}
+      />
+      <PostsCarousel
+        data={allPosts}
+        className="md:basis-1/2"
+        isMarginRight={false}
+      />
+
+      <AppCardsCarousel
+        data={allApps}
+        className="md:basis-1/2 lg:basis-1/3"
+        isMarginRight={true}
+      />
 
       {/* <ContentCarousel className="md:basis-1/2" />
       <ContentCarousel className="md:basis-1/2 lg:basis-1/3" /> */}

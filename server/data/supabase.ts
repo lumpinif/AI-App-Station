@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { Apps } from "@/types/db_tables"
+import { App } from "@/types/db_tables"
 
 const getErrorMessage = (error: unknown) => {
   let message: string
@@ -22,8 +22,8 @@ const getErrorMessage = (error: unknown) => {
 }
 
 export async function GetAppsByUserId(
-  app_id: Apps["app_id"],
-  user_id: Apps["submitted_by_user_id"]
+  app_id: App["app_id"],
+  user_id: App["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -41,7 +41,7 @@ export async function GetAppsByUserId(
   return { app, error }
 }
 
-export async function SubmitApp(title: Apps["title"]) {
+export async function SubmitApp(title: App["title"]) {
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -89,8 +89,8 @@ export async function SubmitApp(title: Apps["title"]) {
 }
 
 export async function UpdateAppByTitle(
-  app_id: Apps["app_id"],
-  newTitle: Apps["title"]
+  app_id: App["app_id"],
+  newTitle: App["title"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -138,8 +138,8 @@ export async function UpdateAppByTitle(
 }
 
 export async function UpdateAppByDescription(
-  app_id: Apps["app_id"],
-  description: Apps["description"]
+  app_id: App["app_id"],
+  description: App["description"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -218,4 +218,20 @@ export async function getPost(slug: string) {
   if (error) return { post: null, error: getErrorMessage(error) }
 
   return { post, error }
+}
+
+// fetch apps
+
+export async function getAllApps() {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: apps, error } = await supabase
+    .from("apps")
+    .select("*")
+    .order("created_at", { ascending: false })
+
+  // error handling
+  if (error) return { apps: null, error: getErrorMessage(error) }
+
+  return { apps, error }
 }

@@ -8,7 +8,7 @@ import { SIDENAVROUTES } from "@/config/routes"
 import { cn } from "@/lib/utils"
 
 import AppSubmitButton from "./app-submit-button"
-import { TagsCarousel } from "./carousel/tags-carousel"
+import { TagsCarousel } from "./carousel/mobile-nav-carousel/tags-carousel"
 
 export function MobileCategoryNav() {
   const router = useRouter()

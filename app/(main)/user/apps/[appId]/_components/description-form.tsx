@@ -9,6 +9,7 @@ import { PulseLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -19,10 +20,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
-import { Apps } from "@/types/db_tables"
 
 interface DescriptionFormProps {
-  initialData: Apps
+  initialData: App
   appId: string
 }
 

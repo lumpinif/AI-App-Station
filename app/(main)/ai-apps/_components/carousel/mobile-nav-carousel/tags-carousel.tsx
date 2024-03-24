@@ -1,8 +1,7 @@
 "use client"
 
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback } from "react"
 import Link from "next/link"
-import { notFound } from "next/navigation"
 import { motion } from "framer-motion"
 
 import { NavItemProps, SIDENAVROUTES } from "@/config/routes"
@@ -14,7 +13,6 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
 } from "@/components/ui/carousel"
 
 const MemoizedCarouselItem = React.memo(CarouselItem)
@@ -24,10 +22,6 @@ type TagsCarouselProps = {
 }
 
 export function TagsCarousel({ currentPath }: TagsCarouselProps) {
-  const [api, setApi] = React.useState<CarouselApi>()
-  const [scrollPrev, setScrollPrev] = React.useState(false)
-  const [scrollNext, setScrollNext] = React.useState(false)
-
   const isActive = useCallback(
     (href: string) => currentPath === href,
     [currentPath]
@@ -41,32 +35,6 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
 
   const allHref = filteredRoutes?.href || "/"
 
-  // Use useCallback to ensure these functions don't trigger unnecessary re-renders
-  const updateScrollStates = useCallback(() => {
-    if (api) {
-      setScrollPrev(api.canScrollPrev())
-      setScrollNext(api.canScrollNext())
-    }
-  }, [api])
-
-  useEffect(() => {
-    if (!api) return
-
-    // Update immediately without waiting for events
-    updateScrollStates()
-
-    // Event listeners for real-time updates
-    api.on("select", updateScrollStates)
-    api.on("reInit", updateScrollStates)
-
-    // Cleanup
-    return () => {
-      api.off("select", updateScrollStates)
-      api.off("reInit", updateScrollStates)
-    }
-  }, [api, updateScrollStates])
-
-  // Conditional rendering moved to the end.
   // Early return if no filteredRoutes are found
   if (!filteredRoutes) {
     return (
@@ -98,6 +66,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
             animate={{ color: "hsl(var(--primary-foreground))" }}
           >
             <motion.span
+              layout
               layoutId="bubble"
               className={cn(
                 buttonVariants({
@@ -108,8 +77,8 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
               )}
               transition={{
                 type: "spring",
-                bounce: 0.2,
-                duration: 0.35,
+                bounce: 0.1,
+                duration: 0.15,
                 ease: [0.32, 0.72, 0, 1],
               }}
             />
@@ -140,11 +109,9 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
         <Carousel
           opts={{
             duration: 20,
-            containScroll: "trimSnaps",
             align: "start",
             slidesToScroll: "auto",
           }}
-          setApi={setApi}
           className="py-3 transition-all duration-300 ease-in-out"
         >
           <CarouselContent className="relative">
@@ -153,18 +120,14 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
           </CarouselContent>
 
           <CarouselPrevious
+            hiddenOnCanNotScroll
             variant="ghost"
-            className={cn(
-              "ml-12 size-8 bg-background/20 backdrop-blur-[1px]",
-              scrollPrev ? "" : "hidden"
-            )}
+            className={cn("ml-12 size-8 bg-background/20 backdrop-blur-[1px]")}
           />
           <CarouselNext
+            hiddenOnCanNotScroll
             variant="ghost"
-            className={cn(
-              "mr-12 size-8 bg-background/20 backdrop-blur-[1px]",
-              scrollNext ? "" : "hidden"
-            )}
+            className={cn("mr-12 size-8 bg-background/20 backdrop-blur-[1px]")}
           />
         </Carousel>
       </div>

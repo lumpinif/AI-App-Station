@@ -9,6 +9,7 @@ import { PulseLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { App } from "@/types/db_tables"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -18,10 +19,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
-import { Apps } from "@/types/db_tables"
 
 interface TitleFormProps {
-  initialData: Apps
+  initialData: App
   appId: string
 }
 

@@ -1,12 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Apps } from "@/types/db_tables"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { motion } from "framer-motion"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { z } from "zod"
 
+import { App } from "@/types/db_tables"
 import { FormDataSchema } from "@/lib/schema"
 import { Button } from "@/components/ui/button"
 
@@ -16,7 +16,7 @@ import TitleForm from "./title-form"
 type Inputs = z.infer<typeof FormDataSchema>
 
 interface AppContinueSubmitFormProps {
-  initialData: Apps
+  initialData: App
   appId: string
 }
 

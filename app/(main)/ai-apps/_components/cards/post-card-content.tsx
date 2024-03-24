@@ -2,13 +2,13 @@ import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 
-import { HeroPostsCardProps, Posts } from "@/types/db_tables"
+import { Post, PostCardProps } from "@/types/db_tables"
 
-export type HeroPostsCardContentProps = HeroPostsCardProps & {
+export type PostCardContentProps = PostCardProps & {
   key: number
 }
 
-const HeroPostsCardContent: React.FC<HeroPostsCardContentProps> = ({
+const PostCardContent: React.FC<PostCardContentProps> = ({
   key,
   label,
   title,
@@ -52,4 +52,4 @@ const HeroPostsCardContent: React.FC<HeroPostsCardContentProps> = ({
   )
 }
 
-export default HeroPostsCardContent
+export default PostCardContent

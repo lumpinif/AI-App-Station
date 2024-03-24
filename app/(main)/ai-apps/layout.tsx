@@ -26,7 +26,7 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
         <nav className="fixed bottom-1/2 top-1/2 z-50 hidden w-fit -translate-y-1/2 flex-col justify-center sm:flex">
           <FloatingSideNav />
         </nav>
-        <AiAppsPageWrapper className="h-[2000px] ">
+        <AiAppsPageWrapper className="">
           {/* TODO: CONSIDERIGN ADD PROGRESSIVE BLUR TO THE EDGE OF THE SCROLLAREA */}
           {children}
         </AiAppsPageWrapper>
