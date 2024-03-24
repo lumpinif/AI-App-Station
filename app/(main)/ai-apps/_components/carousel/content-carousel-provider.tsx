@@ -137,9 +137,9 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
                   playOnInit: true,
                   delay: 3500,
                 }),
-                WheelGesturesPlugin({
-                  forceWheelAxis: "x",
-                }),
+                // WheelGesturesPlugin({
+                //   forceWheelAxis: "x",
+                // }),
               ]
             : [WheelGesturesPlugin()]
         }

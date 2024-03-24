@@ -15,7 +15,7 @@ const AIAppsPage = async () => {
 
   return (
     <section className="flex flex-col gap-y-4">
-      {/* <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
         <HeroCarousel
           data={heroPosts}
           isMarginRight={false}
@@ -23,7 +23,7 @@ const AIAppsPage = async () => {
           isDotButtons
           isAutoPlay
         />
-      </Suspense> */}
+      </Suspense>
       <Suspense fallback={<div>Loading...</div>}>
         <HeroCarousel
           data={allPosts}

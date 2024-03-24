@@ -22,7 +22,7 @@ const HeroPostsCard: React.FC<HeroPostsCardProps> = ({
           {/* Image */}
           <Image
             alt=""
-            src={"/images/tool-preview.png"}
+            src={""}
             fill
             objectFit="cover"
             className="rounded-lg"
