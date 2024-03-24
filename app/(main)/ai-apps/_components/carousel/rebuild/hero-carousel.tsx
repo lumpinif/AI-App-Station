@@ -14,7 +14,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
-import PostCard from "../../cards/post-card"
+import PostCard from "../../cards/_post-card"
 
 type HeroCarouselProps = {
   data: Post[]

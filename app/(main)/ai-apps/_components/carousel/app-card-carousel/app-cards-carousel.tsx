@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { Suspense } from "react"
 import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 
@@ -14,7 +14,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
-import AppCard from "../../cards/app-card"
+import AppCardContent from "../../cards/app-card-content"
 
 const MemoizedCarouselItem = React.memo(CarouselItem)
 
@@ -50,7 +50,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   const renderSlide = (app: App, index: number, className?: string) => {
     return (
       <MemoizedCarouselItem key={index} className={cn("", className)}>
-        <AppCard title={app.title} categories={app.categories} />
+        <AppCardContent title={app.title} categories={app.categories} />
       </MemoizedCarouselItem>
     )
   }
@@ -64,7 +64,9 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
         onMouseLeave={() => setIsHovered(false)}
       >
         <CarouselContent className={isMarginRight ? "mr-6" : ""}>
-          {data.map((app, index) => renderSlide(app, index, className))}
+          <Suspense fallback={"Loading..."}>
+            {data.map((app, index) => renderSlide(app, index, className))}
+          </Suspense>
         </CarouselContent>
         <CarouselPrevious
           variant={"tag"}

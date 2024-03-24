@@ -4,7 +4,7 @@ import { Post } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { CarouselItem } from "@/components/ui/carousel"
 
-import PostCard from "../../cards/post-card"
+import PostCard from "../../cards/_post-card"
 import ContentCarouselProvider, {
   ContentCarouselProviderProps,
 } from "./content-carousel-provider"

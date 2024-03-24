@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { getAllApps, getAllHeroFeaturedPosts, getAllPosts } from "@/server/data"
 import { EmblaOptionsType } from "embla-carousel"
 
@@ -26,23 +27,30 @@ const AIAppsPage = async () => {
 
   return (
     <section className="flex flex-col gap-y-4">
-      <PostsCarousel
-        data={heroPosts}
-        options={OPTIONS_LOOP}
-        isAutpPlay={true}
-        isMarginRight={false}
-      />
-      <PostsCarousel
-        data={allPosts}
-        className="md:basis-1/2"
-        isMarginRight={false}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PostsCarousel
+          data={heroPosts}
+          options={OPTIONS_LOOP}
+          isAutpPlay={true}
+          isMarginRight={false}
+        />
+      </Suspense>
 
-      <AppCardsCarousel
-        data={allApps}
-        className="md:basis-1/2 lg:basis-1/3"
-        isMarginRight={true}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PostsCarousel
+          data={allPosts}
+          className="md:basis-1/2"
+          isMarginRight={false}
+        />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading...</div>}>
+        <AppCardsCarousel
+          data={allApps}
+          className="md:basis-1/2 lg:basis-1/3"
+          isMarginRight={true}
+        />
+      </Suspense>
 
       {/* <ContentCarousel className="md:basis-1/2" />
       <ContentCarousel className="md:basis-1/2 lg:basis-1/3" /> */}
