@@ -15,12 +15,87 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 
+const PlayButton = React.memo(
+  ({
+    isPlaying,
+    onButtonAutoplayClick,
+  }: {
+    isPlaying: boolean
+    onButtonAutoplayClick: () => void
+  }) => (
+    <Button
+      size={"icon"}
+      className="h-fit w-fit rounded-full p-2 shadow-outline backdrop-blur-lg hover:bg-white/30 hover:text-primary"
+      onClick={onButtonAutoplayClick}
+      variant={"tag"}
+    >
+      <span className="flex items-center justify-center rounded-full">
+        {isPlaying ? (
+          <Pause strokeWidth={1.5} size={14} />
+        ) : (
+          <Play strokeWidth={1.5} size={14} />
+        )}
+      </span>
+    </Button>
+  )
+)
+
+PlayButton.displayName = "PlayButton"
+
+interface DotButtonProps {
+  isSelected: boolean
+  onClick: () => void
+}
+
+const DotButton: React.FC<DotButtonProps> = React.memo(
+  ({ isSelected, onClick }) => {
+    return (
+      <Button
+        variant={"tag"}
+        size={"icon"}
+        onClick={onClick}
+        className={cn(
+          "h-2 w-2 rounded-full shadow-outline backdrop-blur-lg",
+          isSelected ? " bg-white" : "hover:bg-white/30"
+        )}
+      />
+    )
+  }
+)
+
+DotButton.displayName = "DotButton"
+
+const DotButtons = React.memo(
+  ({
+    scrollSnaps,
+    selectedIndex,
+    onDotButtonClick,
+  }: {
+    scrollSnaps: number[]
+    selectedIndex: number
+    onDotButtonClick: (index: number) => void
+  }) => (
+    <div className="hidden items-center gap-x-1 sm:flex ">
+      {scrollSnaps.map((_: any, index: any) => (
+        <DotButton
+          key={index}
+          isSelected={index === selectedIndex}
+          onClick={() => onDotButtonClick(index)}
+        />
+      ))}
+    </div>
+  )
+)
+
+DotButtons.displayName = "DotButtons"
+
 export type ContentCarouselProviderProps = {
   children: React.ReactNode
   isLoop?: boolean
   isMarginRight?: boolean
   isAutoPlay?: boolean
   isDotButtons?: boolean
+  isLazyLoading?: boolean
 }
 
 const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
@@ -29,6 +104,7 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
   isMarginRight = true,
   isAutoPlay = false,
   isDotButtons = false,
+  isLazyLoading = true,
 }) => {
   const [api, setApi] = React.useState<CarouselApi>()
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -37,6 +113,22 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
   const [isPlaying, setIsPlaying] = React.useState(false)
 
   // Toggle auto play
+  const onButtonAutoplayClick = React.useCallback(
+    (callback: () => void) => {
+      const autoplay = api?.plugins()?.autoplay
+      if (!autoplay) return
+
+      const resetOrStop =
+        autoplay.options.stopOnInteraction === false
+          ? autoplay.reset
+          : autoplay.stop
+
+      resetOrStop()
+      callback()
+    },
+    [api]
+  )
+
   const toggleAutoplay = React.useCallback(() => {
     const autoplay = api?.plugins()?.autoplay
     if (!autoplay) return
@@ -58,13 +150,11 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
       if (!autoplay) return
 
       // Depending on the autoplay options, either reset or stop the autoplay
-      const resetOrStop =
-        autoplay.options.stopOnInteraction === false
-          ? autoplay.reset
-          : autoplay.stop
-
-      // Execute the chosen action
-      resetOrStop()
+      if (autoplay.options.stopOnInteraction === false) {
+        autoplay.reset()
+      } else {
+        autoplay.stop()
+      }
     },
     [api]
   )
@@ -111,12 +201,15 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
     api
       .on("autoplay:play", () => setIsPlaying(true))
       .on("autoplay:stop", () => setIsPlaying(false))
+      .on("reInit", () => setIsPlaying(false))
 
     // Cleanup function
-    return () => {
-      api.off("select", onSelect)
-      api.off("reInit", handleReInit)
-    }
+    // return () => {
+    //   api.off("select", onSelect)
+    //   api.off("reInit", handleReInit)
+    //   api.off("autoplay:play", () => setIsPlaying(true))
+    //   api.off("autoplay:stop", () => setIsPlaying(false))
+    // }
   }, [api, onInit, onSelect])
 
   return (
@@ -141,7 +234,7 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
                 //   forceWheelAxis: "x",
                 // }),
               ]
-            : [WheelGesturesPlugin()]
+            : []
         }
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -166,47 +259,28 @@ const ContentCarouselProvider: React.FC<ContentCarouselProviderProps> = ({
       </Carousel>
       <div
         className={cn(
-          "absolute bottom-2 z-30 flex w-full items-center justify-end rounded-full p-1 px-4 text-sm text-muted-foreground sm:justify-between"
+          "absolute bottom-2 z-30 flex w-full items-center justify-end rounded-full p-1 px-4 text-sm text-muted-foreground sm:flex-row-reverse sm:justify-between"
         )}
       >
-        {/* Dot Buttons */}
-        {isDotButtons && scrollSnaps.length > 1 && (
-          <div className="hidden items-center gap-x-1 sm:flex ">
-            {scrollSnaps.map((_, index) => (
-              <Button
-                variant={"tag"}
-                size={"icon"}
-                key={index}
-                onClick={() => onDotButtonClick(index)}
-                className={cn(
-                  "h-2 w-2 rounded-full shadow-outline backdrop-blur-lg",
-                  index === selectedIndex ? " bg-white" : "hover:bg-white/30"
-                )}
-              />
-            ))}
-          </div>
-        )}
-
         {/* AutoPlay Controller */}
         {isAutoPlay && (
-          <Button
-            size={"icon"}
-            className="h-fit w-fit rounded-full p-2 shadow-outline backdrop-blur-lg hover:bg-white/30 hover:text-primary"
-            onClick={toggleAutoplay}
-            variant={"tag"}
-          >
-            <span className="flex items-center justify-center rounded-full">
-              {isPlaying ? (
-                <Pause strokeWidth={1.5} size={14} />
-              ) : (
-                <Play strokeWidth={1.5} size={14} />
-              )}
-            </span>
-          </Button>
+          <PlayButton
+            isPlaying={isPlaying}
+            onButtonAutoplayClick={toggleAutoplay}
+          />
+        )}
+
+        {/* Dot Buttons */}
+        {isDotButtons && scrollSnaps.length > 1 && (
+          <DotButtons
+            scrollSnaps={scrollSnaps}
+            selectedIndex={selectedIndex}
+            onDotButtonClick={onDotButtonClick}
+          />
         )}
       </div>
     </div>
   )
 }
 
-export default ContentCarouselProvider
+export default React.memo(ContentCarouselProvider)

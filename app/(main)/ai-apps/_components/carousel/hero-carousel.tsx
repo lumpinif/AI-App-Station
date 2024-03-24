@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 
 import { Posts } from "@/types/db_tables"
@@ -35,6 +33,7 @@ export const HeroCarousel: React.FC<HeroCarouselProps> = ({
       {data?.map((post, index) => (
         <CarouselItem key={index} className={cn("", className)}>
           <HeroPostsCard
+            key={index}
             label={post.label}
             title={post.title}
             description={post.description}

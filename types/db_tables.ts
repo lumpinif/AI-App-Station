@@ -20,3 +20,7 @@ export type Developers = Database["public"]["Tables"]["developers"]["Row"]
 export type Posts = Database["public"]["Tables"]["posts"]["Row"]
 export type PostsCategories =
   Database["public"]["Tables"]["posts_categories"]["Row"]
+export type HeroPostsCardProps = Pick<
+  Posts,
+  "label" | "title" | "description" | "image_src" | "slug"
+>

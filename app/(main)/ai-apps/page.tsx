@@ -1,7 +1,9 @@
-import { Suspense } from "react"
+import React, { lazy, Suspense } from "react"
 import { getAllHeroFeaturedPosts, getAllPosts } from "@/server/data/supabase"
 
-import { HeroCarousel } from "./_components/carousel/hero-carousel"
+const HeroCarouselClient = lazy(
+  () => import("./_components/carousel/hero-carousel-client")
+)
 
 const AIAppsPage = async () => {
   // fetch Posts
@@ -16,16 +18,16 @@ const AIAppsPage = async () => {
   return (
     <section className="flex flex-col gap-y-4">
       <Suspense fallback={<div>Loading...</div>}>
-        <HeroCarousel
+        <HeroCarouselClient
           data={heroPosts}
           isMarginRight={false}
           isLoop
-          isDotButtons
-          isAutoPlay
+          // isDotButtons
+          // isAutoPlay
         />
       </Suspense>
       <Suspense fallback={<div>Loading...</div>}>
-        <HeroCarousel
+        <HeroCarouselClient
           data={allPosts}
           isMarginRight={false}
           className="md:basis-1/2"
