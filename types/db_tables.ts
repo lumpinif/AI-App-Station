@@ -9,6 +9,7 @@ export type Comments = Database["public"]["Tables"]["comments"]["Row"]
 
 // About the Apps
 export type App = Database["public"]["Tables"]["apps"]["Row"]
+
 export type AppsCategories =
   Database["public"]["Tables"]["apps_categories"]["Row"]
 export type AppDevelopers =
@@ -16,7 +17,17 @@ export type AppDevelopers =
 export type Categories = Database["public"]["Tables"]["categories"]["Row"]
 export type Developers = Database["public"]["Tables"]["developers"]["Row"]
 
-export type AppCardProps = Pick<App, "title" | "categories">
+export type AppCardContent = Pick<
+  App,
+  "app_id" | "app_title" | "description" | "slug"
+>
+
+export type AppsWithCategories = AppCardContent & {
+  categories?: Categories[]
+}
+export type AppCardContentWithCategories = AppCardContent & {
+  categories?: Categories[]
+}
 
 // About the Posts
 export type Post = Database["public"]["Tables"]["posts"]["Row"]

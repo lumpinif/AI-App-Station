@@ -4,6 +4,9 @@ import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { App } from "@/types/db_tables"
+import { titleToSlug } from "@/lib/utils"
+
+import { Categories } from "./../../types/db_tables"
 
 const getErrorMessage = (error: unknown) => {
   let message: string
@@ -41,7 +44,7 @@ export async function GetAppsByUserId(
   return { app, error }
 }
 
-export async function SubmitApp(title: App["title"]) {
+export async function SubmitApp(title: App["app_title"]) {
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -61,8 +64,8 @@ export async function SubmitApp(title: App["title"]) {
   // Check if title already exists
   const { data: existingApp, error: existingAppError } = await supabase
     .from("apps")
-    .select("title")
-    .ilike("title", title)
+    .select("app_title")
+    .ilike("app_title", title)
 
   if (existingAppError) {
     return { newApp: null, error: existingAppError }
@@ -75,7 +78,11 @@ export async function SubmitApp(title: App["title"]) {
   const { data: newApp, error } = await supabase
     .from("apps")
     .insert([
-      { title: title, submitted_by_user_id: user.id, submitted_by: user.email },
+      {
+        app_title: title,
+        submitted_by_user_id: user.id,
+        submitted_by: user.email,
+      },
     ])
     .select("*")
 
@@ -90,7 +97,7 @@ export async function SubmitApp(title: App["title"]) {
 
 export async function UpdateAppByTitle(
   app_id: App["app_id"],
-  newTitle: App["title"]
+  newTitle: App["app_title"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -123,7 +130,7 @@ export async function UpdateAppByTitle(
 
   const { data: updatedApp, error } = await supabase
     .from("apps")
-    .update({ title: newTitle })
+    .update({ app_title: newTitle })
     .eq("app_id", app_id)
     .select()
 
@@ -181,9 +188,7 @@ export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {
     .order("created_at", { ascending: false })
 
   // error handling
-  if (error) {
-    throw new Error(error.message)
-  }
+  if (error) return { posts: null, error: getErrorMessage(error) }
 
   return { posts, error }
 }
@@ -227,8 +232,40 @@ export async function getAllApps() {
 
   let { data: apps, error } = await supabase
     .from("apps")
-    .select("*")
+    .select(`*`)
     .order("created_at", { ascending: false })
+
+  // error handling
+  if (error) return { apps: null, error: getErrorMessage(error) }
+
+  return { apps, error }
+}
+
+export async function getAppsWithCategories() {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: apps, error } = await supabase
+    .from("apps")
+    .select(`app_id, app_title, description, slug, categories(*)`)
+    .order("created_at", { ascending: false })
+
+  // error handling
+  if (error) return { apps: null, error: getErrorMessage(error) }
+
+  return { apps, error }
+}
+
+export async function UpdateAppSlugByAppTitle(
+  app_title: App["app_title"],
+  app_id: App["app_id"]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: apps, error } = await supabase
+    .from("apps")
+    .update({ slug: titleToSlug(app_title) })
+    .eq("app_id", app_id)
+    .select("*")
 
   // error handling
   if (error) return { apps: null, error: getErrorMessage(error) }

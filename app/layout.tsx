@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/provider/theme-provider"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
+
 import { Metadata, Viewport } from "next"
 import QueryProvider from "@/provider/query-provider"
 import { GeistSans } from "geist/font/sans"
