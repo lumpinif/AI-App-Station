@@ -37,7 +37,7 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: initialData.title,
+      title: initialData.app_title,
     },
   })
   const { isSubmitting, isValid } = form.formState
@@ -49,7 +49,7 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
     const { updatedApp, error } = await UpdateAppByTitle(appId, title)
 
     if (updatedApp) {
-      toast.success(`${updatedApp[0].title} - App Updated`)
+      toast.success(`${updatedApp[0].app_title} - App Updated`)
       toggleEdit()
     }
 
@@ -63,7 +63,7 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
   return (
     <section>
       <div className="flex items-center justify-start gap-2 font-medium">
-        <span className="text-xl">{initialData.title}</span>
+        <span className="text-xl">{initialData.app_title}</span>
         <Button
           onClick={toggleEdit}
           variant="ghost"
@@ -92,7 +92,7 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
                 <FormItem>
                   <FormControl>
                     <InputBorderSpotlight
-                      defaultValue={initialData.title}
+                      defaultValue={initialData.app_title}
                       disabled={isSubmitting}
                       placeholder="e.g. 'Perplexity'"
                       {...field}

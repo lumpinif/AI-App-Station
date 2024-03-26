@@ -59,7 +59,7 @@ const AppSubmitForm = () => {
     if (newApp) {
       setexistingError("")
       toast.success(
-        `You're submitting : ${newApp[0].title}  -  Redirecting to continue 🎉 Please Don't refresh.`
+        `You're submitting : ${newApp[0].app_title}  -  Redirecting to continue 🎉 Please Don't refresh.`
       )
       router.push(`/user/apps/${newApp[0].app_id}`)
     }

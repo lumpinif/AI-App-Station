@@ -28,7 +28,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   if (error) toast.error(error.message)
 
   const requiredFields = [
-    app.title,
+    app.app_title,
     app.app_url,
     app.introduction,
     app.description,
@@ -48,7 +48,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
         <div className="flex flex-col gap-y-2">
           <h1 className="text-xl">
             Continue on submitting -{" "}
-            <span className="text-3xl font-medium">{app.title}</span>
+            <span className="text-3xl font-medium">{app.app_title}</span>
           </h1>
           <span className="text-sm text-muted-foreground">
             Complete all fields {completionText}
