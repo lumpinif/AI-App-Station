@@ -14,7 +14,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
-import AppCardContent from "../../cards/app-card-content"
+import AppCard from "../../cards/app-card"
 
 const MemoizedCarouselItem = React.memo(CarouselItem)
 
@@ -50,7 +50,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   const renderSlide = (app: App, index: number, className?: string) => {
     return (
       <MemoizedCarouselItem key={index} className={cn("", className)}>
-        <AppCardContent title={app.title} categories={app.categories} />
+        <AppCard title={app.title} categories={app.categories} />
       </MemoizedCarouselItem>
     )
   }

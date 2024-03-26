@@ -2,7 +2,7 @@ import React from "react"
 
 import { AppCardProps } from "@/types/db_tables"
 
-const AppCardContent: React.FC<AppCardProps> = ({ title, categories }) => {
+const AppCard: React.FC<AppCardProps> = ({ title, categories }) => {
   return (
     <>
       {/* TODO: CHANGE THE URL TO APP.SLUG */}
@@ -14,4 +14,4 @@ const AppCardContent: React.FC<AppCardProps> = ({ title, categories }) => {
   )
 }
 
-export default AppCardContent
+export default AppCard
