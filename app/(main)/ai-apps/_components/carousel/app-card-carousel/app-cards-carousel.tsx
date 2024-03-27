@@ -5,7 +5,7 @@ import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { AppsWithCategories } from "@/types/db_tables"
+import { AppCardContentWithCategories } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -22,7 +22,7 @@ const MemoizedCarouselItem = React.memo(CarouselItem)
 
 type AppCardsCarouselProps = {
   title: string
-  data: AppsWithCategories[]
+  data: AppCardContentWithCategories[]
   className?: string
   isMarginRight?: boolean
   options?: EmblaOptionsType
@@ -39,7 +39,7 @@ const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
 const PLUGIN_WHEELGESTURES: EmblaPluginType = WheelGesturesPlugin({})
 
 // Utility function to chunk the data into groups of three
-const chunkDataIntoGroups = (data: AppsWithCategories[]) => {
+const chunkDataIntoGroups = (data: AppCardContentWithCategories[]) => {
   const groups = []
   for (let i = 0; i < data.length; i += 3) {
     groups.push(data.slice(i, i + 3))
@@ -72,7 +72,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   const dataGroups = chunkDataIntoGroups(data)
 
   const renderSlide = (
-    group: AppsWithCategories[],
+    group: AppCardContentWithCategories[],
     index: number,
     className?: string
   ) => {
@@ -81,15 +81,16 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
         key={index}
         className={cn("flex flex-col gap-y-5", className)}
       >
-        {group.map((app, index) => (
+        {group.map((app, i) => (
           <>
             <AppCard
-              index={index}
+              key={app.app_id}
+              index={i}
               app_id={app.app_id}
               app_title={app.app_title}
               description={app.description}
               categories={app.categories}
-              slug={app.slug}
+              app_slug={app.app_slug}
             />
           </>
         ))}

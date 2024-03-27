@@ -4,12 +4,7 @@ import Link from "next/link"
 
 import { PostCardProps } from "@/types/db_tables"
 
-export type PostCardPropsWithKey = PostCardProps & {
-  key: number
-}
-
-const PostCard: React.FC<PostCardPropsWithKey> = ({
-  key,
+const PostCard: React.FC<PostCardProps> = ({
   label,
   title,
   description,
@@ -22,7 +17,6 @@ const PostCard: React.FC<PostCardPropsWithKey> = ({
         <div className="relative h-96 w-full cursor-pointer rounded-lg bg-card px-8">
           {/* Image */}
           <Image
-            key={key}
             alt=""
             src={image_src ? image_src : "/images/tool-preview.png"}
             fill

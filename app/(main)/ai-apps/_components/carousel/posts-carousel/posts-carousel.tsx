@@ -51,7 +51,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
     return (
       <MemoizedCarouselItem key={index} className={cn("", className)}>
         <PostCard
-          key={index}
+          key={post.id}
           image_src={post.image_src}
           description={post.description}
           label={post.label}

@@ -27,7 +27,7 @@ const AppCard: React.FC<AppCardWithIndex> = ({
   app_title,
   description,
   categories,
-  slug,
+  app_slug,
   index,
 }) => {
   return (

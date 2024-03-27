@@ -246,7 +246,7 @@ export async function getAppsWithCategories() {
 
   let { data: apps, error } = await supabase
     .from("apps")
-    .select(`app_id, app_title, description, slug, categories(*)`)
+    .select(`app_id, app_title, description, app_slug, categories(*)`)
     .order("created_at", { ascending: false })
 
   // error handling
@@ -263,7 +263,7 @@ export async function UpdateAppSlugByAppTitle(
 
   let { data: apps, error } = await supabase
     .from("apps")
-    .update({ slug: titleToSlug(app_title) })
+    .update({ app_slug: titleToSlug(app_title) })
     .eq("app_id", app_id)
     .select("*")
 
