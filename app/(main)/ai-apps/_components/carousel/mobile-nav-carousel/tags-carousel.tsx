@@ -37,9 +37,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
 
   // Early return if no filteredRoutes are found
   if (!filteredRoutes) {
-    return (
-      <div>No matching route found for the current path: {currentPath}</div>
-    )
+    return null
   }
 
   const renderLink = (item: NavItemProps | "All") => {
