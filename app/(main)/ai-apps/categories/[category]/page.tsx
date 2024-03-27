@@ -9,7 +9,7 @@ export function generateStaticParams() {
   )
   if (categoryRoutes) {
     const categoryParams = categoryRoutes.items.map((item) => ({
-      category: item.href.split("/").pop() || "", // Extract the category from the href
+      category: item.href.split("/").pop(), // Extract the category from the href
     }))
     return categoryParams
   }

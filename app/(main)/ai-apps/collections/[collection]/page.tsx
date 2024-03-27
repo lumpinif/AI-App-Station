@@ -9,7 +9,7 @@ export function generateStaticParams() {
   )
   if (collectionRoutes) {
     const collectionParams = collectionRoutes.items.map((item) => ({
-      collection: item.href.split("/").pop() || "", // Extract the collection from the href
+      collection: item.href.split("/").pop(), // Extract the collection from the href
     }))
     return collectionParams
   }
