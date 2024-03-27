@@ -24,6 +24,7 @@ type AppCardWithIndex = AppCardContentWithCategories & {
 }
 
 const AppCard: React.FC<AppCardWithIndex> = ({
+  app_id,
   app_title,
   description,
   categories,
@@ -32,18 +33,18 @@ const AppCard: React.FC<AppCardWithIndex> = ({
 }) => {
   return (
     <>
-      <div className="flex items-center justify-between gap-x-2">
+      <div key={app_id} className="flex items-center justify-between gap-x-2">
         {/* Left section */}
         {/* App Icon */}
         <Link
           className="flex h-14 w-14 flex-none items-center justify-center overflow-hidden rounded-xl bg-card transition-all duration-200 ease-out hover:shadow-md dark:hover:shadow-outline"
-          href={"/ai-apps/#"}
+          href={`/ai-apps/${app_slug}`}
         >
           <Image
             src={"/logo.svg"}
             width={200}
             height={200}
-            alt=""
+            alt={app_title}
             className="aspect-square"
           />
         </Link>
@@ -52,12 +53,17 @@ const AppCard: React.FC<AppCardWithIndex> = ({
         <div className="flex w-full flex-1 flex-col gap-y-2">
           <div className="flex items-center justify-between">
             {/* App Title and Category */}
-            <div className="flex w-28 min-w-0 flex-1 flex-col truncate">
-              <span className="truncate text-nowrap">{app_title}</span>
+            <Link
+              href={`/ai-apps/${app_slug}`}
+              className="flex w-28 min-w-0 flex-1 flex-col truncate"
+            >
+              <span className="truncate text-nowrap hover:underline">
+                {app_title}
+              </span>
               <span className="truncate text-nowrap text-sm text-muted-foreground">
                 {description}
               </span>
-            </div>
+            </Link>
             {/* App Actions */}
             <div className="flex flex-none flex-col items-center gap-y-2 ">
               <div className="flex w-full items-center justify-between gap-x-2">
@@ -144,6 +150,7 @@ const AppCard: React.FC<AppCardWithIndex> = ({
                     categories?.map((category, index) => (
                       <>
                         <Link
+                          key={category.category_id}
                           href={`/ai-apps/categories/${category.slug}`}
                           className="hover:underline"
                         >

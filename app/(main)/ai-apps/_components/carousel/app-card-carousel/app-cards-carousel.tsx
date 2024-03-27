@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Suspense } from "react"
+import React, { Suspense, useMemo } from "react"
 import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
@@ -18,8 +18,6 @@ import { Separator } from "@/components/ui/separator"
 
 import AppCard from "../../cards/app-card"
 
-const MemoizedCarouselItem = React.memo(CarouselItem)
-
 type AppCardsCarouselProps = {
   title: string
   data: AppCardContentWithCategories[]
@@ -31,12 +29,8 @@ type AppCardsCarouselProps = {
   hiddenOnCanNotScroll?: boolean
 }
 
-const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
-  playOnInit: true,
-  delay: 4500,
-})
-
-const PLUGIN_WHEELGESTURES: EmblaPluginType = WheelGesturesPlugin({})
+const PLUGIN_AUTOPLAY = Autoplay({ playOnInit: true, delay: 4500 })
+const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
 // Utility function to chunk the data into groups of three
 const chunkDataIntoGroups = (data: AppCardContentWithCategories[]) => {
@@ -59,44 +53,14 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
 }) => {
   const [isHovered, setIsHovered] = React.useState(false)
 
-  let plugins: EmblaPluginType[] = []
+  const plugins = useMemo(() => {
+    const activePlugins: EmblaPluginType[] = []
+    if (isAutpPlay) activePlugins.push(PLUGIN_AUTOPLAY)
+    if (isWheelGestures) activePlugins.push(PLUGIN_WHEELGESTURES)
+    return activePlugins
+  }, [isAutpPlay, isWheelGestures])
 
-  if (isAutpPlay) {
-    plugins.push(PLUGIN_AUTOPLAY)
-  }
-
-  if (isWheelGestures) {
-    plugins.push(PLUGIN_WHEELGESTURES)
-  }
-
-  const dataGroups = chunkDataIntoGroups(data)
-
-  const renderSlide = (
-    group: AppCardContentWithCategories[],
-    index: number,
-    className?: string
-  ) => {
-    return (
-      <MemoizedCarouselItem
-        key={index}
-        className={cn("flex flex-col gap-y-5", className)}
-      >
-        {group.map((app, i) => (
-          <>
-            <AppCard
-              key={app.app_id}
-              index={i}
-              app_id={app.app_id}
-              app_title={app.app_title}
-              description={app.description}
-              categories={app.categories}
-              app_slug={app.app_slug}
-            />
-          </>
-        ))}
-      </MemoizedCarouselItem>
-    )
-  }
+  const dataGroups = useMemo(() => chunkDataIntoGroups(data), [data])
 
   return (
     <div className="relative mx-auto h-full w-full max-w-full">
@@ -115,9 +79,18 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
       >
         <CarouselContent className={cn("py-2", isMarginRight ? "mr-6" : "")}>
           <Suspense fallback={"Loading..."}>
-            {dataGroups.map((group, index) =>
-              renderSlide(group, index, className)
-            )}
+            {dataGroups.map((group, index) => (
+              <CarouselItem
+                key={index}
+                className={cn("flex flex-col gap-y-5", className)}
+              >
+                {group.map((app, appIndex) => (
+                  <>
+                    <AppCard key={app.app_id} index={appIndex} {...app} />
+                  </>
+                ))}
+              </CarouselItem>
+            ))}
           </Suspense>
         </CarouselContent>
         <CarouselPrevious

@@ -1,8 +1,9 @@
 "use client"
 
-import React, { Suspense } from "react"
+import React, { Suspense, useMemo } from "react"
 import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
 import { Post } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -31,6 +32,7 @@ const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
   playOnInit: true,
   delay: 4500,
 })
+const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
 const PostsCarousel: React.FC<PostsCarouselProps> = ({
   data,
@@ -38,29 +40,16 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
   options,
   isAutpPlay = false,
   isMarginRight = false,
+  isWheelGestures = true,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false)
 
-  let plugins: EmblaPluginType[] = []
-
-  if (isAutpPlay) {
-    plugins.push(PLUGIN_AUTOPLAY)
-  }
-
-  const renderSlide = (post: Post, index: number, className?: string) => {
-    return (
-      <MemoizedCarouselItem key={index} className={cn("", className)}>
-        <PostCard
-          key={post.id}
-          image_src={post.image_src}
-          description={post.description}
-          label={post.label}
-          title={post.title}
-          slug={post.slug}
-        />
-      </MemoizedCarouselItem>
-    )
-  }
+  const plugins = useMemo(() => {
+    const activePlugins: EmblaPluginType[] = []
+    if (isAutpPlay) activePlugins.push(PLUGIN_AUTOPLAY)
+    if (isWheelGestures) activePlugins.push(PLUGIN_WHEELGESTURES)
+    return activePlugins
+  }, [isAutpPlay, isWheelGestures])
 
   return (
     <div className="relative mx-auto h-full w-full max-w-full">
@@ -72,7 +61,11 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
       >
         <CarouselContent className={isMarginRight ? "mr-6" : ""}>
           <Suspense fallback={"Loading..."}>
-            {data.map((post, index) => renderSlide(post, index, className))}
+            {data.map((post, index) => (
+              <CarouselItem key={index} className={cn("", className)}>
+                <PostCard key={post.id} {...post} />
+              </CarouselItem>
+            ))}
           </Suspense>
         </CarouselContent>
         <CarouselPrevious

@@ -7,7 +7,7 @@ import { EmblaOptionsType } from "embla-carousel"
 // Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
 const AppCardsCarousel = dynamic(
   () => import("./_components/carousel/app-card-carousel/app-cards-carousel"),
-  { ssr: true }
+  { ssr: false }
 )
 
 const PostsCarousel = dynamic(
@@ -29,12 +29,9 @@ const AIAppsPage = async () => {
   // fetch Posts
   let { posts: heroPosts, error: allHeroFeaturedPostsError } =
     await getAllHeroFeaturedPosts()
-
   let { posts: allPosts, error: allPostsError } = await getAllPosts()
-
   // fetch Apps
   let { apps: allApps, error: allAppsError } = await getAllApps()
-
   let { apps: AppsWithCategories, error: AppsWithCategoriesError } =
     await getAppsWithCategories()
 
