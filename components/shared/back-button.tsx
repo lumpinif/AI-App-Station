@@ -16,13 +16,12 @@ function BackButton({ className }: BackButtonProps) {
   return (
     <div
       className={cn(
-        buttonVariants({ variant: "ghost" }),
-        "group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full font-medium transition-all duration-200 ease-in-out hover:w-24 hover:cursor-pointer",
+        "group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-background text-sm font-medium ring-offset-background transition-all duration-200 hover:w-24 hover:cursor-pointer hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         className
       )}
       onClick={() => route.back()}
     >
-      <div className="inline-flex whitespace-nowrap opacity-0 transition-all duration-200 ease-in-out group-hover:translate-x-3 group-hover:opacity-100">
+      <div className="whitespace-nowrap opacity-0 group-hover:translate-x-3 group-hover:opacity-100">
         Back
       </div>
       <div className="absolute left-[12px]">
