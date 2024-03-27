@@ -246,7 +246,9 @@ export async function getAppsWithCategories() {
 
   let { data: apps, error } = await supabase
     .from("apps")
-    .select(`app_id, app_title, description, app_slug, categories(*)`)
+    .select(
+      `app_id, app_title, description, app_slug, app_icon_src, categories(*)`
+    )
     .order("created_at", { ascending: false })
 
   // error handling

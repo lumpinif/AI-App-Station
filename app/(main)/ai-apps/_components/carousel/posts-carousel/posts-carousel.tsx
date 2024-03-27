@@ -17,8 +17,6 @@ import {
 
 import PostCard from "../../cards/post-card"
 
-const MemoizedCarouselItem = React.memo(CarouselItem)
-
 type PostsCarouselProps = {
   data: Post[]
   className?: string

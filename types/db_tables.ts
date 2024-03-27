@@ -19,7 +19,7 @@ export type Developers = Database["public"]["Tables"]["developers"]["Row"]
 
 export type AppCardContent = Pick<
   App,
-  "app_id" | "app_title" | "description" | "app_slug"
+  "app_id" | "app_title" | "description" | "app_slug" | "app_icon_src"
 >
 
 export type AppCardContentWithCategories = AppCardContent & {

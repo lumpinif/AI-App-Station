@@ -7,7 +7,7 @@ import { EmblaOptionsType } from "embla-carousel"
 // Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
 const AppCardsCarousel = dynamic(
   () => import("./_components/carousel/app-card-carousel/app-cards-carousel"),
-  { ssr: false }
+  { ssr: true }
 )
 
 const PostsCarousel = dynamic(
@@ -57,7 +57,7 @@ const AIAppsPage = async () => {
           isMarginRight={false}
         />
       </Suspense>
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <AppCardsCarousel
           // TODO: CONSIDERING REFACTOR TITLE INTO CONFIG
           title={"Top Free Apps"}
@@ -67,7 +67,7 @@ const AIAppsPage = async () => {
           options={OPTIONS_APPSCARDSCAROUSEL}
           hiddenOnCanNotScroll
         />
-      </div>
+      </div> */}
       <div className="mt-4">
         <AppCardsCarousel
           // TODO: CONSIDERING REFACTOR TITLE INTO CONFIG

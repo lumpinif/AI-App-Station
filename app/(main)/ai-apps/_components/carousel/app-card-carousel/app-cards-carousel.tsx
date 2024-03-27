@@ -85,9 +85,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
                 className={cn("flex flex-col gap-y-5", className)}
               >
                 {group.map((app, appIndex) => (
-                  <>
-                    <AppCard key={app.app_id} index={appIndex} {...app} />
-                  </>
+                  <AppCard key={app.app_id} index={appIndex} {...app} />
                 ))}
               </CarouselItem>
             ))}
