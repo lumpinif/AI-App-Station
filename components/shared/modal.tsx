@@ -26,7 +26,7 @@ export default function Modal({
   if (isMobile) {
     return (
       <Drawer open={isOpen} onOpenChange={onChange} shouldScaleBackground>
-        <DrawerContent className={cn("h-[80%] outline-none", className)}>
+        <DrawerContent className={cn("h-4/5 outline-none", className)}>
           <div className="sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium">
             {title}
             <DrawerClose

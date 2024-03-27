@@ -1,6 +1,6 @@
 import { SIDENAVROUTES } from "@/config/routes"
 
-export const dynamicParams = false // Set to false to generate static params
+export const dynamicParams = false
 
 // Return a list of `params` to populate the [category] dynamic segment
 export function generateStaticParams() {
@@ -22,5 +22,22 @@ export default function CategoryPage({
   params: { category: string }
 }) {
   const { category } = params
-  return <div>Category Page: {category}</div>
+  const categoryRoutes = SIDENAVROUTES.find(
+    (route) => route.title === "Categories"
+  )
+  return (
+    <div>
+      Category Page: {category}
+      <div className="">
+        SideNavRoutes:{" "}
+        {categoryRoutes?.items.map((r, index) => (
+          <ul>
+            <li>
+              {index}-{r.href}
+            </li>
+          </ul>
+        ))}
+      </div>
+    </div>
+  )
 }
