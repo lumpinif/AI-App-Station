@@ -41,6 +41,7 @@ const AppCard: React.FC<AppCardWithIndex> = ({
             app_slug={app_slug}
             app_title={app_title}
             description={description}
+            className="w-20 flex-1"
           />
           <div className="flex flex-none flex-col items-center gap-y-2">
             <div className="flex w-full items-center justify-between gap-x-2">

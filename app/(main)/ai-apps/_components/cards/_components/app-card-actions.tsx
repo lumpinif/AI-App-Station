@@ -15,12 +15,18 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="outline-none ring-0" asChild>
+        <DropdownMenuTrigger
+          className="outline-none focus:!ring-0 focus:ring-transparent"
+          asChild
+        >
           <Button
             variant={"tag"}
-            className="relative m-0 flex h-fit items-center justify-center p-0"
+            className="relative m-0 flex h-fit items-center justify-center p-0 outline-none focus:ring-0 focus:!ring-transparent"
           >
-            <Badge variant={"outline"} className="bg-muted hover:bg-background">
+            <Badge
+              variant={"outline"}
+              className="cursor-pointer bg-muted hover:bg-background"
+            >
               GET
             </Badge>
           </Button>

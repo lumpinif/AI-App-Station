@@ -9,6 +9,7 @@ interface PageTitleProps {
   subtitle?: string
   className?: string
   href?: string
+  isBorder?: boolean
 }
 
 export const PageTitle = ({
@@ -16,10 +17,16 @@ export const PageTitle = ({
   subtitle,
   className,
   href,
+  isBorder = true,
   ...rest
 }: PageTitleProps) => {
   return (
-    <div className="flex w-full items-end justify-between border-b pb-2">
+    <div
+      className={cn(
+        "flex w-full items-end justify-between pb-2",
+        isBorder ? "border-b" : ""
+      )}
+    >
       <div className={cn("text-4xl", className)}>
         {href ? (
           <Link href={href}>

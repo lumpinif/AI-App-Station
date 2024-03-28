@@ -2,7 +2,6 @@ import { Suspense } from "react"
 import { redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { GetAppsByUserId } from "@/server/data/supabase"
-import { toast } from "sonner"
 
 import AppContinueSubmitForm from "./_components/app-continue-submit-form"
 
@@ -25,7 +24,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     return redirect("/ai-apps")
   }
 
-  if (error) toast.error(error.message)
+  if (error) console.error(error)
 
   const requiredFields = [
     app.app_title,

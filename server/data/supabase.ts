@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { App } from "@/types/db_tables"
+import { App, AppDetails } from "@/types/db_tables"
 import { titleToSlug } from "@/lib/utils"
 
 import { Categories } from "./../../types/db_tables"
@@ -45,6 +45,7 @@ export async function GetAppsByUserId(
 }
 
 export async function SubmitApp(title: App["app_title"]) {
+  // TODO: CONSIDER PASSING USER_ID FROM CLIENT BY USING USEUSER HOOK IN ORDER TO CHECK IF USER.ID FROM GETUSER IS SAME AS FROM USEUSER
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -85,12 +86,6 @@ export async function SubmitApp(title: App["app_title"]) {
       },
     ])
     .select("*")
-
-  // TODO: REMOVE THIE BEFORE PRODUCTION
-
-  // if (error) {
-  //   console.log("🚀 ~ Error: Submiting App ~ error:", error)
-  // }
 
   return { newApp, error }
 }
@@ -227,6 +222,21 @@ export async function getPost(slug: string) {
 
 // fetch apps
 
+export async function getAppBySlug(app_slug: string) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: app, error } = await supabase
+    .from("apps")
+    .select(`*,categories(*),profiles(*),developers(*)`)
+    .match({ app_slug: app_slug, is_published: true })
+    .order("created_at", { ascending: false })
+    .single<AppDetails>()
+
+  // error handling
+  if (error) return { app: null, error: getErrorMessage(error) }
+
+  return { app, error }
+}
 export async function getAllApps() {
   const supabase = await createSupabaseServerClient()
 

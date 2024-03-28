@@ -13,7 +13,8 @@ export type App = Database["public"]["Tables"]["apps"]["Row"]
 export type AppsCategories =
   Database["public"]["Tables"]["apps_categories"]["Row"]
 export type AppDevelopers =
-  Database["public"]["Tables"]["app_developers"]["Row"]
+  Database["public"]["Tables"]["apps_developers"]["Row"]
+export type Developer = Database["public"]["Tables"]["developers"]["Row"]
 export type Categories = Database["public"]["Tables"]["categories"]["Row"]
 export type Developers = Database["public"]["Tables"]["developers"]["Row"]
 
@@ -21,9 +22,14 @@ export type AppCardContent = Pick<
   App,
   "app_id" | "app_title" | "description" | "app_slug" | "app_icon_src"
 >
-
 export type AppCardContentWithCategories = AppCardContent & {
   categories?: Categories[]
+}
+
+export type AppDetails = App & {
+  categories?: Categories[]
+  developers?: Developer[]
+  profiles: Profiles
 }
 
 // About the Posts
