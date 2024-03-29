@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { App, AppDetails } from "@/types/db_tables"
+import { App, AppDetails, CommentWithProfile } from "@/types/db_tables"
 import { titleToSlug } from "@/lib/utils"
 
 import { Categories } from "./../../types/db_tables"
@@ -23,6 +23,8 @@ const getErrorMessage = (error: unknown) => {
 
   return message
 }
+
+// TODO: CHECK ALL THE ERROR HANDLING BEFORE PRODUCTION
 
 export async function GetAppsByUserId(
   app_id: App["app_id"],
@@ -82,7 +84,9 @@ export async function SubmitApp(title: App["app_title"]) {
       {
         app_title: title,
         submitted_by_user_id: user.id,
-        submitted_by: user.email,
+        // TODO: REMOVE THIS BEFORE PRODUCTION
+        // submitted_by: user.email ?? "",
+        // REMOVED: submitted_by_user.email
       },
     ])
     .select("*")
@@ -283,4 +287,20 @@ export async function UpdateAppSlugByAppTitle(
   if (error) return { apps: null, error: getErrorMessage(error) }
 
   return { apps, error }
+}
+
+export async function getComments(app_id: App["app_id"]) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: comments, error } = await supabase
+    .from("comments")
+    .select("*, profiles(*)")
+    .eq("app_id", app_id)
+    .order("created_at", { ascending: true })
+    .returns<CommentWithProfile[]>()
+
+  if (error) {
+    console.error(error.message)
+  }
+  return { comments }
 }

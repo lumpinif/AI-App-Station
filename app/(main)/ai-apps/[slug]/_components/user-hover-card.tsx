@@ -1,7 +1,7 @@
 import { CalendarDays } from "lucide-react"
 
-import { Profiles } from "@/types/db_tables"
-import { timeConverter } from "@/lib/utils"
+import { Profile } from "@/types/db_tables"
+import { cn, timeConverter } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,9 +12,9 @@ import {
 import { Icons } from "@/components/icons/icons"
 
 type UserHoverCardProps = {
-  user_name: Profiles["full_name"]
-  avatar_url: Profiles["avatar_url"]
-  user_joined: Profiles["created_at"]
+  user_name: Profile["full_name"]
+  avatar_url: Profile["avatar_url"]
+  user_joined: Profile["created_at"]
 }
 
 export const UserHoverCard: React.FC<UserHoverCardProps> = ({
@@ -31,9 +31,16 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
       <HoverCardContent className="glass-card-background w-fit max-w-xs border border-none shadow-outline backdrop-blur-md">
         <div className="flex justify-between space-x-4">
           <Avatar>
-            <AvatarImage src={`${avatar_url}`} />
+            <AvatarImage
+              src={`${avatar_url}`}
+              className="animate-fade rounded-full"
+            />
             <AvatarFallback>
-              <Icons.user />
+              <Icons.user
+                className={cn(
+                  "h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full"
+                )}
+              />
             </AvatarFallback>
           </Avatar>
           <div className="space-y-2">

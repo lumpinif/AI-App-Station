@@ -2,14 +2,14 @@
 
 import { MouseEvent } from "react"
 
-import { Profiles } from "@/types/db_tables"
+import { Profile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons/icons"
 
-type typeOfProfile = Profiles | { [key: string]: any }
+type typeOfProfile = Profile | { [key: string]: any }
 
 type AccountModalTriggerProps = {
   className?: string
@@ -59,11 +59,7 @@ const AccountModalTrigger = ({
       onClick={handleAvartarModalTriggerClick}
     >
       {!profile?.avatar_url ? (
-        <Icons.user
-          className={cn(
-            "h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full hover:cursor-pointer"
-          )}
-        />
+        <Icons.user className="h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full hover:cursor-pointer" />
       ) : (
         <AvatarImage
           src={`${profile.avatar_url}`}

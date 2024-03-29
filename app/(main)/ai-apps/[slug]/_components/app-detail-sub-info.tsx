@@ -4,7 +4,7 @@ import React, { Suspense } from "react"
 import { ChevronDown, ChevronRight, ChevronsUpDown } from "lucide-react"
 import moment from "moment"
 
-import { App, Profiles } from "@/types/db_tables"
+import { App, Profile } from "@/types/db_tables"
 import { Button } from "@/components/ui/button"
 import {
   Collapsible,
@@ -15,9 +15,9 @@ import {
 import { UserHoverCard } from "./user-hover-card"
 
 type AppDetailSubInfoProps = {
-  submitted_by: Profiles["full_name"]
-  created_at: Profiles["created_at"]
-  avatar_url: Profiles["avatar_url"]
+  submitted_by: Profile["full_name"]
+  created_at: Profile["created_at"]
+  avatar_url: Profile["avatar_url"]
   lastUpdated: App["updated_at"]
 }
 
@@ -32,7 +32,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className="w-56 space-y-2"
+      className="w-full space-y-2 lg:w-56"
     >
       <div className="flex items-center justify-between px-2">
         <h4 className="text-base font-medium">About this App</h4>

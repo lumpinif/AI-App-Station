@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { PageTitle } from "@/components/layout/page-title"
 
+// TODO: REBUILD THIS ERROR PAGE
 export default function Error({
   error,
   reset,

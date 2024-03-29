@@ -1,15 +1,15 @@
 import { Database } from "@/types/supabase"
 
-// About the User
-export type Profiles = Database["public"]["Tables"]["profiles"]["Row"]
-export type UserCollections =
-  Database["public"]["Tables"]["user_collections"]["Row"]
-export type Bookmarks = Database["public"]["Tables"]["bookmarks"]["Row"]
-export type Comments = Database["public"]["Tables"]["comments"]["Row"]
-
-// About the Apps
+export type Profile = Database["public"]["Tables"]["profiles"]["Row"]
+export type Bookmark = Database["public"]["Tables"]["bookmarks"]["Row"]
+export type Comment = Database["public"]["Tables"]["comments"]["Row"]
 export type App = Database["public"]["Tables"]["apps"]["Row"]
 
+// About the Users
+export type UserCollections =
+  Database["public"]["Tables"]["user_collections"]["Row"]
+
+// About the Apps
 export type AppsCategories =
   Database["public"]["Tables"]["apps_categories"]["Row"]
 export type AppDevelopers =
@@ -29,7 +29,7 @@ export type AppCardContentWithCategories = AppCardContent & {
 export type AppDetails = App & {
   categories?: Categories[]
   developers?: Developer[]
-  profiles: Profiles
+  profiles: Profile
 }
 
 // About the Posts
@@ -40,3 +40,21 @@ export type PostCardProps = Pick<
   Post,
   "label" | "title" | "description" | "image_src" | "slug"
 >
+
+// About the Comment
+export type CommentWithProfile = Comment & {
+  profiles: Profile
+}
+
+export type CommentWithReplies = CommentWithProfile & {
+  replies?: CommentWithReplies[]
+}
+
+export type CommentType = Omit<
+  CommentWithProfile,
+  "profiles" | "app_id" | "reply_to"
+> & {
+  isParentComment?: boolean
+  display_name?: Profile["display_name"]
+  avatar_url?: Profile["avatar_url"]
+}
