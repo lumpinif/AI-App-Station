@@ -3,11 +3,7 @@ import Link from "next/link"
 import { BarChart2, Heart, MessageCircle, Share } from "lucide-react"
 import moment from "moment"
 
-import {
-  CommentType,
-  CommentWithProfile,
-  CommentWithReplies,
-} from "@/types/db_tables"
+import { CommentType, CommentWithProfileWithChildren } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
@@ -17,68 +13,12 @@ import { Icons } from "../icons/icons"
 // TODO: ADD COMMENTDELETEBUTTON <CommentDeleteButton id={id} userId={userId} />
 
 // Component to list comments
-const CommentList: React.FC<{ comments: CommentWithProfile[] }> = ({
+const CommentList: React.FC<{ comments: CommentWithProfileWithChildren[] }> = ({
   comments,
 }) => {
-  const organizedComments = React.useMemo(() => {
-    const commentsMap = new Map<string, CommentWithReplies>()
-
-    // Initialize commentMap with all comments
-    comments.forEach((comment) => {
-      commentsMap.set(comment.comment_id, { ...comment, replies: [] })
-    })
-
-    // Helper function to recursively add replies to their parent comment
-    const addRepliesToParent = (comment: CommentWithProfile) => {
-      const parentComment = commentsMap.get(comment.reply_to!)
-      if (parentComment) {
-        const commentWithReplies: CommentWithReplies = {
-          ...comment,
-          replies: [],
-        }
-        if (!parentComment.replies) {
-          parentComment.replies = []
-        }
-        parentComment.replies.push(commentWithReplies)
-        addRepliesToChildren(commentWithReplies)
-      }
-    }
-
-    // Helper function to recursively add replies to a comment
-    const addRepliesToChildren = (comment: CommentWithReplies) => {
-      comments.forEach((childComment) => {
-        if (childComment.reply_to === comment.comment_id) {
-          const childCommentWithReplies: CommentWithReplies = {
-            ...childComment,
-            replies: [],
-          }
-          if (!comment.replies) {
-            comment.replies = []
-          }
-          comment.replies.push(childCommentWithReplies)
-          addRepliesToChildren(childCommentWithReplies)
-        }
-      })
-    }
-
-    // Iterate over all comments and nest them if they have a reply_to
-    comments.forEach((comment) => {
-      if (comment.reply_to) {
-        addRepliesToParent(comment)
-      }
-    })
-
-    // Filter out top-level comments (those without a reply_to)
-    return Array.from(commentsMap.values()).filter(
-      (comment) => !comment.reply_to
-    )
-  }, [comments])
-
-  console.log(JSON.stringify(organizedComments, null, 2))
-
   return (
     <div>
-      {organizedComments.map((comment) => (
+      {comments.map((comment) => (
         <CommentItem key={comment.comment_id} {...comment} />
       ))}
     </div>
@@ -86,20 +26,23 @@ const CommentList: React.FC<{ comments: CommentWithProfile[] }> = ({
 }
 
 // Individual comment item component
-const CommentItem: React.FC<CommentWithReplies> = ({
+const CommentItem: React.FC<CommentWithProfileWithChildren> = ({
   comment,
+  likes_count,
+  rating,
+  views_count,
   comment_id,
   created_at,
   profiles,
   user_id,
-  replies = [],
+  children = [],
 }) => {
   const replyElements = React.useMemo(
     () =>
-      replies.map(
-        (reply) => <CommentItem key={reply.comment_id} {...reply} /> // Ensure replies to replies are passed down
-      ),
-    [replies]
+      children.map((reply) => (
+        <CommentItem key={reply.comment_id} {...reply} />
+      )),
+    [children]
   )
 
   const isParentComment = replyElements && replyElements.length > 0
@@ -108,6 +51,9 @@ const CommentItem: React.FC<CommentWithReplies> = ({
     <>
       <div className="flex flex-col">
         <Comment
+          views_count={views_count}
+          rating={rating}
+          likes_count={likes_count}
           comment={comment}
           comment_id={comment_id}
           created_at={created_at}
@@ -116,12 +62,7 @@ const CommentItem: React.FC<CommentWithReplies> = ({
           avatar_url={profiles.avatar_url}
           isParentComment={isParentComment}
         />
-        {replyElements.length > 0 && (
-          <div className="">
-            {/* Adjust top margin as needed */}
-            {replyElements}
-          </div>
-        )}
+        {replyElements.length > 0 && <div className="">{replyElements}</div>}
         {!isParentComment && <Separator className="my-2" />}
       </div>
     </>
@@ -129,6 +70,9 @@ const CommentItem: React.FC<CommentWithReplies> = ({
 }
 
 const Comment: React.FC<CommentType> = ({
+  likes_count,
+  rating,
+  views_count,
   comment_id,
   user_id,
   display_name,

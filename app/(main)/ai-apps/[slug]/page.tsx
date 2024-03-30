@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation"
 import { getAppBySlug, getComments } from "@/server/data"
 
-import { CommentWithProfile } from "@/types/db_tables"
-
 import { AppIcon } from "../_components/cards/_components/app-icon"
-import AppDetailComments from "./_components/app-detail-comment"
+import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
@@ -23,7 +21,7 @@ export default async function AppPagePage({
     notFound()
   }
 
-  const { comments } = await getComments(app.app_id)
+  // const { comments } = await getComments(app.app_id)
 
   return (
     <>
@@ -45,10 +43,7 @@ export default async function AppPagePage({
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />
               <AppDetailReviews />
-              <AppDetailComments
-                app_id={app.app_id}
-                comments={comments as CommentWithProfile[]}
-              />
+              <AppDetailCommentSection app_id={app.app_id} />
             </div>
             <div className="mt-6 lg:mt-0">
               <AppDetailSubInfo

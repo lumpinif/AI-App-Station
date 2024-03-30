@@ -1,8 +1,10 @@
+// TODO: REFACTOR TYPES INTO SEPERATE TS FILES
+
 import { Database } from "@/types/supabase"
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"]
 export type Bookmark = Database["public"]["Tables"]["bookmarks"]["Row"]
-export type Comment = Database["public"]["Tables"]["comments"]["Row"]
+export type Comment = Database["public"]["Tables"]["app_comments"]["Row"]
 export type App = Database["public"]["Tables"]["apps"]["Row"]
 
 // About the Users
@@ -42,17 +44,21 @@ export type PostCardProps = Pick<
 >
 
 // About the Comment
+
+// export type AppComment = Comment & {
+//   profiles: Profile
+//   children: AppComment[]
+// }
+
 export type CommentWithProfile = Comment & {
   profiles: Profile
 }
-
-export type CommentWithReplies = CommentWithProfile & {
-  replies?: CommentWithReplies[]
+export type CommentWithProfileWithChildren = CommentWithProfile & {
+  children: CommentWithProfileWithChildren[]
 }
-
 export type CommentType = Omit<
   CommentWithProfile,
-  "profiles" | "app_id" | "reply_to"
+  "profiles" | "app_id" | "parent_id"
 > & {
   isParentComment?: boolean
   display_name?: Profile["display_name"]

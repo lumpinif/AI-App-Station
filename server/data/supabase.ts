@@ -293,7 +293,7 @@ export async function getComments(app_id: App["app_id"]) {
   const supabase = await createSupabaseServerClient()
 
   let { data: comments, error } = await supabase
-    .from("comments")
+    .from("app_comments")
     .select("*, profiles(*)")
     .eq("app_id", app_id)
     .order("created_at", { ascending: true })
@@ -302,5 +302,5 @@ export async function getComments(app_id: App["app_id"]) {
   if (error) {
     console.error(error.message)
   }
-  return { comments }
+  return { comments, error }
 }
