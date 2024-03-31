@@ -56,11 +56,15 @@ export type CommentWithProfile = Comment & {
 export type CommentWithProfileWithChildren = CommentWithProfile & {
   children: CommentWithProfileWithChildren[]
 }
-export type CommentType = Omit<
-  CommentWithProfile,
-  "profiles" | "app_id" | "parent_id"
-> & {
-  isParentComment?: boolean
-  display_name?: Profile["display_name"]
-  avatar_url?: Profile["avatar_url"]
+export type CommentType = Omit<CommentWithProfile, "profiles" | "app_id"> &
+  CommentAction & {
+    display_name?: Profile["display_name"]
+    avatar_url?: Profile["avatar_url"]
+  }
+
+export type CommentAction = {
+  toggleReplies?: () => void
+  showReplies?: boolean
+  isReplied?: boolean
+  repliesCount: number
 }

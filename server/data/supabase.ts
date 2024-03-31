@@ -289,15 +289,19 @@ export async function UpdateAppSlugByAppTitle(
   return { apps, error }
 }
 
-export async function getComments(app_id: App["app_id"]) {
+export async function getInitialComments(app_id: App["app_id"]) {
   const supabase = await createSupabaseServerClient()
 
-  let { data: comments, error } = await supabase
+  let query = supabase
     .from("app_comments")
     .select("*, profiles(*)")
     .eq("app_id", app_id)
-    .order("created_at", { ascending: true })
-    .returns<CommentWithProfile[]>()
+    .is("parent_id", null)
+    .order("created_at", {
+      ascending: false,
+    })
+
+  let { data: comments, error } = await query.returns<CommentWithProfile[]>()
 
   if (error) {
     console.error(error.message)

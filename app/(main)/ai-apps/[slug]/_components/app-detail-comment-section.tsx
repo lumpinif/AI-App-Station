@@ -1,14 +1,13 @@
 "use client"
 
-import React, { useEffect } from "react"
-import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
-import { createBrowserClient } from "@supabase/ssr"
+import React from "react"
+import { getInitialComments } from "@/server/data"
 import { toast } from "sonner"
 
 import { App, CommentWithProfileWithChildren } from "@/types/db_tables"
-import useCommentsQuery from "@/hooks/react-hooks/use-comments-query"
+import useAllCommentsQuery from "@/hooks/react-hooks/use-comments-query"
 import useUser from "@/hooks/react-hooks/use-user"
-import CommentList from "@/components/comment/comment-list"
+import CommentList, { Comment } from "@/components/comment/comment-list"
 
 export const dynamic = "force-dynamic"
 export const revalidate = 0
@@ -24,7 +23,7 @@ const AppDetailCommentSection: React.FC<AppDetailCommentsProps> = ({
     data: comments,
     error,
     isFetching,
-  } = useCommentsQuery(app_id) as {
+  } = useAllCommentsQuery(app_id) as {
     data: CommentWithProfileWithChildren[] | null
     error: Error | null
     isFetching: boolean
@@ -43,6 +42,8 @@ const AppDetailCommentSection: React.FC<AppDetailCommentsProps> = ({
     return null
   }
 
+  // const { comments } = await getInitialComments(app_id)
+
   return (
     // {profile?  (
     //   <CommentForm app_id={app_id} userId={session?.user.id} />
@@ -54,6 +55,15 @@ const AppDetailCommentSection: React.FC<AppDetailCommentsProps> = ({
       {comments && (
         <CommentList comments={comments as CommentWithProfileWithChildren[]} />
       )}
+      {/* {comments?.map((comment) => (
+        <Comment
+          key={comment.comment_id}
+          repliesCount={1}
+          avatar_url={comment.profiles.avatar_url}
+          display_name={comment.profiles.display_name}
+          {...comment}
+        />
+      ))} */}
       <pre>{JSON.stringify(comments, null, 2)}</pre>
     </div>
   )

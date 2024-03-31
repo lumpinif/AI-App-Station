@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { getAppBySlug, getComments } from "@/server/data"
+import { getAppBySlug } from "@/server/data"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import AppDetailCommentSection from "./_components/app-detail-comment-section"
@@ -20,8 +20,6 @@ export default async function AppPagePage({
   if (!app) {
     notFound()
   }
-
-  // const { comments } = await getComments(app.app_id)
 
   return (
     <>
