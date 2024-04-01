@@ -49,7 +49,7 @@ export default function Modal({
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
-        className="max-w-xl rounded-2xl shadow-outline"
+        className="shadow-outline max-w-xl rounded-2xl"
       >
         {children}
       </DialogContent>

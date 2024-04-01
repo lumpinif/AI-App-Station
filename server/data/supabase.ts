@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { App, AppDetails, CommentWithProfile } from "@/types/db_tables"
+import { App, AppDetails, Comment, CommentWithProfile } from "@/types/db_tables"
 import { titleToSlug } from "@/lib/utils"
 
 import { Categories } from "./../../types/db_tables"
@@ -271,24 +271,6 @@ export async function getAppsWithCategories() {
   return { apps, error }
 }
 
-export async function UpdateAppSlugByAppTitle(
-  app_title: App["app_title"],
-  app_id: App["app_id"]
-) {
-  const supabase = await createSupabaseServerClient()
-
-  let { data: apps, error } = await supabase
-    .from("apps")
-    .update({ app_slug: titleToSlug(app_title) })
-    .eq("app_id", app_id)
-    .select("*")
-
-  // error handling
-  if (error) return { apps: null, error: getErrorMessage(error) }
-
-  return { apps, error }
-}
-
 export async function getInitialComments(app_id: App["app_id"]) {
   const supabase = await createSupabaseServerClient()
 
@@ -307,4 +289,43 @@ export async function getInitialComments(app_id: App["app_id"]) {
     console.error(error.message)
   }
   return { comments, error }
+}
+
+export async function AddComment(
+  comment_content: Comment["comment"],
+  app_id: App["app_id"],
+  replyToCommentId?: Comment["parent_id"]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return {
+      newApp: null,
+      error: "You need to login to reply.",
+    }
+  }
+
+  let { data: comment, error } = await supabase
+    .from("app_comments")
+    .insert([
+      {
+        user_id: user.id,
+        comment: comment_content,
+        app_id: app_id,
+        parent_id: replyToCommentId,
+      },
+    ])
+    .eq("app_id", app_id)
+    .select("*, profiles(*)")
+
+  if (!comment) return { comment: null, error: "Something went wrong" }
+
+  // error handling
+  if (error) return { comment: null, error: getErrorMessage(error) }
+
+  return { comment, error }
 }

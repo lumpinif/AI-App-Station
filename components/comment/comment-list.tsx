@@ -14,6 +14,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 
 import { Icons } from "../icons/icons"
+import { CommentReplyButton } from "./comment_reply_button"
+import CommentReplyForm from "./comment_reply_form"
+import { CommentLikeButton } from "./comment-like-button"
 
 // TODO: ADD COMMENTDELETEBUTTON <CommentDeleteButton id={id} userId={userId} />
 
@@ -35,6 +38,7 @@ const CommentList: React.FC<{ comments: CommentWithProfileWithChildren[] }> = ({
 
 // Individual comment item component
 const CommentItem: React.FC<CommentWithProfileWithChildren> = ({
+  app_id,
   parent_id,
   comment,
   likes_count,
@@ -63,6 +67,7 @@ const CommentItem: React.FC<CommentWithProfileWithChildren> = ({
     <>
       <div className="relative flex flex-col">
         <Comment
+          app_id={app_id}
           parent_id={parent_id}
           likes_count={likes_count}
           views_count={views_count}
@@ -85,6 +90,7 @@ const CommentItem: React.FC<CommentWithProfileWithChildren> = ({
 }
 
 export const Comment: React.FC<CommentType> = ({
+  app_id,
   parent_id,
   likes_count,
   rating,
@@ -142,15 +148,19 @@ export const Comment: React.FC<CommentType> = ({
               {moment(created_at).fromNow()}
             </span>
           </div>
-          <div className="prose text-primary">{comment}</div>
+          <div className="prose text-primary">
+            {comment} : this comment_id: {comment_id} parent_id:{parent_id}
+          </div>
         </div>
         <CommentActions
+          app_id={app_id}
+          parent_id={parent_id}
+          comment_id={comment_id}
           toggleReplies={toggleReplies}
           showReplies={showReplies}
           isReplied={isReplied}
           repliesCount={repliesCount}
           likes_count={likes_count}
-          rating={rating}
           views_count={views_count}
         />
       </div>
@@ -159,49 +169,46 @@ export const Comment: React.FC<CommentType> = ({
 }
 
 const CommentActions: React.FC<CommentAction> = ({
+  app_id,
+  parent_id,
+  comment_id,
   toggleReplies,
   showReplies,
   isReplied,
   repliesCount,
   likes_count,
-  rating,
   views_count,
 }) => {
+  const [isReplying, setReplying] = React.useState<boolean>(false)
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-x-1">
-        <span className="group rounded-full p-2 hover:bg-blue-500/10">
-          <MessageCircle
-            className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-blue-500 "
-            size={20}
-          />
-        </span>
-        {isReplied && (
-          <div
-            onClick={toggleReplies}
-            className={cn(
-              "mt-1 w-fit cursor-pointer text-xs text-muted-foreground hover:text-primary",
-              showReplies ? "text-primary" : ""
-            )}
-          >
-            {showReplies
-              ? `Hide ${repliesCount} replies`
-              : `Show ${repliesCount} replies`}
-          </div>
-        )}
+    <div className="flex w-full flex-col">
+      <div className="flex items-center gap-x-2 md:gap-x-4">
+        <CommentLikeButton
+          className="sm:gap-x-1"
+          comment_id={comment_id}
+          likes_count={likes_count}
+        />
+        <CommentReplyButton
+          className="sm:gap-x-1"
+          comment_id={comment_id}
+          repliesCount={repliesCount}
+          isReplied={isReplied}
+          showReplies={showReplies}
+          toggleReplies={toggleReplies}
+          isReplying={isReplying}
+          toggleReplying={() => setReplying(!isReplying)}
+        />
       </div>
-      <div className="flex items-center gap-x-1">
-        <span className="group rounded-full p-2 hover:bg-rose-500/10">
-          <Heart
-            className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-rose-500 "
-            size={20}
-          />
-        </span>
-        {likes_count && (
-          <span className="text-xs text-muted-foreground">{likes_count}</span>
-        )}
-      </div>
-      <div className="flex items-center gap-x-1">
+      {isReplying && (
+        <CommentReplyForm
+          app_id={app_id}
+          parent_id={comment_id}
+          className="w-full md:max-w-xl"
+          toggleReplying={() => setReplying(!isReplying)}
+        />
+      )}
+
+      {/* <div className="flex flex-1 items-center gap-x-1">
         <span className="group rounded-full p-2 hover:bg-purple-500/10">
           <BarChart2
             className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-purple-500 "
@@ -213,13 +220,13 @@ const CommentActions: React.FC<CommentAction> = ({
             {views_count}
           </span>
         )}
-      </div>
-      <span className="group rounded-full p-2 hover:bg-green-500/10">
+      </div> */}
+      {/* <span className="group rounded-full p-2 hover:bg-green-500/10">
         <Share
           className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-green-500 "
           size={20}
         />
-      </span>
+      </span> */}
     </div>
   )
 }

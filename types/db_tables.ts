@@ -63,11 +63,13 @@ export type CommentType = Omit<CommentWithProfile, "profiles" | "app_id"> &
   }
 
 export type CommentAction = {
+  app_id: Comment["app_id"]
+  parent_id: Comment["parent_id"]
+  comment_id: Comment["comment_id"]
   toggleReplies?: () => void
   showReplies?: boolean
   isReplied?: boolean
   repliesCount: number
   likes_count: Comment["likes_count"]
   views_count: Comment["views_count"]
-  rating: Comment["rating"]
 }

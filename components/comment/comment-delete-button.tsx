@@ -80,7 +80,7 @@ const CommentDeleteButton: FC<CommentDeleteButtonProps> = ({
     <>
       {session?.user.id === userId && (
         <>
-          <div className="flex flex-shrink-0 self-center">
+          <div className="flex shrink-0 self-center">
             <div className="relative inline-block text-left">
               <div className="-m-2 flex items-center rounded-full p-2 text-gray-400 hover:text-gray-600">
                 <span className="sr-only">Delete comment</span>
