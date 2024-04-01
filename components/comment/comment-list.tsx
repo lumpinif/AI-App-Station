@@ -1,6 +1,16 @@
 import React from "react"
 import Link from "next/link"
-import { BarChart2, Heart, MessageCircle, Share } from "lucide-react"
+import {
+  BarChart2,
+  Delete,
+  EllipsisVertical,
+  Flag,
+  Heart,
+  MessageCircle,
+  Pencil,
+  Share,
+  Share2,
+} from "lucide-react"
 import moment from "moment"
 
 import {
@@ -10,10 +20,19 @@ import {
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useReplies } from "@/hooks/react-hooks/use-comments-query"
+import useUser from "@/hooks/react-hooks/use-user"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 
 import { Icons } from "../icons/icons"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
 import { CommentReplyButton } from "./comment_reply_button"
 import CommentReplyForm from "./comment_reply_form"
 import { CommentLikeButton } from "./comment-like-button"
@@ -106,6 +125,7 @@ export const Comment: React.FC<CommentType> = ({
   showReplies,
   repliesCount,
 }) => {
+  const { data: profile } = useUser()
   return (
     <div
       className="flex gap-x-4 rounded-lg p-4 hover:bg-muted/10"
@@ -133,25 +153,70 @@ export const Comment: React.FC<CommentType> = ({
         </Avatar>
       </div>
       <div className="flex w-full flex-col gap-y-2">
-        <div className="flex flex-col">
-          <div className="flex items-center gap-x-1">
-            <h4 className="font-bold">
-              {display_name ? display_name : `user_${user_id.slice(-5)}`}
-            </h4>
-            <span className="ml-2 text-sm text-muted-foreground">
-              <Link href={""} className="hover:underline">
-                @{display_name ? display_name : `user_${user_id.slice(-5)}`}
-              </Link>
-            </span>
-            <span className="h-[2px] w-[2px] rounded-full bg-muted-foreground" />
-            <span className="text-sm text-muted-foreground">
-              {moment(created_at).fromNow()}
-            </span>
+        <div className="flex items-center justify-between ">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-x-1">
+              <h4 className="font-bold">
+                {display_name ? display_name : `user_${user_id.slice(-5)}`}
+              </h4>
+              <span className="ml-2 text-sm text-muted-foreground">
+                <Link href={""} className="hover:underline">
+                  @{display_name ? display_name : `user_${user_id.slice(-5)}`}
+                </Link>
+              </span>
+              <span className="h-[2px] w-[2px] rounded-full bg-muted-foreground" />
+              <span className="text-sm text-muted-foreground">
+                {moment(created_at).fromNow()}
+              </span>
+            </div>
+            <div className="prose text-primary">
+              {comment} : this comment_id: {comment_id} parent_id:{parent_id}
+            </div>
           </div>
-          <div className="prose text-primary">
-            {comment} : this comment_id: {comment_id} parent_id:{parent_id}
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                asChild
+                className="ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              >
+                <EllipsisVertical size={16} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  className={cn(profile?.user_id === user_id ? "" : "hidden")}
+                >
+                  <div className="flex w-full items-center justify-between px-1">
+                    Edit
+                    <Pencil size={12} className="mb-1" />
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className={cn(profile?.user_id === user_id ? "" : "hidden")}
+                >
+                  <div className="flex w-full items-center justify-between px-1">
+                    Delete
+                    <Delete size={12} />
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <div className="flex w-full items-center justify-between px-1">
+                    Share
+                    <Share2 size={12} />
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className={cn(profile?.user_id === user_id ? "hidden" : "")}
+                >
+                  <div className="flex w-full items-center justify-between px-1">
+                    Report
+                    <Flag size={12} />
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
+
         <CommentActions
           app_id={app_id}
           parent_id={parent_id}

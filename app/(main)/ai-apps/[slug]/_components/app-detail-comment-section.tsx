@@ -54,7 +54,7 @@ const AppDetailCommentSection: React.FC<AppDetailCommentsProps> = ({
         <CommentList comments={comments as CommentWithProfileWithChildren[]} />
       )}
       <div className="mt-5">
-        <pre>{JSON.stringify(comments, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(comments, null, 2)}</pre> */}
       </div>
     </div>
   )
