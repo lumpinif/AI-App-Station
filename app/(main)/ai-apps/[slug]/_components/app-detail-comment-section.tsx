@@ -42,8 +42,6 @@ const AppDetailCommentSection: React.FC<AppDetailCommentsProps> = ({
     return null
   }
 
-  // const { comments } = await getInitialComments(app_id)
-
   return (
     // {profile?  (
     //   <CommentForm app_id={app_id} userId={session?.user.id} />
@@ -55,16 +53,6 @@ const AppDetailCommentSection: React.FC<AppDetailCommentsProps> = ({
       {comments && (
         <CommentList comments={comments as CommentWithProfileWithChildren[]} />
       )}
-      {/* {comments?.map((comment) => (
-        <Comment
-          key={comment.comment_id}
-          repliesCount={1}
-          avatar_url={comment.profiles.avatar_url}
-          display_name={comment.profiles.display_name}
-          {...comment}
-        />
-      ))} */}
-      <pre>{JSON.stringify(comments, null, 2)}</pre>
     </div>
   )
 }

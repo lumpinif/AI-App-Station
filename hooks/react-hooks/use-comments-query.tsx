@@ -32,6 +32,7 @@ async function fetchCommentByAppId(app_id: App["app_id"]) {
   return data
 }
 
+// TODO: FOR FUTURE REFACTORATION
 export function useReplies(
   parent_id: Comment["parent_id"],
   showReplies: boolean

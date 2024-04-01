@@ -67,4 +67,7 @@ export type CommentAction = {
   showReplies?: boolean
   isReplied?: boolean
   repliesCount: number
+  likes_count: Comment["likes_count"]
+  views_count: Comment["views_count"]
+  rating: Comment["rating"]
 }

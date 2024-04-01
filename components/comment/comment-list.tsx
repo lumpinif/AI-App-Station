@@ -14,7 +14,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 
 import { Icons } from "../icons/icons"
-import { Button } from "../ui/button"
 
 // TODO: ADD COMMENTDELETEBUTTON <CommentDeleteButton id={id} userId={userId} />
 
@@ -65,9 +64,9 @@ const CommentItem: React.FC<CommentWithProfileWithChildren> = ({
       <div className="relative flex flex-col">
         <Comment
           parent_id={parent_id}
+          likes_count={likes_count}
           views_count={views_count}
           rating={rating}
-          likes_count={likes_count}
           comment={comment}
           comment_id={comment_id}
           created_at={created_at}
@@ -150,6 +149,9 @@ export const Comment: React.FC<CommentType> = ({
           showReplies={showReplies}
           isReplied={isReplied}
           repliesCount={repliesCount}
+          likes_count={likes_count}
+          rating={rating}
+          views_count={views_count}
         />
       </div>
     </div>
@@ -161,6 +163,9 @@ const CommentActions: React.FC<CommentAction> = ({
   showReplies,
   isReplied,
   repliesCount,
+  likes_count,
+  rating,
+  views_count,
 }) => {
   return (
     <div className="flex items-center justify-between">
@@ -185,18 +190,30 @@ const CommentActions: React.FC<CommentAction> = ({
           </div>
         )}
       </div>
-      <span className="group rounded-full p-2 hover:bg-rose-500/10">
-        <Heart
-          className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-rose-500 "
-          size={20}
-        />
-      </span>
-      <span className="group rounded-full p-2 hover:bg-purple-500/10">
-        <BarChart2
-          className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-purple-500 "
-          size={20}
-        />
-      </span>
+      <div className="flex items-center gap-x-1">
+        <span className="group rounded-full p-2 hover:bg-rose-500/10">
+          <Heart
+            className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-rose-500 "
+            size={20}
+          />
+        </span>
+        {likes_count && (
+          <span className="text-xs text-muted-foreground">{likes_count}</span>
+        )}
+      </div>
+      <div className="flex items-center gap-x-1">
+        <span className="group rounded-full p-2 hover:bg-purple-500/10">
+          <BarChart2
+            className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-purple-500 "
+            size={20}
+          />
+        </span>
+        {views_count && (
+          <span className="mt-1 text-xs text-muted-foreground">
+            {views_count}
+          </span>
+        )}
+      </div>
       <span className="group rounded-full p-2 hover:bg-green-500/10">
         <Share
           className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-green-500 "
