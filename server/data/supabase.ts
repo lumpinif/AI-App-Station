@@ -329,3 +329,66 @@ export async function AddComment(
 
   return { comment, error }
 }
+
+export async function UpdateComment(
+  comment_content: Comment["comment"],
+  comment_id: Comment["comment_id"],
+  app_id: App["app_id"]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return {
+      updatedComment: null,
+      error: "You need to login to update the comment.",
+    }
+  }
+
+  let { data: updatedComment, error } = await supabase
+    .from("app_comments")
+    .update({
+      comment: comment_content,
+    })
+    .match({ comment_id: comment_id, app_id: app_id })
+    .select("*, profiles(*)")
+
+  if (!updatedComment)
+    return { updatedComment: null, error: "Something went wrong" }
+
+  // error handling
+  if (error) return { updatedComment: null, error: getErrorMessage(error) }
+
+  return { updatedComment, error }
+}
+
+export async function DeleteComment(
+  comment_id: Comment["comment_id"],
+  app_id: App["app_id"]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return {
+      error: "You need to login to delete the comment.",
+    }
+  }
+
+  const { error } = await supabase
+    .from("app_comments")
+    .delete()
+    .eq("comment_id", comment_id)
+    .eq("app_id", app_id)
+
+  // error handling
+  if (error) return { error: getErrorMessage(error) }
+
+  return { error }
+}

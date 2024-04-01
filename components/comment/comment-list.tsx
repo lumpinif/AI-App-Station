@@ -21,6 +21,17 @@ import {
 import { cn } from "@/lib/utils"
 import { useReplies } from "@/hooks/react-hooks/use-comments-query"
 import useUser from "@/hooks/react-hooks/use-user"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 
@@ -33,6 +44,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import CommentDeleteButton from "./comment_delete_button"
+import CommentEditForm from "./comment_edit_form"
 import { CommentReplyButton } from "./comment_reply_button"
 import CommentReplyForm from "./comment_reply_form"
 import { CommentLikeButton } from "./comment-like-button"
@@ -125,6 +138,7 @@ export const Comment: React.FC<CommentType> = ({
   showReplies,
   repliesCount,
 }) => {
+  const [isEditing, setIsEditing] = React.useState<boolean>(false)
   const { data: profile } = useUser()
   return (
     <div
@@ -174,50 +188,86 @@ export const Comment: React.FC<CommentType> = ({
             </div>
           </div>
           <div>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                asChild
-                className="ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              >
-                <EllipsisVertical size={16} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem
-                  className={cn(profile?.user_id === user_id ? "" : "hidden")}
+            <AlertDialog>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your comment.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction className="bg-destructive text-muted-foreground hover:bg-destructive/80 hover:text-primary">
+                    <CommentDeleteButton
+                      app_id={app_id}
+                      comment_id={comment_id}
+                    />
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  asChild
+                  className="ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                 >
-                  <div className="flex w-full items-center justify-between px-1">
-                    Edit
-                    <Pencil size={12} className="mb-1" />
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={cn(profile?.user_id === user_id ? "" : "hidden")}
-                >
-                  <div className="flex w-full items-center justify-between px-1">
-                    Delete
-                    <Delete size={12} />
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <div className="flex w-full items-center justify-between px-1">
-                    Share
-                    <Share2 size={12} />
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className={cn(profile?.user_id === user_id ? "hidden" : "")}
-                >
-                  <div className="flex w-full items-center justify-between px-1">
-                    Report
-                    <Flag size={12} />
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <EllipsisVertical size={16} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    className={cn(
+                      "cursor-pointer",
+                      profile?.user_id === user_id ? "" : "hidden"
+                    )}
+                    onClick={() => setIsEditing(!isEditing)}
+                  >
+                    <div className="flex w-full items-center justify-between px-1">
+                      Edit
+                      <Pencil size={12} className="mb-1" />
+                    </div>
+                  </DropdownMenuItem>
+                  <AlertDialogTrigger asChild>
+                    <DropdownMenuItem
+                      className={cn(
+                        "cursor-pointer",
+                        profile?.user_id === user_id ? "" : "hidden"
+                      )}
+                    >
+                      <div className="flex w-full items-center justify-between px-1">
+                        <span>Delete</span>
+                        <Delete size={12} />
+                      </div>
+                    </DropdownMenuItem>
+                  </AlertDialogTrigger>
+                  <DropdownMenuItem>
+                    <div className="flex w-full items-center justify-between px-1">
+                      Share
+                      <Share2 size={12} />
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className={cn(
+                      "cursor-pointer",
+                      profile?.user_id === user_id ? "hidden" : ""
+                    )}
+                  >
+                    <div className="flex w-full items-center justify-between px-1">
+                      Report
+                      <Flag size={12} />
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </AlertDialog>
           </div>
         </div>
 
         <CommentActions
+          setIsEditing={setIsEditing}
+          isEditing={isEditing}
+          comment={comment}
           app_id={app_id}
           parent_id={parent_id}
           comment_id={comment_id}
@@ -234,10 +284,13 @@ export const Comment: React.FC<CommentType> = ({
 }
 
 const CommentActions: React.FC<CommentAction> = ({
+  comment,
   app_id,
   parent_id,
   comment_id,
   toggleReplies,
+  setIsEditing,
+  isEditing,
   showReplies,
   isReplied,
   repliesCount,
@@ -270,6 +323,15 @@ const CommentActions: React.FC<CommentAction> = ({
           parent_id={comment_id}
           className="w-full md:max-w-xl"
           toggleReplying={() => setReplying(!isReplying)}
+        />
+      )}
+      {isEditing && (
+        <CommentEditForm
+          comment_id={comment_id}
+          comment={comment}
+          app_id={app_id}
+          className="w-full md:max-w-xl"
+          setIsEditing={setIsEditing}
         />
       )}
 

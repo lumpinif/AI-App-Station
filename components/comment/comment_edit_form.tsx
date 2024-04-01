@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AddComment } from "@/server/data/supabase"
+import { AddComment, UpdateComment } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
@@ -25,26 +25,30 @@ import { Button } from "../ui/button"
 import { Textarea } from "../ui/textarea"
 
 const FormSchema = z.object({
-  reply: z.string().max(2000, {
-    message: "Reply must not be longer than 400 characters.",
+  edit: z.string().max(2000, {
+    message: "Edit content must not be longer than 400 characters.",
   }),
 })
 
-type CommentReplyFormProps = Pick<
+type CommentEditFormProps = Pick<
   CommentAction,
-  "parent_id" | "app_id" | "toggleReplying"
+  "comment_id" | "app_id" | "comment" | "isEditing" | "setIsEditing"
 > & {
   className?: string
 }
 
-const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
+const CommentEditForm: React.FC<CommentEditFormProps> = ({
   className,
-  toggleReplying,
+  comment,
+  setIsEditing,
   app_id,
-  parent_id: replyToCommentId,
+  comment_id,
 }) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      edit: comment,
+    },
   })
 
   const [loading, setLoading] = React.useState(false)
@@ -58,25 +62,36 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   })
 
   /** You can use `form.watch` to trigger auto sizing. */
-  const reply = form.watch("reply")
+  const edit = form.watch("edit")
   React.useEffect(() => {
     if (textAreaRef.current) {
-      setTriggerAutoSize(reply)
+      setTriggerAutoSize(edit)
     }
-  }, [reply])
+  }, [edit])
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setLoading(true)
 
-    const { comment, error } = await AddComment(
-      values.reply,
-      app_id,
-      replyToCommentId
+    if (values.edit === comment) {
+      setLoading(false)
+      if (setIsEditing) {
+        setIsEditing(false)
+      }
+      return
+    }
+
+    const { updatedComment, error } = await UpdateComment(
+      values.edit,
+      comment_id,
+      app_id
     )
 
-    if (comment) {
+    if (updatedComment) {
       setLoading(false)
-      // toggleReplying()
+      if (setIsEditing) {
+        setIsEditing(false)
+      }
+      toast.success("Comment updated")
     }
 
     if (error) {
@@ -86,8 +101,8 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
   const handleCancelClick = () => {
     form.reset()
-    if (toggleReplying) {
-      toggleReplying(false)
+    if (setIsEditing) {
+      setIsEditing(false)
     }
   }
 
@@ -99,14 +114,15 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
       >
         <FormField
           control={form.control}
-          name="reply"
+          name="edit"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Reply</FormLabel>
+              <FormLabel>Edit</FormLabel>
               <FormControl>
                 <Textarea
+                  defaultValue={comment}
                   className="no-scrollbar rounded-none border-l-0 border-r-0 border-t-0 bg-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                  placeholder="Add a reply ..."
+                  placeholder="Edit the comment ..."
                   {...field}
                   ref={textAreaRef}
                 />
@@ -117,7 +133,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
         />
         <div className="flex gap-x-2">
           <LoadingButton loading={loading} type="submit">
-            Reply
+            Edit
           </LoadingButton>
           <Button type="reset" variant={"ghost"} onClick={handleCancelClick}>
             Cancel
@@ -127,4 +143,4 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
     </Form>
   )
 }
-export default CommentReplyForm
+export default CommentEditForm
