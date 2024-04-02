@@ -1,28 +1,22 @@
 import React from "react"
 import { MessageCircle } from "lucide-react"
 
-import { CommentAction } from "@/types/db_tables"
+import { CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-
-type CommentReplyButtonProps = Pick<
-  CommentAction,
-  "comment_id" | "isReplied" | "toggleReplies" | "showReplies" | "repliesCount"
+type CommentReplyButtonProps = Omit<
+  CommentActionsProp,
+  "comment" | "isEditing" | "setIsEditing"
 > & {
-  className?: string
   toggleReplying: () => void
-  isReplying: boolean
 }
-
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   className,
   repliesCount,
   isReplied,
-  showReplies,
-  toggleReplies,
+  isShowReplies,
   toggleReplying,
+  setisShowReplies,
 }) => {
   return (
     <>
@@ -37,13 +31,13 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
         </span>
         {isReplied && (
           <div
-            onClick={toggleReplies}
+            onClick={setisShowReplies}
             className={cn(
               "mt-1 w-fit cursor-pointer text-xs text-muted-foreground hover:text-primary",
-              showReplies ? "text-primary" : ""
+              isShowReplies ? "text-primary" : ""
             )}
           >
-            {showReplies
+            {isShowReplies
               ? `Hide ${repliesCount} replies`
               : `${repliesCount} replies`}
           </div>

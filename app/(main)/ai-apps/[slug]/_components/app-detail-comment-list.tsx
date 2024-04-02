@@ -3,14 +3,13 @@
 import { getInitialComments } from "@/server/data"
 
 import { CommentWithProfile } from "@/types/db_tables"
-
-import Comment from "./comment_new"
+import Comment from "@/components/comment/comment_new"
 
 type CommentListProps = {
   app_id: CommentWithProfile["app_id"]
 }
 
-const AppDetailCommentList = async ({ app_id }: CommentListProps) => {
+const CommentList = async ({ app_id }: CommentListProps) => {
   const { comments } = await getInitialComments(app_id)
 
   if (!comments) return "no comments"
@@ -23,4 +22,4 @@ const AppDetailCommentList = async ({ app_id }: CommentListProps) => {
   )
 }
 
-export default AppDetailCommentList
+export default CommentList

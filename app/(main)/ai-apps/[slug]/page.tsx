@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation"
 import { getAppBySlug } from "@/server/data"
 
+import AppDetailCommentList from "@/components/comment/comment_list_new"
+
 import { AppIcon } from "../_components/cards/_components/app-icon"
-import { AppDetailComment } from "./_components/app-detail-comment"
 import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
@@ -43,7 +44,7 @@ export default async function AppPagePage({
               <AppDetailIntroduction data={app.introduction} />
               <AppDetailReviews />
               {/* <AppDetailCommentSection app_id={app.app_id} /> */}
-              <AppDetailComment />
+              <AppDetailCommentList app_id={app.app_id} />
             </div>
             <div className="mt-6 lg:mt-0">
               <AppDetailSubInfo

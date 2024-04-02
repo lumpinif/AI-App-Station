@@ -77,3 +77,14 @@ export type CommentAction = {
   likes_count: Comment["likes_count"]
   views_count: Comment["views_count"]
 }
+
+export type CommentActionsProp = {
+  className?: string
+  comment: CommentWithProfile
+  isShowReplies: boolean
+  setisShowReplies: () => void
+  isEditing: boolean
+  setIsEditing: () => void
+  repliesCount: number
+  isReplied: boolean
+}

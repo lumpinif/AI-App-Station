@@ -291,6 +291,25 @@ export async function getInitialComments(app_id: App["app_id"]) {
   return { comments, error }
 }
 
+export async function getReplies(comment_id: Comment["comment_id"]) {
+  const supabase = await createSupabaseServerClient()
+
+  let query = supabase
+    .from("app_comments")
+    .select("*, profiles(*)")
+    .eq("parent_id", comment_id)
+    .order("created_at", {
+      ascending: false,
+    })
+
+  let { data: replies, error } = await query.returns<CommentWithProfile[]>()
+
+  if (error) {
+    console.error(error.message)
+  }
+  return { replies, error }
+}
+
 export async function AddComment(
   comment_content: Comment["comment"],
   app_id: App["app_id"],
