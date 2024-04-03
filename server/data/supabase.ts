@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
+import { z } from "zod"
 
 import { App, AppDetails, Comment, CommentWithProfile } from "@/types/db_tables"
 import { titleToSlug } from "@/lib/utils"
@@ -439,4 +440,33 @@ export async function DeleteComment(
   revalidatePath(`/ai-apps/${slug?.app_slug}`)
 
   return { error }
+}
+
+export async function addLikeToComment(
+  comment_id: Comment["comment_id"],
+  likes_count: Comment["likes_count"]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return {
+      error: "You need to login to delete the comment.",
+    }
+  }
+
+  const { data: new_likes_count, error: addLikesError } = await supabase
+    .from("app_comments")
+    .update({ likes_count: likes_count + 1 })
+    .eq("comment_id", comment_id)
+    .select("likes_count")
+
+  if (addLikesError) {
+    return { error: getErrorMessage(addLikesError) }
+  }
+
+  return { likes_count: new_likes_count }
 }

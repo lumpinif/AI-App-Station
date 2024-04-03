@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { Comment, CommentAction } from "@/types/db_tables"
+import { Comment, CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -31,10 +31,11 @@ const FormSchema = z.object({
 })
 
 type CommentEditFormProps = Pick<
-  CommentAction,
-  "comment_id" | "app_id" | "comment" | "isEditing" | "setIsEditing"
+  CommentActionsProp,
+  "comment" | "setIsEditing" | "className"
 > & {
-  className?: string
+  app_id: Comment["app_id"]
+  comment_id: Comment["comment_id"]
   parent_id?: Comment["parent_id"]
 }
 
@@ -51,7 +52,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      edit: comment,
+      edit: comment.comment,
     },
   })
   const [loading, setLoading] = React.useState(false)
@@ -74,11 +75,9 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setLoading(true)
-    if (values.edit === comment) {
+    if (values.edit === comment.comment) {
       setLoading(false)
-      if (setIsEditing) {
-        setIsEditing(false)
-      }
+      setIsEditing(false)
       return
     }
 
@@ -91,9 +90,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
     if (updatedComment) {
       queryClient.invalidateQueries({ queryKey: queryKey })
       setLoading(false)
-      if (setIsEditing) {
-        setIsEditing(false)
-      }
+      setIsEditing(false)
       toast.success("Comment updated")
     }
 
@@ -104,9 +101,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
 
   const handleCancelClick = () => {
     form.reset()
-    if (setIsEditing) {
-      setIsEditing(false)
-    }
+    setIsEditing(false)
   }
 
   return (
@@ -125,7 +120,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
               </FormLabel>
               <FormControl>
                 <Textarea
-                  defaultValue={comment}
+                  defaultValue={comment.comment}
                   className="no-scrollbar rounded-none border-l-0 border-r-0 border-t-0 bg-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Edit the comment ..."
                   {...field}

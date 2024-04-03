@@ -7,7 +7,18 @@ import { CommentReplyButton } from "./comment_reply_button"
 import CommentReplyForm from "./comment_reply_form"
 import { CommentLikeButton } from "./comment-like-button"
 
-export const CommentActions: React.FC<CommentActionsProp> = ({
+type CommentActionsProps = Pick<
+  CommentActionsProp,
+  | "isShowReplies"
+  | "setisShowReplies"
+  | "isEditing"
+  | "isReplied"
+  | "comment"
+  | "repliesCount"
+  | "setIsEditing"
+>
+
+export const CommentActions: React.FC<CommentActionsProps> = ({
   comment,
   isShowReplies,
   setisShowReplies,
@@ -49,9 +60,9 @@ export const CommentActions: React.FC<CommentActionsProp> = ({
       )}
       {isEditing && (
         <CommentEditForm
+          comment={comment}
           parent_id={comment.parent_id}
           comment_id={comment.comment_id}
-          comment={comment.comment}
           app_id={comment.app_id}
           className="w-full md:max-w-xl"
           setIsEditing={setIsEditing}

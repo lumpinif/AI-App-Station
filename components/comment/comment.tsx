@@ -43,9 +43,6 @@ type CommentProps = {
 const Comment = ({ comment, depth = 0 }: CommentProps) => {
   const [isShowReplies, setisShowReplies] = React.useState<boolean>(false)
   const [isEditing, setIsEditing] = React.useState<boolean>(false)
-  const [optimisticReply, setOptimisticReply] = React.useState<Comment | null>(
-    null
-  )
   const { data, error, isFetching } = useReplies(comment.comment_id)
   const { data: profile } = useUser()
 

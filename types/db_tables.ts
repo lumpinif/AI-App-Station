@@ -47,37 +47,8 @@ export type PostCardProps = Pick<
 
 // About the Comment
 
-// export type AppComment = Comment & {
-//   profiles: Profile
-//   children: AppComment[]
-// }
-
 export type CommentWithProfile = Comment & {
   profiles: Profile
-}
-export type CommentWithProfileWithChildren = CommentWithProfile & {
-  children: CommentWithProfileWithChildren[]
-}
-export type CommentType = Omit<CommentWithProfile, "profiles" | "app_id"> &
-  CommentAction & {
-    display_name?: Profile["display_name"]
-    avatar_url?: Profile["avatar_url"]
-  }
-
-export type CommentAction = {
-  comment?: Comment["comment"]
-  app_id: Comment["app_id"]
-  parent_id: Comment["parent_id"]
-  comment_id: Comment["comment_id"]
-  toggleReplies?: (value: boolean) => void
-  toggleReplying?: (value: boolean) => void
-  setIsEditing?: (value: boolean) => void
-  isEditing?: boolean
-  showReplies?: boolean
-  isReplied?: boolean
-  repliesCount: number
-  likes_count: Comment["likes_count"]
-  views_count: Comment["views_count"]
 }
 
 export type CommentActionsProp = {
@@ -86,7 +57,9 @@ export type CommentActionsProp = {
   isShowReplies: boolean
   setisShowReplies: Dispatch<SetStateAction<boolean>>
   isEditing: boolean
-  setIsEditing: () => void
+  setIsEditing: Dispatch<SetStateAction<boolean>>
   repliesCount: number
   isReplied: boolean
+  likes_count: Comment["likes_count"]
+  views_count: Comment["views_count"]
 }

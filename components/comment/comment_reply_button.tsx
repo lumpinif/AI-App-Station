@@ -4,10 +4,11 @@ import { MessageCircle } from "lucide-react"
 import { CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
-type CommentReplyButtonProps = Omit<
+type CommentReplyButtonProps = Pick<
   CommentActionsProp,
-  "comment" | "isEditing" | "setIsEditing"
+  "repliesCount" | "isReplied" | "isShowReplies" | "setisShowReplies"
 > & {
+  className?: string
   toggleReplying: () => void
 }
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
