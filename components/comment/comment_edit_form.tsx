@@ -1,14 +1,14 @@
 "use client"
 
 import * as React from "react"
-import { AddComment, UpdateComment } from "@/server/data/supabase"
+import { UpdateComment } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { CommentAction } from "@/types/db_tables"
+import { Comment, CommentAction } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -35,6 +35,7 @@ type CommentEditFormProps = Pick<
   "comment_id" | "app_id" | "comment" | "isEditing" | "setIsEditing"
 > & {
   className?: string
+  parent_id?: Comment["parent_id"]
 }
 
 const CommentEditForm: React.FC<CommentEditFormProps> = ({
@@ -43,14 +44,16 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
   setIsEditing,
   app_id,
   comment_id,
+  parent_id,
 }) => {
+  const queryClient = useQueryClient()
+  const queryKey = ["replies", parent_id]
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       edit: comment,
     },
   })
-
   const [loading, setLoading] = React.useState(false)
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
   const [triggerAutoSize, setTriggerAutoSize] = React.useState("")
@@ -71,7 +74,6 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setLoading(true)
-
     if (values.edit === comment) {
       setLoading(false)
       if (setIsEditing) {
@@ -87,6 +89,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
     )
 
     if (updatedComment) {
+      queryClient.invalidateQueries({ queryKey: queryKey })
       setLoading(false)
       if (setIsEditing) {
         setIsEditing(false)

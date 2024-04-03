@@ -3,7 +3,7 @@
 import { getInitialComments } from "@/server/data"
 
 import { CommentWithProfile } from "@/types/db_tables"
-import Comment from "@/components/comment/comment_new"
+import Comment from "@/components/comment/comment"
 
 type CommentListProps = {
   app_id: CommentWithProfile["app_id"]

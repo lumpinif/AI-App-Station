@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { Delete, EllipsisVertical, Flag, Pencil, Share2 } from "lucide-react"
 import moment from "moment"
+import { toast } from "sonner"
 
 import { CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -29,14 +30,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import { Skeleton } from "../ui/skeleton"
 import { CommentActions } from "./comment_actions"
 import CommentDeleteButton from "./comment_delete_button"
 
 type CommentProps = {
   comment: CommentWithProfile
+} & {
+  depth?: number
 }
 
-const Comment = ({ comment }: CommentProps) => {
+const Comment = ({ comment, depth = 0 }: CommentProps) => {
   const [isShowReplies, setisShowReplies] = React.useState<boolean>(false)
   const [isEditing, setIsEditing] = React.useState<boolean>(false)
   const [optimisticReply, setOptimisticReply] = React.useState<Comment | null>(
@@ -45,21 +49,52 @@ const Comment = ({ comment }: CommentProps) => {
   const { data, error, isFetching } = useReplies(comment.comment_id)
   const { data: profile } = useUser()
 
-  if (!data?.replies) return null
-  // if (isFetching) return "this is loading..."
+  if (isFetching)
+    return (
+      <>
+        <div
+          className={cn(
+            "flex w-full items-start space-x-4 px-4",
+            depth === 1 ? "ml-6 mt-3" : "mt-3",
+            depth === 0 && "mt-6"
+          )}
+        >
+          <Skeleton className="h-10 w-10 flex-none rounded-full" />
+          <div className="flex-1 space-y-2">
+            <Skeleton className="h-6 w-1/2 max-w-xl" />
+            <Skeleton className="h-10 w-full max-w-lg" />
+          </div>
+        </div>
+      </>
+    )
 
+  if (error) {
+    toast.error("Failed to fetch replies")
+  }
+
+  if (!data?.replies) return null
   const isReplied = data.replies.length > 0
   const repliesCount = data.replies.length
 
   return (
-    <div className="flex flex-col">
+    <div className={cn("flex flex-col", depth === 1 ? "pl-6" : "")}>
       <div
         className="flex gap-x-4 rounded-lg p-4 hover:bg-muted/10"
         id={comment.comment_id}
       >
-        <div className="relative shrink-0 ">
+        <div className="relative shrink-0">
           {isReplied && isShowReplies && (
-            <span className="absolute left-1/2 right-1/2 top-11 h-[calc(100%-1rem)] w-0.5 translate-x-[0.5px] border-l" />
+            <>
+              {depth === 0 ? (
+                <>
+                  <span className="absolute -bottom-1 left-1/2 right-1/2 h-full w-0.5 translate-x-[0.5px] border-l" />
+                  <span className="absolute -bottom-1 right-0 h-0.5 w-1/2 translate-x-[0.5px] border-b" />
+                  <span className="absolute -bottom-6 right-0 h-1/6 w-0.5 translate-x-[0.5px] border-r" />
+                </>
+              ) : (
+                <span className="absolute left-1/2 right-1/2 top-11 h-[calc(100%-1rem)] w-0.5 translate-x-[0.5px] border-l" />
+              )}
+            </>
           )}
           <Avatar>
             <AvatarImage
@@ -203,7 +238,11 @@ const Comment = ({ comment }: CommentProps) => {
       {isReplied && isShowReplies && (
         <div>
           {data.replies.map((reply) => (
-            <Comment key={reply.comment_id} comment={reply} />
+            <Comment
+              key={reply.comment_id}
+              comment={reply}
+              depth={Math.min(depth + 1, 2)}
+            />
           ))}
         </div>
       )}

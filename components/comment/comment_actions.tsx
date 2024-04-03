@@ -49,6 +49,7 @@ export const CommentActions: React.FC<CommentActionsProp> = ({
       )}
       {isEditing && (
         <CommentEditForm
+          parent_id={comment.parent_id}
           comment_id={comment.comment_id}
           comment={comment.comment}
           app_id={comment.app_id}
