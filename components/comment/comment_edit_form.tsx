@@ -117,7 +117,9 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
           name="edit"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Edit</FormLabel>
+              <FormLabel className="text-muted-foreground">
+                Editing Comment
+              </FormLabel>
               <FormControl>
                 <Textarea
                   defaultValue={comment}

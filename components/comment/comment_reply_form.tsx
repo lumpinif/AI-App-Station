@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { CommentAction } from "@/types/db_tables"
+import { Comment, CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -30,11 +30,12 @@ const FormSchema = z.object({
   }),
 })
 
-type CommentReplyFormProps = Pick<
-  CommentAction,
-  "parent_id" | "app_id" | "toggleReplying"
-> & {
+type CommentReplyFormProps = Pick<CommentActionsProp, "setisShowReplies"> & {
+  app_id: Comment["app_id"]
+  parent_id: Comment["comment_id"]
   className?: string
+  parent_name?: string
+  toggleReplying: () => void
 }
 
 const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
@@ -42,11 +43,13 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   toggleReplying,
   app_id,
   parent_id: replyToCommentId,
+  parent_name,
+  setisShowReplies,
 }) => {
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
-
   const [loading, setLoading] = React.useState(false)
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
   const [triggerAutoSize, setTriggerAutoSize] = React.useState("")
@@ -76,7 +79,10 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
     if (comment) {
       setLoading(false)
-      // toggleReplying()
+      queryClient.invalidateQueries({ queryKey: ["replies", replyToCommentId] })
+      setisShowReplies(true)
+      form.reset()
+      toggleReplying()
     }
 
     if (error) {
@@ -87,7 +93,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   const handleCancelClick = () => {
     form.reset()
     if (toggleReplying) {
-      toggleReplying(false)
+      toggleReplying()
     }
   }
 
@@ -102,13 +108,16 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
           name="reply"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Reply</FormLabel>
+              <FormLabel className="text-muted-foreground">
+                Replying to @ {parent_name}
+              </FormLabel>
               <FormControl>
                 <Textarea
                   className="no-scrollbar rounded-none border-l-0 border-r-0 border-t-0 bg-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Add a reply ..."
                   {...field}
                   ref={textAreaRef}
+                  defaultValue={`@${parent_name} `}
                 />
               </FormControl>
               <FormMessage />

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 import Link from "next/link"
 import { Delete, EllipsisVertical, Flag, Pencil, Share2 } from "lucide-react"
 import moment from "moment"
@@ -8,6 +8,7 @@ import moment from "moment"
 import { CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useReplies } from "@/hooks/react-hooks/use-replies-query"
+import useUser from "@/hooks/react-hooks/use-user"
 
 import { Icons } from "../icons/icons"
 import {
@@ -38,23 +39,18 @@ type CommentProps = {
 const Comment = ({ comment }: CommentProps) => {
   const [isShowReplies, setisShowReplies] = React.useState<boolean>(false)
   const [isEditing, setIsEditing] = React.useState<boolean>(false)
+  const [optimisticReply, setOptimisticReply] = React.useState<Comment | null>(
+    null
+  )
   const { data, error, isFetching } = useReplies(comment.comment_id)
+  const { data: profile } = useUser()
 
-  if (!data?.replies) return "loading..."
-  if (isFetching) return "this is loading..."
+  if (!data?.replies) return null
+  // if (isFetching) return "this is loading..."
 
-  // Handle reply submission
-  // const handleReplySubmit = async (e: React.FormEvent, content: string) => {
-  //   e.preventDefault()
-  //   // Add reply to Supabase
-  //   const { data } = await supabase
-  //     .from('comments')
-  //     .insert({ content, parent_id: comment.id })
-  //   // Fetch updated replies
-  //   fetchReplies()
-  // }
   const isReplied = data.replies.length > 0
   const repliesCount = data.replies.length
+
   return (
     <div className="flex flex-col">
       <div
@@ -105,13 +101,13 @@ const Comment = ({ comment }: CommentProps) => {
                 </span>
               </div>
               <div className="prose text-primary">
-                {comment.comment} : this comment_id: {comment.comment_id}{" "}
+                {comment.comment} :\\\ this comment_id: {comment.comment_id}{" "}
                 parent_id:{comment.parent_id}
               </div>
             </div>
             <div>
               <AlertDialog>
-                <AlertDialogContent>
+                <AlertDialogContent className="glass-card-background rounded-lg border-none shadow-outline backdrop-blur-xl max-sm:max-w-sm ">
                   <AlertDialogHeader>
                     <AlertDialogTitle>
                       Are you absolutely sure?
@@ -127,6 +123,7 @@ const Comment = ({ comment }: CommentProps) => {
                       <CommentDeleteButton
                         app_id={comment.app_id}
                         comment_id={comment.comment_id}
+                        parent_id={comment.parent_id}
                       />
                     </AlertDialogAction>
                   </AlertDialogFooter>
@@ -142,7 +139,7 @@ const Comment = ({ comment }: CommentProps) => {
                     <DropdownMenuItem
                       className={cn(
                         "cursor-pointer",
-                        comment.profiles?.user_id === comment.profiles.user_id
+                        comment.profiles?.user_id === profile?.user_id
                           ? ""
                           : "hidden"
                       )}
@@ -157,7 +154,7 @@ const Comment = ({ comment }: CommentProps) => {
                       <DropdownMenuItem
                         className={cn(
                           "cursor-pointer",
-                          comment.profiles?.user_id === comment.profiles.user_id
+                          comment.profiles?.user_id === profile?.user_id
                             ? ""
                             : "hidden"
                         )}
@@ -177,7 +174,7 @@ const Comment = ({ comment }: CommentProps) => {
                     <DropdownMenuItem
                       className={cn(
                         "cursor-pointer",
-                        comment.profiles?.user_id === comment.profiles.user_id
+                        comment.profiles?.user_id === profile?.user_id
                           ? "hidden"
                           : ""
                       )}
@@ -199,7 +196,7 @@ const Comment = ({ comment }: CommentProps) => {
             isShowReplies={isShowReplies}
             repliesCount={repliesCount}
             setIsEditing={() => setIsEditing(!isEditing)}
-            setisShowReplies={() => setisShowReplies(!isShowReplies)}
+            setisShowReplies={setisShowReplies}
           />
         </div>
       </div>

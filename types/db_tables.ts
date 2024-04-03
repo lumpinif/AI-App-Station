@@ -1,5 +1,7 @@
 // TODO: REFACTOR TYPES INTO SEPERATE TS FILES
 
+import { Dispatch, SetStateAction } from "react"
+
 import { Database } from "@/types/supabase"
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"]
@@ -82,7 +84,7 @@ export type CommentActionsProp = {
   className?: string
   comment: CommentWithProfile
   isShowReplies: boolean
-  setisShowReplies: () => void
+  setisShowReplies: Dispatch<SetStateAction<boolean>>
   isEditing: boolean
   setIsEditing: () => void
   repliesCount: number

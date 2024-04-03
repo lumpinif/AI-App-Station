@@ -1,5 +1,3 @@
-// components/CommentList.tsx
-
 import { getInitialComments } from "@/server/data"
 
 import { CommentWithProfile } from "@/types/db_tables"

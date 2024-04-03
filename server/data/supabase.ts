@@ -316,7 +316,7 @@ export async function AddComment(
   replyToCommentId?: Comment["parent_id"]
 ) {
   const supabase = await createSupabaseServerClient()
-
+  const slug = await getSlugFromAppId(app_id)
   const {
     data: { user },
   } = await supabase.auth.getUser()
@@ -346,7 +346,29 @@ export async function AddComment(
   // error handling
   if (error) return { comment: null, error: getErrorMessage(error) }
 
+  if (comment) revalidatePath(`/ai-apps/${slug?.app_slug}`)
+
   return { comment, error }
+}
+
+export async function getSlugFromAppId(app_id: App["app_id"]) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: slug, error } = await supabase
+    .from("apps")
+    .select("app_slug")
+    .eq("app_id", app_id)
+    .single()
+
+  if (error) {
+    console.error(error.message)
+  }
+
+  if (!slug) {
+    console.error("No slug found for app_id: ", app_id)
+  }
+
+  return slug
 }
 
 export async function UpdateComment(
@@ -355,6 +377,7 @@ export async function UpdateComment(
   app_id: App["app_id"]
 ) {
   const supabase = await createSupabaseServerClient()
+  const slug = await getSlugFromAppId(app_id)
 
   const {
     data: { user },
@@ -381,6 +404,8 @@ export async function UpdateComment(
   // error handling
   if (error) return { updatedComment: null, error: getErrorMessage(error) }
 
+  if (updatedComment) revalidatePath(`/ai-apps/${slug?.app_slug}`)
+
   return { updatedComment, error }
 }
 
@@ -389,6 +414,7 @@ export async function DeleteComment(
   app_id: App["app_id"]
 ) {
   const supabase = await createSupabaseServerClient()
+  const slug = await getSlugFromAppId(app_id)
 
   const {
     data: { user },
@@ -408,6 +434,9 @@ export async function DeleteComment(
 
   // error handling
   if (error) return { error: getErrorMessage(error) }
+
+  // revalidate the path after successful deletion
+  revalidatePath(`/ai-apps/${slug?.app_slug}`)
 
   return { error }
 }

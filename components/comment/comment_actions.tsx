@@ -30,16 +30,21 @@ export const CommentActions: React.FC<CommentActionsProp> = ({
           repliesCount={repliesCount}
           isReplied={isReplied}
           isShowReplies={isShowReplies}
-          setisShowReplies={setisShowReplies}
+          setisShowReplies={() => setisShowReplies(!isShowReplies)}
           toggleReplying={() => setReplying(!isReplying)}
         />
       </div>
       {isReplying && (
         <CommentReplyForm
+          parent_name={
+            comment.profiles.display_name ||
+            `User_${comment.profiles.user_id.slice(-5)}`
+          }
           app_id={comment.app_id}
           parent_id={comment.comment_id}
           className="w-full md:max-w-xl"
           toggleReplying={() => setReplying(!isReplying)}
+          setisShowReplies={setisShowReplies}
         />
       )}
       {isEditing && (
