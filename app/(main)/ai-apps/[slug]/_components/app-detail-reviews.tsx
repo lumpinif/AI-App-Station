@@ -4,6 +4,7 @@ import { Star } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Progress } from "@/components/ui/progress"
+import { Separator } from "@/components/ui/separator"
 
 type AppDetailReviewsProps = {}
 
@@ -11,17 +12,20 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({}) => {
   return (
     <>
       <h2 className="text-2xl font-medium">Ratings and Reviews</h2>
-      <div className="grid w-full grid-cols-2 gap-x-4 border xl:grid-cols-3">
-        <div className="flex w-full items-end border">
-          <div className="flex items-end border ">
+      <div className="grid w-full grid-cols-2 gap-x-4">
+        <div className="flex items-end">
+          <div className="flex w-full items-end gap-x-4">
             <div className="text-6xl font-bold dark:text-muted-foreground">
               4.7
             </div>
-            <div className="ml-2 text-sm text-muted-foreground">out of 5</div>
+            <div className="flex flex-col text-sm text-muted-foreground">
+              <span className="">out of 5</span>
+              <Separator />
+              <span className="">161 Ratings</span>
+            </div>
           </div>
-          <div className="border text-sm text-gray-600">161 Ratings</div>
         </div>
-        <div className="flex flex-col border text-xs">
+        <div className="flex flex-col text-xs">
           <div className="flex items-center">
             <RatingStar />
             <RatingStar />
