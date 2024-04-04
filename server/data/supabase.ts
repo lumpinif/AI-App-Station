@@ -314,7 +314,8 @@ export async function getReplies(comment_id: Comment["comment_id"]) {
 export async function AddComment(
   comment_content: Comment["comment"],
   app_id: App["app_id"],
-  replyToCommentId?: Comment["parent_id"]
+  replyToCommentId?: Comment["parent_id"],
+  rating?: Comment["rating"]
 ) {
   const supabase = await createSupabaseServerClient()
   const slug = await getSlugFromAppId(app_id)
@@ -337,6 +338,7 @@ export async function AddComment(
         comment: comment_content,
         app_id: app_id,
         parent_id: replyToCommentId,
+        rating: rating,
       },
     ])
     .eq("app_id", app_id)
@@ -375,7 +377,8 @@ export async function getSlugFromAppId(app_id: App["app_id"]) {
 export async function UpdateComment(
   comment_content: Comment["comment"],
   comment_id: Comment["comment_id"],
-  app_id: App["app_id"]
+  app_id: App["app_id"],
+  rating?: Comment["rating"]
 ) {
   const supabase = await createSupabaseServerClient()
   const slug = await getSlugFromAppId(app_id)
@@ -395,6 +398,7 @@ export async function UpdateComment(
     .from("app_comments")
     .update({
       comment: comment_content,
+      rating: rating,
     })
     .match({ comment_id: comment_id, app_id: app_id })
     .select("*, profiles(*)")

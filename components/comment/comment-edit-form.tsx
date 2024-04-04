@@ -3,7 +3,9 @@
 import * as React from "react"
 import { UpdateComment } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Rating } from "@mui/material"
 import { useQueryClient } from "@tanstack/react-query"
+import { Star } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -28,6 +30,7 @@ const FormSchema = z.object({
   edit: z.string().max(2000, {
     message: "Edit content must not be longer than 400 characters.",
   }),
+  rating: z.number().min(0.5).max(5),
 })
 
 type CommentEditFormProps = Pick<
@@ -53,6 +56,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       edit: comment.comment,
+      rating: comment.rating || 4.5,
     },
   })
   const [loading, setLoading] = React.useState(false)
@@ -75,7 +79,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setLoading(true)
-    if (values.edit === comment.comment) {
+    if (values.edit === comment.comment && values.rating === comment.rating) {
       setLoading(false)
       setIsEditing(false)
       return
@@ -84,7 +88,8 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
     const { updatedComment, error } = await UpdateComment(
       values.edit,
       comment_id,
-      app_id
+      app_id,
+      values.rating
     )
 
     if (updatedComment) {
@@ -108,7 +113,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn("space-y-4", className)}
+        className={cn("mt-4 space-y-4", className)}
       >
         <FormField
           control={form.control}
@@ -131,6 +136,40 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
             </FormItem>
           )}
         />
+
+        {comment.rating && comment.rating > 0 && (
+          <>
+            <FormField
+              control={form.control}
+              name="rating"
+              render={({ field }) => (
+                <FormItem className="flex items-center md:justify-between">
+                  <FormControl>
+                    <div className="flex items-center space-x-2">
+                      <Rating
+                        {...field}
+                        value={field.value || 4.5}
+                        size="small"
+                        onChange={(event, newValue) => field.onChange(newValue)}
+                        precision={0.5}
+                        emptyIcon={
+                          <Star className=" fill-muted stroke-0" size={18} />
+                        }
+                      />
+                      <span className="text-sm font-medium text-muted-foreground dark:text-muted">
+                        {field.value || 5} stars
+                      </span>
+                    </div>
+                  </FormControl>
+                  <span className="text-sm text-muted-foreground dark:text-muted">
+                    Tap a Star to Update Rate
+                  </span>
+                </FormItem>
+              )}
+            />
+            <FormMessage />
+          </>
+        )}
         <div className="flex gap-x-2">
           <LoadingButton loading={loading} type="submit">
             Edit
