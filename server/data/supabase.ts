@@ -240,8 +240,20 @@ export async function getAppBySlug(app_slug: string) {
   // error handling
   if (error) return { app: null, error: getErrorMessage(error) }
 
-  return { app, error }
+  if (!app) return { app: null, error: "App not found" }
+
+  let { data: ratingData, error: ratingError } = await supabase.rpc(
+    "get_app_rating_data",
+    { app_id_param: app.app_id }
+  )
+
+  if (ratingError) return { error: getErrorMessage(ratingError) }
+
+  if (!ratingData) return { ratingData: null, error: "Rating data not found" }
+
+  return { app, ratingData: ratingData[0], error }
 }
+
 export async function getAllApps() {
   const supabase = await createSupabaseServerClient()
 

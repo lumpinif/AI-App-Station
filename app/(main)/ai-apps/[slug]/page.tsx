@@ -15,7 +15,7 @@ export default async function AppPagePage({
   params: { slug: string }
 }) {
   // TODO: ERROR HANDLING
-  const { app, error } = await getAppBySlug(params.slug)
+  const { app, ratingData, error } = await getAppBySlug(params.slug)
 
   if (!app) {
     notFound()
@@ -40,7 +40,7 @@ export default async function AppPagePage({
             <div className="flex flex-1 flex-col space-y-6 ">
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />
-              <AppDetailReviews />
+              <AppDetailReviews {...ratingData} />
               <AppDetailCommentList app_id={app.app_id} />
             </div>
             <div className="mt-6 lg:mt-0">
