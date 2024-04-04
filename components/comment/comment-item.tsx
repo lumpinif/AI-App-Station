@@ -39,7 +39,7 @@ export const CommentItems: React.FC<CommentItemsProps> = ({
         className="relative flex gap-x-4 rounded-lg p-4 hover:bg-muted/10"
         id={comment.comment_id}
       >
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col space-y-2">
           <div className="flex justify-between">
             {children}
             <CommentDropDownMenu

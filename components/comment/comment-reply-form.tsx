@@ -80,11 +80,13 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setLoading(true)
 
+    const rating = withRating ? values.rating : null
+
     const { comment, error } = await AddComment(
       values.reply,
       app_id,
       replyToCommentId,
-      values.rating
+      rating
     )
 
     if (comment) {
@@ -119,7 +121,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
               control={form.control}
               name="rating"
               render={({ field }) => (
-                <FormItem className="flex items-center md:justify-between">
+                <FormItem className="flex w-full items-end justify-between">
                   <FormControl>
                     <div className="flex items-center space-x-2">
                       <Rating

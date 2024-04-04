@@ -25,7 +25,7 @@ export default async function AppPagePage({
     <>
       <main className=" p-1">
         <div className="flex flex-col items-start">
-          <div className="flex w-full items-center gap-x-2  md:gap-x-6">
+          <div className="flex w-full items-center gap-x-2 md:gap-x-6">
             <div className="flex-none  md:max-w-48 md:p-2 lg:p-4">
               <AppIcon
                 {...app}
@@ -36,7 +36,7 @@ export default async function AppPagePage({
             </div>
             <AppDetailInfo data={app} />
           </div>
-          <div className="flex flex-col  lg:flex-row">
+          <div className="flex flex-col  lg:flex-row lg:space-x-2">
             <div className="flex flex-1 flex-col space-y-6 ">
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />

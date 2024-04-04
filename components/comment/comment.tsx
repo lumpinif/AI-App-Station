@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils"
 
 import { Icons } from "../icons/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import CommentEditForm from "./comment-edit-form"
 
 type CommentProps = {
   comment: CommentWithProfile
@@ -47,25 +46,42 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                 emptyIcon={<Star className="fill-muted stroke-0" size={18} />}
               />
             )}
-            <div className="flex flex-col">
-              <div className="flex items-center gap-x-1">
-                <h4 className="font-bold">
-                  {comment.profiles.display_name
-                    ? comment.profiles.display_name
-                    : `user_${comment.profiles.user_id.slice(-5)}`}
-                </h4>
-                <span className="ml-2 text-sm text-muted-foreground">
-                  <Link href={""} className="hover:underline">
-                    @
+            <div className="flex flex-col space-y-3">
+              <div className="flex-col items-center md:flex md:items-start">
+                <div className="flex items-center gap-x-2">
+                  <h4 className="font-bold">
                     {comment.profiles.display_name
                       ? comment.profiles.display_name
                       : `user_${comment.profiles.user_id.slice(-5)}`}
-                  </Link>
-                </span>
-                <span className="h-[2px] w-[2px] rounded-full bg-muted-foreground" />
-                <span className="text-sm text-muted-foreground">
-                  {moment(comment.created_at).fromNow()}
-                </span>
+                  </h4>
+                  <span className="text-xs text-muted-foreground md:text-sm">
+                    <Link href={""} className="hover:underline">
+                      @
+                      {comment.profiles.display_name
+                        ? comment.profiles.display_name
+                        : `user_${comment.profiles.user_id.slice(-5)}`}
+                    </Link>
+                  </span>
+                </div>
+                <div className="flex items-center gap-x-2 text-xs md:text-sm">
+                  {comment.updated_at ? (
+                    <div className="flex items-center gap-x-2">
+                      <span className="relative text-muted-foreground">
+                        Updated {moment(comment.updated_at).fromNow()}
+                        {moment().diff(moment(comment.updated_at), "days") <
+                          1 && (
+                          <span className="absolute -right-2 top-0 h-1 w-1 rounded-full bg-green-600 md:-right-3 md:h-2 md:w-2" />
+                        )}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-x-2">
+                      <span className="text-muted-foreground/60">
+                        {moment(comment.created_at).fromNow()}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="prose text-primary">
                 {comment.comment}

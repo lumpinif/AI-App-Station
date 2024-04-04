@@ -34,53 +34,39 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
   const rating_2_percentage = (rating_2_count / rating_count) * 100
   const rating_1_percentage = (rating_1_count / rating_count) * 100
 
+  const ratings = [
+    { stars: 5, percentage: rating_5_percentage },
+    { stars: 4, percentage: rating_4_percentage },
+    { stars: 3, percentage: rating_3_percentage },
+    { stars: 2, percentage: rating_2_percentage },
+    { stars: 1, percentage: rating_1_percentage },
+  ]
+
   return (
     <>
       <h2 className="text-2xl font-medium">Ratings & Reviews</h2>
       <div className="grid w-full grid-cols-2 gap-x-4">
-        <div className="flex items-end">
-          <div className="flex w-full items-end gap-x-4">
-            <div className="text-6xl font-bold dark:text-muted-foreground">
-              {rating_score.toFixed(1)}
-            </div>
-            <div className="flex flex-col text-sm text-muted-foreground">
-              <span className="">out of 5</span>
-              <Separator />
-              <span className="">{formattedRatingCount} Ratings</span>
-            </div>
+        <div className="flex w-full items-center gap-x-4">
+          <div className="text-5xl font-bold dark:text-muted-foreground sm:text-6xl">
+            {rating_score.toFixed(1)}
+          </div>
+          <div className="flex flex-col items-center text-xs text-muted-foreground sm:text-sm">
+            <span>out of 5</span>
+            <Separator />
+            <span>{formattedRatingCount} Ratings</span>
           </div>
         </div>
         <div className="flex flex-col text-xs">
-          <div className="flex items-center">
-            <RatingStar />
-            <RatingStar />
-            <RatingStar />
-            <RatingStar />
-            <RatingStar />
-            <ProgreeBar value={rating_5_percentage} />
-          </div>
-          <div className="mt-1 flex items-center">
-            <RatingStar />
-            <RatingStar />
-            <RatingStar />
-            <RatingStar />
-            <ProgreeBar value={rating_4_percentage} />
-          </div>
-          <div className="mt-1 flex items-center">
-            <RatingStar />
-            <RatingStar />
-            <RatingStar />
-            <ProgreeBar value={rating_3_percentage} />
-          </div>
-          <div className="mt-1 flex items-center">
-            <RatingStar />
-            <RatingStar />
-            <ProgreeBar value={rating_2_percentage} />
-          </div>
-          <div className="mt-1 flex items-center">
-            <RatingStar />
-            <ProgreeBar value={rating_1_percentage} />
-          </div>
+          {ratings.map((rating, index) => (
+            <div key={index} className="mt-1 flex items-center">
+              {Array(rating.stars)
+                .fill(null)
+                .map((_, i) => (
+                  <RatingStar key={i} />
+                ))}
+              <ProgreeBar value={rating.percentage} />
+            </div>
+          ))}
         </div>
       </div>
     </>

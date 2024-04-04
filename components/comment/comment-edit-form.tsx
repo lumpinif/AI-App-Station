@@ -16,6 +16,7 @@ import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -143,7 +144,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
               control={form.control}
               name="rating"
               render={({ field }) => (
-                <FormItem className="flex items-center md:justify-between">
+                <FormItem className="flex w-full items-end justify-between">
                   <FormControl>
                     <div className="flex items-center space-x-2">
                       <Rating
@@ -161,9 +162,9 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
                       </span>
                     </div>
                   </FormControl>
-                  <span className="text-sm text-muted-foreground dark:text-muted">
-                    Tap a Star to Update Rate
-                  </span>
+                  <FormDescription className="text-sm text-muted-foreground dark:text-muted">
+                    Tap a Star to Update
+                  </FormDescription>
                 </FormItem>
               )}
             />
