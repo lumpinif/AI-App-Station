@@ -40,7 +40,7 @@ type CommentReplyFormProps = {
   parent_name?: string
   toggleReplying: () => void
   setisShowReplies?: React.Dispatch<React.SetStateAction<boolean>>
-  withRating: boolean
+  withRating?: boolean
 }
 
 const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
