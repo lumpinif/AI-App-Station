@@ -1,11 +1,13 @@
+"use client"
+
 import React from "react"
 
 import { CommentActionsProp } from "@/types/db_tables"
 
-import CommentEditForm from "./comment_edit_form"
-import { CommentReplyButton } from "./comment_reply_button"
-import CommentReplyForm from "./comment_reply_form"
+import CommentEditForm from "./comment-edit-form"
 import { CommentLikeButton } from "./comment-like-button"
+import { CommentReplyButton } from "./comment-reply-button"
+import CommentReplyForm from "./comment-reply-form"
 
 type CommentActionsProps = Pick<
   CommentActionsProp,
@@ -16,7 +18,9 @@ type CommentActionsProps = Pick<
   | "comment"
   | "repliesCount"
   | "setIsEditing"
->
+> & {
+  isFetching: boolean
+}
 
 export const CommentActions: React.FC<CommentActionsProps> = ({
   comment,
@@ -26,6 +30,7 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
   setIsEditing,
   repliesCount,
   isReplied,
+  isFetching,
 }) => {
   const [isReplying, setReplying] = React.useState<boolean>(false)
   return (
@@ -43,6 +48,7 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
           isShowReplies={isShowReplies}
           setisShowReplies={() => setisShowReplies(!isShowReplies)}
           toggleReplying={() => setReplying(!isReplying)}
+          isFetching={isFetching}
         />
       </div>
       {isReplying && (
@@ -68,26 +74,6 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
           setIsEditing={setIsEditing}
         />
       )}
-
-      {/* <div className="flex flex-1 items-center gap-x-1">
-        <span className="group rounded-full p-2 hover:bg-purple-500/10">
-          <BarChart2
-            className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-purple-500 "
-            size={20}
-          />
-        </span>
-        {views_count && (
-          <span className="mt-1 text-xs text-muted-foreground">
-            {views_count}
-          </span>
-        )}
-      </div> */}
-      {/* <span className="group rounded-full p-2 hover:bg-green-500/10">
-        <Share
-          className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-green-500 "
-          size={20}
-        />
-      </span> */}
     </div>
   )
 }

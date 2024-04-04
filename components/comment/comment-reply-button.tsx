@@ -1,5 +1,5 @@
 import React from "react"
-import { MessageCircle } from "lucide-react"
+import { Loader2, MessageCircle } from "lucide-react"
 
 import { CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -10,6 +10,7 @@ type CommentReplyButtonProps = Pick<
 > & {
   className?: string
   toggleReplying: () => void
+  isFetching: boolean
 }
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   className,
@@ -18,6 +19,7 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   isShowReplies,
   toggleReplying,
   setisShowReplies,
+  isFetching,
 }) => {
   return (
     <>
@@ -30,6 +32,9 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
             />
           </div>
         </span>
+        {isFetching && (
+          <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        )}
         {isReplied && (
           <div
             onClick={() => setisShowReplies(!isShowReplies)}
@@ -38,9 +43,11 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
               isShowReplies ? "text-primary" : ""
             )}
           >
-            {isShowReplies
-              ? `Hide ${repliesCount} replies`
-              : `${repliesCount} replies`}
+            {isShowReplies ? (
+              <span>Hide {repliesCount} replies</span>
+            ) : (
+              <span>{repliesCount} replies</span>
+            )}
           </div>
         )}
       </div>

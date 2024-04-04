@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation"
 import { getAppBySlug } from "@/server/data"
 
-import AppDetailCommentList from "@/components/comment/comment_list"
-
 import { AppIcon } from "../_components/cards/_components/app-icon"
+import AppDetailCommentList from "./_components/app-detail-comment-list"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
