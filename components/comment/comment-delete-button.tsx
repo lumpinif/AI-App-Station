@@ -41,14 +41,16 @@ const CommentDeleteButton: React.FC<CommentDeleteButtonProps> = ({
 
   return (
     <>
-      <form action={handleDelete} className="w-full">
-        <button type="submit">
-          <span className="flex items-center">
-            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Delete
-          </span>
-        </button>
-      </form>
+      <span
+        className="w-full cursor-pointer"
+        onClick={handleDelete}
+        role="button"
+      >
+        <span className="flex items-center">
+          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          Delete
+        </span>
+      </span>
     </>
   )
 }

@@ -229,28 +229,16 @@ export const SideNavAppSubmit: React.FC<SideNavToggleProps> = React.memo(
     const buttonClass = cn(buttonClassBase)
 
     return (
-      <Tooltip delayDuration={0}>
-        <div className={cn("relative flex items-center justify-start")}>
-          <TooltipTrigger asChild>
-            <AppSubmitButton className={buttonClass} />
-          </TooltipTrigger>
-
-          <TooltipContent
-            side="right"
-            className="flex items-center gap-2 dark:bg-foreground dark:text-background"
-          >
-            Submit AI Apps
-          </TooltipContent>
-
-          <h1
-            className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
-              !isOpen && "scale-0"
-            }`}
-          >
-            Submit Apps
-          </h1>
-        </div>
-      </Tooltip>
+      <div className={cn("relative flex items-center justify-start")}>
+        <AppSubmitButton className={buttonClass} />
+        <h1
+          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
+            !isOpen && "scale-0"
+          }`}
+        >
+          Submit Apps
+        </h1>
+      </div>
     )
   }
 )

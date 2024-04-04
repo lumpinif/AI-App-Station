@@ -18,7 +18,6 @@ export const CommentForm: React.FC<CommentFormProps> = ({ app_id }) => {
     <>
       {!isReplying && (
         <Button
-          // variant={"secondary"}
           onClick={() => setisReplying(!isReplying)}
           disabled={isReplying}
         >

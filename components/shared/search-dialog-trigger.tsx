@@ -31,7 +31,6 @@ export default function SearchDialogTrigger({
             <Search />
           </Button>
         </TooltipTrigger>
-
         <TooltipContent
           side="right"
           className="flex items-center gap-2 dark:bg-foreground dark:text-background"
