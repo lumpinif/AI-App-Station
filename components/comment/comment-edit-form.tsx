@@ -65,7 +65,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
   useAutosizeTextArea({
     textAreaRef: textAreaRef?.current,
     triggerAutoSize: triggerAutoSize,
-    minHeight: 35,
+    minHeight: 30,
     maxHeight: 1000,
   })
 

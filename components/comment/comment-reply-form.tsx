@@ -65,7 +65,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   useAutosizeTextArea({
     textAreaRef: textAreaRef?.current,
     triggerAutoSize: triggerAutoSize,
-    minHeight: 20,
+    minHeight: 30,
     maxHeight: 500,
   })
 
