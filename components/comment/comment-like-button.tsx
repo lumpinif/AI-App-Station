@@ -46,7 +46,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
     setIsLikeActive(userLikedComment)
   }, [comment.comment_id, comment.comment_likes, profile?.user_id])
 
-  // TODO: FIX THE LIKES_COUNT FLICKERING PROBLEM
+  // TODO: FIX THE OPTIMISTIC LIKES_COUNT FLICKERING PROBLEM
   const toggleLike = useCallback(
     async (optimisticIsLikeActive: boolean) => {
       if (!profile?.user_id) {
@@ -240,7 +240,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
 
   return (
     <>
-      <div className={cn("flex items-center", className)}>
+      <div className={cn("flex items-center space-x-1", className)}>
         <button
           className={cn("group rounded-full p-2 hover:bg-rose-500/10")}
           onClick={() => startTransition(() => handleLikeClick())}
@@ -253,7 +253,11 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
             size={20}
           />
         </button>
-        {optimisticLikeCount > 0 ? optimisticLikeCount : null}
+        {optimisticLikeCount > 0 ? (
+          <span className="text-xs text-muted-foreground">
+            {optimisticLikeCount}
+          </span>
+        ) : null}
       </div>
     </>
   )

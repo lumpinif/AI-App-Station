@@ -35,14 +35,7 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
   const [isReplying, setReplying] = React.useState<boolean>(false)
   return (
     <div className="flex w-full flex-col">
-      <div className="flex items-center gap-x-2 md:gap-x-4">
-        {/* <CommentLikeButton
-          className="sm:gap-x-1"
-          comment_id={comment.comment_id}
-          likes_count={comment.likes_count}
-        /> */}
-        {/* <CommentLikeDislikeButton comment={comment} />
-        <CommentLikeDislikeButton comment={comment} /> */}
+      <div className="flex items-center gap-x-1">
         <CommentLIkeButton comment={comment} />
         <CommentReplyButton
           className="sm:gap-x-1"
