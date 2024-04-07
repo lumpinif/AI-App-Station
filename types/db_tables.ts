@@ -63,6 +63,5 @@ export type CommentActionsProp = {
   repliesCount: number
   isReplied: boolean
   likes_count: Comment["likes_count"]
-  dislikes_count: Comment["dislikes_count"]
   views_count: Comment["views_count"]
 }
