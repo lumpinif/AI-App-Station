@@ -3,6 +3,8 @@ import { Loader2, MessageCircle } from "lucide-react"
 
 import { CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import useUser from "@/hooks/react-hooks/use-user"
+import useAccountModal from "@/hooks/use-account-modal-store"
 
 type CommentReplyButtonProps = Pick<
   CommentActionsProp,
@@ -21,13 +23,23 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   setisShowReplies,
   isFetching,
 }) => {
+  const { data: profile } = useUser()
+  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const handleClick = () => {
+    if (!profile?.user_id) {
+      OpenModal()
+      return
+    }
+    toggleReplying()
+    return
+  }
   return (
     <>
       <div className={cn("flex items-center", className)}>
         <span className="group rounded-full p-2 hover:bg-blue-500/10">
-          <div onClick={toggleReplying}>
+          <div onClick={handleClick}>
             <MessageCircle
-              className="stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-blue-500 "
+              className="cursor-pointer stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-blue-500 "
               size={20}
             />
           </div>
@@ -39,7 +51,7 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
           <div
             onClick={() => setisShowReplies(!isShowReplies)}
             className={cn(
-              "mt-1 w-fit cursor-pointer text-xs text-muted-foreground hover:text-primary",
+              "mt-1 w-fit cursor-pointer select-none text-xs text-muted-foreground hover:text-primary",
               isShowReplies ? "text-primary" : ""
             )}
           >

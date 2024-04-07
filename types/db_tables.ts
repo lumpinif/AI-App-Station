@@ -8,6 +8,7 @@ export type Profile = Database["public"]["Tables"]["profiles"]["Row"]
 export type Bookmark = Database["public"]["Tables"]["bookmarks"]["Row"]
 export type Comment = Database["public"]["Tables"]["app_comments"]["Row"]
 export type App = Database["public"]["Tables"]["apps"]["Row"]
+export type Comment_likes = Database["public"]["Tables"]["comment_likes"]["Row"]
 
 // About the Users
 export type UserCollections =
@@ -49,6 +50,7 @@ export type PostCardProps = Pick<
 
 export type CommentWithProfile = Comment & {
   profiles: Profile
+  comment_likes: Comment_likes[]
 }
 
 export type CommentActionsProp = {
@@ -61,5 +63,6 @@ export type CommentActionsProp = {
   repliesCount: number
   isReplied: boolean
   likes_count: Comment["likes_count"]
+  dislikes_count: Comment["dislikes_count"]
   views_count: Comment["views_count"]
 }

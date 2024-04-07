@@ -1,13 +1,16 @@
 "use server"
 
+import { error } from "console"
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
-import { z } from "zod"
 
-import { App, AppDetails, Comment, CommentWithProfile } from "@/types/db_tables"
-import { titleToSlug } from "@/lib/utils"
-
-import { Categories } from "./../../types/db_tables"
+import {
+  App,
+  AppDetails,
+  Comment,
+  CommentWithProfile,
+  Profile,
+} from "@/types/db_tables"
 
 const getErrorMessage = (error: unknown) => {
   let message: string
@@ -289,7 +292,7 @@ export async function getInitialComments(app_id: App["app_id"]) {
 
   let query = supabase
     .from("app_comments")
-    .select("*, profiles(*)")
+    .select("*, profiles(*),comment_likes(*)")
     .eq("app_id", app_id)
     .is("parent_id", null)
     .order("created_at", {
@@ -303,13 +306,13 @@ export async function getInitialComments(app_id: App["app_id"]) {
   }
   return { comments, error }
 }
-
+// TODO: Refactor OR remove it is Almost Identical to the getInitialComments
 export async function getReplies(comment_id: Comment["comment_id"]) {
   const supabase = await createSupabaseServerClient()
 
   let query = supabase
     .from("app_comments")
-    .select("*, profiles(*)")
+    .select("*, profiles(*),comment_likes(*)")
     .eq("parent_id", comment_id)
     .order("created_at", {
       ascending: false,
@@ -458,31 +461,73 @@ export async function DeleteComment(
   return { error }
 }
 
-export async function addLikeToComment(
+export async function removeLike(
+  app_id: App["app_id"],
   comment_id: Comment["comment_id"],
-  likes_count: Comment["likes_count"]
+  user_id: Profile["user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
+  const slug = await getSlugFromAppId(app_id)
+  const { error: removeLikeError } = await supabase
+    .from("comment_likes")
+    .delete()
+    .match({ comment_id: comment_id, user_id: user_id })
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  revalidatePath(`/ai-apps/${slug?.app_slug}`)
 
-  if (!user) {
+  if (removeLikeError)
+    return { removeLikeError: getErrorMessage(removeLikeError) }
+
+  return { removeLikeError }
+}
+
+export async function addLike(
+  app_id: App["app_id"],
+  comment_id: Comment["comment_id"],
+  user_id: Profile["user_id"]
+) {
+  const supabase = await createSupabaseServerClient()
+  const slug = await getSlugFromAppId(app_id)
+
+  // checking if user liked this comment before
+  const { data: existingLike, error: existingLikeError } = await supabase
+    .from("comment_likes")
+    .select("*")
+    .match({ comment_id, user_id })
+
+  if (existingLikeError)
     return {
-      error: "You need to login to delete the comment.",
+      existingLikeError: getErrorMessage(existingLikeError),
     }
+
+  // If a like already exists, return an error
+  if (existingLike.length > 0) {
+    return { existingLikeError: "You have already liked this comment." }
   }
 
-  const { data: new_likes_count, error: addLikesError } = await supabase
+  // If no existing like, add a new one
+  const { error: addLikeError } = await supabase.from("comment_likes").insert({
+    comment_id: comment_id,
+    user_id: user_id,
+  })
+
+  revalidatePath(`/ai-apps/${slug?.app_slug}`)
+
+  if (addLikeError) return { addLikeError: getErrorMessage(addLikeError) }
+
+  return { addLikeError }
+}
+
+export async function getLikesCount(comment_id: string) {
+  const supabase = await createSupabaseServerClient()
+  const { data: updatedLikesCount, error: likesCountError } = await supabase
     .from("app_comments")
-    .update({ likes_count: likes_count + 1 })
-    .eq("comment_id", comment_id)
     .select("likes_count")
+    .eq("comment_id", comment_id)
+    .single()
 
-  if (addLikesError) {
-    return { error: getErrorMessage(addLikesError) }
-  }
+  if (likesCountError)
+    return { likesCountError: getErrorMessage(likesCountError) }
 
-  return { likes_count: new_likes_count }
+  return { updatedLikesCount, likesCountError }
 }

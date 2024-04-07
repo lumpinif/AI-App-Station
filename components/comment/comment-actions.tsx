@@ -5,7 +5,7 @@ import React from "react"
 import { CommentActionsProp } from "@/types/db_tables"
 
 import CommentEditForm from "./comment-edit-form"
-import { CommentLikeButton } from "./comment-like-button"
+import { CommentLIkeButton } from "./comment-like-button"
 import { CommentReplyButton } from "./comment-reply-button"
 import CommentReplyForm from "./comment-reply-form"
 
@@ -36,11 +36,14 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
   return (
     <div className="flex w-full flex-col">
       <div className="flex items-center gap-x-2 md:gap-x-4">
-        <CommentLikeButton
+        {/* <CommentLikeButton
           className="sm:gap-x-1"
           comment_id={comment.comment_id}
           likes_count={comment.likes_count}
-        />
+        /> */}
+        {/* <CommentLikeDislikeButton comment={comment} />
+        <CommentLikeDislikeButton comment={comment} /> */}
+        <CommentLIkeButton comment={comment} />
         <CommentReplyButton
           className="sm:gap-x-1"
           repliesCount={repliesCount}

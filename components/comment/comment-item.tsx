@@ -79,19 +79,3 @@ export const CommentItems: React.FC<CommentItemsProps> = ({
     </div>
   )
 }
-
-{
-  /* {isReplied && isShowReplies && (
-      <>
-        {depth === 0 ? (
-          <>
-            <span className="absolute -bottom-1 left-1/2 right-1/2 h-full w-0.5 translate-x-[0.5px] border-l" />
-            <span className="absolute -bottom-1 right-0 h-0.5 w-1/2 translate-x-[0.5px] border-b" />
-            <span className="absolute -bottom-6 right-0 h-1/6 w-0.5 translate-x-[0.5px] border-r" />
-          </>
-        ) : (
-          <span className="absolute left-1/2 right-1/2 top-11 h-[calc(100%-1rem)] w-0.5 translate-x-[0.5px] border-l" />
-        )}
-      </>
-    )} */
-}

@@ -21,7 +21,7 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
           <AvatarImage
             src={comment.profiles.avatar_url as string}
             alt="Avatar"
-            className="animate-fade rounded-full"
+            className="animate-fade select-none rounded-full"
           />
           <AvatarFallback>
             <span className="flex h-full w-full items-center justify-center bg-muted">

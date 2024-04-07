@@ -1,3 +1,5 @@
+import { removeLike } from "@/server/data/supabase"
+
 export { SubmitApp } from "./supabase"
 export { GetAppsByUserId } from "./supabase"
 export { UpdateAppByTitle } from "./supabase"
@@ -13,4 +15,6 @@ export { getReplies } from "./supabase"
 export { AddComment } from "./supabase"
 export { UpdateComment } from "./supabase"
 export { DeleteComment } from "./supabase"
-export { addLikeToComment } from "./supabase"
+export { addLike } from "./supabase"
+export { removeLike } from "./supabase"
+export { getLikesCount } from "./supabase"
