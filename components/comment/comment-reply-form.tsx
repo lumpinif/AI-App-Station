@@ -132,7 +132,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
                         emptyIcon={<Star className=" fill-muted stroke-0" />}
                       />
                       <span className="text-sm font-medium text-muted-foreground dark:text-muted">
-                        {field.value || 5} stars
+                        giving {field.value || 5} stars
                       </span>
                     </div>
                   </FormControl>
