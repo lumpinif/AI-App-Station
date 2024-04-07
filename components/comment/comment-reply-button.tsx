@@ -51,7 +51,7 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
           <div
             onClick={() => setisShowReplies(!isShowReplies)}
             className={cn(
-              "mt-1 w-fit cursor-pointer select-none text-xs text-muted-foreground hover:text-primary",
+              "w-fit cursor-pointer select-none text-xs text-muted-foreground hover:text-primary",
               isShowReplies ? "text-primary" : ""
             )}
           >
