@@ -38,7 +38,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
       {isLink ? (
         <Link
           className={cn(
-            "flex flex-none items-center justify-center overflow-hidden rounded-xl p-2 shadow-sm transition-all duration-200 ease-out hover:shadow-md dark:bg-primary dark:hover:shadow-outline",
+            "flex flex-none items-center justify-center overflow-hidden rounded-xl p-2 shadow-sm transition-all duration-200 ease-out hover:shadow-lg dark:bg-primary dark:hover:shadow-outline",
             size ? `h-${size} w-${size}` : "h-14 w-14",
             className
           )}

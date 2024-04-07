@@ -61,6 +61,7 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
         <div className="flex items-center gap-x-2 pt-1">
           <div className="flex flex-col space-y-2">
             <Rating
+              readOnly
               name="read-only"
               size="small"
               value={4.5}
