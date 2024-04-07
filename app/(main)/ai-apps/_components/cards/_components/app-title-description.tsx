@@ -14,6 +14,7 @@ type AppTitleWithDescriptionProps = {
   descriptionFont?: "bold" | "semi-bold" | "medium" | "regular" | "light"
   isTruncate?: boolean
   isLink?: boolean
+  titleClassname?: string
 }
 
 export const AppTitleWithDescription: React.FC<
@@ -24,6 +25,7 @@ export const AppTitleWithDescription: React.FC<
   description,
   className,
   titleSize,
+  titleClassname,
   titleFont,
   descriptionSize,
   descriptionFont,
@@ -36,7 +38,8 @@ export const AppTitleWithDescription: React.FC<
         "text-nowrap",
         isTruncate ? "truncate" : "",
         titleSize ? `text-${titleSize}` : "",
-        titleFont ? `font-${titleFont}` : ""
+        titleFont ? `font-${titleFont}` : "",
+        titleClassname
       )}
     >
       {app_title}

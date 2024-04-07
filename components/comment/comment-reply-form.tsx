@@ -100,6 +100,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
     }
 
     if (error) {
+      setLoading(false)
       toast.error(`${error} - Please try again later 🥲`)
     }
   }

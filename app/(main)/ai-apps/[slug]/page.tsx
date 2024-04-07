@@ -24,9 +24,9 @@ export default async function AppPagePage({
   return (
     <>
       <main className=" p-1">
-        <div className="flex flex-col items-start">
-          <div className="flex w-full items-center gap-x-2 md:gap-x-6">
-            <div className="flex-none  md:max-w-48 md:p-2 lg:p-4">
+        <div className="flex flex-col items-start space-y-6 md:space-y-12">
+          <div className="flex w-full items-center max-md:space-x-8 max-sm:space-x-4 md:flex-row-reverse">
+            <div className="max-w-32 flex-none md:max-w-48">
               <AppIcon
                 {...app}
                 size={"full"}
@@ -34,9 +34,12 @@ export default async function AppPagePage({
                 externalLink={app.app_url!}
               />
             </div>
-            <AppDetailInfo data={app} />
+            <AppDetailInfo
+              data={app}
+              className="flex flex-1 flex-col sm:space-y-2 md:space-y-4"
+            />
           </div>
-          <div className="flex flex-col  lg:flex-row lg:space-x-2">
+          <div className="flex flex-col lg:flex-row lg:space-x-2">
             <div className="flex flex-1 flex-col space-y-6 ">
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />

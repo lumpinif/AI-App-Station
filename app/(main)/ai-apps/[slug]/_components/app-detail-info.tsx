@@ -1,7 +1,9 @@
 import Link from "next/link"
+import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
 
 import { AppDetails } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 import { AppCommentsBadge } from "../../_components/cards/_components/app-comments-badge"
@@ -9,17 +11,22 @@ import { AppTitleWithDescription } from "../../_components/cards/_components/app
 
 type AppDetailInfoProps = {
   data: AppDetails
+  className?: string
 }
 
-export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({ data: app }) => {
+export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
+  data: app,
+  className,
+}) => {
   return (
     <>
-      <div className="flex flex-1 flex-col gap-y-4">
+      <div className={cn("", className)}>
         <div className="flex flex-col gap-y-2">
           <AppTitleWithDescription
             {...app}
             className="tracking-tight sm:tracking-wide sm:[&>*:nth-child(1)]:hover:no-underline"
-            titleSize="4xl"
+            titleSize="3xl"
+            titleClassname="md:text-4xl xl:text-5xl"
             titleFont="bold"
             descriptionSize="base"
             isTruncate={false}
@@ -52,13 +59,19 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({ data: app }) => {
           <span className="text-muted-foreground">{app.pricing}</span>
         </div>
         <div className="flex items-center gap-x-2 pt-1">
-          <div className="flex items-center">
-            {Array.from({ length: 5 }, (_, index) => (
-              <Star key={index} className="stroke-1" />
-            ))}
+          <div className="flex flex-col space-y-2">
+            <Rating
+              name="read-only"
+              size="small"
+              value={4.5}
+              precision={0.5}
+              emptyIcon={<Star className="fill-muted stroke-0" size={18} />}
+            />
+            <div className="flex items-center space-x-2">
+              <AppCommentsBadge />
+              <div className="text-nowrap text-xs">4.7 • 161 Ratings</div>
+            </div>
           </div>
-          <div className="">4.7 • 161 Ratings</div>
-          <AppCommentsBadge />
         </div>
         <span className="flex items-center gap-x-1 text-sm ">
           <div className="hover:nav-link text-blue-600">
