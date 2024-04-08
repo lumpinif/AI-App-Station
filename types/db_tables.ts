@@ -51,6 +51,7 @@ export type PostCardProps = Pick<
 export type CommentWithProfile = Comment & {
   profiles: Profile
   comment_likes: Comment_likes[]
+  user_has_liked_comment?: boolean
 }
 
 export type CommentActionsProp = {

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { getAppBySlug } from "@/server/data"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
-import AppDetailCommentList from "./_components/app-detail-comment-list"
+import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
@@ -16,6 +16,10 @@ export default async function AppPagePage({
 }) {
   // TODO: ERROR HANDLING
   const { app, ratingData, error } = await getAppBySlug(params.slug)
+
+  if (error) {
+    console.error(error)
+  }
 
   if (!app) {
     notFound()
@@ -44,7 +48,7 @@ export default async function AppPagePage({
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />
               <AppDetailReviews {...ratingData} />
-              <AppDetailCommentList app_id={app.app_id} />
+              <AppDetailCommentSection app_id={app.app_id} />
             </div>
             <div className="mt-6 lg:mt-0">
               <AppDetailSubInfo

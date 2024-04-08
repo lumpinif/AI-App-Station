@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import { CommentActionsProp } from "@/types/db_tables"
+import { CommentActionsProp, CommentWithProfile } from "@/types/db_tables"
 
 import CommentEditForm from "./comment-edit-form"
 import { CommentLIkeButton } from "./comment-like-button"
@@ -20,6 +20,7 @@ type CommentActionsProps = Pick<
   | "setIsEditing"
 > & {
   isFetching: boolean
+  setOptimisitcComment: (newComment: CommentWithProfile) => void
 }
 
 export const CommentActions: React.FC<CommentActionsProps> = ({
@@ -31,12 +32,17 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
   repliesCount,
   isReplied,
   isFetching,
+  setOptimisitcComment,
 }) => {
   const [isReplying, setReplying] = React.useState<boolean>(false)
+
   return (
     <div className="flex w-full flex-col">
-      <div className="flex items-center gap-x-1">
-        <CommentLIkeButton comment={comment} />
+      <div className="flex items-center gap-x-4">
+        <CommentLIkeButton
+          comment={comment}
+          setOptimisticComment={setOptimisitcComment}
+        />
         <CommentReplyButton
           className="sm:gap-x-1"
           repliesCount={repliesCount}

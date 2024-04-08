@@ -1,5 +1,5 @@
 import React from "react"
-import { Loader2, MessageCircle } from "lucide-react"
+import { Ellipsis, Loader, Loader2, MessageCircle } from "lucide-react"
 
 import { CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -35,30 +35,30 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   }
   return (
     <>
-      <div className={cn("flex items-center", className)}>
-        <span className="group rounded-full p-2 hover:bg-blue-500/10">
+      <div className={cn("flex items-center space-x-1", className)}>
+        <span className="group rounded-full">
           <div onClick={handleClick}>
             <MessageCircle
               className="cursor-pointer stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-blue-500 "
-              size={20}
+              size={18}
             />
           </div>
         </span>
         {isFetching && (
-          <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+          <Ellipsis className="h-4 w-4 animate-pulse text-muted-foreground" />
         )}
         {isReplied && (
           <div
             onClick={() => setisShowReplies(!isShowReplies)}
             className={cn(
-              "w-fit cursor-pointer select-none text-xs text-muted-foreground hover:text-primary",
+              "w-fit cursor-pointer select-none text-sm text-muted-foreground hover:text-primary",
               isShowReplies ? "text-primary" : ""
             )}
           >
             {isShowReplies ? (
               <span>Hide {repliesCount} replies</span>
             ) : (
-              <span>{repliesCount} replies</span>
+              <span className="hover:underline">{repliesCount}</span>
             )}
           </div>
         )}

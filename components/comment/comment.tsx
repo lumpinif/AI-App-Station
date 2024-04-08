@@ -70,15 +70,30 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                         Updated {moment(comment.updated_at).fromNow()}
                         {moment().diff(moment(comment.updated_at), "days") <
                           1 && (
-                          <span className="absolute -right-2 top-0 h-1 w-1 rounded-full bg-green-600 md:-right-3 md:h-2 md:w-2" />
+                          <span className="absolute -right-2 top-1 h-1 w-1 rounded-full bg-green-600 " />
                         )}
                       </span>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-x-2">
-                      <span className="text-muted-foreground/60">
-                        {moment(comment.created_at).fromNow()}
-                      </span>
+                    <div>
+                      {moment().diff(
+                        moment(comment.created_at),
+                        "minute",
+                        true
+                      ) < 30 ? (
+                        <div className="flex items-center gap-x-2">
+                          <span className="relative text-muted-foreground/60">
+                            {moment(comment.created_at).fromNow()}
+                            <span className="absolute -right-2 top-1 h-1 w-1 animate-pulse rounded-full bg-green-600" />
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-x-2">
+                          <span className="relative text-muted-foreground/60">
+                            {moment(comment.created_at).fromNow()}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
