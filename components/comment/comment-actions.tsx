@@ -3,11 +3,13 @@
 import React from "react"
 
 import { CommentActionsProp, CommentWithProfile } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 
 import CommentEditForm from "./comment-edit-form"
 import { CommentLIkeButton } from "./comment-like-button"
 import { CommentReplyButton } from "./comment-reply-button"
 import CommentReplyForm from "./comment-reply-form"
+import { CommentShowReplies } from "./comment-show-replies"
 
 type CommentActionsProps = Pick<
   CommentActionsProp,
@@ -48,11 +50,18 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
           repliesCount={repliesCount}
           isReplied={isReplied}
           isShowReplies={isShowReplies}
-          setisShowReplies={() => setisShowReplies(!isShowReplies)}
           toggleReplying={() => setReplying(!isReplying)}
           isFetching={isFetching}
         />
       </div>
+      {isReplied && (
+        <CommentShowReplies
+          className="my-4"
+          setisShowReplies={() => setisShowReplies(!isShowReplies)}
+          isShowReplies={isShowReplies}
+          repliesCount={repliesCount}
+        />
+      )}
       {isReplying && (
         <CommentReplyForm
           parent_name={

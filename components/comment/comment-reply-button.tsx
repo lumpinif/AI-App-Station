@@ -1,5 +1,5 @@
 import React from "react"
-import { Ellipsis, Loader, Loader2, MessageCircle } from "lucide-react"
+import { Ellipsis, MessageCircle } from "lucide-react"
 
 import { CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -8,7 +8,7 @@ import useAccountModal from "@/hooks/use-account-modal-store"
 
 type CommentReplyButtonProps = Pick<
   CommentActionsProp,
-  "repliesCount" | "isReplied" | "isShowReplies" | "setisShowReplies"
+  "repliesCount" | "isReplied" | "isShowReplies"
 > & {
   className?: string
   toggleReplying: () => void
@@ -20,7 +20,6 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   isReplied,
   isShowReplies,
   toggleReplying,
-  setisShowReplies,
   isFetching,
 }) => {
   const { data: profile } = useUser()
@@ -49,19 +48,12 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
         )}
         {isReplied && (
           <div
-            onClick={() => setisShowReplies(!isShowReplies)}
             className={cn(
               "w-fit cursor-pointer select-none text-sm text-muted-foreground hover:text-primary",
               isShowReplies ? "text-primary" : ""
             )}
           >
-            {isShowReplies ? (
-              <span className="text-muted-foreground underline underline-offset-4">
-                Hide {repliesCount} replies
-              </span>
-            ) : (
-              <span className="hover:underline">{repliesCount}</span>
-            )}
+            <span className="text-muted-foreground">{repliesCount}</span>
           </div>
         )}
       </div>

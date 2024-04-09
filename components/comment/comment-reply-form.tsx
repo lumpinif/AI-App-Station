@@ -114,7 +114,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn("mt-4 space-y-4", className)}
+        className={cn("space-y-4", className)}
       >
         {withRating && (
           <>
