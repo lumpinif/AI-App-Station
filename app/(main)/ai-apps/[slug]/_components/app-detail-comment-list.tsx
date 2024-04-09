@@ -1,6 +1,8 @@
 "use client"
 
-import { useOptimistic } from "react"
+import { useEffect, useOptimistic } from "react"
+import { useRouter } from "next/navigation"
+import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 
 import { CommentWithProfile } from "@/types/db_tables"
 import { Comment } from "@/components/comment/comment"
@@ -26,6 +28,33 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
     newOptimisticComment[index] = newComment
     return newOptimisticComment
   })
+
+  const router = useRouter()
+  const supabase = createSupabaseBrowserClient()
+
+  //Real-time subscribtion to initial comments
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime initial comments")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "app_comments",
+        },
+        (payload) => {
+          router.refresh()
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [router, supabase])
+
   return (
     <>
       {optimisticComments.map((comment) => (
