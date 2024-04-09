@@ -42,7 +42,7 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
         {
           event: "*",
           schema: "public",
-          table: "app_comments",
+          table: "app_comments, comment_likes",
         },
         (payload) => {
           router.refresh()
