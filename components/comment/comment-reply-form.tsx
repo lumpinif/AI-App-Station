@@ -160,14 +160,13 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
                   placeholder="Add a comment here ..."
                   {...field}
                   ref={textAreaRef}
-                  defaultValue={parent_name ? `@${parent_name}  ` : ""}
+                  // defaultValue={parent_name ? `@${parent_name}  ` : ""}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
         <div className="flex gap-x-2">
           <LoadingButton loading={loading} type="submit">
             {withRating ? "Submit" : "Reply"}

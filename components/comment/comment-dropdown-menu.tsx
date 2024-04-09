@@ -1,6 +1,13 @@
 "use client"
 
-import { Delete, EllipsisVertical, Flag, Pencil, Share2 } from "lucide-react"
+import {
+  Delete,
+  Ellipsis,
+  EllipsisVertical,
+  Flag,
+  Pencil,
+  Share2,
+} from "lucide-react"
 
 import { CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -64,9 +71,9 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
           <DropdownMenu>
             <DropdownMenuTrigger
               asChild
-              className="ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="text-muted-foreground/70 ring-offset-background hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
             >
-              <EllipsisVertical size={16} />
+              <Ellipsis size={16} />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem

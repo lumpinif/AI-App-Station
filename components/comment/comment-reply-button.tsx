@@ -56,7 +56,9 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
             )}
           >
             {isShowReplies ? (
-              <span>Hide {repliesCount} replies</span>
+              <span className="text-muted-foreground underline underline-offset-4">
+                Hide {repliesCount} replies
+              </span>
             ) : (
               <span className="hover:underline">{repliesCount}</span>
             )}

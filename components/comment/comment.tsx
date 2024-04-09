@@ -47,14 +47,14 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
               />
             )}
             <div className="flex flex-col space-y-3">
-              <div className="flex-col items-center md:flex md:items-start">
-                <div className="flex items-center gap-x-2">
-                  <h4 className="font-bold">
-                    {comment.profiles.display_name
-                      ? comment.profiles.display_name
-                      : `user_${comment.profiles.user_id.slice(-5)}`}
-                  </h4>
-                  <span className="text-xs text-muted-foreground md:text-sm">
+              <div className="flex max-w-full items-center space-x-2">
+                <h4 className="flex-none font-semibold">
+                  {comment.profiles.display_name
+                    ? comment.profiles.display_name
+                    : `user_${comment.profiles.user_id.slice(-5)}`}
+                </h4>
+                <div className="min-w-0 max-w-36 overflow-hidden text-ellipsis md:max-w-60">
+                  <span className="whitespace-nowrap text-xs text-muted-foreground md:text-sm">
                     <Link href={""} className="hover:underline">
                       @
                       {comment.profiles.display_name
@@ -63,15 +63,15 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                     </Link>
                   </span>
                 </div>
-                <div className="flex items-center gap-x-2 text-xs md:text-sm">
-                  {comment.updated_at ? (
+                <div className="flex flex-none items-center space-x-2 text-nowrap text-xs md:text-sm">
+                  <span className="h-1 w-1 rounded-full bg-muted-foreground " />
+                  {comment.updated_at &&
+                  moment().diff(moment(comment.updated_at), "minute", true) <
+                    30 ? (
                     <div className="flex items-center gap-x-2">
-                      <span className="relative text-muted-foreground">
-                        Updated {moment(comment.updated_at).fromNow()}
-                        {moment().diff(moment(comment.updated_at), "days") <
-                          1 && (
-                          <span className="absolute -right-2 top-1 h-1 w-1 rounded-full bg-green-600 " />
-                        )}
+                      <span className="relative text-muted-foreground/60">
+                        Just Updated
+                        <span className="absolute -right-2 top-1 h-1 w-1 rounded-full bg-green-600 " />
                       </span>
                     </div>
                   ) : (
@@ -90,7 +90,17 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                       ) : (
                         <div className="flex items-center gap-x-2">
                           <span className="relative text-muted-foreground/60">
-                            {moment(comment.created_at).fromNow()}
+                            {moment().diff(
+                              moment(comment.created_at),
+                              "day",
+                              true
+                            ) < 1 ? (
+                              <span>
+                                {moment(comment.created_at).fromNow()}
+                              </span>
+                            ) : (
+                              moment(comment.created_at).format("l")
+                            )}
                           </span>
                         </div>
                       )}
@@ -98,7 +108,7 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                   )}
                 </div>
               </div>
-              <div className="prose text-primary">
+              <div className="prose font-light leading-6 tracking-wide text-primary">
                 {comment.comment}
                 {/* TODO: CONSIDER MAKING EDIT FORM REPLACE COMMENT WHEN IT IS IN EDITING MODE FROM THE SERVER BY ADDIGN EDITING STATE TO URL */}
                 {/* <CommentEditForm app_id={comment.app_id} comment={comment} /> */}

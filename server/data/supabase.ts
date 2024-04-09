@@ -307,26 +307,6 @@ export async function getInitialComments(app_id: App["app_id"]) {
   return { comments, error }
 }
 
-export async function getAllComments(app_id: App["app_id"]) {
-  const supabase = await createSupabaseServerClient()
-
-  let query = supabase
-    .from("app_comments")
-    .select("*, profiles(*),comment_likes(user_id)")
-    .eq("app_id", app_id)
-    // .is("parent_id", null)
-    .order("created_at", {
-      ascending: false,
-    })
-
-  let { data: allComments, error } = await query.returns<CommentWithProfile[]>()
-
-  if (error) {
-    console.error(error.message)
-  }
-  return { allComments, error }
-}
-
 // TODO: Refactor OR remove it is Almost Identical to the getInitialComments
 export async function getReplies(comment_id: Comment["comment_id"]) {
   const supabase = await createSupabaseServerClient()
