@@ -11,11 +11,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 type CommentProps = {
   comment: CommentWithProfile
+  className?: string
 }
 
-export const Comment: React.FC<CommentProps> = ({ comment }) => {
+export const Comment: React.FC<CommentProps> = ({ comment, className }) => {
   return (
-    <div className="flex gap-x-2">
+    <div className={cn("flex space-x-2 sm:space-x-4", className)}>
       <div className="relative flex-none shrink-0">
         <Avatar>
           <AvatarImage
@@ -108,7 +109,7 @@ export const Comment: React.FC<CommentProps> = ({ comment }) => {
                   )}
                 </div>
               </div>
-              <div className="prose font-light leading-6 tracking-wide text-primary">
+              <div className="prose text-start font-light leading-6 tracking-wide text-primary">
                 {comment.comment}
                 {/* TODO: CONSIDER MAKING EDIT FORM REPLACE COMMENT WHEN IT IS IN EDITING MODE FROM THE SERVER BY ADDIGN EDITING STATE TO URL */}
                 {/* <CommentEditForm app_id={comment.app_id} comment={comment} /> */}

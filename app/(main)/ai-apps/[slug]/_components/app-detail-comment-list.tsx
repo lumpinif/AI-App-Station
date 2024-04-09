@@ -11,9 +11,12 @@ import { CommentItems } from "@/components/comment/comment-item"
 
 type CommentListProps = {
   commentsList: CommentWithProfile[]
+} & {
+  className?: string
 }
 
 export const AppDetailCommentList: React.FC<CommentListProps> = ({
+  className,
   commentsList,
 }) => {
   const [optimisticComments, setOptimisticComment] = useOptimistic<
@@ -67,6 +70,7 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
     <>
       {optimisticComments.map((comment) => (
         <CommentItems
+          className={className}
           key={comment.comment_id}
           comment={comment}
           setOptimisitcComment={setOptimisticComment}

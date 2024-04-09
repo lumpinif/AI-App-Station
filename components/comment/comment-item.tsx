@@ -15,12 +15,14 @@ import { CommentDropDownMenu } from "./comment-dropdown-menu"
 type CommentItemsProps = {
   comment: CommentWithProfile
 } & {
+  className?: string
   depth?: number
   children: React.ReactNode
   setOptimisitcComment: (newComment: CommentWithProfile) => void
 }
 
 export const CommentItems: React.FC<CommentItemsProps> = ({
+  className,
   comment,
   depth = 0,
   children,
@@ -66,7 +68,7 @@ export const CommentItems: React.FC<CommentItemsProps> = ({
   }
 
   return (
-    <div className={cn("flex flex-col", depth === 1 ? "ml-10" : "")}>
+    <div className={cn("flex flex-col", depth === 1 ? "ml-10" : "", className)}>
       <div
         className="relative flex space-x-4 rounded-lg p-4 hover:bg-muted dark:hover:bg-muted/20"
         id={comment.comment_id}

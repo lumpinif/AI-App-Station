@@ -5,42 +5,51 @@ import useMediaQuery from "@/hooks/use-media-query"
 
 import { Dialog, DialogContent } from "../ui/dialog"
 import { Drawer, DrawerClose, DrawerContent } from "../ui/drawer"
+import {
+  EnhancedDrawer,
+  EnhancedDrawerClose,
+  EnhancedDrawerContent,
+} from "./enhanced-drawer"
 
-interface ModalProps {
-  children: React.ReactNode
-  isOpen: boolean
-  title?: string
-  className?: string
-  onChange: (open: boolean) => void
+type DrawerProps = {
+  drawerHeight?: string
+  drawerContentClassName?: string
 }
+
+type DialogProps = {
+  dialogContentClassName?: string
+}
+
+type ModalProps = DrawerProps &
+  DialogProps & {
+    children: React.ReactNode
+    isOpen: boolean
+    title?: string
+    onChange: (open: boolean) => void
+  }
 
 export default function Modal({
   children,
   isOpen,
   title,
   onChange,
-  className,
+  drawerContentClassName,
+  dialogContentClassName,
+  drawerHeight,
 }: ModalProps) {
   const { isMobile } = useMediaQuery()
 
   if (isMobile) {
     return (
-      <Drawer open={isOpen} onOpenChange={onChange} shouldScaleBackground>
-        <DrawerContent className={cn("h-4/5 outline-none", className)}>
-          <div className="sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium">
-            {title}
-            <DrawerClose
-              asChild
-              className="absolute right-0 top-1/2 -translate-y-1/2 text-lg"
-            >
-              <button className="mr-4 w-min text-blue-500">Done</button>
-            </DrawerClose>
-          </div>
-          <div className="flex-1 overflow-y-auto rounded-t-[10px]">
-            {children}
-          </div>
-        </DrawerContent>
-      </Drawer>
+      <EnhancedDrawer isOpen={isOpen} onOpenChange={onChange}>
+        <EnhancedDrawerContent
+          className={drawerContentClassName}
+          drawerHeight={drawerHeight}
+        >
+          <EnhancedDrawerClose title={title} />
+          {children}
+        </EnhancedDrawerContent>
+      </EnhancedDrawer>
     )
   }
 
@@ -49,7 +58,7 @@ export default function Modal({
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={(e) => e.preventDefault()}
-        className="shadow-outline max-w-xl rounded-2xl"
+        className={cn(dialogContentClassName)}
       >
         {children}
       </DialogContent>
