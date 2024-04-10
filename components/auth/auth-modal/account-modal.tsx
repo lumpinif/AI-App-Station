@@ -22,7 +22,7 @@ const AccountModal = ({ session }: { session: Session | null }) => {
       <Modal
         isOpen={isOpen}
         onChange={onChange}
-        drawerContentClassName="outline-none"
+        drawerContentClassName="outline-none rounded-3xl"
         drawerHeight="h-[90%]"
         dialogContentClassName="max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl rounded-2xl shadow-outline"
         title="Account"

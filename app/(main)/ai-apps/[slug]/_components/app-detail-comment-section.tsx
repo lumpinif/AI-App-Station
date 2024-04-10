@@ -2,16 +2,11 @@ import { getUserSession } from "@/server/auth"
 import { getInitialComments } from "@/server/data"
 
 import { CommentWithProfile } from "@/types/db_tables"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
 import { Comment } from "@/components/comment/comment"
 import { CommentForm } from "@/components/comment/comment-form"
 import {
   EnhancedDrawer,
+  EnhancedDrawerClose,
   EnhancedDrawerContent,
   EnhancedDrawerTrigger,
 } from "@/components/shared/enhanced-drawer"
@@ -57,8 +52,8 @@ const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
               </span>
             </div>
           </EnhancedDrawerTrigger>
-          <EnhancedDrawerContent className="h-3/4 max-h-[calc(100vh-2rem)] ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
-            <DrawerClose title="Ratings & Reviews" />
+          <EnhancedDrawerContent className="h-3/5 max-h-[calc(100vh-2rem)] rounded-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
+            <EnhancedDrawerClose title="Ratings & Reviews" />
             <AppDetailCommentList
               commentsList={commentsList}
               className="mb-6 p-4"

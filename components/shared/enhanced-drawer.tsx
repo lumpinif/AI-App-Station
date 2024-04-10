@@ -15,6 +15,7 @@ type DrawerProps = {
   onOpenChange?: (open: boolean) => void
   snapPoints?: (string | number)[]
   shouldScaleBackground?: boolean
+  isContentOverflow?: boolean
 }
 
 type EnhancedDrawerProps = DrawerProps & {
@@ -29,7 +30,7 @@ export const EnhancedDrawer: React.FC<EnhancedDrawerProps> = ({
   shouldScaleBackground = true,
   ...props
 }) => {
-  const [snap, setSnap] = useState<number | string | null>("148px")
+  const [snap, setSnap] = useState<number | string | null>("500px")
 
   return (
     <Drawer
@@ -62,11 +63,18 @@ export const EnhancedDrawerContent: React.FC<EnhancedDrawerProps> = ({
   children,
   className,
   drawerHeight,
+  isContentOverflow = true,
   ...props
 }) => {
   return (
     <DrawerContent className={cn(className, drawerHeight)} {...props}>
-      <div className="flex-1 overflow-y-auto rounded-t-[10px]">{children}</div>
+      {isContentOverflow ? (
+        <>
+          <div className="flex-1 overflow-y-auto">{children}</div>
+        </>
+      ) : (
+        <div className="flex-1">{children}</div>
+      )}
     </DrawerContent>
   )
 }
@@ -79,10 +87,14 @@ export const EnhancedDrawerClose: React.FC<EnhancedDrawerProps> = ({
 }) => {
   return (
     <div
-      className="sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium"
+      className={cn(
+        "sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium",
+        className
+      )}
       {...props}
     >
       {title}
+
       <DrawerClose
         asChild
         className="absolute right-0 top-1/2 -translate-y-1/2 text-lg"
