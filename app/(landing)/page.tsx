@@ -1,3 +1,4 @@
+import { UnderlayActionSheet } from "@/components/ui/underlay-action-sheet"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import HeroSection from "@/components/landing/HeroSection"
 
@@ -10,6 +11,7 @@ export default function LandingPage() {
       <div className="flex flex-col">
         <main className="min-h-dvh flex-1">
           <HeroSection />
+          <UnderlayActionSheet />
         </main>
       </div>
     </>
