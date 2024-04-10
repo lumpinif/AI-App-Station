@@ -33,7 +33,7 @@ export const AppTitleWithDescription: React.FC<
   isLink = true,
 }) => {
   const titleElement = (
-    <span
+    <h4
       className={cn(
         "text-nowrap",
         isTruncate ? "truncate" : "",
@@ -43,40 +43,37 @@ export const AppTitleWithDescription: React.FC<
       )}
     >
       {app_title}
-    </span>
+    </h4>
   )
 
   const descriptionElement = (
-    <span
+    <p
       className={cn(
-        "text-muted-foreground",
+        "cursor-default text-muted-foreground",
         isTruncate ? "truncate" : "",
         descriptionSize ? `text-${descriptionSize}` : "text-sm",
         descriptionFont ? `font-${descriptionFont}` : ""
       )}
     >
       {description || "No description available."}
-    </span>
+    </p>
   )
 
   return (
     <>
       {isLink ? (
-        <Link
-          href={`/ai-apps/${app_slug || "#"}`}
-          className={cn(
-            "flex min-w-0 flex-col sm:[&>*:nth-child(1)]:hover:underline",
-            className
-          )}
-          passHref
-        >
-          {titleElement}
+        <div className={cn("flex min-w-0 flex-col", className)}>
+          <Link
+            href={`/ai-apps/${app_slug}`}
+            className="w-fit active:text-blue-600 sm:hover:text-blue-500"
+            passHref
+          >
+            {titleElement}
+          </Link>
           {descriptionElement}
-        </Link>
+        </div>
       ) : (
-        <div
-          className={cn("flex min-w-0 max-w-2xl flex-col text-wrap", className)}
-        >
+        <div className={cn("flex min-w-0 flex-col", className)}>
           {titleElement}
           {descriptionElement}
         </div>

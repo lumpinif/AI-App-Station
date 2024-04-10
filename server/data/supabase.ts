@@ -299,7 +299,9 @@ export async function getInitialComments(app_id: App["app_id"]) {
       ascending: false,
     })
 
-  let { data: comments, error } = await query.returns<CommentWithProfile[]>()
+  let { data: comments, error } = await query.returns<
+    CommentWithProfile[] | null
+  >()
 
   if (error) {
     console.error(error.message)

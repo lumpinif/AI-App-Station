@@ -50,7 +50,7 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
       <div className="grid w-full grid-cols-2 gap-x-4">
         <div className="flex w-full items-center gap-x-4">
           <div className="text-5xl font-bold dark:text-muted-foreground sm:text-6xl">
-            {rating_score.toFixed(1)}
+            {rating_score ? rating_score.toFixed(1) : 0}
           </div>
           <div className="flex flex-col items-center text-xs text-muted-foreground sm:text-sm">
             <span>out of 5</span>

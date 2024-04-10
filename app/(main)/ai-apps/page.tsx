@@ -35,6 +35,8 @@ const AIAppsPage = async () => {
   let { apps: AppsWithCategories, error: AppsWithCategoriesError } =
     await getAppsWithCategories()
 
+  //TODO: ERROR HANDLING FOR NO APP FOUND
+
   if (!allPosts || !heroPosts || !AppsWithCategories || !allApps) {
     return null
   }

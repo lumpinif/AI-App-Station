@@ -10,11 +10,13 @@ import { Icons } from "../icons/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 type CommentProps = {
-  comment: CommentWithProfile
+  comment: CommentWithProfile | null
   className?: string
 }
 
 export const Comment: React.FC<CommentProps> = ({ comment, className }) => {
+  if (!comment) return "no comment found"
+
   return (
     <div className={cn("flex space-x-2 sm:space-x-4", className)}>
       <div className="relative flex-none shrink-0">

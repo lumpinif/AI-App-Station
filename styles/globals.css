@@ -115,9 +115,9 @@
     @apply flex flex-col;
   }
 
-  p {
+  /* p {
     @apply mb-6;
-  }
+  } */
 }
 
 @layer utilities {

@@ -22,8 +22,16 @@ const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
     data: { session },
   } = await getUserSession()
   const { comments } = await getInitialComments(app_id)
+  console.log("🚀 ~ AppDetailCommentSection ~ comments:", comments)
+
   // TODO: HANDLE NO COMMENTS
-  if (!comments) return "no comments"
+  if (!comments || comments.length === 0 || comments === null)
+    return (
+      <div className="mt-4 space-y-4">
+        <CommentForm app_id={app_id} />
+        <p>Be the first one to comment ...</p>
+      </div>
+    )
 
   const commentsList =
     comments.map((comment) => ({
@@ -34,38 +42,39 @@ const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
       likes_count: comment.comment_likes.length,
     })) ?? []
 
-  return (
-    <>
-      <div className="mt-4">
-        <CommentForm app_id={app_id} />
-      </div>
-      <div className="sm:hidden">
-        <EnhancedDrawer>
-          <EnhancedDrawerTrigger asChild>
-            <div className="flex flex-col space-y-2">
-              <Comment
-                comment={commentsList[0]}
-                className="w-full cursor-pointer rounded-lg bg-muted p-4 dark:bg-muted/20"
+  if (comments && comments.length > 0)
+    return (
+      <>
+        <div className="mt-4">
+          <CommentForm app_id={app_id} />
+        </div>
+        <div className="sm:hidden">
+          <EnhancedDrawer>
+            <EnhancedDrawerTrigger asChild>
+              <div className="flex flex-col space-y-2">
+                <Comment
+                  comment={commentsList[0]}
+                  className="w-full cursor-pointer rounded-lg bg-muted p-4 dark:bg-muted/20"
+                />
+                <span className="cursor-pointer text-end text-xs text-muted-foreground/60 ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
+                  tap to check more...
+                </span>
+              </div>
+            </EnhancedDrawerTrigger>
+            <EnhancedDrawerContent className="h-3/5 max-h-[calc(100vh-2rem)] rounded-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
+              <EnhancedDrawerClose title="Ratings & Reviews" />
+              <AppDetailCommentList
+                commentsList={commentsList}
+                className="mb-6 p-4"
               />
-              <span className="cursor-pointer text-end text-xs text-muted-foreground/60 ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
-                tap to check more...
-              </span>
-            </div>
-          </EnhancedDrawerTrigger>
-          <EnhancedDrawerContent className="h-3/5 max-h-[calc(100vh-2rem)] rounded-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
-            <EnhancedDrawerClose title="Ratings & Reviews" />
-            <AppDetailCommentList
-              commentsList={commentsList}
-              className="mb-6 p-4"
-            />
-          </EnhancedDrawerContent>
-        </EnhancedDrawer>
-      </div>
-      <div className="hidden sm:block">
-        <AppDetailCommentList commentsList={commentsList} />
-      </div>
-    </>
-  )
+            </EnhancedDrawerContent>
+          </EnhancedDrawer>
+        </div>
+        <div className="hidden sm:block">
+          <AppDetailCommentList commentsList={commentsList} />
+        </div>
+      </>
+    )
 }
 
 export default AppDetailCommentSection

@@ -96,7 +96,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
           variant={"tag"}
           className={cn(
             "left-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
-            isHovered ? "" : "hidden"
+            isHovered ? "max-sm:hidden" : "hidden"
           )}
         />
         <CarouselNext
@@ -104,7 +104,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
           variant={"tag"}
           className={cn(
             "right-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
-            isHovered ? "" : "hidden"
+            isHovered ? "max-sm:hidden" : "hidden"
           )}
         />
       </Carousel>

@@ -43,7 +43,7 @@ export default async function AppPagePage({
               className="flex flex-1 flex-col sm:space-y-2 md:space-y-4"
             />
           </div>
-          <div className="flex flex-col lg:flex-row lg:space-x-2">
+          <div className="flex flex-col lg:flex-row lg:space-x-4">
             <div className="flex flex-1 flex-col space-y-6 ">
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { Suspense } from "react"
-import { ChevronDown, ChevronRight, ChevronsUpDown } from "lucide-react"
+import { ChevronDown, ChevronRight } from "lucide-react"
 import moment from "moment"
 
 import { App, Profile } from "@/types/db_tables"
@@ -34,9 +34,9 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
       onOpenChange={setIsOpen}
       className="w-full space-y-2 lg:w-56"
     >
-      <div className="flex items-center justify-between px-2">
+      <div className="flex items-center justify-between">
         <h4 className="text-base font-medium">About this App</h4>
-        <CollapsibleTrigger asChild>
+        <CollapsibleTrigger asChild className="outline-none">
           <Button
             variant="ghost"
             size="sm"
@@ -52,17 +52,20 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent>
-        <div className="flex items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted">
-          <span className="text-muted-foreground">Submitted By</span>
-
+        <div className="flex items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted-foreground/20">
+          <span className="cursor-default text-muted-foreground">
+            Submitted By
+          </span>
           <UserHoverCard
             avatar_url={avatar_url}
             user_joined={user_joined}
             user_name={submitted_by}
           />
         </div>
-        <div className="flex items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted">
-          <span className="text-muted-foreground">Last Updated</span>
+        <div className="flex items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted-foreground/20">
+          <span className="cursor-default text-muted-foreground">
+            Last Updated
+          </span>
           <span>{moment(lastUpdated).fromNow()}</span>
         </div>
       </CollapsibleContent>

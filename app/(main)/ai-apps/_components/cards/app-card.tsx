@@ -45,9 +45,7 @@ const AppCard: React.FC<AppCardWithIndex> = ({
           />
           <div className="flex flex-none flex-col items-center gap-y-2">
             <div className="flex w-full items-center justify-between gap-x-2">
-              <Suspense fallback={<div>...</div>}>
-                <AppCommentsBadge />
-              </Suspense>
+              <AppCommentsBadge />
               <MemoizedAppCardActions />
             </div>
             <AppCardLabelDescription categories={categories} />
