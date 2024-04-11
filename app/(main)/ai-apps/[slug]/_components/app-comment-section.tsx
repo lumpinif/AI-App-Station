@@ -1,8 +1,8 @@
 import { getUserSession } from "@/server/auth"
-import { getInitialComments } from "@/server/data"
+import { getAllComments } from "@/server/data/supabase"
 
 import { CommentWithProfile } from "@/types/db_tables"
-import { Comment } from "@/components/comment/comment"
+import { CommentCard } from "@/components/comment/comment-card"
 import { CommentForm } from "@/components/comment/comment-form"
 import {
   EnhancedDrawer,
@@ -11,21 +11,21 @@ import {
   EnhancedDrawerTrigger,
 } from "@/components/shared/enhanced-drawer"
 
-import AppDetailCommentList from "./app-detail-comment-list"
+import AppDetailCommentList from "./app-detail-commentList"
 
 type CommentListProps = {
   app_id: CommentWithProfile["app_id"]
 }
 
-const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
+const TestAppDetailCommentSection = async ({ app_id }: CommentListProps) => {
   const {
     data: { session },
   } = await getUserSession()
-  const { comments } = await getInitialComments(app_id)
-  console.log("🚀 ~ AppDetailCommentSection ~ comments:", comments)
+
+  const { comments: allComments, error } = await getAllComments(app_id)
 
   // TODO: HANDLE NO COMMENTS
-  if (!comments || comments.length === 0 || comments === null)
+  if (!allComments || allComments.length === 0 || allComments === null)
     return (
       <div className="mt-4 space-y-4">
         <CommentForm app_id={app_id} />
@@ -34,7 +34,7 @@ const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
     )
 
   const commentsList =
-    comments.map((comment) => ({
+    allComments.map((comment) => ({
       ...comment,
       user_has_liked_comment: !!comment.comment_likes.find(
         (like) => like.user_id === session?.user.id
@@ -42,7 +42,7 @@ const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
       likes_count: comment.comment_likes.length,
     })) ?? []
 
-  if (comments && comments.length > 0)
+  if (allComments && allComments.length > 0)
     return (
       <>
         <div className="mt-4">
@@ -52,7 +52,7 @@ const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
           <EnhancedDrawer>
             <EnhancedDrawerTrigger asChild>
               <div className="flex flex-col space-y-2">
-                <Comment
+                <CommentCard
                   comment={commentsList[0]}
                   className="w-full cursor-pointer rounded-lg bg-muted p-4 dark:bg-muted/20"
                 />
@@ -77,4 +77,4 @@ const AppDetailCommentSection = async ({ app_id }: CommentListProps) => {
     )
 }
 
-export default AppDetailCommentSection
+export default TestAppDetailCommentSection

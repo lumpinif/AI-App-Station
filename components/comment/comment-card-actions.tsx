@@ -2,44 +2,44 @@
 
 import React from "react"
 
-import { CommentActionsProp, CommentWithProfile } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import {
+  Comment,
+  CommentActionsProp,
+  CommentWithProfile,
+} from "@/types/db_tables"
 
 import CommentEditForm from "./comment-edit-form"
 import { CommentLIkeButton } from "./comment-like-button"
 import { CommentReplyButton } from "./comment-reply-button"
 import CommentReplyForm from "./comment-reply-form"
-import { CommentShowReplies } from "./comment-show-replies"
 
 type CommentActionsProps = Pick<
   CommentActionsProp,
-  | "isShowReplies"
-  | "setisShowReplies"
-  | "isEditing"
-  | "isReplied"
-  | "comment"
-  | "repliesCount"
-  | "setIsEditing"
+  "isEditing" | "isReplied" | "comment" | "setIsEditing"
 > & {
-  isFetching: boolean
+  commentsList: CommentWithProfile[]
+  parent_id: Comment["parent_id"]
+  isFetching?: boolean
   setOptimisitcComment: (newComment: CommentWithProfile) => void
 }
 
-export const CommentActions: React.FC<CommentActionsProps> = ({
+export const CommentCardActions: React.FC<CommentActionsProps> = ({
+  commentsList,
+  parent_id,
   comment,
-  isShowReplies,
-  setisShowReplies,
   isEditing,
   setIsEditing,
-  repliesCount,
-  isReplied,
   isFetching,
   setOptimisitcComment,
 }) => {
   const [isReplying, setReplying] = React.useState<boolean>(false)
 
+  const childItems = commentsList.filter((i) => i.parent_id === parent_id)
+
+  const repliesCount = childItems.length
+
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex w-full flex-col space-y-4">
       <div className="flex items-center gap-x-4">
         <CommentLIkeButton
           comment={comment}
@@ -48,20 +48,10 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
         <CommentReplyButton
           className="sm:gap-x-1"
           repliesCount={repliesCount}
-          isReplied={isReplied}
-          isShowReplies={isShowReplies}
           toggleReplying={() => setReplying(!isReplying)}
           isFetching={isFetching}
         />
       </div>
-      {isReplied && (
-        <CommentShowReplies
-          className="my-4"
-          setisShowReplies={() => setisShowReplies(!isShowReplies)}
-          isShowReplies={isShowReplies}
-          repliesCount={repliesCount}
-        />
-      )}
       {isReplying && (
         <CommentReplyForm
           parent_name={
@@ -72,7 +62,7 @@ export const CommentActions: React.FC<CommentActionsProps> = ({
           parent_id={comment.comment_id}
           className="w-full md:max-w-xl"
           toggleReplying={() => setReplying(!isReplying)}
-          setisShowReplies={setisShowReplies}
+          // setIsShowReplies={setIsShowReplies}
         />
       )}
       {isEditing && (

@@ -6,21 +6,15 @@ import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
-type CommentReplyButtonProps = Pick<
-  CommentActionsProp,
-  "repliesCount" | "isReplied" | "isShowReplies"
-> & {
+type CommentReplyButtonProps = Pick<CommentActionsProp, "repliesCount"> & {
   className?: string
   toggleReplying: () => void
-  isFetching: boolean
+  isFetching?: boolean
 }
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   className,
   repliesCount,
-  isReplied,
-  isShowReplies,
   toggleReplying,
-  isFetching,
 }) => {
   const { data: profile } = useUser()
   const OpenModal = useAccountModal((state) => state.OpenModal)
@@ -32,6 +26,9 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
     toggleReplying()
     return
   }
+
+  const isReplied = repliesCount > 0
+
   return (
     <>
       <div className={cn("flex items-center space-x-1", className)}>
@@ -43,14 +40,11 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
             />
           </div>
         </span>
-        {isFetching && (
-          <Ellipsis className="h-4 w-4 animate-pulse text-muted-foreground" />
-        )}
+
         {isReplied && (
           <div
             className={cn(
-              "w-fit cursor-pointer select-none text-sm text-muted-foreground hover:text-primary",
-              isShowReplies ? "text-primary" : ""
+              "w-fit cursor-pointer select-none text-sm text-muted-foreground hover:text-primary"
             )}
           >
             <span className="text-muted-foreground">{repliesCount}</span>

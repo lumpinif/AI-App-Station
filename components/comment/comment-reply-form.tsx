@@ -39,7 +39,7 @@ type CommentReplyFormProps = {
   className?: string
   parent_name?: string
   toggleReplying: () => void
-  setisShowReplies?: React.Dispatch<React.SetStateAction<boolean>>
+  setIsShowReplies?: React.Dispatch<React.SetStateAction<boolean>>
   withRating?: boolean
 }
 
@@ -49,7 +49,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   app_id,
   parent_id: replyToCommentId,
   parent_name,
-  setisShowReplies,
+  setIsShowReplies,
   withRating = false,
 }) => {
   const queryClient = useQueryClient()
@@ -92,8 +92,8 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
     if (comment) {
       setLoading(false)
       queryClient.invalidateQueries({ queryKey: ["replies", replyToCommentId] })
-      if (setisShowReplies) {
-        setisShowReplies(true)
+      if (setIsShowReplies) {
+        setIsShowReplies(true)
       }
       form.reset()
       toggleReplying()

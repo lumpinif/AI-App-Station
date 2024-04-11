@@ -3,11 +3,10 @@
 import { useEffect, useOptimistic } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
-import { useQueryClient } from "@tanstack/react-query"
 
-import { Comment as CommentType, CommentWithProfile } from "@/types/db_tables"
-import { Comment } from "@/components/comment/comment"
-import { CommentItems } from "@/components/comment/comment-item"
+import { CommentWithProfile } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
+import { CommentList } from "@/components/comment/comment-list"
 
 type CommentListProps = {
   commentsList: CommentWithProfile[]
@@ -35,7 +34,6 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
 
   const router = useRouter()
   const supabase = createSupabaseBrowserClient()
-  const queryClient = useQueryClient()
 
   //Real-time subscribtion to initial comments
 
@@ -50,13 +48,7 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
           table: "app_comments",
         },
         (payload) => {
-          const payloadComment = payload.new as CommentType
-          const queryKey = ["replies", payloadComment.parent_id]
-
           router.refresh()
-
-          if (payloadComment.parent_id !== null)
-            queryClient.invalidateQueries({ queryKey: queryKey })
         }
       )
       .subscribe()
@@ -64,21 +56,15 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [queryClient, router, supabase])
+  }, [router, supabase])
 
   return (
-    <>
-      {optimisticComments.map((comment) => (
-        <CommentItems
-          className={className}
-          key={comment.comment_id}
-          comment={comment}
-          setOptimisitcComment={setOptimisticComment}
-        >
-          <Comment comment={comment} />
-        </CommentItems>
-      ))}
-    </>
+    <div className={cn(className)}>
+      <CommentList
+        commentsList={optimisticComments}
+        setOptimisitcComment={setOptimisticComment}
+      />
+    </div>
   )
 }
 

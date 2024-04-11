@@ -3,20 +3,20 @@ import { cn } from "@/lib/utils"
 
 type CommentShowRepliesProps = Pick<
   CommentActionsProp,
-  "repliesCount" | "isShowReplies" | "setisShowReplies"
+  "repliesCount" | "isShowReplies" | "setIsShowReplies"
 > & {
   className?: string
 }
 
 export const CommentShowReplies: React.FC<CommentShowRepliesProps> = ({
   className,
-  setisShowReplies,
+  setIsShowReplies,
   repliesCount,
   isShowReplies,
 }) => {
   return (
     <div
-      onClick={() => setisShowReplies(!isShowReplies)}
+      onClick={() => setIsShowReplies(!isShowReplies)}
       className={cn(
         "w-fit cursor-pointer select-none text-sm text-muted-foreground hover:text-primary",
         isShowReplies ? "text-primary" : "",

@@ -58,7 +58,7 @@ export type CommentActionsProp = {
   className?: string
   comment: CommentWithProfile
   isShowReplies: boolean
-  setisShowReplies: Dispatch<SetStateAction<boolean>>
+  setIsShowReplies: Dispatch<SetStateAction<boolean>>
   isEditing: boolean
   setIsEditing: Dispatch<SetStateAction<boolean>>
   repliesCount: number
