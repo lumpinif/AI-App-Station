@@ -26,7 +26,7 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
   rating_2_count,
   rating_1_count,
 }) => {
-  const formattedRatingCount = numeral(rating_count).format("0a")
+  const formattedRatingCount = numeral(rating_count).format("0.[0]a")
 
   const rating_5_percentage = (rating_5_count / rating_count) * 100
   const rating_4_percentage = (rating_4_count / rating_count) * 100

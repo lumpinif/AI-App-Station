@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation"
 import { getAppBySlug } from "@/server/data"
 
+import { Button } from "@/components/ui/button"
+
 import { AppIcon } from "../_components/cards/_components/app-icon"
+import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
 import TestAppDetailCommentSection from "./_components/app-comment-section"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
@@ -27,21 +30,38 @@ export default async function AppPagePage({
 
   return (
     <>
-      <main className=" p-1">
+      <main className="mt-6">
         <div className="flex flex-col items-start space-y-6 md:space-y-12">
-          <div className="flex w-full items-center max-md:space-x-8 max-sm:space-x-4 md:flex-row-reverse">
-            <div className="max-w-32 flex-none md:max-w-48">
-              <AppIcon
+          <div className="flex w-full flex-col items-start space-y-6">
+            <div className="flex w-full items-start justify-between space-x-4">
+              <div className="mt-1 size-20 flex-none sm:size-28 md:size-32 lg:size-40">
+                <AppIcon
+                  {...app}
+                  size={"full"}
+                  isLink={false}
+                  externalLink={app.app_url!}
+                />
+              </div>
+              <AppTitleWithDescription
                 {...app}
-                size={"full"}
+                className="items-start tracking-tight sm:tracking-wide sm:[&>*:nth-child(1)]:hover:no-underline"
+                titleSize="3xl"
+                titleClassname="text-2xl md:text-4xl xl:text-5xl"
+                titleFont="bold"
+                descriptionSize="sm"
+                descriptionClassname="tracking tracking-normal"
+                isTruncate={false}
                 isLink={false}
-                externalLink={app.app_url!}
               />
             </div>
+
             <AppDetailInfo
               data={app}
-              className="flex flex-1 flex-col sm:space-y-2 md:space-y-4"
+              {...ratingData}
+              className="flex flex-1 flex-col sm:space-y-8 md:space-y-12"
             />
+
+            <Button className="mx-auto w-full max-w-lg">Launch</Button>
           </div>
           <div className="flex flex-col lg:flex-row lg:space-x-4">
             <div className="flex flex-1 flex-col space-y-6 ">

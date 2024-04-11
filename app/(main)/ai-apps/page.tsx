@@ -30,6 +30,7 @@ const AIAppsPage = async () => {
   let { posts: heroPosts, error: allHeroFeaturedPostsError } =
     await getAllHeroFeaturedPosts()
   let { posts: allPosts, error: allPostsError } = await getAllPosts()
+  //TODO: ERROR HANDLING FOR NO POST FOUND
   // fetch Apps
   let { apps: allApps, error: allAppsError } = await getAllApps()
   let { apps: AppsWithCategories, error: AppsWithCategoriesError } =

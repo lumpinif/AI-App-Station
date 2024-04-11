@@ -11,6 +11,7 @@ import {
   CommentWithProfile,
   Profile,
 } from "@/types/db_tables"
+import { titleToSlug } from "@/lib/utils"
 
 const getErrorMessage = (error: unknown) => {
   let message: string
@@ -87,6 +88,7 @@ export async function SubmitApp(title: App["app_title"]) {
     .insert([
       {
         app_title: title,
+        app_slug: titleToSlug(title),
         submitted_by_user_id: user.id,
         // TODO: REMOVE THIS BEFORE PRODUCTION
         // submitted_by: user.email ?? "",
@@ -276,9 +278,7 @@ export async function getAppsWithCategories() {
 
   let { data: apps, error } = await supabase
     .from("apps")
-    .select(
-      `app_id, app_title, description, app_slug, app_icon_src, categories(*)`
-    )
+    .select(`*, categories(*)`)
     .order("created_at", { ascending: false })
 
   // error handling

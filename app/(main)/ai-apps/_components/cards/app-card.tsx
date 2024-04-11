@@ -1,5 +1,4 @@
-import React, { Suspense } from "react"
-import dynamic from "next/dynamic"
+import React from "react"
 
 import { AppCardContentWithCategories } from "@/types/db_tables"
 import { Separator } from "@/components/ui/separator"
@@ -22,6 +21,7 @@ const AppCard: React.FC<AppCardWithIndex> = ({
   description,
   categories,
   app_slug,
+  comments_count,
   app_icon_src,
   index,
 }) => {
@@ -45,7 +45,10 @@ const AppCard: React.FC<AppCardWithIndex> = ({
           />
           <div className="flex flex-none flex-col items-center gap-y-2">
             <div className="flex w-full items-center justify-between gap-x-2">
-              <AppCommentsBadge />
+              <AppCommentsBadge
+                app_slug={app_slug}
+                comments_count={comments_count}
+              />
               <MemoizedAppCardActions />
             </div>
             <AppCardLabelDescription categories={categories} />

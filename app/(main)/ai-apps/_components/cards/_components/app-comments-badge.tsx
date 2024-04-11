@@ -1,13 +1,25 @@
 import Link from "next/link"
 import { MessageCircle } from "lucide-react"
+import numeral from "numeral"
 
-type AppCommentsBadgeProps = {}
+import { App } from "@/types/db_tables"
 
-export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({}) => {
+type AppCommentsBadgeProps = {
+  app_slug: App["app_slug"]
+  comments_count: number
+}
+
+export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
+  comments_count,
+  app_slug,
+}) => {
+  const commentsCount = comments_count > 0 ? comments_count : 0
+  const formattedCommentsCount = numeral(commentsCount).format("0.[0]a")
+
   return (
     <>
       <Link
-        href={"/ai-apps/chatgpt/#ratings-and-reviews"}
+        href={`/ai-apps/${app_slug}/#ratings-and-reviews`}
         className="group hover:underline"
       >
         <div className="m-0 flex items-center gap-x-1 p-0">
@@ -15,7 +27,9 @@ export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({}) => {
             className="stroke-muted-foreground stroke-1 group-hover:fill-muted dark:stroke-muted dark:group-hover:fill-muted"
             size={16}
           />
-          <span className="text-xs">10k+</span>
+          {commentsCount > 0 ? (
+            <span className="text-xs">{formattedCommentsCount}</span>
+          ) : null}
         </div>
       </Link>
     </>

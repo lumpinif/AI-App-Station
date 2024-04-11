@@ -23,11 +23,7 @@ export type Developer = Database["public"]["Tables"]["developers"]["Row"]
 export type Categories = Database["public"]["Tables"]["categories"]["Row"]
 export type Developers = Database["public"]["Tables"]["developers"]["Row"]
 
-export type AppCardContent = Pick<
-  App,
-  "app_id" | "app_title" | "description" | "app_slug" | "app_icon_src"
->
-export type AppCardContentWithCategories = AppCardContent & {
+export type AppCardContentWithCategories = App & {
   categories?: Categories[]
 }
 

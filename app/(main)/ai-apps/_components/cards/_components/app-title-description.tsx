@@ -15,6 +15,7 @@ type AppTitleWithDescriptionProps = {
   isTruncate?: boolean
   isLink?: boolean
   titleClassname?: string
+  descriptionClassname?: string
 }
 
 export const AppTitleWithDescription: React.FC<
@@ -29,6 +30,7 @@ export const AppTitleWithDescription: React.FC<
   titleFont,
   descriptionSize,
   descriptionFont,
+  descriptionClassname,
   isTruncate = true,
   isLink = true,
 }) => {
@@ -52,7 +54,8 @@ export const AppTitleWithDescription: React.FC<
         "cursor-default text-muted-foreground",
         isTruncate ? "truncate" : "",
         descriptionSize ? `text-${descriptionSize}` : "text-sm",
-        descriptionFont ? `font-${descriptionFont}` : ""
+        descriptionFont ? `font-${descriptionFont}` : "",
+        descriptionClassname
       )}
     >
       {description || "No description available."}

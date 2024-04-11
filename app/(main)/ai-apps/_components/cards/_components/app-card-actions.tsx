@@ -31,7 +31,11 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
             </Badge>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="glass-card-background border shadow-outline backdrop-blur-md dark:border-none">
+        <DropdownMenuContent
+          className="glass-card-background border backdrop-blur-md dark:border-none sm:shadow-outline"
+          sideOffset={5}
+          align="end"
+        >
           <DropdownMenuItem>
             <div className="flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm text-muted-foreground hover:text-popover-foreground">
               <span>Add to Collection</span>

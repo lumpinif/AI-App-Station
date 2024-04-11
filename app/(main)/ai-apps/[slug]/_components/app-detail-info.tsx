@@ -12,27 +12,21 @@ import { AppTitleWithDescription } from "../../_components/cards/_components/app
 type AppDetailInfoProps = {
   data: AppDetails
   className?: string
+  rating_score: number
+  rating_count: number
 }
 
 export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
   data: app,
   className,
+  rating_score,
+  rating_count,
 }) => {
   return (
     <>
-      <div className={cn("", className)}>
-        <div className="flex flex-col gap-y-2">
-          <AppTitleWithDescription
-            {...app}
-            className="tracking-tight sm:tracking-wide sm:[&>*:nth-child(1)]:hover:no-underline"
-            titleSize="3xl"
-            titleClassname="md:text-4xl xl:text-5xl"
-            titleFont="bold"
-            descriptionSize="base"
-            isTruncate={false}
-            isLink={false}
-          />
-          <span className="flex w-full gap-x-1 text-sm text-muted-foreground">
+      <div className={cn("w-full space-y-6", className)}>
+        <div className="flex w-full items-center justify-between">
+          <span className="flex space-x-1 text-sm text-muted-foreground">
             {app.developers && app.developers.length > 0 ? (
               app.developers.map((dev) => (
                 <span
@@ -56,51 +50,54 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
               </Badge>
             )}
           </span>
-          <span className="text-muted-foreground">{app.pricing}</span>
+          <span className="text-xs text-muted-foreground">{app.pricing}</span>
         </div>
-        <div className="flex items-center gap-x-2 pt-1">
-          <div className="flex flex-col space-y-2">
-            <Rating
-              readOnly
-              name="read-only"
-              size="small"
-              value={4.5}
-              precision={0.5}
-              emptyIcon={<Star className="fill-muted stroke-0" size={18} />}
-            />
-            <div className="flex items-center space-x-2">
-              <AppCommentsBadge />
-              <div className="text-nowrap text-xs">4.7 • 161 Ratings</div>
-            </div>
+        <div className="flex items-center space-x-2 overflow-x-auto">
+          <Rating
+            readOnly
+            name="read-only"
+            size="small"
+            value={4.5}
+            precision={0.5}
+            emptyIcon={<Star className="fill-muted stroke-0" size={18} />}
+          />
+          <div className="text-nowrap text-xs">
+            {rating_score} • {rating_count} Ratings
           </div>
-        </div>
-        <span className="flex items-center gap-x-1 text-sm ">
-          <div className="hover:nav-link text-blue-600">
-            <a href={app.app_url || ""}>{app.app_url}</a>
-          </div>
-          <span className="flex items-center gap-x-1 text-muted-foreground">
-            {app.categories && app.categories.length > 0 ? (
-              app.categories?.map((category, index) => (
-                <span
-                  key={category.category_id}
-                  className="flex items-center gap-x-1"
-                >
-                  <Link
-                    href={`/ai-apps/categories/${category.slug}`}
-                    className="hover:underline"
+
+          <AppCommentsBadge
+            app_slug={app.app_slug}
+            comments_count={app.comments_count}
+          />
+
+          <span className="flex items-center gap-x-1  text-sm">
+            {/* <div className="hover:nav-link text-blue-600">
+              <a href={app.app_url || ""}>{app.app_url}</a>
+            </div> */}
+            <span className="flex items-center gap-x-1 text-muted-foreground">
+              {app.categories && app.categories.length > 0 ? (
+                app.categories?.map((category, index) => (
+                  <span
+                    key={category.category_id}
+                    className="flex items-center gap-x-1"
                   >
-                    <span className="text-xs">{category.category_title}</span>
-                  </Link>
-                  {app.categories && index !== app.categories.length - 1 && (
-                    <div className="h-1 w-1 rounded-full bg-muted-foreground" />
-                  )}
-                </span>
-              ))
-            ) : (
-              <span className="text-xs">No Category</span>
-            )}
+                    <Link
+                      href={`/ai-apps/categories/${category.slug}`}
+                      className="hover:underline"
+                    >
+                      <span className="text-xs">{category.category_title}</span>
+                    </Link>
+                    {app.categories && index !== app.categories.length - 1 && (
+                      <div className="h-1 w-1 rounded-full bg-muted-foreground" />
+                    )}
+                  </span>
+                ))
+              ) : (
+                <span className="text-xs">No Category</span>
+              )}
+            </span>
           </span>
-        </span>
+        </div>
       </div>
     </>
   )
