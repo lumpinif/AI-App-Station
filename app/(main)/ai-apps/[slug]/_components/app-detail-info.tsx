@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
 import { AppCommentsBadge } from "../../_components/cards/_components/app-comments-badge"
-import { AppTitleWithDescription } from "../../_components/cards/_components/app-title-description"
 
 type AppDetailInfoProps = {
   data: AppDetails
@@ -71,9 +70,6 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
           />
 
           <span className="flex items-center gap-x-1  text-sm">
-            {/* <div className="hover:nav-link text-blue-600">
-              <a href={app.app_url || ""}>{app.app_url}</a>
-            </div> */}
             <span className="flex items-center gap-x-1 text-muted-foreground">
               {app.categories && app.categories.length > 0 ? (
                 app.categories?.map((category, index) => (

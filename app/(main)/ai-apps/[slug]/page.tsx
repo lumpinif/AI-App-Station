@@ -11,6 +11,7 @@ import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
 import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
 import { AppDetailSubInfo } from "./_components/app-detail-sub-info"
+import { AppLaunchButton } from "./_components/app-launch-button"
 
 export default async function AppPagePage({
   params,
@@ -61,7 +62,7 @@ export default async function AppPagePage({
               className="flex flex-1 flex-col sm:space-y-8 md:space-y-12"
             />
 
-            <Button className="mx-auto w-full max-w-lg">Launch</Button>
+            <AppLaunchButton app_url={app.app_url} />
           </div>
           <div className="flex flex-col lg:flex-row lg:space-x-4">
             <div className="flex flex-1 flex-col space-y-6 ">
