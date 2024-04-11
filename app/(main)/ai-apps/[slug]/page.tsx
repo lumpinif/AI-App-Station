@@ -34,8 +34,8 @@ export default async function AppPagePage({
       <main className="mt-6">
         <div className="flex flex-col items-start space-y-6 md:space-y-12">
           <div className="flex w-full flex-col items-start space-y-6">
-            <div className="flex w-full items-start justify-between space-x-4">
-              <div className="mt-1 size-20 flex-none sm:size-28 md:size-32 lg:size-40">
+            <div className="flex w-full items-start space-x-4">
+              <div className="mt-1 size-24 flex-none sm:size-32 md:size-40 lg:size-44">
                 <AppIcon
                   {...app}
                   size={"full"}

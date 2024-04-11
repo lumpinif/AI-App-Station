@@ -17,7 +17,11 @@ export const AppLaunchButton: React.FC<AppLaunchButtonProps> = ({
         className="mx-auto w-full max-w-lg font-semibold tracking-wide"
         asChild
       >
-        {isAppUrl && <a href={app_url || ""}>Launch</a>}
+        {isAppUrl && (
+          <a href={app_url || ""} target="_blank">
+            Launch
+          </a>
+        )}
       </Button>
     </>
   )
