@@ -31,7 +31,7 @@ export const CommentListFilter: React.FC<CommentListFilterProps> = ({
 }) => {
   return (
     <>
-      <div className={cn("flex w-full justify-end space-x-4", className)}>
+      <div className={cn(className)}>
         <CommentsFilter c_order={c_order} orderBy={orderBy} />
       </div>
     </>
@@ -94,7 +94,7 @@ const CommentsFilter: React.FC<CommentListFilterProps> = ({
         className="ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
       >
         <Button
-          className="flex h-8 items-center space-x-2 border dark:border-none dark:shadow-outline"
+          className="flex h-8 items-center space-x-2 rounded-full"
           variant="ghost"
           size="sm"
         >
@@ -105,9 +105,9 @@ const CommentsFilter: React.FC<CommentListFilterProps> = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        align="end"
+        align="start"
         sideOffset={10}
-        className="glass-card-background backdrop-blur-sm"
+        className="glass-card-background backdrop-blur-lg"
       >
         <DropdownMenuLabel>Filter by</DropdownMenuLabel>
         <DropdownMenuSeparator />

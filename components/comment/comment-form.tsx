@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { MessageCircleMore } from "lucide-react"
 
 import { Comment } from "@/types/db_tables"
 
@@ -20,8 +21,14 @@ export const CommentForm: React.FC<CommentFormProps> = ({ app_id }) => {
         <Button
           onClick={() => setisReplying(!isReplying)}
           disabled={isReplying}
+          variant={"ghost"}
+          className="flex items-center space-x-2 border dark:border-none dark:shadow-outline"
+          size="default"
         >
-          Leave a comment
+          <MessageCircleMore className="size-3 text-muted-foreground" />
+          <span className="select-none text-xs text-muted-foreground">
+            Leave a Comment
+          </span>
         </Button>
       )}
       {isReplying && (

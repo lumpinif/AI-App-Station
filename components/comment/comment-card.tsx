@@ -64,7 +64,10 @@ export const CommentCard: React.FC<CommentProps> = ({
                   </h4>
                   <div className="min-w-0 max-w-36 overflow-hidden text-ellipsis md:max-w-60">
                     <span className="whitespace-nowrap text-xs text-muted-foreground md:text-sm">
-                      <Link href={""} className="hover:underline">
+                      <Link
+                        href={""}
+                        className="underline-offset-2 hover:underline"
+                      >
                         @
                         {comment.profiles.display_name
                           ? comment.profiles.display_name

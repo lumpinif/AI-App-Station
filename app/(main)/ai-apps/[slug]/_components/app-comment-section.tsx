@@ -3,6 +3,7 @@ import { getAllComments } from "@/server/data"
 
 import { Comment, CommentWithProfile } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
 import { CommentCard } from "@/components/comment/comment-card"
 import { CommentForm } from "@/components/comment/comment-form"
 import { CommentListFilter } from "@/components/comment/comment-list-filter"
@@ -56,11 +57,18 @@ const AppDetailCommentSection = async ({
 
   if (allComments && allComments.length > 0)
     return (
-      <section className="flex flex-col space-y-4">
-        <div className="mt-4">
-          <CommentForm app_id={app_id} />
+      <section className="flex flex-col space-y-6 md:space-y-8">
+        <div className="flex w-full items-center space-x-4">
+          {allComments && allComments.length > 0 && (
+            <span className="font-medium tracking-wide">
+              {allComments.length} Comments
+            </span>
+          )}
+          <CommentListFilter c_order={c_order} orderBy={orderBy} />
         </div>
-        <CommentListFilter c_order={c_order} orderBy={orderBy} />
+
+        <CommentForm app_id={app_id} />
+
         <div className="sm:hidden">
           <EnhancedDrawer>
             <EnhancedDrawerTrigger asChild>
