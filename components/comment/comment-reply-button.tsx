@@ -35,18 +35,17 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
         <span className="group rounded-full">
           <div onClick={handleClick}>
             <MessageCircle
-              className="cursor-pointer stroke-current stroke-[1.5] text-muted-foreground group-hover:stroke-blue-500 "
+              className={cn(
+                "cursor-pointer stroke-current stroke-[1.5] text-muted-foreground hover:fill-blue-500 group-hover:stroke-blue-500",
+                isReplied && "fill-blue-500 stroke-blue-500"
+              )}
               size={18}
             />
           </div>
         </span>
 
         {isReplied && (
-          <div
-            className={cn(
-              "w-fit cursor-pointer select-none text-sm text-muted-foreground hover:text-primary"
-            )}
-          >
+          <div className={cn("w-fit cursor-default select-none text-sm")}>
             <span className="text-muted-foreground">{repliesCount}</span>
           </div>
         )}

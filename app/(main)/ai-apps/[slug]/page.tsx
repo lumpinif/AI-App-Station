@@ -1,11 +1,12 @@
+import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getAppBySlug } from "@/server/data"
 
-import { Button } from "@/components/ui/button"
+import { Comment } from "@/types/db_tables"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
-import TestAppDetailCommentSection from "./_components/app-comment-section"
+import AppDetailCommentSection from "./_components/app-comment-section"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
@@ -13,11 +14,25 @@ import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
 import { AppDetailSubInfo } from "./_components/app-detail-sub-info"
 import { AppLaunchButton } from "./_components/app-launch-button"
 
+export type AppPageProps = {
+  params: { slug: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
+}
+
 export default async function AppPagePage({
   params,
-}: {
-  params: { slug: string }
-}) {
+  searchParams,
+}: AppPageProps) {
+  const c_order: "asc" | "desc" =
+    searchParams?.c_order === "asc"
+      ? "asc"
+      : searchParams?.c_order === "desc"
+        ? "desc"
+        : "desc"
+
+  const orderBy: keyof Comment =
+    (searchParams?.orderBy as keyof Comment) ?? null
+
   // TODO: ERROR HANDLING
   const { app, ratingData, error } = await getAppBySlug(params.slug)
 
@@ -25,6 +40,7 @@ export default async function AppPagePage({
     console.error(error)
   }
 
+  //TODO: HANDLING APP NOT FOUND
   if (!app) {
     notFound()
   }
@@ -69,7 +85,14 @@ export default async function AppPagePage({
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />
               <AppDetailReviews {...ratingData} />
-              <TestAppDetailCommentSection app_id={app.app_id} />
+              {/* TODO: HANDLE LOADING */}
+              <Suspense fallback={<div>Loading...</div>}>
+                <AppDetailCommentSection
+                  app_id={app.app_id}
+                  c_order={c_order}
+                  orderBy={orderBy}
+                />
+              </Suspense>
             </div>
             <div className="mt-6 lg:mt-0">
               <AppDetailSubInfo

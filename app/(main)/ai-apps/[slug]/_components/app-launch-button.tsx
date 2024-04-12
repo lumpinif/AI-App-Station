@@ -9,8 +9,6 @@ export const AppLaunchButton: React.FC<AppLaunchButtonProps> = ({
   app_url,
 }) => {
   const isAppUrl = app_url !== null ? true : false
-  console.log("🚀 ~ app_url:", app_url)
-
   return (
     <>
       <Button

@@ -240,23 +240,32 @@ export async function getAppBySlug(app_slug: string) {
     .select(`*,categories(*),profiles(*),developers(*)`)
     .match({ app_slug: app_slug, is_published: true })
     .order("created_at", { ascending: false })
-    .single<AppDetails>()
+    .limit(1)
+    .returns<AppDetails[]>()
+
+  // .single<AppDetails>()
 
   // error handling
   if (error) return { app: null, error: getErrorMessage(error) }
 
-  if (!app) return { app: null, error: "App not found" }
+  if (!app || app.length === 0) {
+    console.log("App not found for app_slug:", app_slug)
+    return { app: null, error: "App not found" }
+  }
+
+  const app_id = app[0].app_id
 
   let { data: ratingData, error: ratingError } = await supabase.rpc(
     "get_app_rating_data",
-    { app_id_param: app.app_id }
+    { app_id_param: app_id }
   )
 
   if (ratingError) return { error: getErrorMessage(ratingError) }
 
-  if (!ratingData) return { ratingData: null, error: "Rating data not found" }
+  if (!ratingData || ratingData.length === 0)
+    return { ratingData: null, error: "Rating data not found" }
 
-  return { app, ratingData: ratingData[0], error }
+  return { app: app[0], ratingData: ratingData[0], error }
 }
 
 export async function getAllApps() {
@@ -287,20 +296,33 @@ export async function getAppsWithCategories() {
   return { apps, error }
 }
 
-export async function getAllComments(app_id: App["app_id"]) {
+export async function getAllComments(
+  app_id: App["app_id"],
+  c_order?: "asc" | "desc",
+  orderBy?: keyof Comment
+) {
   const supabase = await createSupabaseServerClient()
+
+  // Determine if sorting by created_at should be ascending
+  const ascendingOrder: boolean = c_order === "asc"
 
   let query = supabase
     .from("app_comments")
     .select("*, profiles(*),comment_likes(user_id)")
     .eq("app_id", app_id)
-    .order("created_at", {
-      ascending: false,
-    })
 
-  let { data: comments, error } = await query.returns<
-    CommentWithProfile[] | null
-  >()
+  // Conditional additional ordering by another field
+  if (orderBy) {
+    query = query.order(orderBy, {
+      ascending: c_order === "asc",
+    })
+  }
+
+  let { data: comments, error } = await query
+    .order("created_at", {
+      ascending: ascendingOrder || false,
+    })
+    .returns<CommentWithProfile[] | null>()
 
   if (error) {
     console.error(error.message)
@@ -308,27 +330,27 @@ export async function getAllComments(app_id: App["app_id"]) {
   return { comments, error }
 }
 
-export async function getInitialComments(app_id: App["app_id"]) {
-  const supabase = await createSupabaseServerClient()
+// export async function getInitialComments(app_id: App["app_id"]) {
+//   const supabase = await createSupabaseServerClient()
 
-  let query = supabase
-    .from("app_comments")
-    .select("*, profiles(*),comment_likes(user_id)")
-    .eq("app_id", app_id)
-    .is("parent_id", null)
-    .order("created_at", {
-      ascending: false,
-    })
+//   let query = supabase
+//     .from("app_comments")
+//     .select("*, profiles(*),comment_likes(user_id)")
+//     .eq("app_id", app_id)
+//     .is("parent_id", null)
+//     .order("created_at", {
+//       ascending: false,
+//     })
 
-  let { data: comments, error } = await query.returns<
-    CommentWithProfile[] | null
-  >()
+//   let { data: comments, error } = await query.returns<
+//     CommentWithProfile[] | null
+//   >()
 
-  if (error) {
-    console.error(error.message)
-  }
-  return { comments, error }
-}
+//   if (error) {
+//     console.error(error.message)
+//   }
+//   return { comments, error }
+// }
 
 // TODO: Refactor OR remove it is Almost Identical to the getInitialComments
 export async function getReplies(comment_id: Comment["comment_id"]) {

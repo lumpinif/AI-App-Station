@@ -67,7 +67,10 @@ export const AppTitleWithDescription: React.FC<
       {isLink ? (
         <div className={cn("flex min-w-0 flex-col", className)}>
           <Link
-            href={`/ai-apps/${app_slug}`}
+            href={{
+              pathname: `/ai-apps/${app_slug}`,
+              query: { orderBy: "likes_count" },
+            }}
             className="w-fit active:text-blue-600 sm:hover:text-blue-500"
             passHref
           >
