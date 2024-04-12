@@ -40,10 +40,15 @@ const AppDetailCommentSection = async ({
 
   if (!allComments || allComments.length === 0 || allComments === null)
     return (
-      <div className="mt-4 space-y-4">
+      <>
+        <div className="flex items-center space-x-4">
+          <span className="font-medium tracking-wide">0 Comments</span>
+          <p className="text-muted-foreground">
+            Be the first one to comment ...
+          </p>
+        </div>
         <CommentForm app_id={app_id} />
-        <p>Be the first one to comment ...</p>
-      </div>
+      </>
     )
 
   const commentsList =
