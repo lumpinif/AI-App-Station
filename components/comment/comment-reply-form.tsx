@@ -122,24 +122,28 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
               control={form.control}
               name="rating"
               render={({ field }) => (
-                <FormItem className="flex w-full items-end justify-between">
+                <FormItem>
                   <FormControl>
-                    <div className="flex items-center space-x-2">
-                      <Rating
-                        {...field}
-                        value={field.value || 4.5}
-                        onChange={(event, newValue) => field.onChange(newValue)}
-                        precision={0.5}
-                        emptyIcon={<Star className=" fill-muted stroke-0" />}
-                      />
-                      <span className="text-sm font-medium text-muted-foreground dark:text-muted">
-                        giving {field.value || 5} stars
+                    <div className="flex w-full items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Rating
+                          {...field}
+                          value={field.value || 4.5}
+                          onChange={(event, newValue) =>
+                            field.onChange(newValue)
+                          }
+                          precision={0.5}
+                          emptyIcon={<Star className=" fill-muted stroke-0" />}
+                        />
+                        <span className="text-xs font-medium text-muted-foreground dark:text-muted">
+                          giving {field.value || 5} stars
+                        </span>
+                      </div>
+                      <span className="text-xs text-muted-foreground dark:text-muted">
+                        Tap a Star to Rate
                       </span>
                     </div>
                   </FormControl>
-                  <span className="text-sm text-muted-foreground dark:text-muted">
-                    Tap a Star to Rate
-                  </span>
                 </FormItem>
               )}
             />
