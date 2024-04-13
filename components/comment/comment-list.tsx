@@ -100,6 +100,9 @@ export function CommentList({
           </div>
         )
       })}
+      <span className="w-full px-4 py-4 text-end text-xs text-muted-foreground">
+        No more comments
+      </span>
     </ul>
   )
 }

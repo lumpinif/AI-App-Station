@@ -37,10 +37,9 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
             />
           </div>
           <Separator orientation="vertical" className="h-1/2" />
-
           {app.categories && app.categories.length > 0 ? (
             app.categories?.map((category, index) => (
-              <>
+              <div key={index}>
                 <div
                   key={category.category_id}
                   className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44"
@@ -52,15 +51,15 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
                   />
                 </div>
                 <Separator orientation="vertical" className="h-1/2" />
-              </>
+              </div>
             ))
           ) : (
-            <>
+            <div>
               <div className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44">
                 <span className="text-xs">No Category</span>
               </div>
               <Separator orientation="vertical" className="h-1/2" />
-            </>
+            </div>
           )}
 
           <div className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44">

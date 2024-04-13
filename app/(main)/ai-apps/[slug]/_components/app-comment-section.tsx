@@ -3,7 +3,6 @@ import { getAllComments } from "@/server/data"
 
 import { Comment, CommentWithProfile } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
 import { CommentCard } from "@/components/comment/comment-card"
 import { CommentForm } from "@/components/comment/comment-form"
 import { CommentListFilter } from "@/components/comment/comment-list-filter"
@@ -13,6 +12,7 @@ import {
   EnhancedDrawerContent,
   EnhancedDrawerTrigger,
 } from "@/components/shared/enhanced-drawer"
+import { BottomBlur } from "@/components/shared/progressive-blur"
 
 import AppDetailCommentList from "./app-detail-commentList"
 
@@ -87,18 +87,23 @@ const AppDetailCommentSection = async ({
                 </span>
               </div>
             </EnhancedDrawerTrigger>
-            <EnhancedDrawerContent className="h-3/5 max-h-[calc(100vh-2rem)] rounded-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
+            <EnhancedDrawerContent className="h-3/5 max-h-[calc(100vh-2rem)] rounded-t-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
               <EnhancedDrawerClose title="Ratings & Reviews" />
               <AppDetailCommentList
                 commentsList={commentsList}
                 className="mb-6 p-4"
               />
+              <BottomBlur className="h-24" />
             </EnhancedDrawerContent>
           </EnhancedDrawer>
         </div>
         <div className="hidden flex-col space-y-4 sm:flex">
-          <ScrollArea className="h-[30rem]">
-            <AppDetailCommentList commentsList={commentsList} />
+          <ScrollArea className="relative h-[35rem]">
+            <BottomBlur className="h-24" />
+            <AppDetailCommentList
+              commentsList={commentsList}
+              className="mb-14"
+            />
           </ScrollArea>
         </div>
       </section>
