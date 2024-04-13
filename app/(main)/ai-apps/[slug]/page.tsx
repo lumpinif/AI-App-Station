@@ -7,6 +7,7 @@ import { Comment } from "@/types/db_tables"
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
 import AppDetailCommentSection from "./_components/app-comment-section"
+import { AppDetailDeveloper } from "./_components/app-detail-developer"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
@@ -50,8 +51,8 @@ export default async function AppPagePage({
       <main className="mt-6">
         <div className="flex flex-col items-start space-y-6 md:space-y-12">
           <div className="flex w-full flex-col items-start space-y-6">
-            <div className="flex w-full items-start space-x-4">
-              <div className="mt-1 size-24 flex-none sm:size-32 md:size-40 lg:size-44">
+            <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">
+              <div className="size-28 flex-none sm:size-32 md:size-40 lg:size-44">
                 <AppIcon
                   {...app}
                   size={"full"}
@@ -59,26 +60,36 @@ export default async function AppPagePage({
                   externalLink={app.app_url!}
                 />
               </div>
-              <AppTitleWithDescription
-                {...app}
-                className="items-start tracking-tight sm:tracking-wide sm:[&>*:nth-child(1)]:hover:no-underline"
-                titleSize="3xl"
-                titleClassname="text-2xl md:text-4xl xl:text-5xl"
-                titleFont="bold"
-                descriptionSize="sm"
-                descriptionClassname="tracking tracking-normal"
-                isTruncate={false}
-                isLink={false}
-              />
+              <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
+                <AppTitleWithDescription
+                  {...app}
+                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide sm:[&>*:nth-child(1)]:hover:no-underline"
+                  titleSize="3xl"
+                  titleClassname="md:text-4xl"
+                  titleFont="bold"
+                  descriptionSize="sm"
+                  descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 "
+                  isTruncate={false}
+                  isLink={false}
+                >
+                  <AppDetailDeveloper data={app} />
+                </AppTitleWithDescription>
+                <span className="flex w-full items-end justify-between pr-4">
+                  <AppDetailDeveloper data={app} className="sm:hidden" />
+                  <AppLaunchButton
+                    app_url={app.app_url}
+                    className="hidden max-w-44 px-6 py-1 sm:flex sm:w-32 md:w-40"
+                  />
+                </span>
+              </div>
             </div>
 
-            <AppDetailInfo
-              data={app}
-              {...ratingData}
-              className="flex flex-1 flex-col sm:space-y-8 md:space-y-12"
-            />
+            <AppDetailInfo data={app} {...ratingData} className="py-2" />
 
-            <AppLaunchButton app_url={app.app_url} />
+            <AppLaunchButton
+              app_url={app.app_url}
+              className="mx-auto w-full max-w-xl sm:hidden"
+            />
           </div>
           <div className="flex flex-col lg:flex-row lg:space-x-4">
             <div className="flex flex-1 flex-col space-y-6 ">

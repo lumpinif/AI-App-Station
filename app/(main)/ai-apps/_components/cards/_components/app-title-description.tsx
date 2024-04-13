@@ -16,6 +16,7 @@ type AppTitleWithDescriptionProps = {
   isLink?: boolean
   titleClassname?: string
   descriptionClassname?: string
+  children?: React.ReactNode
 }
 
 export const AppTitleWithDescription: React.FC<
@@ -33,6 +34,7 @@ export const AppTitleWithDescription: React.FC<
   descriptionClassname,
   isTruncate = true,
   isLink = true,
+  children,
 }) => {
   const titleElement = (
     <h4
@@ -74,13 +76,27 @@ export const AppTitleWithDescription: React.FC<
             className="w-fit active:text-blue-600 sm:hover:text-blue-500"
             passHref
           >
-            {titleElement}
+            {children ? (
+              <span className="flex items-center justify-between">
+                {titleElement}
+                <span className="hidden sm:flex">{children}</span>
+              </span>
+            ) : (
+              <>{titleElement}</>
+            )}
           </Link>
           {descriptionElement}
         </div>
       ) : (
-        <div className={cn("flex min-w-0 flex-col", className)}>
-          {titleElement}
+        <div className={cn("flex w-full min-w-0 flex-col gap-1", className)}>
+          {children ? (
+            <span className="flex w-full items-center space-x-6">
+              {titleElement}
+              <span className="hidden sm:flex">{children}</span>
+            </span>
+          ) : (
+            <>{titleElement}</>
+          )}
           {descriptionElement}
         </div>
       )}
