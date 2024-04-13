@@ -59,11 +59,14 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
   }, [router, supabase])
 
   return (
-    <div className={cn(className)}>
+    <div className={cn("flex w-full flex-col", className)}>
       <CommentList
         commentsList={optimisticComments}
         setOptimisitcComment={setOptimisticComment}
       />
+      <span className="px-4 py-2 text-end text-xs text-muted-foreground max-sm:mb-6">
+        No more comments
+      </span>
     </div>
   )
 }

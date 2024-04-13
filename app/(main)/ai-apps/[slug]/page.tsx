@@ -63,12 +63,12 @@ export default async function AppPagePage({
               <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
                 <AppTitleWithDescription
                   {...app}
-                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide sm:[&>*:nth-child(1)]:hover:no-underline"
+                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
                   titleSize="3xl"
                   titleClassname="md:text-4xl"
                   titleFont="bold"
                   descriptionSize="sm"
-                  descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 "
+                  descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 md:text-base"
                   isTruncate={false}
                   isLink={false}
                 >

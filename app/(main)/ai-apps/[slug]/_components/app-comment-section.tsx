@@ -62,7 +62,7 @@ const AppDetailCommentSection = async ({
 
   if (allComments && allComments.length > 0)
     return (
-      <section className="flex flex-col space-y-6 md:space-y-8">
+      <section className="flex w-full flex-col space-y-6 md:space-y-8">
         <div className="flex w-full items-center space-x-4">
           {allComments && allComments.length > 0 && (
             <span className="font-medium tracking-wide">
@@ -83,7 +83,7 @@ const AppDetailCommentSection = async ({
                   className="w-full cursor-pointer rounded-lg bg-muted p-4 dark:bg-muted/20"
                 />
                 <span className="cursor-pointer text-end text-xs text-muted-foreground/60 ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
-                  tap to check more...
+                  tap to check more
                 </span>
               </div>
             </EnhancedDrawerTrigger>
@@ -91,13 +91,13 @@ const AppDetailCommentSection = async ({
               <EnhancedDrawerClose title="Ratings & Reviews" />
               <AppDetailCommentList
                 commentsList={commentsList}
-                className="mb-6 p-4"
+                className="mb-6 w-full p-4"
               />
               <BottomBlur className="h-24" />
             </EnhancedDrawerContent>
           </EnhancedDrawer>
         </div>
-        <div className="hidden flex-col space-y-4 sm:flex">
+        <div className="hidden w-full flex-col space-y-4 sm:flex">
           <ScrollArea className="relative h-[35rem]">
             <BottomBlur className="h-24" />
             <AppDetailCommentList
