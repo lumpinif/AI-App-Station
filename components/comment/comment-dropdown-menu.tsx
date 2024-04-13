@@ -49,7 +49,7 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
     <>
       <div>
         <AlertDialog>
-          <AlertDialogContent className="glass-card-background rounded-lg border-none shadow-outline backdrop-blur-xl max-sm:max-w-sm ">
+          <AlertDialogContent className="dark:glass-card-background rounded-lg border-none shadow-outline backdrop-blur-xl max-sm:max-w-sm ">
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -59,7 +59,7 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="bg-destructive text-muted-foreground hover:bg-destructive/80 hover:text-primary">
+              <AlertDialogAction className="bg-destructive text-white hover:bg-destructive/80">
                 <CommentDeleteButton
                   app_id={comment.app_id}
                   comment_id={comment.comment_id}
@@ -88,27 +88,33 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
                   <Pencil size={12} className="mb-1" />
                 </div>
               </DropdownMenuItem>
-              <AlertDialogTrigger asChild>
-                <DropdownMenuItem
-                  className={cn(
-                    "cursor-pointer",
-                    comment.profiles?.user_id === profile?.user_id
-                      ? ""
-                      : "hidden"
-                  )}
-                >
-                  <div className="flex w-full items-center justify-between px-1">
-                    <span>Delete</span>
-                    <Delete size={12} />
-                  </div>
-                </DropdownMenuItem>
-              </AlertDialogTrigger>
+
               <DropdownMenuItem>
                 <div className="flex w-full items-center justify-between px-1">
                   Share
                   <Share2 size={12} />
                 </div>
               </DropdownMenuItem>
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem
+                  className={cn(
+                    "group cursor-pointer hover:!bg-destructive",
+                    comment.profiles?.user_id === profile?.user_id
+                      ? ""
+                      : "hidden"
+                  )}
+                >
+                  <div className=" flex w-full items-center justify-between px-1">
+                    <span className="text-destructive group-hover:text-background dark:text-red-500 group-hover:dark:text-primary">
+                      Delete
+                    </span>
+                    <Delete
+                      size={12}
+                      className="text-destructive group-hover:text-background dark:text-red-500 group-hover:dark:text-primary"
+                    />
+                  </div>
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
               <DropdownMenuItem
                 className={cn(
                   "cursor-pointer",
