@@ -47,12 +47,12 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
       <h2 className="text-2xl font-medium" id="ratings-and-reviews">
         Ratings & Reviews
       </h2>
-      <div className="grid w-full grid-cols-2 gap-x-4">
-        <div className="flex w-full items-center gap-x-4">
+      <div className="grid w-full grid-cols-2 space-x-4">
+        <div className="flex w-full items-center space-x-4 md:space-x-6 lg:space-x-8 xl:space-x-9">
           <div className="text-5xl font-bold dark:text-muted-foreground sm:text-6xl">
             {rating_score ? rating_score.toFixed(1) : 0}
           </div>
-          <div className="flex flex-col items-center text-xs text-muted-foreground sm:text-sm">
+          <div className="flex flex-col items-center space-y-1 text-xs text-muted-foreground sm:text-sm">
             <span>out of 5</span>
             <Separator />
             <span>{formattedRatingCount} Ratings</span>

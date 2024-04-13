@@ -36,7 +36,10 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
             rating_score={rating_score}
           />
         </div>
-        <Separator orientation="vertical" className="h-1/2" />
+        <Separator
+          orientation="vertical"
+          className="h-2/3 dark:border-muted/60"
+        />
         <Categories data={app} />
         <div className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44">
           <AppCommentsBadge
@@ -45,7 +48,10 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
             className="underline-offset-4 hover:font-medium"
           />
         </div>
-        <Separator orientation="vertical" className="h-1/2" />
+        <Separator
+          orientation="vertical"
+          className="h-2/3 dark:border-muted/60"
+        />
         <div className="lg:w-44shrink-0 flex h-full w-28 items-center justify-center sm:w-32 md:w-40">
           <Pricing data={app} className="w-full text-center" />
         </div>
@@ -125,7 +131,10 @@ const Categories = ({ data: app }: { data: AppDetails }) => {
                 className="underline-offset-4 hover:font-medium hover:underline"
               />
             </div>
-            <Separator orientation="vertical" className="h-1/2" />
+            <Separator
+              orientation="vertical"
+              className="h-2/3 dark:border-muted/60"
+            />
           </Fragment>
         ))
       ) : (
@@ -133,7 +142,10 @@ const Categories = ({ data: app }: { data: AppDetails }) => {
           <div className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44">
             <span className="text-xs">No Category</span>
           </div>
-          <Separator orientation="vertical" className="h-1/2" />
+          <Separator
+            orientation="vertical"
+            className="h-2/3 dark:border-muted/60"
+          />
         </Fragment>
       )}
     </Fragment>
