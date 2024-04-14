@@ -70,7 +70,10 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
               className={cn("bg-transparent", className)}
             >
               <div className="relative flex size-full items-center justify-center rounded-2xl bg-card">
-                <PostCard {...post} />
+                <PostCard
+                  {...post}
+                  image_src={`https://picsum.photos/600/350?v=${index}`}
+                />
               </div>
             </SliderMainItem>
           ))}
