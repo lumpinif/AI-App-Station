@@ -29,10 +29,10 @@ export const PostCard: React.FC<PostCardProps> = ({
         />
 
         <div className="absolute inset-x-0 bottom-0 h-4/6 w-full bg-gradient-to-t from-background/90 via-background/60 via-60% to-transparent" />
-        <BottomBlur
+        {/* <BottomBlur
           className="bottom-1 h-3/5 rounded-2xl lg:hidden 2xl:block"
           isLastBackground={false}
-        />
+        /> */}
       </div>
     </Link>
   )

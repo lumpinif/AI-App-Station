@@ -30,6 +30,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
       height={200}
       alt={app_title || "App Logo"}
       className="aspect-square rounded-xl"
+      priority
     />
   )
 
