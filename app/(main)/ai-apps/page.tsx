@@ -4,6 +4,8 @@ import { getAllApps, getAllHeroFeaturedPosts, getAllPosts } from "@/server/data"
 import { getAppsWithCategories } from "@/server/data/supabase"
 import { EmblaOptionsType } from "embla-carousel"
 
+import NewPostsCarousel from "./_components/carousel/posts-carousel/new-posts-carousel"
+
 // Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
 const AppCardsCarousel = dynamic(
   () => import("./_components/carousel/app-card-carousel/app-cards-carousel"),
@@ -42,35 +44,20 @@ const AIAppsPage = async () => {
     return null
   }
 
+  //TODO:HADNDLING LOADING SKELETON
   return (
     <section className="flex flex-col gap-y-4">
       <Suspense fallback={<div>Loading...</div>}>
-        <PostsCarousel
+        <NewPostsCarousel
           data={heroPosts}
-          options={OPTIONS_LOOP}
           isAutpPlay={true}
-          isMarginRight={false}
+          isWheelGestures={true}
+          isIndicator={true}
         />
       </Suspense>
-
       <Suspense fallback={<div>Loading...</div>}>
-        <PostsCarousel
-          data={allPosts}
-          className="md:basis-1/2"
-          isMarginRight={false}
-        />
+        <NewPostsCarousel data={heroPosts} className="md:basis-1/2" />
       </Suspense>
-      {/* <div className="mt-4">
-        <AppCardsCarousel
-          // TODO: CONSIDERING REFACTOR TITLE INTO CONFIG
-          title={"Top Free Apps"}
-          data={allApps}
-          className="md:basis-1/2 lg:basis-1/3"
-          isMarginRight={true}
-          options={OPTIONS_APPSCARDSCAROUSEL}
-          hiddenOnCanNotScroll
-        />
-      </div> */}
       <div className="mt-4">
         <AppCardsCarousel
           // TODO: CONSIDERING REFACTOR TITLE INTO CONFIG

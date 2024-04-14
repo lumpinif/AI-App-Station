@@ -29,7 +29,13 @@ export const BlurDiv = ({
   />
 )
 
-export const BottomBlur = ({ className }: { className?: string }) => {
+export const BottomBlur = ({
+  className,
+  isLastBackground = true,
+}: {
+  className?: string
+  isLastBackground?: boolean
+}) => {
   return (
     <span
       className={cn(
@@ -85,7 +91,7 @@ export const BottomBlur = ({ className }: { className?: string }) => {
           zIndex={8}
           blurValue={2.5}
           gradientStops="rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 1) 100%"
-          className="bg-background"
+          className={isLastBackground ? "bg-background" : ""}
         />
       </div>
     </span>

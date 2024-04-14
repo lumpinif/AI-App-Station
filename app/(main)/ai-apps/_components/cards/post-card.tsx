@@ -13,21 +13,26 @@ const PostCard: React.FC<PostCardProps> = ({
 }) => {
   return (
     <>
-      <Link href={`/story/${slug}`} scroll={false}>
-        <div className="relative h-96 w-full cursor-pointer rounded-lg bg-card px-8">
+      <Link href={`/story/${slug}`} scroll={false} passHref>
+        <div className="relative h-80 w-full cursor-pointer rounded-2xl bg-card px-8">
           {/* Image */}
-          <Image
-            alt=""
-            src={image_src ? image_src : "/images/tool-preview.png"}
-            fill
-            objectFit="cover"
-            className="rounded-lg"
-            objectPosition="center"
-          />
+          <div className="relative h-full w-full ">
+            <Image
+              alt=""
+              src={image_src ? image_src : "/images/preview1.png"}
+              fill
+              objectFit="cover"
+              className="rounded-lg"
+              objectPosition="center"
+              style={{
+                objectFit: "cover",
+              }}
+            />
+          </div>
 
           {/* Overlay */}
           {/* <span className="absolute inset-x-0 bottom-0 z-10 h-full w-full bg-white opacity-40 dark:bg-black"></span> */}
-          <span className=" absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-r from-background/50 to-transparent"></span>
+          <span className=" absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-r from-background/50 to-transparent" />
           {/* Text */}
           <div className="absolute top-[15%] z-20 flex max-w-xs flex-col items-start justify-between gap-y-3">
             <span className="text-xs font-medium uppercase leading-none tracking-tight mix-blend-difference">
