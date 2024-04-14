@@ -23,7 +23,7 @@ export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
     <>
       <Link
         href={`/ai-apps/${app_slug}/#ratings-and-reviews`}
-        className={cn("group hover:underline", className)}
+        className={cn(className, "group hover:underline")}
       >
         <div className="m-0 flex items-center gap-x-1 p-0">
           <MessageCircle
@@ -31,7 +31,9 @@ export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
             size={16}
           />
           {commentsCount > 0 ? (
-            <span className="text-xs">{formattedCommentsCount}</span>
+            <span className="text-xs max-sm:pt-1">
+              {formattedCommentsCount}
+            </span>
           ) : null}
         </div>
       </Link>

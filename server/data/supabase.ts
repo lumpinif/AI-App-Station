@@ -268,13 +268,16 @@ export async function getAppBySlug(app_slug: string) {
   return { app: app[0], ratingData: ratingData[0], error }
 }
 
-export async function getAllApps() {
+export async function getAllApps(withTable?: string, orderBy?: keyof App) {
   const supabase = await createSupabaseServerClient()
 
-  let { data: apps, error } = await supabase
-    .from("apps")
-    .select(`*`)
-    .order("created_at", { ascending: false })
+  let query = supabase.from("apps").select(`*, ${withTable}`)
+
+  if (orderBy) {
+    query = query.order(orderBy, { ascending: false })
+  }
+
+  let { data: apps, error } = await query
 
   // error handling
   if (error) return { apps: null, error: getErrorMessage(error) }
@@ -282,13 +285,16 @@ export async function getAllApps() {
   return { apps, error }
 }
 
-export async function getAppsWithCategories() {
+export async function getAppsWithCategories(orderBy?: keyof App) {
   const supabase = await createSupabaseServerClient()
 
-  let { data: apps, error } = await supabase
-    .from("apps")
-    .select(`*, categories(*)`)
-    .order("created_at", { ascending: false })
+  let query = supabase.from("apps").select(`*, categories(*)`)
+
+  if (orderBy) {
+    query = query.order(orderBy, { ascending: false })
+  }
+
+  let { data: apps, error } = await query
 
   // error handling
   if (error) return { apps: null, error: getErrorMessage(error) }

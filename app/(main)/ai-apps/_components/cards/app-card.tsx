@@ -44,12 +44,15 @@ const AppCard: React.FC<AppCardWithIndex> = ({
             className="w-20 flex-1"
           />
           <div className="flex flex-none flex-col items-center gap-y-2">
-            <div className="flex w-full items-center justify-between gap-x-2">
+            <div className="flex w-full items-center justify-end gap-x-2 sm:justify-between">
               <AppCommentsBadge
                 app_slug={app_slug}
                 comments_count={comments_count}
+                className="text-muted-foreground"
               />
-              <MemoizedAppCardActions />
+              <span className="hidden sm:flex">
+                <MemoizedAppCardActions />
+              </span>
             </div>
             <AppCardLabelDescription categories={categories} />
           </div>
