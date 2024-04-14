@@ -1,4 +1,18 @@
-import Image from "next/image"
+"use client"
+
+import React from "react"
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
+
+import { cn } from "@/lib/utils"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
+import { ImageElement } from "../../_components/cards/new-post-card"
 
 type AppDetailScreenshotsProps = {
   data?: string[]
@@ -7,55 +21,54 @@ type AppDetailScreenshotsProps = {
 export const AppDetailScreenshots: React.FC<AppDetailScreenshotsProps> = ({
   data,
 }) => {
+  const [isHovered, setIsHovered] = React.useState(false)
+
   return (
     <>
-      <div className="">
-        <h2 className="text-xl font-bold">iPhone Screenshots</h2>
-        <div className="mt-4 flex space-x-4 overflow-x-auto">
-          <Image
-            alt="Screenshot 1"
-            className="rounded-lg shadow-lg"
-            height="500"
-            src="/images/preview1.png"
-            style={{
-              aspectRatio: "250/500",
-              objectFit: "cover",
+      <div className="flex flex-col space-y-4">
+        <h2 className="text-2xl font-medium">iPhone Screenshots</h2>
+        <div className="relative mx-auto h-full w-full max-w-full">
+          <Carousel
+            opts={{
+              align: "start",
+              duration: 25,
+              dragThreshold: 5,
             }}
-            width="250"
-          />
-          <Image
-            alt="Screenshot 2"
-            className="rounded-lg shadow-lg"
-            height="500"
-            src="/images/preview1.png"
-            style={{
-              aspectRatio: "250/500",
-              objectFit: "cover",
-            }}
-            width="250"
-          />
-          <Image
-            alt="Screenshot 3"
-            className="rounded-lg shadow-lg"
-            height="500"
-            src="/images/preview1.png"
-            style={{
-              aspectRatio: "250/500",
-              objectFit: "cover",
-            }}
-            width="250"
-          />
-          <Image
-            alt="Screenshot 4"
-            className="rounded-lg shadow-lg"
-            height="500"
-            src="/images/preview1.png"
-            style={{
-              aspectRatio: "250/500",
-              objectFit: "cover",
-            }}
-            width="250"
-          />
+            plugins={[WheelGesturesPlugin({})]}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            <CarouselContent className="mr-6 h-52">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <CarouselItem
+                  key={index}
+                  className="bg-transparent md:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="relative flex size-full items-center justify-center rounded-2xl bg-card">
+                    <ImageElement
+                      image_src={`https://picsum.photos/600/350?v=${index}`}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious
+              hiddenOnCanNotScroll
+              variant={"tag"}
+              className={cn(
+                "left-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
+                isHovered ? "" : "hidden"
+              )}
+            />
+            <CarouselNext
+              hiddenOnCanNotScroll
+              variant={"tag"}
+              className={cn(
+                "right-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
+                isHovered ? "" : "hidden"
+              )}
+            />
+          </Carousel>
         </div>
       </div>
     </>
