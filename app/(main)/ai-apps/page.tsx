@@ -12,15 +12,6 @@ const AppCardsCarousel = dynamic(
   { ssr: true }
 )
 
-const PostsCarousel = dynamic(
-  () => import("./_components/carousel/posts-carousel/posts-carousel"),
-  { ssr: true }
-)
-
-const OPTIONS_LOOP: EmblaOptionsType = {
-  loop: true,
-}
-
 const OPTIONS_APPSCARDSCAROUSEL: EmblaOptionsType = {
   breakpoints: {
     "(min-width: 768px)": { slidesToScroll: 2 },
