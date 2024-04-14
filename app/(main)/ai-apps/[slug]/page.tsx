@@ -3,11 +3,14 @@ import { notFound } from "next/navigation"
 import { getAppBySlug } from "@/server/data"
 
 import { Comment } from "@/types/db_tables"
+import BackButton from "@/components/shared/back-button"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
+import { ImageElement } from "../_components/cards/new-post-card"
 import AppDetailCommentSection from "./_components/app-comment-section"
 import { AppDetailDeveloper } from "./_components/app-detail-developer"
+import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
@@ -48,7 +51,8 @@ export default async function AppPagePage({
 
   return (
     <>
-      <main className="mt-6">
+      <main className="mt-16 sm:mt-4">
+        <AppDetailHeroImage />
         <div className="flex flex-col items-start space-y-6 md:space-y-12">
           <div className="flex w-full flex-col items-start space-y-6">
             <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">

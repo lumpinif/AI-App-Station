@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { cva } from "class-variance-authority"
 
 import { PostCardProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -39,14 +38,14 @@ export const PostCard: React.FC<PostCardProps> = ({
   )
 }
 
-const ImageElement: React.FC<Pick<PostCardProps, "image_src">> = ({
-  image_src,
-}) => {
+export const ImageElement: React.FC<
+  Pick<PostCardProps, "image_src"> & { className?: string }
+> = ({ image_src, className }) => {
   return (
     <Image
       alt=""
       src={image_src ? image_src : "/images/Feature-thumbnail.png"}
-      className="rounded-lg"
+      className={cn("rounded-lg", className)}
       objectPosition="center"
       fill
       style={{

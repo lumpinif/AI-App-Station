@@ -87,7 +87,7 @@ const AppDetailCommentSection = async ({
                 </span>
               </div>
             </EnhancedDrawerTrigger>
-            <EnhancedDrawerContent className="h-3/5 max-h-[calc(100vh-2rem)] rounded-t-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
+            <EnhancedDrawerContent className="h-4/5 max-h-[calc(100vh-2rem)] rounded-t-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
               <EnhancedDrawerClose title="Ratings & Reviews" />
               <AppDetailCommentList
                 commentsList={commentsList}
