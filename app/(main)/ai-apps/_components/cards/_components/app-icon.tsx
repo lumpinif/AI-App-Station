@@ -11,7 +11,7 @@ type AppIconProps = {
   size?: number | string
   className?: string
   isLink?: boolean
-  externalLink?: string
+  externalLink: App["app_url"]
 }
 
 export const AppIcon: React.FC<AppIconProps> = ({
@@ -35,7 +35,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
   )
 
   return (
-    <>
+    <div>
       {isLink ? (
         <Link
           className={cn(
@@ -48,7 +48,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
           {ImageElement}
         </Link>
       ) : (
-        <>
+        <div>
           {!externalLink ? (
             <div className="flex flex-none items-center justify-center overflow-hidden rounded-xl p-2 shadow-md transition-all duration-200 ease-out dark:bg-primary">
               {ImageElement}
@@ -60,8 +60,8 @@ export const AppIcon: React.FC<AppIconProps> = ({
               </div>
             </a>
           )}
-        </>
+        </div>
       )}
-    </>
+    </div>
   )
 }

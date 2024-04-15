@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Comment as CommentType, CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -24,6 +24,11 @@ export function CommentList({
   setOptimisitcComment,
 }: CommentListProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   if (!idsToRender.length) {
     idsToRender = optimisticComments
@@ -43,15 +48,13 @@ export function CommentList({
   }
 
   return (
-    <ul
+    <div
       className={cn(
         "relative flex flex-col gap-2",
         indentLevel > 0 && indentLevel <= 4 ? "ml-9 pl-2" : ""
       )}
+      suppressHydrationWarning
     >
-      {indentLevel > 0 && indentLevel <= 4 && (
-        <span className="absolute left-0 h-full w-px sm:bg-muted sm:dark:bg-muted/10" />
-      )}
       {idsToRender.map((comment_id) => {
         const comment = optimisticComments.find(
           (i) => i.comment_id === comment_id
@@ -100,7 +103,7 @@ export function CommentList({
           </div>
         )
       })}
-    </ul>
+    </div>
   )
 }
 

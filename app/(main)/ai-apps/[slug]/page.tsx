@@ -1,13 +1,11 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
-import { getAppBySlug } from "@/server/data"
+import { getAllComments, getAppBySlug } from "@/server/data"
 
 import { Comment } from "@/types/db_tables"
-import BackButton from "@/components/shared/back-button"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
-import { ImageElement } from "../_components/cards/new-post-card"
 import AppDetailCommentSection from "./_components/app-comment-section"
 import { AppDetailDeveloper } from "./_components/app-detail-developer"
 import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
@@ -27,15 +25,18 @@ export default async function AppPagePage({
   params,
   searchParams,
 }: AppPageProps) {
-  const c_order: "asc" | "desc" =
-    searchParams?.c_order === "asc"
-      ? "asc"
-      : searchParams?.c_order === "desc"
-        ? "desc"
-        : "desc"
+  // const c_order: "asc" | "desc" | undefined =
+  //   searchParams?.c_order === "asc"
+  //     ? "asc"
+  //     : searchParams?.c_order === "desc"
+  //       ? "desc"
+  //       : undefined
 
-  const orderBy: keyof Comment =
-    (searchParams?.orderBy as keyof Comment) ?? null
+  // const orderBy: keyof Comment =
+  //   (searchParams?.orderBy as keyof Comment) ?? undefined
+
+  const c_order = searchParams?.c_order as "asc" | "desc" | undefined
+  const orderBy = searchParams?.orderBy as keyof Comment | undefined
 
   // TODO: ERROR HANDLING
   const { app, ratingData, error } = await getAppBySlug(params.slug)
@@ -49,10 +50,14 @@ export default async function AppPagePage({
     notFound()
   }
 
+  const { comments: allComments, error: getAllCommentsError } =
+    await getAllComments(app.app_id, c_order, orderBy)
+  // TODO: HANDLE NO COMMENTS AND ERROR
+
   return (
     <>
-      <main className="mt-16 sm:mt-4">
-        <AppDetailHeroImage />
+      <main className="mt-16 sm:mt-4" suppressHydrationWarning>
+        {/* <AppDetailHeroImage /> */}
         <div className="flex flex-col items-start space-y-6 md:space-y-12">
           <div className="flex w-full flex-col items-start space-y-6">
             <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">
@@ -61,7 +66,7 @@ export default async function AppPagePage({
                   {...app}
                   size={"full"}
                   isLink={false}
-                  externalLink={app.app_url!}
+                  externalLink={app.app_url}
                 />
               </div>
               <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
@@ -87,22 +92,21 @@ export default async function AppPagePage({
                 </span>
               </div>
             </div>
-
             <AppDetailInfo data={app} {...ratingData} className="py-2" />
-
             <AppLaunchButton
               app_url={app.app_url}
               className="mx-auto w-full max-w-xl sm:hidden"
             />
           </div>
-          <div className="flex flex-col lg:flex-row lg:space-x-4">
-            <div className="flex flex-1 flex-col space-y-6 ">
+          <div className="flex w-full flex-col lg:flex-row lg:space-x-4">
+            <div className="flex flex-1 flex-col space-y-6">
               <AppDetailScreenshots />
               <AppDetailIntroduction data={app.introduction} />
               <AppDetailReviews {...ratingData} />
               {/* TODO: HANDLE LOADING */}
               <Suspense fallback={<div>Loading...</div>}>
                 <AppDetailCommentSection
+                  allComments={allComments}
                   app_id={app.app_id}
                   c_order={c_order}
                   orderBy={orderBy}

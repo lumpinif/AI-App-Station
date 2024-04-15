@@ -80,7 +80,7 @@ const RatingsAndReviews = ({
   className?: string
 }) => {
   return (
-    <span className={cn("flex flex-col justify-center", className)}>
+    <div className={cn("flex flex-col justify-center", className)}>
       <div className="text-nowrap text-xs ">
         {rating_score} • {rating_count} Ratings
       </div>
@@ -92,7 +92,7 @@ const RatingsAndReviews = ({
         precision={0.5}
         emptyIcon={<Star className="fill-muted stroke-0" size={18} />}
       />
-    </span>
+    </div>
   )
 }
 

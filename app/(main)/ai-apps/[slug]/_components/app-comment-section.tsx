@@ -17,12 +17,14 @@ import { BottomBlur } from "@/components/shared/progressive-blur"
 import AppDetailCommentList from "./app-detail-commentList"
 
 type CommentListProps = {
+  allComments: CommentWithProfile[] | null
   app_id: CommentWithProfile["app_id"]
   c_order?: "asc" | "desc"
   orderBy?: keyof Comment
 }
 
 const AppDetailCommentSection = async ({
+  allComments,
   app_id,
   c_order,
   orderBy,
@@ -31,12 +33,13 @@ const AppDetailCommentSection = async ({
     data: { session },
   } = await getUserSession()
 
+  // const { comments: allComments, error } = await getAllComments(
+  //   app_id,
+  //   c_order,
+  //   orderBy
+  // )
+
   // TODO: HANDLE NO COMMENTS AND ERROR
-  const { comments: allComments, error } = await getAllComments(
-    app_id,
-    c_order,
-    orderBy
-  )
 
   if (!allComments || allComments.length === 0 || allComments === null)
     return (
@@ -62,7 +65,10 @@ const AppDetailCommentSection = async ({
 
   if (allComments && allComments.length > 0)
     return (
-      <section className="flex w-full flex-col space-y-6 md:space-y-8">
+      <section
+        className="flex w-full flex-col space-y-6 md:space-y-8"
+        suppressHydrationWarning
+      >
         <div className="flex w-full items-center space-x-4">
           {allComments && allComments.length > 0 && (
             <span className="font-medium tracking-wide">

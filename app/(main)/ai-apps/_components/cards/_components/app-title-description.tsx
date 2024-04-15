@@ -71,7 +71,6 @@ export const AppTitleWithDescription: React.FC<
           <Link
             href={{
               pathname: `/ai-apps/${app_slug}`,
-              query: { orderBy: "likes_count" },
             }}
             className="w-fit active:text-blue-600 sm:hover:text-blue-500"
             passHref

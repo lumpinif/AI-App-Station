@@ -59,7 +59,10 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
   }, [router, supabase])
 
   return (
-    <div className={cn("flex w-full flex-col", className)}>
+    <div
+      className={cn("flex w-full flex-col", className)}
+      suppressHydrationWarning
+    >
       <CommentList
         commentsList={optimisticComments}
         setOptimisitcComment={setOptimisticComment}

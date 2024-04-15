@@ -48,9 +48,7 @@ export const ImageElement: React.FC<
       className={cn("rounded-lg", className)}
       objectPosition="center"
       fill
-      style={{
-        objectFit: "cover",
-      }}
+      objectFit="cover"
     />
   )
 }

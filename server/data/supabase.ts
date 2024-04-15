@@ -308,9 +308,7 @@ export async function getAllComments(
   orderBy?: keyof Comment
 ) {
   const supabase = await createSupabaseServerClient()
-
-  // Determine if sorting by created_at should be ascending
-  const ascendingOrder: boolean = c_order === "asc"
+  const slug = await getSlugFromAppId(app_id)
 
   let query = supabase
     .from("app_comments")
@@ -318,17 +316,23 @@ export async function getAllComments(
     .eq("app_id", app_id)
 
   // Conditional additional ordering by another field
-  if (orderBy) {
+  if (!orderBy && !c_order) {
+    query = query.order("likes_count", {
+      ascending: false,
+    })
+  } else if (orderBy) {
     query = query.order(orderBy, {
+      ascending: false,
+    })
+  } else {
+    query = query.order("created_at", {
       ascending: c_order === "asc",
     })
   }
 
-  let { data: comments, error } = await query
-    .order("created_at", {
-      ascending: ascendingOrder || false,
-    })
-    .returns<CommentWithProfile[] | null>()
+  let { data: comments, error } = await query.returns<
+    CommentWithProfile[] | null
+  >()
 
   if (error) {
     console.error(error.message)
