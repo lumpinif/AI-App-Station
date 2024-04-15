@@ -1,21 +1,25 @@
 import React from "react"
-import { Ellipsis, MessageCircle } from "lucide-react"
+import { MessageCircle } from "lucide-react"
 
 import { CommentActionsProp, CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
-type CommentReplyButtonProps = Pick<CommentActionsProp, "repliesCount"> & {
+type CommentReplyButtonProps = Pick<
+  CommentActionsProp,
+  "isReplied" | "repliesCount"
+> & {
   className?: string
   toggleReplying: () => void
   isFetching?: boolean
-  replies?: CommentWithProfile[]
+  replies: CommentWithProfile[]
 }
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
+  isReplied,
+  repliesCount,
   replies,
   className,
-  repliesCount,
   toggleReplying,
 }) => {
   const { data: profile } = useUser()
@@ -29,7 +33,6 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
     return
   }
 
-  const isReplied = repliesCount > 0
   const isUserReplied = replies?.find(
     (reply) => reply.user_id === profile?.user_id
   )

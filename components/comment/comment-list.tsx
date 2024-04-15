@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { Comment as CommentType, CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -24,11 +24,6 @@ export function CommentList({
   setOptimisitcComment,
 }: CommentListProps) {
   const [isEditing, setIsEditing] = useState<boolean>(false)
-  const [isClient, setIsClient] = useState(false)
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
 
   if (!idsToRender.length) {
     idsToRender = optimisticComments
@@ -37,10 +32,12 @@ export function CommentList({
   }
 
   const getIsReplied = (
-    commentsList: CommentWithProfile[],
+    optimisticComments: CommentWithProfile[],
     parent_id: string
   ) => {
-    const childItems = commentsList.filter((i) => i.parent_id === parent_id)
+    const childItems = optimisticComments.filter(
+      (i) => i.parent_id === parent_id
+    )
 
     const repliesCount = childItems.length
     const isReplied = repliesCount > 0

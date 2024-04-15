@@ -28,6 +28,7 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
   parent_id,
   comment,
   isEditing,
+  isReplied,
   setIsEditing,
   isFetching,
   setOptimisitcComment,
@@ -35,7 +36,6 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
   const [isReplying, setReplying] = React.useState<boolean>(false)
 
   const childItems = commentsList.filter((i) => i.parent_id === parent_id)
-
   const repliesCount = childItems.length
 
   return (
@@ -48,6 +48,7 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
         <CommentReplyButton
           className="sm:gap-x-1"
           replies={childItems}
+          isReplied={isReplied}
           repliesCount={repliesCount}
           toggleReplying={() => setReplying(!isReplying)}
           isFetching={isFetching}
