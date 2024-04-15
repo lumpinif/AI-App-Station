@@ -104,7 +104,7 @@ const AppDetailCommentSection = async ({
           </EnhancedDrawer>
         </div>
         <div className="hidden w-full flex-col space-y-4 sm:flex">
-          <ScrollArea className="relative h-[35rem]">
+          <ScrollArea className="relative h-[42rem]">
             <BottomBlur className="h-24" />
             <AppDetailCommentList
               commentsList={commentsList}
