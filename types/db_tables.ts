@@ -48,6 +48,7 @@ export type CommentWithProfile = Comment & {
   profiles: Profile
   comment_likes: Comment_likes[]
   user_has_liked_comment?: boolean
+  user_has_commented?: boolean
 }
 
 export type CommentActionsProp = {

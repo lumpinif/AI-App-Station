@@ -47,6 +47,7 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
         />
         <CommentReplyButton
           className="sm:gap-x-1"
+          replies={childItems}
           repliesCount={repliesCount}
           toggleReplying={() => setReplying(!isReplying)}
           isFetching={isFetching}

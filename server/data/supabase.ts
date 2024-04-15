@@ -317,13 +317,17 @@ export async function getAllComments(
 
   // Conditional additional ordering by another field
   if (!orderBy && !c_order) {
-    query = query.order("likes_count", {
-      ascending: false,
-    })
+    query = query
+      .order("likes_count", {
+        ascending: false,
+      })
+      .order("created_at", { ascending: false })
   } else if (orderBy) {
-    query = query.order(orderBy, {
-      ascending: false,
-    })
+    query = query
+      .order(orderBy, {
+        ascending: false,
+      })
+      .order("created_at", { ascending: false })
   } else {
     query = query.order("created_at", {
       ascending: c_order === "asc",

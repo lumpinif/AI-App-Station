@@ -1,7 +1,7 @@
 import React from "react"
 import { Ellipsis, MessageCircle } from "lucide-react"
 
-import { CommentActionsProp } from "@/types/db_tables"
+import { CommentActionsProp, CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
@@ -10,8 +10,10 @@ type CommentReplyButtonProps = Pick<CommentActionsProp, "repliesCount"> & {
   className?: string
   toggleReplying: () => void
   isFetching?: boolean
+  replies?: CommentWithProfile[]
 }
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
+  replies,
   className,
   repliesCount,
   toggleReplying,
@@ -28,6 +30,9 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   }
 
   const isReplied = repliesCount > 0
+  const isUserReplied = replies?.find(
+    (reply) => reply.user_id === profile?.user_id
+  )
 
   return (
     <>
@@ -37,7 +42,7 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
             <MessageCircle
               className={cn(
                 "cursor-pointer stroke-current stroke-[1.5] text-muted-foreground hover:fill-blue-500 group-hover:stroke-blue-500",
-                isReplied && "fill-blue-500 stroke-blue-500"
+                isUserReplied && "fill-blue-500 stroke-blue-500"
               )}
               size={18}
             />

@@ -79,7 +79,8 @@ export const CommentCard: React.FC<CommentProps> = ({
                     <span className="h-1 w-1 rounded-full bg-muted-foreground " />
                     {comment.updated_at &&
                     moment().diff(moment(comment.updated_at), "minute", true) <
-                      30 ? (
+                      30 &&
+                    comment.updated_at !== comment.created_at ? (
                       <div className="flex items-center gap-x-2">
                         <span className="relative text-muted-foreground/60">
                           Just Updated
