@@ -49,6 +49,8 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
     return activePlugins
   }, [isAutpPlay, isWheelGestures])
 
+  // TODO:REMOVE THIS CAROUSEL IT IS DEPRECATED //
+
   return (
     <div className="relative mx-auto h-full w-full max-w-full">
       <Carousel

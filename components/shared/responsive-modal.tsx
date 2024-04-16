@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 
 import { Dialog, DialogContent } from "../ui/dialog"
-import { Drawer, DrawerClose, DrawerContent } from "../ui/drawer"
 import {
   EnhancedDrawer,
   EnhancedDrawerClose,

@@ -25,16 +25,6 @@ export default async function AppPagePage({
   params,
   searchParams,
 }: AppPageProps) {
-  // const c_order: "asc" | "desc" | undefined =
-  //   searchParams?.c_order === "asc"
-  //     ? "asc"
-  //     : searchParams?.c_order === "desc"
-  //       ? "desc"
-  //       : undefined
-
-  // const orderBy: keyof Comment =
-  //   (searchParams?.orderBy as keyof Comment) ?? undefined
-
   const c_order = searchParams?.c_order as "asc" | "desc" | undefined
   const orderBy = searchParams?.orderBy as keyof Comment | undefined
 

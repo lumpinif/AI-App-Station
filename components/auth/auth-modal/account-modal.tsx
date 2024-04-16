@@ -3,7 +3,7 @@
 import { Session } from "@supabase/auth-helpers-nextjs"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
-import Modal from "@/components/shared/modal"
+import Modal from "@/components/shared/responsive-modal"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import UserAccount from "../avatar/user-account"

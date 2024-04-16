@@ -1,5 +1,4 @@
 import { getUserSession } from "@/server/auth"
-import { getAllComments } from "@/server/data"
 
 import { Comment, CommentWithProfile } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -32,12 +31,6 @@ const AppDetailCommentSection = async ({
   const {
     data: { session },
   } = await getUserSession()
-
-  // const { comments: allComments, error } = await getAllComments(
-  //   app_id,
-  //   c_order,
-  //   orderBy
-  // )
 
   // TODO: HANDLE NO COMMENTS AND ERROR
 

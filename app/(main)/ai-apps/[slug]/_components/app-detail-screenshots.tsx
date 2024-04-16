@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/carousel"
 
 import { ImageElement } from "../../_components/cards/new-post-card"
+import { AppDetailScreenshotsDialog } from "./app-detail-screenshots-dialog"
 
 type AppDetailScreenshotsProps = {
   data?: string[]
@@ -26,7 +27,7 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenshotsProps> = ({
   return (
     <>
       <div className="flex flex-col space-y-4">
-        <h2 className="text-2xl font-medium">iPhone Screenshots</h2>
+        <h2 className="text-2xl font-medium">Screenshots</h2>
         <div className="relative mx-auto h-full w-full max-w-full">
           <Carousel
             opts={{
@@ -39,15 +40,16 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenshotsProps> = ({
             onMouseLeave={() => setIsHovered(false)}
           >
             <CarouselContent className="mr-6 h-52">
-              {Array.from({ length: 5 }).map((_, index) => (
+              {Array.from({ length: 10 }).map((_, index) => (
                 <CarouselItem
                   key={index}
                   className="bg-transparent md:basis-1/2 lg:basis-1/3"
                 >
-                  <div className="relative flex size-full items-center justify-center rounded-2xl bg-card">
-                    <ImageElement
+                  <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                    {/* <ImageElement
                       image_src={`https://picsum.photos/600/350?v=${index}`}
-                    />
+                    /> */}
+                    <AppDetailScreenshotsDialog index={index} />
                   </div>
                 </CarouselItem>
               ))}

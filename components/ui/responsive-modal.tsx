@@ -15,15 +15,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
 } from "@/components/ui/drawer"
+
+import {
+  EnhancedDrawer,
+  EnhancedDrawerClose,
+  EnhancedDrawerContent,
+  EnhancedDrawerTrigger,
+} from "../shared/enhanced-drawer"
 
 interface BaseProps {
   children: React.ReactNode
@@ -39,11 +42,11 @@ interface ResponsiveModalProps extends BaseProps {
   asChild?: true
 }
 
-const desktop = "(min-width: 768px)"
+// const desktop = "(min-width: 768px)"
 
 const ResponsiveModal = ({ children, ...props }: RootResponsiveModalProps) => {
   const { isDesktop } = useMediaQuery()
-  const ResponsiveModal = isDesktop ? Dialog : Drawer
+  const ResponsiveModal = isDesktop ? Dialog : EnhancedDrawer
 
   return <ResponsiveModal {...props}>{children}</ResponsiveModal>
 }
@@ -54,7 +57,9 @@ const ResponsiveModalTrigger = ({
   ...props
 }: ResponsiveModalProps) => {
   const { isDesktop } = useMediaQuery()
-  const ResponsiveModalTrigger = isDesktop ? DialogTrigger : DrawerTrigger
+  const ResponsiveModalTrigger = isDesktop
+    ? DialogTrigger
+    : EnhancedDrawerTrigger
 
   return (
     <ResponsiveModalTrigger className={className} {...props}>
@@ -69,7 +74,7 @@ const ResponsiveModalClose = ({
   ...props
 }: ResponsiveModalProps) => {
   const { isDesktop } = useMediaQuery()
-  const ResponsiveModalClose = isDesktop ? DialogClose : DrawerClose
+  const ResponsiveModalClose = isDesktop ? DialogClose : EnhancedDrawerClose
 
   return (
     <ResponsiveModalClose className={className} {...props}>
@@ -84,7 +89,9 @@ const ResponsiveModalContent = ({
   ...props
 }: ResponsiveModalProps) => {
   const { isDesktop } = useMediaQuery()
-  const ResponsiveModalContent = isDesktop ? DialogContent : DrawerContent
+  const ResponsiveModalContent = isDesktop
+    ? DialogContent
+    : EnhancedDrawerContent
 
   return (
     <ResponsiveModalContent className={className} {...props}>
@@ -169,12 +176,12 @@ const ResponsiveModalFooter = ({
 
 export {
   ResponsiveModal,
-  ResponsiveModalTrigger,
+  ResponsiveModalBody,
   ResponsiveModalClose,
   ResponsiveModalContent,
   ResponsiveModalDescription,
+  ResponsiveModalFooter,
   ResponsiveModalHeader,
   ResponsiveModalTitle,
-  ResponsiveModalBody,
-  ResponsiveModalFooter,
+  ResponsiveModalTrigger,
 }
