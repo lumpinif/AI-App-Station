@@ -11,7 +11,7 @@ type AppIconProps = {
   size?: number | string
   className?: string
   isLink?: boolean
-  externalLink: App["app_url"]
+  externalLink?: App["app_url"]
 }
 
 export const AppIcon: React.FC<AppIconProps> = ({

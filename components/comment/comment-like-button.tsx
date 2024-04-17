@@ -1,7 +1,6 @@
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
-import { useQueryClient } from "@tanstack/react-query"
 import { Heart } from "lucide-react"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
@@ -24,8 +23,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
 }) => {
   const supabase = createSupabaseBrowserClient()
   const [isPending, startTransition] = useTransition()
-  const queryClient = useQueryClient()
-  const queryKey = ["replies", comment.parent_id]
+
   const OpenModal = useAccountModal((state) => state.OpenModal)
 
   const router = useRouter()
@@ -42,7 +40,6 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
       if (addLikeError) {
         toast.error("Failed to like. Please try again.")
       }
-      queryClient.invalidateQueries({ queryKey: queryKey })
     },
     1000, // Adjust the debounce delay (in milliseconds) as needed,
     { leading: true, trailing: true }
@@ -58,14 +55,12 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
       if (removeLikeError) {
         toast.error("Failed to remove like. Please try again.")
       }
-      queryClient.invalidateQueries({ queryKey: queryKey })
     },
     1000,
     { leading: true, trailing: true }
   )
 
   const handleLikes = async () => {
-    console.log("clicked!")
     // checking if we have a user login
     if (!profile?.user_id) {
       toast.error("Please login to like a comment.")

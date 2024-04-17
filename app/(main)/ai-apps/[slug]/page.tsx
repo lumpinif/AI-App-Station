@@ -1,16 +1,18 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getAllComments, getAppBySlug } from "@/server/data"
+import { Bookmark, ExternalLink, ThumbsUp } from "lucide-react"
 
 import { Comment } from "@/types/db_tables"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
-import AppDetailCommentSection from "./_components/app-comment-section"
+import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailDeveloper } from "./_components/app-detail-developer"
 import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
 import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
+import { AppDetailLikeButton } from "./_components/app-detail-like-button"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
 import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
 import { AppDetailSubInfo } from "./_components/app-detail-sub-info"
@@ -34,7 +36,6 @@ export default async function AppPagePage({
   if (error) {
     console.error(error)
   }
-
   //TODO: HANDLING APP NOT FOUND
   if (!app) {
     notFound()
@@ -47,7 +48,7 @@ export default async function AppPagePage({
   return (
     <>
       <main className="mt-16 sm:mt-4" suppressHydrationWarning>
-        {/* <AppDetailHeroImage /> */}
+        <AppDetailHeroImage />
         <div className="flex flex-col items-start space-y-6 md:space-y-12">
           <div className="flex w-full flex-col items-start space-y-6">
             <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">
@@ -60,25 +61,42 @@ export default async function AppPagePage({
                 />
               </div>
               <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
-                <AppTitleWithDescription
-                  {...app}
-                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
-                  titleSize="3xl"
-                  titleClassname="md:text-4xl"
-                  titleFont="bold"
-                  descriptionSize="sm"
-                  descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 md:text-base"
-                  isTruncate={false}
-                  isLink={false}
-                >
-                  <AppDetailDeveloper data={app} />
-                </AppTitleWithDescription>
+                <div className="flex w-full justify-between">
+                  <AppTitleWithDescription
+                    {...app}
+                    className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
+                    titleSize="3xl"
+                    titleClassname="md:text-4xl"
+                    titleFont="bold"
+                    descriptionSize="sm"
+                    descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 md:text-base"
+                    isTruncate={false}
+                    isLink={false}
+                  >
+                    <AppDetailDeveloper data={app} />
+                  </AppTitleWithDescription>
+                  <span className="flex h-fit items-center space-x-2 pr-2 md:pr-4">
+                    <ThumbsUp className="size-4 stroke-1 text-muted-foreground md:size-5" />
+                  </span>
+                </div>
                 <span className="flex w-full items-end justify-between pr-4">
                   <AppDetailDeveloper data={app} className="sm:hidden" />
-                  <AppLaunchButton
-                    app_url={app.app_url}
-                    className="hidden max-w-44 px-6 py-1 sm:flex sm:w-32 md:w-40"
-                  />
+                  <span className="flex items-center space-x-2 md:space-x-6">
+                    <AppLaunchButton
+                      app_url={app.app_url}
+                      className="hidden max-w-44 px-6 py-1 sm:flex sm:w-32 md:w-40"
+                    />
+                    <span className="flex items-center space-x-2 md:space-x-4">
+                      <AppDetailLikeButton
+                        data={app.app_likes}
+                        app_id={app.app_id}
+                      />
+
+                      <Bookmark className="size-4 stroke-1 text-muted-foreground md:size-6" />
+                      {/* <Star className="size-4 stroke-1 text-muted-foreground md:size-5" /> */}
+                      <ExternalLink className="size-4 stroke-1 text-muted-foreground md:size-6" />
+                    </span>
+                  </span>
                 </span>
               </div>
             </div>

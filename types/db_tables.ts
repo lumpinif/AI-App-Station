@@ -8,6 +8,7 @@ export type Profile = Database["public"]["Tables"]["profiles"]["Row"]
 export type Bookmark = Database["public"]["Tables"]["bookmarks"]["Row"]
 export type Comment = Database["public"]["Tables"]["app_comments"]["Row"]
 export type App = Database["public"]["Tables"]["apps"]["Row"]
+export type App_likes = Database["public"]["Tables"]["app_likes"]["Row"]
 export type Comment_likes = Database["public"]["Tables"]["comment_likes"]["Row"]
 
 // About the Users
@@ -31,6 +32,7 @@ export type AppDetails = App & {
   categories?: Categories[]
   developers?: Developer[]
   profiles: Profile
+  app_likes: App_likes[]
 }
 
 // About the Posts
