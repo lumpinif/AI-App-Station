@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
 
