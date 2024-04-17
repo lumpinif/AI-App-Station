@@ -14,8 +14,8 @@ const AiAppsPageWrapper = ({ children, className }: AiAppsPageWrapperProps) => {
   return (
     <main
       className={cn(
-        "flex-1 overflow-x-hidden sm:ml-28",
-        isOpen && "sm:ml-52",
+        "flex-1 overflow-x-hidden md:ml-28",
+        isOpen && "md:ml-52",
         className
       )}
     >

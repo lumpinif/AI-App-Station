@@ -111,7 +111,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
         >
           <Heart
             className={cn(
-              "transition-color stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out group-hover:fill-rose-500 group-hover:text-rose-500",
+              "transition-color stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
               optimisticLikeState.isUserLiked && "fill-current text-rose-500"
             )}
             size={18}

@@ -11,6 +11,7 @@ const StickyFloatingHeader = () => {
   const path = currentPath.split("/").slice(1)
   const lastSegment = path.length - 1
 
+  // TODO: TO BE CONTINUE DEVELOPING
   return (
     <>
       <div className="glass-card-background sticky inset-x-0 top-0 hidden h-14 w-full border-b text-sm font-semibold tracking-tight backdrop-blur-sm sm:block">

@@ -45,7 +45,7 @@ export const AppDetailScreenshotsDialog: React.FC<
       </ResponsiveModalTrigger>
       <ResponsiveModalContent
         className={cn(
-          "flex h-[95%] flex-col justify-start rounded-3xl border p-4 lg:max-w-[95%]",
+          "flex h-[95%] flex-col justify-start rounded-t-3xl p-4 lg:max-w-[95%]",
           isDesktop && "p-8 shadow-outline"
         )}
       >
@@ -69,7 +69,7 @@ export const AppDetailScreenshotsDialog: React.FC<
             <CarouselPrevious className="left-1 size-8 border-0 outline-none hover:bg-background/70 md:left-2 md:size-12" />
             <CarouselNext className="right-1 size-8 border-0 outline-none hover:bg-background/70 md:right-2 md:size-12" />
             <CarouselMainContainer
-              className={cn("h-[calc(77svh)]", isDesktop && "h-[calc(75svh)]")}
+              className={cn("h-[calc(70svh)]", isDesktop && "h-[calc(75svh)]")}
             >
               {Array.from({ length: 10 }).map((_, index) => (
                 <SliderMainItem
@@ -86,7 +86,7 @@ export const AppDetailScreenshotsDialog: React.FC<
                       alt=""
                       objectFit="cover"
                       style={{ objectFit: "cover" }}
-                      // data-vaul-no-drag
+                      data-vaul-no-drag
                     />
                   </div>
                 </SliderMainItem>

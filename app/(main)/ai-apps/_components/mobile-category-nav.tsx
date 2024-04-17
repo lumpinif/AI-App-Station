@@ -19,11 +19,20 @@ export function MobileCategoryNav() {
     router.push(href) // Update the URL
   }
 
+  const isShowAllAppsTab = pathname !== "/ai-apps"
+
   return (
     <div className="sm:hidden">
+      {isShowAllAppsTab && (
+        <AllAppsTab
+          className="mr-1"
+          pathname={pathname}
+          handleTabSelection={handleTabSelection}
+        />
+      )}
       <div className="flex flex-col">
-        <div className="scrollbar-none flex items-center  justify-between overflow-x-auto py-1 sm:hidden">
-          <div className="flex gap-x-1">
+        <div className="scrollbar-none flex items-center justify-between overflow-x-auto py-1 sm:hidden">
+          <div className="flex gap-x-2">
             {SIDENAVROUTES.map((route) => (
               <div
                 key={route.title}
@@ -47,8 +56,7 @@ export function MobileCategoryNav() {
                       layoutId="bubble_underline"
                       className="absolute inset-0 z-10 border-b-2 border-primary pb-1"
                       transition={{
-                        type: "spring",
-                        bounce: 0.2,
+                        type: "tween",
                         duration: 0.35,
                         ease: [0.32, 0.72, 0, 1],
                       }}
@@ -74,6 +82,36 @@ export function MobileCategoryNav() {
           <TagsCarousel currentPath={pathname} />
         )}
       </div>
+    </div>
+  )
+}
+
+const AllAppsTab = ({
+  className,
+  pathname,
+  handleTabSelection,
+}: {
+  className?: string
+  pathname: string
+  handleTabSelection: (href: string) => void
+}) => {
+  return (
+    <div
+      className={cn(
+        "relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
+        className,
+        pathname === `/ai-apps`
+          ? "border-primary text-primary"
+          : "border-transparent text-muted-foreground hover:text-primary"
+      )}
+      style={{
+        WebkitTapHighlightColor: "transparent",
+      }}
+      onClick={() => {
+        handleTabSelection(`/ai-apps`)
+      }}
+    >
+      <span className="text-xs">All Apps</span>
     </div>
   )
 }

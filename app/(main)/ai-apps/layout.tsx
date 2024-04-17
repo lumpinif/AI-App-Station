@@ -14,19 +14,21 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
       {/* TODO: Continue building sticky floating header */}
       {/* <StickyFloatingHeader /> */}
       {/* Mobile scrolling nav */}
-      <div className="container">
+
+      {/* <div className="container">
         <AiAppsPageTitle />
-      </div>
-      <div className="container">
+      </div> */}
+
+      <div className="container mb-2">
         <MobileCategoryNav />
       </div>
 
       <div className="container flex h-full w-full gap-6">
         {/* Floating Side Nav */}
-        <nav className="fixed bottom-1/2 top-1/2 z-50 hidden w-fit -translate-y-1/2 flex-col justify-center sm:flex">
+        <nav className="fixed bottom-1/2 top-1/2 z-50 hidden w-fit -translate-y-1/2 flex-col justify-center md:flex">
           <FloatingSideNav />
         </nav>
-        <AiAppsPageWrapper className="">
+        <AiAppsPageWrapper>
           {/* TODO: CONSIDERIGN ADD PROGRESSIVE BLUR TO THE EDGE OF THE SCROLLAREA */}
           {children}
         </AiAppsPageWrapper>

@@ -2,6 +2,7 @@ import { Fragment } from "react"
 import Link from "next/link"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
+import numeral from "numeral"
 
 import { AppDetails, Categories as CategoriesProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -22,41 +23,118 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
   rating_score,
   rating_count,
 }) => {
+  const formattedRatingCount = numeral(rating_count).format("0.[0]a")
+
   return (
     <div
       className={cn(
-        "no-scrollbar w-full max-w-full snap-x overflow-x-auto",
+        "no-scrollbar w-full max-w-full snap-x overflow-x-auto py-2 md:py-4",
         className
       )}
     >
       <div className="flex h-20 w-full min-w-max shrink-0 flex-row items-center max-sm:justify-between">
-        <div className="flex h-full w-28 shrink-0 items-center justify-center overflow-hidden sm:w-32 md:w-40 lg:w-44">
+        <InfoBox>
+          <InfoBoxTitle>{formattedRatingCount} Ratings</InfoBoxTitle>
           <RatingsAndReviews
             rating_count={rating_count}
             rating_score={rating_score}
           />
-        </div>
-        <Separator
-          orientation="vertical"
-          className="h-2/3 dark:border-muted/60"
-        />
-        <Categories data={app} />
-        <div className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44">
+        </InfoBox>
+        <InfoBoxSeperator />
+
+        <InfoBox>
+          <InfoBoxTitle>
+            {app.developers && app.developers.length > 1 ? (
+              <span>Developers</span>
+            ) : (
+              <span>Developer</span>
+            )}
+          </InfoBoxTitle>
+          <Developers data={app} />
+        </InfoBox>
+        <InfoBoxSeperator />
+
+        {app.categories && app.categories.length > 0 ? (
+          app.categories?.map((category, index) => (
+            <Fragment key={category.category_id + index}>
+              <InfoBox>
+                <InfoBoxTitle>Category</InfoBoxTitle>
+                <Category
+                  category_slug={category.slug}
+                  category_title={category.category_title}
+                />
+              </InfoBox>
+              <InfoBoxSeperator />
+            </Fragment>
+          ))
+        ) : (
+          <>
+            <InfoBox>
+              <InfoBoxTitle>Category</InfoBoxTitle>
+              <span className="text-xs">No Category</span>
+            </InfoBox>
+            <InfoBoxSeperator />
+          </>
+        )}
+
+        <InfoBox>
+          <InfoBoxTitle>Comments</InfoBoxTitle>
           <AppCommentsBadge
             app_slug={app.app_slug}
             comments_count={app.comments_count}
-            className="underline-offset-4 hover:font-medium"
+            className="flex h-full flex-col items-center justify-center overflow-hidden text-center text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
           />
-        </div>
-        <Separator
-          orientation="vertical"
-          className="h-2/3 dark:border-muted/60"
-        />
-        <div className="lg:w-44shrink-0 flex h-full w-28 items-center justify-center sm:w-32 md:w-40">
-          <Pricing data={app} className="w-full text-center" />
-        </div>
+        </InfoBox>
+        <InfoBoxSeperator />
+        <InfoBox>
+          <InfoBoxTitle>Pricing</InfoBoxTitle>
+          <Pricing
+            data={app}
+            className="flex h-full cursor-default flex-col items-center justify-center overflow-hidden text-center text-muted-foreground"
+          />
+        </InfoBox>
       </div>
     </div>
+  )
+}
+
+const InfoBoxSeperator = ({ className }: { className?: string }) => {
+  return (
+    <Separator
+      orientation="vertical"
+      className={cn("h-2/3 dark:border-muted/60", className)}
+    />
+  )
+}
+
+type InfoBoxProps = {
+  children: React.ReactNode | string
+  className?: string
+}
+
+const InfoBox = ({ children, className }: InfoBoxProps) => {
+  return (
+    <div
+      className={cn(
+        "flex h-full w-28 shrink-0 flex-col items-center justify-start overflow-hidden text-center sm:w-32 md:w-40 lg:w-44",
+        className
+      )}
+    >
+      {children}
+    </div>
+  )
+}
+
+const InfoBoxTitle = ({ children, className }: InfoBoxProps) => {
+  return (
+    <span
+      className={cn(
+        "text-nowrap text-xs uppercase text-muted-foreground ",
+        className
+      )}
+    >
+      {children}
+    </span>
   )
 }
 
@@ -80,10 +158,13 @@ const RatingsAndReviews = ({
   className?: string
 }) => {
   return (
-    <div className={cn("flex flex-col justify-center", className)}>
-      <div className="text-nowrap text-xs ">
-        {rating_score} • {rating_count} Ratings
-      </div>
+    <div
+      className={cn(
+        "flex h-full flex-col items-center justify-center space-y-1 text-muted-foreground",
+        className
+      )}
+    >
+      <span className="text-lg font-medium tracking-wider">{rating_score}</span>
       <Rating
         readOnly
         name="read-only"
@@ -108,46 +189,50 @@ const Category = ({
   return (
     <Link
       href={`/ai-apps/categories/${category_slug}`}
-      className={cn(className)}
+      className={cn(
+        "flex h-full flex-col items-center justify-center overflow-hidden text-center text-muted-foreground underline-offset-4 hover:text-primary hover:underline",
+        className
+      )}
     >
       <span className="text-xs">{category_title}</span>
     </Link>
   )
 }
 
-const Categories = ({ data: app }: { data: AppDetails }) => {
+const Developers = ({
+  data: app,
+  className,
+}: {
+  data: AppDetails
+  className?: string
+}) => {
   return (
-    <Fragment>
-      {app.categories && app.categories.length > 0 ? (
-        app.categories?.map((category, index) => (
-          <Fragment key={index}>
-            <div
-              key={category.category_id}
-              className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44"
-            >
-              <Category
-                category_slug={category.slug}
-                category_title={category.category_title}
-                className="underline-offset-4 hover:font-medium hover:underline"
-              />
-            </div>
-            <Separator
-              orientation="vertical"
-              className="h-2/3 dark:border-muted/60"
-            />
-          </Fragment>
-        ))
-      ) : (
-        <Fragment>
-          <div className="flex h-full w-28 shrink-0 items-center justify-center sm:w-32 md:w-40 lg:w-44">
-            <span className="text-xs">No Category</span>
-          </div>
-          <Separator
-            orientation="vertical"
-            className="h-2/3 dark:border-muted/60"
-          />
-        </Fragment>
+    <div
+      className={cn(
+        "no-scrollbar relative flex h-full w-full snap-mandatory flex-col items-center justify-center overflow-y-scroll text-ellipsis pt-1 text-muted-foreground",
+        className
       )}
-    </Fragment>
+    >
+      <span className="flex h-full flex-col items-center justify-center">
+        {app.developers && app.developers.length > 0 ? (
+          app.developers.map((dev) => (
+            <span key={dev.developer_name} className="w-full pt-1 text-xs">
+              {dev.developer_slug ? (
+                <Link
+                  href={dev.developer_slug}
+                  className="h-full font-medium underline-offset-4 hover:cursor-pointer hover:text-primary hover:underline"
+                >
+                  {dev.developer_name}
+                </Link>
+              ) : (
+                <span className="font-medium">{dev.developer_name}</span>
+              )}
+            </span>
+          ))
+        ) : (
+          <span className="text-xs">Unknow</span>
+        )}
+      </span>
+    </div>
   )
 }

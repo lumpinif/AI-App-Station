@@ -43,8 +43,11 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
   ]
 
   return (
-    <>
-      <h2 className="text-2xl font-medium" id="ratings-and-reviews">
+    <div className="flex flex-col space-y-4">
+      <h2
+        className="text-2xl font-semibold tracking-wide"
+        id="ratings-and-reviews"
+      >
         Ratings & Reviews
       </h2>
       <div className="grid w-full grid-cols-2 space-x-4">
@@ -71,7 +74,7 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
           ))}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

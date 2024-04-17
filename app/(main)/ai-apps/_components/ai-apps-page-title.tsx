@@ -5,14 +5,27 @@ import useSideNav from "@/hooks/use-side-nav-store"
 
 import { PageTitle } from "../../../../components/layout/page-title"
 
-const AiAppsPageTitle = () => {
+type AiAppsPageTitleProps = {
+  isLayout?: boolean
+  title?: string
+  href?: string
+}
+
+const AiAppsPageTitle = ({
+  isLayout = true,
+  title = "Apps",
+  href = "/ai-apps",
+}: AiAppsPageTitleProps) => {
   const isOpen = useSideNav((state) => state.isOpen)
 
   return (
     <div
-      className={cn("mb-2 w-full sm:mb-5", !isOpen ? "sm:pl-28" : "sm:pl-52")}
+      className={cn(
+        "mb-2 w-full sm:mb-5",
+        !isOpen && isLayout ? "sm:pl-28" : `${isLayout && "sm:pl-52"}`
+      )}
     >
-      <PageTitle title="Apps" href="/ai-apps" />
+      <PageTitle title={title} href={href} />
     </div>
   )
 }

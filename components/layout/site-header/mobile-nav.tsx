@@ -33,7 +33,7 @@ const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
   return (
     <nav
       className={cn(
-        "tab-bar-container fixed bottom-5 left-1/2 -translate-x-1/2 sm:hidden",
+        "tab-bar-container fixed bottom-5 left-1/2 -translate-x-1/2 md:hidden",
         className
       )}
       {...props}

@@ -35,7 +35,9 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
       className="w-full space-y-2 lg:w-56"
     >
       <div className="flex items-center justify-between">
-        <h4 className="text-base font-medium">About this App</h4>
+        <h4 className="text-sm font-medium text-muted-foreground">
+          More Info About this App
+        </h4>
         <CollapsibleTrigger asChild className="outline-none">
           <Button
             variant="ghost"

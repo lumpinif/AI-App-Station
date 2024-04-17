@@ -10,6 +10,7 @@ interface PageTitleProps {
   className?: string
   href?: string
   isBorder?: boolean
+  isWithAccountModalTrigger?: boolean
 }
 
 export const PageTitle = ({
@@ -18,6 +19,7 @@ export const PageTitle = ({
   className,
   href,
   isBorder = true,
+  isWithAccountModalTrigger = false,
   ...rest
 }: PageTitleProps) => {
   return (
@@ -56,9 +58,11 @@ export const PageTitle = ({
           </>
         )}
       </div>
-      <div className="sm:hidden">
-        <AccountModalTrigger />
-      </div>
+      {isWithAccountModalTrigger && (
+        <div className="sm:hidden">
+          <AccountModalTrigger />
+        </div>
+      )}
     </div>
   )
 }

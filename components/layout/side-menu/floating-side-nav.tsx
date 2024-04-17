@@ -72,7 +72,7 @@ const FloatingSideNav: React.FC = () => {
   return (
     <aside
       className={cn(
-        "cubic-bezier(0.32, 0.72, 0, 1) z-50 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 sm:flex",
+        "cubic-bezier(0.32, 0.72, 0, 1) z-50 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 md:flex",
         !isOpen ? "-ml-6 rounded-[2.5rem]" : "-ml-4 mt-16"
       )}
     >

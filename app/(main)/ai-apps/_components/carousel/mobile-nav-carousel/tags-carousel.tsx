@@ -74,9 +74,9 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
                 })
               )}
               transition={{
-                type: "spring",
-                bounce: 0.1,
-                duration: 0.15,
+                type: "tween",
+                bounce: 0,
+                duration: 0.35,
                 ease: [0.32, 0.72, 0, 1],
               }}
             />

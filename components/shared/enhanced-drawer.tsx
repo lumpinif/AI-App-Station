@@ -88,7 +88,7 @@ export const EnhancedDrawerClose: React.FC<EnhancedDrawerProps> = ({
   return (
     <div
       className={cn(
-        "sticky inset-x-0 z-50 flex h-20 items-center justify-center text-lg font-medium",
+        "sticky inset-x-0 z-50 flex h-14 items-center justify-center text-lg font-medium",
         className
       )}
       {...props}

@@ -36,7 +36,7 @@ const AppDetailCommentSection = async ({
 
   if (!allComments || allComments.length === 0 || allComments === null)
     return (
-      <>
+      <section className="flex flex-col space-y-6 md:space-y-8">
         <div className="flex items-center space-x-4">
           <span className="font-medium tracking-wide">0 Comments</span>
           <p className="text-muted-foreground">
@@ -44,7 +44,7 @@ const AppDetailCommentSection = async ({
           </p>
         </div>
         <CommentForm app_id={app_id} />
-      </>
+      </section>
     )
 
   const commentsList =

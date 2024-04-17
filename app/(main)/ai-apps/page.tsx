@@ -4,7 +4,9 @@ import { getAllApps, getAllHeroFeaturedPosts, getAllPosts } from "@/server/data"
 import { getAppsWithCategories } from "@/server/data/supabase"
 import { EmblaOptionsType } from "embla-carousel"
 
+import AiAppsPageTitle from "./_components/ai-apps-page-title"
 import NewPostsCarousel from "./_components/carousel/posts-carousel/new-posts-carousel"
+import { MobileCategoryNav } from "./_components/mobile-category-nav"
 
 // Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
 const AppCardsCarousel = dynamic(
@@ -39,6 +41,7 @@ const AIAppsPage = async () => {
   //TODO:HADNDLING LOADING SKELETON
   return (
     <section className="flex flex-col gap-y-4">
+      <AiAppsPageTitle isLayout={false} />
       <Suspense fallback={<div>Loading...</div>}>
         <NewPostsCarousel
           data={heroPosts}
