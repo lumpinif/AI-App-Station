@@ -141,10 +141,7 @@ export async function UpdateAppByTitle(
 
   if (updatedApp) revalidatePath(`/user/apps/${app_id}`)
 
-  // TODO: REMOVE THIE BEFORE PRODUCTION
-  if (error) {
-    console.log("🚀 ~ Error: Submiting App ~ error:", error)
-  }
+  if (error) return { updatedApp: null, error: getErrorMessage(error) }
 
   return { updatedApp, error }
 }
@@ -173,10 +170,7 @@ export async function UpdateAppByDescription(
 
   if (updatedApp) revalidatePath(`/user/apps/${app_id}`)
 
-  // TODO: REMOVE THIE BEFORE PRODUCTION
-  if (error) {
-    console.log("🚀 ~ Error: Submiting App ~ error:", error)
-  }
+  if (error) return { updatedApp: null, error: getErrorMessage(error) }
 
   return { updatedApp, error }
 }
@@ -401,7 +395,7 @@ export async function AddComment(
   if (!user) {
     return {
       newApp: null,
-      error: "You need to login to reply.",
+      error: "You need to login to reply",
     }
   }
 

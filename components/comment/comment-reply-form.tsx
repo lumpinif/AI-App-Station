@@ -4,7 +4,6 @@ import * as React from "react"
 import { AddComment } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
-import { useQueryClient } from "@tanstack/react-query"
 import { Star } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -52,7 +51,6 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   setIsShowReplies,
   withRating = false,
 }) => {
-  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -91,7 +89,6 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
     if (comment) {
       setLoading(false)
-      queryClient.invalidateQueries({ queryKey: ["replies", replyToCommentId] })
       if (setIsShowReplies) {
         setIsShowReplies(true)
       }
@@ -101,7 +98,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
     if (error) {
       setLoading(false)
-      toast.error(`${error} - Please try again later 🥲`)
+      toast.error(error)
     }
   }
 

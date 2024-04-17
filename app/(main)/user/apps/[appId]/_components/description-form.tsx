@@ -58,9 +58,9 @@ const DescriptionForm = ({ initialData, appId }: DescriptionFormProps) => {
     }
 
     if (typeof error === "string") {
-      toast.error(`${error} 🥲`)
+      toast.error(`${error}`)
     } else if (error) {
-      toast.error(`${error?.message} - Please try again later 🥲`)
+      toast.error(`${error} - Please try again later`)
     }
   }
 

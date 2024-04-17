@@ -101,7 +101,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
     }
 
     if (error) {
-      toast.error(`${error} - Please try again later 🥲`)
+      toast.error(`${error} - Please try again later`)
     }
   }
 

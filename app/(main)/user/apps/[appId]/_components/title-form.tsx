@@ -54,9 +54,9 @@ const TitleForm = ({ initialData, appId }: TitleFormProps) => {
     }
 
     if (typeof error === "string") {
-      toast.error(`${error} 🥲`)
+      toast.error(`${error}`)
     } else if (error) {
-      toast.error(`${error?.message} - Please try again later 🥲`)
+      toast.error(`${error?.message} - Please try again later`)
     }
   }
 
