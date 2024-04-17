@@ -24,7 +24,10 @@ export function ThemeToggle({
   isDirect = false,
   className,
 }: ThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme, resolvedTheme } = useTheme()
+
+  // Use the resolved theme if available, otherwise fall back to the theme
+  const currentTheme = resolvedTheme || theme
 
   if (isDirect) {
     return (
@@ -75,15 +78,10 @@ export function ThemeToggle({
 
   return (
     <>
-      <div className="dark:glass-card-background flex w-fit flex-row items-center space-x-2 rounded-full p-1 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline">
+      <div className="dark:glass-card-background flex w-fit flex-row items-center space-x-4 rounded-full p-2 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline">
         <button
           type="button"
-          className={cn(
-            theme === "light"
-              ? "scale-105 rounded-full text-primary"
-              : "bg-transparent",
-            "p-1"
-          )}
+          className={cn(currentTheme === "light" && "text-primary")}
           onClick={() => setTheme("light")}
         >
           <Sun size={18} className="stroke-1" />
@@ -91,12 +89,7 @@ export function ThemeToggle({
 
         <button
           type="button"
-          className={cn(
-            theme === "system"
-              ? "scale-105 rounded-full text-primary"
-              : "bg-transparent",
-            "p-1"
-          )}
+          className={cn(currentTheme === "system" && "text-primary")}
           onClick={() => setTheme("system")}
         >
           <Monitor size={18} className="stroke-1" />
@@ -104,12 +97,7 @@ export function ThemeToggle({
 
         <button
           type="button"
-          className={cn(
-            theme === "dark"
-              ? "scale-105 rounded-full text-primary"
-              : "bg-transparent",
-            "p-1"
-          )}
+          className={cn(currentTheme === "dark" && "text-primary")}
           onClick={() => setTheme("dark")}
         >
           <Moon size={18} className="stroke-1" />
