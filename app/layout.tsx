@@ -99,10 +99,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                   <SearchCommandDialogProvider />
                   <AccountModalProvider />
                   <main className="min-h-dvh flex-1">
-                    <div className="flex h-full flex-col">
+                    <main className="flex h-full flex-col">
                       <SiteHeader />
                       <main className="mb-2 h-full flex-1">{children}</main>
-                    </div>
+                    </main>
                   </main>
                   <SiteFooter />
                 </QueryProvider>
