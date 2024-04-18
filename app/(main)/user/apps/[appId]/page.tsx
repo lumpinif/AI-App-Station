@@ -15,8 +15,8 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     error: getUserDataError,
   } = await getUserData()
 
-  if (!user || getUserDataError) {
-    return redirect("/login")
+  if (!user) {
+    return redirect("/signin")
   }
 
   const { app, error } = await GetAppsByUserId(params.appId, user.id)

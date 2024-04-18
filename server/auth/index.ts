@@ -65,8 +65,8 @@ export async function getUserSession() {
 
 export async function getUserData() {
   const supabase = await createSupabaseServerClient()
-  const { data, error } = await supabase.auth.getUser()
-  return { data, error }
+  // const { data, error } = await supabase.auth.getUser()
+  return await supabase.auth.getUser()
 }
 
 export async function getUserProfile() {

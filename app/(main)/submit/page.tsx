@@ -10,9 +10,8 @@ const AppSubmitPage = () => {
         <p className="mt-1 text-sm text-muted-foreground">
           Help us to expand our knowledge for the whole humanity.
         </p>
-        <Suspense>
-          <AppSubmitForm />
-        </Suspense>
+
+        <AppSubmitForm />
       </div>
     </div>
   )
