@@ -45,7 +45,7 @@ export const AppDetailScreenshotsDialog: React.FC<
       </ResponsiveModalTrigger>
       <ResponsiveModalContent
         className={cn(
-          "flex h-[95%] flex-col justify-start rounded-t-3xl p-4 lg:max-w-[95%]",
+          "flex h-[95%] flex-col justify-start rounded-t-3xl p-4 outline-none focus:!ring-0 focus:!ring-transparent lg:max-w-[95%]",
           isDesktop && "p-8 shadow-outline"
         )}
       >
