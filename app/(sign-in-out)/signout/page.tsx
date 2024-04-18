@@ -1,13 +1,14 @@
 import { redirect } from "next/navigation"
-import { getUserSession } from "@/server/auth"
+import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import SignOutButton from "@/components/auth/signout/sign-out-button"
 import BackButton from "@/components/shared/back-button"
 
 const SignOutPage = async () => {
-  const { data } = await getUserSession()
+  const supabase = await createSupabaseServerClient()
+  const { data, error } = await supabase.auth.getUser()
 
-  if (!data.session) {
+  if (!data?.user) {
     return redirect("/signin")
   }
 

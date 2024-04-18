@@ -32,4 +32,4 @@ export const cardVariants = cva(
   }
 )
 
-export const PROTECTED_PATH = "/dashboard"
+// TODO: REMOVE THIS BEFORE PRODUCTION

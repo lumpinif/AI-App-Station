@@ -12,9 +12,10 @@ type SubmittedAppIdPageProps = {
 const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   const {
     data: { user },
+    error: getUserDataError,
   } = await getUserData()
 
-  if (!user) {
+  if (!user || getUserDataError) {
     return redirect("/login")
   }
 

@@ -1,8 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { createServerClient, type CookieOptions } from "@supabase/ssr"
 
-export const createSupabaseMiddlewareClient = (request: NextRequest) => {
-  // Create an unmodified response
+export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -18,7 +17,6 @@ export const createSupabaseMiddlewareClient = (request: NextRequest) => {
           return request.cookies.get(name)?.value
         },
         set(name: string, value: string, options: CookieOptions) {
-          // If the cookie is updated, update the cookies for the request and response
           request.cookies.set({
             name,
             value,
@@ -36,7 +34,6 @@ export const createSupabaseMiddlewareClient = (request: NextRequest) => {
           })
         },
         remove(name: string, options: CookieOptions) {
-          // If the cookie is removed, update the cookies for the request and response
           request.cookies.set({
             name,
             value: "",
@@ -56,6 +53,22 @@ export const createSupabaseMiddlewareClient = (request: NextRequest) => {
       },
     }
   )
+  // const { data } = await supabase.auth.getUser()
+  // const url = new URL(request.url)
+  // if (data?.user) {
+  //   if (url.pathname === "/signin" || "/signout") {
+  //     return NextResponse.redirect(new URL("/", request.url))
+  //   }
+  //   return response
+  // } else {
+  //   if (url.pathname === "/user") {
+  //     return NextResponse.redirect(
+  //       new URL("/signin?next=" + url.pathname, request.url)
+  //     )
+  //   }
+  //   return response
+  // }
+  await supabase.auth.getUser()
 
-  return { supabase, response }
+  return response
 }

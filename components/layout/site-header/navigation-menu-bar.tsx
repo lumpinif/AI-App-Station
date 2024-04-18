@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons/icons"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
-import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 export function NavigationMenuBar() {
   const currentPath = usePathname()
@@ -62,12 +61,15 @@ export function NavigationMenuBar() {
         </NavigationMenuItem>
 
         {MAINROUTES.map((route) => (
-          <NavigationMenuItem key={route.id}>
+          <NavigationMenuItem
+            key={route.id}
+            className="cursor-pointer select-none"
+          >
             {route.href !== "/search" && (
-              <Link href={`${route.href}`} legacyBehavior passHref>
+              <Link href={`${route.href}`} legacyBehavior>
                 <NavigationMenuLink
                   className={cn(navigationMenuTriggerStyle(), {
-                    "!text-blue-500 ": currentPath.includes(`${route.href}`),
+                    "!text-blue-500": currentPath.includes(`${route.href}`),
                   })}
                 >
                   {route.title}

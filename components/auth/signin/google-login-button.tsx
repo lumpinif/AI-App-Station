@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { FcGoogle } from "react-icons/fc"
 import { RingLoader } from "react-spinners"
@@ -10,6 +11,8 @@ import { Button } from "@/components/ui/button"
 
 const GoogleLoginButton = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const params = useSearchParams()
+  const next = params.get("next") || "/ai-apps"
 
   async function handleGoogleLogin() {
     setIsLoading(true)
@@ -18,7 +21,7 @@ const GoogleLoginButton = () => {
       await supabse.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${location.origin}/auth/callback`,
+          redirectTo: `${location.origin}/auth/callback?next=` + next,
         },
       })
     } catch (error) {

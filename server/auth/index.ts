@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
-import { toast } from "sonner"
 
 export async function signUpWithEmailAndPassword(signUpData: {
   email: string
@@ -17,7 +16,7 @@ export async function signUpWithEmailAndPassword(signUpData: {
   })
 
   if (data) {
-    revalidatePath("/")
+    revalidatePath("/", "layout")
   }
 
   return { data, error }
@@ -35,7 +34,7 @@ export async function signInWithEmailAndPassword(signInData: {
   })
 
   if (data) {
-    revalidatePath("/")
+    revalidatePath("/", "layout")
   }
 
   return { data, error }
@@ -51,7 +50,7 @@ export async function signOut() {
 
   if (session) {
     const { error } = await supabase.auth.signOut()
-    revalidatePath("/")
+    revalidatePath("/", "layout")
     return { error }
   }
 
@@ -66,7 +65,8 @@ export async function getUserSession() {
 
 export async function getUserData() {
   const supabase = await createSupabaseServerClient()
-  return supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser()
+  return { data, error }
 }
 
 export async function getUserProfile() {

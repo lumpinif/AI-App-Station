@@ -21,7 +21,6 @@ const SignOutButton = () => {
         const result = await signOut()
         if (result !== null) {
           toast.success("Signed Out.")
-          router.push("/")
         } else {
           toast.error("You need to Sign In first.")
           router.push("/signin")
@@ -30,6 +29,10 @@ const SignOutButton = () => {
         console.error(error)
         toast.error("Failed to Sign Out!")
       }
+      // TODO: HANDLE REDIRECT FOR THE PROTECTED PATH
+      // if (pathname === "/user") {
+      //   router.replace("/auth?next=" + pathname)
+      // }
     })
   }
 

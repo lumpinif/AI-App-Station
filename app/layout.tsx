@@ -77,15 +77,15 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body
-          className={cn(
-            "min-h-dvh bg-background font-sans antialiased",
-            GeistSans.variable
-          )}
-        >
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={cn(
+          "min-h-dvh bg-background font-sans antialiased",
+          GeistSans.variable
+        )}
+      >
+        <QueryProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -95,25 +95,23 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-dvh flex-col bg-background">
                 {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
-                <QueryProvider>
-                  <SearchCommandDialogProvider />
-                  <AccountModalProvider />
-                  <main className="min-h-dvh flex-1">
-                    <main className="flex h-full flex-col">
-                      <SiteHeader />
-                      <main className="mb-2 h-full flex-1">{children}</main>
-                    </main>
-                  </main>
-                  <SiteFooter />
-                </QueryProvider>
+                <SearchCommandDialogProvider />
+                <AccountModalProvider />
+                <section className="min-h-dvh flex-1">
+                  <section className="flex h-full flex-col">
+                    <SiteHeader />
+                    <main className="mb-2 h-full flex-1">{children}</main>
+                  </section>
+                </section>
+                <SiteFooter />
               </div>
             </div>
             <TailwindIndicator />
             <SonnerToaster richColors position="bottom-left" />
           </ThemeProvider>
-          <SpeedInsights />
-        </body>
-      </html>
-    </>
+        </QueryProvider>
+        <SpeedInsights />
+      </body>
+    </html>
   )
 }

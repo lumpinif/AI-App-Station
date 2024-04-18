@@ -81,26 +81,22 @@ export function ThemeToggle({
       <div className="dark:glass-card-background flex w-fit flex-row items-center space-x-4 rounded-full p-2 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline">
         <button
           type="button"
-          className={cn(currentTheme === "light" && "text-primary")}
+          className="text-primary  dark:text-muted-foreground"
           onClick={() => setTheme("light")}
         >
-          <Sun size={18} className="stroke-1" />
+          <Sun size={18} className="stroke-[1.5px] dark:stroke-1" />
         </button>
 
-        <button
-          type="button"
-          className={cn(currentTheme === "system" && "text-primary")}
-          onClick={() => setTheme("system")}
-        >
+        <button type="button" onClick={() => setTheme("system")}>
           <Monitor size={18} className="stroke-1" />
         </button>
 
         <button
           type="button"
-          className={cn(currentTheme === "dark" && "text-primary")}
+          className="dark:text-primary"
           onClick={() => setTheme("dark")}
         >
-          <Moon size={18} className="stroke-1" />
+          <Moon size={18} className="stroke-1 dark:stroke-[1.5px]" />
         </button>
       </div>
     </>

@@ -12,7 +12,6 @@ import LoginCard from "../signin/login-card"
 const AccountModal = ({ session }: { session: Session | null }) => {
   const isOpen = useAccountModal((state) => state.isOpen)
   const CloseModal = useAccountModal((state) => state.CloseModal)
-
   const onChange = (open: boolean) => {
     if (!open) CloseModal()
   }
@@ -24,7 +23,7 @@ const AccountModal = ({ session }: { session: Session | null }) => {
         onChange={onChange}
         drawerContentClassName="outline-none rounded-3xl"
         drawerHeight="h-[90%]"
-        dialogContentClassName="max-w-xl md:max-w-2xl rounded-2xl shadow-outline"
+        dialogContentClassName="max-w-xl rounded-2xl shadow-outline"
         title="Account"
       >
         {session ? (

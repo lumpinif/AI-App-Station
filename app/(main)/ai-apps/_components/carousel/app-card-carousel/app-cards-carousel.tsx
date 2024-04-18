@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Suspense, useMemo } from "react"
+import React, { useMemo } from "react"
 import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
@@ -78,18 +78,16 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
         onMouseLeave={() => setIsHovered(false)}
       >
         <CarouselContent className={cn("py-2", isMarginRight ? "mr-6" : "")}>
-          <Suspense fallback={"Loading..."}>
-            {dataGroups.map((group, index) => (
-              <CarouselItem
-                key={index}
-                className={cn("flex flex-col gap-y-5", className)}
-              >
-                {group.map((app, appIndex) => (
-                  <AppCard key={app.app_id} index={appIndex} {...app} />
-                ))}
-              </CarouselItem>
-            ))}
-          </Suspense>
+          {dataGroups.map((group, index) => (
+            <CarouselItem
+              key={index}
+              className={cn("flex flex-col gap-y-5", className)}
+            >
+              {group.map((app, appIndex) => (
+                <AppCard key={app.app_id} index={appIndex} {...app} />
+              ))}
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <CarouselPrevious
           hiddenOnCanNotScroll={hiddenOnCanNotScroll}
