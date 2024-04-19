@@ -10,8 +10,8 @@ import { App } from "@/types/db_tables"
 import { FormDataSchema } from "@/lib/schema"
 import { Button } from "@/components/ui/button"
 
-import DescriptionForm from "./description-form"
-import TitleForm from "./title-form"
+import DescriptionForm from "./forms/app-description-form"
+import TitleForm from "./forms/app-title-form"
 
 type Inputs = z.infer<typeof FormDataSchema>
 
@@ -140,9 +140,9 @@ export default function AppContinueSubmitForm({
                 >
                   App Title
                 </label>
-                <div className="mt-2">
-                  <TitleForm initialData={initialData} appId={appId} />
-                </div>
+                {/* <div className="mt-2">
+                  <TitleForm initialData={initialData} app_id={appId} />
+                </div> */}
               </div>
 
               <div className="sm:col-span-3">
@@ -176,7 +176,7 @@ export default function AppContinueSubmitForm({
                   Description
                 </label>
                 <div className="mt-2">
-                  <DescriptionForm initialData={initialData} appId={appId} />
+                  {/* <DescriptionForm initialData={initialData} app_id={appId} /> */}
                 </div>
               </div>
             </div>

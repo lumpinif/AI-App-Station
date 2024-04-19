@@ -164,7 +164,7 @@ const RatingsAndReviews = ({
         className
       )}
     >
-      <span className="text-lg font-medium tracking-wider">{rating_score}</span>
+      <div className="text-lg font-medium tracking-wider">{rating_score}</div>
       <Rating
         readOnly
         name="read-only"

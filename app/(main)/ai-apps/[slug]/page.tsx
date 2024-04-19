@@ -84,7 +84,7 @@ export default async function AppPagePage({
                   descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 md:text-base"
                   isTruncate={false}
                   isLink={false}
-                ></AppTitleWithDescription>
+                />
                 <span className="flex h-fit items-center space-x-2 pr-2 md:pr-4">
                   <ExternalLink className="mt-1 size-4 stroke-1 text-muted-foreground md:size-6" />
                 </span>

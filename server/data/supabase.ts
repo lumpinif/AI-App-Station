@@ -119,8 +119,8 @@ export async function UpdateAppByTitle(
   // Check if title already exists with exactly matching case-sensitive comparison
   const { data: existingApp, error: existingAppError } = await supabase
     .from("apps")
-    .select("title")
-    .eq("title", newTitle)
+    .select("app_title")
+    .eq("app_title", newTitle)
 
   if (existingAppError) {
     return { updatedApp: null, error: existingAppError }
@@ -135,7 +135,7 @@ export async function UpdateAppByTitle(
 
   const { data: updatedApp, error } = await supabase
     .from("apps")
-    .update({ app_title: newTitle })
+    .update({ app_title: newTitle, app_slug: titleToSlug(newTitle) })
     .eq("app_id", app_id)
     .select()
 
