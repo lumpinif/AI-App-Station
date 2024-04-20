@@ -541,7 +541,43 @@ export async function getAllDevelopers() {
   return { developers, error }
 }
 
-export async function upsertAppsDevelopers(
+// export async function upsertAppsDevelopers(
+//   app_id: App["app_id"],
+//   developer_ids: Developer["developer_id"][]
+// ) {
+//   try {
+//     const supabase = await createSupabaseServerClient()
+//     const {
+//       data: { session },
+//     } = await supabase.auth.getSession()
+
+//     const { data, error } = await supabase.from("apps_developers").upsert(
+//       developer_ids.map((developer_id) => ({
+//         app_id: app_id,
+//         developer_id: developer_id,
+//         submitted_by_user_id: session?.user.id,
+//       })),
+//       { onConflict: "app_id, developer_id" }
+//     )
+
+//     revalidatePath(`/user/apps/${app_id}`)
+
+//     // TODO: CHECK THE ERROR HANDLING IF IT IS THE BEST PRACTICE ACCRODING TO CLAUDE
+//     if (error) {
+//       console.error("Error inserting app-developer associations:", error)
+//       throw new Error("Failed to insert app-developer associations")
+//     }
+
+//     return data
+//   } catch (error) {
+//     console.error("Error in upsertAppsDevelopers:", error)
+//     throw new Error(
+//       "An error occurred while upserting app-developer associations"
+//     )
+//   }
+// }
+
+export async function insertAppsDevelopers(
   app_id: App["app_id"],
   developer_ids: Developer["developer_id"][]
 ) {
@@ -551,18 +587,41 @@ export async function upsertAppsDevelopers(
       data: { session },
     } = await supabase.auth.getSession()
 
-    const { data, error } = await supabase.from("apps_developers").upsert(
+    if (!session?.user.id) {
+      throw new Error("User session not found")
+    }
+
+    // Check if the app_id is associated with the current user_id
+    const { count, error: countError } = await supabase
+      .from("apps")
+      .select("*", { count: "exact", head: true })
+      .eq("app_id", app_id)
+      .eq("submitted_by_user_id", session?.user.id)
+
+    if (countError) {
+      console.error(
+        "Error checking app_id and user_id association:",
+        countError
+      )
+      throw new Error("Failed to check app_id and user_id association")
+    }
+
+    if (count === 0) {
+      throw new Error(
+        "Unauthorized: app_id is not associated with the current user"
+      )
+    }
+
+    const { data, error } = await supabase.from("apps_developers").insert(
       developer_ids.map((developer_id) => ({
         app_id: app_id,
         developer_id: developer_id,
         submitted_by_user_id: session?.user.id,
-      })),
-      { onConflict: "app_id, developer_id" }
+      }))
     )
 
     revalidatePath(`/user/apps/${app_id}`)
 
-    // TODO: CHECK THE ERROR HANDLING IF IT IS THE BEST PRACTICE ACCRODING TO CLAUDE
     if (error) {
       console.error("Error inserting app-developer associations:", error)
       throw new Error("Failed to insert app-developer associations")
@@ -570,9 +629,9 @@ export async function upsertAppsDevelopers(
 
     return data
   } catch (error) {
-    console.error("Error in upsertAppsDevelopers:", error)
+    console.error("Error in insertAppsDevelopers:", error)
     throw new Error(
-      "An error occurred while upserting app-developer associations"
+      "An error occurred while inserting app-developer associations"
     )
   }
 }
@@ -609,18 +668,51 @@ export async function removeAppsDevelopers(
   app_id: App["app_id"],
   developer_ids: Developer["developer_id"][]
 ) {
-  const supabase = await createSupabaseServerClient()
+  try {
+    const supabase = await createSupabaseServerClient()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
 
-  const { error } = await supabase
-    .from("apps_developers")
-    .delete()
-    .match({ app_id: app_id })
-    .in("developer_id", developer_ids)
+    if (!session?.user.id) {
+      throw new Error("User session not found")
+    }
 
-  revalidatePath(`/user/apps/${app_id}`)
+    // Check if the app_id is associated with the current user_id
+    const { count, error: countError } = await supabase
+      .from("apps")
+      .select("*", { count: "exact", head: true })
+      .eq("app_id", app_id)
+      .eq("submitted_by_user_id", session?.user.id)
 
-  if (error) {
-    console.error("Error removing app-developer associations:", error)
+    if (countError) {
+      console.error(
+        "Error checking app_id and user_id association:",
+        countError
+      )
+      throw new Error("Failed to check app_id and user_id association")
+    }
+
+    if (count === 0) {
+      throw new Error(
+        "Unauthorized: app_id is not associated with the current user"
+      )
+    }
+
+    const { error } = await supabase
+      .from("apps_developers")
+      .delete()
+      .match({ app_id: app_id })
+      .in("developer_id", developer_ids)
+
+    revalidatePath(`/user/apps/${app_id}`)
+
+    if (error) {
+      console.error("Error removing app-developer associations:", error)
+      throw error
+    }
+  } catch (error) {
+    console.error("Error in removeAppsDevelopers:", error)
     throw error
   }
 }

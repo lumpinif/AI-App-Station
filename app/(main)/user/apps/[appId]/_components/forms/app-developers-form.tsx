@@ -4,9 +4,9 @@ import { useState } from "react"
 import {
   checkExistingDevelopers,
   getAllDevelopers,
+  insertAppsDevelopers,
   insertDevelopers,
   removeAppsDevelopers,
-  upsertAppsDevelopers,
 } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Pencil } from "lucide-react"
@@ -128,16 +128,32 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
       const insertedDevelopers =
         newDevelopers.length > 0 ? await insertDevelopers(newDevelopers) : []
 
-      const allDeveloperIds = [
+      // const allDeveloperIds = [
+      //   ...insertedDevelopers.map((dev) => dev.developer_id),
+      //   ...existingDevelopers.map((dev) => dev.developer_id),
+      //   ...defaultDevelopers
+      //     .filter((d) => submittedDeveloperSlugs.has(titleToSlug(d.value)))
+      //     .map((d) => d.id as string),
+      // ]
+
+      // if (allDeveloperIds.length > 0) {
+      //   await upsertAppsDevelopers(app_id, allDeveloperIds)
+      // }
+
+      const newAppDeveloperIds = [
         ...insertedDevelopers.map((dev) => dev.developer_id),
-        ...existingDevelopers.map((dev) => dev.developer_id),
-        ...defaultDevelopers
-          .filter((d) => submittedDeveloperSlugs.has(titleToSlug(d.value)))
-          .map((d) => d.id as string),
+        ...existingDevelopers
+          .filter(
+            (dev) =>
+              !defaultDevelopers.some(
+                (d) => d.id === dev.developer_id.toString()
+              )
+          )
+          .map((dev) => dev.developer_id),
       ]
 
-      if (allDeveloperIds.length > 0) {
-        await upsertAppsDevelopers(app_id, allDeveloperIds)
+      if (newAppDeveloperIds.length > 0) {
+        await insertAppsDevelopers(app_id, newAppDeveloperIds)
       }
 
       if (developersToRemove.length > 0) {
@@ -152,7 +168,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
       toggleEdit()
     } catch (error) {
       console.error("Error updating developers:", error)
-      toast.error("An error occurred while updating developers")
+      toast.error("Failed updating developers, please try again")
     }
   }
 
