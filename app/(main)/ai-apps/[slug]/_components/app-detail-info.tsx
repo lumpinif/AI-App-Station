@@ -209,18 +209,28 @@ const Developers = ({
   return (
     <div
       className={cn(
-        "no-scrollbar relative flex h-full w-full snap-mandatory flex-col items-center justify-center overflow-y-scroll text-ellipsis pt-1 text-muted-foreground",
+        "group relative flex h-full w-full flex-col items-center justify-start text-muted-foreground",
         className
       )}
     >
-      <span className="flex h-full flex-col items-center justify-center">
+      <div
+        className={cn(
+          "no-scrollbar relative h-full max-h-16 overflow-y-auto scroll-smooth first:pt-1",
+          developers && developers.length < 4
+            ? "flex flex-col items-center justify-center"
+            : ""
+        )}
+      >
         {developers && developers.length > 0 ? (
           developers.map((dev) => (
-            <span key={dev.developer_name} className="w-full pt-1 text-xs">
+            <span
+              key={dev.developer_name}
+              className="block w-20 overflow-hidden text-ellipsis pb-1 text-xs md:w-28"
+            >
               {dev.developer_slug ? (
                 <Link
                   href={dev.developer_slug}
-                  className="h-full font-medium underline-offset-4 hover:cursor-pointer hover:text-primary hover:underline"
+                  className="select-none font-medium underline-offset-4 hover:cursor-pointer hover:text-primary hover:underline"
                 >
                   {dev.developer_name}
                 </Link>
@@ -230,9 +240,16 @@ const Developers = ({
             </span>
           ))
         ) : (
-          <span className="text-xs">Unknow</span>
+          <span className="flex h-full w-full items-center justify-center text-xs">
+            No developers yet
+          </span>
         )}
-      </span>
+      </div>
+      {developers && developers.length > 4 && (
+        <div className="absolute right-px top-[-22px] opacity-0 transition-all duration-200 ease-out group-hover:opacity-80 group-focus:opacity-80 group-active:opacity-80 md:right-4">
+          <span className="select-none text-xs text-muted-foreground">▼</span>
+        </div>
+      )}
     </div>
   )
 }
