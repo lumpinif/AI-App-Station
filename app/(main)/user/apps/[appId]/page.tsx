@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { GetAppsByUserId } from "@/server/data/supabase"
+import { GetAppByAppIdUserId } from "@/server/data/supabase"
 
 import { AppDevelopersForm } from "./_components/forms/app-developers-form"
 import { AppIconForm } from "./_components/forms/app-icon-form"
@@ -23,7 +23,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     return redirect("/signin")
   }
 
-  const { app, error } = await GetAppsByUserId(params.appId, user.id)
+  const { app, error } = await GetAppByAppIdUserId(params.appId, user.id)
 
   if (!app) {
     return redirect("/ai-apps")
@@ -83,7 +83,10 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
                 </div>
               </div>
             </div>
-            <AppDevelopersForm />
+            <AppDevelopersForm
+              app_id={app.app_id}
+              developers={app.developers}
+            />
           </div>
           <div className="flex w-full flex-col">
             <div className="flex flex-1 flex-col space-y-6 md:space-y-12 lg:space-y-16">

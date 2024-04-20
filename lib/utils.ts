@@ -2,6 +2,8 @@ import { clsx, type ClassValue } from "clsx"
 import { format, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
+import { Developer } from "@/types/db_tables"
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -35,4 +37,8 @@ export function titleToSlug(title: string) {
     .trim()
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
+}
+
+export function normalizeDevName(name: Developer["developer_name"]) {
+  return name.toLowerCase().replace(/[^a-z0-9]/g, "")
 }

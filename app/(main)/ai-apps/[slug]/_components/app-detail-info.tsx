@@ -50,7 +50,7 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
               <span>Developer</span>
             )}
           </InfoBoxTitle>
-          <Developers data={app} />
+          <Developers developers={app.developers} />
         </InfoBox>
         <InfoBoxSeperator />
 
@@ -200,10 +200,10 @@ const Category = ({
 }
 
 const Developers = ({
-  data: app,
+  developers,
   className,
 }: {
-  data: AppDetails
+  developers: AppDetails["developers"]
   className?: string
 }) => {
   return (
@@ -214,8 +214,8 @@ const Developers = ({
       )}
     >
       <span className="flex h-full flex-col items-center justify-center">
-        {app.developers && app.developers.length > 0 ? (
-          app.developers.map((dev) => (
+        {developers && developers.length > 0 ? (
+          developers.map((dev) => (
             <span key={dev.developer_name} className="w-full pt-1 text-xs">
               {dev.developer_slug ? (
                 <Link

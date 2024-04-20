@@ -9,6 +9,7 @@ import {
   AppDetails,
   Comment,
   CommentWithProfile,
+  Developer,
   Profile,
 } from "@/types/db_tables"
 import { titleToSlug } from "@/lib/utils"
@@ -31,7 +32,7 @@ const getErrorMessage = (error: unknown) => {
 
 // TODO: CHECK ALL THE ERROR HANDLING BEFORE PRODUCTION
 
-export async function GetAppsByUserId(
+export async function GetAppByAppIdUserId(
   app_id: App["app_id"],
   user_id: App["submitted_by_user_id"]
 ) {
@@ -43,12 +44,23 @@ export async function GetAppsByUserId(
 
   let { data: app, error } = await supabase
     .from("apps")
-    .select("*")
-    .eq("app_id", app_id)
-    .eq("submitted_by_user_id", user_id)
-    .single()
+    .select("*,categories(*),profiles(*),developers(*),app_likes(*)")
+    .match({ app_id: app_id, submitted_by_user_id: user_id })
+    .limit(1)
+    .returns<AppDetails[]>()
+  // .eq("app_id", app_id)
+  // .eq("submitted_by_user_id", user_id)
+  // .single()
 
-  return { app, error }
+  if (!app || app.length === 0) {
+    // console.log("App not found for app_slug:", app_slug)
+    return { app: null, error: "App not found" }
+  }
+
+  // error handling
+  if (error) return { app: null, error: getErrorMessage(error) }
+
+  return { app: app[0], error }
 }
 
 export async function SubmitApp(title: App["app_title"]) {
@@ -233,7 +245,7 @@ export async function getAppBySlug(app_slug: string) {
     .from("apps")
     .select(`*,categories(*),profiles(*),developers(*),app_likes(*)`)
     .match({ app_slug: app_slug, is_published: true })
-    .order("created_at", { ascending: false })
+    // .order("created_at", { ascending: false })
     .limit(1)
     .returns<AppDetails[]>()
 
@@ -243,7 +255,7 @@ export async function getAppBySlug(app_slug: string) {
   if (error) return { app: null, error: getErrorMessage(error) }
 
   if (!app || app.length === 0) {
-    console.log("App not found for app_slug:", app_slug)
+    // console.log("App not found for app_slug:", app_slug)
     return { app: null, error: "App not found" }
   }
 
@@ -432,6 +444,7 @@ export async function getSlugFromAppId(app_id: App["app_id"]) {
     .eq("app_id", app_id)
     .single()
 
+  // TODO: CHECK ERROR HANDLING
   if (error) {
     console.error(error.message)
   }
@@ -513,4 +526,122 @@ export async function DeleteComment(
   revalidatePath(`/ai-apps/${slug?.app_slug}`)
 
   return { error }
+}
+
+export async function getAllDevelopers() {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: developers, error } = await supabase
+    .from("developers")
+    .select("developer_name, developer_id")
+
+  // error handling
+  if (error) return { error: getErrorMessage(error) }
+
+  return { developers, error }
+}
+
+export async function upsertAppsDevelopers(
+  app_id: App["app_id"],
+  developer_ids: Developer["developer_id"][]
+) {
+  try {
+    const supabase = await createSupabaseServerClient()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    const { data, error } = await supabase.from("apps_developers").upsert(
+      developer_ids.map((developer_id) => ({
+        app_id: app_id,
+        developer_id: developer_id,
+        submitted_by_user_id: session?.user.id,
+      })),
+      { onConflict: "app_id, developer_id" }
+    )
+
+    revalidatePath(`/user/apps/${app_id}`)
+
+    // TODO: CHECK THE ERROR HANDLING IF IT IS THE BEST PRACTICE ACCRODING TO CLAUDE
+    if (error) {
+      console.error("Error inserting app-developer associations:", error)
+      throw new Error("Failed to insert app-developer associations")
+    }
+
+    return data
+  } catch (error) {
+    console.error("Error in upsertAppsDevelopers:", error)
+    throw new Error(
+      "An error occurred while upserting app-developer associations"
+    )
+  }
+}
+
+export async function insertDevelopers(
+  developers: { label: string; value: string }[]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  const { data, error } = await supabase
+    .from("developers")
+    .insert(
+      developers.map((developer) => ({
+        developer_name: developer.label,
+        developer_slug: titleToSlug(developer.value),
+        submitted_by_user_id: session?.user.id,
+      }))
+    )
+    .select("developer_id, developer_name")
+
+  if (error) {
+    console.error("Error inserting developers:", error)
+    throw error
+  }
+
+  return data
+}
+
+export async function removeAppsDevelopers(
+  app_id: App["app_id"],
+  developer_ids: Developer["developer_id"][]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const { error } = await supabase
+    .from("apps_developers")
+    .delete()
+    .match({ app_id: app_id })
+    .in("developer_id", developer_ids)
+
+  revalidatePath(`/user/apps/${app_id}`)
+
+  if (error) {
+    console.error("Error removing app-developer associations:", error)
+    throw error
+  }
+}
+
+export async function checkExistingDevelopers(
+  developers: { label: string; value: string }[]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const { data, error } = await supabase
+    .from("developers")
+    .select("developer_id, developer_slug")
+    .in(
+      "developer_slug",
+      developers.map((d) => d.value)
+    )
+
+  if (error) {
+    console.error("Error fetching existing developers:", error)
+    throw error
+  }
+
+  return data
 }
