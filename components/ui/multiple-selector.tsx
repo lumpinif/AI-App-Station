@@ -153,7 +153,7 @@ const CommandEmpty = forwardRef<
   return (
     <div
       ref={forwardedRef}
-      className={cn("py-6 text-center text-sm", className)}
+      className={cn("px-2 py-3 text-center text-sm", className)}
       cmdk-empty=""
       role="presentation"
       {...props}
@@ -395,7 +395,7 @@ const MultipleSelector = React.forwardRef<
       >
         <div
           className={cn(
-            "group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2",
+            "group rounded-md border-0 py-2 text-sm ring-offset-transparent focus-within:ring-0 focus-within:ring-offset-0",
             className
           )}
         >
@@ -459,15 +459,15 @@ const MultipleSelector = React.forwardRef<
                   : placeholder
               }
               className={cn(
-                "ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground",
+                "ml-1 flex-1 bg-transparent outline-none placeholder:text-xs placeholder:text-muted-foreground",
                 inputProps?.className
               )}
             />
           </div>
         </div>
-        <div className="relative mt-2">
+        <div className="relative">
           {open && (
-            <CommandList className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
+            <CommandList className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-lg outline-none backdrop-blur-lg animate-in dark:border-0 dark:bg-popover/60 dark:shadow-outline">
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (

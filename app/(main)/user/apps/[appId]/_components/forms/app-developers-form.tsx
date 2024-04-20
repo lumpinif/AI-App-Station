@@ -9,14 +9,13 @@ import {
   removeAppsDevelopers,
 } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Pencil } from "lucide-react"
+import { Check, Ellipsis, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
 import { App, Developer } from "@/types/db_tables"
 import { cn, normalizeDevName, titleToSlug } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -128,18 +127,6 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
       const insertedDevelopers =
         newDevelopers.length > 0 ? await insertDevelopers(newDevelopers) : []
 
-      // const allDeveloperIds = [
-      //   ...insertedDevelopers.map((dev) => dev.developer_id),
-      //   ...existingDevelopers.map((dev) => dev.developer_id),
-      //   ...defaultDevelopers
-      //     .filter((d) => submittedDeveloperSlugs.has(titleToSlug(d.value)))
-      //     .map((d) => d.id as string),
-      // ]
-
-      // if (allDeveloperIds.length > 0) {
-      //   await upsertAppsDevelopers(app_id, allDeveloperIds)
-      // }
-
       const newAppDeveloperIds = [
         ...insertedDevelopers.map((dev) => dev.developer_id),
         ...existingDevelopers
@@ -173,43 +160,53 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
   }
 
   return (
-    <section className="w-full flex-col space-y-2 border">
-      <h1 className="text-2xl font-semibold tracking-wide">Developers</h1>
+    <section className="w-full flex-col space-y-2">
+      <h1
+        className="w-fit text-2xl font-semibold tracking-wide hover:cursor-pointer"
+        onClick={toggleEdit}
+      >
+        Developers
+      </h1>
       {!isEditing ? (
-        <div className={cn("flex items-center justify-start gap-2")}>
-          <span className="flex h-full items-center justify-center space-x-1">
+        <div
+          className={cn(
+            "group flex w-fit items-center justify-start space-x-2 md:space-x-4"
+          )}
+        >
+          <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
             {developers && developers.length > 0 ? (
               developers.map((dev) => (
-                <Badge key={dev.developer_name} className="w-fit text-xs">
+                <span
+                  key={dev.developer_name}
+                  className="w-fit text-sm hover:cursor-pointer"
+                  onClick={() => setIsEditing(true)}
+                >
                   {dev.developer_slug ? (
-                    <span className="h-full select-none font-medium">
+                    <span className="h-full select-none">
                       {dev.developer_name}
                     </span>
                   ) : (
-                    <span className="font-medium">{dev.developer_name}</span>
+                    <span className="h-full select-none">
+                      {dev.developer_name}
+                    </span>
                   )}
-                </Badge>
+                </span>
               ))
             ) : (
               <span className="text-xs text-muted-foreground">
-                Search or Create developers ...
+                Search or Create developers
               </span>
             )}
           </span>
 
-          <Button
-            onClick={toggleEdit}
-            variant="ghost"
-            className="group"
-            size={"sm"}
-          >
-            <Pencil className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
+          <Button onClick={toggleEdit} variant="ghost" size={"xs"}>
+            <Ellipsis className="h-4 w-4 text-muted-foreground opacity-10 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
           </Button>
         </div>
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
               <FormField
                 control={form.control}
                 name="developers"
@@ -225,20 +222,20 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                           return res
                         }}
                         value={field.value}
+                        badgeClassName="font-medium"
                         onChange={field.onChange}
                         defaultOptions={defaultDevelopers}
-                        placeholder="Search or Create developers ..."
+                        placeholder="Search or Create developers..."
                         emptyIndicator={
-                          <p className="text-center text-base leading-10 text-muted-foreground">
+                          <p className="text-center text-xs text-muted-foreground">
                             Try to search for some developers
                           </p>
                         }
-                        className="border-0"
                         creatable
                         preventDuplicateCreation
                         loadingIndicator={
-                          <p className="py-2 text-center text-base leading-10 text-muted-foreground">
-                            loading...
+                          <p className="text-center text-xs leading-10 text-muted-foreground">
+                            searching...
                           </p>
                         }
                       />
@@ -247,23 +244,30 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                   </FormItem>
                 )}
               />
-              <div className="flex items-center space-x-2 ">
+              <div className="flex items-center space-x-2">
                 <Button
                   onClick={toggleEdit}
                   variant="ghost"
                   className="group"
-                  size={"sm"}
+                  size={"xs"}
                 >
                   <span className="text-muted-foreground group-hover:text-foreground">
-                    Cancel
+                    <X className="h-4 w-4" />
                   </span>
                 </Button>
+
                 <LoadingButton
                   loading={isSubmitting}
                   type="submit"
                   disabled={!isValid || isSubmitting}
+                  variant="ghost"
+                  className="group"
+                  size={"xs"}
+                  showChildren={false}
                 >
-                  Confirm
+                  <span className="text-muted-foreground group-hover:text-foreground">
+                    <Check className="h-4 w-4" />
+                  </span>
                 </LoadingButton>
               </div>
             </div>

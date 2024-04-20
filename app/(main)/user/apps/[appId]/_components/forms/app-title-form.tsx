@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { UpdateAppByTitle } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Loader2, Pencil } from "lucide-react"
+import { Check, Ellipsis, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { LoadingButton } from "@/components/ui/loading-button"
 
 type TitleFormProps = {
   app_id: App["app_id"]
@@ -63,17 +64,24 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
   return (
     <section>
       {!isEditing ? (
-        <div className={cn("flex items-center justify-start gap-2")}>
-          <span className="text-nowrap text-3xl font-bold md:text-4xl">
+        <div
+          className={cn(
+            "flex items-center justify-start space-x-2 md:space-x-4"
+          )}
+        >
+          <span
+            className="text-nowrap text-3xl font-bold hover:cursor-pointer md:text-4xl"
+            onClick={() => setIsEditing(true)}
+          >
             {app_title}
           </span>
           <Button
             onClick={toggleEdit}
             variant="ghost"
             className="group"
-            size={"sm"}
+            size={"xs"}
           >
-            <Pencil className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
+            <Ellipsis className="h-4 w-4 text-muted-foreground opacity-10 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
           </Button>
         </div>
       ) : (
@@ -86,12 +94,6 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      {/* <InputBorderSpotlight
-                        defaultValue={app_title}
-                        disabled={isSubmitting}
-                        placeholder="e.g. 'Perplexity'"
-                        {...field}
-                      /> */}
                       <Input
                         defaultValue={app_title}
                         disabled={isSubmitting}
@@ -109,30 +111,28 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                   onClick={toggleEdit}
                   variant="ghost"
                   className="group"
-                  size={"sm"}
+                  size={"xs"}
                 >
                   <span className="text-muted-foreground group-hover:text-foreground">
-                    Cancel
+                    <X className="h-4 w-4" />
                   </span>
                 </Button>
-                <Button
-                  disabled={
-                    !isValid ||
-                    isSubmitting ||
-                    app_title === form.getValues("title")
-                  }
-                  type="submit"
-                  size={"sm"}
-                  className="w-14"
-                >
-                  {isSubmitting ? (
-                    // TODO: REMOVE PULSELOADER GLOBALLY
-                    // <PulseLoader size={3} margin={1} />
-                    <Loader2 className={cn("h-4 w-4 animate-spin")} />
-                  ) : (
-                    <span className="select-none">Save</span>
-                  )}
-                </Button>
+
+                {app_title !== form.getValues("title") && (
+                  <LoadingButton
+                    loading={isSubmitting}
+                    type="submit"
+                    disabled={!isValid || isSubmitting}
+                    variant="ghost"
+                    className="group"
+                    size={"xs"}
+                    showChildren={false}
+                  >
+                    <span className="text-muted-foreground group-hover:text-foreground">
+                      <Check className="h-4 w-4" />
+                    </span>
+                  </LoadingButton>
+                )}
               </div>
             </div>
           </form>

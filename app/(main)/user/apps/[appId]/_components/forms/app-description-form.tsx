@@ -3,9 +3,8 @@
 import React, { useState } from "react"
 import { UpdateAppByDescription } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Loader2, Pencil } from "lucide-react"
+import { Check, Ellipsis, X } from "lucide-react"
 import { useForm } from "react-hook-form"
-import { PulseLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
@@ -20,6 +19,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
+import { LoadingButton } from "@/components/ui/loading-button"
 import { Textarea } from "@/components/ui/textarea"
 
 type DescriptionFormProps = {
@@ -89,22 +89,23 @@ const DescriptionForm = ({
   return (
     <section className="w-full">
       {!isEditing ? (
-        <div className={cn("flex items-center justify-start gap-2")}>
+        <div className={cn("group flex items-center justify-start space-x-2")}>
           <span
             className={cn(
-              "font tracking line-clamp-2 cursor-default text-sm tracking-normal text-muted-foreground md:line-clamp-3 md:text-base",
+              "font tracking line-clamp-2 cursor-default text-sm tracking-normal text-muted-foreground hover:cursor-pointer md:line-clamp-3 md:text-base",
               !description && "italic text-muted-foreground"
             )}
+            onClick={() => setIsEditing(true)}
           >
-            {description || "Add some description ..."}
+            {description || "Add some description here"}
           </span>
           <Button
             onClick={toggleEdit}
             variant="ghost"
             className="group"
-            size={"sm"}
+            size={"xs"}
           >
-            <Pencil className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
+            <Ellipsis className="h-4 w-4 text-muted-foreground opacity-10 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
           </Button>
         </div>
       ) : (
@@ -129,35 +130,37 @@ const DescriptionForm = ({
                   </FormItem>
                 )}
               />
-              <div className="flex items-center gap-x-2">
+              <div className="flex items-center space-x-2">
                 <Button
                   onClick={toggleEdit}
                   variant="ghost"
                   className="group"
-                  size={"sm"}
+                  size={"xs"}
                 >
                   <span className="text-muted-foreground group-hover:text-foreground">
-                    Cancel
+                    <X className="h-4 w-4" />
                   </span>
                 </Button>
-                <Button
-                  disabled={
-                    !isValid ||
-                    isSubmitting ||
-                    description === form.getValues("description")
-                  }
-                  type="submit"
-                  size={"sm"}
-                  className="w-14"
-                >
-                  {isSubmitting ? (
-                    // TODO: REMOVE PULSElOADER GLOBALLY
-                    // <PulseLoader size={3} margin={1} />
-                    <Loader2 className={cn("h-4 w-4 animate-spin")} />
-                  ) : (
-                    <span className="select-none">Save</span>
-                  )}
-                </Button>
+
+                {description !== form.getValues("description") && (
+                  <LoadingButton
+                    loading={isSubmitting}
+                    type="submit"
+                    disabled={
+                      !isValid ||
+                      isSubmitting ||
+                      description === form.getValues("description")
+                    }
+                    variant="ghost"
+                    className="group"
+                    size={"xs"}
+                    showChildren={false}
+                  >
+                    <span className="text-muted-foreground group-hover:text-foreground">
+                      <Check className="h-4 w-4" />
+                    </span>
+                  </LoadingButton>
+                )}
               </div>
             </div>
           </form>

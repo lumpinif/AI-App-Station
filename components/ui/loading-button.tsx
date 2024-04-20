@@ -25,6 +25,7 @@ const buttonVariants = cva(
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
+        xs: "h-6 w-6 px-1",
       },
     },
     defaultVariants: {
@@ -39,11 +40,21 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   loading?: boolean
+  showChildren?: boolean
 }
 
 const LoadingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, asChild = false, loading, children, ...props },
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      loading,
+      children,
+      showChildren = true,
+      ...props
+    },
     ref
   ) => {
     const Comp = asChild ? Slot : "button"
@@ -57,10 +68,13 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <>
           {loading && (
             <Loader2
-              className={cn("h-4 w-4 animate-spin", children && "mr-2")}
+              className={cn(
+                "h-4 w-4 animate-spin",
+                children && showChildren ? "mr-2" : ""
+              )}
             />
           )}
-          {children}
+          {showChildren ? children : !loading && children}
         </>
       </Comp>
     )
