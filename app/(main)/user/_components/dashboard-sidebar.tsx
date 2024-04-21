@@ -65,7 +65,7 @@ export const Sidebar = () => {
             // }
             rightSlot={<TbDirection className="text-xl opacity-50" />}
           >
-            <span className="text-sm font-medium">Linear</span>
+            <span className="text-sm font-medium">User</span>
           </SidebarItem>
           <div className="flex justify-end">
             <button
@@ -85,7 +85,7 @@ export const Sidebar = () => {
               className="glass-card-background rounded-md px-2 py-1 shadow-outline"
               leftSlot={<LuBarChart4 />}
             >
-              <span className="text-sm font-medium">Dashboard</span>
+              <span className="text-sm font-medium">Liked Apps</span>
             </SidebarItem>
             <SidebarItem
               isCollapsed={isCollapsed}
@@ -108,7 +108,7 @@ export const Sidebar = () => {
                 </div>
               }
             >
-              <span className="text-sm font-medium">Inbox</span>
+              <span className="text-sm font-medium">Collections</span>
             </SidebarItem>
           </div>
           <div className="py-4">
