@@ -1,6 +1,7 @@
 import Link from "next/link"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
+import PopoverMenu from "@/components/ui/popover-menu"
 import BackButton from "@/components/shared/back-button"
 
 export default async function UserAppsPage() {
@@ -26,10 +27,15 @@ export default async function UserAppsPage() {
       </h1>
       <div className="container flex flex-col space-y-4">
         {data?.map((app) => (
-          <Link href="/user/apps/[id]" as={`/user/apps/${app.app_id}`}>
+          <Link
+            href="/user/apps/[id]"
+            as={`/user/apps/${app.app_id}`}
+            className="w-fit rounded-xl bg-card px-3"
+          >
             {app.app_title}
           </Link>
         ))}
+        <PopoverMenu />
       </div>
     </>
   )
