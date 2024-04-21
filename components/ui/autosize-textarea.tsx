@@ -40,7 +40,8 @@ export const useAutosizeTextArea = ({
         textAreaRef.style.height = `${scrollHeight + offsetBorder}px`
       }
     }
-  }, [init, maxHeight, minHeight, textAreaRef, triggerAutoSize])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textAreaRef, triggerAutoSize])
 }
 
 export type AutosizeTextAreaRef = {
@@ -81,15 +82,17 @@ export const AutosizeTextarea = React.forwardRef<
 
     useImperativeHandle(ref, () => ({
       textArea: textAreaRef.current as HTMLTextAreaElement,
+      focus: () => textAreaRef.current?.focus(),
       maxHeight,
       minHeight,
     }))
 
     React.useEffect(() => {
-      if (value) {
+      if (value || props?.defaultValue) {
         setTriggerAutoSize(value as string)
       }
-    }, [value])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value || props?.defaultValue])
 
     return (
       <textarea

@@ -51,7 +51,7 @@ const DescriptionForm = ({
   useAutosizeTextArea({
     textAreaRef: textAreaRef?.current,
     triggerAutoSize: triggerAutoSize,
-    minHeight: 30,
+    minHeight: 35,
     maxHeight: 90,
   })
 
@@ -64,7 +64,9 @@ const DescriptionForm = ({
   }, [descriptionWatch])
 
   const { isSubmitting, isValid } = form.formState
-  const toggleEdit = () => setIsEditing((current) => !current)
+  const toggleEdit = () => {
+    setIsEditing((current) => !current)
+  }
 
   const onSubmit = async ({
     description,
