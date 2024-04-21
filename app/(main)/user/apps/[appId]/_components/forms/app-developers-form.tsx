@@ -110,7 +110,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
     )
 
     if (developersToAdd.length === 0 && developersToRemove.length === 0) {
-      toast.info("No changes detected.")
+      // toast.info("No changes detected.")
       toggleEdit()
       return
     }

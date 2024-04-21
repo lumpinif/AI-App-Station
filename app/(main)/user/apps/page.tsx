@@ -4,6 +4,7 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import BackButton from "@/components/shared/back-button"
 
 export default async function UserAppsPage() {
+  // TODO: MOVE THESE DATABASE TRANSCAIONS TO SERVER ACTIONS
   const supabase = await createSupabaseServerClient()
 
   const {
@@ -20,7 +21,6 @@ export default async function UserAppsPage() {
 
   return (
     <>
-      <BackButton />
       <h1 className="container mb-10">
         Welcome to User Apps Page! {user?.email}
       </h1>
