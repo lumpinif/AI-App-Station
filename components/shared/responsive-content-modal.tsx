@@ -27,7 +27,7 @@ type ModalProps = DrawerProps &
     onChange: (open: boolean) => void
   }
 
-export default function Modal({
+export default function ResponsiveContentModal({
   children,
   isOpen,
   title,

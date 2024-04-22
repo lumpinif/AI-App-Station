@@ -70,6 +70,50 @@
   }
 }
 
+.uppy-Dashboard-inner {
+  background-color: var(--background) !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+}
+
+.uppy-Dashboard-AddFiles {
+  border: none !important;
+}
+
+.uppy-StatusBar {
+  background-color: var(--background) !important;
+}
+
+.uppy-StatusBar-content {
+  color: rgb(27, 178, 64) !important;
+}
+
+.uppy-DashboardContent-bar {
+  border: none !important;
+}
+
+.uppy-Dashboard-Item-previewInnerWrap {
+  background-color: transparent !important;
+}
+
+.uppy-DashboardContent-bar {
+  background-color: transparent !important;
+}
+
+.uppy-Root {
+  color: var(--foreground) !important;
+}
+
+.uppy-Dashboard-Item-previewImg {
+  background-color: transparent !important;
+  border-radius: 0.75rem !important;
+}
+
+.uppy-Dashboard-AddFiles-title {
+  color: var(--foreground) !important;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -163,7 +207,6 @@
     all: unset;
   }
 
-  /*  */
   .link-card {
     @apply -mx-1.5 -my-1 rounded bg-transparent px-1.5 py-1 transition-colors duration-300 hover:bg-muted;
   }

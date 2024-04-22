@@ -3,7 +3,7 @@
 import { Session } from "@supabase/auth-helpers-nextjs"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
-import Modal from "@/components/shared/responsive-modal"
+import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import UserAccount from "../avatar/user-account"
@@ -18,10 +18,10 @@ const AccountModal = ({ session }: { session: Session | null }) => {
 
   return (
     <>
-      <Modal
+      <ResponsiveContentModal
         isOpen={isOpen}
         onChange={onChange}
-        drawerContentClassName="outline-none rounded-3xl"
+        drawerContentClassName="outline-none rounded-t-3xl"
         drawerHeight="h-[90%]"
         dialogContentClassName="max-w-xl rounded-2xl shadow-outline"
         title="Account"
@@ -37,7 +37,7 @@ const AccountModal = ({ session }: { session: Session | null }) => {
             </div>
           </LoginCard>
         )}
-      </Modal>
+      </ResponsiveContentModal>
     </>
   )
 }

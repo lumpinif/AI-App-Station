@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { getUserData } from "@/server/auth"
+import { getUserData, getUserSession } from "@/server/auth"
 import { GetAppByAppIdUserId } from "@/server/data/supabase"
 
 import { AppDevelopersForm } from "./_components/forms/app-developers-form"
@@ -18,6 +18,11 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     data: { user },
     error: getUserDataError,
   } = await getUserData()
+
+  const {
+    data: { session },
+  } = await getUserSession()
+
   // TODO: HANDLE ERROR
   if (!user) {
     return redirect("/signin")
@@ -75,7 +80,12 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           <div className="flex w-full flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
             <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">
               <div className="size-28 flex-none sm:size-32 md:size-40 lg:size-44">
-                <AppIconForm />
+                <AppIconForm
+                  app_id={app.app_id}
+                  app_title={app.app_title}
+                  app_submitted_by_user_id={app.submitted_by_user_id}
+                  access_token={session?.access_token}
+                />
               </div>
               <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
                 <div className="flex w-full justify-between">
