@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import {
   checkExistingDevelopers,
   getAllDevelopers,
@@ -9,13 +9,14 @@ import {
   removeAppsDevelopers,
 } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, Ellipsis, X } from "lucide-react"
+import { Check, Ellipsis, Loader2, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
 import { App, Developer } from "@/types/db_tables"
 import { cn, normalizeDevName, titleToSlug } from "@/lib/utils"
+import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -83,10 +84,11 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
     },
   })
 
+  const refSelector = useRef<HTMLDivElement>(null)
+
   const [isEditing, setIsEditing] = useState(false)
   const { isSubmitting, isValid } = form.formState
 
-  const [isTriggered, setIsTriggered] = useState(false)
   const toggleEdit = () => setIsEditing((current) => !current)
 
   async function onSubmit({ developers }: z.infer<typeof formSchema>) {
@@ -159,11 +161,15 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
     }
   }
 
+  useClickOutside<HTMLDivElement>(refSelector, () => {
+    setIsEditing(false)
+  })
+
   return (
     <section className="w-full flex-col space-y-2">
       <h1
-        className="w-fit text-2xl font-semibold tracking-wide hover:cursor-pointer"
-        onClick={toggleEdit}
+        className="w-fit select-none text-2xl font-semibold tracking-wide hover:cursor-pointer"
+        onClick={() => setIsEditing(true)}
       >
         Developers
       </h1>
@@ -206,7 +212,10 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-            <div className="flex items-center space-x-1">
+            <div
+              className="flex w-fit items-center space-x-1 border"
+              ref={refSelector}
+            >
               <FormField
                 control={form.control}
                 name="developers"
@@ -216,9 +225,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                       <MultipleSelector
                         // hidePlaceholderWhenSelected
                         onSearch={async (value) => {
-                          setIsTriggered(true)
                           const res = await searchAllDevelopers(value)
-                          setIsTriggered(false)
                           return res
                         }}
                         value={field.value}
@@ -234,9 +241,10 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                         creatable
                         preventDuplicateCreation
                         loadingIndicator={
-                          <p className="text-center text-xs leading-10 text-muted-foreground">
-                            searching...
-                          </p>
+                          <span className="flex w-full items-center justify-center space-x-2 py-5 text-muted-foreground">
+                            <p className="text-center text-xs ">searching</p>
+                            <Loader2 className="h-2 w-2 animate-spin" />
+                          </span>
                         }
                       />
                     </FormControl>

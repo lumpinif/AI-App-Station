@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { UpdateAppByTitle } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, Ellipsis, X } from "lucide-react"
@@ -10,6 +10,7 @@ import * as z from "zod"
 
 import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -33,6 +34,7 @@ const formSchema = z.object({
 })
 
 const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
+  const refTitle = useRef<HTMLDivElement>(null)
   const [isEditing, setIsEditing] = useState(false)
 
   const form = useForm({
@@ -61,6 +63,10 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
     }
   }
 
+  useClickOutside<HTMLDivElement>(refTitle, () => {
+    setIsEditing(false)
+  })
+
   return (
     <section>
       {!isEditing ? (
@@ -87,7 +93,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2" ref={refTitle}>
               <FormField
                 control={form.control}
                 name="title"

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { UpdateAppByDescription } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, Ellipsis, X } from "lucide-react"
@@ -10,6 +10,7 @@ import * as z from "zod"
 
 import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import useClickOutside from "@/hooks/use-click-out-side"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import { Button } from "@/components/ui/button"
 import {
@@ -46,8 +47,10 @@ const DescriptionForm = ({
     },
   })
 
-  const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
-  const [triggerAutoSize, setTriggerAutoSize] = React.useState("")
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+  const refDescription = useRef<HTMLDivElement>(null)
+
+  const [triggerAutoSize, setTriggerAutoSize] = useState("")
   useAutosizeTextArea({
     textAreaRef: textAreaRef?.current,
     triggerAutoSize: triggerAutoSize,
@@ -57,7 +60,7 @@ const DescriptionForm = ({
 
   const descriptionWatch = form.watch("description")
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (textAreaRef.current) {
       setTriggerAutoSize(descriptionWatch)
     }
@@ -88,6 +91,10 @@ const DescriptionForm = ({
     }
   }
 
+  useClickOutside<HTMLDivElement>(refDescription, () => {
+    setIsEditing(false)
+  })
+
   return (
     <section className="w-full">
       {!isEditing ? (
@@ -113,7 +120,10 @@ const DescriptionForm = ({
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex w-full items-center justify-between space-x-2">
+            <div
+              className="flex w-full items-center justify-between space-x-2"
+              ref={refDescription}
+            >
               <FormField
                 control={form.control}
                 name="description"
