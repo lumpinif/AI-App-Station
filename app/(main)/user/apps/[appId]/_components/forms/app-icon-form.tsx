@@ -5,15 +5,14 @@ import Image from "next/image"
 import { TooltipTrigger } from "@radix-ui/react-tooltip"
 import Uppy from "@uppy/core"
 import { Dashboard } from "@uppy/react"
-import { Image as ImageIcon, Loader2, TrashIcon, X } from "lucide-react"
+import { Image as ImageIcon, Loader2, X } from "lucide-react"
 
 import "@uppy/core/dist/style.min.css"
 import "@uppy/dashboard/dist/style.min.css"
 
 import { useRouter } from "next/navigation"
-import { deleteAppIcon, getAppIconFileName } from "@/server/data/supabase"
+import { deleteAppIcon } from "@/server/data/supabase"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Tus from "@uppy/tus"
 import { toast } from "sonner"
 
