@@ -4,6 +4,8 @@ import {
   GetAppByAppIdUserId,
   getAppIconFileName,
   getAppIconUrl,
+  getScreenshotsFileNames,
+  getScreenshotsPublicUrls,
 } from "@/server/data/supabase"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
@@ -52,6 +54,17 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     appIconFileName || ""
   )
 
+  const screenshotsFileNames = await getScreenshotsFileNames(
+    app.app_slug,
+    app.submitted_by_user_id
+  )
+
+  const screenshotsPublicUrls = await getScreenshotsPublicUrls(
+    app.app_slug,
+    app.submitted_by_user_id,
+    screenshotsFileNames || []
+  )
+
   // const requiredFields = [
   //   app.app_title,
   //   app.app_url,
@@ -59,12 +72,9 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   //   app.description,
   //   app.pricing,
   // ]
-
   // const totalFields = requiredFields.length
   // const completedFields = requiredFields.filter(Boolean).length
-
   // const completionText = `(${completedFields}/${totalFields})`
-
   // const isComplete = requiredFields.every(Boolean)
 
   return (
@@ -85,7 +95,6 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     //         isPublished={course.isPublished}
     //       />
     //   </div>
-
     //   <Suspense>
     //     <AppContinueSubmitForm initialData={app} appId={app.app_id} />
     //   </Suspense>
@@ -117,7 +126,13 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           </div>
           <div className="flex w-full flex-col">
             <div className="flex flex-1 flex-col space-y-6 md:space-y-12 lg:space-y-16">
-              <AppScreenshotsForm />
+              <AppScreenshotsForm
+                screenshotsFileNames={screenshotsFileNames || []}
+                screenshotsPublicUrls={screenshotsPublicUrls || []}
+                app_slug={app.app_slug}
+                app_submitted_by_user_id={app.submitted_by_user_id}
+                access_token={session?.access_token as string}
+              />
               <AppIntroductionForm />
             </div>
             <div className="mt-6">

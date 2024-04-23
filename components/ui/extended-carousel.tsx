@@ -268,7 +268,7 @@ const SliderMainItem = forwardRef<
       {...props}
       ref={ref}
       className={cn(
-        `min-w-0 shrink-0 grow-0 basis-full bg-background p-1 ${
+        `min-w-0 shrink-0 grow-0 basis-full bg-background p-1 hover:cursor-grab active:cursor-grabbing ${
           orientation === "vertical" ? "pb-1" : "pr-1"
         }`,
         className
@@ -295,7 +295,7 @@ const SliderThumbItem = forwardRef<
       ref={ref}
       onClick={() => onThumbClick(index)}
       className={cn(
-        "flex min-w-0 shrink-0 grow-0 basis-1/3 bg-background p-1",
+        "flex min-w-0 shrink-0 grow-0 basis-1/3 bg-background p-1 hover:cursor-grab active:cursor-grabbing",
         `${orientation === "vertical" ? "pb-1" : "pr-1"}`,
         className
       )}

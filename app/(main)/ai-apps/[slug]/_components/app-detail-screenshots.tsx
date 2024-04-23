@@ -12,7 +12,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
-import { ImageElement } from "../../_components/cards/new-post-card"
 import { AppDetailScreenshotsDialog } from "./app-detail-screenshots-dialog"
 
 type AppDetailScreenshotsProps = {

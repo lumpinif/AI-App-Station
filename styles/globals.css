@@ -73,12 +73,21 @@
 .uppy-Dashboard-inner {
   background-color: var(--background) !important;
   width: 100% !important;
-  height: 100% !important;
+  /* height: 100% !important; */
   border: none !important;
 }
 
 .uppy-Dashboard-AddFiles {
   border: none !important;
+}
+
+.uppy-Dashboard-AddFilesPanel {
+  background: linear-gradient(
+    0deg,
+    var(--background) 30%,
+    var(--muted)
+  ) !important;
+  backdrop-filter: blur(25px) !important;
 }
 
 .uppy-StatusBar {

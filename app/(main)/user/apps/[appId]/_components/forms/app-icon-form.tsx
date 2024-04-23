@@ -55,13 +55,13 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   appIconPublicUrl,
 }) => {
   const { data: profile } = useUser()
-  const [showIconUpModal, setShowIconUpModal] = useState<boolean>(false)
+  const router = useRouter()
+  const [showUploadModal, setShowUploadModal] = useState<boolean>(false)
   const [showUploadButton, setUploadButton] = useState<boolean>(false)
   const [isUploading, setIsUploading] = useState<boolean>(false)
   const [isRefreshingIcon, setIsRefreshingIcon] = useState<boolean>(false)
   const hasAppIconFileName = appIconFileName !== "" && appIconFileName !== null
   const hasAppIconUrl = appIconPublicUrl !== "" && appIconPublicUrl !== null
-  const router = useRouter()
   const supabase = createSupabaseBrowserClient()
   const bucketNameApp = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -69,6 +69,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
 
   const [uppy] = useState(() =>
     new Uppy({
+      id: "app-icon-uploader",
       restrictions: {
         maxNumberOfFiles: 1,
         allowedFileTypes: ["image/*"],
@@ -119,16 +120,15 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
     uppy.on("complete", (result) => {
       setIsRefreshingIcon(!isRefreshingIcon)
       if (result.successful.length > 0) {
-        console.log("on complete")
-        toast.success("Image updated")
+        toast.success("App Icon updated")
         router.refresh()
       } else {
-        toast.error("Error uploading image")
+        toast.error("Please try again uploading Icon")
       }
       router.refresh()
       setIsUploading(false)
       setIsRefreshingIcon(false)
-      setShowIconUpModal(false)
+      setShowUploadModal(false)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // Empty dependency array means this effect runs once on mount and clean up on unmount
@@ -160,7 +160,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
         }
       })
     } else {
-      toast.warning("Please upload the image")
+      toast.warning("Please upload the Icon")
     }
   }
 
@@ -174,11 +174,11 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
 
     if (response) {
       setIsRefreshingIcon(false)
-      toast.success("Image deleted")
+      toast.success("App Icon deleted")
       router.refresh()
     } else {
       setIsRefreshingIcon(false)
-      toast.error("Error deleting image")
+      toast.error("Error deleting App Icon")
     }
   }
 
@@ -196,7 +196,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
               <div
                 className="group flex size-full flex-col items-center justify-center sm:hover:cursor-pointer"
                 onClick={() => {
-                  setShowIconUpModal(true)
+                  setShowUploadModal(true)
                 }}
               >
                 {isRefreshingIcon ? (
@@ -247,7 +247,9 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter className="font-sans">
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel className="border-0">
+                      Cancel
+                    </AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleIconDelete}
                       className="bg-destructive hover:bg-destructive/80"
@@ -272,9 +274,9 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
       </div>
       <div>
         <ResponsiveContentModal
-          isOpen={showIconUpModal}
+          isOpen={showUploadModal}
           onChange={(open: boolean) => {
-            if (!open) setShowIconUpModal(false)
+            if (!open) setShowUploadModal(false)
           }}
           drawerContentClassName="outline-none rounded-t-3xl"
           drawerHeight="h-fit"
@@ -290,6 +292,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
               }
               showSelectedFiles
               uppy={uppy}
+              showRemoveButtonAfterComplete
               proudlyDisplayPoweredByUppy={false}
               showLinkToFileUploadResult={false}
               hideUploadButton

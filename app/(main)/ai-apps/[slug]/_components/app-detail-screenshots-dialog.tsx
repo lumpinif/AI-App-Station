@@ -25,18 +25,24 @@ import { EnhancedDrawerClose } from "@/components/shared/enhanced-drawer"
 
 import { ImageElement } from "../../_components/cards/new-post-card"
 
-type AppDetailScreenshotsDialogProps = { index?: number }
+type AppDetailScreenshotsDialogProps = {
+  screenshot_url?: string
+  screenshotsPublicUrls?: string[]
+  index?: number
+}
 
 export const AppDetailScreenshotsDialog: React.FC<
   AppDetailScreenshotsDialogProps
-> = ({ index }) => {
+> = ({ screenshotsPublicUrls, screenshot_url, index }) => {
   const { isDesktop } = useMediaQuery()
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/screenshots/`
 
   return (
     <ResponsiveModal>
-      <ResponsiveModalTrigger>
+      <ResponsiveModalTrigger className="hover:cursor-grab active:cursor-grabbing">
         <Image
-          src={`https://picsum.photos/600/350?v=${index}`}
+          src={screenshot_url ? screenshot_url : `/images/image-not-found.png`}
           fill
           alt=""
           objectFit="cover"
@@ -65,53 +71,68 @@ export const AppDetailScreenshotsDialog: React.FC<
         </ResponsiveModalHeader>
         {/* Carousel */}
         <div className="h-fit w-full flex-1 overflow-hidden">
-          <Carousel orientation="horizontal">
+          <Carousel
+            orientation="horizontal"
+            carouselOptions={{ startIndex: index }}
+          >
             <CarouselPrevious className="left-1 size-8 border-0 outline-none hover:bg-background/70 md:left-2 md:size-12" />
             <CarouselNext className="right-1 size-8 border-0 outline-none hover:bg-background/70 md:right-2 md:size-12" />
             <CarouselMainContainer
               className={cn("h-[calc(70svh)]", isDesktop && "h-[calc(75svh)]")}
             >
-              {Array.from({ length: 10 }).map((_, index) => (
-                <SliderMainItem
-                  key={index}
-                  className={cn(
-                    "h-[calc(77svh)] bg-transparent",
-                    isDesktop && "h-[calc(75svh)]"
-                  )}
-                >
-                  <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
-                    <Image
-                      src={`https://picsum.photos/600/350?v=${index}`}
-                      fill
-                      alt=""
-                      objectFit="cover"
-                      style={{ objectFit: "cover" }}
-                      data-vaul-no-drag
-                    />
-                  </div>
-                </SliderMainItem>
-              ))}
+              {screenshotsPublicUrls &&
+                screenshotsPublicUrls.length > 0 &&
+                screenshotsPublicUrls.map((screenshot_url, index) => (
+                  <SliderMainItem
+                    key={index}
+                    className={cn(
+                      "h-[calc(77svh)] bg-transparent",
+                      isDesktop && "h-[calc(75svh)]"
+                    )}
+                  >
+                    <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
+                      <Image
+                        src={
+                          screenshot_url
+                            ? screenshot_url
+                            : `/images/image-not-found.png`
+                        }
+                        fill
+                        alt=""
+                        objectFit="cover"
+                        style={{ objectFit: "cover" }}
+                        data-vaul-no-drag
+                      />
+                    </div>
+                  </SliderMainItem>
+                ))}
             </CarouselMainContainer>
 
             <CarouselThumbsContainer>
-              {Array.from({ length: 10 }).map((_, index) => (
-                <SliderThumbItem
-                  key={index}
-                  index={index}
-                  className="bg-transparent"
-                >
-                  <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
-                    <Image
-                      src={`https://picsum.photos/600/350?v=${index}`}
-                      fill
-                      alt=""
-                      objectFit="cover"
-                      style={{ objectFit: "cover" }}
-                      data-vaul-no-drag
-                    />
-                  </div>
-                </SliderThumbItem>
-              ))}
+              {screenshotsPublicUrls &&
+                screenshotsPublicUrls.length > 0 &&
+                screenshotsPublicUrls.map((screenshot_url, index) => (
+                  <SliderThumbItem
+                    key={index}
+                    index={index}
+                    className="bg-transparent"
+                  >
+                    <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
+                      <Image
+                        src={
+                          screenshot_url
+                            ? screenshot_url
+                            : `/images/image-not-found.png`
+                        }
+                        fill
+                        alt=""
+                        objectFit="cover"
+                        style={{ objectFit: "cover" }}
+                        data-vaul-no-drag
+                      />
+                    </div>
+                  </SliderThumbItem>
+                ))}
             </CarouselThumbsContainer>
           </Carousel>
         </div>

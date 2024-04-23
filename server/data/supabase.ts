@@ -751,6 +751,54 @@ export async function checkExistingDevelopers(
 
 // STORAGE
 
+export async function getScreenshotsFileNames(
+  app_slug: string,
+  app_submitted_by_user_id: string
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
+
+  const { data, error } = await supabase.storage
+    .from(bucketName)
+    .list(`${app_slug}/${app_submitted_by_user_id}/screenshots`, {
+      limit: 6,
+      offset: 0,
+      sortBy: { column: "created_at", order: "desc" },
+    })
+
+  if (error) {
+    console.error("Error message : ", error.message)
+    return null
+  }
+
+  if (data && data.length > 0) {
+    return data?.map((item) => item.name)
+  }
+  return null
+}
+
+export async function getScreenshotsPublicUrls(
+  app_slug: string,
+  app_submitted_by_user_id: string,
+  fileNames: string[]
+) {
+  const supabase = await createSupabaseServerClient()
+  const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
+  let screenshotsPublicUrls: string[] = []
+
+  fileNames.map((fileName) => {
+    const { data } = supabase.storage
+      .from(bucketName)
+      .getPublicUrl(
+        `${app_slug}/${app_submitted_by_user_id}/screenshots/${fileName}`
+      )
+
+    if (data) screenshotsPublicUrls.push(data.publicUrl)
+  })
+
+  return screenshotsPublicUrls
+}
 export async function getAppIconFileName(
   app_slug: string,
   app_submitted_by_user_id: string
@@ -822,6 +870,37 @@ export async function deleteAppIcon(
       if (error) {
         console.log(error)
       }
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    if (error) {
+      console.log(error)
+      return false
+    }
+    return false
+  }
+}
+
+export async function deleteScreenshot(
+  app_slug: App["app_slug"],
+  app_submitted_by_user_id: App["submitted_by_user_id"],
+  screenshotFileName: string
+) {
+  const supabase = await createSupabaseServerClient()
+  try {
+    const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
+    const { data, error } = await supabase.storage
+      .from(bucketName)
+      .remove([
+        `${app_slug}/${app_submitted_by_user_id}/screenshots/${screenshotFileName}`,
+      ])
+    // TODO: ERROR HANDLING
+    if (error) {
+      console.log(error)
+    }
+    if (data?.length && data?.length > 0) {
       return true
     } else {
       return false

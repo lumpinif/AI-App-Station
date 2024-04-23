@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { UpdateAppByDescription } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, Ellipsis, X } from "lucide-react"
+import { Check, SquarePen, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -114,7 +114,7 @@ const DescriptionForm = ({
             className="group"
             size={"xs"}
           >
-            <Ellipsis className="h-4 w-4 text-muted-foreground opacity-10 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
+            <SquarePen className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
           </Button>
         </div>
       ) : (

@@ -3,7 +3,7 @@
 import { useRef, useState } from "react"
 import { UpdateAppByTitle } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, Ellipsis, X } from "lucide-react"
+import { Check, SquarePen, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -72,7 +72,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
       {!isEditing ? (
         <div
           className={cn(
-            "flex items-center justify-start space-x-2 md:space-x-4"
+            "group flex items-center justify-start space-x-2 md:space-x-4"
           )}
         >
           <span
@@ -87,7 +87,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
             className="group"
             size={"xs"}
           >
-            <Ellipsis className="h-4 w-4 text-muted-foreground opacity-10 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
+            <SquarePen className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
           </Button>
         </div>
       ) : (
