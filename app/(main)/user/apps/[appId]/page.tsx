@@ -94,8 +94,8 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
       <div className="flex flex-col space-y-4">
         <div className="flex flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
           <div className="flex w-full flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
-            <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">
-              <div className="size-28 flex-none sm:size-32 md:size-40 lg:size-44">
+            <div className="flex w-full items-start space-x-4 md:space-x-8">
+              <div className="size-28 flex-none sm:size-32 md:size-40">
                 <AppIconForm
                   appIconFileName={appIconFileName as string}
                   appIconPublicUrl={appIconUrl as string}
