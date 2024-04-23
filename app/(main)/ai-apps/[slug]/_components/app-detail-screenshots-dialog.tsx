@@ -49,7 +49,7 @@ export const AppDetailScreenshotsDialog: React.FC<
       </ResponsiveModalTrigger>
       <ResponsiveModalContent
         className={cn(
-          "flex h-[95%] flex-col justify-start rounded-t-3xl p-4 outline-none focus:!ring-0 focus:!ring-transparent lg:h-fit lg:max-w-[75%]",
+          "flex h-[95%] flex-col justify-start rounded-t-3xl p-4 outline-none focus:!ring-0 focus:!ring-transparent lg:h-fit lg:max-w-[85%]",
           isDesktop && "p-8 shadow-outline"
         )}
       >
@@ -76,7 +76,10 @@ export const AppDetailScreenshotsDialog: React.FC<
             <CarouselPrevious className="left-1 size-8 border-0 outline-none hover:bg-background/70 md:left-2 md:size-12" />
             <CarouselNext className="right-1 size-8 border-0 outline-none hover:bg-background/70 md:right-2 md:size-12" />
             <CarouselMainContainer
-              className={cn("h-[calc(70svh)]", isDesktop && "h-[calc(60svh)]")}
+              className={cn(
+                "h-[calc(70svh)]",
+                isDesktop && "lg:h-[calc(60svh)] xl:h-[calc(75svh)]"
+              )}
             >
               {screenshotsPublicUrls &&
                 screenshotsPublicUrls.length > 0 &&
@@ -85,7 +88,7 @@ export const AppDetailScreenshotsDialog: React.FC<
                     key={index}
                     className={cn(
                       "h-[calc(77svh)] bg-transparent",
-                      isDesktop && "h-[calc(60svh)]"
+                      isDesktop && "h-[calc(60svh)] xl:h-[calc(75svh)]"
                     )}
                   >
                     <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
