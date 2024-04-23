@@ -1,20 +1,38 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { TooltipTrigger } from "@radix-ui/react-tooltip"
 import Uppy from "@uppy/core"
 import { Dashboard } from "@uppy/react"
-import { Image as ImageIcon } from "lucide-react"
+import { Image as ImageIcon, Loader2, TrashIcon, X } from "lucide-react"
 
 import "@uppy/core/dist/style.min.css"
 import "@uppy/dashboard/dist/style.min.css"
 
+import { useRouter } from "next/navigation"
+import { deleteAppIcon, getAppIconFileName } from "@/server/data/supabase"
+import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Tus from "@uppy/tus"
+import { toast } from "sonner"
 
 import { App } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
@@ -23,17 +41,15 @@ import {
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 type AppIconFormProps = {
-  app_id: App["app_id"]
-  app_title: App["app_title"]
+  app_slug: App["app_slug"]
   app_submitted_by_user_id: App["submitted_by_user_id"]
-  access_token?: string
-  appIconFileName?: string
-  appIconPublicUrl?: string
+  access_token: string
+  appIconFileName: string
+  appIconPublicUrl: string
 }
 
 export const AppIconForm: React.FC<AppIconFormProps> = ({
-  app_id,
-  app_title,
+  app_slug,
   app_submitted_by_user_id,
   access_token,
   appIconFileName,
@@ -42,7 +58,12 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   const { data: profile } = useUser()
   const [showIconUpModal, setShowIconUpModal] = useState<boolean>(false)
   const [showUploadButton, setUploadButton] = useState<boolean>(false)
-
+  const [isUploading, setIsUploading] = useState<boolean>(false)
+  const [isRefreshingIcon, setIsRefreshingIcon] = useState<boolean>(false)
+  const hasAppIconFileName = appIconFileName !== "" && appIconFileName !== null
+  const hasAppIconUrl = appIconPublicUrl !== "" && appIconPublicUrl !== null
+  const router = useRouter()
+  const supabase = createSupabaseBrowserClient()
   const bucketNameApp = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseUploadURL = `${supabaseUrl}/storage/v1/upload/resumable`
@@ -69,13 +90,13 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
     })
   )
 
-  uppy.on("file-added", (file) => {
+  uppy.on("file-added", async (file) => {
     setUploadButton(true)
 
     const supabaseMetadata = {
       bucketName: bucketNameApp,
       objectName:
-        app_title +
+        app_slug +
         "/" +
         app_submitted_by_user_id +
         "/" +
@@ -91,30 +112,87 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
     }
   })
 
+  uppy.on("upload", () => {
+    setIsRefreshingIcon(!isRefreshingIcon)
+  })
+
+  useEffect(() => {
+    uppy.on("complete", (result) => {
+      setIsRefreshingIcon(!isRefreshingIcon)
+      if (result.successful.length > 0) {
+        console.log("on complete")
+        toast.success("Image updated")
+        router.refresh()
+      } else {
+        toast.error("Error uploading image")
+      }
+      router.refresh()
+      setIsUploading(false)
+      setIsRefreshingIcon(false)
+      setShowIconUpModal(false)
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Empty dependency array means this effect runs once on mount and clean up on unmount
+
   uppy.on("file-removed", (file) => {
     setUploadButton(false)
   })
 
   const handleUpload = () => {
-    uppy.upload()
+    if (uppy.getFiles().length !== 0) {
+      const app_icon_src =
+        app_slug +
+        "/" +
+        app_submitted_by_user_id +
+        "/" +
+        "icon" +
+        "/" +
+        uppy.getFiles()[0].name
+      setIsUploading(!isUploading)
+      uppy.upload().then(async () => {
+        const { error } = await supabase
+          .from("apps")
+          .update({ app_icon_src: app_icon_src })
+          .eq("app_slug", app_slug)
+          .eq("submitted_by_user_id", app_submitted_by_user_id)
+
+        if (error) {
+          toast.error("Error updating App Icon Src")
+        }
+      })
+    } else {
+      toast.warning("Please upload the image")
+    }
   }
 
-  const ImageElement = (
-    <Image
-      src={""}
-      width={200}
-      height={200}
-      alt={"App Logo"}
-      className="aspect-square rounded-xl"
-      priority
-    />
-  )
+  const handleIconDelete = async () => {
+    setIsRefreshingIcon(!isRefreshingIcon)
+    const response = await deleteAppIcon(
+      app_slug,
+      app_submitted_by_user_id,
+      appIconFileName
+    )
+
+    if (response) {
+      setIsRefreshingIcon(false)
+      toast.success("Image deleted")
+      router.refresh()
+    } else {
+      setIsRefreshingIcon(false)
+      toast.error("Error deleting image")
+    }
+  }
 
   return (
     <TooltipProvider>
-      <div className="flex aspect-square flex-none items-center justify-center overflow-hidden rounded-xl bg-card p-2 shadow-md transition-all duration-200 ease-out dark:shadow-outline">
+      <div
+        className={cn(
+          "flex aspect-square flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out dark:shadow-outline",
+          hasAppIconFileName ? "dark:bg-primary" : "bg-card"
+        )}
+      >
         <Tooltip delayDuration={0}>
-          {!appIconFileName ? (
+          {!hasAppIconFileName ? (
             <TooltipTrigger asChild>
               <div
                 className="group flex size-full flex-col items-center justify-center sm:hover:cursor-pointer"
@@ -122,17 +200,67 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
                   setShowIconUpModal(true)
                 }}
               >
-                <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
-                <div className="flex flex-col items-center text-center text-xs leading-6 text-muted-foreground">
-                  <p className="text-xs leading-5 text-muted">
-                    Upload App Icon
-                  </p>
-                </div>
+                {isRefreshingIcon ? (
+                  <Skeleton className="size-full" />
+                ) : (
+                  <>
+                    <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
+                    <div className="flex flex-col items-center text-center text-xs leading-6 text-muted-foreground">
+                      <p className="text-xs leading-5 text-muted">
+                        Upload App Icon
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </TooltipTrigger>
           ) : (
-            ImageElement
+            <div className="group relative">
+              {isRefreshingIcon ? (
+                <Skeleton className="size-full" />
+              ) : (
+                <Image
+                  src={
+                    hasAppIconUrl && hasAppIconFileName
+                      ? appIconPublicUrl
+                      : "/images/image-not-found.png"
+                  }
+                  width={200}
+                  height={200}
+                  alt={"App Logo"}
+                  className="aspect-square rounded-xl p-2"
+                  priority
+                />
+              )}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button className="absolute right-1 top-1">
+                    <X className="transtition-all hidden size-4 opacity-0 duration-200 ease-out group-hover:block group-hover:cursor-pointer group-hover:text-popover-foreground group-hover:opacity-100 dark:group-hover:text-popover" />
+                  </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="max-w-sm rounded-2xl md:max-w-md">
+                  <AlertDialogHeader className="font-sans">
+                    <AlertDialogTitle>
+                      Are you sure you want to delete this icon?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action can not be undone
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="font-sans">
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleIconDelete}
+                      className="bg-destructive hover:bg-destructive/80"
+                    >
+                      <span className="text-primary">Confirm</span>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           )}
+
           <TooltipContent
             className="flex items-center text-xs dark:bg-foreground dark:text-background"
             align="center"
@@ -157,11 +285,14 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
           <div className="flex flex-col items-center space-y-6 p-4 pb-6 md:space-y-10">
             <Dashboard
               className="w-full"
-              disabled={profile?.user_id !== app_submitted_by_user_id}
+              disabled={
+                profile?.user_id !== app_submitted_by_user_id ||
+                isRefreshingIcon
+              }
               showSelectedFiles
               uppy={uppy}
               proudlyDisplayPoweredByUppy={false}
-              showLinkToFileUploadResult
+              showLinkToFileUploadResult={false}
               hideUploadButton
               disableInformer
             />
@@ -171,8 +302,23 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
               </span>
             )}
             {showUploadButton && (
-              <Button onClick={handleUpload} className="w-full">
-                Upload
+              <Button
+                disabled={
+                  profile?.user_id !== app_submitted_by_user_id ||
+                  isRefreshingIcon ||
+                  isUploading
+                }
+                onClick={handleUpload}
+                className="w-full"
+              >
+                {isUploading ? (
+                  <span className="flex items-center font-normal text-muted-foreground">
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                    <span>Uploading</span>
+                  </span>
+                ) : (
+                  <span>Upload</span>
+                )}
               </Button>
             )}
           </div>

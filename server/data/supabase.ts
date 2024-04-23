@@ -261,6 +261,17 @@ export async function getAppBySlug(app_slug: string) {
 
   const app_id = app[0].app_id
 
+  // getting app icon url
+  // const appIconFileName = await getAppIconFileName(
+  //   app_slug,
+  //   app[0].submitted_by_user_id
+  // )
+  // const appIconUrl = await getAppIconUrl(
+  //   app_slug,
+  //   app[0].submitted_by_user_id,
+  //   appIconFileName as string
+  // )
+
   let { data: ratingData, error: ratingError } = await supabase.rpc(
     "get_app_rating_data",
     { app_id_param: app_id }
@@ -736,4 +747,90 @@ export async function checkExistingDevelopers(
   }
 
   return data
+}
+
+// STORAGE
+
+export async function getAppIconFileName(
+  app_slug: string,
+  app_submitted_by_user_id: string
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
+
+  const { data, error } = await supabase.storage
+    .from(bucketName)
+    .list(`${app_slug}/${app_submitted_by_user_id}/icon`, {
+      limit: 1,
+      offset: 0,
+      sortBy: { column: "created_at", order: "asc" },
+    })
+
+  if (error) {
+    console.error("Error message : ", error.message)
+    return null
+  }
+
+  if (data && data.length > 0) {
+    return data[0].name
+  }
+  return null
+}
+
+export async function getAppIconUrl(
+  app_slug: string,
+  app_submitted_by_user_id: string,
+  fileName: string
+) {
+  const supabase = await createSupabaseServerClient()
+  const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
+
+  const { data } = supabase.storage
+    .from(bucketName)
+    .getPublicUrl(`${app_slug}/${app_submitted_by_user_id}/icon/${fileName}`)
+
+  return data.publicUrl
+}
+
+export async function deleteAppIcon(
+  app_slug: App["app_slug"],
+  app_submitted_by_user_id: App["submitted_by_user_id"],
+  appIconFileName: string
+) {
+  const supabase = await createSupabaseServerClient()
+  try {
+    const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
+    const { data, error } = await supabase.storage
+      .from(bucketName)
+      .remove([
+        `${app_slug}/${app_submitted_by_user_id}/icon/${appIconFileName}`,
+      ])
+    // TODO: ERROR HANDLING
+    if (error) {
+      console.log(error)
+    }
+    if (data?.length && data?.length > 0) {
+      // remove the record from app_icon_src
+      const { error } = await supabase
+        .from("apps")
+        .update({ app_icon_src: null })
+        .eq("app_slug", app_slug)
+        .eq("submitted_by_user_id", app_submitted_by_user_id)
+
+      // TODO: ERROR HANDLING
+      if (error) {
+        console.log(error)
+      }
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    if (error) {
+      console.log(error)
+      return false
+    }
+    return false
+  }
 }

@@ -165,6 +165,7 @@ module.exports = {
       animation: {
         // Reveal Effect
         reveal: "reveal 0.7s ease-in-out",
+        "reveal-repeat": "reveal 0.7s ease-in-out infinite",
 
         // Accordion
         "accordion-down": "accordion-down 0.2s ease-out",

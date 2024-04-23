@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 type AppIconProps = {
   app_slug: App["app_slug"]
   app_title: App["app_title"]
-  app_icon_src: App["app_icon_src"]
+  app_icon_src?: App["app_icon_src"]
   size?: number | string
   className?: string
   isLink?: boolean
@@ -23,9 +23,13 @@ export const AppIcon: React.FC<AppIconProps> = ({
   isLink = true,
   externalLink,
 }) => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/apps/`
+  const appIconSrc = supabaseImageURL + app_icon_src
+
   const ImageElement = (
     <Image
-      src={app_icon_src || "/images/openai-svgrepo-com.svg"}
+      src={app_icon_src ? appIconSrc : "/images/image-not-found.png"}
       width={200}
       height={200}
       alt={app_title || "App Logo"}

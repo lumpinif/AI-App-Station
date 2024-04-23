@@ -213,7 +213,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
             <div
-              className="flex w-fit items-center space-x-1 border"
+              className="flex w-fit items-center space-x-1"
               ref={refSelector}
             >
               <FormField

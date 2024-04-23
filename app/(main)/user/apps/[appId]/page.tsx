@@ -1,6 +1,11 @@
 import { redirect } from "next/navigation"
 import { getUserData, getUserSession } from "@/server/auth"
-import { GetAppByAppIdUserId } from "@/server/data/supabase"
+import {
+  GetAppByAppIdUserId,
+  getAppIconFileName,
+  getAppIconUrl,
+} from "@/server/data/supabase"
+import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { AppDevelopersForm } from "./_components/forms/app-developers-form"
 import { AppIconForm } from "./_components/forms/app-icon-form"
@@ -36,20 +41,31 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
 
   if (error) console.error(error)
 
-  const requiredFields = [
-    app.app_title,
-    app.app_url,
-    app.introduction,
-    app.description,
-    app.pricing,
-  ]
+  const appIconFileName = await getAppIconFileName(
+    app.app_slug,
+    app.submitted_by_user_id
+  )
 
-  const totalFields = requiredFields.length
-  const completedFields = requiredFields.filter(Boolean).length
+  const appIconUrl = await getAppIconUrl(
+    app.app_slug,
+    app.submitted_by_user_id,
+    appIconFileName || ""
+  )
 
-  const completionText = `(${completedFields}/${totalFields})`
+  // const requiredFields = [
+  //   app.app_title,
+  //   app.app_url,
+  //   app.introduction,
+  //   app.description,
+  //   app.pricing,
+  // ]
 
-  const isComplete = requiredFields.every(Boolean)
+  // const totalFields = requiredFields.length
+  // const completedFields = requiredFields.filter(Boolean).length
+
+  // const completionText = `(${completedFields}/${totalFields})`
+
+  // const isComplete = requiredFields.every(Boolean)
 
   return (
     // <div className="flex flex-col gap-10 p-6">
@@ -81,10 +97,11 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
             <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">
               <div className="size-28 flex-none sm:size-32 md:size-40 lg:size-44">
                 <AppIconForm
-                  app_id={app.app_id}
-                  app_title={app.app_title}
+                  appIconFileName={appIconFileName as string}
+                  appIconPublicUrl={appIconUrl as string}
+                  app_slug={app.app_slug}
                   app_submitted_by_user_id={app.submitted_by_user_id}
-                  access_token={session?.access_token}
+                  access_token={session?.access_token as string}
                 />
               </div>
               <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
