@@ -61,7 +61,7 @@ export const AppDetailScreenshotsDialog: React.FC<
           className={cn("hidden h-fit", isDesktop && "block")}
         >
           <ResponsiveModalTitle>
-            <h1>More Screenshots</h1>
+            <span>More Screenshots</span>
           </ResponsiveModalTitle>
           <ResponsiveModalDescription>
             <p>Checking more screenshots of this app</p>

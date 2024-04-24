@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { redirect } from "next/navigation"
 import { getUserData, getUserSession } from "@/server/auth"
 import {
@@ -7,6 +8,7 @@ import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase"
+import { Loader2 } from "lucide-react"
 
 import BackButton from "@/components/shared/back-button"
 
@@ -88,13 +90,17 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           <div className="flex w-full flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
             <div className="flex w-full items-start space-x-4 md:space-x-8">
               <div className="size-28 flex-none sm:size-32 md:size-40">
-                <AppIconForm
-                  appIconFileName={appIconFileName as string}
-                  appIconPublicUrl={appIconUrl as string}
-                  app_slug={app.app_slug}
-                  app_submitted_by_user_id={app.submitted_by_user_id}
-                  access_token={session?.access_token as string}
-                />
+                <Suspense
+                  fallback={<Loader2 className="size-4 animate-spin" />}
+                >
+                  <AppIconForm
+                    appIconFileName={appIconFileName as string}
+                    appIconPublicUrl={appIconUrl as string}
+                    app_slug={app.app_slug}
+                    app_submitted_by_user_id={app.submitted_by_user_id}
+                    access_token={session?.access_token as string}
+                  />
+                </Suspense>
               </div>
               <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
                 <div className="flex w-full justify-between">
@@ -102,24 +108,30 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
                 </div>
               </div>
             </div>
-            <AppDevelopersForm
-              app_id={app.app_id}
-              developers={app.developers}
-            />
-            <AppCategoriesForm
-              app_id={app.app_id}
-              categories={app.categories}
-            />
+            <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
+              <AppDevelopersForm
+                app_id={app.app_id}
+                developers={app.developers}
+              />
+            </Suspense>
+            <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
+              <AppCategoriesForm
+                app_id={app.app_id}
+                categories={app.categories}
+              />
+            </Suspense>
           </div>
           <div className="flex w-full flex-col">
             <div className="flex flex-1 flex-col space-y-6 md:space-y-12 lg:space-y-16">
-              <AppScreenshotsForm
-                screenshotsFileNames={screenshotsFileNames || []}
-                screenshotsPublicUrls={screenshotsPublicUrls || []}
-                app_slug={app.app_slug}
-                app_submitted_by_user_id={app.submitted_by_user_id}
-                access_token={session?.access_token as string}
-              />
+              <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
+                <AppScreenshotsForm
+                  screenshotsFileNames={screenshotsFileNames || []}
+                  screenshotsPublicUrls={screenshotsPublicUrls || []}
+                  app_slug={app.app_slug}
+                  app_submitted_by_user_id={app.submitted_by_user_id}
+                  access_token={session?.access_token as string}
+                />
+              </Suspense>
               <AppIntroductionForm />
             </div>
             <div className="mt-6">

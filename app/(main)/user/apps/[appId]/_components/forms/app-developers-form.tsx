@@ -27,6 +27,12 @@ import {
 } from "@/components/ui/form"
 import { LoadingButton } from "@/components/ui/loading-button"
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const optionSchema = z.object({
   label: z.string(),
@@ -165,123 +171,135 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
   })
 
   return (
-    <section className="w-full flex-col space-y-2">
-      <h1
-        className="w-fit select-none text-2xl font-semibold tracking-wide hover:cursor-pointer"
-        onClick={() => setIsEditing(true)}
-      >
-        Set Developers
-      </h1>
-      {!isEditing ? (
-        <div
-          className={cn(
-            "group flex w-fit items-center justify-start space-x-2 md:space-x-4"
-          )}
+    <TooltipProvider>
+      <section className="w-full flex-col space-y-2">
+        <h1
+          className="w-fit select-none text-2xl font-semibold tracking-wide hover:cursor-pointer"
+          onClick={() => setIsEditing(true)}
         >
-          <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
-            {developers && developers.length > 0 ? (
-              developers.map((dev) => (
-                <span
-                  key={dev.developer_name}
-                  className="w-fit text-sm hover:cursor-pointer"
-                  onClick={() => setIsEditing(true)}
-                >
-                  {dev.developer_slug ? (
-                    <span className="h-full select-none">
-                      {dev.developer_name}
-                    </span>
-                  ) : (
-                    <span className="h-full select-none">
-                      {dev.developer_name}
-                    </span>
-                  )}
-                </span>
-              ))
-            ) : (
-              <span className="text-xs text-muted-foreground">
-                Search or Create developers
-              </span>
+          Set Developers
+        </h1>
+        {!isEditing ? (
+          <div
+            className={cn(
+              "group flex w-fit items-center justify-start space-x-2 md:space-x-4"
             )}
-          </span>
-
-          <Button onClick={toggleEdit} variant="ghost" size={"xs"}>
-            <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
-          </Button>
-        </div>
-      ) : (
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-            <div
-              className="flex w-fit items-center space-x-1"
-              ref={refSelector}
-            >
-              <FormField
-                control={form.control}
-                name="developers"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <MultipleSelector
-                        // hidePlaceholderWhenSelected
-                        onSearch={async (value) => {
-                          const res = await searchAllDevelopers(value)
-                          return res
-                        }}
-                        value={field.value}
-                        badgeClassName="font-medium"
-                        onChange={field.onChange}
-                        defaultOptions={defaultDevelopers}
-                        placeholder="Search or Create developers..."
-                        emptyIndicator={
-                          <p className="text-center text-xs text-muted-foreground">
-                            Try to search for some developers
-                          </p>
-                        }
-                        creatable
-                        preventDuplicateCreation
-                        loadingIndicator={
-                          <span className="flex w-full items-center justify-center space-x-2 py-5 text-muted-foreground">
-                            <p className="text-center text-xs ">searching</p>
-                            <Loader2 className="h-2 w-2 animate-spin" />
-                          </span>
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex items-center space-x-2">
-                <Button
-                  onClick={toggleEdit}
-                  variant="ghost"
-                  className="group"
-                  size={"xs"}
-                >
-                  <span className="text-muted-foreground group-hover:text-foreground">
-                    <X className="h-4 w-4" />
+          >
+            <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
+              {developers && developers.length > 0 ? (
+                developers.map((dev) => (
+                  <span
+                    key={dev.developer_name}
+                    className="w-fit text-sm hover:cursor-pointer"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    {dev.developer_slug ? (
+                      <span className="h-full select-none">
+                        {dev.developer_name}
+                      </span>
+                    ) : (
+                      <span className="h-full select-none">
+                        {dev.developer_name}
+                      </span>
+                    )}
                   </span>
+                ))
+              ) : (
+                <span className="text-xs text-muted-foreground">
+                  Search or Create developers
+                </span>
+              )}
+            </span>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger asChild>
+                <Button onClick={toggleEdit} variant="ghost" size={"xs"}>
+                  <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
                 </Button>
+              </TooltipTrigger>
+              <TooltipContent
+                className="flex items-center text-xs dark:bg-foreground dark:text-background"
+                align="center"
+                side="right"
+              >
+                Add more developers
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+              <div
+                className="flex w-fit items-center space-x-1"
+                ref={refSelector}
+              >
+                <FormField
+                  control={form.control}
+                  name="developers"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <MultipleSelector
+                          // hidePlaceholderWhenSelected
+                          onSearch={async (value) => {
+                            const res = await searchAllDevelopers(value)
+                            return res
+                          }}
+                          value={field.value}
+                          badgeClassName="font-medium"
+                          onChange={field.onChange}
+                          defaultOptions={defaultDevelopers}
+                          placeholder="Search or Create developers..."
+                          emptyIndicator={
+                            <p className="text-center text-xs text-muted-foreground">
+                              Try to search for some developers
+                            </p>
+                          }
+                          creatable
+                          preventDuplicateCreation
+                          loadingIndicator={
+                            <span className="flex w-full items-center justify-center space-x-2 py-5 text-muted-foreground">
+                              <p className="text-center text-xs ">searching</p>
+                              <Loader2 className="h-2 w-2 animate-spin" />
+                            </span>
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="flex items-center space-x-2">
+                  <Button
+                    onClick={toggleEdit}
+                    variant="ghost"
+                    className="group"
+                    size={"xs"}
+                  >
+                    <span className="text-muted-foreground group-hover:text-foreground">
+                      <X className="h-4 w-4" />
+                    </span>
+                  </Button>
 
-                <LoadingButton
-                  loading={isSubmitting}
-                  type="submit"
-                  disabled={!isValid || isSubmitting}
-                  variant="ghost"
-                  className="group"
-                  size={"xs"}
-                  showChildren={false}
-                >
-                  <span className="text-muted-foreground group-hover:text-foreground">
-                    <Check className="h-4 w-4" />
-                  </span>
-                </LoadingButton>
+                  <LoadingButton
+                    loading={isSubmitting}
+                    type="submit"
+                    disabled={!isValid || isSubmitting}
+                    variant="ghost"
+                    className="group"
+                    size={"xs"}
+                    showChildren={false}
+                  >
+                    <span className="text-muted-foreground group-hover:text-foreground">
+                      <Check className="h-4 w-4" />
+                    </span>
+                  </LoadingButton>
+                </div>
               </div>
-            </div>
-          </form>
-        </Form>
-      )}
-    </section>
+            </form>
+          </Form>
+        )}
+      </section>
+    </TooltipProvider>
   )
 }
 export default AppDevelopersForm

@@ -108,9 +108,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
 
   useEffect(() => {
     uppy.on("upload-error", (file, error: NetworkError, response) => {
-      toast.error(
-        `Failed to upload ${file?.name}. Make sure no duplicate uploads.`
-      )
+      toast.error(`Failed to upload ${file?.name}. Please try again`)
 
       if (error?.isNetworkError) {
         toast.warning(
@@ -143,6 +141,13 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
     }
   })
 
+  uppy.on("upload", (data) => {
+    // data object consists of `id` with upload ID and `fileIDs` array
+    // with file IDs in current upload
+    // data: { id, fileIDs }
+    setIsUploading(true)
+  })
+
   useEffect(() => {
     uppy.on("complete", (result) => {
       if (result.successful.length > 0) {
@@ -158,12 +163,14 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   }, []) // Empty dependency array means this effect runs once on mount and clean up on unmount
 
   uppy.on("file-removed", (file) => {
-    setUploadButton(false)
+    if (uppy.getFiles().length === 0) {
+      setUploadButton(false)
+    }
   })
 
   const handleUpload = () => {
     if (uppy.getFiles().length !== 0) {
-      setIsUploading(!isUploading)
+      setIsUploading(true)
       uppy.upload()
     } else {
       toast.warning("Please upload the Icon")
@@ -186,118 +193,139 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   }
 
   return (
-    <>
+    <TooltipProvider>
       <section className="w-full flex-col space-y-2">
-        <span className="flex items-center space-x-2">
+        <span className="flex items-center space-x-2 md:space-x-4">
           <h1 className="w-fit text-2xl font-semibold tracking-wide">
             Screenshots Gallary
           </h1>
           {allowContinueUploading && (
-            <Button
-              onClick={() => {
-                if (allowContinueUploading) {
-                  setShowUploadModal(true)
-                }
-              }}
-              variant="ghost"
-              size={"xs"}
-              className="group"
-            >
-              <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
-            </Button>
+            <span className="flex items-center space-x-2">
+              <span className="flex items-center space-x-2 text-sm text-muted-foreground">
+                {allowedNumberOfImages} / 6
+              </span>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <Button
+                    onClick={() => {
+                      if (allowContinueUploading) {
+                        setShowUploadModal(true)
+                      }
+                    }}
+                    variant="ghost"
+                    size={"xs"}
+                    className="group"
+                  >
+                    <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent
+                  className="flex items-center text-xs dark:bg-foreground dark:text-background"
+                  align="center"
+                  side="right"
+                >
+                  Add more screenshots
+                </TooltipContent>
+              </Tooltip>
+
+              {isUploading && (
+                <span className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <Loader2 className="size-4 animate-spin" />
+                </span>
+              )}
+            </span>
           )}
         </span>
-        <TooltipProvider>
-          <Tooltip delayDuration={0}>
-            <div className="flex flex-col space-y-4">
-              {!hasScreenshotsFileNames ? (
-                <div className="relative mx-auto h-full w-full max-w-full">
-                  <TooltipTrigger asChild>
-                    <ScreenshotsFormCarousel
-                      setIsHovered={setIsHovered}
-                      setShowUploadModal={setShowUploadModal}
-                      isHovered={isHovered}
-                    />
-                  </TooltipTrigger>
-                </div>
-              ) : (
-                <ScreenshotsFormCarousel
-                  handleScreenshotDelete={handleScreenshotDelete}
-                  screenshotsFileNames={screenshotsFileNames}
-                  hasScreenshotsPublicUrls={hasScreenshotsPublicUrls}
-                  screenshotsPublicUrls={screenshotsPublicUrls}
-                  setIsHovered={setIsHovered}
-                  setShowUploadModal={setShowUploadModal}
-                  isHovered={isHovered}
-                />
-              )}
 
-              <ResponsiveContentModal
-                isOpen={showUploadModal}
-                onChange={(open: boolean) => {
-                  if (!open) setShowUploadModal(false)
-                }}
-                drawerContentClassName="outline-none rounded-t-3xl"
-                drawerHeight="h-fit"
-                dialogContentClassName="w-full max-w-xl rounded-2xl shadow-outline sm:p-4"
-                title="Upload Icon"
-              >
-                <div className="flex flex-col items-center space-y-6 p-4 pb-6 md:space-y-10">
-                  <Dashboard
-                    uppy={uppy}
-                    className="w-full"
+        <Tooltip delayDuration={0}>
+          <div className="flex flex-col space-y-4">
+            {!hasScreenshotsFileNames ? (
+              <div className="relative mx-auto h-full w-full max-w-full">
+                <TooltipTrigger asChild>
+                  <ScreenshotsFormCarousel
+                    setIsHovered={setIsHovered}
+                    setShowUploadModal={setShowUploadModal}
+                    isHovered={isHovered}
+                  />
+                </TooltipTrigger>
+              </div>
+            ) : (
+              <ScreenshotsFormCarousel
+                handleScreenshotDelete={handleScreenshotDelete}
+                screenshotsFileNames={screenshotsFileNames}
+                hasScreenshotsPublicUrls={hasScreenshotsPublicUrls}
+                screenshotsPublicUrls={screenshotsPublicUrls}
+                setIsHovered={setIsHovered}
+                setShowUploadModal={setShowUploadModal}
+                isHovered={isHovered}
+              />
+            )}
+
+            <ResponsiveContentModal
+              isOpen={showUploadModal}
+              onChange={(open: boolean) => {
+                if (!open) setShowUploadModal(false)
+              }}
+              drawerContentClassName="outline-none rounded-t-3xl"
+              drawerHeight="h-fit"
+              dialogContentClassName="w-full sm:max-w-xl md:max-w-3xl rounded-2xl shadow-outline sm:p-4"
+              title="Upload Icon"
+            >
+              <div className="flex flex-col items-center space-y-6 p-4 pb-6 md:space-y-10">
+                <Dashboard
+                  uppy={uppy}
+                  className="w-full"
+                  disabled={
+                    profile?.user_id !== app_submitted_by_user_id ||
+                    isUploading ||
+                    allowedNumberOfImages === 0
+                  }
+                  showSelectedFiles
+                  showRemoveButtonAfterComplete
+                  proudlyDisplayPoweredByUppy={false}
+                  showLinkToFileUploadResult={false}
+                  note={"Only Image files are allowed"}
+                  hideUploadButton
+                />
+                {!showUploadButton && (
+                  <span className="w-full text-center text-xs font-light text-muted-foreground/50 md:text-sm">
+                    TODO: You can upload up to 6 images in total. Images only,
+                    max 5MB each,
+                  </span>
+                )}
+                {showUploadButton && (
+                  <Button
                     disabled={
                       profile?.user_id !== app_submitted_by_user_id ||
-                      isUploading ||
-                      allowedNumberOfImages === 0
+                      isUploading
                     }
-                    showSelectedFiles
-                    showRemoveButtonAfterComplete
-                    proudlyDisplayPoweredByUppy={false}
-                    showLinkToFileUploadResult={false}
-                    hideUploadButton
-                    disableInformer
-                  />
-                  {!showUploadButton && (
-                    <span className="w-full text-center text-xs font-light text-muted-foreground/50 md:text-sm">
-                      TODO: You can upload up to 6 images in total. Images only,
-                      max 5MB each,
-                    </span>
-                  )}
-                  {showUploadButton && (
-                    <Button
-                      disabled={
-                        profile?.user_id !== app_submitted_by_user_id ||
-                        isUploading
-                      }
-                      onClick={handleUpload}
-                      className="w-full"
-                    >
-                      {isUploading ? (
-                        <span className="flex items-center font-normal text-muted-foreground">
-                          <Loader2 className="mr-2 size-4 animate-spin" />
-                          <span>Uploading</span>
-                        </span>
-                      ) : (
-                        <span>Upload</span>
-                      )}
-                    </Button>
-                  )}
-                </div>
-              </ResponsiveContentModal>
-            </div>
-            <TooltipContent
-              className="flex items-center text-xs dark:bg-foreground dark:text-background"
-              align="center"
-              side="bottom"
-              sideOffset={15}
-            >
-              Click to Upload Screenshots
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+                    onClick={handleUpload}
+                    className="w-full"
+                  >
+                    {isUploading ? (
+                      <span className="flex items-center font-normal text-muted-foreground">
+                        <Loader2 className="mr-2 size-4 animate-spin" />
+                        <span>Uploading</span>
+                      </span>
+                    ) : (
+                      <span>Upload</span>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </ResponsiveContentModal>
+          </div>
+          <TooltipContent
+            className="flex items-center text-xs dark:bg-foreground dark:text-background"
+            align="center"
+            side="bottom"
+            sideOffset={15}
+          >
+            Click to Upload Screenshots
+          </TooltipContent>
+        </Tooltip>
       </section>
-    </>
+    </TooltipProvider>
   )
 }
 
