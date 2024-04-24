@@ -21,7 +21,7 @@ export function timeConverter(dateString: string): string {
   return formattedDate
 }
 
-export function titleToSlug(title: string) {
+export function nameToSlug(title: string) {
   // Detect if the title is URL-encoded
   let decodedTitle
   try {
@@ -39,6 +39,6 @@ export function titleToSlug(title: string) {
     .replace(/-+/g, "-")
 }
 
-export function normalizeDevName(name: Developer["developer_name"]) {
+export function normalizeName(name: string) {
   return name.toLowerCase().replace(/[^a-z0-9]/g, "")
 }

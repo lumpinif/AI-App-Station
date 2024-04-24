@@ -7,8 +7,10 @@ import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase"
-import createSupabaseServerClient from "@/utils/supabase/server-client"
 
+import BackButton from "@/components/shared/back-button"
+
+import AppCategoriesForm from "./_components/forms/app-categories-form"
 import { AppDevelopersForm } from "./_components/forms/app-developers-form"
 import { AppIconForm } from "./_components/forms/app-icon-form"
 import { AppIntroductionForm } from "./_components/forms/app-introduction"
@@ -65,42 +67,23 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     screenshotsFileNames || []
   )
 
-  // const requiredFields = [
-  //   app.app_title,
-  //   app.app_url,
-  //   app.introduction,
-  //   app.description,
-  //   app.pricing,
-  // ]
-  // const totalFields = requiredFields.length
-  // const completedFields = requiredFields.filter(Boolean).length
-  // const completionText = `(${completedFields}/${totalFields})`
-  // const isComplete = requiredFields.every(Boolean)
-
   return (
-    // <div className="flex flex-col gap-10 p-6">
-    //   <div className="flex items-center justify-between">
-    //     <div className="flex flex-col gap-y-2">
-    //       <h1 className="text-xl">
-    //         Continue on submitting -{" "}
-    //         <span className="text-3xl font-medium">{app.app_title}</span>
-    //       </h1>
-    //       <span className="text-sm text-muted-foreground">
-    //         Complete all fields {completionText}
-    //       </span>
-    //     </div>
-    //     <Actions
-    //         disabled={!isComplete}
-    //         courseId={params.courseId}
-    //         isPublished={course.isPublished}
-    //       />
-    //   </div>
-    //   <Suspense>
-    //     <AppContinueSubmitForm initialData={app} appId={app.app_id} />
-    //   </Suspense>
-    // </div>
-    <>
-      <div className="flex flex-col space-y-4">
+    <section className="flex flex-col space-y-6">
+      <div className="flex flex-col border-b pb-4">
+        <div className="flex items-center space-x-4">
+          <BackButton />
+          <div className="flex flex-col">
+            <h1 className="text-base">
+              Continue on submitting -{" "}
+              <span className="text-base font-medium">{app.app_title}</span>
+            </h1>
+            <span className="text-xs text-muted-foreground">
+              You need to Complete all fields before you can submit
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="mt-6 flex flex-col space-y-4">
         <div className="flex flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
           <div className="flex w-full flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
             <div className="flex w-full items-start space-x-4 md:space-x-8">
@@ -123,6 +106,10 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
               app_id={app.app_id}
               developers={app.developers}
             />
+            <AppCategoriesForm
+              app_id={app.app_id}
+              categories={app.categories}
+            />
           </div>
           <div className="flex w-full flex-col">
             <div className="flex flex-1 flex-col space-y-6 md:space-y-12 lg:space-y-16">
@@ -141,7 +128,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           </div>
         </div>
       </div>
-    </>
+    </section>
   )
 }
 

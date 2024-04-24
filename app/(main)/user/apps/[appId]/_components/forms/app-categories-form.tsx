@@ -2,10 +2,15 @@
 
 import { useRef, useState } from "react"
 import {
+  checkExistingCategories,
   checkExistingDevelopers,
+  getAllCategories,
   getAllDevelopers,
+  insertAppsCategories,
   insertAppsDevelopers,
+  insertCategories,
   insertDevelopers,
+  removeAppsCategories,
   removeAppsDevelopers,
 } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -14,7 +19,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App, Developer } from "@/types/db_tables"
+import { App, Category, Developer } from "@/types/db_tables"
 import { cn, nameToSlug, normalizeName } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
@@ -36,51 +41,53 @@ const optionSchema = z.object({
 })
 
 const formSchema = z.object({
-  developers: z.array(optionSchema).min(1),
+  categories: z.array(optionSchema).min(1),
 })
 
-type AppDevelopersFormProps = {
+type AppCategoriesFormProps = {
   app_id: App["app_id"]
-  developers?: Developer[]
+  categories?: Category[]
 }
 
-const searchAllDevelopers = async (value: string): Promise<Option[]> => {
-  const { developers, error } = await getAllDevelopers()
+const searchAllCategories = async (value: string): Promise<Option[]> => {
+  const { categories, error } = await getAllCategories()
 
   if (error) {
     toast.error(error)
     return []
   }
+  // TODO: CONSIDER IF IT IS BETTER TO USE SLUG INSTEAD OF NAME .toLowerCase()
+  // TODO: CONSIDER IF THE TITLETOSLUG IS BETTER THEN NORMALIZENAME
 
-  const allDevelopers: Option[] =
-    developers?.map((developer) => ({
-      label: developer.developer_name,
-      value: normalizeName(developer.developer_name),
-      id: developer.developer_id,
+  const allCategories: Option[] =
+    categories?.map((category) => ({
+      label: category.category_name,
+      value: category.category_slug,
+      id: category.category_id,
     })) || []
 
-  const res = allDevelopers.filter((option) =>
-    option.value.includes(normalizeName(value))
+  const res = allCategories.filter((option) =>
+    option.value.includes(nameToSlug(value))
   )
 
   return res
 }
 
-export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
+export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
   app_id,
-  developers,
+  categories,
 }) => {
-  const defaultDevelopers: Option[] =
-    developers?.map((developer) => ({
-      label: developer.developer_name,
-      value: developer.developer_name.toLowerCase(),
-      id: developer.developer_id,
+  const defaultCategories: Option[] =
+    categories?.map((category) => ({
+      label: category.category_name,
+      value: category.category_slug,
+      id: category.category_id,
     })) || []
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      developers: defaultDevelopers,
+      categories: defaultCategories,
     },
   })
 
@@ -91,73 +98,80 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
 
   const toggleEdit = () => setIsEditing((current) => !current)
 
-  async function onSubmit({ developers }: z.infer<typeof formSchema>) {
-    const normalizedDevelopers = developers.map((d) => ({
-      ...d,
-      value: normalizeName(d.label),
+  async function onSubmit({ categories }: z.infer<typeof formSchema>) {
+    const normalizedCategories = categories.map((c) => ({
+      ...c,
+      value: nameToSlug(c.label),
     }))
 
-    const submittedDeveloperSlugs = new Set(
-      normalizedDevelopers.map((d) => d.value)
-    )
-    const initialDevelopersMap = new Map(
-      defaultDevelopers.map((d) => [nameToSlug(d.value), d])
+    const submittedCategorySlugs = new Set(
+      normalizedCategories.map((c) => c.value)
     )
 
-    const developersToAdd = normalizedDevelopers.filter(
-      (d) => !initialDevelopersMap.has(d.value)
-    )
-    const developersToRemove = defaultDevelopers.filter(
-      (d) => !submittedDeveloperSlugs.has(nameToSlug(d.value))
+    //TODO: TEST IF WE CAN REMVOE nameToSlug
+
+    const initialCategoriessMap = new Map(
+      defaultCategories.map((d) => [nameToSlug(d.value), d])
     )
 
-    if (developersToAdd.length === 0 && developersToRemove.length === 0) {
+    const categoriesToAdd = normalizedCategories.filter(
+      (d) => !initialCategoriessMap.has(d.value)
+    )
+
+    //TODO: TEST IF WE CAN REMVOE nameToSlug
+
+    const categoriesToRemove = defaultCategories.filter(
+      (d) => !submittedCategorySlugs.has(nameToSlug(d.value))
+    )
+
+    if (categoriesToAdd.length === 0 && categoriesToRemove.length === 0) {
       // toast.info("No changes detected.")
       toggleEdit()
       return
     }
 
     try {
-      const existingDevelopers = await checkExistingDevelopers(developersToAdd)
-      const newDevelopers = developersToAdd.filter(
-        (d) =>
-          !existingDevelopers.some(
-            (existingDev) => existingDev.developer_slug === d.value
+      const existingCategories = await checkExistingCategories(categoriesToAdd)
+
+      const newCategories = categoriesToAdd.filter(
+        (c) =>
+          !existingCategories.some(
+            (existingCat) => existingCat.category_slug === c.value
           )
       )
 
-      const insertedDevelopers =
-        newDevelopers.length > 0 ? await insertDevelopers(newDevelopers) : []
+      const insertedCategories =
+        newCategories.length > 0 ? await insertCategories(newCategories) : []
 
-      const newAppDeveloperIds = [
-        ...insertedDevelopers.map((dev) => dev.developer_id),
-        ...existingDevelopers
+      const newAppCategoryIds = [
+        ...insertedCategories.map((cat) => cat.category_id),
+        ...existingCategories
           .filter(
-            (dev) =>
-              !defaultDevelopers.some(
-                (d) => d.id === dev.developer_id.toString()
+            (cat) =>
+              !defaultCategories.some(
+                (d) => d.id === cat.category_id.toString()
               )
           )
-          .map((dev) => dev.developer_id),
+          .map((cat) => cat.category_id),
       ]
 
-      if (newAppDeveloperIds.length > 0) {
-        await insertAppsDevelopers(app_id, newAppDeveloperIds)
+      if (newAppCategoryIds.length > 0) {
+        await insertAppsCategories(app_id, newAppCategoryIds)
       }
 
-      if (developersToRemove.length > 0) {
-        const developerIdsToRemove = developersToRemove.map(
-          (d) => d.id as string
+      if (categoriesToRemove.length > 0) {
+        const categoryIdsToRemove = categoriesToRemove.map(
+          (c) => c.id as string
         )
 
-        await removeAppsDevelopers(app_id, developerIdsToRemove)
+        await removeAppsCategories(app_id, categoryIdsToRemove)
       }
 
-      toast.success("Developers updated successfully")
+      toast.success("Categories updated successfully")
       toggleEdit()
     } catch (error) {
-      console.error("Error updating developers:", error)
-      toast.error("Failed updating developers, please try again")
+      console.error("Error updating categories:", error)
+      toast.error("Failed updating categories, please try again")
     }
   }
 
@@ -171,7 +185,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
         className="w-fit select-none text-2xl font-semibold tracking-wide hover:cursor-pointer"
         onClick={() => setIsEditing(true)}
       >
-        Set Developers
+        Select Categories
       </h1>
       {!isEditing ? (
         <div
@@ -180,27 +194,28 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
           )}
         >
           <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
-            {developers && developers.length > 0 ? (
-              developers.map((dev) => (
+            {categories && categories.length > 0 ? (
+              categories.map((cat) => (
                 <span
-                  key={dev.developer_name}
+                  key={cat.category_name}
                   className="w-fit text-sm hover:cursor-pointer"
                   onClick={() => setIsEditing(true)}
                 >
-                  {dev.developer_slug ? (
+                  {/* TODO: CHECK WHY DO WE NEED TO CHECK THE CATEGORY SLUG HERE */}
+                  {cat.category_slug ? (
                     <span className="h-full select-none">
-                      {dev.developer_name}
+                      {cat.category_name}
                     </span>
                   ) : (
                     <span className="h-full select-none">
-                      {dev.developer_name}
+                      {cat.category_name}
                     </span>
                   )}
                 </span>
               ))
             ) : (
               <span className="text-xs text-muted-foreground">
-                Search or Create developers
+                Select or Create cateories
               </span>
             )}
           </span>
@@ -218,24 +233,24 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
             >
               <FormField
                 control={form.control}
-                name="developers"
+                name="categories"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <MultipleSelector
                         // hidePlaceholderWhenSelected
                         onSearch={async (value) => {
-                          const res = await searchAllDevelopers(value)
+                          const res = await searchAllCategories(value)
                           return res
                         }}
                         value={field.value}
                         badgeClassName="font-medium"
                         onChange={field.onChange}
-                        defaultOptions={defaultDevelopers}
-                        placeholder="Search or Create developers..."
+                        defaultOptions={defaultCategories}
+                        placeholder="Select or Create categories..."
                         emptyIndicator={
                           <p className="text-center text-xs text-muted-foreground">
-                            Try to search for some developers
+                            Try to search for some categories
                           </p>
                         }
                         creatable
@@ -285,4 +300,4 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
     </section>
   )
 }
-export default AppDevelopersForm
+export default AppCategoriesForm

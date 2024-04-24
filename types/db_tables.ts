@@ -21,15 +21,15 @@ export type AppsCategories =
 export type AppDevelopers =
   Database["public"]["Tables"]["apps_developers"]["Row"]
 export type Developer = Database["public"]["Tables"]["developers"]["Row"]
-export type Categories = Database["public"]["Tables"]["categories"]["Row"]
+export type Category = Database["public"]["Tables"]["categories"]["Row"]
 export type Developers = Database["public"]["Tables"]["developers"]["Row"]
 
 export type AppCardContentWithCategories = App & {
-  categories?: Categories[]
+  categories?: Category[]
 }
 
 export type AppDetails = App & {
-  categories?: Categories[]
+  categories?: Category[]
   developers?: Developer[]
   profiles: Profile
   app_likes: App_likes[]

@@ -2,14 +2,14 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { getPost } from "@/server/data"
 
-import { titleToSlug } from "@/lib/utils"
+import { nameToSlug } from "@/lib/utils"
 
 export type StoryPageProps = {
   params: { slug: string }
 }
 
 export default async function StoryPage({ params }: StoryPageProps) {
-  const slug = titleToSlug(params.slug)
+  const slug = nameToSlug(params.slug)
 
   const { post, error } = await getPost(slug)
 

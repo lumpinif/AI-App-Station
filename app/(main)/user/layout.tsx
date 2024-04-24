@@ -10,10 +10,10 @@ export default function DashboardPageLayout({
   return (
     <main className="">
       <div className="flex h-screen">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className="h-full flex-1 py-2 pr-2">
-          <div className="h-full w-full rounded-2xl p-4 shadow-outline">
-            <BackButton />
+          <div className="container h-full w-full rounded-2xl p-4">
+            {/* <BackButton /> */}
             {children}
           </div>
         </div>

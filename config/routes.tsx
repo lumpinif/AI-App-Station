@@ -135,6 +135,11 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
     icon: <Tags />,
     items: [
       {
+        title: "LLM",
+        href: "/ai-apps/categories/llm",
+        items: [],
+      },
+      {
         title: "Bussiness",
         href: "/ai-apps/categories/bussiness",
         items: [],

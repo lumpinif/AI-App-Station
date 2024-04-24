@@ -7,12 +7,13 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import {
   App,
   AppDetails,
+  Category,
   Comment,
   CommentWithProfile,
   Developer,
   Profile,
 } from "@/types/db_tables"
-import { titleToSlug } from "@/lib/utils"
+import { nameToSlug } from "@/lib/utils"
 
 const getErrorMessage = (error: unknown) => {
   let message: string
@@ -100,7 +101,7 @@ export async function SubmitApp(title: App["app_title"]) {
     .insert([
       {
         app_title: title,
-        app_slug: titleToSlug(title),
+        app_slug: nameToSlug(title),
         submitted_by_user_id: user.id,
         // TODO: REMOVE THIS BEFORE PRODUCTION
         // submitted_by: user.email ?? "",
@@ -147,7 +148,7 @@ export async function UpdateAppByTitle(
 
   const { data: updatedApp, error } = await supabase
     .from("apps")
-    .update({ app_title: newTitle, app_slug: titleToSlug(newTitle) })
+    .update({ app_title: newTitle, app_slug: nameToSlug(newTitle) })
     .eq("app_id", app_id)
     .select()
 
@@ -552,41 +553,18 @@ export async function getAllDevelopers() {
   return { developers, error }
 }
 
-// export async function upsertAppsDevelopers(
-//   app_id: App["app_id"],
-//   developer_ids: Developer["developer_id"][]
-// ) {
-//   try {
-//     const supabase = await createSupabaseServerClient()
-//     const {
-//       data: { session },
-//     } = await supabase.auth.getSession()
+export async function getAllCategories() {
+  const supabase = await createSupabaseServerClient()
 
-//     const { data, error } = await supabase.from("apps_developers").upsert(
-//       developer_ids.map((developer_id) => ({
-//         app_id: app_id,
-//         developer_id: developer_id,
-//         submitted_by_user_id: session?.user.id,
-//       })),
-//       { onConflict: "app_id, developer_id" }
-//     )
+  let { data: categories, error } = await supabase
+    .from("categories")
+    .select("category_name, category_id,category_slug")
 
-//     revalidatePath(`/user/apps/${app_id}`)
+  // error handling
+  if (error) return { error: getErrorMessage(error) }
 
-//     // TODO: CHECK THE ERROR HANDLING IF IT IS THE BEST PRACTICE ACCRODING TO CLAUDE
-//     if (error) {
-//       console.error("Error inserting app-developer associations:", error)
-//       throw new Error("Failed to insert app-developer associations")
-//     }
-
-//     return data
-//   } catch (error) {
-//     console.error("Error in upsertAppsDevelopers:", error)
-//     throw new Error(
-//       "An error occurred while upserting app-developer associations"
-//     )
-//   }
-// }
+  return { categories, error }
+}
 
 export async function insertAppsDevelopers(
   app_id: App["app_id"],
@@ -646,6 +624,64 @@ export async function insertAppsDevelopers(
     )
   }
 }
+export async function insertAppsCategories(
+  app_id: App["app_id"],
+  category_ids: Category["category_id"][]
+) {
+  try {
+    const supabase = await createSupabaseServerClient()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (!session?.user.id) {
+      throw new Error("User session not found")
+    }
+
+    // Check if the app_id is associated with the current user_id
+    const { count, error: countError } = await supabase
+      .from("apps")
+      .select("*", { count: "exact", head: true })
+      .eq("app_id", app_id)
+      .eq("submitted_by_user_id", session?.user.id)
+
+    if (countError) {
+      console.error(
+        "Error checking app_id and user_id association:",
+        countError
+      )
+      throw new Error("Failed to check app_id and user_id association")
+    }
+
+    if (count === 0) {
+      throw new Error(
+        "Unauthorized: app_id is not associated with the current user"
+      )
+    }
+
+    const { data, error } = await supabase.from("apps_categories").insert(
+      category_ids.map((category_id) => ({
+        app_id: app_id,
+        category_id: category_id,
+        submitted_by_user_id: session?.user.id,
+      }))
+    )
+
+    revalidatePath(`/user/apps/${app_id}`)
+
+    if (error) {
+      console.error("Error inserting app-categories associations:", error)
+      throw new Error("Failed to insert app-categories associations")
+    }
+
+    return data
+  } catch (error) {
+    console.error("Error in insertAppsCategories:", error)
+    throw new Error(
+      "An error occurred while inserting app-categories associations"
+    )
+  }
+}
 
 export async function insertDevelopers(
   developers: { label: string; value: string }[]
@@ -661,7 +697,7 @@ export async function insertDevelopers(
     .insert(
       developers.map((developer) => ({
         developer_name: developer.label,
-        developer_slug: titleToSlug(developer.value),
+        developer_slug: nameToSlug(developer.value),
         submitted_by_user_id: session?.user.id,
       }))
     )
@@ -669,6 +705,33 @@ export async function insertDevelopers(
 
   if (error) {
     console.error("Error inserting developers:", error)
+    throw error
+  }
+
+  return data
+}
+export async function insertCategories(
+  categories: { label: string; value: string }[]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  const { data, error } = await supabase
+    .from("categories")
+    .insert(
+      categories.map((category) => ({
+        category_name: category.label,
+        category_slug: nameToSlug(category.value),
+        submitted_by_user_id: session?.user.id,
+      }))
+    )
+    .select("category_id, category_name")
+
+  if (error) {
+    console.error("Error inserting categories:", error)
     throw error
   }
 
@@ -727,6 +790,58 @@ export async function removeAppsDevelopers(
     throw error
   }
 }
+export async function removeAppsCategories(
+  app_id: App["app_id"],
+  category_ids: Category["category_id"][]
+) {
+  try {
+    const supabase = await createSupabaseServerClient()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (!session?.user.id) {
+      throw new Error("User session not found")
+    }
+
+    // Check if the app_id is associated with the current user_id
+    const { count, error: countError } = await supabase
+      .from("apps")
+      .select("*", { count: "exact", head: true })
+      .eq("app_id", app_id)
+      .eq("submitted_by_user_id", session?.user.id)
+
+    if (countError) {
+      console.error(
+        "Error checking app_id and user_id association:",
+        countError
+      )
+      throw new Error("Failed to check app_id and user_id association")
+    }
+
+    if (count === 0) {
+      throw new Error(
+        "Unauthorized: app_id is not associated with the current user"
+      )
+    }
+
+    const { error } = await supabase
+      .from("apps_categories")
+      .delete()
+      .match({ app_id: app_id })
+      .in("category_id", category_ids)
+
+    revalidatePath(`/user/apps/${app_id}`)
+
+    if (error) {
+      console.error("Error removing app-developer associations:", error)
+      throw error
+    }
+  } catch (error) {
+    console.error("Error in removeAppsCategories:", error)
+    throw error
+  }
+}
 
 export async function checkExistingDevelopers(
   developers: { label: string; value: string }[]
@@ -743,6 +858,27 @@ export async function checkExistingDevelopers(
 
   if (error) {
     console.error("Error fetching existing developers:", error)
+    throw error
+  }
+
+  return data
+}
+
+export async function checkExistingCategories(
+  categories: { label: string; value: string }[]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const { data, error } = await supabase
+    .from("categories")
+    .select("category_id, category_slug")
+    .in(
+      "category_slug",
+      categories.map((d) => d.value)
+    )
+
+  if (error) {
+    console.error("Error fetching existing categories:", error)
     throw error
   }
 
