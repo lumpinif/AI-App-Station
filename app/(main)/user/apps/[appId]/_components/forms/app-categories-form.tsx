@@ -217,7 +217,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
               )}
             </span>
             <Tooltip delayDuration={0}>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button onClick={toggleEdit} variant="ghost" size={"xs"}>
                   <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
                 </Button>
