@@ -39,6 +39,6 @@ export function nameToSlug(title: string) {
     .replace(/-+/g, "-")
 }
 
-export function normalizeName(name: string) {
-  return name.toLowerCase().replace(/[^a-z0-9]/g, "")
+function normalizeString(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "")
 }

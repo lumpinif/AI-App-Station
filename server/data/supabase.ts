@@ -545,7 +545,7 @@ export async function getAllDevelopers() {
 
   let { data: developers, error } = await supabase
     .from("developers")
-    .select("developer_name, developer_id")
+    .select("developer_name, developer_id,developer_slug")
 
   // error handling
   if (error) return { error: getErrorMessage(error) }

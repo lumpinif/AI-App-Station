@@ -3,15 +3,10 @@
 import { useRef, useState } from "react"
 import {
   checkExistingCategories,
-  checkExistingDevelopers,
   getAllCategories,
-  getAllDevelopers,
   insertAppsCategories,
-  insertAppsDevelopers,
   insertCategories,
-  insertDevelopers,
   removeAppsCategories,
-  removeAppsDevelopers,
 } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, Loader2, Plus, X } from "lucide-react"
@@ -19,8 +14,8 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App, Category, Developer } from "@/types/db_tables"
-import { cn, nameToSlug, normalizeName } from "@/lib/utils"
+import { App, Category } from "@/types/db_tables"
+import { cn, nameToSlug } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
 import {
@@ -108,24 +103,19 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
       normalizedCategories.map((c) => c.value)
     )
 
-    //TODO: TEST IF WE CAN REMVOE nameToSlug
-
     const initialCategoriessMap = new Map(
-      defaultCategories.map((d) => [nameToSlug(d.value), d])
+      defaultCategories.map((c) => [c.value, c])
     )
 
     const categoriesToAdd = normalizedCategories.filter(
       (d) => !initialCategoriessMap.has(d.value)
     )
 
-    //TODO: TEST IF WE CAN REMVOE nameToSlug
-
     const categoriesToRemove = defaultCategories.filter(
-      (d) => !submittedCategorySlugs.has(nameToSlug(d.value))
+      (d) => !submittedCategorySlugs.has(d.value)
     )
 
     if (categoriesToAdd.length === 0 && categoriesToRemove.length === 0) {
-      // toast.info("No changes detected.")
       toggleEdit()
       return
     }
@@ -167,7 +157,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
         await removeAppsCategories(app_id, categoryIdsToRemove)
       }
 
-      toast.success("Categories updated successfully")
+      toast.success("Categories updated")
       toggleEdit()
     } catch (error) {
       console.error("Error updating categories:", error)

@@ -15,7 +15,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import { App, Developer } from "@/types/db_tables"
-import { cn, nameToSlug, normalizeName } from "@/lib/utils"
+import { cn, nameToSlug } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
 import {
@@ -55,12 +55,12 @@ const searchAllDevelopers = async (value: string): Promise<Option[]> => {
   const allDevelopers: Option[] =
     developers?.map((developer) => ({
       label: developer.developer_name,
-      value: normalizeName(developer.developer_name),
+      value: developer.developer_slug,
       id: developer.developer_id,
     })) || []
 
   const res = allDevelopers.filter((option) =>
-    option.value.includes(normalizeName(value))
+    option.value.includes(nameToSlug(value))
   )
 
   return res
@@ -73,7 +73,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
   const defaultDevelopers: Option[] =
     developers?.map((developer) => ({
       label: developer.developer_name,
-      value: developer.developer_name.toLowerCase(),
+      value: developer.developer_slug,
       id: developer.developer_id,
     })) || []
 
@@ -94,25 +94,24 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
   async function onSubmit({ developers }: z.infer<typeof formSchema>) {
     const normalizedDevelopers = developers.map((d) => ({
       ...d,
-      value: normalizeName(d.label),
+      value: nameToSlug(d.label),
     }))
 
     const submittedDeveloperSlugs = new Set(
       normalizedDevelopers.map((d) => d.value)
     )
     const initialDevelopersMap = new Map(
-      defaultDevelopers.map((d) => [nameToSlug(d.value), d])
+      defaultDevelopers.map((d) => [d.value, d])
     )
 
     const developersToAdd = normalizedDevelopers.filter(
       (d) => !initialDevelopersMap.has(d.value)
     )
     const developersToRemove = defaultDevelopers.filter(
-      (d) => !submittedDeveloperSlugs.has(nameToSlug(d.value))
+      (d) => !submittedDeveloperSlugs.has(d.value)
     )
 
     if (developersToAdd.length === 0 && developersToRemove.length === 0) {
-      // toast.info("No changes detected.")
       toggleEdit()
       return
     }
@@ -153,7 +152,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
         await removeAppsDevelopers(app_id, developerIdsToRemove)
       }
 
-      toast.success("Developers updated successfully")
+      toast.success("Developers updated")
       toggleEdit()
     } catch (error) {
       console.error("Error updating developers:", error)
