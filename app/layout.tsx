@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/provider/theme-provider"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 import "@/styles/globals.css"
+import "@/styles/prosemirror.css"
 
 import { Metadata, Viewport } from "next"
 import QueryProvider from "@/provider/query-provider"

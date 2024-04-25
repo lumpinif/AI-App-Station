@@ -1,25 +1,21 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import { useState } from "react"
 import {
+  EditorBubble,
   EditorCommand,
   EditorCommandEmpty,
   EditorCommandItem,
   EditorCommandList,
   EditorContent,
-  EditorInstance,
   EditorRoot,
   type JSONContent,
 } from "novel"
 import { handleCommandNavigation, ImageResizer } from "novel/extensions"
 import { handleImageDrop, handleImagePaste } from "novel/plugins"
-import { useDebouncedCallback } from "use-debounce"
-
-import { defaultEditorContent } from "@/lib/editor-dummy-content"
 
 import { Separator } from "../ui/separator"
 import { defaultExtensions } from "./extensions"
-import GenerativeMenuSwitch from "./generative/generative-menu-switch"
 import { uploadFn } from "./image-upload"
 import { ColorSelector } from "./selectors/color-selector"
 import { LinkSelector } from "./selectors/link-selector"
@@ -29,43 +25,34 @@ import { slashCommand, suggestionItems } from "./slash-command"
 
 const extensions = [...defaultExtensions, slashCommand]
 
-const NovelAdvancedEditor = () => {
-  const [initialContent, setInitialContent] = useState<null | JSONContent>(null)
-  const [saveStatus, setSaveStatus] = useState("Saved")
-
+interface EditorProp {
+  initialValue?: JSONContent
+  onChange: (value: JSONContent) => void
+  className?: string
+  saveStatus?: string
+  setSaveStatus: (status: string) => void
+}
+const NovelEditor = ({
+  initialValue,
+  onChange,
+  className,
+  saveStatus,
+  setSaveStatus,
+}: EditorProp) => {
   const [openNode, setOpenNode] = useState(false)
   const [openColor, setOpenColor] = useState(false)
   const [openLink, setOpenLink] = useState(false)
-  const [openAI, setOpenAI] = useState(false)
-
-  const debouncedUpdates = useDebouncedCallback(
-    async (editor: EditorInstance) => {
-      const json = editor.getJSON()
-
-      window.localStorage.setItem("novel-content", JSON.stringify(json))
-      setSaveStatus("Saved")
-    },
-    500
-  )
-
-  useEffect(() => {
-    const content = window.localStorage.getItem("novel-content")
-    if (content) setInitialContent(JSON.parse(content))
-    else setInitialContent(defaultEditorContent)
-  }, [])
-
-  if (!initialContent) return null
 
   return (
     <div className="relative w-full max-w-screen-lg">
-      <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
+      {/* <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
         {saveStatus}
-      </div>
+      </div> */}
       <EditorRoot>
         <EditorContent
-          initialContent={initialContent}
+          className="rounded-xl  p-4"
+          {...(initialValue && { initialContent: initialValue })}
           extensions={extensions}
-          className="relative min-h-[500px] w-full max-w-screen-lg border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
           editorProps={{
             handleDOMEvents: {
               keydown: (_view, event) => handleCommandNavigation(event),
@@ -79,8 +66,8 @@ const NovelAdvancedEditor = () => {
             },
           }}
           onUpdate={({ editor }) => {
-            debouncedUpdates(editor)
-            setSaveStatus("Unsaved")
+            onChange(editor.getJSON())
+            setSaveStatus("saving")
           }}
           slotAfter={<ImageResizer />}
         >
@@ -92,7 +79,7 @@ const NovelAdvancedEditor = () => {
               {suggestionItems.map((item) => (
                 <EditorCommandItem
                   value={item.title}
-                  onCommand={(val) => item.command!(val)}
+                  onCommand={(val) => item.command?.(val)}
                   className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent `}
                   key={item.title}
                 >
@@ -110,21 +97,25 @@ const NovelAdvancedEditor = () => {
             </EditorCommandList>
           </EditorCommand>
 
-          <GenerativeMenuSwitch open={openAI} onOpenChange={setOpenAI}>
-            <Separator orientation="vertical" />
+          <EditorBubble
+            tippyOptions={{
+              placement: "top",
+            }}
+            className="flex w-fit max-w-[90vw] overflow-hidden rounded-md border border-muted bg-background shadow-xl"
+          >
+            <Separator orientation="vertical" className="h-full w-px" />
             <NodeSelector open={openNode} onOpenChange={setOpenNode} />
-            <Separator orientation="vertical" />
-
+            <Separator orientation="vertical" className="h-full w-px" />
             <LinkSelector open={openLink} onOpenChange={setOpenLink} />
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="h-full w-px" />
             <TextButtons />
-            <Separator orientation="vertical" />
+            <Separator orientation="vertical" className="h-full w-px" />
             <ColorSelector open={openColor} onOpenChange={setOpenColor} />
-          </GenerativeMenuSwitch>
+          </EditorBubble>
         </EditorContent>
       </EditorRoot>
     </div>
   )
 }
 
-export default NovelAdvancedEditor
+export default NovelEditor

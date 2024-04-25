@@ -1,13 +1,21 @@
-// import Tiptap from "./tiptap"
+'use client'
 
+import NovelEditor from "@/components/editor/advanced-editor"
+import { JSONContent } from "novel";
+import { useState } from "react";
+import { defaultValue } from "./default-value";
 const SearchPage = () => {
+  const [value, setValue] = useState<JSONContent>(defaultValue);
+  console.log(value);
   return (
-    <div>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+       <div className="flex w-full max-w-xl flex-col gap-6 rounded-md border bg-card p-6">
       <div className="">SearchPage</div>
-      <div className="no-scrollbar container mx-auto max-w-3xl overflow-y-auto rounded-3xl bg-muted p-8 shadow-outline">
-        {/* <Tiptap className="bg-blue-50" /> */}
+      <div className="flex w-full max-w-xl flex-col gap-6 rounded-md border bg-card p-6">
+      <NovelEditor initialValue={value} onChange={setValue} />
       </div>
-    </div>
+      </div>
+    </main>
   )
 }
 

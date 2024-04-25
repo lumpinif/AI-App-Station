@@ -9,7 +9,7 @@ export default function DashboardPageLayout({
 }) {
   return (
     <main className="">
-      <div className="flex h-screen">
+      <div className="flex">
         {/* <Sidebar /> */}
         <div className="h-full flex-1 py-2 pr-2">
           <div className="container h-full w-full rounded-2xl p-4">
