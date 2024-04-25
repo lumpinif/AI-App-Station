@@ -1,3 +1,5 @@
+// import NovelAdvancedEditor from "@/components/novel-editor/advanced-editor"
+
 type AppIntroductionFormProps = {}
 
 export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({}) => {
@@ -9,6 +11,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({}) => {
       >
         App Introduction
       </h1>
+      {/* <NovelAdvancedEditor /> */}
     </section>
   )
 }
