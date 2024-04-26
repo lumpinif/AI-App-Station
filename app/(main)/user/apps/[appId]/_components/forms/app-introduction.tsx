@@ -66,7 +66,9 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
               ) : (
                 <>
                   {saveStatus === "Failed to save" ? (
-                    <span className="text-primary">{saveStatus}</span>
+                    <span className="text-primary">
+                      {saveStatus} Please try again
+                    </span>
                   ) : (
                     saveStatus
                   )}
