@@ -1,6 +1,5 @@
 "use server"
 
-import { error } from "console"
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
@@ -1055,5 +1054,34 @@ export async function deleteScreenshot(
       return false
     }
     return false
+  }
+}
+
+// Handle Introduction
+
+export async function insertIntroduction(
+  app_id: App["app_id"],
+  introduction: Record<string, any>
+) {
+  const supabase = await createSupabaseServerClient()
+
+  try {
+    const { error } = await supabase
+      .from("apps")
+      .update({ introduction: introduction })
+      .eq("app_id", app_id)
+
+    if (error) {
+      console.error("Error inserting introduction:", error)
+      return { error: error }
+    }
+
+    revalidatePath(`/user/apps/${app_id}`)
+
+    return { error }
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
   }
 }

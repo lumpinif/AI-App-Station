@@ -9,6 +9,7 @@ import {
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase"
 import { Loader2 } from "lucide-react"
+import { JSONContent } from "novel"
 
 import BackButton from "@/components/shared/back-button"
 
@@ -132,7 +133,10 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
                   access_token={session?.access_token as string}
                 />
               </Suspense>
-              <AppIntroductionForm />
+              <AppIntroductionForm
+                app_id={app.app_id}
+                introduction={app.introduction as JSONContent}
+              />
             </div>
             <div className="mt-6">
               <AppSubInfoForm />

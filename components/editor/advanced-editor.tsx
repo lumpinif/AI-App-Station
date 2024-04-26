@@ -14,6 +14,8 @@ import {
 import { handleCommandNavigation, ImageResizer } from "novel/extensions"
 import { handleImageDrop, handleImagePaste } from "novel/plugins"
 
+import { cn } from "@/lib/utils"
+
 import { Separator } from "../ui/separator"
 import { defaultExtensions } from "./extensions"
 import { uploadFn } from "./image-upload"
@@ -36,7 +38,6 @@ const NovelEditor = ({
   initialValue,
   onChange,
   className,
-  saveStatus,
   setSaveStatus,
 }: EditorProp) => {
   const [openNode, setOpenNode] = useState(false)
@@ -44,13 +45,10 @@ const NovelEditor = ({
   const [openLink, setOpenLink] = useState(false)
 
   return (
-    <div className="relative w-full max-w-screen-lg">
-      {/* <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
-        {saveStatus}
-      </div> */}
+    <div className="relative w-full">
       <EditorRoot>
         <EditorContent
-          className="rounded-xl  p-4"
+          className={cn("rounded-xl p-4 px-6", className)}
           {...(initialValue && { initialContent: initialValue })}
           extensions={extensions}
           editorProps={{
