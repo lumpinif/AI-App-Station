@@ -76,7 +76,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
           )}
         >
           <span
-            className="text-nowrap text-3xl font-bold hover:cursor-pointer md:text-4xl"
+            className="text-lg font-bold hover:cursor-pointer sm:text-3xl md:text-4xl"
             onClick={() => setIsEditing(true)}
           >
             {app_title}
@@ -105,7 +105,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                         disabled={isSubmitting}
                         placeholder="e.g. 'Perplexity'"
                         {...field}
-                        className="h-fit max-w-40 text-nowrap border-0 p-0 text-3xl font-bold outline-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 md:max-w-52 md:text-4xl"
+                        className="h-fit w-full max-w-48 text-nowrap border-0 p-0 text-lg font-bold outline-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-3xl md:max-w-96 md:text-4xl"
                       />
                     </FormControl>
                     <FormMessage />
