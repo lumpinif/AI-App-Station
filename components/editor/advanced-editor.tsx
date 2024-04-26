@@ -48,7 +48,7 @@ const NovelEditor = ({
     <div className="relative w-full">
       <EditorRoot>
         <EditorContent
-          className={cn("rounded-xl border p-4 px-6", className)}
+          className={cn("rounded-xl p-6", className)}
           {...(initialValue && { initialContent: initialValue })}
           extensions={extensions}
           editorProps={{

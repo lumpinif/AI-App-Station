@@ -75,8 +75,8 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
             </div>
           </div>
         </div>
-        <Separator />
-        <span className="flex cursor-default select-none justify-end text-xs text-muted-foreground/80">
+        {/* <Separator /> */}
+        <span className="flex cursor-default select-none text-xs text-muted-foreground/80">
           Select text to edit or Press &apos;/&apos; for commands
         </span>
       </div>
@@ -85,6 +85,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
         onChange={handleEditorSave}
         setSaveStatus={setSaveStatus}
         saveStatus={saveStatus}
+        className="border border-dashed border-muted-foreground pt-2 dark:border-border"
       />
     </section>
   )
