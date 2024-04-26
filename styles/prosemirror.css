@@ -13,6 +13,33 @@
   height: 0;
 }
 
+.ProseMirror h1 {
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.25rem; /* 36px */
+  letter-spacing: 0.025em;
+  margin: 0.45em 0;
+}
+.ProseMirror h2 {
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+  letter-spacing: 0.025em;
+  margin: 0.45em 0;
+}
+.ProseMirror h3 {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+  letter-spacing: 0.025em;
+  margin: 0.45em 0 0.65em 0;
+}
+
+.prose
+  :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-weight: 400;
+  font-style: italic;
+  color: hsl(var(--muted-foreground));
+  border-inline-start-width: 0.25rem;
+}
+
 /* Custom image styles */
 
 .ProseMirror img {

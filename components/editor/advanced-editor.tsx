@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils"
 import { Separator } from "../ui/separator"
 import { defaultExtensions } from "./extensions"
 import { uploadFn } from "./image-upload"
-import { ColorSelector } from "./selectors/color-selector"
+// import { ColorSelector } from "./selectors/color-selector"
 import { LinkSelector } from "./selectors/link-selector"
 import { NodeSelector } from "./selectors/node-selector"
 import { TextButtons } from "./selectors/text-buttons"
@@ -41,7 +41,7 @@ const NovelEditor = ({
   setSaveStatus,
 }: EditorProp) => {
   const [openNode, setOpenNode] = useState(false)
-  const [openColor, setOpenColor] = useState(false)
+  // const [openColor, setOpenColor] = useState(false)
   const [openLink, setOpenLink] = useState(false)
 
   return (
@@ -108,7 +108,7 @@ const NovelEditor = ({
             <Separator orientation="vertical" className="h-full w-px" />
             <TextButtons />
             <Separator orientation="vertical" className="h-full w-px" />
-            <ColorSelector open={openColor} onOpenChange={setOpenColor} />
+            {/* <ColorSelector open={openColor} onOpenChange={setOpenColor} /> */}
           </EditorBubble>
         </EditorContent>
       </EditorRoot>
