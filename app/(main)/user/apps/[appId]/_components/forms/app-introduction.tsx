@@ -20,7 +20,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({}) => {
   }, 1000)
 
   const [value, setValue] = useState<JSONContent>(defaultEditorContent)
-  console.log(value)
+  // console.log(value)
   return (
     <section className="w-full flex-col space-y-4">
       <div className="flex-col space-y-2">

@@ -295,7 +295,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
               showRemoveButtonAfterComplete
               proudlyDisplayPoweredByUppy={false}
               showLinkToFileUploadResult={false}
-              note={"Only Image files are allowed"}
+              note={"Only Image files are allowed. Max 5MB each."}
               hideUploadButton
             />
             {!showUploadButton && (

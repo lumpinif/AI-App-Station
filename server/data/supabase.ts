@@ -573,10 +573,10 @@ export async function insertAppsDevelopers(
   try {
     const supabase = await createSupabaseServerClient()
     const {
-      data: { session },
-    } = await supabase.auth.getSession()
+      data: { user },
+    } = await supabase.auth.getUser()
 
-    if (!session?.user.id) {
+    if (!user?.id) {
       throw new Error("User session not found")
     }
 
@@ -585,7 +585,7 @@ export async function insertAppsDevelopers(
       .from("apps")
       .select("*", { count: "exact", head: true })
       .eq("app_id", app_id)
-      .eq("submitted_by_user_id", session?.user.id)
+      .eq("submitted_by_user_id", user.id)
 
     if (countError) {
       console.error(
@@ -605,7 +605,7 @@ export async function insertAppsDevelopers(
       developer_ids.map((developer_id) => ({
         app_id: app_id,
         developer_id: developer_id,
-        submitted_by_user_id: session?.user.id,
+        submitted_by_user_id: user.id,
       }))
     )
 
@@ -631,11 +631,11 @@ export async function insertAppsCategories(
   try {
     const supabase = await createSupabaseServerClient()
     const {
-      data: { session },
-    } = await supabase.auth.getSession()
+      data: { user },
+    } = await supabase.auth.getUser()
 
-    if (!session?.user.id) {
-      throw new Error("User session not found")
+    if (!user?.id) {
+      throw new Error("User not found")
     }
 
     // Check if the app_id is associated with the current user_id
@@ -643,7 +643,7 @@ export async function insertAppsCategories(
       .from("apps")
       .select("*", { count: "exact", head: true })
       .eq("app_id", app_id)
-      .eq("submitted_by_user_id", session?.user.id)
+      .eq("submitted_by_user_id", user.id)
 
     if (countError) {
       console.error(
@@ -663,7 +663,7 @@ export async function insertAppsCategories(
       category_ids.map((category_id) => ({
         app_id: app_id,
         category_id: category_id,
-        submitted_by_user_id: session?.user.id,
+        submitted_by_user_id: user.id,
       }))
     )
 
@@ -689,8 +689,12 @@ export async function insertDevelopers(
   const supabase = await createSupabaseServerClient()
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user?.id) {
+    throw new Error("User not found")
+  }
 
   const { data, error } = await supabase
     .from("developers")
@@ -698,7 +702,7 @@ export async function insertDevelopers(
       developers.map((developer) => ({
         developer_name: developer.label,
         developer_slug: nameToSlug(developer.value),
-        submitted_by_user_id: session?.user.id,
+        submitted_by_user_id: user.id,
       }))
     )
     .select("developer_id, developer_name")
@@ -716,8 +720,12 @@ export async function insertCategories(
   const supabase = await createSupabaseServerClient()
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user?.id) {
+    throw new Error("User not found")
+  }
 
   const { data, error } = await supabase
     .from("categories")
@@ -725,7 +733,7 @@ export async function insertCategories(
       categories.map((category) => ({
         category_name: category.label,
         category_slug: nameToSlug(category.value),
-        submitted_by_user_id: session?.user.id,
+        submitted_by_user_id: user.id,
       }))
     )
     .select("category_id, category_name")
@@ -745,10 +753,10 @@ export async function removeAppsDevelopers(
   try {
     const supabase = await createSupabaseServerClient()
     const {
-      data: { session },
-    } = await supabase.auth.getSession()
+      data: { user },
+    } = await supabase.auth.getUser()
 
-    if (!session?.user.id) {
+    if (!user?.id) {
       throw new Error("User session not found")
     }
 
@@ -757,7 +765,7 @@ export async function removeAppsDevelopers(
       .from("apps")
       .select("*", { count: "exact", head: true })
       .eq("app_id", app_id)
-      .eq("submitted_by_user_id", session?.user.id)
+      .eq("submitted_by_user_id", user.id)
 
     if (countError) {
       console.error(
@@ -797,11 +805,11 @@ export async function removeAppsCategories(
   try {
     const supabase = await createSupabaseServerClient()
     const {
-      data: { session },
-    } = await supabase.auth.getSession()
+      data: { user },
+    } = await supabase.auth.getUser()
 
-    if (!session?.user.id) {
-      throw new Error("User session not found")
+    if (!user?.id) {
+      throw new Error("User not found")
     }
 
     // Check if the app_id is associated with the current user_id
@@ -809,7 +817,7 @@ export async function removeAppsCategories(
       .from("apps")
       .select("*", { count: "exact", head: true })
       .eq("app_id", app_id)
-      .eq("submitted_by_user_id", session?.user.id)
+      .eq("submitted_by_user_id", user.id)
 
     if (countError) {
       console.error(

@@ -95,6 +95,9 @@ dependencies:
   '@tanstack/react-query-devtools':
     specifier: ^5.28.6
     version: 5.32.0(@tanstack/react-query@5.32.0)(react@18.2.0)
+  '@uppy/core':
+    specifier: ^3.10.1
+    version: 3.10.1
   '@uppy/dashboard':
     specifier: ^3.8.1
     version: 3.8.1(@uppy/core@3.10.1)
