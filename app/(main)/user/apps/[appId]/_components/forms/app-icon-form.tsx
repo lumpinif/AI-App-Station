@@ -203,10 +203,10 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
                   <Skeleton className="size-full" />
                 ) : (
                   <>
-                    <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
-                    <div className="flex flex-col items-center text-center text-xs leading-6 text-muted-foreground">
-                      <p className="text-xs leading-5 text-muted">
-                        Upload App Icon
+                    <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] p-1 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+                    <div className="flex flex-col items-center text-center text-xs text-muted-foreground">
+                      <p className="px-1 text-xs leading-5 text-muted">
+                        Upload Icon
                       </p>
                     </div>
                   </>

@@ -1,7 +1,3 @@
-"use client"
-
-import * as z from "zod"
-
 import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 

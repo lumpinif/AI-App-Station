@@ -101,9 +101,10 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                   <FormItem>
                     <FormControl>
                       <Input
-                        defaultValue={app_title}
+                        autoFocus
+                        // defaultValue={app_title}
                         disabled={isSubmitting}
-                        placeholder="e.g. 'Perplexity'"
+                        placeholder="Enter App Title"
                         {...field}
                         className="h-fit w-full max-w-48 text-nowrap border-0 p-0 text-lg font-bold outline-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-3xl md:max-w-96 md:text-4xl"
                       />

@@ -34,6 +34,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { InfoModal } from "./info-modal"
+
 const optionSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -48,6 +50,7 @@ const formSchema = z.object({
 type AppDevelopersFormProps = {
   app_id: App["app_id"]
   developers?: Developer[]
+  className?: string
 }
 
 const searchAllDevelopers = async (value: string): Promise<Option[]> => {
@@ -75,6 +78,7 @@ const searchAllDevelopers = async (value: string): Promise<Option[]> => {
 export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
   app_id,
   developers,
+  className,
 }) => {
   const defaultDevelopers: Option[] =
     developers?.map((developer) => ({
@@ -172,18 +176,34 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
 
   return (
     <TooltipProvider>
-      <section className="w-full flex-col space-y-2">
-        <h1
-          className="w-fit select-none text-2xl font-semibold tracking-wide hover:cursor-pointer"
-          onClick={() => setIsEditing(true)}
-        >
-          Set Developers
-        </h1>
+      <section
+        className={cn("w-full flex-col space-y-2 sm:space-y-4", className)}
+      >
+        <span className="flex items-center space-x-2">
+          <h1 className="w-fit select-none text-lg font-semibold hover:cursor-pointer sm:text-2xl">
+            Select Developers
+          </h1>
+          <InfoModal
+            infoTitle="Info about the selector"
+            tooltipContent="Mutiple Selector"
+            dialogContentClassName="max-w-lg h-fit p-6"
+            drawerHeight="h-fit"
+            drawerContentClassName="p-6"
+          >
+            <div className="">
+              <h3>
+                You can click &apos;+&apos; to add existing developers or create
+                new developer labels for the app.
+              </h3>
+            </div>
+          </InfoModal>
+        </span>
         {!isEditing ? (
           <div
             className={cn(
               "group flex w-fit items-center justify-start space-x-2 md:space-x-4"
             )}
+            onClick={() => setIsEditing(true)}
           >
             <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
               {developers && developers.length > 0 ? (
@@ -227,7 +247,10 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
           </div>
         ) : (
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full rounded-md border border-dashed border-muted-foreground p-2 transition-all duration-200 ease-out dark:border-border"
+            >
               <div
                 className="flex w-fit items-center space-x-1"
                 ref={refSelector}
@@ -239,6 +262,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                     <FormItem>
                       <FormControl>
                         <MultipleSelector
+                          inputProps={{ autoFocus: isEditing }}
                           // hidePlaceholderWhenSelected
                           onSearch={async (value) => {
                             const res = await searchAllDevelopers(value)
@@ -251,7 +275,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                           placeholder="Search or Create developers..."
                           emptyIndicator={
                             <p className="text-center text-xs text-muted-foreground">
-                              Try to search for some developers
+                              Try to create or search for some developers
                             </p>
                           }
                           creatable

@@ -24,6 +24,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Button } from "@/components/ui/button"
 import {
   Carousel,
@@ -194,9 +195,9 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
 
   return (
     <TooltipProvider>
-      <section className="w-full flex-col space-y-2">
+      <section className="w-full flex-col space-y-4 sm:space-y-6">
         <span className="flex items-center space-x-2 md:space-x-4">
-          <h1 className="w-fit text-2xl font-semibold tracking-wide">
+          <h1 className="w-fit text-lg font-semibold sm:text-2xl">
             Screenshots Gallary
           </h1>
           {allowContinueUploading && (
@@ -373,7 +374,7 @@ const ScreenshotsFormCarousel = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CarouselContent className="mr-6 h-52">
+      <CarouselContent className="mr-6 h-fit">
         {!hasScreenshotsPublicUrls
           ? Array.from({ length: 6 }).map((_, index) => (
               <CarouselItem
@@ -381,9 +382,11 @@ const ScreenshotsFormCarousel = ({
                 className="bg-transparent md:basis-1/2 lg:basis-1/3"
                 onClick={() => setShowUploadModal(true)}
               >
-                <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
-                  <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
-                </div>
+                <AspectRatio ratio={16 / 9}>
+                  <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                    <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
+                  </div>
+                </AspectRatio>
               </CarouselItem>
             ))
           : screenshotItems &&

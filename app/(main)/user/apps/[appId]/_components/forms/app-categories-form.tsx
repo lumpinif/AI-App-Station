@@ -34,6 +34,8 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip"
 
+import { InfoModal } from "./info-modal"
+
 const optionSchema = z.object({
   label: z.string(),
   value: z.string(),
@@ -48,6 +50,7 @@ const formSchema = z.object({
 type AppCategoriesFormProps = {
   app_id: App["app_id"]
   categories?: Category[]
+  className?: string
 }
 
 const searchAllCategories = async (value: string): Promise<Option[]> => {
@@ -77,6 +80,7 @@ const searchAllCategories = async (value: string): Promise<Option[]> => {
 export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
   app_id,
   categories,
+  className,
 }) => {
   const defaultCategories: Option[] =
     categories?.map((category) => ({
@@ -177,18 +181,35 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
 
   return (
     <TooltipProvider>
-      <section className="w-full flex-col space-y-2">
-        <h1
-          className="w-fit select-none text-2xl font-semibold tracking-wide hover:cursor-pointer"
-          onClick={() => setIsEditing(true)}
-        >
-          Select Categories
-        </h1>
+      <section
+        className={cn("w-full flex-col space-y-4 sm:space-y-6", className)}
+      >
+        <span className="flex items-center space-x-2">
+          <h1 className="w-fit select-none text-lg font-semibold hover:cursor-pointer sm:text-2xl">
+            Select Categories
+          </h1>
+          <InfoModal
+            infoTitle="Info about the selector"
+            tooltipContent="Mutiple Selector"
+            dialogContentClassName="max-w-lg h-fit p-6"
+            drawerHeight="h-fit"
+            drawerContentClassName="p-6"
+          >
+            {/* TODO: REDESIGN THE INFOMER */}
+            <div className="">
+              <h3>
+                You can click &apos;+&apos; to add existing categories or create
+                new category labels for the app.
+              </h3>
+            </div>
+          </InfoModal>
+        </span>
         {!isEditing ? (
           <div
             className={cn(
               "group flex w-fit items-center justify-start space-x-2 md:space-x-4"
             )}
+            onClick={() => setIsEditing(true)}
           >
             <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
               {categories && categories.length > 0 ? (
@@ -233,7 +254,10 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
           </div>
         ) : (
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full rounded-md border border-dashed border-muted-foreground p-2 transition-all duration-200 ease-out dark:border-border"
+            >
               <div
                 className="flex w-fit items-center space-x-1"
                 ref={refSelector}
@@ -245,6 +269,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                     <FormItem>
                       <FormControl>
                         <MultipleSelector
+                          inputProps={{ autoFocus: isEditing }}
                           // hidePlaceholderWhenSelected
                           onSearch={async (value) => {
                             const res = await searchAllCategories(value)

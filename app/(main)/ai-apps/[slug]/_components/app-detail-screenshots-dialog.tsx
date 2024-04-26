@@ -4,6 +4,7 @@ import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import {
   Carousel,
   CarouselMainContainer,
@@ -23,8 +24,6 @@ import {
 } from "@/components/ui/responsive-modal"
 import { EnhancedDrawerClose } from "@/components/shared/enhanced-drawer"
 
-import { ImageElement } from "../../_components/cards/new-post-card"
-
 type AppDetailScreenshotsDialogProps = {
   screenshot_url?: string
   screenshotsPublicUrls?: string[]
@@ -38,14 +37,22 @@ export const AppDetailScreenshotsDialog: React.FC<
 
   return (
     <ResponsiveModal>
-      <ResponsiveModalTrigger className="hover:cursor-grab active:cursor-grabbing">
-        <Image
-          src={screenshot_url ? screenshot_url : `/images/image-not-found.png`}
-          fill
-          alt=""
-          objectFit="cover"
-          style={{ objectFit: "cover" }}
-        />
+      <ResponsiveModalTrigger
+        className="hover:cursor-grab active:cursor-grabbing"
+        asChild
+      >
+        <AspectRatio ratio={16 / 9}>
+          <Image
+            src={
+              screenshot_url ? screenshot_url : `/images/image-not-found.png`
+            }
+            fill
+            alt=""
+            objectFit="cover"
+            className="rounded-md object-cover"
+            style={{ objectFit: "cover" }}
+          />
+        </AspectRatio>
       </ResponsiveModalTrigger>
       <ResponsiveModalContent
         className={cn(
@@ -92,18 +99,21 @@ export const AppDetailScreenshotsDialog: React.FC<
                     )}
                   >
                     <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
-                      <Image
-                        src={
-                          screenshot_url
-                            ? screenshot_url
-                            : `/images/image-not-found.png`
-                        }
-                        fill
-                        alt=""
-                        objectFit="cover"
-                        style={{ objectFit: "cover" }}
-                        data-vaul-no-drag
-                      />
+                      <AspectRatio ratio={16 / 9}>
+                        <Image
+                          src={
+                            screenshot_url
+                              ? screenshot_url
+                              : `/images/image-not-found.png`
+                          }
+                          fill
+                          alt=""
+                          objectFit="cover"
+                          style={{ objectFit: "cover" }}
+                          className="rounded-md object-cover"
+                          data-vaul-no-drag
+                        />
+                      </AspectRatio>
                     </div>
                   </SliderMainItem>
                 ))}
@@ -119,18 +129,21 @@ export const AppDetailScreenshotsDialog: React.FC<
                     className="bg-transparent"
                   >
                     <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
-                      <Image
-                        src={
-                          screenshot_url
-                            ? screenshot_url
-                            : `/images/image-not-found.png`
-                        }
-                        fill
-                        alt=""
-                        objectFit="cover"
-                        style={{ objectFit: "cover" }}
-                        data-vaul-no-drag
-                      />
+                      <AspectRatio ratio={16 / 9}>
+                        <Image
+                          src={
+                            screenshot_url
+                              ? screenshot_url
+                              : `/images/image-not-found.png`
+                          }
+                          fill
+                          alt=""
+                          objectFit="cover"
+                          className="rounded-md object-cover"
+                          style={{ objectFit: "cover" }}
+                          data-vaul-no-drag
+                        />
+                      </AspectRatio>
                     </div>
                   </SliderThumbItem>
                 ))}

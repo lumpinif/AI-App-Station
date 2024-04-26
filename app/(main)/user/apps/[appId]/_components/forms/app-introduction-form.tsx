@@ -82,11 +82,11 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
   }
 
   return (
-    <section className="w-full flex-col space-y-4">
+    <section className="w-full flex-col space-y-6 sm:space-y-8">
       <div className="flex-col space-y-2">
         <div className="flex items-baseline justify-between">
           <div className="flex items-baseline space-x-2">
-            <h1 className="w-fit cursor-default select-none text-2xl font-semibold tracking-wide">
+            <h1 className="w-fit cursor-default select-none text-lg font-semibold sm:text-2xl">
               App Introduction
             </h1>
           </div>

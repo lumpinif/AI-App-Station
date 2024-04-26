@@ -4,10 +4,10 @@ export const AppSubInfoForm: React.FC<AppSubInfoFormProps> = ({}) => {
   return (
     <section className="w-full flex-col space-y-2">
       <h1
-        className="w-fit text-2xl font-semibold tracking-wide hover:cursor-pointer"
+        className="w-fit text-lg font-semibold hover:cursor-pointer sm:text-2xl"
         // onClick={toggleEdit}
       >
-        More about this app
+        Other Information
       </h1>
     </section>
   )
