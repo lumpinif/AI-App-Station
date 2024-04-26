@@ -13,6 +13,23 @@
   height: 0;
 }
 
+.ProseMirror p {
+  line-height: 1; /* Adjust this value to reduce or increase the line height */
+}
+
+.ProseMirror li {
+  line-height: 1; /* Adjust this value for list items */
+}
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  line-height: 1; /* Adjust this value for headings */
+}
+
 /* Custom image styles */
 
 .ProseMirror img {
@@ -126,6 +143,7 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
 
 .drag-handle {
   position: fixed;
+  left: -1.5rem;
   opacity: 1;
   transition: opacity ease-in 0.2s;
   border-radius: 0.25rem;
