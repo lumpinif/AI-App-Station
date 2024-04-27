@@ -1,3 +1,7 @@
+.ProseMirror {
+  @apply md:p-8 md:py-4 lg:p-12 lg:py-6;
+}
+
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
@@ -14,22 +18,74 @@
 }
 
 .ProseMirror h1 {
-  font-size: 1.875rem; /* 30px */
+  /* font-size: 1.875rem; 30px */
+  @apply text-2xl;
   line-height: 2.25rem; /* 36px */
   letter-spacing: 0.025em;
   margin: 0.45em 0;
 }
 .ProseMirror h2 {
-  font-size: 1.5rem; /* 24px */
+  /* font-size: 1.5rem; 24px */
+  @apply text-xl;
   line-height: 2rem; /* 32px */
   letter-spacing: 0.025em;
   margin: 0.45em 0;
 }
 .ProseMirror h3 {
-  font-size: 1.25rem; /* 20px */
+  /* font-size: 1.25rem; 20px */
+  @apply text-lg;
   line-height: 1.75rem; /* 28px */
   letter-spacing: 0.025em;
   margin: 0.45em 0 0.65em 0;
+}
+
+@media screen and (max-width: 768px) {
+  .ProseMirror h1 {
+    font-size: 1.5rem; /* 24px */
+    line-height: 2rem; /* 32px */
+    margin: 0.35em 0;
+  }
+
+  .ProseMirror h2 {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+    margin: 0.35em 0;
+  }
+
+  .ProseMirror h3 {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.5rem; /* 24px */
+    margin: 0.35em 0 0.5em 0;
+  }
+  .ProseMirror p {
+    @apply text-base;
+    line-height: 1.5rem; /* 24px */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .ProseMirror h1 {
+    font-size: 1.25rem; /* 20px */
+    line-height: 1.75rem; /* 28px */
+    margin: 0.35em 0;
+  }
+
+  .ProseMirror h2 {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.5rem; /* 24px */
+    margin: 0.35em 0;
+  }
+
+  .ProseMirror h3 {
+    font-size: 1rem; /* 16px */
+    line-height: 1.25rem; /* 20px */
+    margin: 0.25em 0 0.5em 0;
+  }
+
+  .ProseMirror p {
+    @apply text-base;
+    line-height: 1.5rem; /* 24px */
+  }
 }
 
 .prose
@@ -138,6 +194,23 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
   text-decoration-thickness: 2px;
 }
 
+@media screen and (max-width: 768px) {
+  ul[data-type="taskList"] li > label input[type="checkbox"] {
+    width: 1em;
+    height: 1em;
+    top: 3px;
+    margin-right: 0.2rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  ul[data-type="taskList"] li > label input[type="checkbox"] {
+    width: 1em;
+    height: 1em;
+    top: 3px;
+    margin-right: 0.2rem;
+  }
+}
+
 /* Overwrite tippy-box original max-width */
 
 .tippy-box {
@@ -153,7 +226,6 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
 
 .drag-handle {
   position: fixed;
-  left: -1.5rem;
   opacity: 1;
   transition: opacity ease-in 0.2s;
   border-radius: 0.25rem;
@@ -175,7 +247,6 @@ ul[data-type="taskList"] li[data-checked="true"] > div > p {
   &:active {
     background-color: var(--novel-stone-200);
     transition: background-color 0.2s;
-    cursor: grabbing;
   }
 
   &.hide {

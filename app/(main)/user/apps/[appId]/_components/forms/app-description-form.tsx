@@ -7,7 +7,7 @@ import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-import { IntroductionFormTextarea } from "./introduction-form-textarea"
+import { IntroductionFormTextarea } from "./description-form-textarea"
 
 type DescriptionFormProps = {
   app_id: App["app_id"]

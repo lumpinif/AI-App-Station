@@ -144,7 +144,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
         onChange={handleEditorSave}
         setSaveStatus={setSaveStatus}
         saveStatus={saveStatus}
-        className="border border-dashed border-muted-foreground pt-2 dark:border-border"
+        className="border border-dashed border-muted-foreground dark:border-border"
       />
     </section>
   )

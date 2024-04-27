@@ -1064,7 +1064,7 @@ export async function insertIntroduction(
   introduction: Record<string, any>
 ) {
   const supabase = await createSupabaseServerClient()
-
+  const slug = await getSlugFromAppId(app_id)
   try {
     const { error } = await supabase
       .from("apps")
@@ -1076,6 +1076,7 @@ export async function insertIntroduction(
       return { error: error }
     }
 
+    revalidatePath(`/ai-apps/${slug?.app_slug}`)
     revalidatePath(`/user/apps/${app_id}`)
 
     return { error }
