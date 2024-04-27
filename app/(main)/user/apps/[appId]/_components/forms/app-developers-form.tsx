@@ -17,6 +17,7 @@ import * as z from "zod"
 import { App, Developer } from "@/types/db_tables"
 import { cn, nameToSlug } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -237,24 +238,16 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
             )}
             onClick={() => setIsEditing(true)}
           >
-            <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
+            <span className="flex h-full flex-wrap items-center justify-start">
               {developers && developers.length > 0 ? (
                 developers.map((dev) => (
-                  <span
+                  <Badge
                     key={dev.developer_name}
-                    className="w-fit text-sm hover:cursor-pointer"
+                    className="mb-1 mr-1 font-medium"
                     onClick={() => setIsEditing(true)}
                   >
-                    {dev.developer_slug ? (
-                      <span className="h-full select-none">
-                        {dev.developer_name}
-                      </span>
-                    ) : (
-                      <span className="h-full select-none">
-                        {dev.developer_name}
-                      </span>
-                    )}
-                  </span>
+                    {dev.developer_name}
+                  </Badge>
                 ))
               ) : (
                 <span className="text-xs text-muted-foreground">

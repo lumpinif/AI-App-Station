@@ -60,8 +60,8 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
               <InfoBox>
                 <InfoBoxTitle>Category</InfoBoxTitle>
                 <Category
-                  category_slug={category.slug}
-                  category_title={category.category_title}
+                  category_slug={category.category_slug}
+                  category_name={category.category_name}
                 />
               </InfoBox>
               <InfoBoxSeperator />
@@ -178,12 +178,12 @@ const RatingsAndReviews = ({
 }
 
 const Category = ({
-  category_title,
+  category_name,
   category_slug,
   className,
 }: {
-  category_title: CategoriesProps["category_title"]
-  category_slug: CategoriesProps["slug"]
+  category_name: CategoriesProps["category_name"]
+  category_slug: CategoriesProps["category_slug"]
   className?: string
 }) => {
   return (
@@ -194,7 +194,7 @@ const Category = ({
         className
       )}
     >
-      <span className="text-xs">{category_title}</span>
+      <span className="text-xs">{category_name}</span>
     </Link>
   )
 }

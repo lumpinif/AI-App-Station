@@ -18,6 +18,7 @@ import * as z from "zod"
 import { App, Category } from "@/types/db_tables"
 import { cn, nameToSlug } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -240,25 +241,16 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
             )}
             onClick={() => setIsEditing(true)}
           >
-            <span className="flex h-full items-center justify-center space-x-2 md:space-x-2">
+            <span className="flex h-full flex-wrap items-center justify-start">
               {categories && categories.length > 0 ? (
                 categories.map((cat) => (
-                  <span
+                  <Badge
                     key={cat.category_name}
-                    className="w-fit text-sm hover:cursor-pointer"
+                    className="mb-1 mr-1 font-medium"
                     onClick={() => setIsEditing(true)}
                   >
-                    {/* TODO: CHECK WHY DO WE NEED TO CHECK THE CATEGORY SLUG HERE */}
-                    {cat.category_slug ? (
-                      <span className="h-full select-none">
-                        {cat.category_name}
-                      </span>
-                    ) : (
-                      <span className="h-full select-none">
-                        {cat.category_name}
-                      </span>
-                    )}
-                  </span>
+                    {cat.category_name}
+                  </Badge>
                 ))
               ) : (
                 <span className="text-xs text-muted-foreground">
