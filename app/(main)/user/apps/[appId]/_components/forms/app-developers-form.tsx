@@ -218,6 +218,11 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
               <Separator />
               <ul className="mt-2 text-muted-foreground">
                 <li>
+                  {" "}
+                  - Max <span className="font-medium text-primary">5</span>{" "}
+                  developers can be selected
+                </li>
+                <li>
                   -{" "}
                   <span className="font-medium text-primary">Not allowed</span>{" "}
                   to create{" "}
@@ -297,6 +302,12 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                           badgeClassName="font-medium"
                           onChange={field.onChange}
                           defaultOptions={defaultDevelopers}
+                          maxSelected={5}
+                          onMaxSelected={(maxLimit) => {
+                            toast.warning(
+                              `You have reached max selected ${maxLimit} developers limit. Please remove some categories to add more.`
+                            )
+                          }}
                           placeholder="Search or Create developers..."
                           emptyIndicator={
                             <p className="text-center text-xs text-muted-foreground">
