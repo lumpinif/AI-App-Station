@@ -1,8 +1,8 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import Image from "next/image"
 import { EmblaPluginType } from "embla-carousel"
+import AutoScroll from "embla-carousel-auto-scroll"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
@@ -39,7 +39,7 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
 
   const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
     playOnInit: true,
-    delay: 4000,
+    delay: 5000,
   })
   const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
@@ -81,7 +81,7 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
           <CarouselThumbsContainer className="gap-x-2">
             {isIndicator &&
-              Array.from({ length: 5 }).map((_, index) => (
+              Array.from({ length: Posts.length }).map((_, index) => (
                 <CarouselIndicator key={index} index={index} />
               ))}
           </CarouselThumbsContainer>

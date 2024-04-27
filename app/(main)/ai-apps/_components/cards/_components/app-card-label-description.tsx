@@ -10,11 +10,14 @@ export const AppCardLabelDescription: React.FC<
   AppCardLabelDescriptionProps
 > = ({ categories }) => {
   return (
-    <>
-      <div className="flex w-full justify-end gap-x-1 text-nowrap text-[10px] text-muted-foreground">
-        {/* Category */}
-        {categories && categories.length > 0 ? (
-          categories?.map((category, index) => (
+    // TODO: REFACTOR THIS CONSIDER MAKING IT TO A POPOVER
+
+    <div className="flex w-full justify-end gap-x-1  text-nowrap text-[10px] text-muted-foreground">
+      {/* Category */}
+      {categories && categories.length > 0 ? (
+        categories
+          ?.slice(0, 2) // Take only the first two items from the categories array
+          .map((category, index) => (
             <span
               key={category.category_id}
               className="flex items-center gap-x-1"
@@ -25,15 +28,14 @@ export const AppCardLabelDescription: React.FC<
               >
                 <span className="text-xs">{category.category_name}</span>
               </Link>
-              {index !== categories.length - 1 && (
+              {index !== categories.slice(0, 2).length - 1 && (
                 <div className="h-1 w-1 rounded-full bg-muted-foreground" />
               )}
             </span>
           ))
-        ) : (
-          <span className="text-xs">Set Category</span>
-        )}
-      </div>
-    </>
+      ) : (
+        <span className="text-xs">Set Category</span>
+      )}
+    </div>
   )
 }

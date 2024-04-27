@@ -58,6 +58,7 @@ const AIAppsPage = async () => {
           // TODO: CONSIDERING REFACTOR TITLE INTO CONFIG
           title={"Top Paid Apps"}
           data={AppsWithCategories}
+          // isAutpPlay={true}
           className="md:basis-1/2 lg:basis-1/3"
           isMarginRight={true}
           options={OPTIONS_APPSCARDSCAROUSEL}

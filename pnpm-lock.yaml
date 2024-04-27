@@ -149,6 +149,9 @@ dependencies:
   embla-carousel:
     specifier: ^8.0.2
     version: 8.0.2
+  embla-carousel-auto-scroll:
+    specifier: ^8.0.2
+    version: 8.0.2(embla-carousel@8.0.2)
   embla-carousel-autoplay:
     specifier: ^8.0.2
     version: 8.0.2(embla-carousel@8.0.2)
@@ -4517,6 +4520,14 @@ packages:
 
   /electron-to-chromium@1.4.748:
     resolution: {integrity: sha512-VWqjOlPZn70UZ8FTKUOkUvBLeTQ0xpty66qV0yJcAGY2/CthI4xyW9aEozRVtuwv3Kpf5xTesmJUcPwuJmgP4A==}
+
+  /embla-carousel-auto-scroll@8.0.2(embla-carousel@8.0.2):
+    resolution: {integrity: sha512-cMvn/HPNUvWnB6qh76qR69ay4yFIPBdOliMu3B2QtNtqSU0Qmb36bewlknXzxtC6MLZb9DOQnWl9UnImhpQ02Q==}
+    peerDependencies:
+      embla-carousel: 8.0.2
+    dependencies:
+      embla-carousel: 8.0.2
+    dev: false
 
   /embla-carousel-autoplay@8.0.2(embla-carousel@8.0.2):
     resolution: {integrity: sha512-31lBigAkHeI4k1767uYcr9Gm2y12mzLpVsi+QRxIWQT8J4AtRoHLOhd8YJFiXf22DbI/j78+IaeJK4lZRlFxUw==}
