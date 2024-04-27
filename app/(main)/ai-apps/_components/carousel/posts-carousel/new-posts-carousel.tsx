@@ -39,7 +39,7 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
 
   const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
     playOnInit: true,
-    delay: 4500,
+    delay: 4000,
   })
   const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 

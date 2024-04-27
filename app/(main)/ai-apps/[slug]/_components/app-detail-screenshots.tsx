@@ -2,8 +2,11 @@
 
 import React from "react"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
+import { ImageIcon } from "lucide-react"
 
+import { AppDetailScreenShotsProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 import {
   Carousel,
   CarouselContent,
@@ -14,12 +17,8 @@ import {
 
 import { AppDetailScreenshotsDialog } from "./app-detail-screenshots-dialog"
 
-type AppDetailScreenshotsProps = {
-  data?: string[]
-}
-
-export const AppDetailScreenshots: React.FC<AppDetailScreenshotsProps> = ({
-  data,
+export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
+  screenshotsPublicUrls,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false)
 
@@ -38,19 +37,35 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenshotsProps> = ({
           onMouseLeave={() => setIsHovered(false)}
         >
           <CarouselContent className="mr-6 h-52">
-            {Array.from({ length: 10 }).map((_, index) => (
-              <CarouselItem
-                key={index}
-                className="bg-transparent md:basis-1/2 lg:basis-1/3"
-              >
-                <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
-                  {/* <ImageElement
-                      image_src={`https://picsum.photos/600/350?v=${index}`}
-                    /> */}
-                  <AppDetailScreenshotsDialog index={index} />
-                </div>
-              </CarouselItem>
-            ))}
+            {screenshotsPublicUrls && screenshotsPublicUrls.length > 0
+              ? screenshotsPublicUrls.map((item, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="bg-transparent md:basis-1/2 lg:basis-1/3"
+                  >
+                    <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                      <AppDetailScreenshotsDialog
+                        index={index}
+                        screenshotsPublicUrls={screenshotsPublicUrls}
+                        screenshot_url={
+                          typeof item === "string" ? item : undefined
+                        }
+                      />
+                    </div>
+                  </CarouselItem>
+                ))
+              : Array.from({ length: 6 }).map((_, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="bg-transparent md:basis-1/2 lg:basis-1/3"
+                  >
+                    <AspectRatio ratio={16 / 9}>
+                      <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                        <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
+                      </div>
+                    </AspectRatio>
+                  </CarouselItem>
+                ))}
           </CarouselContent>
           <CarouselPrevious
             hiddenOnCanNotScroll

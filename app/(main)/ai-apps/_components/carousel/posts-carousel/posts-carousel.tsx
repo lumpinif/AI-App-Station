@@ -32,6 +32,7 @@ const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
 })
 const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
+// TODO: REMOVE THIS BEFORE PRODUCTION IF IT IS UNUSED
 const PostsCarousel: React.FC<PostsCarouselProps> = ({
   data,
   className,

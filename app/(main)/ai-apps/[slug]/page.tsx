@@ -1,6 +1,10 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getAllComments, getAppBySlug } from "@/server/data"
+import {
+  getScreenshotsFileNames,
+  getScreenshotsPublicUrls,
+} from "@/server/data/supabase"
 import { Bookmark, ExternalLink, ThumbsUp } from "lucide-react"
 
 import { Comment } from "@/types/db_tables"
@@ -45,9 +49,21 @@ export default async function AppPagePage({
     await getAllComments(app.app_id, c_order, orderBy)
   // TODO: HANDLE NO COMMENTS AND ERROR
 
-  // mt-16 sm:mt-4
   // TODO: ADD HERO FEATURED LOGIC PROP AND THE IMAGE
+  // mt-16 sm:mt-4
   const isHeroFeatured = true
+
+  // Get screenshots
+  const screenshotsFileNames = await getScreenshotsFileNames(
+    app.app_slug,
+    app.submitted_by_user_id
+  )
+
+  const screenshotsPublicUrls = await getScreenshotsPublicUrls(
+    app.app_slug,
+    app.submitted_by_user_id,
+    screenshotsFileNames || []
+  )
 
   return (
     <main
@@ -115,7 +131,9 @@ export default async function AppPagePage({
         </div>
         <div className="flex w-full flex-col lg:flex-row lg:space-x-4">
           <div className="flex flex-1 flex-col space-y-6 md:space-y-12 lg:space-y-16">
-            <AppDetailScreenshots />
+            <AppDetailScreenshots
+              screenshotsPublicUrls={screenshotsPublicUrls || []}
+            />
             <AppDetailIntroduction data={app.introduction} />
             <AppDetailReviews {...ratingData} />
             {/* TODO: HANDLE LOADING */}

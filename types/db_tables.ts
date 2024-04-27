@@ -65,3 +65,24 @@ export type CommentActionsProp = {
   likes_count: Comment["likes_count"]
   views_count: Comment["views_count"]
 }
+
+// screenshots
+
+export type ScreenshotItem = {
+  publicUrl: string
+  fileName: string
+}
+
+export type AppDetailScreenShotsProps = {
+  screenshotsPublicUrls?: string[]
+}
+
+export type ScreenshotsFormCarouselProps = {
+  isHovered: boolean
+  setIsHovered: (isHovered: boolean) => void
+  setShowUploadModal: (isHovered: boolean) => void
+  hasScreenshotsPublicUrls?: boolean
+  screenshotsPublicUrls?: string[]
+  screenshotsFileNames?: string[]
+  handleScreenshotDelete?: (screenshotFileName: string) => void
+}

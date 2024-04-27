@@ -1,5 +1,4 @@
 import * as React from "react"
-import { set } from "date-fns"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
@@ -76,25 +75,25 @@ const Carousel = React.forwardRef<
       setCanScrollNext(api.canScrollNext())
     }, [])
 
-    const toggleAutoplay = React.useCallback(() => {
-      const autoplay = api?.plugins()?.autoplay
-      if (!autoplay) return
+    // const toggleAutoplay = React.useCallback(() => {
+    //   const autoplay = api?.plugins()?.autoplay
+    //   if (!autoplay) return
 
-      const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play
-      playOrStop()
-    }, [api])
+    //   const playOrStop = autoplay.isPlaying() ? autoplay.stop : autoplay.play
+    //   playOrStop()
+    // }, [api])
 
     const scrollPrev = React.useCallback(() => {
       // Scroll to the previous item
       api?.scrollPrev()
-      toggleAutoplay()
-    }, [api, toggleAutoplay]) // Recreate the function whenever `api` changes
+      // toggleAutoplay()
+    }, [api]) // Recreate the function whenever `api` changes
 
     const scrollNext = React.useCallback(() => {
       // Scroll to the next item
       api?.scrollNext()
-      toggleAutoplay()
-    }, [api, toggleAutoplay])
+      // toggleAutoplay()
+    }, [api])
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {

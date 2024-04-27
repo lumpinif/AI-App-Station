@@ -10,7 +10,11 @@ import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 import { ImageIcon, Loader2, Plus, X } from "lucide-react"
 import { toast } from "sonner"
 
-import { App } from "@/types/db_tables"
+import {
+  App,
+  ScreenshotItem,
+  ScreenshotsFormCarouselProps,
+} from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUser from "@/hooks/react-hooks/use-user"
 import {
@@ -328,21 +332,6 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
       </section>
     </TooltipProvider>
   )
-}
-
-type ScreenshotItem = {
-  publicUrl: string
-  fileName: string
-}
-
-type ScreenshotsFormCarouselProps = {
-  isHovered: boolean
-  setIsHovered: (isHovered: boolean) => void
-  setShowUploadModal: (isHovered: boolean) => void
-  hasScreenshotsPublicUrls?: boolean
-  screenshotsPublicUrls?: string[]
-  screenshotsFileNames?: string[]
-  handleScreenshotDelete?: (screenshotFileName: string) => void
 }
 
 const ScreenshotsFormCarousel = ({
