@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { redirect } from "next/navigation"
 import { getUserData, getUserSession } from "@/server/auth"
 import {
+  getAllCategories,
   GetAppByAppIdUserId,
   getAppIconFileName,
   getAppIconUrl,
@@ -46,6 +47,9 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   }
 
   if (error) console.error(error)
+
+  const { categories, error: getAllCatError } = await getAllCategories()
+  if (getAllCatError) console.error(error)
 
   const appIconFileName = await getAppIconFileName(
     app.app_slug,
@@ -123,6 +127,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
               className="md:col-span-1"
               app_id={app.app_id}
               categories={app.categories}
+              allCategories={categories}
             />
           </Suspense>
         </div>

@@ -412,7 +412,9 @@ const MultipleSelector = React.forwardRef<
                   data-fixed={option.fixed}
                   data-disabled={disabled}
                 >
-                  {option.label}
+                  <span className="font-normal dark:font-medium">
+                    {option.label}
+                  </span>
                   <button
                     className={cn(
                       "ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2",
@@ -467,7 +469,7 @@ const MultipleSelector = React.forwardRef<
         </div>
         <div className="relative">
           {open && (
-            <CommandList className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-lg outline-none backdrop-blur-lg animate-in dark:border-0 dark:bg-popover/60 dark:shadow-outline">
+            <CommandList className="absolute top-0 z-10 w-full rounded-md border bg-background shadow-lg outline-none animate-in">
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (

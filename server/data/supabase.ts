@@ -557,7 +557,7 @@ export async function getAllCategories() {
 
   let { data: categories, error } = await supabase
     .from("categories")
-    .select("category_name, category_id,category_slug")
+    .select("*")
 
   // error handling
   if (error) return { error: getErrorMessage(error) }

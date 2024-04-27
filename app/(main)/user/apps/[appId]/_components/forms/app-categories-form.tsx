@@ -52,6 +52,7 @@ const formSchema = z.object({
 type AppCategoriesFormProps = {
   app_id: App["app_id"]
   categories?: Category[]
+  allCategories?: Category[] | null
   className?: string
 }
 
@@ -80,10 +81,18 @@ const searchAllCategories = async (value: string): Promise<Option[]> => {
 export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
   app_id,
   categories,
+  allCategories,
   className,
 }) => {
   const defaultCategories: Option[] =
     categories?.map((category) => ({
+      label: category.category_name,
+      value: category.category_slug,
+      id: category.category_id,
+    })) || []
+
+  const allCategoriesOptions: Option[] =
+    allCategories?.map((category) => ({
       label: category.category_name,
       value: category.category_slug,
       id: category.category_id,
@@ -182,7 +191,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
   return (
     <TooltipProvider>
       <section
-        className={cn("w-full flex-col space-y-4 sm:space-y-6", className)}
+        className={cn("w-full flex-col space-y-2 sm:space-y-4", className)}
       >
         <span className="flex items-center space-x-2">
           <h1 className="w-fit select-none text-lg font-semibold hover:cursor-pointer sm:text-2xl">
@@ -246,7 +255,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                 categories.map((cat) => (
                   <Badge
                     key={cat.category_name}
-                    className="mb-1 mr-1 font-medium"
+                    className="mb-1 mr-1 font-normal dark:font-medium"
                     onClick={() => setIsEditing(true)}
                   >
                     {cat.category_name}
@@ -299,7 +308,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                           value={field.value}
                           badgeClassName="font-medium"
                           onChange={field.onChange}
-                          defaultOptions={defaultCategories}
+                          defaultOptions={allCategoriesOptions}
                           placeholder="Select or Create categories..."
                           emptyIndicator={
                             <p className="text-center text-xs text-muted-foreground">

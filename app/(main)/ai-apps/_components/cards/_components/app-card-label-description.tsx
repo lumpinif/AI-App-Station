@@ -20,10 +20,10 @@ export const AppCardLabelDescription: React.FC<
               className="flex items-center gap-x-1"
             >
               <Link
-                href={`/ai-apps/categories/${category.slug}`}
+                href={`/ai-apps/categories/${category.category_slug}`}
                 className="hover:underline"
               >
-                <span className="text-xs">{category.category_title}</span>
+                <span className="text-xs">{category.category_name}</span>
               </Link>
               {index !== categories.length - 1 && (
                 <div className="h-1 w-1 rounded-full bg-muted-foreground" />

@@ -243,7 +243,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                 developers.map((dev) => (
                   <Badge
                     key={dev.developer_name}
-                    className="mb-1 mr-1 font-medium"
+                    className="mb-1 mr-1 font-normal dark:font-medium"
                     onClick={() => setIsEditing(true)}
                   >
                     {dev.developer_name}
