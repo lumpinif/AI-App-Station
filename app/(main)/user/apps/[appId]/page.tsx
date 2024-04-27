@@ -18,7 +18,6 @@ import { AppDevelopersForm } from "./_components/forms/app-developers-form"
 import { AppIconForm } from "./_components/forms/app-icon-form"
 import { AppIntroductionForm } from "./_components/forms/app-introduction-form"
 import { AppScreenshotsForm } from "./_components/forms/app-screenshots-form"
-import { AppSubInfoForm } from "./_components/forms/app-sub-info-form"
 import { AppTitleWithDescriptionForm } from "./_components/forms/app-title-description-form"
 
 type SubmittedAppIdPageProps = {
@@ -145,9 +144,9 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
         />
 
         {/* Subinfo */}
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <AppSubInfoForm />
-        </div>
+        </div> */}
       </div>
     </section>
   )

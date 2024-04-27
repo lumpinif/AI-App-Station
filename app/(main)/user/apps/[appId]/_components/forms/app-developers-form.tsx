@@ -9,7 +9,7 @@ import {
   removeAppsDevelopers,
 } from "@/server/data/supabase"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, Loader2, Plus, X } from "lucide-react"
+import { Check, Info, Loader2, Plus, Search, Tags, X } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/form"
 import { LoadingButton } from "@/components/ui/loading-button"
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector"
+import { Separator } from "@/components/ui/separator"
 import {
   Tooltip,
   TooltipContent,
@@ -34,7 +35,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { InfoModal } from "./info-modal"
+import { InfoPopover } from "./info-modal"
 
 const optionSchema = z.object({
   label: z.string(),
@@ -183,20 +184,51 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
           <h1 className="w-fit select-none text-lg font-semibold hover:cursor-pointer sm:text-2xl">
             Select Developers
           </h1>
-          <InfoModal
-            infoTitle="Info about the selector"
-            tooltipContent="Mutiple Selector"
-            dialogContentClassName="max-w-lg h-fit p-6"
-            drawerHeight="h-fit"
-            drawerContentClassName="p-6"
-          >
-            <div className="">
-              <h3>
-                You can click &apos;+&apos; to add existing developers or create
-                new developer labels for the app.
+          <InfoPopover>
+            <div className="px-2">
+              <h3>Selector Actions</h3>
+              <Separator />
+
+              <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
+                <li className="flex items-center space-x-4">
+                  <Plus className="size-4" />
+                  <span className="w-full">
+                    Click + to add or create developers
+                  </span>
+                </li>
+                <li className="flex items-center space-x-4">
+                  <Tags className="size-4" />
+                  <span className="w-full">
+                    You can select more than one developers
+                  </span>
+                </li>
+                <li className="flex items-center space-x-4">
+                  <Search className="size-4" />
+                  <span className="w-full">
+                    Search for developers in the database
+                  </span>
+                </li>
+              </ul>
+
+              <h3 className="flex items-center space-x-2">
+                <Info className="size-4" />
+                <span>Key Info</span>
               </h3>
+              <Separator />
+              <ul className="mt-2 text-muted-foreground">
+                <li>
+                  -{" "}
+                  <span className="font-medium text-primary">Not allowed</span>{" "}
+                  to create{" "}
+                  <span className="font-medium text-primary">duplicate</span>{" "}
+                  developers
+                </li>
+                <li> - Press ✓ to save the selection</li>
+                <li> - Avoid selecting unrelated developers</li>
+                <li> - Please be responsible for your submission</li>
+              </ul>
             </div>
-          </InfoModal>
+          </InfoPopover>
         </span>
         {!isEditing ? (
           <div

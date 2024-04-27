@@ -42,3 +42,18 @@ export function nameToSlug(title: string) {
 function normalizeString(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "")
 }
+
+export function isValidYoutubeUrl(url: string): boolean {
+  const ytRegex =
+    /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
+  return ytRegex.test(url)
+}
+
+export function isValidUrl(url: string) {
+  try {
+    new URL(url)
+    return true
+  } catch (e) {
+    return false
+  }
+}

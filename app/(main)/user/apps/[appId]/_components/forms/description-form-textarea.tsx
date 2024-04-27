@@ -24,9 +24,12 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import { Textarea } from "@/components/ui/textarea"
 
 const formSchema = z.object({
-  description: z.string().min(1, {
-    message: "Description is required",
-  }),
+  description: z
+    .string()
+    .min(1, {
+      message: "Description is required",
+    })
+    .max(140, { message: "Description is too long. 140 Chars Max." }),
 })
 
 type IntroductionFormTextareaProps = {
@@ -46,6 +49,7 @@ export const IntroductionFormTextarea: React.FC<
   const maxH = isMobile ? 60 : 95
 
   const form = useForm({
+    mode: "onChange",
     resolver: zodResolver(formSchema),
     defaultValues: {
       description: description || "",
@@ -123,7 +127,7 @@ export const IntroductionFormTextarea: React.FC<
                       ref={textAreaRef}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-xs sm:text-sm" />
                 </FormItem>
               )}
             />
