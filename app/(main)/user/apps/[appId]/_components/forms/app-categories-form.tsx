@@ -61,8 +61,6 @@ const searchAllCategories = async (value: string): Promise<Option[]> => {
     toast.error(error)
     return []
   }
-  // TODO: CONSIDER IF IT IS BETTER TO USE SLUG INSTEAD OF NAME .toLowerCase()
-  // TODO: CONSIDER IF THE TITLETOSLUG IS BETTER THEN NORMALIZENAME
 
   const allCategories: Option[] =
     categories?.map((category) => ({
