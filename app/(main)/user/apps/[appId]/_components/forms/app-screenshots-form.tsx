@@ -201,9 +201,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
     <TooltipProvider>
       <section className="w-full flex-col space-y-4 sm:space-y-6">
         <span className="flex items-center space-x-2 md:space-x-4">
-          <h1 className="w-fit text-lg font-semibold sm:text-2xl">
-            Screenshots Gallary
-          </h1>
+          <h1 className="w-fit text-2xl font-semibold">Screenshots Gallary</h1>
           {allowContinueUploading && (
             <span className="flex items-center space-x-2">
               <span className="flex items-center space-x-2 text-sm text-muted-foreground">

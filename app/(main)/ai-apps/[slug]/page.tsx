@@ -21,6 +21,7 @@ import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailLikeButton } from "./_components/app-detail-like-button"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
 import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
+import { AppDetailShare } from "./_components/app-detail-share"
 import { AppDetailSubInfo } from "./_components/app-detail-sub-info"
 import { AppLaunchButton } from "./_components/app-launch-button"
 
@@ -69,20 +70,20 @@ export default async function AppPagePage({
 
   return (
     <main
-      className="flex flex-col space-y-4 md:mt-6 lg:mt-8 xl:mt-12"
+      className="mt-4 flex flex-col space-y-4 md:mt-6 lg:mt-8 xl:mt-12"
       suppressHydrationWarning
     >
-      {isHeroFeatured && (
+      {app.is_featured && (
         <div
-          className={cn("md:hidden", isHeroFeatured && "h-20 w-full sm:h-32")}
+          className={cn("md:hidden", app.is_featured && "h-20 w-full sm:h-32")}
         >
           <AppDetailHeroImage />
         </div>
       )}
       <div className="flex flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
         <div className="flex w-full flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
-          <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-12">
-            <div className="size-28 flex-none sm:size-32 md:size-40 lg:size-44">
+          <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-14">
+            <div className="size-24 flex-none sm:size-32 md:size-40">
               <AppIcon
                 {...app}
                 size={"full"}
@@ -90,13 +91,13 @@ export default async function AppPagePage({
                 externalLink={app.app_url}
               />
             </div>
-            <div className="flex h-28 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
+            <div className="flex h-24 w-full flex-col items-start justify-between sm:h-32 md:h-40">
               <div className="flex w-full justify-between">
                 <AppTitleWithDescription
                   {...app}
-                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
+                  className=" w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
                   titleSize="3xl"
-                  titleClassname="md:text-4xl"
+                  titleClassname="md:text-4xl leading-[0.8]"
                   titleFont="bold"
                   descriptionSize="sm"
                   descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 md:text-base"
@@ -104,7 +105,7 @@ export default async function AppPagePage({
                   isLink={false}
                 />
                 <span className="flex h-fit items-center space-x-2 pr-2 md:pr-4">
-                  <ExternalLink className="mt-1 size-4 stroke-1 text-muted-foreground md:size-6" />
+                  <AppDetailShare />
                 </span>
               </div>
               <span className="flex w-full items-end justify-between pr-4">

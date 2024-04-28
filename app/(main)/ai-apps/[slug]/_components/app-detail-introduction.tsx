@@ -34,7 +34,7 @@ export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
   if (!app_introduction || app_introduction === null) {
     return (
       <section className="flex flex-col space-y-4">
-        <h1 className="text-lg font-semibold sm:text-2xl">Introduction</h1>
+        <h1 className="font-semibold sm:text-2xl">Introduction</h1>
         <div className="relative w-full">
           <span className="italic text-muted-foreground">
             No Introduction has been found ...
@@ -46,7 +46,7 @@ export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
 
   return (
     <section className="flex flex-col space-y-4">
-      <h1 className="text-lg font-semibold sm:text-2xl">Introduction</h1>
+      <h1 className="text-2xl font-semibold">Introduction</h1>
       <div className="relative w-full">
         <button
           className="absolute -bottom-4 right-2 z-50 text-blue-500"

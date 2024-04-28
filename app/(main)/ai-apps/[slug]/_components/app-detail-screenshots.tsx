@@ -23,8 +23,8 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
   const [isHovered, setIsHovered] = React.useState(false)
 
   return (
-    <div className="flex flex-col space-y-4">
-      <h2 className="text-2xl font-semibold tracking-wide">Screenshots</h2>
+    <div className="flex flex-col space-y-4 sm:space-y-6">
+      <h1 className="text-2xl font-semibold tracking-wide">Screenshots</h1>
       <div className="relative mx-auto h-full w-full max-w-full">
         <Carousel
           opts={{
