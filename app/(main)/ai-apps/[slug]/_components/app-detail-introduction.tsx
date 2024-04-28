@@ -49,7 +49,7 @@ export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
       <h1 className="text-lg font-semibold sm:text-2xl">Introduction</h1>
       <div className="relative w-full">
         <button
-          className="absolute bottom-0 right-2 z-50 text-blue-500"
+          className="absolute -bottom-4 right-2 z-50 text-blue-500"
           onClick={() => setShowAll(!showAll)}
         >
           Show {showAll ? "less" : "more"}
@@ -57,9 +57,9 @@ export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
         {showAll ? (
           <EditorContent editor={editor} className="p-2 pb-10" />
         ) : (
-          <ScrollArea className="relative h-[30rem] w-full p-2">
-            <EditorContent editor={editor} className="pb-24" />
-            <ProgressiveBlur className="h-24" />
+          <ScrollArea className="relative h-[32rem] w-full p-2">
+            <EditorContent editor={editor} className="pb-16" />
+            <ProgressiveBlur className="h-20" />
           </ScrollArea>
         )}
       </div>

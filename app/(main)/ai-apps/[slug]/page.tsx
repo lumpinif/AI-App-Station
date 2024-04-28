@@ -138,7 +138,7 @@ export default async function AppPagePage({
             className="mx-auto w-full max-w-xl sm:hidden"
           />
         </div>
-        <div className="flex w-full flex-col lg:flex-row lg:space-x-4">
+        <div className="flex w-full flex-col xl:flex-row xl:space-x-4">
           <div className="flex flex-1 flex-col space-y-6 md:space-y-12 lg:space-y-16">
             <AppDetailScreenshots
               screenshotsPublicUrls={screenshotsPublicUrls || []}
@@ -155,7 +155,7 @@ export default async function AppPagePage({
               />
             </Suspense>
           </div>
-          <div className="mt-6 lg:mt-0">
+          <div className="mt-2 xl:mt-0">
             <AppDetailSubInfo
               created_at={app.profiles.created_at}
               avatar_url={app.profiles.avatar_url}
