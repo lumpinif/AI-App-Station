@@ -36,7 +36,7 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <CarouselContent className="mr-6 h-52">
+          <CarouselContent className="mr-6 h-fit">
             {screenshotsPublicUrls && screenshotsPublicUrls.length > 0
               ? screenshotsPublicUrls.map((item, index) => (
                   <CarouselItem
