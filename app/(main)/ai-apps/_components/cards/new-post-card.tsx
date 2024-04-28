@@ -3,7 +3,6 @@ import Link from "next/link"
 
 import { PostCardProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import { BottomBlur } from "@/components/shared/progressive-blur"
 
 export const PostCard: React.FC<PostCardProps> = ({
   label,

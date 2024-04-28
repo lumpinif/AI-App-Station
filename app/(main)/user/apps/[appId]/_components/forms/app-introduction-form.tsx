@@ -221,7 +221,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           setSaveStatus={setSaveStatus}
           setCharsCount={setCharsCount}
           saveStatus={saveStatus}
-          className="border border-dashed border-muted-foreground dark:border-border"
+          className="border border-dashed border-muted-foreground dark:border-border md:p-8 md:py-4 lg:p-12 lg:py-6"
         />
       </section>
     </TooltipProvider>

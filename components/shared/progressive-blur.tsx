@@ -6,7 +6,7 @@ export const BlurDiv = ({
   gradientStops,
   zIndex,
   className,
-  direction = "left",
+  direction = "bottom",
 }: {
   direction?: "left" | "top" | "right" | "bottom"
   blurValue: number
@@ -29,11 +29,13 @@ export const BlurDiv = ({
   />
 )
 
-export const BottomBlur = ({
+export const ProgressiveBlur = ({
   className,
+  direction = "bottom",
   isLastBackground = true,
 }: {
   className?: string
+  direction?: "left" | "top" | "right" | "bottom"
   isLastBackground?: boolean
 }) => {
   return (
@@ -45,49 +47,49 @@ export const BottomBlur = ({
     >
       <div className="relative h-full w-full">
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={1}
           blurValue={0.25}
           gradientStops="rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 37.5%"
         />
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={2}
           blurValue={0.5}
           gradientStops="rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 0) 50%"
         />
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={3}
           blurValue={0.75}
           gradientStops="rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 62.5%"
         />
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={4}
           blurValue={1}
           gradientStops="rgba(0, 0, 0, 0) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 0) 75%"
         />
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={5}
           blurValue={1.25}
           gradientStops="rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 87.5%"
         />
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={6}
           blurValue={1.5}
           gradientStops="rgba(0, 0, 0, 0) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%"
         />
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={7}
           blurValue={2}
           gradientStops="rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 1) 100%"
         />
         <BlurDiv
-          direction="bottom"
+          direction={direction}
           zIndex={8}
           blurValue={2.5}
           gradientStops="rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 1) 100%"

@@ -104,6 +104,12 @@ dependencies:
   '@tiptap/extension-youtube':
     specifier: ^2.3.0
     version: 2.3.0(@tiptap/core@2.3.0)
+  '@tiptap/pm':
+    specifier: ^2.3.0
+    version: 2.3.0
+  '@tiptap/react':
+    specifier: ^2.3.0
+    version: 2.3.0(@tiptap/core@2.3.0)(@tiptap/pm@2.3.0)(react-dom@18.2.0)(react@18.2.0)
   '@uppy/core':
     specifier: ^3.10.1
     version: 3.10.1
@@ -188,6 +194,9 @@ dependencies:
   openai:
     specifier: ^4.38.3
     version: 4.38.5
+  progressive-blur:
+    specifier: ^1.0.0
+    version: 1.0.0(react-dom@18.2.0)(react@18.2.0)
   punycode:
     specifier: ^2.3.1
     version: 2.3.1
@@ -7189,6 +7198,16 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dev: true
+
+  /progressive-blur@1.0.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-BZkJJHksqsxt9eJ+bv5ptXyUDa+ZbpOzdGJNJVxFo2qF0u+Y38E1oKWidt6JIaHCM1xk9o8LSjf9TbtHpbx9WQ==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}

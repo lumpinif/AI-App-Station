@@ -11,7 +11,7 @@ import {
   EnhancedDrawerContent,
   EnhancedDrawerTrigger,
 } from "@/components/shared/enhanced-drawer"
-import { BottomBlur } from "@/components/shared/progressive-blur"
+import { ProgressiveBlur } from "@/components/shared/progressive-blur"
 
 import AppDetailCommentList from "./app-detail-commentList"
 
@@ -92,17 +92,17 @@ const AppDetailCommentSection = async ({
                 commentsList={commentsList}
                 className="mb-6 w-full p-4"
               />
-              <BottomBlur className="h-24" />
+              <ProgressiveBlur className="h-24" />
             </EnhancedDrawerContent>
           </EnhancedDrawer>
         </div>
         <div className="hidden w-full flex-col space-y-4 sm:flex">
           <ScrollArea className="relative h-[42rem]">
-            <BottomBlur className="h-24" />
             <AppDetailCommentList
               commentsList={commentsList}
               className="mb-14"
             />
+            <ProgressiveBlur className="h-24" />
           </ScrollArea>
         </div>
       </section>
