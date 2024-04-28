@@ -94,7 +94,13 @@ const ResponsiveModalContent = ({
     : EnhancedDrawerContent
 
   return (
-    <ResponsiveModalContent className={className} {...props}>
+    <ResponsiveModalContent
+      className={cn(
+        "outline-none focus:!ring-0 focus:!ring-transparent",
+        className
+      )}
+      {...props}
+    >
       {children}
     </ResponsiveModalContent>
   )

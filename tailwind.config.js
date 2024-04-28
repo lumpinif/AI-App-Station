@@ -161,8 +161,19 @@ module.exports = {
           "10%": { opacity: 1, filter: "brightness(1.25) blur(10px)" },
           "100%": { opacity: 1, filter: "brightness(1) blur(0)", scale: "1" },
         },
+        // spinner-loader
+        spinner: {
+          "0%": {
+            opacity: 1,
+          },
+          "100%": {
+            opacity: 0.15,
+          },
+        },
       },
       animation: {
+        // spinner loader
+        spinner: "spinner 1.2s linear infinite",
         // Reveal Effect
         reveal: "reveal 0.7s ease-in-out",
         "reveal-repeat": "reveal 0.7s ease-in-out infinite",

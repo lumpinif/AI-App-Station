@@ -105,7 +105,7 @@ export default async function AppPagePage({
                   isLink={false}
                 />
                 <span className="flex h-fit items-center space-x-2 pr-2 md:pr-4">
-                  <AppDetailShare />
+                  <AppDetailShare {...app} />
                 </span>
               </div>
               <span className="flex w-full items-end justify-between pr-4">

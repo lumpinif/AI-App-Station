@@ -2,7 +2,6 @@ import { clsx, type ClassValue } from "clsx"
 import { format, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
-import { Developer } from "@/types/db_tables"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -55,5 +54,13 @@ export function isValidUrl(url: string) {
     return true
   } catch (e) {
     return false
+  }
+}
+
+export function getSiteUrl() {
+  if (process.env.NODE_ENV === "development") {
+    return process.env.NEXT_PUBLIC_DEV_URL || "http://localhost:3000"
+  } else {
+    return process.env.NEXT_PUBLIC_PRO_URL || "https://aiappstation.com"
   }
 }
