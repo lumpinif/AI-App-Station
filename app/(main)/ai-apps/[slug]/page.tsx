@@ -10,6 +10,7 @@ import { Bookmark, ExternalLink, ThumbsUp } from "lucide-react"
 import { Comment } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
+import { AppCommentsBadge } from "../_components/cards/_components/app-comments-badge"
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
 import AppDetailCommentSection from "./_components/app-detail-comment-section"
@@ -112,11 +113,15 @@ export default async function AppPagePage({
                     className="hidden max-w-44 px-6 py-1 sm:flex sm:w-32 md:w-40"
                   />
                   <span className="flex items-center space-x-2 md:space-x-4">
+                    <AppCommentsBadge
+                      app_slug={app.app_slug}
+                      comments_count={app.comments_count}
+                    />
                     <AppDetailLikeButton
                       data={app.app_likes}
                       app_id={app.app_id}
                     />
-                    <Bookmark className="size-4 stroke-1 text-muted-foreground md:size-6" />
+                    <Bookmark className="size-4 stroke-1 text-muted-foreground" />
                     {/* <Star className="size-4 stroke-1 text-muted-foreground md:size-5" /> */}
                   </span>
                 </span>

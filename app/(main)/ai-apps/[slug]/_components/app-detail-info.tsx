@@ -1,7 +1,9 @@
-import { Fragment } from "react"
+"use client"
+
+import { Fragment, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Rating } from "@mui/material"
-import { Star } from "lucide-react"
+import { ArrowRight, Star } from "lucide-react"
 import numeral from "numeral"
 
 import { AppDetails, Category as CategoriesProps } from "@/types/db_tables"
@@ -24,60 +26,91 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
   rating_count,
 }) => {
   const formattedRatingCount = numeral(rating_count).format("0.[0]a")
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [hasOverflow, setHasOverflow] = useState(false)
+
+  const checkOverflow = () => {
+    if (containerRef.current) {
+      const { scrollWidth, clientWidth } = containerRef.current
+      setHasOverflow(scrollWidth > clientWidth)
+    }
+  }
+
+  useEffect(() => {
+    checkOverflow()
+    window.addEventListener("resize", checkOverflow)
+    return () => {
+      window.removeEventListener("resize", checkOverflow)
+    }
+  }, [rating_count, rating_score])
 
   return (
-    <div
-      className={cn(
-        "no-scrollbar w-full max-w-full snap-x overflow-x-auto py-2 md:py-4",
-        className
+    <div className="group relative w-full max-w-full">
+      {hasOverflow && (
+        <div className="absolute bottom-0 right-0">
+          <span className="flex items-center space-x-2 text-xs  text-muted-foreground/50">
+            <p className="opacity-100 transition-all duration-200 ease-out group-focus-within:opacity-100 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 sm:opacity-0">
+              scroll for more
+            </p>
+            <ArrowRight className="size-3 opacity-100 transition-all duration-200 ease-out group-focus-within:opacity-100 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 sm:opacity-0" />
+          </span>
+        </div>
       )}
-    >
-      <div className="flex h-20 w-full min-w-max shrink-0 flex-row items-center max-sm:justify-between">
-        <InfoBox>
-          <InfoBoxTitle>{formattedRatingCount} Ratings</InfoBoxTitle>
-          <RatingsAndReviews
-            rating_count={rating_count}
-            rating_score={rating_score}
-          />
-        </InfoBox>
-        <InfoBoxSeperator />
+      <div
+        ref={containerRef}
+        className={cn(
+          "no-scrollbar relative w-full max-w-full snap-x overflow-x-auto py-2 md:py-4",
+          className
+        )}
+      >
+        <div className="flex h-20 w-full min-w-max shrink-0 flex-row items-center max-sm:justify-between">
+          <InfoBox>
+            <InfoBoxTitle>{formattedRatingCount} Ratings</InfoBoxTitle>
+            <RatingsAndReviews
+              rating_count={rating_count}
+              rating_score={rating_score}
+            />
+          </InfoBox>
+          <InfoBoxSeperator />
 
-        <InfoBox>
-          <InfoBoxTitle>
-            {app.developers && app.developers.length > 1 ? (
-              <span>Developers</span>
-            ) : (
-              <span>Developer</span>
-            )}
-          </InfoBoxTitle>
-          <Developers developers={app.developers} />
-        </InfoBox>
-        <InfoBoxSeperator />
+          <InfoBox>
+            <InfoBoxTitle>
+              {app.developers && app.developers.length > 1 ? (
+                <span>Developers</span>
+              ) : (
+                <span>Developer</span>
+              )}
+            </InfoBoxTitle>
+            <Developers developers={app.developers} />
+          </InfoBox>
+          <InfoBoxSeperator />
 
-        {app.categories && app.categories.length > 0 ? (
-          app.categories?.map((category, index) => (
-            <Fragment key={category.category_id + index}>
+          {app.categories && app.categories.length > 0 ? (
+            app.categories?.map((category, index) => (
+              <Fragment key={category.category_id + index}>
+                <InfoBox>
+                  <InfoBoxTitle>Category</InfoBoxTitle>
+                  <Category
+                    category_slug={category.category_slug}
+                    category_name={category.category_name}
+                  />
+                </InfoBox>
+                <InfoBoxSeperator />
+              </Fragment>
+            ))
+          ) : (
+            <>
               <InfoBox>
                 <InfoBoxTitle>Category</InfoBoxTitle>
-                <Category
-                  category_slug={category.category_slug}
-                  category_name={category.category_name}
-                />
+                <span className="flex h-full items-center justify-center text-center text-xs text-muted-foreground">
+                  No Categories yet
+                </span>
               </InfoBox>
               <InfoBoxSeperator />
-            </Fragment>
-          ))
-        ) : (
-          <>
-            <InfoBox>
-              <InfoBoxTitle>Category</InfoBoxTitle>
-              <span className="text-xs">No Category</span>
-            </InfoBox>
-            <InfoBoxSeperator />
-          </>
-        )}
+            </>
+          )}
 
-        <InfoBox>
+          {/* <InfoBox>
           <InfoBoxTitle>Comments</InfoBoxTitle>
           <AppCommentsBadge
             app_slug={app.app_slug}
@@ -85,14 +118,15 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
             className="flex h-full flex-col items-center justify-center overflow-hidden text-center text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
           />
         </InfoBox>
-        <InfoBoxSeperator />
-        <InfoBox>
-          <InfoBoxTitle>Pricing</InfoBoxTitle>
-          <Pricing
-            data={app}
-            className="flex h-full cursor-default flex-col items-center justify-center overflow-hidden text-center text-muted-foreground"
-          />
-        </InfoBox>
+        <InfoBoxSeperator /> */}
+          <InfoBox>
+            <InfoBoxTitle>Pricing</InfoBoxTitle>
+            <Pricing
+              data={app}
+              className="flex h-full cursor-default flex-col items-center justify-center overflow-hidden text-center text-muted-foreground"
+            />
+          </InfoBox>
+        </div>
       </div>
     </div>
   )

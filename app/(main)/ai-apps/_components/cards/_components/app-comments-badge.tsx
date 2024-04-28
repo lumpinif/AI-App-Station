@@ -20,23 +20,22 @@ export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
   const formattedCommentsCount = numeral(commentsCount).format("0.[0]a")
 
   return (
-    <>
-      <Link
-        href={`/ai-apps/${app_slug}/#ratings-and-reviews`}
-        className={cn(className, "group hover:underline")}
-      >
-        <div className="m-0 flex items-center gap-x-1 p-0">
-          <MessageCircle
-            className="stroke-muted-foreground stroke-1 group-hover:fill-muted dark:stroke-muted dark:group-hover:fill-muted"
-            size={16}
-          />
-          {commentsCount > 0 ? (
-            <span className="text-xs max-sm:pt-1">
-              {formattedCommentsCount}
-            </span>
-          ) : null}
-        </div>
-      </Link>
-    </>
+    <Link
+      href={`/ai-apps/${app_slug}/#ratings-and-reviews`}
+      className={cn("group", className)}
+    >
+      <div className="m-0 flex items-center gap-x-1 p-0">
+        <MessageCircle
+          className={cn(
+            "transition-color size-4 stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-blue-500 sm:group-hover:text-blue-500"
+          )}
+        />
+        {commentsCount > 0 ? (
+          <span className="text-sm font-medium text-muted-foreground">
+            {formattedCommentsCount}
+          </span>
+        ) : null}
+      </div>
+    </Link>
   )
 }

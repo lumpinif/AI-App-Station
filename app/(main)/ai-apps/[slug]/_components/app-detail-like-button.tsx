@@ -101,28 +101,24 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   }
 
   return (
-    <>
-      <div
-        className={cn("flex items-center space-x-1 md:space-x-2", className)}
+    <div className={cn("flex items-center space-x-1 md:space-x-2")}>
+      <button
+        className={cn("group rounded-full")}
+        onClick={() => startTransition(() => handleLikes())}
       >
-        <button
-          className={cn("group rounded-full")}
-          onClick={() => startTransition(() => handleLikes())}
-        >
-          <Heart
-            className={cn(
-              "transition-color stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
-              optimisticLikeState.isUserLiked && "fill-current text-rose-500"
-            )}
-            size={18}
-          />
-        </button>
-        {appLikesCount > 0 && (
-          <span className="text-sm font-medium text-muted-foreground">
-            {optimisticLikeState.appLikesCount}
-          </span>
-        )}
-      </div>
-    </>
+        <Heart
+          className={cn(
+            "transition-color size-4 stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
+            optimisticLikeState.isUserLiked && "fill-current text-rose-500",
+            className
+          )}
+        />
+      </button>
+      {appLikesCount > 0 && (
+        <span className="text-sm font-medium text-muted-foreground">
+          {optimisticLikeState.appLikesCount}
+        </span>
+      )}
+    </div>
   )
 }
