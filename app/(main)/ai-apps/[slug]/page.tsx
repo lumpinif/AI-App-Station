@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils"
 import { AppCommentsBadge } from "../_components/cards/_components/app-comments-badge"
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
+import { AppDetailBookmark } from "./_components/app-detail-bookmark"
 import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
 import { AppDetailInfo } from "./_components/app-detail-info"
@@ -121,7 +122,10 @@ export default async function AppPagePage({
                       data={app.app_likes}
                       app_id={app.app_id}
                     />
-                    <Bookmark className="size-4 stroke-1 text-muted-foreground" />
+                    <AppDetailBookmark
+                      app_id={app.app_id}
+                      data={app.app_bookmarks}
+                    />
                     {/* <Star className="size-4 stroke-1 text-muted-foreground md:size-5" /> */}
                   </span>
                 </span>

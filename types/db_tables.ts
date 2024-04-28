@@ -5,9 +5,9 @@ import { Dispatch, SetStateAction } from "react"
 import { Database } from "@/types/supabase"
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"]
-export type Bookmark = Database["public"]["Tables"]["bookmarks"]["Row"]
 export type Comment = Database["public"]["Tables"]["app_comments"]["Row"]
 export type App = Database["public"]["Tables"]["apps"]["Row"]
+export type App_bookmarks = Database["public"]["Tables"]["app_bookmarks"]["Row"]
 export type App_likes = Database["public"]["Tables"]["app_likes"]["Row"]
 export type Comment_likes = Database["public"]["Tables"]["comment_likes"]["Row"]
 
@@ -33,6 +33,7 @@ export type AppDetails = App & {
   developers?: Developer[]
   profiles: Profile
   app_likes: App_likes[]
+  app_bookmarks: App_bookmarks[]
 }
 
 // About the Posts

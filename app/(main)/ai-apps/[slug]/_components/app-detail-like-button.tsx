@@ -1,6 +1,6 @@
 "use client"
 
-import { useOptimistic, useState, useTransition } from "react"
+import { useOptimistic, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { Heart } from "lucide-react"
@@ -28,26 +28,23 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   data: app_likes,
   app_id,
 }) => {
-  // console.log("🚀 ~ app_likes:", app_likes)
   const { data: profile } = useUser()
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const supabase = createSupabaseBrowserClient()
 
   const isUserLiked = app_likes.some(
     (like) => like.user_id === profile?.user_id
   )
   const appLikesCount = app_likes.length
 
-  const router = useRouter()
-
   const [optimisticLikeState, setOptimisticLikeState] = useOptimistic(
     { isUserLiked, appLikesCount },
     (state, newState: LikeState) => ({ ...state, ...newState })
   )
 
-  const supabase = createSupabaseBrowserClient()
-  const [isPending, startTransition] = useTransition()
-  const OpenModal = useAccountModal((state) => state.OpenModal)
-
-  const handleLikeDebounced = useDebouncedCallback(
+  const handleRemoveLikeDebounced = useDebouncedCallback(
     async (profile: Profile) => {
       const { error: removeLikeError } = await supabase
         .from("app_likes")
@@ -62,7 +59,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
     { leading: true, trailing: true }
   )
 
-  const handleRemoveLikeDebounced = useDebouncedCallback(
+  const handleLikeDebounced = useDebouncedCallback(
     async (profile: Profile) => {
       const { error: addLikeError } = await supabase.from("app_likes").insert({
         app_id: app_id,
@@ -84,13 +81,13 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
     }
 
     if (isUserLiked) {
-      handleLikeDebounced(profile)
+      handleRemoveLikeDebounced(profile)
       setOptimisticLikeState({
         isUserLiked: !isUserLiked,
         appLikesCount: appLikesCount - 1,
       })
     } else {
-      handleRemoveLikeDebounced(profile)
+      handleLikeDebounced(profile)
       setOptimisticLikeState({
         isUserLiked: !isUserLiked,
         appLikesCount: appLikesCount + 1,
