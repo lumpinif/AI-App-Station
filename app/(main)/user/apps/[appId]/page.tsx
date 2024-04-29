@@ -14,6 +14,7 @@ import { JSONContent } from "novel"
 
 import BackButton from "@/components/shared/back-button"
 
+import { AppApprovalSubmitButton } from "./_components/forms/app-approval-submit-button"
 import AppCategoriesForm from "./_components/forms/app-categories-form"
 import { AppDevelopersForm } from "./_components/forms/app-developers-form"
 import { AppIconForm } from "./_components/forms/app-icon-form"
@@ -73,6 +74,20 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     screenshotsFileNames || []
   )
 
+  const isAllFormsComplete = (): boolean => {
+    return (
+      !!app.app_title &&
+      !!app.description &&
+      !!app.categories &&
+      app.categories.length > 0 &&
+      !!app.developers &&
+      app.developers.length > 0 &&
+      !!app.introduction &&
+      !!appIconUrl &&
+      screenshotsPublicUrls.length > 0
+    )
+  }
+
   return (
     <section>
       <div className="flex flex-col border-b pb-1">
@@ -83,7 +98,15 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
               Continue submitting - <span>{app.app_title}</span>
             </h1>
             <span className="hidden text-xs text-muted-foreground sm:flex">
-              Complete all required fields
+              {/* Submit */}
+              <div className="flex w-full justify-end">
+                <AppApprovalSubmitButton
+                  size={"sm"}
+                  app_id={app.app_id}
+                  disabled={!isAllFormsComplete()}
+                  className="h-8 w-20 select-none text-xs"
+                />
+              </div>
             </span>
           </div>
         </div>
@@ -152,6 +175,16 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
         {/* <div className="mt-6">
           <AppSubInfoForm />
         </div> */}
+
+        {/* Submit */}
+
+        <div className="flex w-full justify-end sm:hidden">
+          <AppApprovalSubmitButton
+            app_id={app.app_id}
+            disabled={!isAllFormsComplete()}
+            className="w-full select-none"
+          />
+        </div>
       </div>
     </section>
   )
