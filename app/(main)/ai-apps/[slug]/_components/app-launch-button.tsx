@@ -20,7 +20,7 @@ export const AppLaunchButton: React.FC<AppLaunchButtonProps> = ({
     <>
       <Button
         className={cn(
-          "group relative h-10 rounded-md border px-6 dark:border-none dark:shadow-outline",
+          "group relative h-10 rounded-md border px-6",
           className,
           isAppUrl ? "" : "cursor-not-allowed bg-muted hover:bg-muted"
         )}

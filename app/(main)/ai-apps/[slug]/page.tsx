@@ -135,7 +135,7 @@ export default async function AppPagePage({
           <AppDetailInfo data={app} {...ratingData} className="py-4" />
           <AppLaunchButton
             app_url={app.app_url}
-            className="mx-auto w-full max-w-xl sm:hidden"
+            className="mx-auto w-full max-w-xl border dark:border-0 dark:shadow-outline dark:outline-none sm:hidden"
           />
         </div>
         <div className="flex w-full flex-col xl:flex-row xl:space-x-4">
