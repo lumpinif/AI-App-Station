@@ -57,7 +57,7 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
       {isReplying && (
         <CommentReplyForm
           parent_name={
-            comment.profiles.display_name ||
+            comment.profiles.user_name ||
             `User_${comment.profiles.user_id.slice(-5)}`
           }
           app_id={comment.app_id}

@@ -4,10 +4,9 @@ import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { signOut } from "@/server/auth"
 import { useQueryClient } from "@tanstack/react-query"
-import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 
-import { Button } from "../../ui/button"
+import { SpinnerButton } from "@/components/shared/spinner-button"
 
 const SignOutButton = () => {
   const [isPending, startTransition] = useTransition()
@@ -39,14 +38,14 @@ const SignOutButton = () => {
   return (
     <>
       <form action={handleSignOut}>
-        <Button type="submit" disabled={isPending} variant={"destructive"}>
+        <SpinnerButton
+          type="submit"
+          isLoading={isPending}
+          buttonClassName="w-full"
+          buttonVariant={"destructive"}
+        >
           Sign Out
-          {isPending && (
-            <span className="ml-1">
-              <RingLoader size={15} speedMultiplier={1.5} color="gray" />
-            </span>
-          )}
-        </Button>
+        </SpinnerButton>
       </form>
     </>
   )

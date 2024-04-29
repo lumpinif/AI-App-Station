@@ -12,22 +12,6 @@ import { cn, getSiteUrl } from "@/lib/utils"
 import { Button } from "../ui/button"
 import { LoadingSpinner } from "./loading-spinner"
 
-const buttonCopy = {
-  idle: (
-    <>
-      <span>Copy Link</span>
-      <Copy size={16} />
-    </>
-  ),
-  loading: <LoadingSpinner size={16} />,
-  success: (
-    <>
-      <span>Link Copied</span>
-      <Check size={16} />
-    </>
-  ),
-} as const
-
 type CopyButtonProps = { className?: string; url?: string; isToast?: boolean }
 
 export const CopyButton: React.FC<CopyButtonProps> = ({
@@ -35,6 +19,22 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
   className,
   url: urlProp,
 }) => {
+  const buttonCopy = {
+    idle: (
+      <>
+        <span>Copy Link</span>
+        <Copy size={16} />
+      </>
+    ),
+    loading: <LoadingSpinner size={16} />,
+    success: (
+      <>
+        <span>Link Copied</span>
+        <Check size={16} />
+      </>
+    ),
+  } as const
+
   const [buttonState, setButtonState] =
     useState<keyof typeof buttonCopy>("idle")
   const pathname = usePathname()

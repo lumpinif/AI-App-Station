@@ -5,15 +5,13 @@ import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 const initUser = {
+  user_id: "",
+  email: "",
+  user_name: "",
   avatar_url: "",
   created_at: "",
-  data_of_birth: "",
-  display_name: "",
-  email: "",
-  full_name: "",
-  user_id: "",
-  job: "",
   updated_at: "",
+  full_name: "",
 }
 
 export default function useUser() {

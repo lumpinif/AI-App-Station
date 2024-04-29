@@ -4,12 +4,10 @@ import { useTransition } from "react"
 import { signUpWithEmailAndPassword } from "@/server/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -18,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { SpinnerButton } from "@/components/shared/spinner-button"
 
 import { InputBorderSpotlight } from "../../shared/InputBorderSpotlight"
 
@@ -52,13 +51,14 @@ export default function RegisterForm() {
   function onSubmitRegisterForm(signUpData: z.infer<typeof FormSchema>) {
     startTransition(async () => {
       //server action of signUpWithEmailAndPassword
-      const { data, error } = await signUpWithEmailAndPassword(signUpData)
+      const { data, error: signUpError } =
+        await signUpWithEmailAndPassword(signUpData)
 
-      if (error?.message) {
+      if (signUpError?.message) {
         if (
-          error.name === "AuthApiError" &&
-          error.message === "Email rate limit exceeded" &&
-          error.status === 429
+          signUpError.name === "AuthApiSignUpError" &&
+          signUpError.message === "Email rate limit exceeded" &&
+          signUpError.status === 429
         ) {
           // Display a user-friendly message to inform the user about the email rate limit issue
           toast.error(
@@ -66,7 +66,7 @@ export default function RegisterForm() {
           )
         } else {
           toast.error("Error Registering!", {
-            description: error.message,
+            description: signUpError.name + signUpError.message,
           })
         }
       } else {
@@ -140,18 +140,13 @@ export default function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button
+        <SpinnerButton
           type="submit"
-          className="flex w-full gap-2"
-          disabled={isPending}
+          isLoading={isPending}
+          buttonClassName="w-full rounded-md"
         >
           Register
-          {isPending && (
-            <span>
-              <RingLoader size={15} speedMultiplier={1.5} color="gray" />
-            </span>
-          )}
-        </Button>
+        </SpinnerButton>
       </form>
     </Form>
   )

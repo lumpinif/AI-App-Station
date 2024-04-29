@@ -63,7 +63,7 @@ const AccountModalTrigger = ({
       ) : (
         <AvatarImage
           src={`${profile.avatar_url}`}
-          alt={`${profile.display_name}`}
+          alt={`${profile.full_name || profile.user_name || "User"}`}
           className="h-full w-full animate-fade rounded-full object-cover"
         />
       )}

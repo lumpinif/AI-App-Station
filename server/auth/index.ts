@@ -6,11 +6,10 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 export async function signUpWithEmailAndPassword(signUpData: {
   email: string
   password: string
-  confirm: string
 }) {
   const supabase = await createSupabaseServerClient()
 
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error: signUpError } = await supabase.auth.signUp({
     email: signUpData.email,
     password: signUpData.password,
   })
@@ -19,7 +18,20 @@ export async function signUpWithEmailAndPassword(signUpData: {
     revalidatePath("/", "layout")
   }
 
-  return { data, error }
+  // Serialize and parse the `data` object
+  const serializedData = JSON.parse(JSON.stringify(data))
+
+  // Create a plain object representation of the error
+  const errorData = signUpError
+    ? {
+        name: signUpError.name,
+        message: signUpError.message,
+        status: signUpError.status,
+        // Include other necessary error properties
+      }
+    : null
+
+  return { data: serializedData, error: errorData }
 }
 
 export async function signInWithEmailAndPassword(signInData: {
@@ -28,7 +40,7 @@ export async function signInWithEmailAndPassword(signInData: {
 }) {
   const supabase = await createSupabaseServerClient()
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error: signInError } = await supabase.auth.signInWithPassword({
     email: signInData.email,
     password: signInData.password,
   })
@@ -37,7 +49,20 @@ export async function signInWithEmailAndPassword(signInData: {
     revalidatePath("/", "layout")
   }
 
-  return { data, error }
+  // Serialize and parse the `data` object
+  const serializedData = JSON.parse(JSON.stringify(data))
+
+  // Create a plain object representation of the error
+  const errorData = signInError
+    ? {
+        name: signInError.name,
+        message: signInError.message,
+        status: signInError.status,
+        // Include other necessary error properties
+      }
+    : null
+
+  return { data: serializedData, error: errorData }
 }
 
 export async function signOut() {

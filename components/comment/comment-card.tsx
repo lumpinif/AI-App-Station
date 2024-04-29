@@ -58,8 +58,8 @@ export const CommentCard: React.FC<CommentProps> = ({
               <div className="flex flex-col space-y-3">
                 <div className="flex max-w-full items-center space-x-2">
                   <h4 className="flex-none font-semibold">
-                    {comment.profiles.display_name
-                      ? comment.profiles.display_name
+                    {comment.profiles.user_name
+                      ? comment.profiles.user_name
                       : `user_${comment.profiles.user_id.slice(-5)}`}
                   </h4>
                   <div className="min-w-0 max-w-36 overflow-hidden text-ellipsis md:max-w-60">
@@ -69,8 +69,8 @@ export const CommentCard: React.FC<CommentProps> = ({
                         className="underline-offset-2 hover:underline"
                       >
                         @
-                        {comment.profiles.display_name
-                          ? comment.profiles.display_name
+                        {comment.profiles.user_name
+                          ? comment.profiles.user_name
                           : `user_${comment.profiles.user_id.slice(-5)}`}
                       </Link>
                     </span>

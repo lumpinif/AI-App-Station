@@ -4,12 +4,10 @@ import { useTransition } from "react"
 import { signInWithEmailAndPassword } from "@/server/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 import * as z from "zod"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
-import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -18,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { SpinnerButton } from "@/components/shared/spinner-button"
 
 import { InputBorderSpotlight } from "../../shared/InputBorderSpotlight"
 
@@ -108,18 +107,13 @@ export default function SignInForm() {
               </FormItem>
             )}
           />
-          <Button
+          <SpinnerButton
             type="submit"
-            className="flex w-full gap-2 rounded-full"
-            disabled={isPending}
+            isLoading={isPending}
+            buttonClassName="w-full rounded-full"
           >
             Sign In
-            {isPending && (
-              <span>
-                <RingLoader size={15} speedMultiplier={1.5} color="gray" />
-              </span>
-            )}
-          </Button>
+          </SpinnerButton>
         </form>
       </Form>
     </>

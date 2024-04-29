@@ -11,8 +11,8 @@ import SignOutButton from "@/components/auth/signout/sign-out-button"
 export default function AccountFormSupabase() {
   const supabase = createSupabaseBrowserClient()
   const [loading, setLoading] = useState(true)
-  const [fullname, setFullname] = useState<string | null>(null)
-  const [username, setUsername] = useState<string | null>(null)
+  const [full_name, setFullname] = useState<string | null>(null)
+  const [user_name, setUsername] = useState<string | null>(null)
   // const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
 
@@ -24,18 +24,18 @@ export default function AccountFormSupabase() {
 
   if (profile) {
     setFullname(profile.full_name)
-    setUsername(profile.display_name)
+    setUsername(profile.user_name)
     // setWebsite(data.website)
     setAvatarUrl(profile.avatar_url)
   }
 
   async function updateProfile({
-    fullname,
-    username,
+    full_name,
+    user_name,
     avatar_url,
   }: {
-    username: string | null
-    fullname: string | null
+    user_name: string | null
+    full_name: string | null
     avatar_url: string | null
   }) {
     try {
@@ -44,14 +44,14 @@ export default function AccountFormSupabase() {
       const { error } = await supabase.from("profiles").upsert({
         user_id: profile?.user_id as string,
         email: profile?.email as string,
-        full_name: fullname,
-        display_name: username,
+        full_name,
+        user_name,
         avatar_url,
         updated_at: new Date().toISOString(),
       })
       if (error) throw error
       toast.success("Profile updated for", {
-        description: <text>{fullname}</text>,
+        description: <text>{full_name}</text>,
       })
     } catch (error) {
       toast.error("Failed to update profile!")
@@ -59,6 +59,8 @@ export default function AccountFormSupabase() {
       setLoading(false)
     }
   }
+
+  // TODO: CONSIDER USE REACT-FORM INSTEAD WITH FORMSCHEMA
 
   return (
     <div className="form-widget">
@@ -71,7 +73,7 @@ export default function AccountFormSupabase() {
         <input
           id="fullName"
           type="text"
-          value={fullname || ""}
+          value={full_name || ""}
           onChange={(e) => setFullname(e.target.value)}
         />
       </div>
@@ -80,7 +82,7 @@ export default function AccountFormSupabase() {
         <input
           id="username"
           type="text"
-          value={username || ""}
+          value={user_name || ""}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
@@ -96,7 +98,7 @@ export default function AccountFormSupabase() {
 
       <div>
         <Button
-          onClick={() => updateProfile({ fullname, username, avatar_url })}
+          onClick={() => updateProfile({ full_name, user_name, avatar_url })}
           disabled={loading}
         >
           {loading ? "Loading ..." : "Update"}

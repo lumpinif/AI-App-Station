@@ -4,10 +4,9 @@ import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { GithubIcon } from "lucide-react"
-import { RingLoader } from "react-spinners"
 import { toast } from "sonner"
 
-import { Button } from "@/components/ui/button"
+import { SpinnerButton } from "@/components/shared/spinner-button"
 
 const GithubLoginButton = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -34,19 +33,14 @@ const GithubLoginButton = () => {
   }
 
   return (
-    <Button
+    <SpinnerButton
+      isLoading={isLoading}
       onClick={handleGithubLogin}
-      className="w-full rounded-full"
-      disabled={isLoading}
+      buttonClassName="w-full rounded-full"
     >
-      {isLoading && (
-        <span className="mr-2">
-          <RingLoader size={15} speedMultiplier={1.5} color="gray" />
-        </span>
-      )}
       Github
       <GithubIcon className="ml-2 h-5 w-5" />
-    </Button>
+    </SpinnerButton>
   )
 }
 
