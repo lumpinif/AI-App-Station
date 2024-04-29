@@ -22,7 +22,7 @@ export function NavigationMenuBar() {
   const currentPath = usePathname()
   return (
     <NavigationMenu>
-      <NavigationMenuList className="glass-card-background mx-2 h-14 rounded-full p-2 text-foreground/80 bg-blend-luminosity backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
+      <NavigationMenuList className="glass-card-background mx-2 h-14 rounded-full p-2 text-foreground backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
         <NavigationMenuItem className="rounded-full">
           <NavigationMenuTrigger className="bg-transparent">
             Getting started
@@ -36,10 +36,10 @@ export function NavigationMenuBar() {
                     href="/"
                   >
                     <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
+                    <div className="mb-2 mt-4 text-lg font-medium ">
                       AI App Station
                     </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
+                    <p className="text-sm leading-tight dark:text-muted-foreground">
                       Beautifully designed components that you can copy and
                       paste into your apps. Accessible. Customizable. Open
                       Source.
