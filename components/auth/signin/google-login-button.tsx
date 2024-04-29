@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
+import { FcGoogle } from "react-icons/fc"
 import { toast } from "sonner"
 
 import { SpinnerButton } from "@/components/shared/spinner-button"
@@ -36,7 +37,8 @@ const GoogleLoginButton = () => {
       isLoading={isLoading}
       buttonClassName="w-full rounded-full"
     >
-      Register
+      Google
+      <FcGoogle className="ml-2 h-5 w-5" />
     </SpinnerButton>
   )
 }
