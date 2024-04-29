@@ -69,7 +69,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
           <Button
             variant="ghost"
             size={"icon"}
-            className="h-9 w-9 rounded-full p-0 transition-all duration-200 ease-out "
+            className="h-9 w-9 rounded-full p-0 outline-none transition-all duration-200 ease-out"
           >
             {!isOpen ? (
               <ChevronRight className="size-4 text-muted-foreground" />
@@ -96,11 +96,15 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
 
         {app_url && (
           <CollapsibleItem>
-            <span className="cursor-default text-muted-foreground">
+            <span className="cursor-default text-muted-foreground ">
               App Url
             </span>
             <span>
-              <a href={app_url} target="_blank">
+              <a
+                href={app_url}
+                target="_blank"
+                className="underline-offset-4 hover:underline"
+              >
                 {app_url}
               </a>
             </span>
