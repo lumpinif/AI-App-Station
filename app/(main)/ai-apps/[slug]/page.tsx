@@ -108,12 +108,12 @@ export default async function AppPagePage({
                 </span>
               </div>
               <span className="flex w-full items-end justify-between pr-4">
-                <span className="flex items-center space-x-2 md:space-x-6">
+                <span className="flex items-center gap-x-2 md:gap-x-6">
                   <AppLaunchButton
                     app_url={app.app_url}
                     className="hidden max-w-44 px-6 py-1 sm:flex sm:w-32 md:w-40"
                   />
-                  <span className="flex items-center space-x-2 md:space-x-4">
+                  <span className="flex items-center gap-x-2 md:gap-x-4">
                     <AppCommentsBadge
                       app_slug={app.app_slug}
                       comments_count={app.comments_count}

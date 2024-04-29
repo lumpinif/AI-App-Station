@@ -1,10 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
-export default function Page() {
+export default function Loading() {
   return (
     <main
-      className="container mt-4 flex flex-col space-y-4 md:mt-6 md:pl-36 lg:mt-8 xl:mt-12"
+      className="mt-4 flex flex-col space-y-4 md:mt-6 lg:mt-8 xl:mt-12"
       suppressHydrationWarning
     >
       <div className="h-20 w-full sm:h-32 md:hidden">
