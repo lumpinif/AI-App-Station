@@ -1,9 +1,10 @@
+import Link from "next/link"
 import { CalendarDays } from "lucide-react"
 
 import { Profile } from "@/types/db_tables"
 import { cn, timeConverter } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   HoverCard,
   HoverCardContent,
@@ -12,6 +13,7 @@ import {
 import { Icons } from "@/components/icons/icons"
 
 type UserHoverCardProps = {
+  triggerClassName?: string
   user_name: Profile["full_name"]
   avatar_url: Profile["avatar_url"]
   user_joined: Profile["created_at"]
@@ -21,12 +23,26 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
   user_name,
   avatar_url,
   user_joined,
+  triggerClassName,
 }) => {
   const joinedTime = timeConverter(user_joined)
+
+  // TODO: DEFINE USER_SLUG BEFORE PRODUCTION
+  const user_slug = "user_slug"
+
   return (
     <HoverCard openDelay={400} closeDelay={200}>
       <HoverCardTrigger asChild>
-        <Button variant="link">{user_name}</Button>
+        <Link
+          href={`/user/${user_slug}`}
+          className={cn(
+            "w-fit text-primary underline-offset-4 hover:underline",
+            triggerClassName
+          )}
+          target="_blank"
+        >
+          {user_name}
+        </Link>
       </HoverCardTrigger>
       <HoverCardContent className="glass-card-background w-fit max-w-xs border border-none shadow-outline backdrop-blur-md">
         <div className="flex justify-between space-x-4">

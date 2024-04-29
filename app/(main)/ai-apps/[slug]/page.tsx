@@ -5,7 +5,6 @@ import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase"
-import { Bookmark, ExternalLink, ThumbsUp } from "lucide-react"
 
 import { Comment } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -157,12 +156,7 @@ export default async function AppPagePage({
             </Suspense>
           </div>
           <div className="mt-2 xl:mt-0">
-            <AppDetailSubInfo
-              created_at={app.profiles.created_at}
-              avatar_url={app.profiles.avatar_url}
-              lastUpdated={app.updated_at}
-              submitted_by={app.profiles.full_name}
-            />
+            <AppDetailSubInfo {...app} {...app.profiles} {...app.developers} />
           </div>
         </div>
       </div>

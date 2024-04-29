@@ -93,7 +93,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <div vaul-drawer-wrapper="">
-              <div className="relative flex min-h-dvh flex-col bg-background">
+              <main className="relative flex min-h-dvh flex-col bg-background">
                 {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
                 <SearchCommandDialogProvider />
                 <AccountModalProvider />
@@ -104,7 +104,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                   </section>
                 </section>
                 <SiteFooter />
-              </div>
+              </main>
             </div>
             <TailwindIndicator />
             <SonnerToaster richColors position="bottom-left" />

@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "../icons/icons"
-import { buttonVariants } from "../ui/button"
 
 type BackButtonProps = {
   className?: string
