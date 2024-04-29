@@ -10,8 +10,6 @@ import { AppDetails, Category as CategoriesProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 
-import { AppCommentsBadge } from "../../_components/cards/_components/app-comments-badge"
-
 type AppDetailInfoProps = {
   data: AppDetails
   className?: string
@@ -66,10 +64,7 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
         <div className="flex h-20 w-full min-w-max shrink-0 flex-row items-center max-sm:justify-between">
           <InfoBox>
             <InfoBoxTitle>{formattedRatingCount} Ratings</InfoBoxTitle>
-            <RatingsAndReviews
-              rating_count={rating_count}
-              rating_score={rating_score}
-            />
+            <RatingsAndReviews rating_score={rating_score} />
           </InfoBox>
           <InfoBoxSeperator />
 
@@ -110,15 +105,6 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
             </>
           )}
 
-          {/* <InfoBox>
-          <InfoBoxTitle>Comments</InfoBoxTitle>
-          <AppCommentsBadge
-            app_slug={app.app_slug}
-            comments_count={app.comments_count}
-            className="flex h-full flex-col items-center justify-center overflow-hidden text-center text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
-          />
-        </InfoBox>
-        <InfoBoxSeperator /> */}
           <InfoBox>
             <InfoBoxTitle>Pricing</InfoBoxTitle>
             <Pricing
@@ -184,11 +170,9 @@ const Pricing = ({
 
 const RatingsAndReviews = ({
   rating_score,
-  rating_count,
   className,
 }: {
   rating_score: number
-  rating_count: number
   className?: string
 }) => {
   return (
