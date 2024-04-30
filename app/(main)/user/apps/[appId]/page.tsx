@@ -95,14 +95,15 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     <section className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] bg-background relative w-full items-center justify-center">
       {/* Radial gradient for the container to give a faded look */}
       <div className="bg-background pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
-      <div className="relative z-20 flex items-center justify-between">
-        <div className="sm:w-24">
-          <BackButton />
+      <div className="relative z-20 flex items-center justify-between border-b">
+        <div className="flex items-center gap-x-2">
+          <div className="sm:w-24">
+            <BackButton />
+          </div>
+          <h1 className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-500 bg-clip-text py-4 text-center text-lg font-bold text-transparent">
+            Editing {app.app_title}
+          </h1>
         </div>
-
-        <h1 className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-500 bg-clip-text py-2 text-center text-lg font-bold text-transparent sm:text-4xl md:py-6 lg:py-8 lg:text-5xl xl:py-10">
-          Editing {app.app_title}
-        </h1>
 
         <span className="text-muted-foreground flex text-xs">
           {/* Submit button */}
@@ -135,11 +136,8 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
       </div>
 
       {/* content */}
-      <div className="relative z-20 lg:container">
-        <div className="flex w-full flex-col ">
-          <div className="flex w-full items-center justify-between py-2"></div>
-        </div>
-        <div className="mt-6 flex flex-col items-start space-y-8 sm:mt-8 md:mt-10 md:space-y-14 lg:space-y-20">
+      <div className="relative z-20 mt-6 lg:container sm:mt-12">
+        <div className="flex flex-col items-start space-y-8 sm:mt-8 md:mt-10 md:space-y-14 lg:space-y-20">
           {/* Icon Title Description */}
           <div className="flex w-full items-start space-x-6 md:space-x-10 lg:space-x-14">
             <div className="size-24 flex-none sm:size-32 md:size-40">
