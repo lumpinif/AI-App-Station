@@ -30,7 +30,7 @@ export default function ContentCard({ photo }: { photo: Photo }) {
               className="aspect-square w-full rounded-xl object-cover lg:hidden"
             />
             <h3 className="text-xl font-medium">{photo.name}</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Taken by {photo.username}
             </p>
             <p>

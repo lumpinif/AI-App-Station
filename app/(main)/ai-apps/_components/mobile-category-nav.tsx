@@ -40,10 +40,10 @@ export function MobileCategoryNav() {
                   handleTabSelection(`${route.href}`)
                 }}
                 className={cn(
-                  "relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
+                  "focus-visible:ring-ring relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4",
                   pathname.includes(`${route.href}`)
                     ? "border-primary text-primary"
-                    : "border-transparent text-muted-foreground hover:text-primary"
+                    : "text-muted-foreground hover:text-primary border-transparent"
                 )}
                 style={{
                   WebkitTapHighlightColor: "transparent",
@@ -54,7 +54,7 @@ export function MobileCategoryNav() {
                   <>
                     <motion.span
                       layoutId="bubble_underline"
-                      className="absolute inset-0 z-10 border-b-2 border-primary pb-1"
+                      className="border-primary absolute inset-0 z-10 border-b-2 pb-1"
                       transition={{
                         type: "tween",
                         duration: 0.35,
@@ -71,7 +71,7 @@ export function MobileCategoryNav() {
           </div>
           <div className="group flex items-center">
             <AppSubmitButton
-              className="whitespace-nowrap text-muted-foreground transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring group-hover:text-primary"
+              className="text-muted-foreground focus-visible:ring-ring group-hover:text-primary whitespace-nowrap transition-colors ease-out focus-visible:ring-4"
               size={"xs"}
             >
               <span className="text-xs">Submit Apps</span>
@@ -98,11 +98,11 @@ const AllAppsTab = ({
   return (
     <div
       className={cn(
-        "relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
+        "focus-visible:ring-ring relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4",
         className,
         pathname === `/ai-apps`
           ? "border-primary text-primary"
-          : "border-transparent text-muted-foreground hover:text-primary"
+          : "text-muted-foreground hover:text-primary border-transparent"
       )}
       style={{
         WebkitTapHighlightColor: "transparent",

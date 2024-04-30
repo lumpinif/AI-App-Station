@@ -52,7 +52,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
                 className="aspect-square w-full rounded-xl object-cover lg:hidden"
               />
               <h3 className="text-xl font-medium">{post.title}</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Created by {post.profiles?.full_name || post.profiles?.email}
               </p>
               <p>

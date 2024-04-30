@@ -88,7 +88,7 @@ export default function PopoverMenu() {
       <AnimatePresence>
         {openMenu && (
           <motion.div
-            className="absolute bottom-0 left-0 flex flex-col items-center overflow-hidden bg-primary p-1"
+            className="bg-primary absolute bottom-0 left-0 flex flex-col items-center overflow-hidden p-1"
             initial="closed"
             animate="open"
             exit="closed"
@@ -104,17 +104,17 @@ export default function PopoverMenu() {
                 return (
                   <li
                     key={index}
-                    className="w-full select-none rounded-b-[4px] rounded-t-[4px] bg-primary transition-transform first:rounded-t-[12px] last:rounded-b-[12px] active:scale-[0.98]"
+                    className="bg-primary w-full select-none rounded-b-[4px] rounded-t-[4px] transition-transform first:rounded-t-[12px] last:rounded-b-[12px] active:scale-[0.98]"
                   >
                     <div className="flex items-center py-3">
                       <div className="px-4">
-                        <item.icon className="h-5  w-5 text-background" />
+                        <item.icon className="text-background  h-5 w-5" />
                       </div>
                       <div>
-                        <h3 className="text-base  text-background">
+                        <h3 className="text-background  text-base">
                           {item.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {item.text}
                         </p>
                       </div>
@@ -127,7 +127,7 @@ export default function PopoverMenu() {
         )}
       </AnimatePresence>
       <motion.button
-        className="absolute bottom-0  left-0 flex h-12 w-12 items-center justify-center rounded-full bg-primary p-2 text-background outline-none"
+        className="bg-primary text-background  absolute bottom-0 left-0 flex h-12 w-12 items-center justify-center rounded-full p-2 outline-none"
         disabled={openMenu}
         onClick={(e) => {
           e.stopPropagation()

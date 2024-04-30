@@ -11,7 +11,7 @@ const StoryPageLayout = ({ children }: StoryPageLayoutProps) => {
     <>
       <div className="container flex flex-col">
         <StoryPageTitle />
-        <BackButton className="mt-4 dark:shadow-outline" />
+        <BackButton className="dark:shadow-outline mt-4" />
         <main className="mt-5 flex-1">
           <>{children}</>
         </main>

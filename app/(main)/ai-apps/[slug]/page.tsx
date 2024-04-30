@@ -4,7 +4,7 @@ import { getAllComments, getAppBySlug } from "@/server/data"
 import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
-} from "@/server/data/supabase"
+} from "@/server/data/supabase-actions"
 
 import { Comment } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -135,7 +135,7 @@ export default async function AppPagePage({
           <AppDetailInfo data={app} {...ratingData} className="py-4" />
           <AppLaunchButton
             app_url={app.app_url}
-            className="mx-auto w-full max-w-xl border dark:border-0 dark:shadow-outline dark:outline-none sm:hidden"
+            className="dark:shadow-outline mx-auto w-full max-w-xl border sm:hidden dark:border-0 dark:outline-none"
           />
         </div>
         <div className="flex w-full flex-col xl:flex-row xl:space-x-4">

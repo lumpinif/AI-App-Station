@@ -14,7 +14,7 @@ const PostCard: React.FC<PostCardProps> = ({
   return (
     <>
       <Link href={`/story/${slug}`} scroll={false} passHref>
-        <div className="relative h-80 w-full cursor-pointer rounded-2xl bg-card px-8">
+        <div className="bg-card relative h-80 w-full cursor-pointer rounded-2xl px-8">
           {/* Image */}
           <div className="relative h-full w-full ">
             <Image
@@ -32,7 +32,7 @@ const PostCard: React.FC<PostCardProps> = ({
 
           {/* Overlay */}
           {/* <span className="absolute inset-x-0 bottom-0 z-10 h-full w-full bg-white opacity-40 dark:bg-black"></span> */}
-          <span className=" absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-r from-background/50 to-transparent" />
+          <span className=" from-background/50 absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-r to-transparent" />
           {/* Text */}
           <div className="absolute top-[15%] z-20 flex max-w-xs flex-col items-start justify-between gap-y-3">
             <span className="text-xs font-medium uppercase leading-none tracking-tight mix-blend-difference">

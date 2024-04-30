@@ -18,7 +18,7 @@ export const CommentShowReplies: React.FC<CommentShowRepliesProps> = ({
     <div
       onClick={() => setIsShowReplies(!isShowReplies)}
       className={cn(
-        "w-fit cursor-pointer select-none text-sm text-muted-foreground hover:text-primary",
+        "text-muted-foreground hover:text-primary w-fit cursor-pointer select-none text-sm",
         isShowReplies ? "text-primary" : "",
         className
       )}

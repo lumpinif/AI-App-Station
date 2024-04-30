@@ -27,7 +27,7 @@ const Equipments = ({ item }: { item: GridItemInterface }) => {
               {item.equipments?.map((equipment, index) => {
                 return (
                   <Link
-                    className="rounded-lg bg-card px-2 py-1 text-sm font-medium"
+                    className="bg-card rounded-lg px-2 py-1 text-sm font-medium"
                     key={equipment.link + index}
                     href={equipment.link}
                   >
@@ -39,7 +39,7 @@ const Equipments = ({ item }: { item: GridItemInterface }) => {
           </div>
         </div>
         {/* Overlay */}
-        <span className="absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-t from-card to-transparent"></span>
+        <span className="from-card absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-t to-transparent"></span>
         {/* Blur Layers */}
         {/* <span className="absolute inset-x-0 bottom-0 z-[9] h-[30%] w-full backdrop-blur-[1.4px]"></span>
         <span className="absolute inset-x-0 bottom-0 z-[8] h-[40%] w-full backdrop-blur-[1.2px]"></span>

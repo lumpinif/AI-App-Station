@@ -12,9 +12,9 @@ const SearchPage = () => {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex w-full max-w-xl flex-col gap-6 rounded-md border bg-card p-6">
+      <div className="bg-card flex w-full max-w-xl flex-col gap-6 rounded-md border p-6">
         <div className="">SearchPage</div>
-        <div className="flex w-full max-w-xl flex-col gap-6 rounded-md border bg-card p-6">
+        <div className="bg-card flex w-full max-w-xl flex-col gap-6 rounded-md border p-6">
           {/* <NovelEditor initialValue={value} onChange={setValue} /> */}
         </div>
       </div>

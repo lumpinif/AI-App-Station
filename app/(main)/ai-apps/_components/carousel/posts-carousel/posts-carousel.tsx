@@ -72,14 +72,14 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
         <CarouselPrevious
           variant={"tag"}
           className={cn(
-            "left-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
+            "from-background/80 left-0 size-10 h-full rounded-none to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
             isHovered ? "" : "hidden"
           )}
         />
         <CarouselNext
           variant={"tag"}
           className={cn(
-            "right-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
+            "from-background/80 right-0 size-10 h-full rounded-none to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
             isHovered ? "" : "hidden"
           )}
         />

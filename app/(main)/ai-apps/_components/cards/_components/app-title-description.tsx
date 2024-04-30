@@ -53,7 +53,7 @@ export const AppTitleWithDescription: React.FC<
   const descriptionElement = (
     <p
       className={cn(
-        "cursor-default text-muted-foreground",
+        "text-muted-foreground cursor-default",
         isTruncate ? "truncate" : "",
         descriptionSize ? `text-${descriptionSize}` : "text-sm",
         descriptionFont ? `font-${descriptionFont}` : "",

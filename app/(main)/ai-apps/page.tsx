@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import dynamic from "next/dynamic"
 import { getAllApps, getAllHeroFeaturedPosts, getAllPosts } from "@/server/data"
-import { getAppsWithCategories } from "@/server/data/supabase"
+import { getAppsWithCategories } from "@/server/data/supabase-actions"
 import { EmblaOptionsType } from "embla-carousel"
 
 import AiAppsPageTitle from "./_components/ai-apps-page-title"

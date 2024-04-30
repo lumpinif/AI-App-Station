@@ -22,7 +22,7 @@ export function NavigationMenuBar() {
   const currentPath = usePathname()
   return (
     <NavigationMenu>
-      <NavigationMenuList className="glass-card-background mx-2 h-14 rounded-full p-2 text-foreground backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
+      <NavigationMenuList className="glass-card-background text-foreground dark:shadow-outline mx-2 h-14 rounded-full p-2 backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100">
         <NavigationMenuItem className="rounded-full">
           <NavigationMenuTrigger className="bg-transparent">
             Getting started
@@ -39,7 +39,7 @@ export function NavigationMenuBar() {
                     <div className="mb-2 mt-4 text-lg font-medium ">
                       AI App Station
                     </div>
-                    <p className="text-sm leading-tight dark:text-muted-foreground">
+                    <p className="dark:text-muted-foreground text-sm leading-tight">
                       Beautifully designed components that you can copy and
                       paste into your apps. Accessible. Customizable. Open
                       Source.
@@ -101,13 +101,13 @@ const ListItem = React.forwardRef<
         <Link
           href={`${ref}`}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
             className
           )}
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
             {children}
           </p>
         </Link>

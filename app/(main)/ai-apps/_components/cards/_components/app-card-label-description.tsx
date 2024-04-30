@@ -12,7 +12,7 @@ export const AppCardLabelDescription: React.FC<
   return (
     // TODO: REFACTOR THIS CONSIDER MAKING IT TO A POPOVER
 
-    <div className="flex w-full justify-end gap-x-1  text-nowrap text-[10px] text-muted-foreground">
+    <div className="text-muted-foreground flex w-full justify-end  gap-x-1 text-nowrap text-[10px]">
       {/* Category */}
       {categories && categories.length > 0 ? (
         categories
@@ -29,7 +29,7 @@ export const AppCardLabelDescription: React.FC<
                 <span className="text-xs">{category.category_name}</span>
               </Link>
               {index !== categories.slice(0, 2).length - 1 && (
-                <div className="h-1 w-1 rounded-full bg-muted-foreground" />
+                <div className="bg-muted-foreground h-1 w-1 rounded-full" />
               )}
             </span>
           ))

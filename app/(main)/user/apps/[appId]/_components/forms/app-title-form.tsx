@@ -90,7 +90,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
             className="group"
             size={"xs"}
           >
-            <SquarePen className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
+            <SquarePen className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
           </Button>
         </div>
       ) : (
@@ -109,7 +109,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                         disabled={isSubmitting}
                         placeholder="Enter App Title"
                         {...field}
-                        className="h-fit w-full max-w-48 text-nowrap border-0 p-0 text-lg font-bold outline-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-3xl md:max-w-96 md:text-4xl"
+                        className="ring-offset-background h-fit w-full max-w-48 text-nowrap border-0 p-0 text-lg font-bold outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-3xl md:max-w-96 md:text-4xl"
                       />
                     </FormControl>
                     <FormMessage />

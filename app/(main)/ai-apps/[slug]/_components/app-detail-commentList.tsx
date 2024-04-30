@@ -67,7 +67,7 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
         commentsList={optimisticComments}
         setOptimisitcComment={setOptimisticComment}
       />
-      <span className="px-4 py-2 text-end text-xs text-muted-foreground max-sm:mb-6">
+      <span className="text-muted-foreground px-4 py-2 text-end text-xs max-sm:mb-6">
         No more comments
       </span>
     </div>

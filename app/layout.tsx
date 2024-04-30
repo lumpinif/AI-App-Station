@@ -81,7 +81,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-dvh bg-background font-sans antialiased",
+          "bg-background min-h-dvh font-sans antialiased",
           GeistSans.variable
         )}
       >
@@ -94,7 +94,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           >
             {/* <div vaul-drawer-wrapper=""> */}
             <main
-              className="relative flex min-h-dvh flex-col bg-background"
+              className="bg-background relative flex min-h-dvh flex-col"
               vaul-drawer-wrapper=""
             >
               {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}

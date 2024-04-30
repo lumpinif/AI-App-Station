@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { insertIntroduction } from "@/server/data/supabase"
+import { insertIntroduction } from "@/server/data/supabase-actions"
 import {
   CloudUpload,
   Loader2,
@@ -111,7 +111,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
                     <h3>Editor Actions</h3>
                     <Separator />
 
-                    <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
+                    <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
                       <li className="flex items-center space-x-4">
                         <Type className="size-4" />
                         <span className="w-full">
@@ -125,7 +125,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
                         </span>
                       </li>
                       <li className="flex items-center space-x-4">
-                        <kbd className="rounded bg-muted p-1">/</kbd>
+                        <kbd className="bg-muted rounded p-1">/</kbd>
                         <span className="w-full">
                           Press / to open the command menu
                         </span>
@@ -146,7 +146,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
 
                     <h3>Editor Features</h3>
                     <Separator />
-                    <ul className="mt-2 text-muted-foreground">
+                    <ul className="text-muted-foreground mt-2">
                       <li> - Rich text editing</li>
                       <li> - Capture Quote</li>
                       <li> - To-do List</li>
@@ -161,7 +161,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
               </span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="flex h-fit select-none rounded-lg bg-accent px-2 py-1 text-xs text-muted-foreground">
+              <div className="bg-accent text-muted-foreground flex h-fit select-none rounded-lg px-2 py-1 text-xs">
                 <span>
                   {charsCount}/{CHARS_LIMIT}
                 </span>
@@ -185,7 +185,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
               )}
               <div
                 className={cn(
-                  "flex select-none rounded-lg bg-accent px-2 py-1 text-xs text-muted-foreground",
+                  "bg-accent text-muted-foreground flex select-none rounded-lg px-2 py-1 text-xs",
                   saveStatus === "Failed to save" && "bg-destructive"
                 )}
               >
@@ -211,7 +211,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
             </div>
           </div>
           {/* <Separator /> */}
-          <span className="flex cursor-default select-none text-xs text-muted-foreground/80">
+          <span className="text-muted-foreground/80 flex cursor-default select-none text-xs">
             Select text to edit or Press &apos;/&apos; for commands
           </span>
         </div>
@@ -221,7 +221,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           setSaveStatus={setSaveStatus}
           setCharsCount={setCharsCount}
           saveStatus={saveStatus}
-          className="border border-dashed border-muted-foreground dark:border-border md:p-8 md:py-4 lg:p-12 lg:py-6"
+          className="border-muted-foreground dark:border-border border border-dashed md:p-8 md:py-4 lg:p-12 lg:py-6"
         />
       </section>
     </TooltipProvider>

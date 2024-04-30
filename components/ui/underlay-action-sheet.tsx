@@ -133,7 +133,7 @@ export const UnderlayActionSheet = () => {
         >
           <div>
             <motion.div
-              className="relative overflow-hidden bg-background"
+              className="bg-background relative overflow-hidden"
               style={{
                 height: contentHeight,
                 scale: contentScale,
@@ -187,7 +187,7 @@ export const UnderlayActionSheet = () => {
                 </p>
               </motion.div>
               <motion.div
-                className="absolute bottom-0 left-0 flex w-full items-end justify-center bg-gradient-to-t from-background via-background to-transparent"
+                className="from-background via-background absolute bottom-0 left-0 flex w-full items-end justify-center bg-gradient-to-t to-transparent"
                 style={{
                   height: actionAreaHeight,
                 }}
@@ -211,7 +211,7 @@ export const UnderlayActionSheet = () => {
                 >
                   <motion.button
                     onClick={openSheet}
-                    className="dark:glass-card-background z-10 flex items-center justify-center rounded-[12px] bg-muted px-2 text-muted-foreground transition-colors"
+                    className="dark:glass-card-background bg-muted text-muted-foreground z-10 flex items-center justify-center rounded-[12px] px-2 transition-colors"
                     style={{
                       height: actionButtonSize,
                     }}
@@ -231,35 +231,35 @@ export const UnderlayActionSheet = () => {
           <motion.div className="flex flex-col space-y-2 px-4">
             <div className="flex items-center space-x-2 pb-5 pt-3">
               <div className="flex-1">
-                <button className="dark:glass-card-background rounded-full bg-muted p-1 transition-colors">
-                  <PlusIcon className="h-4 w-4 text-primary" />
+                <button className="dark:glass-card-background bg-muted rounded-full p-1 transition-colors">
+                  <PlusIcon className="text-primary h-4 w-4" />
                 </button>
               </div>
-              <div className="flex-1 text-center text-primary">Actions</div>
+              <div className="text-primary flex-1 text-center">Actions</div>
               <div className="flex flex-1 justify-end" onClick={closeSheet}>
-                <button className="dark:glass-card-background rounded-full bg-muted p-1 transition-colors">
-                  <Cross1Icon className="h-4 w-4 text-primary" />
+                <button className="dark:glass-card-background bg-muted rounded-full p-1 transition-colors">
+                  <Cross1Icon className="text-primary h-4 w-4" />
                 </button>
               </div>
             </div>
             <div className="flex flex-row space-x-2">
-              <div className="dark:glass-card-background flex flex-1 flex-col items-center justify-center space-y-1 rounded-xl bg-muted p-4 text-sm">
-                <HeartIcon className="h-4 w-4 text-primary" />
-                <span className="text-sm text-primary">Like</span>
+              <div className="dark:glass-card-background bg-muted flex flex-1 flex-col items-center justify-center space-y-1 rounded-xl p-4 text-sm">
+                <HeartIcon className="text-primary h-4 w-4" />
+                <span className="text-primary text-sm">Like</span>
               </div>
-              <div className="dark:glass-card-background flex flex-1 flex-col items-center justify-center space-y-1 rounded-xl bg-muted p-4 text-sm">
-                <Share1Icon className="h-4 w-4 text-primary" />
+              <div className="dark:glass-card-background bg-muted flex flex-1 flex-col items-center justify-center space-y-1 rounded-xl p-4 text-sm">
+                <Share1Icon className="text-primary h-4 w-4" />
                 <span className="text-primary">Share</span>
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <div className="dark:glass-card-background flex items-center space-x-2 rounded-xl bg-muted p-4">
-                <MagicWandIcon className="h-4 w-4 text-primary" />
-                <span className="text-sm text-primary">Regenerate</span>
+              <div className="dark:glass-card-background bg-muted flex items-center space-x-2 rounded-xl p-4">
+                <MagicWandIcon className="text-primary h-4 w-4" />
+                <span className="text-primary text-sm">Regenerate</span>
               </div>
-              <div className="dark:glass-card-background flex items-center space-x-2 rounded-xl bg-muted p-4 text-sm">
-                <LockClosedIcon className="h-4 w-4 text-primary" />
-                <span className="text-sm text-primary">Lock</span>
+              <div className="dark:glass-card-background bg-muted flex items-center space-x-2 rounded-xl p-4 text-sm">
+                <LockClosedIcon className="text-primary h-4 w-4" />
+                <span className="text-primary text-sm">Lock</span>
               </div>
             </div>
           </motion.div>

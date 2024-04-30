@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react"
 import { Info } from "lucide-react"
 
@@ -17,11 +19,13 @@ import ResponsiveContentModal from "@/components/shared/responsive-content-modal
 type InfoModalProps = {
   children?: React.ReactNode
   className?: string
+  iconClassName?: string
 }
 
 export const InfoPopover: React.FC<InfoModalProps> = ({
   className,
   children,
+  iconClassName,
 }) => {
   const [showInfo, setShowInfo] = useState(false)
   return (
@@ -30,12 +34,13 @@ export const InfoPopover: React.FC<InfoModalProps> = ({
         <button>
           <Info
             className={cn(
-              "size-4 text-muted-foreground transition-colors duration-200 ease-out sm:hover:text-primary"
+              "text-muted-foreground sm:hover:text-primary size-4 transition-colors duration-200 ease-out",
+              iconClassName
             )}
           />
         </button>
       </PopoverTrigger>
-      <PopoverContent align="start" sideOffset={10}>
+      <PopoverContent align="center" sideOffset={10}>
         <div className={cn("text-sm", className)}>{children}</div>
       </PopoverContent>
     </Popover>

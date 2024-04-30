@@ -25,19 +25,19 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
           >
             <Badge
               variant={"outline"}
-              className="cursor-pointer bg-muted hover:bg-background"
+              className="bg-muted hover:bg-background cursor-pointer"
             >
               GET
             </Badge>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="glass-card-background border backdrop-blur-md dark:border-none sm:shadow-outline"
+          className="glass-card-background sm:shadow-outline border backdrop-blur-md dark:border-none"
           sideOffset={5}
           align="end"
         >
           <DropdownMenuItem>
-            <div className="flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm text-muted-foreground hover:text-popover-foreground">
+            <div className="text-muted-foreground hover:text-popover-foreground flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm">
               <span>Add to Collection</span>
               <Button variant={"tag"} size={"xs"} className="m-0 p-0">
                 {/* <Bookmark
@@ -49,7 +49,7 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <div className="flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm text-muted-foreground hover:text-popover-foreground">
+            <div className="text-muted-foreground hover:text-popover-foreground flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm">
               <span>Like</span>
               <Button variant={"tag"} size={"xs"} className="m-0 p-0">
                 <Heart className="fill-red-600 stroke-red-600" size={16} />
@@ -58,7 +58,7 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <div className="flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm text-muted-foreground hover:text-popover-foreground">
+            <div className="text-muted-foreground hover:text-popover-foreground flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm">
               <span>Share it with</span>
               <Button variant={"tag"} size={"xs"} className="m-0 p-0">
                 <SquareArrowOutUpRight size={16} />

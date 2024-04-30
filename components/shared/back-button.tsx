@@ -24,7 +24,7 @@ function BackButton({ className, back_url }: BackButtonProps) {
   return (
     <button
       className={cn(
-        "group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-background text-sm font-medium ring-offset-background transition-all duration-200 hover:cursor-pointer hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sm:hover:w-24",
+        "bg-background ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-sm font-medium transition-all duration-200 hover:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sm:hover:w-24",
         className
       )}
       onClick={handleOnClick}

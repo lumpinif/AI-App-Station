@@ -42,7 +42,7 @@ const UserCard = ({ className }: { className?: string }) => {
           <h1 className="text-xl font-medium sm:text-xl md:text-3xl">
             {profile?.full_name}
           </h1>
-          <div className="tracking-wide text-muted-foreground">
+          <div className="text-muted-foreground tracking-wide">
             {profile?.email}
           </div>
         </div>

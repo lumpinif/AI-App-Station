@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AddComment } from "@/server/data/supabase"
+import { AddComment } from "@/server/data/supabase-actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
@@ -132,11 +132,11 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
                           precision={0.5}
                           emptyIcon={<Star className=" fill-muted stroke-0" />}
                         />
-                        <span className="text-xs font-medium text-muted-foreground dark:text-muted">
+                        <span className="text-muted-foreground dark:text-muted text-xs font-medium">
                           giving {field.value || 5} stars
                         </span>
                       </div>
-                      <span className="text-xs text-muted-foreground dark:text-muted">
+                      <span className="text-muted-foreground dark:text-muted text-xs">
                         Tap a Star to Rate
                       </span>
                     </div>
@@ -157,7 +157,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
               </FormLabel>
               <FormControl>
                 <Textarea
-                  className="no-scrollbar rounded-none border-l-0 border-r-0 border-t-0 bg-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="no-scrollbar ring-offset-background rounded-none border-l-0 border-r-0 border-t-0 bg-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Add a comment here ..."
                   {...field}
                   ref={textAreaRef}

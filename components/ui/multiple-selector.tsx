@@ -417,7 +417,7 @@ const MultipleSelector = React.forwardRef<
                   </span>
                   <button
                     className={cn(
-                      "ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2",
+                      "ring-offset-background focus:ring-ring ml-1 rounded-full outline-none focus:ring-2 focus:ring-offset-2",
                       (disabled || option.fixed) && "hidden"
                     )}
                     onKeyDown={(e) => {
@@ -431,7 +431,7 @@ const MultipleSelector = React.forwardRef<
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                    <X className="text-muted-foreground hover:text-foreground h-3 w-3" />
                   </button>
                 </Badge>
               )
@@ -461,7 +461,7 @@ const MultipleSelector = React.forwardRef<
                   : placeholder
               }
               className={cn(
-                "ml-1 flex-1 bg-transparent outline-none placeholder:text-xs placeholder:text-muted-foreground",
+                "placeholder:text-muted-foreground ml-1 flex-1 bg-transparent outline-none placeholder:text-xs",
                 inputProps?.className
               )}
             />
@@ -469,7 +469,7 @@ const MultipleSelector = React.forwardRef<
         </div>
         <div className="relative">
           {open && (
-            <CommandList className="absolute top-0 z-10 w-full rounded-md border bg-background shadow-lg outline-none animate-in">
+            <CommandList className="bg-background animate-in absolute top-0 z-10 w-full rounded-md border shadow-lg outline-none">
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (
@@ -509,7 +509,7 @@ const MultipleSelector = React.forwardRef<
                               className={cn(
                                 "cursor-pointer",
                                 option.disable &&
-                                  "cursor-default text-muted-foreground"
+                                  "text-muted-foreground cursor-default"
                               )}
                             >
                               {option.label}

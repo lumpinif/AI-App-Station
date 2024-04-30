@@ -11,7 +11,7 @@ import "@uppy/core/dist/style.min.css"
 import "@uppy/dashboard/dist/style.min.css"
 
 import { useRouter } from "next/navigation"
-import { deleteAppIcon } from "@/server/data/supabase"
+import { deleteAppIcon } from "@/server/data/supabase-actions"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import Tus from "@uppy/tus"
 import { toast } from "sonner"
@@ -186,7 +186,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
     <TooltipProvider>
       <div
         className={cn(
-          "flex aspect-square flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out dark:shadow-outline",
+          "dark:shadow-outline flex aspect-square flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out",
           hasAppIconFileName ? "dark:bg-primary" : "bg-card"
         )}
       >
@@ -203,9 +203,9 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
                   <Skeleton className="size-full" />
                 ) : (
                   <>
-                    <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] p-1 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
-                    <div className="flex flex-col items-center text-center text-xs text-muted-foreground">
-                      <p className="select-none px-1 text-xs leading-5 text-muted">
+                    <ImageIcon className="stroke-muted size-3/4 stroke-[1.5px] p-1 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+                    <div className="text-muted-foreground flex flex-col items-center text-center text-xs">
+                      <p className="text-muted select-none px-1 text-xs leading-5">
                         Upload Icon
                       </p>
                     </div>
@@ -234,7 +234,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <button className="absolute right-1 top-1">
-                    <X className="transtition-all hidden size-4 opacity-0 duration-200 ease-out group-hover:block group-hover:cursor-pointer group-hover:text-popover-foreground group-hover:opacity-100 dark:group-hover:text-popover" />
+                    <X className="transtition-all group-hover:text-popover-foreground dark:group-hover:text-popover hidden size-4 opacity-0 duration-200 ease-out group-hover:block group-hover:cursor-pointer group-hover:opacity-100" />
                   </button>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="max-w-sm rounded-2xl md:max-w-md">
@@ -263,7 +263,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
           )}
 
           <TooltipContent
-            className="flex items-center text-xs dark:bg-foreground dark:text-background"
+            className="dark:bg-foreground dark:text-background flex items-center text-xs"
             align="center"
             side="bottom"
             sideOffset={15}
@@ -299,7 +299,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
               hideUploadButton
             />
             {!showUploadButton && (
-              <span className="w-full text-center text-xs font-light text-muted-foreground/50 md:text-sm">
+              <span className="text-muted-foreground/50 w-full text-center text-xs font-light md:text-sm">
                 TODO: CHANGE THIS Images only, max 5MB each
               </span>
             )}
@@ -314,7 +314,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
                 className="w-full"
               >
                 {isUploading ? (
-                  <span className="flex items-center font-normal text-muted-foreground">
+                  <span className="text-muted-foreground flex items-center font-normal">
                     <Loader2 className="mr-2 size-4 animate-spin" />
                     <span>Uploading</span>
                   </span>

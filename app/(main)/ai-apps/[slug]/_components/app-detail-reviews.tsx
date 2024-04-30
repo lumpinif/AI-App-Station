@@ -52,10 +52,10 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
       </h2>
       <div className="grid w-full grid-cols-2 space-x-4">
         <div className="flex w-full items-center space-x-4 md:space-x-6 lg:space-x-8 xl:space-x-9">
-          <div className="text-5xl font-bold dark:text-muted-foreground sm:text-6xl">
+          <div className="dark:text-muted-foreground text-5xl font-bold sm:text-6xl">
             {rating_score ? rating_score.toFixed(1) : 0}
           </div>
-          <div className="flex flex-col items-center space-y-1 text-xs text-muted-foreground sm:text-sm">
+          <div className="text-muted-foreground flex flex-col items-center space-y-1 text-xs sm:text-sm">
             <span>out of 5</span>
             <Separator />
             <span>{formattedRatingCount} Ratings</span>
@@ -89,7 +89,7 @@ export const RatingStar: React.FC<RatingStarProps> = ({
 }) => {
   return (
     <Star
-      className={cn("fill-current text-muted-foreground", className)}
+      className={cn("text-muted-foreground fill-current", className)}
       size={size}
       strokeWidth={1}
     />

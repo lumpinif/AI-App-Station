@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { UpdateComment } from "@/server/data/supabase"
+import { UpdateComment } from "@/server/data/supabase-actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { useQueryClient } from "@tanstack/react-query"
@@ -127,7 +127,7 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
               <FormControl>
                 <Textarea
                   defaultValue={comment.comment}
-                  className="no-scrollbar rounded-none border-l-0 border-r-0 border-t-0 bg-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="no-scrollbar ring-offset-background rounded-none border-l-0 border-r-0 border-t-0 bg-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Edit the comment ..."
                   {...field}
                   ref={textAreaRef}
@@ -157,12 +157,12 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
                           <Star className=" fill-muted stroke-0" size={18} />
                         }
                       />
-                      <span className="text-sm font-medium text-muted-foreground dark:text-muted">
+                      <span className="text-muted-foreground dark:text-muted text-sm font-medium">
                         {field.value || 5} stars
                       </span>
                     </div>
                   </FormControl>
-                  <FormDescription className="text-sm text-muted-foreground dark:text-muted">
+                  <FormDescription className="text-muted-foreground dark:text-muted text-sm">
                     Tap a Star to Update
                   </FormDescription>
                 </FormItem>

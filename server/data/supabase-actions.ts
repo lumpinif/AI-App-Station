@@ -1088,3 +1088,44 @@ export async function insertIntroduction(
     }
   }
 }
+
+// Handle app review submission
+
+export async function handleAppReviewSubmission(app_id: App["app_id"]) {
+  const supabase = await createSupabaseServerClient()
+  const slug = await getSlugFromAppId(app_id)
+
+  try {
+    const { error, data } = await supabase
+      .from("apps")
+      .select("ready_to_publish")
+      .eq("app_id", app_id)
+      .single()
+
+    if (error) {
+      console.error("Error check app review:", error)
+      return { error: error }
+    }
+
+    if (data.ready_to_publish === false) {
+      const updateResult = await supabase
+        .from("apps")
+        .update({ ready_to_publish: true })
+        .eq("app_id", app_id)
+
+      if (updateResult.error) {
+        console.error("Error handle app review:", updateResult.error)
+        return { error: updateResult.error }
+      }
+
+      revalidatePath(`/ai-apps/${slug?.app_slug}`)
+      revalidatePath(`/user/apps/${app_id}`)
+    }
+
+    return { error }
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
+  }
+}

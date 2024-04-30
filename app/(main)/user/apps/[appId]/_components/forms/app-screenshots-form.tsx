@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { deleteScreenshot } from "@/server/data/supabase"
+import { deleteScreenshot } from "@/server/data/supabase-actions"
 import { Uppy } from "@uppy/core"
 import { Dashboard } from "@uppy/react"
 import Tus from "@uppy/tus"
@@ -204,7 +204,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
           <h1 className="w-fit text-2xl font-semibold">Screenshots Gallary</h1>
           {allowContinueUploading && (
             <span className="flex items-center space-x-2">
-              <span className="flex items-center space-x-2 text-sm text-muted-foreground">
+              <span className="text-muted-foreground flex items-center space-x-2 text-sm">
                 {allowedNumberOfImages} / 6
               </span>
               <Tooltip delayDuration={0}>
@@ -219,11 +219,11 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
                     size={"xs"}
                     className="group"
                   >
-                    <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
+                    <Plus className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent
-                  className="flex items-center text-xs dark:bg-foreground dark:text-background"
+                  className="dark:bg-foreground dark:text-background flex items-center text-xs"
                   align="center"
                   side="right"
                 >
@@ -232,7 +232,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
               </Tooltip>
 
               {isUploading && (
-                <span className="flex items-center space-x-2 text-sm text-muted-foreground">
+                <span className="text-muted-foreground flex items-center space-x-2 text-sm">
                   <Loader2 className="size-4 animate-spin" />
                 </span>
               )}
@@ -291,7 +291,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
                   hideUploadButton
                 />
                 {!showUploadButton && (
-                  <span className="w-full text-center text-xs font-light text-muted-foreground/50 md:text-sm">
+                  <span className="text-muted-foreground/50 w-full text-center text-xs font-light md:text-sm">
                     TODO: You can upload up to 6 images in total. Images only,
                     max 5MB each,
                   </span>
@@ -306,7 +306,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
                     className="w-full"
                   >
                     {isUploading ? (
-                      <span className="flex items-center font-normal text-muted-foreground">
+                      <span className="text-muted-foreground flex items-center font-normal">
                         <Loader2 className="mr-2 size-4 animate-spin" />
                         <span>Uploading</span>
                       </span>
@@ -319,7 +319,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
             </ResponsiveContentModal>
           </div>
           <TooltipContent
-            className="flex items-center text-xs dark:bg-foreground dark:text-background"
+            className="dark:bg-foreground dark:text-background flex items-center text-xs"
             align="center"
             side="bottom"
             sideOffset={15}
@@ -370,8 +370,8 @@ const ScreenshotsFormCarousel = ({
                 onClick={() => setShowUploadModal(true)}
               >
                 <AspectRatio ratio={16 / 9}>
-                  <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
-                    <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
+                  <div className="bg-card relative flex size-full items-center justify-center overflow-hidden rounded-2xl">
+                    <ImageIcon className="stroke-muted size-3/4 stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
                   </div>
                 </AspectRatio>
               </CarouselItem>
@@ -382,7 +382,7 @@ const ScreenshotsFormCarousel = ({
                 key={index}
                 className="bg-transparent md:basis-1/2 lg:basis-1/3"
               >
-                <div className="group relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                <div className="bg-card group relative flex size-full items-center justify-center overflow-hidden rounded-2xl">
                   <AppDetailScreenshotsDialog
                     index={index}
                     screenshotsPublicUrls={screenshotsPublicUrls}
@@ -393,8 +393,8 @@ const ScreenshotsFormCarousel = ({
                   {typeof item !== "string" && (
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
-                        <button className="absolute right-1 top-1 z-50 rounded-full bg-muted/80">
-                          <X className="transtition-all size-6 p-1 opacity-100 duration-200 ease-out group-hover:block group-hover:cursor-pointer group-hover:text-primary group-hover:opacity-100 dark:group-hover:text-primary md:hidden md:opacity-0" />
+                        <button className="bg-muted/80 absolute right-1 top-1 z-50 rounded-full">
+                          <X className="transtition-all group-hover:text-primary dark:group-hover:text-primary size-6 p-1 opacity-100 duration-200 ease-out group-hover:block group-hover:cursor-pointer group-hover:opacity-100 md:hidden md:opacity-0" />
                         </button>
                       </AlertDialogTrigger>
                       <AlertDialogContent className="max-w-sm rounded-2xl md:max-w-md">
@@ -430,7 +430,7 @@ const ScreenshotsFormCarousel = ({
         hiddenOnCanNotScroll
         variant={"tag"}
         className={cn(
-          "left-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
+          "from-background/80 left-0 size-10 h-full rounded-none to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
           isHovered ? "" : "hidden"
         )}
       />
@@ -438,7 +438,7 @@ const ScreenshotsFormCarousel = ({
         hiddenOnCanNotScroll
         variant={"tag"}
         className={cn(
-          "right-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
+          "from-background/80 right-0 size-10 h-full rounded-none to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
           isHovered ? "" : "hidden"
         )}
       />

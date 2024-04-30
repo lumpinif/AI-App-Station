@@ -104,7 +104,7 @@ export const YoutubeSelector = ({
               </p>
             </Button>
           </ResponsiveModalTrigger>
-          <ResponsiveModalContent className="w-full border-t bg-popover p-10 lg:max-w-md">
+          <ResponsiveModalContent className="bg-popover w-full border-t p-10 lg:max-w-md">
             <EnhancedDrawerClose
               title="Embed Youtube Video"
               className="lg:hidden"
@@ -125,7 +125,7 @@ export const YoutubeSelector = ({
                 ref={inputRef}
                 type="text"
                 placeholder="Paste YouTube URL"
-                className="flex-1 rounded-md bg-background p-2 text-sm outline-none"
+                className="bg-background flex-1 rounded-md p-2 text-sm outline-none"
               />
               <div className="flex space-x-2">
                 <input
@@ -135,7 +135,7 @@ export const YoutubeSelector = ({
                   max="1024"
                   placeholder="Width"
                   defaultValue="640"
-                  className="flex-1 rounded-md bg-background p-2 text-sm outline-none"
+                  className="bg-background flex-1 rounded-md p-2 text-sm outline-none"
                 />
                 <input
                   ref={heightRef}
@@ -144,7 +144,7 @@ export const YoutubeSelector = ({
                   max="720"
                   placeholder="Height"
                   defaultValue="480"
-                  className="flex-1 rounded-md bg-background p-2 text-sm outline-none"
+                  className="bg-background flex-1 rounded-md p-2 text-sm outline-none"
                 />
               </div>
               <div className="flex justify-end">
@@ -175,7 +175,7 @@ export const YoutubeSelector = ({
                 ref={inputRef}
                 type="text"
                 placeholder="Paste Youtube URL"
-                className="flex-1 rounded-md bg-background p-2 text-sm outline-none"
+                className="bg-background flex-1 rounded-md p-2 text-sm outline-none"
               />
               <div className="flex space-x-2">
                 <input
@@ -185,7 +185,7 @@ export const YoutubeSelector = ({
                   max="1024"
                   placeholder="Width"
                   defaultValue="640"
-                  className="flex-1 rounded-md bg-background p-2 text-sm outline-none"
+                  className="bg-background flex-1 rounded-md p-2 text-sm outline-none"
                 />
                 <input
                   ref={heightRef}
@@ -194,7 +194,7 @@ export const YoutubeSelector = ({
                   max="720"
                   placeholder="Height"
                   defaultValue="480"
-                  className="flex-1 rounded-md bg-background p-2 text-sm outline-none"
+                  className="bg-background flex-1 rounded-md p-2 text-sm outline-none"
                 />
               </div>
               <div className="flex justify-end">

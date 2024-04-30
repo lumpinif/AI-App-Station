@@ -49,7 +49,7 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
     <>
       <div>
         <AlertDialog>
-          <AlertDialogContent className="dark:glass-card-background rounded-lg border-none shadow-outline backdrop-blur-xl max-sm:max-w-sm ">
+          <AlertDialogContent className="dark:glass-card-background shadow-outline rounded-lg border-none backdrop-blur-xl max-sm:max-w-sm ">
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -59,7 +59,7 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="bg-destructive text-white hover:bg-destructive/80">
+              <AlertDialogAction className="bg-destructive hover:bg-destructive/80 text-white">
                 <CommentDeleteButton
                   app_id={comment.app_id}
                   comment_id={comment.comment_id}
@@ -98,19 +98,19 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
               <AlertDialogTrigger asChild>
                 <DropdownMenuItem
                   className={cn(
-                    "group cursor-pointer hover:!bg-destructive",
+                    "hover:!bg-destructive group cursor-pointer",
                     comment.profiles?.user_id === profile?.user_id
                       ? ""
                       : "hidden"
                   )}
                 >
                   <div className=" flex w-full items-center justify-between px-1">
-                    <span className="text-destructive group-hover:text-background dark:text-red-500 group-hover:dark:text-primary">
+                    <span className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500">
                       Delete
                     </span>
                     <Delete
                       size={12}
-                      className="text-destructive group-hover:text-background dark:text-red-500 group-hover:dark:text-primary"
+                      className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500"
                     />
                   </div>
                 </DropdownMenuItem>

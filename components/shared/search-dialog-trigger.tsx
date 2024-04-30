@@ -33,10 +33,10 @@ export default function SearchDialogTrigger({
         </TooltipTrigger>
         <TooltipContent
           side="right"
-          className="flex items-center gap-2 dark:bg-foreground dark:text-background"
+          className="dark:bg-foreground dark:text-background flex items-center gap-2"
         >
           Search
-          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/60 sm:flex">
+          <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
             <span className="text-xs">⌘</span>K
           </kbd>
         </TooltipContent>

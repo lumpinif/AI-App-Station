@@ -36,7 +36,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
         <Link
           href={`/user/${user_slug}`}
           className={cn(
-            "w-fit text-primary underline-offset-4 hover:underline",
+            "text-primary w-fit underline-offset-4 hover:underline",
             triggerClassName
           )}
           target="_blank"
@@ -44,7 +44,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
           {user_name}
         </Link>
       </HoverCardTrigger>
-      <HoverCardContent className="glass-card-background w-fit max-w-xs border border-none shadow-outline backdrop-blur-md">
+      <HoverCardContent className="glass-card-background shadow-outline w-fit max-w-xs border border-none backdrop-blur-md">
         <div className="flex justify-between space-x-4">
           <Avatar>
             <AvatarImage
@@ -54,7 +54,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
             <AvatarFallback>
               <Icons.user
                 className={cn(
-                  "h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full"
+                  "animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full"
                 )}
               />
             </AvatarFallback>
@@ -68,7 +68,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
             </span>
             <div className="flex items-center pt-2">
               <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 Joined {joinedTime}
               </span>
             </div>

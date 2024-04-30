@@ -37,13 +37,13 @@ const AccountModalTrigger = ({
     return (
       <Avatar
         className={cn(
-          "flex animate-pulse items-center justify-center hover:cursor-pointer hover:bg-foreground/10",
+          "hover:bg-foreground/10 flex animate-pulse items-center justify-center hover:cursor-pointer",
           className
         )}
       >
         <Icons.user
           className={cn(
-            "h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full hover:cursor-pointer"
+            "animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer"
           )}
         />
       </Avatar>
@@ -53,18 +53,18 @@ const AccountModalTrigger = ({
   return (
     <Avatar
       className={cn(
-        "flex animate-fade items-center justify-center hover:cursor-pointer",
+        "animate-fade flex items-center justify-center hover:cursor-pointer",
         className
       )}
       onClick={handleAvartarModalTriggerClick}
     >
       {!profile?.avatar_url ? (
-        <Icons.user className="h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full hover:cursor-pointer" />
+        <Icons.user className="animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer" />
       ) : (
         <AvatarImage
           src={`${profile.avatar_url}`}
           alt={`${profile.full_name || profile.user_name || "User"}`}
-          className="h-full w-full animate-fade rounded-full object-cover"
+          className="animate-fade h-full w-full rounded-full object-cover"
         />
       )}
     </Avatar>

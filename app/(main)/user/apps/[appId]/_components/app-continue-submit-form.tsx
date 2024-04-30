@@ -106,8 +106,8 @@ export default function AppContinueSubmitForm({
                   <span className="text-sm font-medium">{step.name}</span>
                 </div>
               ) : (
-                <div className="group flex w-full flex-col border-l-4 border-muted py-1 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
-                  <span className="text-sm font-medium text-muted-foreground transition-colors">
+                <div className="border-muted group flex w-full flex-col border-l-4 py-1 pl-4 transition-colors md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4">
+                  <span className="text-muted-foreground text-sm font-medium transition-colors">
                     {step.id}
                   </span>
                   <span className="text-sm font-medium">{step.name}</span>
@@ -129,14 +129,14 @@ export default function AppContinueSubmitForm({
             <h2 className="text-base font-semibold leading-7">
               App Information
             </h2>
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            <p className="text-muted-foreground mt-1 text-sm leading-6">
               Provide details about the app.
             </p>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-3">
                 <label
                   htmlFor="app title"
-                  className="block text-sm font-medium leading-6 text-muted-foreground"
+                  className="text-muted-foreground block text-sm font-medium leading-6"
                 >
                   App Title
                 </label>
@@ -148,7 +148,7 @@ export default function AppContinueSubmitForm({
               <div className="sm:col-span-3">
                 <label
                   htmlFor="app website"
-                  className="block text-sm font-medium leading-6 text-muted-foreground"
+                  className="text-muted-foreground block text-sm font-medium leading-6"
                 >
                   App Website
                 </label>
@@ -171,7 +171,7 @@ export default function AppContinueSubmitForm({
               <div className="sm:col-span-3">
                 <label
                   htmlFor="description"
-                  className="block text-sm font-medium leading-6 text-muted-foreground"
+                  className="text-muted-foreground block text-sm font-medium leading-6"
                 >
                   Description
                 </label>

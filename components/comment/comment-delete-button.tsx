@@ -1,5 +1,5 @@
 import * as React from "react"
-import { DeleteComment } from "@/server/data/supabase"
+import { DeleteComment } from "@/server/data/supabase-actions"
 import { useQueryClient } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"

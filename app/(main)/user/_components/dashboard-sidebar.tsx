@@ -55,7 +55,7 @@ export const Sidebar = () => {
         <div className="flex flex-col">
           <SidebarItem
             isCollapsed={isCollapsed}
-            className="rounded-md px-2 py-1 shadow-outline"
+            className="shadow-outline rounded-md px-2 py-1"
             // leftSlot={
             //   <img
             //     alt="any"
@@ -82,7 +82,7 @@ export const Sidebar = () => {
           <div className="flex flex-col gap-2">
             <SidebarItem
               isCollapsed={isCollapsed}
-              className="glass-card-background rounded-md px-2 py-1 shadow-outline"
+              className="glass-card-background shadow-outline rounded-md px-2 py-1"
               leftSlot={<LuBarChart4 />}
             >
               <span className="text-sm font-medium">Liked Apps</span>
@@ -103,7 +103,7 @@ export const Sidebar = () => {
                 </div>
               }
               rightSlot={
-                <div className="size-[16px] rounded-md bg-muted text-center text-[10px]">
+                <div className="bg-muted size-[16px] rounded-md text-center text-[10px]">
                   6
                 </div>
               }

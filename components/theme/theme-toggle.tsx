@@ -35,7 +35,7 @@ export function ThemeToggle({
         variant="ghost"
         size="icon"
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        className={cn("rounded-full dark:hover:bg-foreground/10", className)}
+        className={cn("dark:hover:bg-foreground/10 rounded-full", className)}
       >
         <Sun className="h-6 w-6 stroke-[1.5px] dark:hidden" />
         <Moon className="hidden h-6 w-6 stroke-[1.5px] dark:block" />
@@ -78,7 +78,7 @@ export function ThemeToggle({
 
   return (
     <>
-      <div className="dark:glass-card-background flex w-fit flex-row items-center space-x-4 rounded-full p-2 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline">
+      <div className="dark:glass-card-background text-muted-foreground dark:shadow-outline flex w-fit flex-row items-center space-x-4 rounded-full p-2 transition-all duration-150 ease-out">
         <button
           type="button"
           className="text-primary  dark:text-muted-foreground"

@@ -73,7 +73,7 @@ export const FloatingSideNavCollapsibleContent: React.FC<FloatingSideNavCollapsi
               href={item.href}
               key={index}
               className={cn(
-                "flex w-full items-center rounded-md px-2 py-1 hover:text-foreground/80 hover:underline dark:hover:bg-background/50 dark:hover:no-underline dark:hover:shadow-outline",
+                "hover:text-foreground/80 dark:hover:bg-background/50 dark:hover:shadow-outline flex w-full items-center rounded-md px-2 py-1 hover:underline dark:hover:no-underline",
                 item.disabled && "cursor-not-allowed opacity-60",
                 pathname === item.href
                   ? "text-foreground"
@@ -86,7 +86,7 @@ export const FloatingSideNavCollapsibleContent: React.FC<FloatingSideNavCollapsi
             <span
               key={index}
               className={cn(
-                "flex w-full cursor-not-allowed items-center rounded-md p-2 text-muted-foreground hover:underline",
+                "text-muted-foreground flex w-full cursor-not-allowed items-center rounded-md p-2 hover:underline",
                 item.disabled && "cursor-not-allowed opacity-60"
               )}
             >
@@ -112,7 +112,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => {
       <div className="flex min-w-full items-center justify-between gap-4 text-nowrap">
         <div className="flex items-center gap-2">
           {item.icon && (
-            <div className="flex h-5 w-5 items-center group-hover:text-foreground">
+            <div className="group-hover:text-foreground flex h-5 w-5 items-center">
               {item.icon}
             </div>
           )}
@@ -120,7 +120,7 @@ const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => {
         </div>
 
         {item.shortcutNumber && isOpen && (
-          <kbd className="pointer-events-none flex h-5 w-5 select-none items-center justify-center rounded bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 dark:bg-muted-foreground/30">
+          <kbd className="bg-muted dark:bg-muted-foreground/30 pointer-events-none flex h-5 w-5 select-none items-center justify-center rounded px-1.5 font-mono text-[10px] font-medium opacity-100">
             <span className="text-xs">{item.shortcutNumber}</span>
           </kbd>
         )}
@@ -163,14 +163,14 @@ const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
             {isOpen ? (
               <Link
                 href={`${item.href}` || "/"}
-                className="absolute right-4 origin-left select-none text-nowrap text-sm text-foreground hover:cursor-pointer hover:text-foreground/80"
+                className="text-foreground hover:text-foreground/80 absolute right-4 origin-left select-none text-nowrap text-sm hover:cursor-pointer"
               >
                 {item.title}
               </Link>
             ) : (
               <TooltipContent
                 side="right"
-                className="flex items-center gap-4 dark:bg-foreground dark:text-background"
+                className="dark:bg-foreground dark:text-background flex items-center gap-4"
               >
                 {item.title}
               </TooltipContent>

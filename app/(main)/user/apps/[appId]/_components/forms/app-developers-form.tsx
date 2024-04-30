@@ -7,7 +7,7 @@ import {
   insertAppsDevelopers,
   insertDevelopers,
   removeAppsDevelopers,
-} from "@/server/data/supabase"
+} from "@/server/data/supabase-actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, Info, Loader2, Plus, Search, Tags, X } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -190,7 +190,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
               <h3>Selector Actions</h3>
               <Separator />
 
-              <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
+              <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
                 <li className="flex items-center space-x-4">
                   <Plus className="size-4" />
                   <span className="w-full">
@@ -216,17 +216,17 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                 <span>Key Info</span>
               </h3>
               <Separator />
-              <ul className="mt-2 text-muted-foreground">
+              <ul className="text-muted-foreground mt-2">
                 <li>
                   {" "}
-                  - Max <span className="font-medium text-primary">5</span>{" "}
+                  - Max <span className="text-primary font-medium">5</span>{" "}
                   developers can be selected
                 </li>
                 <li>
                   -{" "}
-                  <span className="font-medium text-primary">Not allowed</span>{" "}
+                  <span className="text-primary font-medium">Not allowed</span>{" "}
                   to create{" "}
-                  <span className="font-medium text-primary">duplicate</span>{" "}
+                  <span className="text-primary font-medium">duplicate</span>{" "}
                   developers
                 </li>
                 <li> - Press ✓ to save the selection</li>
@@ -255,7 +255,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                   </Badge>
                 ))
               ) : (
-                <span className="text-xs text-muted-foreground">
+                <span className="text-muted-foreground text-xs">
                   Search or Create developers
                 </span>
               )}
@@ -263,11 +263,11 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button onClick={toggleEdit} variant="ghost" size={"xs"}>
-                  <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
+                  <Plus className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent
-                className="flex items-center text-xs dark:bg-foreground dark:text-background"
+                className="dark:bg-foreground dark:text-background flex items-center text-xs"
                 align="center"
                 side="right"
               >
@@ -279,7 +279,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-full rounded-md border border-dashed border-muted-foreground p-2 transition-all duration-200 ease-out dark:border-border"
+              className="border-muted-foreground dark:border-border w-full rounded-md border border-dashed p-2 transition-all duration-200 ease-out"
             >
               <div
                 className="flex w-fit items-center space-x-1"
@@ -310,14 +310,14 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                           }}
                           placeholder="Search or Create developers..."
                           emptyIndicator={
-                            <p className="text-center text-xs text-muted-foreground">
+                            <p className="text-muted-foreground text-center text-xs">
                               Try to create or search for some developers
                             </p>
                           }
                           creatable
                           preventDuplicateCreation
                           loadingIndicator={
-                            <span className="flex w-full items-center justify-center space-x-2 py-5 text-muted-foreground">
+                            <span className="text-muted-foreground flex w-full items-center justify-center space-x-2 py-5">
                               <p className="text-center text-xs ">searching</p>
                               <Loader2 className="h-2 w-2 animate-spin" />
                             </span>

@@ -62,7 +62,7 @@ export function CommentList({
         return (
           <div className="flex flex-col" key={comment.comment_id}>
             <div
-              className="relative flex space-x-4 rounded-lg p-4 transition-all duration-100 ease-out sm:hover:bg-muted sm:dark:hover:bg-muted/20"
+              className="sm:hover:bg-muted sm:dark:hover:bg-muted/20 relative flex space-x-4 rounded-lg p-4 transition-all duration-100 ease-out"
               id={comment.comment_id}
             >
               <div className="flex w-full flex-col space-y-4">

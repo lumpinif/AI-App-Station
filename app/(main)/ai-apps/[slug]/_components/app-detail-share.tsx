@@ -57,7 +57,7 @@ export const AppDetailShare: React.FC<AppDetailShareProps> = ({
     <ResponsiveModal>
       <ResponsiveModalTrigger asChild>
         <button className="group">
-          <ExternalLink className="size-4 stroke-1 text-muted-foreground transition-all duration-150 ease-out group-hover:text-primary md:size-6" />
+          <ExternalLink className="text-muted-foreground group-hover:text-primary size-4 stroke-1 transition-all duration-150 ease-out md:size-6" />
         </button>
       </ResponsiveModalTrigger>
       <ResponsiveModalContent className="w-full rounded-t-3xl p-4 py-6 lg:max-w-lg lg:rounded-md">

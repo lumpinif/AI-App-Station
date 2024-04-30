@@ -30,7 +30,7 @@ export default async function UserAppsPage() {
           <Link
             href="/user/apps/[id]"
             as={`/user/apps/${app.app_id}`}
-            className="w-fit rounded-xl bg-card px-3"
+            className="bg-card w-fit rounded-xl px-3"
           >
             {app.app_title}
           </Link>

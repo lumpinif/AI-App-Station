@@ -100,14 +100,14 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
         >
           <Heart
             className={cn(
-              "transition-color stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
+              "transition-color text-muted-foreground stroke-current stroke-[1.5] outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
               comment.user_has_liked_comment && "fill-current text-rose-500"
             )}
             size={18}
           />
         </button>
         {comment.likes_count > 0 && (
-          <span className="text-sm font-medium text-muted-foreground">
+          <span className="text-muted-foreground text-sm font-medium">
             {comment.likes_count}
           </span>
         )}

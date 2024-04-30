@@ -82,8 +82,8 @@ export const CommentListFilter: React.FC<CommentListFilterProps> = ({
               variant="ghost"
               size="sm"
             >
-              <ListFilter className="size-3 text-muted-foreground" />
-              <span className="select-none text-xs text-muted-foreground">
+              <ListFilter className="text-muted-foreground size-3" />
+              <span className="text-muted-foreground select-none text-xs">
                 Filter
               </span>
             </Button>

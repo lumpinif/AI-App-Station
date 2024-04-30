@@ -48,7 +48,7 @@ export default async function SettingsLayout({
         <BackButton className=" dark:shadow-outline" />
       </header>
       <div className="flex flex-col items-center justify-center px-4 sm:container">
-        <div className="w-full rounded-3xl p-10 pb-16 dark:shadow-outline">
+        <div className="dark:shadow-outline w-full rounded-3xl p-10 pb-16">
           <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
             <AccountModalTrigger className="h-20 w-20 sm:h-32 sm:w-32" />
             <div>

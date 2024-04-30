@@ -57,7 +57,7 @@ export const AppDetailScreenshotsDialog: React.FC<
       <ResponsiveModalContent
         className={cn(
           "flex flex-col justify-start rounded-t-3xl p-4 outline-none focus:!ring-0 focus:!ring-transparent lg:max-w-4xl xl:max-w-6xl 2xl:max-w-[90rem]",
-          isDesktop && "p-8 shadow-outline"
+          isDesktop && "shadow-outline p-8"
         )}
       >
         <EnhancedDrawerClose
@@ -85,8 +85,8 @@ export const AppDetailScreenshotsDialog: React.FC<
             }}
             className="h-full"
           >
-            <CarouselPrevious className="left-2 top-1/3  size-8 border-0 bg-background/30 outline-none md:left-2 md:top-1/2 md:size-12" />
-            <CarouselNext className="right-2 top-1/3 size-8 border-0 bg-background/30 outline-none md:right-2 md:top-1/2 md:size-12" />
+            <CarouselPrevious className="bg-background/30 left-2  top-1/3 size-8 border-0 outline-none md:left-2 md:top-1/2 md:size-12" />
+            <CarouselNext className="bg-background/30 right-2 top-1/3 size-8 border-0 outline-none md:right-2 md:top-1/2 md:size-12" />
 
             <CarouselMainContainer className={cn("relative")}>
               {screenshotsPublicUrls &&
@@ -121,7 +121,7 @@ export const AppDetailScreenshotsDialog: React.FC<
                     index={index}
                     className="py-auto h-fit"
                   >
-                    <div className="relative flex size-full items-center justify-center overflow-hidden rounded-xl bg-background">
+                    <div className="bg-background relative flex size-full items-center justify-center overflow-hidden rounded-xl">
                       <AspectRatio ratio={16 / 9}>
                         <Image
                           src={

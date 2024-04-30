@@ -62,7 +62,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
       className="w-full space-y-2 xl:w-56"
     >
       <div className="flex items-center justify-between">
-        <h4 className="font-medium text-muted-foreground lg:text-sm">
+        <h4 className="text-muted-foreground font-medium lg:text-sm">
           More Info About this App
         </h4>
         <CollapsibleTrigger asChild className="outline-none">
@@ -72,7 +72,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
             className="h-9 w-9 rounded-full p-0 outline-none transition-all duration-200 ease-out"
           >
             {!isOpen ? (
-              <ChevronRight className="size-4 text-muted-foreground" />
+              <ChevronRight className="text-muted-foreground size-4" />
             ) : (
               <ChevronDown className="size-4" />
             )}
@@ -83,7 +83,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
       <CollapsibleContent>
         {submitted_by && (
           <CollapsibleItem>
-            <span className="cursor-default text-muted-foreground">
+            <span className="text-muted-foreground cursor-default">
               Submitted By
             </span>
             <UserHoverCard
@@ -96,7 +96,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
 
         {app_url && (
           <CollapsibleItem>
-            <span className="cursor-default text-muted-foreground ">
+            <span className="text-muted-foreground cursor-default ">
               App Url
             </span>
             <span>
@@ -113,7 +113,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
 
         {pricing && (
           <CollapsibleItem>
-            <span className="cursor-default text-muted-foreground">
+            <span className="text-muted-foreground cursor-default">
               Pricing
             </span>
             <span>{pricing}</span>
@@ -121,7 +121,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
         )}
 
         <CollapsibleItem>
-          <span className="cursor-default text-muted-foreground">
+          <span className="text-muted-foreground cursor-default">
             Copy Right
           </span>
           <span>
@@ -146,14 +146,14 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
         </CollapsibleItem>
 
         <CollapsibleItem>
-          <span className="cursor-default text-muted-foreground">
+          <span className="text-muted-foreground cursor-default">
             Last Updated
           </span>
           <span>{moment(lastUpdated).fromNow()}</span>
         </CollapsibleItem>
 
         <CollapsibleItem>
-          <span className="cursor-default text-muted-foreground">
+          <span className="text-muted-foreground cursor-default">
             Report this page
           </span>
           <span>report@aiappstation.com</span>
@@ -173,7 +173,7 @@ const CollapsibleItem = ({
   return (
     <div
       className={cn(
-        "flex flex-col justify-between rounded-md px-4 py-2 text-sm hover:bg-muted-foreground/20",
+        "hover:bg-muted-foreground/20 flex flex-col justify-between rounded-md px-4 py-2 text-sm",
         className
       )}
     >

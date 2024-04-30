@@ -22,11 +22,11 @@ export const CommentForm: React.FC<CommentFormProps> = ({ app_id }) => {
           onClick={() => setisReplying(!isReplying)}
           disabled={isReplying}
           variant={"ghost"}
-          className="flex items-center space-x-2 border dark:border-none dark:shadow-outline"
+          className="dark:shadow-outline flex items-center space-x-2 border dark:border-none"
           size="default"
         >
-          <MessageCircleMore className="size-3 text-muted-foreground" />
-          <span className="select-none text-xs text-muted-foreground">
+          <MessageCircleMore className="text-muted-foreground size-3" />
+          <span className="text-muted-foreground select-none text-xs">
             Leave a Comment
           </span>
         </Button>

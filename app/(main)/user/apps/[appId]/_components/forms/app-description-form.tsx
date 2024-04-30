@@ -27,8 +27,8 @@ const DescriptionForm = ({ description, app_id }: DescriptionFormProps) => {
         <div className={cn("group flex items-center justify-start space-x-2")}>
           <span
             className={cn(
-              "line-clamp-3 cursor-default text-sm text-muted-foreground hover:cursor-pointer md:line-clamp-3 md:text-base",
-              !description && "italic text-muted-foreground"
+              "text-muted-foreground line-clamp-3 cursor-default text-sm hover:cursor-pointer md:line-clamp-3 md:text-base",
+              !description && "text-muted-foreground italic"
             )}
             onClick={() => setIsEditing(true)}
           >
@@ -40,7 +40,7 @@ const DescriptionForm = ({ description, app_id }: DescriptionFormProps) => {
             className="group"
             size={"xs"}
           >
-            <SquarePen className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
+            <SquarePen className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
           </Button>
         </div>
       ) : (

@@ -37,7 +37,7 @@ export const PageTitle = ({
                 {title}
               </span>
               {subtitle && (
-                <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
+                <span className="text-muted-foreground text-base font-semibold tracking-[-.016em] md:tracking-[-.024em]">
                   {subtitle}
                 </span>
               )}
@@ -47,7 +47,7 @@ export const PageTitle = ({
           <>
             <div className="flex flex-col">
               {subtitle && (
-                <span className="mt-2 text-sm font-medium uppercase text-muted-foreground">
+                <span className="text-muted-foreground mt-2 text-sm font-medium uppercase">
                   {subtitle}
                 </span>
               )}
