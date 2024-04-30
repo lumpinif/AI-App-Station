@@ -92,9 +92,9 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   }
 
   return (
-    <section className="dark:bg-dot-white/[0.1] bg-dot-black/[0.1] bg-background relative  w-full items-center justify-center">
+    <section className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] bg-background relative w-full items-center justify-center">
       {/* Radial gradient for the container to give a faded look */}
-      <div className="bg-background pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
+      <div className="bg-background pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
       <div className="relative z-20 flex items-center justify-between">
         <div className="sm:w-24">
           <BackButton />
