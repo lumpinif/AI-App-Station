@@ -7,8 +7,8 @@ import { siteConfig } from "@/config/dummy-config"
 import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
+import UserCard from "../../../../../components/auth/auth-modal/user-card"
 import Equipments from "../bento-grid/2-panels/equipments"
-import UserCard from "./user-card"
 import WidgetItem from "./widget-item"
 
 const GridPanel = () => {

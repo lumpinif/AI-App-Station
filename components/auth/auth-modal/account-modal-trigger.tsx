@@ -9,18 +9,18 @@ import useAccountModal from "@/hooks/use-account-modal-store"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons/icons"
 
-type typeOfProfile = Profile | { [key: string]: any }
-
 type AccountModalTriggerProps = {
   className?: string
   isFetching?: boolean
-  profile?: typeOfProfile
+  profile?: Profile
+  avatarClassName?: string
 }
 
 const AccountModalTrigger = ({
   className,
   isFetching: propIsFetching,
   profile: propData,
+  avatarClassName,
 }: AccountModalTriggerProps) => {
   const OpenModal = useAccountModal((state) => state.OpenModal)
   const { isFetching: hookIsFetching, data: hookData } = useUser()
@@ -43,7 +43,8 @@ const AccountModalTrigger = ({
       >
         <Icons.user
           className={cn(
-            "animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer"
+            "animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer",
+            avatarClassName
           )}
         />
       </Avatar>
@@ -53,18 +54,26 @@ const AccountModalTrigger = ({
   return (
     <Avatar
       className={cn(
-        "animate-fade flex items-center justify-center hover:cursor-pointer",
+        "flex items-center justify-center hover:cursor-pointer",
         className
       )}
       onClick={handleAvartarModalTriggerClick}
     >
       {!profile?.avatar_url ? (
-        <Icons.user className="animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer" />
+        <Icons.user
+          className={cn(
+            "h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer",
+            avatarClassName
+          )}
+        />
       ) : (
         <AvatarImage
           src={`${profile.avatar_url}`}
           alt={`${profile.full_name || profile.user_name || "User"}`}
-          className="animate-fade h-full w-full rounded-full object-cover"
+          className={cn(
+            "animate-fade h-full w-full rounded-full object-cover",
+            avatarClassName
+          )}
         />
       )}
     </Avatar>

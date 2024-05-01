@@ -17,28 +17,26 @@ const AccountModal = ({ session }: { session: Session | null }) => {
   }
 
   return (
-    <>
-      <ResponsiveContentModal
-        isOpen={isOpen}
-        onChange={onChange}
-        drawerContentClassName="outline-none rounded-t-3xl"
-        drawerHeight="h-[90%]"
-        dialogContentClassName="max-w-xl rounded-2xl shadow-outline"
-        title="Account"
-      >
-        {session ? (
-          <UserAccount />
-        ) : (
-          <LoginCard className="flex flex-col gap-10">
-            <div className="mt-2 flex justify-end border-t sm:hidden">
-              <div className="mt-2">
-                <ThemeToggle />
-              </div>
+    <ResponsiveContentModal
+      isOpen={isOpen}
+      onChange={onChange}
+      drawerContentClassName="outline-none rounded-t-3xl"
+      drawerHeight="h-[90%]"
+      dialogContentClassName="max-w-xl rounded-2xl shadow-outline"
+      title="Account"
+    >
+      {session ? (
+        <UserAccount />
+      ) : (
+        <LoginCard className="flex flex-col gap-10">
+          <div className="mt-2 flex justify-end border-t sm:hidden">
+            <div className="mt-2">
+              <ThemeToggle />
             </div>
-          </LoginCard>
-        )}
-      </ResponsiveContentModal>
-    </>
+          </div>
+        </LoginCard>
+      )}
+    </ResponsiveContentModal>
   )
 }
 

@@ -24,13 +24,13 @@ function BackButton({ className, back_url }: BackButtonProps) {
   return (
     <button
       className={cn(
-        "bg-background ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-sm font-medium transition-all duration-200 hover:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sm:hover:w-24",
+        "group/back bg-background ring-offset-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring group relative inline-flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-sm font-medium transition-all duration-200 hover:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sm:hover:w-24",
         className
       )}
       onClick={handleOnClick}
       type="button"
     >
-      <div className="whitespace-nowrap opacity-0 group-hover:translate-x-3 sm:group-hover:opacity-100">
+      <div className="whitespace-nowrap opacity-0 group-hover/back:translate-x-3 sm:group-hover/back:opacity-100">
         Back
       </div>
       <div className="absolute left-[12px]">

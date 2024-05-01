@@ -95,7 +95,9 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     <section className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] bg-background relative w-full items-center justify-center">
       {/* Radial gradient for the container to give a faded look */}
       <div className="bg-background pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
-      <div className="relative z-20 flex items-center justify-between border-b">
+
+      {/* Header */}
+      <div className="bg-background container sticky top-0 z-30 flex items-center justify-between backdrop-blur-md">
         <div className="flex items-center gap-x-2">
           <div className="sm:w-24">
             <BackButton />
@@ -105,34 +107,32 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           </h1>
         </div>
 
-        <span className="text-muted-foreground flex text-xs">
-          {/* Submit button */}
-          <div className="flex justify-end">
-            <AppApprovalSubmitButton
-              ready_to_submit={app.ready_to_publish}
-              size={"sm"}
-              app_id={app.app_id}
-              disabled={!isAllFormsComplete() || app.ready_to_publish}
-              className={cn(
-                "hidden h-8 w-20 select-none text-xs sm:block",
-                isAllFormsComplete() && "w-28",
-                app.ready_to_publish && "w-32"
-              )}
-            >
-              {app.ready_to_publish
-                ? "Waiting for Approval"
-                : isAllFormsComplete()
-                  ? "Ready to Publish"
-                  : "Publish"}
-            </AppApprovalSubmitButton>
-            <div className="sm:hidden">
-              <InfoPopover>
-                *Please carefully complete all information before submitting for
-                app review.
-              </InfoPopover>
-            </div>
+        {/* Submit button */}
+        <div className="text-muted-foreground flex justify-end text-xs">
+          <AppApprovalSubmitButton
+            ready_to_submit={app.ready_to_publish}
+            size={"sm"}
+            app_id={app.app_id}
+            disabled={!isAllFormsComplete() || app.ready_to_publish}
+            className={cn(
+              "hidden h-8 w-20 select-none text-xs sm:block",
+              isAllFormsComplete() && "w-28",
+              app.ready_to_publish && "w-32"
+            )}
+          >
+            {app.ready_to_publish
+              ? "Waiting for Approval"
+              : isAllFormsComplete()
+                ? "Ready to Publish"
+                : "Publish"}
+          </AppApprovalSubmitButton>
+          <div className="sm:hidden">
+            <InfoPopover>
+              *Please carefully complete all information before submitting for
+              app review.
+            </InfoPopover>
           </div>
-        </span>
+        </div>
       </div>
 
       {/* content */}

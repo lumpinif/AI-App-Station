@@ -1,4 +1,4 @@
-import UserCard from "../../../widgets-grid/user-card"
+import UserCard from "../../../../../../../components/auth/auth-modal/user-card"
 
 const LeftPanel = () => {
   return (
