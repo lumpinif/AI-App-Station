@@ -13,7 +13,6 @@ import { Loader2 } from "lucide-react"
 import { JSONContent } from "novel"
 
 import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
 import BackButton from "@/components/shared/back-button"
 
 import { AppApprovalSubmitButton } from "./_components/forms/app-approval-submit-button"

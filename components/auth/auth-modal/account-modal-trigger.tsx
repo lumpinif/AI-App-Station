@@ -1,6 +1,7 @@
 "use client"
 
 import { MouseEvent } from "react"
+import { useRouter } from "next/navigation"
 
 import { Profile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -14,25 +15,36 @@ type AccountModalTriggerProps = {
   isFetching?: boolean
   profile?: Profile
   avatarClassName?: string
+  isTriggerModal?: boolean
+  href?: string
 }
 
 const AccountModalTrigger = ({
+  href,
   className,
   isFetching: propIsFetching,
   profile: propData,
   avatarClassName,
+  isTriggerModal = true,
 }: AccountModalTriggerProps) => {
   const OpenModal = useAccountModal((state) => state.OpenModal)
+  const isModalOpen = useAccountModal((state) => state.isOpen)
   const { isFetching: hookIsFetching, data: hookData } = useUser()
-
+  const router = useRouter()
   const isFetching = !propIsFetching ? hookIsFetching : propIsFetching
   const profile = !propData ? hookData : propData
 
   const handleAvartarModalTriggerClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    OpenModal()
-    e.stopPropagation()
+    if (!isTriggerModal) return
+    if (!isModalOpen) {
+      e.preventDefault()
+      OpenModal()
+      e.stopPropagation()
+    } else {
+      router.push(href || "/user")
+    }
   }
+
   if (isFetching) {
     return (
       <Avatar

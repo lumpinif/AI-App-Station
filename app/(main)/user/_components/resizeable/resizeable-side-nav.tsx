@@ -83,7 +83,10 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                   })
                 )}
               >
-                <AccountModalTrigger className="size-8 rounded-md" />
+                <AccountModalTrigger
+                  className="size-8 rounded-md"
+                  isTriggerModal={false}
+                />
                 <span className="sr-only">user account modal trigger</span>
               </Link>
             </TooltipTrigger>
@@ -96,6 +99,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
           </Tooltip>
         ) : (
           <UserCard
+            isTriggerModal={false}
             className={cn(
               "mx-2",
               buttonVariants({ variant: "ghost", size: "sm" }),

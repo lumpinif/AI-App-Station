@@ -13,6 +13,7 @@ type NewUserCardProps = {
   profileContainerCN?: string
   profileNameCN?: string
   profileEmailCN?: string
+  isTriggerModal?: boolean
 }
 
 export const UserCard: React.FC<NewUserCardProps> = ({
@@ -22,6 +23,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
   profileContainerCN,
   profileNameCN,
   profileEmailCN,
+  isTriggerModal,
 }) => {
   const { isFetching, data: profile } = useUser()
   const CloseModal = useAccountModal((state) => state.CloseModal)
@@ -31,11 +33,13 @@ export const UserCard: React.FC<NewUserCardProps> = ({
       href="/user"
       className={cn("flex items-center overflow-hidden", className)}
       onClick={CloseModal}
+      passHref
     >
       <AccountModalTrigger
         className={modalTriggerCN}
         avatarClassName={avatarCN}
         isFetching={isFetching}
+        isTriggerModal={isTriggerModal}
       />
       <div className={cn("flex flex-1 flex-col", profileContainerCN)}>
         <span className={profileNameCN}>{profile?.full_name}</span>
