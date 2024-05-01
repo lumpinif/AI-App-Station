@@ -1,5 +1,3 @@
-import UserCard from "../../../../../../../components/auth/auth-modal/user-card"
-
 const LeftPanel = () => {
   return (
     <div
@@ -8,7 +6,7 @@ const LeftPanel = () => {
     >
       {/* Top User Card Container */}
       <div>
-        <UserCard />
+        {/* <UserCard /> */}
 
         {/* Buttons Container */}
         {/* <div className="mt-6 flex items-center gap-3">

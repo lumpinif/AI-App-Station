@@ -7,7 +7,6 @@ import { siteConfig } from "@/config/dummy-config"
 import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 
-import UserCard from "../../../../../components/auth/auth-modal/user-card"
 import Equipments from "../bento-grid/2-panels/equipments"
 import WidgetItem from "./widget-item"
 
@@ -44,7 +43,7 @@ const GridPanel = () => {
     >
       <WidgetItem>
         <Suspense fallback={<div>Loading...</div>}>
-          <UserCard className="hover:bg-card-hover" />
+          {/* <UserCard className="hover:bg-card-hover" /> */}
         </Suspense>
       </WidgetItem>
 
