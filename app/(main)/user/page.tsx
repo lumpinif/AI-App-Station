@@ -1,12 +1,11 @@
 import Link from "next/link"
 
+import { Dashboard } from "./_components/user-page/dashboard"
+
 export default function UserPage() {
   return (
-    <div className="">
-      <Link href={"/user/apps"}>
-        <div className="text-xl font-semibold">Submitted Apps </div>
-      </Link>
-      <div className="py-6 pr-6"></div>
-    </div>
+    <main className="sm:pl-6 xl:pl-8 2xl:pl-10">
+      <Dashboard />
+    </main>
   )
 }
