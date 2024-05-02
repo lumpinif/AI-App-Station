@@ -13,10 +13,8 @@ export default async function TodayPageLayout({
       <div className="container flex flex-col">
         <TodayPageTitle />
         <main className="mt-5 flex-1">
-          <>
-            {children}
-            {modal}
-          </>
+          {children}
+          {modal}
         </main>
       </div>
     </>
