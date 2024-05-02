@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import photos from "@/config/dummy-photos"
 
+import StyledWithoutDrag from "./_components/test-card"
 import GridPanel from "./_components/widgets-grid/grid-panel"
 
 const TodayPage = () => {
@@ -35,6 +36,7 @@ const TodayPage = () => {
             </li>
           ))}
         </ul>
+        <StyledWithoutDrag />
       </main>
     </>
   )
