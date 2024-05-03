@@ -25,7 +25,7 @@ export const cardVariants = cva(
     variants: {
       variant: {
         "user-card":
-          "hover:bg-card-hover active:bg-card-hover bg-card cursor-pointer p-2 px-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md active:scale-[0.99] sm:gap-x-4",
+          "hover:bg-card-hover active:bg-card-hover bg-card cursor-pointer p-2 px-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md active:scale-[0.98] sm:gap-x-4",
         "side-nav-user-card": "border",
       },
       size: {},
