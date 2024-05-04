@@ -20,7 +20,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { TooltipProvider } from "@/components/ui/tooltip"
 
 import { ResizeableSideNav } from "./resizeable-side-nav"
@@ -177,6 +177,7 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
         <ResizablePanel id="right-panel" defaultSize={75}>
           <ScrollArea className="h-[calc(100svh-6rem)] w-full">
             {children}
+            <ScrollBar orientation="horizontal" />
           </ScrollArea>
         </ResizablePanel>
       </ResizablePanelGroup>

@@ -5,7 +5,7 @@ import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/shared/date-range-picker"
 
 import { SubmittedAppsTable } from "./_components/table/submitted-apps-table"
-import { Dashboard } from "./_components/user-page/dashboard"
+import { Dashboard } from "./_components/user-page/user-page-wrapper"
 import { getSubmittedApps } from "./_lib/db-queries"
 import { searchParamsSchema } from "./_lib/validations"
 
@@ -31,18 +31,18 @@ export default async function UserPage({ searchParams }: UserPageProps) {
   const { apps, pageCount } = await getSubmittedApps(search)
 
   return (
-    <main className="w-full sm:pl-6 xl:pl-8 2xl:pl-10">
-      <Dashboard />
-      <DateRangePicker
-        triggerSize="sm"
-        triggerClassName="ml-auto w-56 sm:w-60"
-        align="end"
-      />
-      <div className="w-full overflow-x-auto">
+    <main className="flex flex-col gap-4 sm:pl-6 xl:pl-8 2xl:pl-10">
+      <Dashboard>
+        <DateRangePicker
+          triggerSize="sm"
+          triggerClassName="ml-auto w-56 sm:w-60"
+          align="end"
+        />
+
         <Suspense
           fallback={
             <DataTableSkeleton
-              columnCount={5}
+              columnCount={3}
               searchableColumnCount={1}
               filterableColumnCount={2}
               cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
@@ -56,7 +56,7 @@ export default async function UserPage({ searchParams }: UserPageProps) {
            */}
           <SubmittedAppsTable apps={apps} pageCount={pageCount} />
         </Suspense>
-      </div>
+      </Dashboard>
     </main>
   )
 }

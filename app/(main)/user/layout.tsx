@@ -16,7 +16,6 @@ export default function DashboardPageLayout({
 
   return (
     <main className="container h-full md:pt-8">
-      {/* <div className="flex"> */}
       <ResizeableSideBar
         defaultLayout={defaultLayout}
         defaultCollapsed={defaultCollapsed}
@@ -24,12 +23,6 @@ export default function DashboardPageLayout({
       >
         {children}
       </ResizeableSideBar>
-      {/* <div className="h-full flex-1 py-2 pr-2">
-          <div className="container h-full w-full rounded-2xl p-4">
-            {children}
-          </div>
-        </div> */}
-      {/* </div> */}
     </main>
   )
 }

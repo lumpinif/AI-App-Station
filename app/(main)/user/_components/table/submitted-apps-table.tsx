@@ -90,7 +90,7 @@ export function SubmittedAppsTable({
   })
 
   return (
-    <div className="flex w-full flex-col gap-4 overflow-auto">
+    <div className="w-full space-y-2.5">
       {/* {featureFlags.includes("advancedFilter") ? (
         <DataTableAdvancedToolbar table={table} filterFields={filterFields}>
           <TasksTableToolbarActions table={table} />
