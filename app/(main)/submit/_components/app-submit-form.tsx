@@ -73,57 +73,55 @@ const AppSubmitForm = () => {
   }
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-8">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>App title</FormLabel>
-                <FormControl>
-                  <InputBorderSpotlight
-                    disabled={isSubmitting}
-                    placeholder="e.g. 'ChatGPT'"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {!existingError ? (
-                    <span>Don&apos;t worry, you can change this later.</span>
-                  ) : (
-                    <span className="font-medium text-red-600/80 transition-all duration-300 ease-in">
-                      {existingError}
-                    </span>
-                  )}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-8">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>App title</FormLabel>
+              <FormControl>
+                <InputBorderSpotlight
+                  disabled={isSubmitting}
+                  placeholder="e.g. 'ChatGPT'"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription>
+                {!existingError ? (
+                  <span>Don&apos;t worry, you can change this later.</span>
+                ) : (
+                  <span className="font-medium text-red-600/80 transition-all duration-300 ease-in">
+                    {existingError}
+                  </span>
+                )}
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex items-center gap-x-2">
+          <Button type="submit" disabled={!isValid || isSubmitting}>
+            {isSubmitting ? (
+              <>
+                Please wait{" "}
+                <ThreeDots
+                  color="gray"
+                  visible={true}
+                  height="20"
+                  width="20"
+                  ariaLabel="three-dots-loading"
+                  wrapperClass="ml-2"
+                />
+              </>
+            ) : (
+              <>Continue</>
             )}
-          />
-          <div className="flex items-center gap-x-2">
-            <Button type="submit" disabled={!isValid || isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  Please wait{" "}
-                  <ThreeDots
-                    color="gray"
-                    visible={true}
-                    height="20"
-                    width="20"
-                    ariaLabel="three-dots-loading"
-                    wrapperClass="ml-2"
-                  />
-                </>
-              ) : (
-                <>Continue</>
-              )}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </>
+          </Button>
+        </div>
+      </form>
+    </Form>
   )
 }
 

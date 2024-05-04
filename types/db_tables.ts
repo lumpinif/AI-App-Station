@@ -1,12 +1,21 @@
 // TODO: REFACTOR TYPES INTO SEPERATE TS FILES
 
+// import { Database, Tables, Enums } from "./database.types.ts";
+
+// Before 😕
+// let movie: Database['public']['Tables']['movies']['Row'] = // ...
+
+// After 😍
+// let movie: Tables<'movies'>
+
 import { Dispatch, SetStateAction } from "react"
 
-import { Database } from "@/types/supabase"
+import { Database, Enums, Tables } from "@/types/supabase"
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"]
 export type Comment = Database["public"]["Tables"]["app_comments"]["Row"]
 export type App = Database["public"]["Tables"]["apps"]["Row"]
+export type publish_status = Enums<"publish_status">
 export type App_bookmarks = Database["public"]["Tables"]["app_bookmarks"]["Row"]
 export type App_likes = Database["public"]["Tables"]["app_likes"]["Row"]
 export type Comment_likes = Database["public"]["Tables"]["comment_likes"]["Row"]

@@ -236,7 +236,7 @@ export async function getPost(slug: string) {
   return { post, error }
 }
 
-// fetch apps
+// Fetch Apps
 
 export async function getAppBySlug(app_slug: string) {
   const supabase = await createSupabaseServerClient()
@@ -321,6 +321,7 @@ export async function getAppsWithCategories(orderBy?: keyof App) {
   return { apps, error }
 }
 
+// HANDLE COMMNETS
 export async function getAllComments(
   app_id: App["app_id"],
   c_order?: "asc" | "desc",

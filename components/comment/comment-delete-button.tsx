@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
 import { Comment } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 
 type CommentDeleteButtonProps = {
   app_id: Comment["app_id"]
@@ -40,18 +41,19 @@ const CommentDeleteButton: React.FC<CommentDeleteButtonProps> = ({
   }
 
   return (
-    <>
-      <span
-        className="flex w-full cursor-pointer items-center justify-center"
-        onClick={handleDelete}
-        role="button"
-      >
-        <span className="flex w-fit items-center text-center">
-          {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Delete
-        </span>
+    <span
+      className={cn(
+        "flex w-full cursor-pointer items-center justify-center",
+        className
+      )}
+      onClick={handleDelete}
+      role="button"
+    >
+      <span className="flex w-fit items-center text-center">
+        {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        Delete
       </span>
-    </>
+    </span>
   )
 }
 
