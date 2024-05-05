@@ -40,11 +40,6 @@ export default async function UserAppsPage({ searchParams }: UserPageProps) {
           />
         }
       >
-        {/* TODO: CHECK THIS BELOW */}
-        {/**
-         * Passing promises and consuming them using React.use for triggering the suspense fallback.
-         * @see https://react.dev/reference/react/use
-         */}
         <SubmittedAppsTable apps={apps} pageCount={pageCount} />
       </Suspense>
     </main>
