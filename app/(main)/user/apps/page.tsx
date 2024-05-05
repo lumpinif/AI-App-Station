@@ -4,7 +4,6 @@ import { SearchParams } from "@/types/data-table"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/shared/date-range-picker"
 
-import { UserPagesWrapper } from "../_components/layout/user-pages-wrapper"
 import { SubmittedAppsTable } from "./_components/table/submitted-apps-table"
 import { getSubmittedApps } from "./_lib/db-queries"
 import { searchParamsSchema } from "./_lib/validations"
