@@ -25,12 +25,20 @@ export function exportTableToCSV<TData>(
      * @default false
      */
     onlySelected?: boolean
+
+    /**
+     * Whether to export all data from the selected rows.
+     * @default true
+     */
+
+    allData?: boolean
   } = {}
 ): void {
   const {
     filename = "submitted_apps",
     excludeColumns = [],
     onlySelected = false,
+    allData = true,
   } = opts
 
   // Retrieve headers (column names)
@@ -41,24 +49,62 @@ export function exportTableToCSV<TData>(
       (id) => !excludeColumns.includes(id as keyof TData | "select" | "actions")
     )
 
-  // Build CSV content
-  const csvContent = [
-    headers.join(","),
-    ...(onlySelected
-      ? table.getFilteredSelectedRowModel().rows
-      : table.getRowModel().rows
-    ).map((row) =>
-      headers
-        .map((header) => {
-          const cellValue = row.getValue(header)
-          // Handle values that might contain commas or newlines
-          return typeof cellValue === "string"
-            ? `"${cellValue.replace(/"/g, '""')}"`
-            : cellValue
-        })
-        .join(",")
-    ),
-  ].join("\n")
+  let csvContent: string
+
+  if (allData) {
+    // Retrieve all columns from the table data
+    const allColumns = Object.keys(table.options.data[0] || {})
+
+    // Get the rows based on the onlySelected option
+    const rows = onlySelected
+      ? table.getSelectedRowModel().rows.map((row) => row.original)
+      : table.options.data
+
+    // Build CSV content with all columns and values
+    csvContent = [
+      allColumns.join(","),
+      ...rows.map((row) =>
+        allColumns
+          .map((column) => {
+            let cellValue: any = row[column as keyof TData]
+
+            // Convert introduction JSON to string
+            if (column === "introduction" && typeof cellValue === "object") {
+              cellValue = JSON.stringify(cellValue)
+            }
+
+            return typeof cellValue === "string"
+              ? `"${cellValue.replace(/"/g, '""')}"`
+              : cellValue
+          })
+          .join(",")
+      ),
+    ].join("\n")
+  } else {
+    // Build CSV content with rendered headers and rows
+    csvContent = [
+      headers.join(","),
+      ...(onlySelected
+        ? table.getSelectedRowModel().rows
+        : table.getRowModel().rows
+      ).map((row) =>
+        headers
+          .map((header) => {
+            let cellValue = row.getValue(header)
+
+            // Convert introduction JSON to string
+            if (header === "introduction" && typeof cellValue === "object") {
+              cellValue = JSON.stringify(cellValue)
+            }
+
+            return typeof cellValue === "string"
+              ? `"${cellValue.replace(/"/g, '""')}"`
+              : cellValue
+          })
+          .join(",")
+      ),
+    ].join("\n")
+  }
 
   // Create a Blob with CSV content
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
