@@ -70,9 +70,9 @@ export function DataTable<TData>({
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
                       key={cell.id}
-                      style={{
-                        width: cell.column.getSize(),
-                      }}
+                      // style={{
+                      //   width: cell.column.getSize(),
+                      // }}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

@@ -4,6 +4,7 @@ import { useOptimistic, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { Heart } from "lucide-react"
+import numeral from "numeral"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
@@ -113,7 +114,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
       </button>
       {appLikesCount > 0 && (
         <span className="text-muted-foreground text-sm font-medium">
-          {optimisticLikeState.appLikesCount}
+          {numeral(optimisticLikeState.appLikesCount).format("0.[0]a")}
         </span>
       )}
     </div>

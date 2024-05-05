@@ -2,6 +2,7 @@ import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { Heart } from "lucide-react"
+import numeral from "numeral"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
@@ -108,7 +109,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
         </button>
         {comment.likes_count > 0 && (
           <span className="text-muted-foreground text-sm font-medium">
-            {comment.likes_count}
+            {numeral(comment.likes_count).format("0.[0]a")}
           </span>
         )}
       </div>

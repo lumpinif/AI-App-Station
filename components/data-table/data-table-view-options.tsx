@@ -24,6 +24,8 @@ export function DataTableViewOptions<TData>({
     app_icon_src: "Icon",
     app_title: "Title",
     app_publish_status: "Status",
+    likes_count: "Likes",
+    views_count: "Views",
     created_at: "Created At",
   }
   return (

@@ -18,14 +18,6 @@ type UserPageProps = {
 }
 
 export default async function UserPage({ searchParams }: UserPageProps) {
-  // const {
-  //   data: { user },
-  // } = await getUserData()
-
-  // if (!user?.id) {
-  //   return "no user"
-  // }
-
   const search = searchParamsSchema.parse(searchParams)
 
   const { apps, pageCount } = await getSubmittedApps(search)
@@ -42,10 +34,10 @@ export default async function UserPage({ searchParams }: UserPageProps) {
         <Suspense
           fallback={
             <DataTableSkeleton
-              columnCount={3}
+              columnCount={5}
               searchableColumnCount={1}
-              filterableColumnCount={2}
-              cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem"]}
+              filterableColumnCount={1}
+              cellWidths={["10rem", "15rem", "12rem", "12rem", "8rem"]}
               shrinkZero
             />
           }

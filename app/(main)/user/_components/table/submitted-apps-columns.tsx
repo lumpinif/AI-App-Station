@@ -3,8 +3,9 @@
 import { useState, useTransition } from "react"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
-import { Delete } from "lucide-react"
+import { Delete, Heart } from "lucide-react"
 import moment from "moment"
+import numeral from "numeral"
 import { toast } from "sonner"
 
 import { App, publish_status } from "@/types/db_tables"
@@ -113,10 +114,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         }
 
         return (
-          <Badge
-            variant={"secondary"}
-            className={cn("flex w-fit items-center bg-transparent")}
-          >
+          <div className={cn("flex w-fit items-center bg-transparent")}>
             <Icon
               className={cn(
                 "text-muted-foreground mr-2 size-4",
@@ -127,7 +125,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
             <span className={cn("font-normal capitalize", statusColor[status])}>
               {status}
             </span>
-          </Badge>
+          </div>
         )
       },
       filterFn: (row, id, value) => {
@@ -140,6 +138,39 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         <DataTableColumnHeader column={column} title="Created At" />
       ),
       cell: ({ cell }) => moment(cell.getValue() as Date).format("MMM D, YYYY"),
+    },
+    {
+      accessorKey: "likes_count",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Likes" />
+      ),
+      cell: ({ row }) => {
+        const likes_count = row.original.likes_count as App["likes_count"]
+        const formattedLikesCount = numeral(likes_count).format("0.[0]a")
+        return (
+          <div className="text-muted-foreground flex items-center gap-x-2">
+            <Heart className="size-4" />
+            <span className="w-full truncate font-normal">
+              {formattedLikesCount}
+            </span>
+          </div>
+        )
+      },
+    },
+    {
+      accessorKey: "views_count",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Views (no)" />
+      ),
+      cell: ({ row }) => {
+        const views_count = row.original.views_count as App["views_count"]
+        const formattedViewsCount = numeral(views_count).format("0.[0]a")
+        return (
+          <span className="text-muted-foreground w-full truncate font-normal">
+            {formattedViewsCount}
+          </span>
+        )
+      },
     },
     {
       id: "actions",
