@@ -2,12 +2,7 @@
 
 import React from "react"
 import Link from "next/link"
-import {
-  ArrowLeftFromLine,
-  ArrowRightFromLine,
-  LucideIcon,
-  Upload,
-} from "lucide-react"
+import { ArrowRightFromLine, LucideIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"

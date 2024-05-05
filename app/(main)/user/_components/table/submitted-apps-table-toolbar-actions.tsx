@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 
 import { exportTableToCSV } from "../../_lib/export"
 // import { CreateTaskDialog } from "./create-task-dialog"
-import { DeleteAppsDialog } from "./app-action-sheet"
+import { DeleteAppsDialog } from "./app-actions-dialog"
 
 interface SubmittedAppsTableToolbarActionsProps {
   table: Table<App>
@@ -22,6 +22,7 @@ export function TasksTableToolbarActions({
       {/* table.getFilteredSelectedRowModel().rows.length > 0 */}
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
         <DeleteAppsDialog
+          triggerClassName="h-8"
           apps={table.getFilteredSelectedRowModel().rows}
           onSuccess={() => table.toggleAllPageRowsSelected(false)}
         />
@@ -30,6 +31,7 @@ export function TasksTableToolbarActions({
       <Button
         variant="outline"
         size="sm"
+        className="ml-auto h-8 lg:flex"
         onClick={() =>
           exportTableToCSV(table, {
             filename: "submitted_apps",

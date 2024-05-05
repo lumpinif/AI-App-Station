@@ -126,3 +126,64 @@ export async function deleteApp(app_id: App["app_id"]) {
     return { error: "An error occurred while deleting the app." } // Return a generic error message
   }
 }
+export async function unpublishApp(app_id: App["app_id"]) {
+  try {
+    const supabase = await createSupabaseServerClient()
+    const slug = await getSlugFromAppId(app_id)
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user?.id) return { error: "User not found" }
+
+    const { error } = await supabase
+      .from("apps")
+      .update({ app_publish_status: "unpublished" })
+      .match({
+        app_id,
+        submitted_by_user_id: user.id,
+      })
+
+    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/user/apps/${app_id}`)
+
+    return { error: error ?? null } // Return { error: null } if no error occurs
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
+    return { error: "An error occurred while unpublishing the app." } // Return a generic error message
+  }
+}
+
+export async function publishApp(app_id: App["app_id"]) {
+  try {
+    const supabase = await createSupabaseServerClient()
+    const slug = await getSlugFromAppId(app_id)
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user?.id) return { error: "User not found" }
+
+    const { error } = await supabase
+      .from("apps")
+      .update({ app_publish_status: "published" })
+      .match({
+        app_id,
+        submitted_by_user_id: user.id,
+      })
+
+    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/user/apps/${app_id}`)
+
+    return { error: error ?? null } // Return { error: null } if no error occurs
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
+    return { error: "An error occurred while publishing the app." } // Return a generic error message
+  }
+}

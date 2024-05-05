@@ -17,6 +17,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
@@ -29,8 +30,12 @@ import {
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-icon"
 
-import { getStatusIcon } from "../../_lib/utils"
-import { DeleteAppsDialog } from "./app-action-sheet"
+import { getStatusColor, getStatusIcon } from "../../_lib/utils"
+import {
+  DeleteAppsDialog,
+  PublishAppsDialog,
+  UnpublishAppsDialog,
+} from "./app-actions-dialog"
 
 export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
   return [
@@ -106,23 +111,15 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         if (!status) return null
 
         const Icon = getStatusIcon(status)
-        const statusColor = {
-          draft: "text-muted-foreground",
-          pending: "text-yellow-500",
-          published: "text-green-500",
-          unpublished: "text-red-500",
-        }
+        const statusColor = getStatusColor(status)
 
         return (
           <div className={cn("flex w-fit items-center bg-transparent")}>
             <Icon
-              className={cn(
-                "text-muted-foreground mr-2 size-4",
-                statusColor[status]
-              )}
+              className={cn("text-muted-foreground mr-2 size-4", statusColor)}
               aria-hidden="true"
             />
-            <span className={cn("font-normal capitalize", statusColor[status])}>
+            <span className={cn("font-normal capitalize", statusColor)}>
               {status}
             </span>
           </div>
@@ -175,15 +172,33 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
     {
       id: "actions",
       cell: function Cell({ row }) {
-        const [isUpdatePending, startUpdateTransition] = useTransition()
-
         const [showDeleteAppDialog, setShowDeleteAppDialog] = useState(false)
+        const [showUnpublishAppDialog, setShowUnpublishAppDialog] =
+          useState(false)
+        const [showPublishAppDialog, setShowPublishAppDialog] = useState(false)
+
+        const UnpublishIcon = getStatusIcon("unpublished")
+        const UnpublishStatusColor = getStatusColor("unpublished")
+        const PublishIcon = getStatusIcon("published")
+        const PublishStatusColor = getStatusColor("published")
 
         return (
           <>
             <DeleteAppsDialog
               open={showDeleteAppDialog}
               onOpenChange={setShowDeleteAppDialog}
+              apps={[row]}
+              showTrigger={false}
+            />
+            <UnpublishAppsDialog
+              open={showUnpublishAppDialog}
+              onOpenChange={setShowUnpublishAppDialog}
+              apps={[row]}
+              showTrigger={false}
+            />
+            <PublishAppsDialog
+              open={showPublishAppDialog}
+              onOpenChange={setShowPublishAppDialog}
               apps={[row]}
               showTrigger={false}
             />
@@ -198,11 +213,38 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Update Status</DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem
+                        onSelect={() => setShowPublishAppDialog(true)}
+                      >
+                        <PublishIcon
+                          className={cn("mr-2 size-4", PublishStatusColor)}
+                        />
+                        <span className={PublishStatusColor}>
+                          Publish the app
+                        </span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onSelect={() => setShowUnpublishAppDialog(true)}
+                      >
+                        <UnpublishIcon
+                          className={cn("mr-2 size-4", UnpublishStatusColor)}
+                        />
+                        <span className={UnpublishStatusColor}>
+                          Unpublish the app
+                        </span>
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
                 {/* <DropdownMenuSeparator /> */}
                 <DropdownMenuItem onSelect={() => setShowDeleteAppDialog(true)}>
-                  <span className="text-red-500">Delete</span>
+                  <span className={cn(UnpublishStatusColor)}>Delete</span>
                   <DropdownMenuShortcut>
-                    <Delete className="size-4 text-red-500" />
+                    <Delete className={cn("size-4", UnpublishStatusColor)} />
                   </DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>
