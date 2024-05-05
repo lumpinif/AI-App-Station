@@ -35,6 +35,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
   return [
     {
       id: "select",
+      size: 20,
       header: ({ table }) => (
         <Checkbox
           checked={
@@ -43,7 +44,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          // className="translate-y-0.5"
+          className="translate-y-0.5"
         />
       ),
       cell: ({ row }) => (
@@ -51,7 +52,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          // className="translate-y-0.5"
+          className="translate-y-0.5"
         />
       ),
       enableSorting: false,
@@ -59,6 +60,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
     },
     {
       accessorKey: "app_icon_src",
+      size: 20,
       header: "Icon",
       cell: ({ row }) => {
         const app_title = row.original.app_title as App["app_title"]

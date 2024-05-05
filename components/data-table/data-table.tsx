@@ -35,7 +35,13 @@ export function DataTable<TData>({
   return (
     <div className="w-full space-y-2.5 overflow-x-auto">
       <div className="rounded-md border">
-        <Table>
+        <Table
+        // {...{
+        //   style: {
+        //     width: table.getCenterTotalSize(),
+        //   },
+        // }}
+        >
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -62,7 +68,12 @@ export function DataTable<TData>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      style={{
+                        width: cell.column.getSize(),
+                      }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
