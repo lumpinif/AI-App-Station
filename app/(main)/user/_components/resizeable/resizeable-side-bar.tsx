@@ -80,7 +80,7 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
           }}
           className={cn(
-            "hidden flex-col items-center justify-center transition-all  duration-150 ease-in-out md:flex",
+            "peer hidden flex-col items-center justify-center transition-all duration-150 ease-in-out md:flex",
             isCollapsed && `min-w-[50px]`
           )}
         >
@@ -99,7 +99,7 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
           onClick={handleResizeHandleClick}
           hitAreaMargins={{ coarse: 15, fine: 5 }}
           className={cn(
-            "hidden bg-transparent outline-none transition-all duration-150 ease-in-out md:flex"
+            "bg-transparent opacity-0 outline-none transition-all duration-150 ease-in-out focus-within:opacity-100 hover:opacity-100  focus:opacity-100 peer-hover:opacity-100 peer-active:opacity-100 md:focus-within:opacity-100 md:focus:opacity-100 md:peer-hover:opacity-100 md:peer-active:opacity-100"
           )}
         />
         <ResizablePanel id="right-panel" defaultSize={75}>

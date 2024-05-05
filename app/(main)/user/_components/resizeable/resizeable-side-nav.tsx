@@ -65,6 +65,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
           </Tooltip>
         </div>
       )}
+
       <div className="grid gap-4 group-[[data-collapsed=true]]:justify-center">
         {isCollapsed ? (
           <Tooltip delayDuration={0}>
@@ -100,13 +101,14 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
               buttonVariants({ variant: "ghost", size: "sm" }),
               "flex items-center justify-start"
             )}
-            modalTriggerCN="mr-2 lg:size-8 md:size-6 rounded-md"
+            modalTriggerCN="mr-2 md:size-6 rounded-md"
             avatarCN="size-full rounded-md"
             profileNameCN="text-primary text-xs"
             profileEmailCN="text-muted-foreground text-xs"
           />
         )}
       </div>
+
       <nav className="grid gap-4 group-[[data-collapsed=true]]:justify-center">
         {links.map((group, groupIndex) => (
           <React.Fragment key={groupIndex}>
@@ -150,7 +152,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                     "justify-start"
                   )}
                 >
-                  <link.icon className="text-muted-foreground mr-2 stroke-[1px] md:size-6 lg:size-8" />
+                  <link.icon className="text-muted-foreground mr-2 stroke-[1.5px] md:size-6" />
                   {link.title}
                   {link.label && (
                     <span className={cn("text-muted-foreground ml-auto")}>
