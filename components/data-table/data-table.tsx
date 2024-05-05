@@ -33,7 +33,7 @@ export function DataTable<TData>({
   floatingBar = null,
 }: DataTableProps<TData>) {
   return (
-    <div className="w-full space-y-2.5 overflow-x-auto">
+    <div className="w-full space-y-2.5 overflow-x-auto p-1">
       <div className="rounded-md border">
         <Table
         // {...{

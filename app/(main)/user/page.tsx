@@ -23,12 +23,16 @@ export default async function UserPage({ searchParams }: UserPageProps) {
   const { apps, pageCount } = await getSubmittedApps(search)
 
   return (
-    <main className="flex flex-col gap-4 sm:pl-6 xl:pl-8 2xl:pl-10">
+    <main className="flex flex-col gap-4 sm:pl-6 xl:pl-8 2xl:pl-10 ">
       <Dashboard>
         <DateRangePicker
+          PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
           triggerSize="sm"
-          triggerClassName="ml-auto w-56 sm:w-60"
-          align="end"
+          triggerVariant={"outline"}
+          triggerClassName="mr-auto w-48 sm:w-60 text-muted-foreground"
+          align="start"
+          sideOffset={10}
+          className="p-1"
         />
 
         <Suspense

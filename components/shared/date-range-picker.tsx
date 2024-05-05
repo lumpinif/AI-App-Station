@@ -60,6 +60,13 @@ interface DateRangePickerProps
    * @type string
    */
   triggerClassName?: string
+
+  /**
+   * The class name of the popover content.
+   * @default undefined
+   * @type string
+   */
+  PopoverContentClassName?: string
 }
 
 export function DateRangePicker({
@@ -69,6 +76,7 @@ export function DateRangePicker({
   triggerVariant = "outline",
   triggerSize = "default",
   triggerClassName,
+  PopoverContentClassName,
   className,
   ...props
 }: DateRangePickerProps) {
@@ -119,7 +127,7 @@ export function DateRangePicker({
   }, [date?.from, date?.to])
 
   return (
-    <div className="grid gap-2">
+    <div className={cn("grid gap-2", className)}>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -146,7 +154,10 @@ export function DateRangePicker({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className={cn("w-auto p-0", className)} {...props}>
+        <PopoverContent
+          className={cn("w-auto p-0", PopoverContentClassName)}
+          {...props}
+        >
           <Calendar
             initialFocus
             mode="range"
