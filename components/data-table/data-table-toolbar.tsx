@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Cross2Icon } from "@radix-ui/react-icons"
+import { Cross2Icon, MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import type { Table } from "@tanstack/react-table"
 
 import { DataTableFilterField } from "@/types/data-table"
@@ -47,21 +47,25 @@ export function DataTableToolbar<TData>({
           searchableColumns.map(
             (column) =>
               table.getColumn(column.value ? String(column.value) : "") && (
-                <Input
-                  key={String(column.value)}
-                  placeholder={column.placeholder}
-                  value={
-                    (table
-                      .getColumn(String(column.value))
-                      ?.getFilterValue() as string) ?? ""
-                  }
-                  onChange={(event) =>
-                    table
-                      .getColumn(String(column.value))
-                      ?.setFilterValue(event.target.value)
-                  }
-                  className="h-8 w-40 lg:w-64"
-                />
+                <div className="relative">
+                  <Input
+                    key={String(column.value)}
+                    placeholder={column.placeholder}
+                    value={
+                      (table
+                        .getColumn(String(column.value))
+                        ?.getFilterValue() as string) ?? ""
+                    }
+                    onChange={(event) =>
+                      table
+                        .getColumn(String(column.value))
+                        ?.setFilterValue(event.target.value)
+                    }
+                    className="relative h-8 w-40 pl-9 lg:w-64"
+                  />
+
+                  <MagnifyingGlassIcon className="text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
+                </div>
               )
           )}
         {filterableColumns.length > 0 &&

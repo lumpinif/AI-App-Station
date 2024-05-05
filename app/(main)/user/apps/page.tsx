@@ -23,7 +23,7 @@ export default async function UserAppsPage({ searchParams }: UserPageProps) {
         PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
         triggerSize="sm"
         triggerVariant={"outline"}
-        triggerClassName="mr-auto w-48 sm:w-60 text-muted-foreground"
+        triggerClassName="mr-auto w-64 text-muted-foreground"
         align="start"
         sideOffset={10}
         className="p-1"

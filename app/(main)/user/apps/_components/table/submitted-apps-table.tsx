@@ -44,7 +44,7 @@ export function SubmittedAppsTable({
     {
       label: "Title",
       value: "app_title",
-      placeholder: "Filter App titles...",
+      placeholder: "Filter App titles ...",
     },
     {
       label: "Status",
