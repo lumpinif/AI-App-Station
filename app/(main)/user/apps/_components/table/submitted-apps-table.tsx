@@ -16,11 +16,13 @@ import { TasksTableToolbarActions } from "./submitted-apps-table-toolbar-actions
 interface SubmittedAppsTableProps {
   apps: App[]
   pageCount: number
+  totalAppsCount: number
 }
 
 export function SubmittedAppsTable({
   apps,
   pageCount,
+  totalAppsCount,
 }: SubmittedAppsTableProps) {
   // Feature flags for showcasing some additional features. Feel free to remove them.
 
@@ -107,6 +109,7 @@ export function SubmittedAppsTable({
           <TasksTableFloatingBar table={table} />
           // ) : null
         }
+        totalAppsCount={totalAppsCount}
       />
     </div>
   )

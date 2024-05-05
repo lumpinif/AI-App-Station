@@ -18,15 +18,18 @@ import {
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
   pageSizeOptions?: number[]
+  totalAppsCount: number
 }
 
 export function DataTablePagination<TData>({
   table,
   pageSizeOptions = [10, 20, 30, 40, 50],
+  totalAppsCount,
 }: DataTablePaginationProps<TData>) {
   return (
     <div className="flex w-full flex-col-reverse items-center justify-between gap-4 overflow-auto p-1 sm:flex-row sm:gap-8">
       <div className="text-muted-foreground flex-1 whitespace-nowrap text-sm">
+        {totalAppsCount} apps in total.{" "}
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>

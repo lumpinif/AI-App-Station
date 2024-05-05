@@ -26,11 +26,14 @@ interface DataTableProps<TData> {
    * @example floatingBar={<TasksTableFloatingBar table={table} />}
    */
   floatingBar?: React.ReactNode | null
+
+  totalAppsCount: number
 }
 
 export function DataTable<TData>({
   table,
   floatingBar = null,
+  totalAppsCount,
 }: DataTableProps<TData>) {
   return (
     <div className="w-full space-y-2.5 overflow-x-auto p-1">
@@ -96,7 +99,7 @@ export function DataTable<TData>({
         </Table>
       </div>
       <div className="flex flex-col gap-2.5">
-        <DataTablePagination table={table} />
+        <DataTablePagination table={table} totalAppsCount={totalAppsCount} />
         {table.getFilteredSelectedRowModel().rows.length > 0 && floatingBar}
       </div>
     </div>

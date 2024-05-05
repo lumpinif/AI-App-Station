@@ -15,7 +15,7 @@ type UserPageProps = {
 export default async function UserAppsPage({ searchParams }: UserPageProps) {
   const search = searchParamsSchema.parse(searchParams)
 
-  const { apps, pageCount } = await getSubmittedApps(search)
+  const { apps, pageCount, totalAppsCount } = await getSubmittedApps(search)
   return (
     <main>
       <DateRangePicker
@@ -39,7 +39,11 @@ export default async function UserAppsPage({ searchParams }: UserPageProps) {
           />
         }
       >
-        <SubmittedAppsTable apps={apps} pageCount={pageCount} />
+        <SubmittedAppsTable
+          apps={apps}
+          pageCount={pageCount}
+          totalAppsCount={totalAppsCount}
+        />
       </Suspense>
     </main>
   )

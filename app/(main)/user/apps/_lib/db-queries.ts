@@ -28,6 +28,15 @@ export async function getSubmittedApps(
 
   const supabase = await createSupabaseServerClient()
 
+  // get the user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user || !user.id) {
+    return { apps: [], pageCount: 0, totalAppsCount: 0 }
+  }
+
   try {
     // Offset to paginate the results
     const offset = (page - 1) * per_page
@@ -47,6 +56,7 @@ export async function getSubmittedApps(
     const query = supabase
       .from("apps")
       .select("*", { count: "exact" })
+      .match({ submitted_by_user_id: user.id })
       .order(column, { ascending: order === "asc" })
 
     // Apply filters based on the search parameters
@@ -92,10 +102,22 @@ export async function getSubmittedApps(
     const totalCount = count ? count : 0
     const pageCount = Math.ceil(totalCount / per_page)
 
-    return { apps: apps ?? [], pageCount }
+    // Get the total count of apps submitted by the user
+    const { count: totalAppsCount, error: totalAppsCountError } = await supabase
+      .from("apps")
+      .select("*", { count: "exact", head: true })
+      .match({ submitted_by_user_id: user.id })
+
+    if (totalAppsCountError) {
+      throw new Error(
+        `Failed to fetch total apps count: ${totalAppsCountError.message}`
+      )
+    }
+
+    return { apps: apps ?? [], pageCount, totalAppsCount: totalAppsCount ?? 0 }
   } catch (error) {
     console.error("Error fetching submitted apps:", error)
-    return { apps: [], pageCount: 0 }
+    return { apps: [], pageCount: 0, totalAppsCount: 0 }
   }
 }
 
