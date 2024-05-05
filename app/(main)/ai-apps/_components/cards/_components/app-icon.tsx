@@ -29,11 +29,11 @@ export const AppIcon: React.FC<AppIconProps> = ({
 
   const ImageElement = (
     <Image
-      src={app_icon_src ? appIconSrc : "/images/image-not-found.png"}
+      src={app_icon_src ? appIconSrc : "/images/app-icon-grid-32.png"}
       width={200}
       height={200}
       alt={app_title || "App Logo"}
-      className="aspect-square rounded-xl"
+      className="aspect-square rounded-xl object-cover"
       priority
     />
   )
@@ -43,8 +43,9 @@ export const AppIcon: React.FC<AppIconProps> = ({
       {isLink ? (
         <Link
           className={cn(
-            "dark:bg-primary dark:hover:shadow-outline flex flex-none items-center justify-center overflow-hidden rounded-xl p-2 shadow-sm transition-all duration-200 ease-out hover:shadow-lg",
+            "dark:bg-primary dark:hover:shadow-outline flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-sm transition-all duration-200 ease-out hover:shadow-lg",
             size ? `h-${size} w-${size}` : "h-14 w-14",
+            app_icon_src ? "p-1" : "",
             className
           )}
           href={`/ai-apps/${app_slug || "#"}`}
@@ -52,19 +53,29 @@ export const AppIcon: React.FC<AppIconProps> = ({
           {ImageElement}
         </Link>
       ) : (
-        <div>
+        <>
           {!externalLink ? (
-            <div className="dark:bg-primary flex flex-none items-center justify-center overflow-hidden rounded-xl p-2 shadow-md transition-all duration-200 ease-out">
+            <div
+              className={cn(
+                "dark:bg-primary flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out",
+                app_icon_src ? "p-1" : ""
+              )}
+            >
               {ImageElement}
             </div>
           ) : (
             <a href={`${externalLink}`} target="_blank">
-              <div className="cursor-potiner dark:bg-primary flex flex-none items-center justify-center overflow-hidden rounded-xl p-2 shadow-md transition-all duration-200 ease-out">
+              <div
+                className={cn(
+                  "cursor-potiner dark:bg-primary flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out",
+                  app_icon_src ? "p-1" : ""
+                )}
+              >
                 {ImageElement}
               </div>
             </a>
           )}
-        </div>
+        </>
       )}
     </div>
   )
