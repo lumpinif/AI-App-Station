@@ -1,18 +1,9 @@
 "use client"
 
 import { useRef, useState } from "react"
-import {
-  Bookmark,
-  FileText,
-  Heart,
-  ListTodo,
-  LucideIcon,
-  Search,
-  Settings,
-  Upload,
-} from "lucide-react"
 import { ImperativePanelHandle } from "react-resizable-panels"
 
+import { userLayoutRoutes } from "@/config/user-layout-routes"
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 import {
@@ -31,69 +22,6 @@ type ResizeableSideBarProps = {
   navCollapsedSize: number
   children?: React.ReactNode
 }
-
-const links: {
-  group: string
-  items: {
-    title: string
-    label?: string
-    href: string
-    icon: LucideIcon
-  }[]
-}[] = [
-  {
-    group: "General",
-    items: [
-      // {
-      //   title: "Dashboard",
-      //   href: "/dashboard",
-      //   label: "",
-      //   icon: LayoutDashboard,
-      // },
-      {
-        title: "Search",
-        href: "/search",
-        label: "",
-        icon: Search,
-      },
-      {
-        title: "Settings",
-        href: "/user/settings",
-        label: "",
-        icon: Settings,
-      },
-    ],
-  },
-  {
-    group: "User",
-    items: [
-      {
-        title: "Apps submitted",
-        href: "/user/apps",
-        label: "",
-        icon: ListTodo,
-      },
-      {
-        title: "Favorites",
-        href: "/user/liked",
-        label: "",
-        icon: Heart,
-      },
-      {
-        title: "Bookmarks",
-        href: "/user/bookmarks",
-        label: "",
-        icon: Bookmark,
-      },
-      {
-        title: "Posts",
-        href: "/user/posts",
-        label: "",
-        icon: FileText,
-      },
-    ],
-  },
-]
 
 export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
   children,
@@ -160,7 +88,7 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
             {/* NAV */}
             <ResizeableSideNav
               isCollapsed={isCollapsed}
-              links={links}
+              links={userLayoutRoutes}
               handleResizeHandleClick={handleResizeHandleClick}
             />
           </div>

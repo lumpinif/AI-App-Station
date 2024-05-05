@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { ChevronDown, ChevronRight } from "lucide-react"
 
-import { SIDENAVROUTES } from "@/config/routes"
+import { SIDENAVROUTES } from "@/config/main-routes"
 import { cn } from "@/lib/utils"
 
 import AppSubmitButton from "./app-submit-button"

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { MAINROUTES, NavItemProps } from "@/config/routes"
+import { MAINROUTES, NavItemProps } from "@/config/main-routes"
 import { cn } from "@/lib/utils"
 import { useScroll } from "@/hooks/use-scroll"
 

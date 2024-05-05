@@ -1,4 +1,4 @@
-import { SIDENAVROUTES } from "@/config/routes"
+import { SIDENAVROUTES } from "@/config/main-routes"
 
 export const dynamicParams = false
 

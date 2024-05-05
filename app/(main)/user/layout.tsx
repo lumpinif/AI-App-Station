@@ -1,13 +1,20 @@
 import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
+import { getUserData } from "@/server/auth"
 
-import { Sidebar } from "./_components/dashboard-sidebar"
+import { UserPagesWrapper } from "./_components/layout/user-pages-wrapper"
 import { ResizeableSideBar } from "./_components/resizeable/resizeable-side-bar"
 
-export default function DashboardPageLayout({
+export default async function UserLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const { data, error } = await getUserData()
+  if (error || !data?.user) {
+    redirect("/login")
+  }
+
   const layout = cookies().get("react-resizable-panels:layout")
   const collapsed = cookies().get("react-resizable-panels:collapsed")
 
@@ -21,7 +28,7 @@ export default function DashboardPageLayout({
         defaultCollapsed={defaultCollapsed}
         navCollapsedSize={5}
       >
-        {children}
+        <UserPagesWrapper>{children}</UserPagesWrapper>
       </ResizeableSideBar>
     </main>
   )

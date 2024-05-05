@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { NavItemProps, SIDENAVROUTESProps } from "@/config/routes"
+import { NavItemProps, SIDENAVROUTESProps } from "@/config/main-routes"
 import { cn } from "@/lib/utils"
 import useSideNav from "@/hooks/use-side-nav-store"
 

@@ -1,42 +1,52 @@
-import Link from "next/link"
-import createSupabaseServerClient from "@/utils/supabase/server-client"
+import { Suspense } from "react"
 
-import PopoverMenu from "@/components/ui/popover-menu"
-import BackButton from "@/components/shared/back-button"
+import { SearchParams } from "@/types/data-table"
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
+import { DateRangePicker } from "@/components/shared/date-range-picker"
 
-export default async function UserAppsPage() {
-  // TODO: MOVE THESE DATABASE TRANSCAIONS TO SERVER ACTIONS
-  const supabase = await createSupabaseServerClient()
+import { UserPagesWrapper } from "../_components/layout/user-pages-wrapper"
+import { SubmittedAppsTable } from "./_components/table/submitted-apps-table"
+import { getSubmittedApps } from "./_lib/db-queries"
+import { searchParamsSchema } from "./_lib/validations"
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+type UserPageProps = {
+  searchParams: SearchParams
+}
 
-  if (!user?.id) {
-    return "no user"
-  }
-  const { data } = await supabase
-    .from("apps")
-    .select("app_id,app_title")
-    .eq("submitted_by_user_id", user?.id)
+export default async function UserAppsPage({ searchParams }: UserPageProps) {
+  const search = searchParamsSchema.parse(searchParams)
 
+  const { apps, pageCount } = await getSubmittedApps(search)
   return (
-    <>
-      <h1 className="container mb-10">
-        Welcome to User Apps Page! {user?.email}
-      </h1>
-      <div className="container flex flex-col space-y-4">
-        {data?.map((app) => (
-          <Link
-            href="/user/apps/[id]"
-            as={`/user/apps/${app.app_id}`}
-            className="bg-card w-fit rounded-xl px-3"
-          >
-            {app.app_title}
-          </Link>
-        ))}
-        <PopoverMenu />
-      </div>
-    </>
+    <main>
+      <DateRangePicker
+        PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
+        triggerSize="sm"
+        triggerVariant={"outline"}
+        triggerClassName="mr-auto w-48 sm:w-60 text-muted-foreground"
+        align="start"
+        sideOffset={10}
+        className="p-1"
+      />
+
+      <Suspense
+        fallback={
+          <DataTableSkeleton
+            columnCount={5}
+            searchableColumnCount={1}
+            filterableColumnCount={1}
+            cellWidths={["10rem", "15rem", "12rem", "12rem", "8rem"]}
+            shrinkZero
+          />
+        }
+      >
+        {/* TODO: CHECK THIS BELOW */}
+        {/**
+         * Passing promises and consuming them using React.use for triggering the suspense fallback.
+         * @see https://react.dev/reference/react/use
+         */}
+        <SubmittedAppsTable apps={apps} pageCount={pageCount} />
+      </Suspense>
+    </main>
   )
 }

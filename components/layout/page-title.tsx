@@ -47,7 +47,7 @@ export const PageTitle = ({
           <>
             <div className="flex flex-col">
               {subtitle && (
-                <span className="text-muted-foreground mt-2 text-sm font-medium uppercase">
+                <span className="text-muted-foreground mt-2 text-sm font-medium">
                   {subtitle}
                 </span>
               )}
