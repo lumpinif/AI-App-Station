@@ -15,8 +15,16 @@ export async function getSubmittedApps(
   searchParams: z.infer<typeof searchParamsSchema>
 ) {
   noStore()
-  const { page, per_page, sort, title, status, operator, from, to } =
-    searchParams
+  const {
+    page,
+    per_page,
+    sort,
+    app_title,
+    app_publish_status,
+    operator,
+    from,
+    to,
+  } = searchParams
 
   const supabase = await createSupabaseServerClient()
 
@@ -43,22 +51,22 @@ export async function getSubmittedApps(
 
     // Apply filters based on the search parameters
     if (!operator || operator === "and") {
-      if (title) query.ilike("app_title", `%${title}%`)
-      if (status) query.eq("app_publish_status", status)
+      if (app_title) query.ilike("app_title", `%${app_title}%`)
+      if (app_publish_status) query.eq("app_publish_status", app_publish_status)
       if (fromDate && toDate) {
         query.gte("created_at", fromDate.toISOString())
         query.lte("created_at", toDate.toISOString())
       }
     } else if (operator === "or") {
       const orFilters: string[] = []
-      if (title && status) {
+      if (app_title && app_publish_status) {
         orFilters.push(
-          `and(app_title.ilike.%${title}%,app_publish_status.eq.${status})`
+          `and(app_title.ilike.%${app_title}%,app_publish_status.eq.${app_publish_status})`
         )
-      } else if (title) {
-        orFilters.push(`app_title.ilike.%${title}%`)
-      } else if (status) {
-        orFilters.push(`app_publish_status.eq.${status}`)
+      } else if (app_title) {
+        orFilters.push(`app_title.ilike.%${app_title}%`)
+      } else if (app_publish_status) {
+        orFilters.push(`app_publish_status.eq.${app_publish_status}`)
       }
       if (fromDate && toDate) {
         orFilters.push(
@@ -81,7 +89,9 @@ export async function getSubmittedApps(
     }
 
     // Calculate the total page count
-    const pageCount = Math.ceil(count ?? 0 / per_page)
+    const totalCount = count ? count : 0
+    const pageCount = Math.ceil(totalCount / per_page)
+
     return { apps: apps ?? [], pageCount }
   } catch (error) {
     console.error("Error fetching submitted apps:", error)

@@ -20,7 +20,7 @@ export function TasksTableToolbarActions({
   return (
     <div className="flex items-center gap-2">
       {/* table.getFilteredSelectedRowModel().rows.length > 0 */}
-      {true ? (
+      {table.getFilteredSelectedRowModel().rows.length > 0 ? (
         <DeleteAppsDialog
           apps={table.getFilteredSelectedRowModel().rows}
           onSuccess={() => table.toggleAllPageRowsSelected(false)}

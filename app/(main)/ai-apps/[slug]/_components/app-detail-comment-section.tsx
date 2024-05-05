@@ -1,4 +1,4 @@
-import { getUserSession } from "@/server/auth"
+import { getUserData } from "@/server/auth"
 
 import { Comment, CommentWithProfile } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -29,8 +29,8 @@ const AppDetailCommentSection = async ({
   orderBy,
 }: CommentListProps) => {
   const {
-    data: { session },
-  } = await getUserSession()
+    data: { user },
+  } = await getUserData()
 
   // TODO: HANDLE NO COMMENTS AND ERROR
 
@@ -51,7 +51,7 @@ const AppDetailCommentSection = async ({
     allComments.map((comment) => ({
       ...comment,
       user_has_liked_comment: !!comment.comment_likes.find(
-        (like) => like.user_id === session?.user.id
+        (like) => like.user_id === user?.id
       ),
       likes_count: comment.comment_likes.length,
     })) ?? []
