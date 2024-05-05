@@ -20,6 +20,12 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  const columnsTitles = {
+    app_icon_src: "Icon",
+    app_title: "Title",
+    app_publish_status: "Status",
+    created_at: "Created At",
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -50,7 +56,9 @@ export function DataTableViewOptions<TData>({
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => column.toggleVisibility(!!value)}
               >
-                <span className="truncate">{column.id}</span>
+                <span className="truncate">
+                  {columnsTitles[column.id as keyof typeof columnsTitles]}
+                </span>
               </DropdownMenuCheckboxItem>
             )
           })}

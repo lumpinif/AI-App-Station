@@ -3,10 +3,12 @@
 import { useState, useTransition } from "react"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
+import { Delete } from "lucide-react"
 import moment from "moment"
 import { toast } from "sonner"
 
 import { App, publish_status } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -24,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
+import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-icon"
 
 import { getStatusIcon } from "../../_lib/utils"
 import { DeleteAppsDialog } from "./app-action-sheet"
@@ -55,6 +58,25 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
       enableHiding: false,
     },
     {
+      accessorKey: "app_icon_src",
+      header: "Icon",
+      cell: ({ row }) => {
+        const app_title = row.original.app_title as App["app_title"]
+        const app_slug = row.original.app_slug as App["app_slug"]
+        const app_icon_src = row.original.app_icon_src as App["app_icon_src"]
+
+        return (
+          <AppIcon
+            size={10}
+            className="rounded-lg"
+            app_title={app_title}
+            app_slug={app_slug}
+            app_icon_src={app_icon_src}
+          />
+        )
+      },
+    },
+    {
       accessorKey: "app_title",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Title" />
@@ -63,11 +85,9 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         const app_title = row.original.app_title as App["app_title"]
 
         return (
-          <div className="flex space-x-2">
+          <div className="flex max-w-60">
             {/* {app_title && <Badge variant="outline">{app_title}</Badge>} */}
-            <span className="max-w-[31.25rem] truncate font-medium">
-              {app_title}
-            </span>
+            <span className="w-full truncate font-normal">{app_title}</span>
           </div>
         )
       },
@@ -83,15 +103,29 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         if (!status) return null
 
         const Icon = getStatusIcon(status)
+        const statusColor = {
+          draft: "text-muted-foreground",
+          pending: "text-yellow-500",
+          published: "text-green-500",
+          unpublished: "text-red-500",
+        }
 
         return (
-          <div className="flex w-[6.25rem] items-center">
+          <Badge
+            variant={"secondary"}
+            className={cn("flex w-fit items-center bg-transparent")}
+          >
             <Icon
-              className="text-muted-foreground mr-2 size-4"
+              className={cn(
+                "text-muted-foreground mr-2 size-4",
+                statusColor[status]
+              )}
               aria-hidden="true"
             />
-            <span className="capitalize">{status}</span>
-          </div>
+            <span className={cn("font-normal capitalize", statusColor[status])}>
+              {status}
+            </span>
+          </Badge>
         )
       },
       filterFn: (row, id, value) => {
@@ -133,8 +167,10 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
               <DropdownMenuContent align="end" className="w-40">
                 {/* <DropdownMenuSeparator /> */}
                 <DropdownMenuItem onSelect={() => setShowDeleteAppDialog(true)}>
-                  Delete
-                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                  <span className="text-red-500">Delete</span>
+                  <DropdownMenuShortcut>
+                    <Delete className="size-4 text-red-500" />
+                  </DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
