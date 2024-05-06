@@ -1,3 +1,5 @@
+import { ViewTransitions } from "next-view-transitions"
+
 import TodayPageTitle from "./_components/today-page-title"
 
 interface TodayPageLayoutProps {
@@ -9,7 +11,7 @@ export default async function TodayPageLayout({
   modal,
 }: TodayPageLayoutProps) {
   return (
-    <>
+    <ViewTransitions>
       <div className="container flex flex-col">
         <TodayPageTitle />
         <main className="mt-5 flex-1">
@@ -17,6 +19,6 @@ export default async function TodayPageLayout({
           {modal}
         </main>
       </div>
-    </>
+    </ViewTransitions>
   )
 }
