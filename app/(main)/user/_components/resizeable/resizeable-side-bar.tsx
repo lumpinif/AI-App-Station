@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { ImperativePanelHandle } from "react-resizable-panels"
 
 import { userLayoutRoutes } from "@/config/user-layout-routes"
@@ -12,8 +12,14 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { TooltipProvider } from "@/components/ui/tooltip"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
+import { ResizeableSideBarHandle } from "./resizeable-side-bar-handle"
 import { ResizeableSideNav } from "./resizeable-side-nav"
 
 type ResizeableSideBarProps = {
@@ -40,16 +46,37 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
   const minSize = isDesktop ? lgMinSize : isTablet ? mdMinSize : 15
   const maxSize = isDesktop ? lgMaxSize : isTablet ? mdMaxSize : 25
 
-  const handleResizeHandleClick = () => {
+  const isLeftPanelCollapsed = leftPanelRef?.current?.isCollapsed()
+
+  const handleResizeHandleClick = useCallback(() => {
     if (leftPanelRef?.current) {
-      if (leftPanelRef?.current.isCollapsed()) {
+      if (isLeftPanelCollapsed) {
         leftPanelRef?.current.expand()
+      } else {
+        leftPanelRef?.current.collapse()
       }
-      // else {
-      //   leftPanelRef?.current.collapse()
-      // }
     }
-  }
+  }, [isLeftPanelCollapsed])
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === " " && (e.metaKey || e.ctrlKey)) {
+        if (
+          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          e.target instanceof HTMLSelectElement
+        ) {
+          return
+        }
+        e.preventDefault()
+        handleResizeHandleClick()
+      }
+    }
+
+    document.addEventListener("keydown", down)
+    return () => document.removeEventListener("keydown", down)
+  }, [handleResizeHandleClick, isLeftPanelCollapsed])
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -80,28 +107,24 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
           }}
           className={cn(
-            "peer hidden flex-col items-center justify-center transition-all duration-150 ease-in-out md:flex",
+            "peer hidden flex-col items-center justify-center border-r transition-all duration-150 ease-in-out md:flex",
             isCollapsed && `min-w-[50px]`
           )}
         >
-          <div className="flex h-full w-full flex-col border-r">
-            {/* NAV */}
-            <ResizeableSideNav
-              isCollapsed={isCollapsed}
-              links={userLayoutRoutes}
-              handleResizeHandleClick={handleResizeHandleClick}
-            />
-          </div>
+          {/* NAV */}
+          <ResizeableSideNav
+            isCollapsed={isCollapsed}
+            links={userLayoutRoutes}
+            handleResizeHandleClick={handleResizeHandleClick}
+          />
         </ResizablePanel>
-        <ResizableHandle
-          id="resize-handle"
-          withHandle
-          onClick={handleResizeHandleClick}
-          hitAreaMargins={{ coarse: 15, fine: 5 }}
-          className={cn(
-            "bg-transparent opacity-0 outline-none transition-all duration-150 ease-in-out focus-within:opacity-100 hover:opacity-100  focus:opacity-100 peer-hover:opacity-100 peer-active:opacity-100 md:focus-within:opacity-100 md:focus:opacity-100 md:peer-hover:opacity-100 md:peer-active:opacity-100"
-          )}
+
+        {/* Resize handle */}
+
+        <ResizeableSideBarHandle
+          handleResizeHandleClick={handleResizeHandleClick}
         />
+
         <ResizablePanel id="right-panel" defaultSize={75}>
           <ScrollArea className="h-[calc(100svh-6rem)] w-full p-1">
             {children}
