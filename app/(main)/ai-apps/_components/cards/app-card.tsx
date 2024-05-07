@@ -5,9 +5,9 @@ import { Separator } from "@/components/ui/separator"
 
 import { AppCardActions } from "./_components/app-card-actions"
 import { AppCardLabelDescription } from "./_components/app-card-label-description"
-import { AppCommentsBadge } from "./_components/app-comments-badge"
 import { AppIcon } from "./_components/app-icon"
 import { AppTitleWithDescription } from "./_components/app-title-description"
+import { AppCommentsBadge } from "./app-comments-badge"
 
 type AppCardWithIndex = AppCardContentWithCategories & {
   index: number

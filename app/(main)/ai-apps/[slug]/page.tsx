@@ -9,9 +9,9 @@ import {
 import { Comment } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
-import { AppCommentsBadge } from "../_components/cards/_components/app-comments-badge"
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
+import { AppCommentsBadge } from "../_components/cards/app-comments-badge"
 import { AppDetailBookmark } from "./_components/app-detail-bookmark"
 import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailHeroImage } from "./_components/app-detail-hero-image"

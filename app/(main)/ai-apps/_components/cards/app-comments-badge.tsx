@@ -27,7 +27,8 @@ export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
       <div className="m-0 flex items-center gap-x-1 p-0">
         <MessageCircle
           className={cn(
-            "transition-color text-muted-foreground size-4 stroke-current stroke-[1.5] outline-none duration-200 ease-out sm:group-hover:fill-blue-500 sm:group-hover:text-blue-500"
+            "transition-color text-muted-foreground size-4 stroke-current stroke-[1.5] outline-none duration-200 ease-out sm:group-hover:fill-blue-500 sm:group-hover:text-blue-500",
+            commentsCount > 0 && "fill-blue-500 text-blue-500"
           )}
         />
         {commentsCount > 0 ? (
