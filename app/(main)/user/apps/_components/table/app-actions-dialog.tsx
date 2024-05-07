@@ -1,7 +1,8 @@
 "use client"
 
 import { useTransition } from "react"
-import { TrashIcon } from "@radix-ui/react-icons"
+import { useRouter } from "next/navigation"
+import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 import { toast } from "sonner"
 
@@ -215,7 +216,7 @@ export function UnpublishAppsDialog({
             className="bg-destructive hover:bg-destructive/80 text-white"
           >
             <Button
-              aria-label="Delete selected rows"
+              aria-label="unpublish selected rows"
               variant="destructive"
               onClick={() => {
                 startUnpublishTransition(() => {
@@ -248,12 +249,11 @@ export function PublishAppsDialog({
       {showTrigger ? (
         <AlertDialogTrigger asChild>
           <Button
-            variant="destructive"
             size="sm"
             className="outline-none focus:ring-0 focus:!ring-transparent"
           >
-            <TrashIcon className="mr-1 size-4" aria-hidden="true" />
-            Unpublish ({apps.length})
+            <RocketIcon className="mr-1 size-4" aria-hidden="true" />
+            Publish ({apps.length})
           </Button>
         </AlertDialogTrigger>
       ) : null}
@@ -272,11 +272,10 @@ export function PublishAppsDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             asChild
-            className="bg-destructive hover:bg-destructive/80 text-white"
+            className="bg-green-500 text-white hover:bg-green-600"
           >
             <Button
-              aria-label="Delete selected rows"
-              variant="destructive"
+              aria-label="publish selected rows"
               onClick={() => {
                 startPublishTransition(() => {
                   publishApps({
@@ -288,6 +287,59 @@ export function PublishAppsDialog({
               disabled={isPublishPending}
             >
               Publish
+            </Button>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+export function EditAppsDialog({
+  apps,
+  onSuccess,
+  showTrigger = true,
+  ...props
+}: AppActionDialogProps) {
+  const router = useRouter()
+  const [isEditPending, startEditTransition] = useTransition()
+
+  return (
+    <AlertDialog {...props}>
+      {showTrigger ? (
+        <AlertDialogTrigger asChild>
+          <Button
+            variant="destructive"
+            size="sm"
+            className="outline-none focus:ring-0 focus:!ring-transparent"
+          >
+            <TrashIcon className="mr-1 size-4" aria-hidden="true" />
+            Unpublish ({apps.length})
+          </Button>
+        </AlertDialogTrigger>
+      ) : null}
+      <AlertDialogContent className="max-w-sm rounded-sm md:max-w-md lg:max-w-lg">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Before opening the editor</AlertDialogTitle>
+          <AlertDialogDescription>
+            Caution: Keep in mind that editing the app will result in immediate
+            changes, regardless of its published status.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="gap-2 sm:space-x-0">
+          <AlertDialogCancel asChild>
+            <Button variant="outline">Cancel</Button>
+          </AlertDialogCancel>
+          <AlertDialogAction asChild>
+            <Button
+              aria-label="edit selected row"
+              onClick={() => {
+                startEditTransition(() =>
+                  router.push(`/user/apps/${apps[0].original.app_id}`)
+                )
+              }}
+              disabled={isEditPending}
+            >
+              Confirm
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

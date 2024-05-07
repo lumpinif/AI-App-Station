@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { DotsHorizontalIcon } from "@radix-ui/react-icons"
+import { useRouter } from "next/navigation"
+import { DotsHorizontalIcon, Pencil2Icon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { Delete, Heart } from "lucide-react"
 import moment from "moment"
@@ -33,6 +34,7 @@ import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-
 import { getStatusColor, getStatusIcon } from "../../_lib/utils"
 import {
   DeleteAppsDialog,
+  EditAppsDialog,
   PublishAppsDialog,
   UnpublishAppsDialog,
 } from "./app-actions-dialog"
@@ -176,6 +178,9 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         const [showUnpublishAppDialog, setShowUnpublishAppDialog] =
           useState(false)
         const [showPublishAppDialog, setShowPublishAppDialog] = useState(false)
+        const [showEditAppDialog, setShowEditAppDialog] = useState(false)
+
+        const router = useRouter()
 
         const UnpublishIcon = getStatusIcon("unpublished")
         const UnpublishStatusColor = getStatusColor("unpublished")
@@ -202,6 +207,12 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
               apps={[row]}
               showTrigger={false}
             />
+            <EditAppsDialog
+              open={showEditAppDialog}
+              onOpenChange={setShowEditAppDialog}
+              apps={[row]}
+              showTrigger={false}
+            />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -213,12 +224,22 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-40">
+                <DropdownMenuItem
+                  className="active:scale-[0.98]"
+                  onSelect={() => setShowEditAppDialog(true)}
+                >
+                  <span>Edit</span>
+                  <DropdownMenuShortcut>
+                    <Pencil2Icon className={cn("size-4")} />
+                  </DropdownMenuShortcut>
+                </DropdownMenuItem>
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>Update Status</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
                         onSelect={() => setShowPublishAppDialog(true)}
+                        className="active:scale-[0.98]"
                       >
                         <PublishIcon
                           className={cn("mr-2 size-4", PublishStatusColor)}
@@ -229,6 +250,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onSelect={() => setShowUnpublishAppDialog(true)}
+                        className="active:scale-[0.98]"
                       >
                         <UnpublishIcon
                           className={cn("mr-2 size-4", UnpublishStatusColor)}
@@ -241,7 +263,10 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
                   </DropdownMenuPortal>
                 </DropdownMenuSub>
                 {/* <DropdownMenuSeparator /> */}
-                <DropdownMenuItem onSelect={() => setShowDeleteAppDialog(true)}>
+                <DropdownMenuItem
+                  onSelect={() => setShowDeleteAppDialog(true)}
+                  className="active:scale-[0.98]"
+                >
                   <span className={cn(UnpublishStatusColor)}>Delete</span>
                   <DropdownMenuShortcut>
                     <Delete className={cn("size-4", UnpublishStatusColor)} />
