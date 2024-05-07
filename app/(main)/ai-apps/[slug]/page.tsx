@@ -51,18 +51,20 @@ export default async function AppPagePage({
     await getAllComments(app.app_id, c_order, orderBy)
   // TODO: HANDLE NO COMMENTS AND ERROR
 
+  if (!getAllCommentsError) {
+    console.error(getAllCommentsError)
+  }
+
   // TODO: ADD HERO FEATURED LOGIC PROP AND THE IMAGE
-  // mt-16 sm:mt-4
-  const isHeroFeatured = true
 
   // Get screenshots
   const screenshotsFileNames = await getScreenshotsFileNames(
-    app.app_slug,
+    app.app_id,
     app.submitted_by_user_id
   )
 
   const screenshotsPublicUrls = await getScreenshotsPublicUrls(
-    app.app_slug,
+    app.app_id,
     app.submitted_by_user_id,
     screenshotsFileNames || []
   )
