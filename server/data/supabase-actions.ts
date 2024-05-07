@@ -898,8 +898,8 @@ export async function checkExistingCategories(
 // STORAGE
 
 export async function getScreenshotsFileNames(
-  app_slug: string,
-  app_submitted_by_user_id: string
+  app_id: App["app_id"],
+  app_submitted_by_user_id: App["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -907,7 +907,7 @@ export async function getScreenshotsFileNames(
 
   const { data, error } = await supabase.storage
     .from(bucketName)
-    .list(`${app_slug}/${app_submitted_by_user_id}/screenshots`, {
+    .list(`${app_id}/${app_submitted_by_user_id}/screenshots`, {
       limit: 6,
       offset: 0,
       sortBy: { column: "created_at", order: "desc" },
@@ -925,8 +925,8 @@ export async function getScreenshotsFileNames(
 }
 
 export async function getScreenshotsPublicUrls(
-  app_slug: string,
-  app_submitted_by_user_id: string,
+  app_id: App["app_id"],
+  app_submitted_by_user_id: App["submitted_by_user_id"],
   fileNames: string[]
 ) {
   const supabase = await createSupabaseServerClient()
@@ -937,7 +937,7 @@ export async function getScreenshotsPublicUrls(
     const { data } = supabase.storage
       .from(bucketName)
       .getPublicUrl(
-        `${app_slug}/${app_submitted_by_user_id}/screenshots/${fileName}`
+        `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
       )
 
     if (data) screenshotsPublicUrls.push(data.publicUrl)

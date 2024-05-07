@@ -47,7 +47,7 @@ import ResponsiveContentModal from "@/components/shared/responsive-content-modal
 import { AppDetailScreenshotsDialog } from "@/app/(main)/ai-apps/[slug]/_components/app-detail-screenshots-dialog"
 
 type AppScreenshotsFormProps = {
-  app_slug: App["app_slug"]
+  app_id: App["app_id"]
   app_submitted_by_user_id: App["submitted_by_user_id"]
   access_token: string
   screenshotsFileNames: string[]
@@ -59,7 +59,7 @@ interface NetworkError extends Error {
 }
 
 export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
-  app_slug,
+  app_id,
   app_submitted_by_user_id,
   access_token,
   screenshotsFileNames,
@@ -130,7 +130,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
     const supabaseMetadata = {
       bucketName: bucketNameApp,
       objectName:
-        app_slug +
+        app_id +
         "/" +
         app_submitted_by_user_id +
         "/" +
@@ -184,7 +184,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
 
   const handleScreenshotDelete = async (screenshotFileName: string) => {
     const response = await deleteScreenshot(
-      app_slug,
+      app_id,
       app_submitted_by_user_id,
       screenshotFileName
     )

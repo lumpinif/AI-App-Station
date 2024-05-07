@@ -72,12 +72,12 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   )
 
   const screenshotsFileNames = await getScreenshotsFileNames(
-    app.app_slug,
+    app.app_id,
     app.submitted_by_user_id
   )
 
   const screenshotsPublicUrls = await getScreenshotsPublicUrls(
-    app.app_slug,
+    app.app_id,
     app.submitted_by_user_id,
     screenshotsFileNames || []
   )
@@ -184,7 +184,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
             <AppScreenshotsForm
               screenshotsFileNames={screenshotsFileNames || []}
               screenshotsPublicUrls={screenshotsPublicUrls || []}
-              app_slug={app.app_slug}
+              app_id={app.app_id}
               app_submitted_by_user_id={app.submitted_by_user_id}
               access_token={session?.access_token as string}
             />
