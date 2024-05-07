@@ -109,7 +109,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                         disabled={isSubmitting}
                         placeholder="Enter App Title"
                         {...field}
-                        className="ring-offset-background h-fit w-full max-w-48 text-nowrap border-0 p-0 text-lg font-bold outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-3xl md:max-w-96 md:text-4xl"
+                        className="ring-offset-background h-fit w-full max-w-48 text-nowrap border-0 bg-transparent p-0 text-lg font-bold outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-3xl md:max-w-96 md:text-4xl"
                       />
                     </FormControl>
                     <FormMessage />
