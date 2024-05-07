@@ -1,7 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { insertIntroduction } from "@/server/data/supabase-actions"
+import { useEffect, useState } from "react"
+import {
+  insertIntroduction,
+  removeEmptyIntroduction,
+} from "@/server/data/supabase-actions"
 import {
   CloudUpload,
   Loader2,
@@ -15,7 +18,7 @@ import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
 import { App } from "@/types/db_tables"
-import { defaultEditorContent } from "@/lib/editor-dummy-content"
+import { defaultEditorContent } from "@/config/default-editor-content"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -40,59 +43,100 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
   if (!introduction || introduction === null) {
     introduction = defaultEditorContent
   }
+  const isIntroductionEmpty =
+    JSON.stringify(introduction) ===
+    '{"type":"doc","content":[{"type":"paragraph"}]}'
+
   const [value, setValue] = useState<JSONContent>(introduction)
   const [isRetrying, setIsRetrying] = useState(false)
   const [saveStatus, setSaveStatus] = useState("Saved")
   const [retryCount, setRetryCount] = useState(0)
   const [charsCount, setCharsCount] = useState(0)
+  const [isEmpty, setIsEmpty] = useState(false)
+
   const MAX_RETRY_ATTEMPTS = 3
 
-  const handleEditorSave = useDebouncedCallback(async (value: JSONContent) => {
-    setValue(value)
-    if (introduction !== value) {
-      const startTime = Date.now()
-      const timeout = 5000 // 5 seconds timeout
-      let error = null
-
-      while (
-        Date.now() - startTime < timeout &&
-        retryCount < MAX_RETRY_ATTEMPTS
+  useEffect(() => {
+    const handleRemoveEmptyIntroduction = async () => {
+      if (
+        value === null ||
+        isIntroductionEmpty ||
+        isEmpty ||
+        introduction === defaultEditorContent
       ) {
-        error = await insertIntroduction(
-          app_id,
-          JSON.parse(JSON.stringify(value))
-        )
-        if (!error?.error) {
-          break
-        }
-        await new Promise((resolve) => setTimeout(resolve, 1000)) // Wait for 1 second before retrying
-      }
+        setIsEmpty(true)
+        // If the editor content is empty and the introduction is not already null,
+        // delete the introduction from the database
+        const { error } = await removeEmptyIntroduction(app_id)
 
-      if (error?.error) {
-        console.log(
-          "Auto-retry failed. Max retry attempts reached or timeout exceeded."
-        )
-        toast.error("Failed to save introduction. Please try again later.")
-        setSaveStatus("Failed to save")
-        setIsRetrying(false) // Set isRetring to false when auto-retry fails
-        setRetryCount(0) // Reset retryCount to 0
-        return null
+        if (error) {
+          console.error("Failed to remove empty introduction", error)
+          toast.error("Failed to save introduction. Please try again later.")
+          setSaveStatus("Failed to save")
+          return null
+        }
       }
-      if (saveStatus === "Failed to save") {
-        console.log("Auto-retry successful. Introduction saved.")
-        setIsRetrying(false)
-        setRetryCount(0)
-      }
-      setSaveStatus("Saved")
     }
-  }, 1500)
+
+    handleRemoveEmptyIntroduction()
+  }, [value, isIntroductionEmpty, app_id, isEmpty, introduction])
+
+  const handleEditorDebouncedSave = useDebouncedCallback(
+    async (value: JSONContent) => {
+      setValue(value)
+
+      // Check if the value is empty and update the isEmpty state immediately
+      const isValueEmpty =
+        JSON.stringify(value) ===
+        '{"type":"doc","content":[{"type":"paragraph"}]}'
+      setIsEmpty(isValueEmpty)
+
+      if (introduction !== value) {
+        const startTime = Date.now()
+        const timeout = 5000 // 5 seconds timeout
+        let error = null
+
+        while (
+          Date.now() - startTime < timeout &&
+          retryCount < MAX_RETRY_ATTEMPTS
+        ) {
+          error = await insertIntroduction(
+            app_id,
+            JSON.parse(JSON.stringify(value))
+          )
+          if (!error?.error) {
+            break
+          }
+          await new Promise((resolve) => setTimeout(resolve, 1000)) // Wait for 1 second before retrying
+        }
+
+        if (error?.error) {
+          console.log(
+            "Auto-retry failed. Max retry attempts reached or timeout exceeded."
+          )
+          toast.error("Failed to save introduction. Please try again later.")
+          setSaveStatus("Failed to save")
+          setIsRetrying(false) // Set isRetring to false when auto-retry fails
+          setRetryCount(0) // Reset retryCount to 0
+          return null
+        }
+        if (saveStatus === "Failed to save") {
+          console.log("Auto-retry successful. Introduction saved.")
+          setIsRetrying(false)
+          setRetryCount(0)
+        }
+        setSaveStatus("Saved")
+      }
+    },
+    1000
+  )
 
   const handleRetry = () => {
     if (saveStatus === "Failed to save" && retryCount < MAX_RETRY_ATTEMPTS) {
       console.log("Retry button clicked. Starting auto-retry...")
       setIsRetrying(true)
       setRetryCount((prevCount) => prevCount + 1)
-      handleEditorSave(value)
+      handleEditorDebouncedSave(value as JSONContent)
     }
   }
 
@@ -160,7 +204,24 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
                 </InfoPopover>
               </span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-x-2">
+              {/* TODO: ADD A CLEAR BUTTON FOR THE DEFAUL CONTENT */}
+              {/* {!isEmpty &&
+                !isIntroductionEmpty &&
+                introduction === defaultEditorContent && (
+                  <Button
+                    size={"sm"}
+                    className="bg-accent hover:bg-accent/80 text-muted-foreground h-fit rounded-lg px-2 py-1 text-xs"
+                    variant={"default"}
+                    onClick={handleClearDefaultContent}
+                    disabled={isEmpty}
+                  >
+                    <span className="flex items-center gap-x-2">
+                      <span className="flex">Clear the default content</span>
+                    </span>
+                  </Button>
+                )} */}
+
               <div className="bg-accent text-muted-foreground flex h-fit select-none rounded-lg px-2 py-1 text-xs">
                 <span>
                   {charsCount}/{CHARS_LIMIT}
@@ -217,12 +278,17 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
         </div>
         <NovelEditor
           initialValue={value}
-          onChange={handleEditorSave}
+          onChange={handleEditorDebouncedSave}
           setSaveStatus={setSaveStatus}
           setCharsCount={setCharsCount}
           saveStatus={saveStatus}
           className="border-muted-foreground dark:border-border border border-dashed md:p-8 md:py-4 lg:p-12 lg:py-6"
         />
+        {isEmpty && (
+          <div className="text-muted-foreground mt-4 text-center">
+            The editor is empty. Start typing to add content.
+          </div>
+        )}
       </section>
     </TooltipProvider>
   )

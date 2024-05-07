@@ -1095,6 +1095,39 @@ export async function insertIntroduction(
   }
 }
 
+export async function removeEmptyIntroduction(app_id: App["app_id"]) {
+  const supabase = await createSupabaseServerClient()
+  const slug = await getSlugFromAppId(app_id)
+  try {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError || !user) {
+      return { error: userError || new Error("User not found") }
+    }
+
+    const { error: updateError } = await supabase
+      .from("apps")
+      .update({ introduction: null })
+      .match({ app_id: app_id, submitted_by_user_id: user.id })
+
+    if (updateError) {
+      console.error("Error deleting introduction:", updateError)
+      return { error: updateError }
+    }
+
+    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/user/apps/${app_id}`)
+
+    return { error: null }
+  } catch (error) {
+    console.error("Error in removeEmptyIntroduction:", error)
+    return { error: error as Error }
+  }
+}
+
 // Handle app review submission
 
 // export async function handleAppPubulish(app_id: App["app_id"]) {
