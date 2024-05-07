@@ -45,18 +45,16 @@ export const PageTitle = ({
             </div>
           </Link>
         ) : (
-          <>
-            <div className="flex flex-col">
-              {subtitle && (
-                <span className="text-muted-foreground mt-2 text-sm font-medium">
-                  {subtitle}
-                </span>
-              )}
-              <span className="font-bold tracking-[-.016em] md:tracking-[-.024em]">
-                {title}
+          <div className="flex flex-col">
+            {subtitle && (
+              <span className="text-muted-foreground mt-2 text-sm font-medium">
+                {subtitle}
               </span>
-            </div>
-          </>
+            )}
+            <span className="font-bold tracking-[-.016em] md:tracking-[-.024em]">
+              {title}
+            </span>
+          </div>
         )}
       </div>
       {WithAccountModalTrigger && (
