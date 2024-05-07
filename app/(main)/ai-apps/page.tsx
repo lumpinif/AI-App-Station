@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import dynamic from "next/dynamic"
 import { getAllApps, getAllHeroFeaturedPosts, getAllPosts } from "@/server/data"
-import { getAppsWithCategories } from "@/server/data/supabase-actions"
+import { getAppsWithCatWithOrderBy } from "@/server/data/supabase-actions"
 import { EmblaOptionsType } from "embla-carousel"
 
 import AiAppsPageTitle from "./_components/ai-apps-page-title"
@@ -29,10 +29,20 @@ const AIAppsPage = async () => {
   // fetch Apps
   let { apps: allApps, error: allAppsError } =
     await getAllApps("comments_count")
+
   let { apps: AppsWithCategories, error: AppsWithCategoriesError } =
-    await getAppsWithCategories("comments_count")
+    await getAppsWithCatWithOrderBy("likes_count")
 
   //TODO: ERROR HANDLING FOR NO APP FOUND
+
+  if (allAppsError || allHeroFeaturedPostsError || allPostsError) {
+    console.error(
+      allAppsError,
+      allHeroFeaturedPostsError,
+      allPostsError,
+      AppsWithCategoriesError
+    )
+  }
 
   if (!allPosts || !heroPosts || !AppsWithCategories || !allApps) {
     return null

@@ -14,13 +14,12 @@ import { JSONContent } from "novel"
 
 import { cn } from "@/lib/utils"
 import { PageTitle } from "@/components/layout/page-title"
-import BackButton from "@/components/shared/back-button"
 
-import { AppApprovalSubmitButton } from "./_components/forms/app-approval-submit-button"
 import AppCategoriesForm from "./_components/forms/app-categories-form"
 import { AppDevelopersForm } from "./_components/forms/app-developers-form"
 import { AppIconForm } from "./_components/forms/app-icon-form"
 import { AppIntroductionForm } from "./_components/forms/app-introduction-form"
+import { AppPublishButton } from "./_components/forms/app-publish-button"
 import { AppScreenshotsForm } from "./_components/forms/app-screenshots-form"
 import { AppTitleWithDescriptionForm } from "./_components/forms/app-title-description-form"
 import { InfoPopover } from "./_components/forms/info-modal"
@@ -103,37 +102,51 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
 
       {/* Header */}
       <div className="bg-background sticky top-0 z-30 flex items-center justify-between pb-4">
-        <PageTitle
-          title={`Editing ${app.app_title}`}
-          withBorder={false}
-          className="text-2xl"
-        />
+        <div className="flex items-start gap-x-2">
+          <PageTitle
+            title={`Editing ${app.app_title}`}
+            withBorder={false}
+            className="text-2xl"
+          />
+
+          <InfoPopover
+            align="start"
+            isQuestionIcon={false}
+            iconClassName="size-3"
+          >
+            *Please carefully complete all information before publish the app to
+            the public. Once published, you will be honored in the app detail.
+          </InfoPopover>
+        </div>
 
         {/* Submit button */}
-        <div className="text-muted-foreground flex justify-end text-xs">
-          <AppApprovalSubmitButton
-            ready_to_submit={app.ready_to_publish}
+        <div className="text-muted-foreground flex items-center justify-end gap-x-2 text-xs">
+          <AppPublishButton
+            isAllFieldsComplete={isAllFormsComplete()}
+            app_publish_status={app.app_publish_status}
             size={"sm"}
             app_id={app.app_id}
-            disabled={!isAllFormsComplete() || app.ready_to_publish}
+            disabled={
+              !isAllFormsComplete() || app.app_publish_status === "published"
+            }
             className={cn(
-              "hidden h-8 w-20 select-none text-xs sm:block",
+              "hidden h-8 w-fit select-none text-xs sm:block",
               isAllFormsComplete() && "w-28",
-              app.ready_to_publish && "w-32"
+              app.app_publish_status === "published" && "w-fit"
             )}
           >
-            {app.ready_to_publish
-              ? "Waiting for Approval"
+            {app.app_publish_status === "published"
+              ? "Published"
               : isAllFormsComplete()
                 ? "Ready to Publish"
-                : "Publish"}
-          </AppApprovalSubmitButton>
-          <div className="sm:hidden">
-            <InfoPopover>
-              *Please carefully complete all information before submitting for
-              app review.
-            </InfoPopover>
-          </div>
+                : app.app_publish_status === "draft"
+                  ? "Fill Out All Fields"
+                  : app.app_publish_status === "unpublished"
+                    ? "Unpublished"
+                    : app.app_publish_status === "pending"
+                      ? "Currently under Reviewing"
+                      : isAllFormsComplete() && "Ready to Publish"}
+          </AppPublishButton>
         </div>
       </div>
 
@@ -200,18 +213,27 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           </div> */}
           {/* Submit */}
           <div className="flex w-full justify-end sm:hidden">
-            <AppApprovalSubmitButton
-              ready_to_submit={app.ready_to_publish}
+            <AppPublishButton
+              isAllFieldsComplete={isAllFormsComplete()}
+              app_publish_status={app.app_publish_status}
               app_id={app.app_id}
-              disabled={!isAllFormsComplete() || app.ready_to_publish}
+              disabled={
+                !isAllFormsComplete() || app.app_publish_status === "published"
+              }
               className="w-full select-none"
             >
-              {app.ready_to_publish
-                ? "Waiting for Approval"
+              {app.app_publish_status === "published"
+                ? "Published"
                 : isAllFormsComplete()
                   ? "Ready to Publish"
-                  : "Publish"}
-            </AppApprovalSubmitButton>
+                  : app.app_publish_status === "draft"
+                    ? "Fill Out All Fields"
+                    : app.app_publish_status === "unpublished"
+                      ? "Unpublished"
+                      : app.app_publish_status === "pending"
+                        ? "Currently under Reviewing"
+                        : isAllFormsComplete() && "Ready to Publish"}
+            </AppPublishButton>
           </div>
         </div>
       </div>

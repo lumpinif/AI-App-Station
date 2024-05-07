@@ -1,6 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
@@ -330,17 +331,13 @@ export function EditAppsDialog({
             <Button variant="outline">Cancel</Button>
           </AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button
+            <Link
+              href={`/user/apps/${apps[0].original.app_id}`}
               aria-label="edit selected row"
-              onClick={() => {
-                startEditTransition(() =>
-                  router.push(`/user/apps/${apps[0].original.app_id}`)
-                )
-              }}
-              disabled={isEditPending}
+              target="_blank"
             >
               Confirm
-            </Button>
+            </Link>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

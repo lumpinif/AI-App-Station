@@ -194,6 +194,7 @@ export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {
   let { data: posts, error } = await supabase
     .from("posts")
     .select("*")
+    // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE
     .eq("published", true)
     .eq("hero_featured", noHeroFeaturedPosts)
     .order("created_at", { ascending: false })
@@ -246,7 +247,7 @@ export async function getAppBySlug(app_slug: string) {
     .select(
       `*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*)`
     )
-    .match({ app_slug: app_slug, is_published: true })
+    .match({ app_slug: app_slug, app_publish_status: "published" })
     // .order("created_at", { ascending: false })
     .limit(1)
     .returns<AppDetails[]>()
@@ -290,7 +291,9 @@ export async function getAppBySlug(app_slug: string) {
 export async function getAllApps(withTable?: string, orderBy?: keyof App) {
   const supabase = await createSupabaseServerClient()
 
-  let query = supabase.from("apps").select(`*, ${withTable}`)
+  let query = supabase.from("apps").select(`*, ${withTable}`).match({
+    app_publish_status: "published",
+  })
 
   if (orderBy) {
     query = query.order(orderBy, { ascending: false })
@@ -304,10 +307,12 @@ export async function getAllApps(withTable?: string, orderBy?: keyof App) {
   return { apps, error }
 }
 
-export async function getAppsWithCategories(orderBy?: keyof App) {
+export async function getAppsWithCatWithOrderBy(orderBy?: keyof App) {
   const supabase = await createSupabaseServerClient()
 
-  let query = supabase.from("apps").select(`*, categories(*)`)
+  let query = supabase.from("apps").select(`*, categories(*)`).match({
+    app_publish_status: "published",
+  })
 
   if (orderBy) {
     query = query.order(orderBy, { ascending: false })
@@ -1092,41 +1097,41 @@ export async function insertIntroduction(
 
 // Handle app review submission
 
-export async function handleAppReviewSubmission(app_id: App["app_id"]) {
-  const supabase = await createSupabaseServerClient()
-  const slug = await getSlugFromAppId(app_id)
+// export async function handleAppPubulish(app_id: App["app_id"]) {
+//   const supabase = await createSupabaseServerClient()
+//   const slug = await getSlugFromAppId(app_id)
 
-  try {
-    const { error, data } = await supabase
-      .from("apps")
-      .select("ready_to_publish")
-      .eq("app_id", app_id)
-      .single()
+//   try {
+//     const { error, data } = await supabase
+//       .from("apps")
+//       .select("ready_to_publish")
+//       .eq("app_id", app_id)
+//       .single()
 
-    if (error) {
-      console.error("Error check app review:", error)
-      return { error: error }
-    }
+//     if (error) {
+//       console.error("Error check app review:", error)
+//       return { error: error }
+//     }
 
-    if (data.ready_to_publish === false) {
-      const updateResult = await supabase
-        .from("apps")
-        .update({ ready_to_publish: true })
-        .eq("app_id", app_id)
+//     if (data.ready_to_publish === false) {
+//       const updateResult = await supabase
+//         .from("apps")
+//         .update({ ready_to_publish: true })
+//         .eq("app_id", app_id)
 
-      if (updateResult.error) {
-        console.error("Error handle app review:", updateResult.error)
-        return { error: updateResult.error }
-      }
+//       if (updateResult.error) {
+//         console.error("Error handle app review:", updateResult.error)
+//         return { error: updateResult.error }
+//       }
 
-      revalidatePath(`/ai-apps/${slug?.app_slug}`)
-      revalidatePath(`/user/apps/${app_id}`)
-    }
+//       revalidatePath(`/ai-apps/${slug?.app_slug}`)
+//       revalidatePath(`/user/apps/${app_id}`)
+//     }
 
-    return { error }
-  } catch (error) {
-    if (error) {
-      console.log(error)
-    }
-  }
-}
+//     return { error }
+//   } catch (error) {
+//     if (error) {
+//       console.log(error)
+//     }
+//   }
+// }

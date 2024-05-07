@@ -37,7 +37,7 @@ import {
   EditAppsDialog,
   PublishAppsDialog,
   UnpublishAppsDialog,
-} from "./app-actions-dialog"
+} from "./submitted-apps-actions-dialog"
 
 export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
   return [

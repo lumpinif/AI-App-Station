@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { handleAppReviewSubmission } from "@/server/data/supabase-actions"
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
 import { toast } from "sonner"
 
@@ -10,6 +9,8 @@ import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { ButtonProps } from "@/components/ui/button"
 import { SpinnerButton } from "@/components/shared/spinner-button"
+
+import { publishApp } from "../../../_lib/db-queries"
 
 type TRunAnimationParams = {
   speed: number
@@ -25,14 +26,16 @@ type TConductorInstance = {
 }
 
 type AppApprovalSubmitProps = ButtonProps & {
-  ready_to_submit?: boolean
+  isAllFieldsComplete: boolean
+  app_publish_status: App["app_publish_status"]
   children?: React.ReactNode
   className?: string
   app_id: App["app_id"]
 }
 
-export const AppApprovalSubmitButton: React.FC<AppApprovalSubmitProps> = ({
-  ready_to_submit,
+export const AppPublishButton: React.FC<AppApprovalSubmitProps> = ({
+  isAllFieldsComplete = false,
+  app_publish_status,
   children,
   app_id,
   className,
@@ -42,24 +45,22 @@ export const AppApprovalSubmitButton: React.FC<AppApprovalSubmitProps> = ({
   const controller = useRef<TConductorInstance | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmitForApproval = async () => {
-    if (ready_to_submit === true) {
-      return toast.info("You have already submitted this app for approval.")
+  const handlePublishApp = async () => {
+    if (app_publish_status === "published") {
+      return toast.info("You have already published this app.")
     }
 
     setIsSubmitting(true)
     try {
-      const res = await handleAppReviewSubmission(app_id)
+      const res = await publishApp(app_id)
       if (res?.error) {
         toast.error("An error occurred during submission.")
         setIsSubmitting(false)
       } else {
-        toast.success(
-          "Thank you for sharing your knowledge with the world. Your contribution is currently under review. Please stay tuned for the approval decision."
-        )
+        toast.success("Thank you for sharing your knowledge with the world.")
         if (controller.current) {
-          controller.current.run({ speed: 3, duration: 1000, delay: 0 })
-          await new Promise((resolve) => setTimeout(resolve, 1000))
+          controller.current.run({ speed: 3, duration: 1500, delay: 0 })
+          await new Promise((resolve) => setTimeout(resolve, 1500))
           setIsSubmitting(false)
           router.push(`/user/apps`)
         }
@@ -78,7 +79,7 @@ export const AppApprovalSubmitButton: React.FC<AppApprovalSubmitProps> = ({
     <>
       <SpinnerButton
         isLoading={isSubmitting}
-        onClick={handleSubmitForApproval}
+        onClick={handlePublishApp}
         buttonClassName={cn("rounded-md", className)}
         {...props}
       >

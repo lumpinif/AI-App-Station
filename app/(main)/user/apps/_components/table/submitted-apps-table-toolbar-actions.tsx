@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 
 import { exportTableToCSV } from "../../_lib/export"
 // import { CreateTaskDialog } from "./create-task-dialog"
-import { DeleteAppsDialog } from "./app-actions-dialog"
+import { DeleteAppsDialog } from "./submitted-apps-actions-dialog"
 
 interface SubmittedAppsTableToolbarActionsProps {
   table: Table<App>

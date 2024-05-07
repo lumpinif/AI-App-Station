@@ -35,7 +35,7 @@ import {
   publishApps,
   PublishAppsDialog,
   UnpublishAppsDialog,
-} from "./app-actions-dialog"
+} from "./submitted-apps-actions-dialog"
 
 interface TasksTableFloatingBarProps {
   table: Table<App>
