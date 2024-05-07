@@ -64,7 +64,6 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
         isEmpty ||
         introduction === defaultEditorContent
       ) {
-        setIsEmpty(true)
         // If the editor content is empty and the introduction is not already null,
         // delete the introduction from the database
         const { error } = await removeEmptyIntroduction(app_id)
@@ -89,6 +88,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
       const isValueEmpty =
         JSON.stringify(value) ===
         '{"type":"doc","content":[{"type":"paragraph"}]}'
+
       setIsEmpty(isValueEmpty)
 
       if (introduction !== value) {
@@ -284,12 +284,11 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           saveStatus={saveStatus}
           className="border-muted-foreground dark:border-border border border-dashed md:p-8 md:py-4 lg:p-12 lg:py-6"
         />
-        {value === null ||
-          (isIntroductionEmpty && (
-            <div className="text-muted-foreground mt-4 text-center">
-              The editor is empty. Start typing to add content.
-            </div>
-          ))}
+        {isEmpty && (
+          <div className="text-muted-foreground mt-4 text-center">
+            The editor is empty. Start typing to add content.
+          </div>
+        )}
       </section>
     </TooltipProvider>
   )
