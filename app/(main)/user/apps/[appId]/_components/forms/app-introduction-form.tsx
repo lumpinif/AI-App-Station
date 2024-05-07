@@ -284,11 +284,12 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           saveStatus={saveStatus}
           className="border-muted-foreground dark:border-border border border-dashed md:p-8 md:py-4 lg:p-12 lg:py-6"
         />
-        {isEmpty && (
-          <div className="text-muted-foreground mt-4 text-center">
-            The editor is empty. Start typing to add content.
-          </div>
-        )}
+        {value === null ||
+          (isIntroductionEmpty && (
+            <div className="text-muted-foreground mt-4 text-center">
+              The editor is empty. Start typing to add content.
+            </div>
+          ))}
       </section>
     </TooltipProvider>
   )
