@@ -93,6 +93,7 @@ export function SubmittedAppsTable({
 
   return (
     <div className="w-full space-y-5">
+      {/* TODO: Implement the advanced filter */}
       {/* {featureFlags.includes("advancedFilter") ? (
         <DataTableAdvancedToolbar table={table} filterFields={filterFields}>
           <TasksTableToolbarActions table={table} />

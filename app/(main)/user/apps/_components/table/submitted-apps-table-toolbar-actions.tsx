@@ -1,6 +1,7 @@
 "use client"
 
-import { DownloadIcon } from "@radix-ui/react-icons"
+import { useRouter } from "next/navigation"
+import { DownloadIcon, ReloadIcon } from "@radix-ui/react-icons"
 import { type Table } from "@tanstack/react-table"
 
 import { App } from "@/types/db_tables"
@@ -17,6 +18,7 @@ interface SubmittedAppsTableToolbarActionsProps {
 export function TasksTableToolbarActions({
   table,
 }: SubmittedAppsTableToolbarActionsProps) {
+  const router = useRouter()
   return (
     <div className="flex items-center gap-2">
       {/* table.getFilteredSelectedRowModel().rows.length > 0 */}
@@ -31,7 +33,16 @@ export function TasksTableToolbarActions({
       <Button
         variant="outline"
         size="sm"
-        className="ml-auto h-8 lg:flex"
+        className="ml-auto h-8 active:scale-[0.98] lg:flex"
+        onClick={() => router.refresh()}
+      >
+        <ReloadIcon className="mr-1 size-4" aria-hidden="true" />
+        Reload
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        className="ml-auto h-8 active:scale-[0.98] lg:flex"
         onClick={() =>
           exportTableToCSV(table, {
             filename: "submitted_apps",
