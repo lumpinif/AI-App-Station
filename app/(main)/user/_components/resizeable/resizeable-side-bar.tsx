@@ -125,11 +125,8 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
           handleResizeHandleClick={handleResizeHandleClick}
         />
 
-        <ResizablePanel id="right-panel" defaultSize={75}>
-          <ScrollArea className="h-[calc(100svh-6rem)] w-full p-1">
-            {children}
-            <ScrollBar orientation="horizontal" />
-          </ScrollArea>
+        <ResizablePanel id="right-panel" defaultSize={defaultLayout[1]}>
+          {children}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
