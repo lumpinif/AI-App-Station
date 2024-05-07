@@ -61,12 +61,12 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   if (getAllCatError) console.error(error)
 
   const appIconFileName = await getAppIconFileName(
-    app.app_slug,
+    app.app_id,
     app.submitted_by_user_id
   )
 
   const appIconUrl = await getAppIconUrl(
-    app.app_slug,
+    app.app_id,
     app.submitted_by_user_id,
     appIconFileName || ""
   )
@@ -147,7 +147,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
                 <AppIconForm
                   appIconFileName={appIconFileName as string}
                   appIconPublicUrl={appIconUrl as string}
-                  app_slug={app.app_slug}
+                  app_id={app.app_id}
                   app_submitted_by_user_id={app.submitted_by_user_id}
                   access_token={session?.access_token as string}
                 />

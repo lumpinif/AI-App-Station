@@ -946,8 +946,8 @@ export async function getScreenshotsPublicUrls(
   return screenshotsPublicUrls
 }
 export async function getAppIconFileName(
-  app_slug: string,
-  app_submitted_by_user_id: string
+  app_id: App["app_id"],
+  app_submitted_by_user_id: App["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -955,7 +955,7 @@ export async function getAppIconFileName(
 
   const { data, error } = await supabase.storage
     .from(bucketName)
-    .list(`${app_slug}/${app_submitted_by_user_id}/icon`, {
+    .list(`${app_id}/${app_submitted_by_user_id}/icon`, {
       limit: 1,
       offset: 0,
       sortBy: { column: "created_at", order: "asc" },
@@ -973,8 +973,8 @@ export async function getAppIconFileName(
 }
 
 export async function getAppIconUrl(
-  app_slug: string,
-  app_submitted_by_user_id: string,
+  app_id: App["app_id"],
+  app_submitted_by_user_id: App["submitted_by_user_id"],
   fileName: string
 ) {
   const supabase = await createSupabaseServerClient()
@@ -982,7 +982,7 @@ export async function getAppIconUrl(
 
   const { data } = supabase.storage
     .from(bucketName)
-    .getPublicUrl(`${app_slug}/${app_submitted_by_user_id}/icon/${fileName}`)
+    .getPublicUrl(`${app_id}/${app_submitted_by_user_id}/icon/${fileName}`)
 
   return data.publicUrl
 }

@@ -40,7 +40,7 @@ import {
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 type AppIconFormProps = {
-  app_slug: App["app_slug"]
+  app_id: App["app_id"]
   app_submitted_by_user_id: App["submitted_by_user_id"]
   access_token: string
   appIconFileName: string
@@ -48,7 +48,7 @@ type AppIconFormProps = {
 }
 
 export const AppIconForm: React.FC<AppIconFormProps> = ({
-  app_slug,
+  app_id,
   app_submitted_by_user_id,
   access_token,
   appIconFileName,
@@ -96,7 +96,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
     const supabaseMetadata = {
       bucketName: bucketNameApp,
       objectName:
-        app_slug +
+        app_id +
         "/" +
         app_submitted_by_user_id +
         "/" +
@@ -140,7 +140,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   const handleUpload = () => {
     if (uppy.getFiles().length !== 0) {
       const app_icon_src =
-        app_slug +
+        app_id +
         "/" +
         app_submitted_by_user_id +
         "/" +
@@ -152,7 +152,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
         const { error } = await supabase
           .from("apps")
           .update({ app_icon_src: app_icon_src })
-          .eq("app_slug", app_slug)
+          .eq("app_id", app_id)
           .eq("submitted_by_user_id", app_submitted_by_user_id)
 
         if (error) {
@@ -167,7 +167,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   const handleIconDelete = async () => {
     setIsRefreshingIcon(!isRefreshingIcon)
     const response = await deleteAppIcon(
-      app_slug,
+      app_id,
       app_submitted_by_user_id,
       appIconFileName
     )
