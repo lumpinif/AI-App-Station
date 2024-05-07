@@ -25,7 +25,9 @@ export const UserPagesBreadCrumb: React.FC<UserBreadCrumbProps> = () => {
     (matched, group) => {
       if (matched) return matched
 
-      const matchedItem = group.items.find((item) => item.href === pathname)
+      const matchedItem = group.items.find((item) =>
+        pathname.startsWith(item.href)
+      )
       if (matchedItem) {
         return {
           group: group.group,
@@ -41,25 +43,26 @@ export const UserPagesBreadCrumb: React.FC<UserBreadCrumbProps> = () => {
   // Extract the group and item from the matched route
   const { group, items } = matchedRoute || { group: "", items: [] }
 
-  return (
-    <Breadcrumb>
-      <BreadcrumbList>
-        {items.length > 0 && (
-          <>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/user">User</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href={items[0].href}>{items[0].title}</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </>
-        )}
-      </BreadcrumbList>
-    </Breadcrumb>
-  )
+  if (items.length > 0)
+    return (
+      <Breadcrumb>
+        <BreadcrumbList>
+          {items.length > 0 && (
+            <>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/user">User</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={items[0].href}>{items[0].title}</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </>
+          )}
+        </BreadcrumbList>
+      </Breadcrumb>
+    )
 }

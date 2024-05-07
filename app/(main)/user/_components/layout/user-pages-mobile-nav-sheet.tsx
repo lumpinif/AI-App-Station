@@ -19,7 +19,10 @@ export const UserPagesMobileNavSheet = () => {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-5/6 border-none sm:max-w-sm">
+      <SheetContent
+        side="left"
+        className="w-5/6 border-none sm:hidden sm:max-w-sm"
+      >
         <nav className="grid gap-6 text-lg font-medium">
           <Link
             href="#"

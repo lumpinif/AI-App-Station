@@ -8,7 +8,7 @@ export function NotFound() {
           <PageTitle
             title="Page Not found"
             className="text-3xl font-medium"
-            isWithAccountModalTrigger={false}
+            WithAccountModalTrigger={false}
           />
         </div>
         <p className="text-muted-foreground mt-2">

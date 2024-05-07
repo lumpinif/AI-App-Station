@@ -9,8 +9,9 @@ interface PageTitleProps {
   subtitle?: string
   className?: string
   href?: string
-  isBorder?: boolean
-  isWithAccountModalTrigger?: boolean
+  withBorder?: boolean
+  WithAccountModalTrigger?: boolean
+  withBackButton?: boolean
 }
 
 export const PageTitle = ({
@@ -18,15 +19,15 @@ export const PageTitle = ({
   subtitle,
   className,
   href,
-  isBorder = true,
-  isWithAccountModalTrigger = false,
-  ...rest
+  withBorder: isBorder = true,
+  WithAccountModalTrigger = false,
+  withBackButton = false,
 }: PageTitleProps) => {
   return (
     <div
       className={cn(
-        "flex w-full items-end justify-between pb-2",
-        isBorder ? "border-b" : ""
+        "flex w-full items-end justify-between pb-0",
+        isBorder ? "border-b pb-2" : ""
       )}
     >
       <div className={cn("text-4xl", className)}>
@@ -58,7 +59,7 @@ export const PageTitle = ({
           </>
         )}
       </div>
-      {isWithAccountModalTrigger && (
+      {WithAccountModalTrigger && (
         <div className="sm:hidden">
           <AccountModalTrigger />
         </div>

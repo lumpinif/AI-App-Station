@@ -13,6 +13,7 @@ import { Loader2 } from "lucide-react"
 import { JSONContent } from "novel"
 
 import { cn } from "@/lib/utils"
+import { PageTitle } from "@/components/layout/page-title"
 import BackButton from "@/components/shared/back-button"
 
 import { AppApprovalSubmitButton } from "./_components/forms/app-approval-submit-button"
@@ -41,6 +42,11 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   // TODO: HANDLE ERROR
   if (!user) {
     return redirect("/signin")
+  }
+
+  if (getUserDataError) {
+    console.error(getUserDataError)
+    return redirect("/ai-apps")
   }
 
   const { app, error } = await GetAppByAppIdUserId(params.appId, user.id)
@@ -96,15 +102,12 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
       <div className="bg-background pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
 
       {/* Header */}
-      <div className="bg-background container sticky top-0 z-30 flex items-center justify-between backdrop-blur-md">
-        <div className="flex items-center gap-x-2">
-          <div className="sm:w-24">
-            <BackButton />
-          </div>
-          <h1 className="relative z-20 bg-gradient-to-b from-neutral-200 to-neutral-500 bg-clip-text py-4 text-center text-lg font-bold text-transparent">
-            Editing {app.app_title}
-          </h1>
-        </div>
+      <div className="bg-background sticky top-0 z-30 flex items-center justify-between pb-4">
+        <PageTitle
+          title={`Editing ${app.app_title}`}
+          withBorder={false}
+          className="text-2xl"
+        />
 
         {/* Submit button */}
         <div className="text-muted-foreground flex justify-end text-xs">
@@ -135,7 +138,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
       </div>
 
       {/* content */}
-      <div className="relative z-20 mt-6 lg:container sm:mt-12">
+      <div className="relative z-20 mt-6 sm:mt-12">
         <div className="flex flex-col items-start space-y-8 sm:mt-8 md:mt-10 md:space-y-14 lg:space-y-20">
           {/* Icon Title Description */}
           <div className="flex w-full items-start space-x-6 md:space-x-10 lg:space-x-14">

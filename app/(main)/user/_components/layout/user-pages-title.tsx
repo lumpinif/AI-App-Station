@@ -15,6 +15,10 @@ export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
 }) => {
   const pathname = usePathname()
 
+  if (pathname === "/user") {
+    return <PageTitle title="User" withBorder={false} className={className} />
+  }
+
   const matchedRoute = userLayoutRoutes.reduce<UserLayoutRouteProps | null>(
     (matched, group) => {
       if (matched) return matched
@@ -34,9 +38,16 @@ export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
   )
 
   // Extract the title from the matched route
-  const title = matchedRoute?.items[0]?.title || "User"
+  const title = matchedRoute?.items[0]?.title || null
   const description = matchedRoute?.items[0]?.description || undefined
 
-  // return <div className={className}>{title}</div>
-  return <PageTitle title={title} isBorder={false} subtitle={description} />
+  if (title !== null || title)
+    return (
+      <PageTitle
+        title={title}
+        withBorder={false}
+        subtitle={description}
+        className={className}
+      />
+    )
 }

@@ -25,7 +25,7 @@ export default function Error({
       <PageTitle
         title="Something went wrong"
         className="border-none"
-        isBorder={false}
+        withBorder={false}
       />
 
       <Button

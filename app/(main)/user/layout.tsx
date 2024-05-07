@@ -22,7 +22,7 @@ export default async function UserLayout({
   const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined
 
   return (
-    <main className="container h-full md:pt-8">
+    <main className="container h-full md:pt-4">
       <ResizeableSideBar
         defaultLayout={defaultLayout}
         defaultCollapsed={defaultCollapsed}
