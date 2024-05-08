@@ -25,7 +25,7 @@ import { AppTitleDescriptionUrlForms } from "./_components/forms/app-title-descr
 import { InfoPopover } from "./_components/forms/info-modal"
 
 type SubmittedAppIdPageProps = {
-  params: { appId: string }
+  params: { app_id: string }
 }
 
 const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
@@ -48,7 +48,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     return redirect("/ai-apps")
   }
 
-  const { app, error } = await GetAppByAppIdUserId(params.appId, user.id)
+  const { app, error } = await GetAppByAppIdUserId(params.app_id, user.id)
 
   if (!app) {
     return redirect("/ai-apps")
