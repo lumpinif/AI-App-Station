@@ -21,6 +21,7 @@ import { AppIconForm } from "./_components/forms/app-icon-form"
 import { AppIntroductionForm } from "./_components/forms/app-introduction-form"
 import { AppPublishButton } from "./_components/forms/app-publish-button"
 import { AppScreenshotsForm } from "./_components/forms/app-screenshots-form"
+import { AppSubInfoForm } from "./_components/forms/app-sub-info-form"
 import { AppTitleDescriptionUrlForms } from "./_components/forms/app-title-description-url-form"
 import { InfoPopover } from "./_components/forms/info-modal"
 
@@ -174,6 +175,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
               </Suspense>
             </div>
           </div>
+
           {/* Developers Categories */}
           <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
             <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
@@ -192,6 +194,12 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
               />
             </Suspense>
           </div>
+
+          {/* Subinfo */}
+          <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
+            <AppSubInfoForm {...app} />
+          </Suspense>
+
           {/* Screenshots */}
           <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
             <AppScreenshotsForm
@@ -202,15 +210,13 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
               access_token={session?.access_token as string}
             />
           </Suspense>
+
           {/* Introduction */}
           <AppIntroductionForm
             app_id={app.app_id}
             introduction={app.introduction as JSONContent}
           />
-          {/* Subinfo */}
-          {/* <div className="mt-6">
-            <AppSubInfoForm />
-          </div> */}
+
           {/* Submit */}
           <div className="flex w-full justify-end sm:hidden">
             <AppPublishButton
