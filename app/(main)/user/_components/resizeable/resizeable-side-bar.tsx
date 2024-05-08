@@ -107,8 +107,8 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
           }}
           className={cn(
-            "peer hidden flex-col items-center justify-center border-r transition-all duration-150 ease-in-out md:flex",
-            isCollapsed && `min-w-[50px]`
+            "hover:border-border/70 peer hidden flex-col items-center justify-center border-r border-transparent transition-all duration-150 ease-in-out md:flex",
+            isCollapsed ? `min-w-[50px]` : "border-border/5"
           )}
         >
           {/* NAV */}
