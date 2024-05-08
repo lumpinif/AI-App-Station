@@ -61,6 +61,9 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
               className="dark:bg-foreground dark:text-background flex items-center gap-2 text-xs"
             >
               Toggle Sidebar
+              <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono  text-[10px] opacity-100 sm:flex">
+                <span className="text-xs">⌘</span>space
+              </kbd>
             </TooltipContent>
           </Tooltip>
         </div>
