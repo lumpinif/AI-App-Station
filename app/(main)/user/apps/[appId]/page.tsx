@@ -21,7 +21,7 @@ import { AppIconForm } from "./_components/forms/app-icon-form"
 import { AppIntroductionForm } from "./_components/forms/app-introduction-form"
 import { AppPublishButton } from "./_components/forms/app-publish-button"
 import { AppScreenshotsForm } from "./_components/forms/app-screenshots-form"
-import { AppTitleWithDescriptionForm } from "./_components/forms/app-title-description-form"
+import { AppTitleDescriptionUrlForms } from "./_components/forms/app-title-description-url-form"
 import { InfoPopover } from "./_components/forms/info-modal"
 
 type SubmittedAppIdPageProps = {
@@ -169,7 +169,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
             <div className="flex h-24 w-full flex-col items-start justify-between sm:h-32 md:h-40 lg:h-44">
               <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
                 <div className="flex w-full justify-between">
-                  <AppTitleWithDescriptionForm {...app} />
+                  <AppTitleDescriptionUrlForms {...app} />
                 </div>
               </Suspense>
             </div>

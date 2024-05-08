@@ -24,10 +24,10 @@ const DescriptionForm = ({ description, app_id }: DescriptionFormProps) => {
   return (
     <section className="min-h-0 w-full">
       {!isEditing ? (
-        <div className={cn("group flex items-center justify-start space-x-2")}>
+        <div className={cn("group flex items-center justify-start gap-x-2")}>
           <span
             className={cn(
-              "text-muted-foreground line-clamp-3 cursor-default text-sm hover:cursor-pointer md:line-clamp-3 md:text-base",
+              "text-muted-foreground line-clamp-2 cursor-default text-sm hover:cursor-pointer md:line-clamp-3 md:text-base",
               !description && "text-muted-foreground italic"
             )}
             onClick={() => setIsEditing(true)}

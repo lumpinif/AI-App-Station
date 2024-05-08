@@ -46,7 +46,7 @@ export const IntroductionFormTextarea: React.FC<
   const refDescription = useRef<HTMLDivElement>(null)
   const { isMobile } = useMediaQuery()
 
-  const maxH = isMobile ? 60 : 95
+  const maxH = isMobile ? 42 : 70
 
   const form = useForm({
     mode: "onChange",
@@ -59,7 +59,7 @@ export const IntroductionFormTextarea: React.FC<
   useAutosizeTextArea({
     textAreaRef: textAreaRef?.current,
     triggerAutoSize: triggerAutoSize,
-    minHeight: 14,
+    minHeight: 15,
     maxHeight: maxH,
   })
 

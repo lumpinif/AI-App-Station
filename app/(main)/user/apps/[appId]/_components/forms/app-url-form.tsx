@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { UpdateAppByTitle } from "@/server/data"
+import { UpdateAppByUrl } from "@/server/data/supabase-actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, SquarePen, X } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -22,56 +22,59 @@ import {
 import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
 
-type TitleFormProps = {
+type AppUrlFormProps = {
   app_id: App["app_id"]
-  app_title: App["app_title"]
+  app_url: App["app_url"]
 }
 
 const formSchema = z.object({
-  title: z
+  url: z
     .string()
-    .min(1, {
-      message: "Title is required",
-    })
-    .max(50, { message: "Title is too long" }),
+    .regex(
+      /^https:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z0-9()]{2,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/,
+      {
+        message: "Invalid URL. Make sure it starts with 'https://'",
+      }
+    ),
 })
 
-const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
-  const refTitle = useRef<HTMLDivElement>(null)
+export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
+  const refUrl = useRef<HTMLDivElement>(null)
   const [isEditing, setIsEditing] = useState(false)
 
   const form = useForm({
+    mode: "all",
+    // reValidateMode: "onChange",
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: app_title,
+      url: app_url || "",
     },
   })
+
   const { isSubmitting, isValid } = form.formState
   const toggleEdit = () => setIsEditing((current) => !current)
 
-  const onSubmit = async ({
-    title,
-  }: z.infer<typeof formSchema>): Promise<void> => {
-    const { updatedApp, error } = await UpdateAppByTitle(app_id, title)
+  const onSubmit = async ({ url }: z.infer<typeof formSchema>) => {
+    const { updatedApp, error } = await UpdateAppByUrl(app_id, url)
 
     if (updatedApp) {
-      toast.success(`${updatedApp[0].app_title} - App Title Updated`)
+      toast.success(`${updatedApp[0].app_title} - App Url Updated`)
       toggleEdit()
     }
 
     if (typeof error === "string") {
       toast.error(`${error}`)
     } else if (error) {
-      toast.error(`${error?.message} - Please try again later`)
+      toast.error(`${error} - Please try again later`)
     }
   }
 
-  useClickOutside<HTMLDivElement>(refTitle, () => {
+  useClickOutside<HTMLDivElement>(refUrl, () => {
     setIsEditing(false)
   })
 
   return (
-    <section className="w-full flex-1">
+    <section className="w-fit">
       {!isEditing ? (
         <div
           className={cn(
@@ -79,10 +82,10 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
           )}
         >
           <span
-            className="text-lg font-bold hover:cursor-pointer sm:text-3xl md:text-4xl"
+            className="text-base font-medium hover:cursor-pointer"
             onClick={() => setIsEditing(true)}
           >
-            {app_title}
+            {app_url || "Add App URL Here"}
           </span>
           <Button
             onClick={toggleEdit}
@@ -96,20 +99,19 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex items-center space-x-2" ref={refTitle}>
+            <div className="flex items-center space-x-2" ref={refUrl}>
               <FormField
                 control={form.control}
-                name="title"
+                name="url"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <Input
                         autoFocus
-                        // defaultValue={app_title}
                         disabled={isSubmitting}
-                        placeholder="Enter App Title"
+                        placeholder="https://example.com"
                         {...field}
-                        className="ring-offset-background h-fit w-full max-w-48 text-nowrap border-0 bg-transparent p-0 text-lg font-bold outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 sm:text-3xl md:max-w-fit md:text-4xl"
+                        className="ring-offset-background h-fit w-fit text-nowrap border-0 bg-transparent p-0 text-base font-medium outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       />
                     </FormControl>
                     <FormMessage />
@@ -128,7 +130,7 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                   </span>
                 </Button>
 
-                {app_title !== form.getValues("title") && (
+                {app_url !== form.getValues("url") && (
                   <LoadingButton
                     loading={isSubmitting}
                     type="submit"
@@ -143,6 +145,12 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
                     </span>
                   </LoadingButton>
                 )}
+
+                {/* {!isValid && (
+                  <span className="text-muted-foreground">
+                    Invalid URL. Make sure it starts with &apos;https://&apos;
+                  </span>
+                )} */}
               </div>
             </div>
           </form>
@@ -151,5 +159,3 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
     </section>
   )
 }
-
-export default TitleForm
