@@ -9,7 +9,7 @@ import moment from "moment"
 import numeral from "numeral"
 import { toast } from "sonner"
 
-import { App, publish_status } from "@/types/db_tables"
+import { App, Publish_Status } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -108,7 +108,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         <DataTableColumnHeader column={column} title="Status" />
       ),
       cell: ({ row }) => {
-        const status = row.original.app_publish_status as publish_status
+        const status = row.original.app_publish_status as Publish_Status
 
         if (!status) return null
 

@@ -82,11 +82,16 @@ export const IntroductionFormTextarea: React.FC<
   const { isSubmitting, isValid } = form.formState
 
   const onSubmit = async ({
-    description,
+    description: form_description,
   }: z.infer<typeof formSchema>): Promise<void> => {
+    if (form_description === description) {
+      setIsEditing(false)
+      return
+    }
+
     const { updatedApp, error } = await UpdateAppByDescription(
       app_id,
-      description
+      form_description
     )
 
     if (updatedApp) {

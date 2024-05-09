@@ -52,6 +52,11 @@ const TitleForm = ({ app_id, app_title }: TitleFormProps) => {
   const onSubmit = async ({
     title,
   }: z.infer<typeof formSchema>): Promise<void> => {
+    if (app_title === title) {
+      setIsEditing(false)
+      return
+    }
+
     const { updatedApp, error } = await UpdateAppByTitle(app_id, title)
 
     if (updatedApp) {

@@ -55,6 +55,11 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
   const toggleEdit = () => setIsEditing((current) => !current)
 
   const onSubmit = async ({ url }: z.infer<typeof formSchema>) => {
+    if (url === app_url) {
+      setIsEditing(false)
+      return
+    }
+
     const { updatedApp, error } = await UpdateAppByUrl(app_id, url)
 
     if (updatedApp) {
@@ -145,12 +150,6 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
                     </span>
                   </LoadingButton>
                 )}
-
-                {/* {!isValid && (
-                  <span className="text-muted-foreground">
-                    Invalid URL. Make sure it starts with &apos;https://&apos;
-                  </span>
-                )} */}
               </div>
             </div>
           </form>

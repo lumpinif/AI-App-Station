@@ -260,7 +260,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                 categories.map((cat) => (
                   <Badge
                     key={cat.category_name}
-                    className="mb-1 mr-1 font-normal dark:font-medium"
+                    className="mb-1 mr-1 cursor-pointer font-normal dark:font-medium"
                     onClick={() => setIsEditing(true)}
                   >
                     {cat.category_name}
