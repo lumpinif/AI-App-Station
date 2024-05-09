@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { PopoverAnchor } from "@radix-ui/react-popover"
 import {
   EditorBubble,
   EditorCommand,
@@ -70,6 +69,25 @@ const NovelEditor = ({
               handleImagePaste(view, event, uploadFn),
             handleDrop: (view, event, _slice, moved) =>
               handleImageDrop(view, event, moved, uploadFn),
+            // transformPastedText: (text) => text,
+            transformPastedHTML: (html, view) => {
+              // Create a temporary div element
+              const tempElement = document.createElement("div")
+              // Set the innerHTML of the div to the pasted HTML
+              tempElement.innerHTML = html
+
+              // Remove text color and font styles
+              tempElement.querySelectorAll("*").forEach((element) => {
+                const htmlElement = element as HTMLElement // Explicit cast
+                // Remove color styles
+                htmlElement.style.color = ""
+                // Remove font styles
+                htmlElement.style.fontFamily = ""
+              })
+
+              // Return the innerHTML of the temporary div
+              return tempElement.innerHTML
+            },
             attributes: {
               class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
             },

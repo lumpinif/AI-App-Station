@@ -1028,7 +1028,7 @@ export async function getScreenshotsFileNames(
     .list(`${app_id}/${app_submitted_by_user_id}/screenshots`, {
       limit: 6,
       offset: 0,
-      sortBy: { column: "created_at", order: "desc" },
+      sortBy: { column: "created_at", order: "asc" },
     })
 
   if (error) {

@@ -88,10 +88,9 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   const [showUploadButton, setUploadButton] = useState<boolean>(false)
 
   const hasScreenshotsFileNames =
-    screenshotsFileNames.length > 0 && screenshotsFileNames !== null
+    screenshotsFileNames.length >= 0 && screenshotsFileNames !== null
 
-  const allowContinueUploading =
-    hasScreenshotsFileNames && allowedNumberOfImages > 0
+  const allowContinueUploading = allowedNumberOfImages > 0
 
   const hasScreenshotsPublicUrls =
     screenshotsPublicUrls.length > 0 && screenshotsPublicUrls !== null
@@ -267,7 +266,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
           {allowContinueUploading && (
             <span className="flex items-center space-x-2">
               <span className="text-muted-foreground flex items-center space-x-2 text-sm">
-                {allowedNumberOfImages} / 6
+                {screenshotsPublicUrls.length} / 6
               </span>
               <Tooltip delayDuration={0}>
                 <TooltipTrigger asChild>
