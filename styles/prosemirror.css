@@ -15,21 +15,21 @@
 
 .ProseMirror h1 {
   /* font-size: 1.875rem; 30px */
-  @apply text-2xl;
-  line-height: 2.25rem; /* 36px */
+  @apply text-3xl;
+  line-height: 2.5rem; /* 36px */
   letter-spacing: 0.025em;
   margin: 0.45em 0;
 }
 .ProseMirror h2 {
   /* font-size: 1.5rem; 24px */
-  @apply text-xl;
+  @apply text-2xl;
   line-height: 2rem; /* 32px */
   letter-spacing: 0.025em;
   margin: 0.45em 0;
 }
 .ProseMirror h3 {
   /* font-size: 1.25rem; 20px */
-  @apply text-lg;
+  @apply text-xl;
   line-height: 1.75rem; /* 28px */
   letter-spacing: 0.025em;
   margin: 0.45em 0 0.65em 0;
@@ -57,6 +57,11 @@
     @apply text-base;
     line-height: 1.5rem; /* 24px */
   }
+}
+
+.prose-lg :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 
 @media screen and (max-width: 480px) {
