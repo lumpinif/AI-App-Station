@@ -12,7 +12,7 @@ import {
   Developer,
   Profile,
 } from "@/types/db_tables"
-import { nameToSlug } from "@/lib/utils"
+import { capitalizeFirstLetter, nameToSlug } from "@/lib/utils"
 
 const getErrorMessage = (error: unknown) => {
   let message: string
@@ -788,7 +788,7 @@ export async function insertDevelopers(
     .from("developers")
     .insert(
       developers.map((developer) => ({
-        developer_name: developer.label,
+        developer_name: capitalizeFirstLetter(developer.label),
         developer_slug: nameToSlug(developer.value),
         submitted_by_user_id: user.id,
       }))
@@ -819,7 +819,7 @@ export async function insertCategories(
     .from("categories")
     .insert(
       categories.map((category) => ({
-        category_name: category.label,
+        category_name: capitalizeFirstLetter(category.label),
         category_slug: nameToSlug(category.value),
         submitted_by_user_id: user.id,
       }))

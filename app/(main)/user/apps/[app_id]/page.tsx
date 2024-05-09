@@ -92,6 +92,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
       app.developers.length > 0 &&
       !!app.introduction &&
       !!appIconUrl &&
+      !!app.pricing &&
       screenshotsPublicUrls.length > 0
     )
   }

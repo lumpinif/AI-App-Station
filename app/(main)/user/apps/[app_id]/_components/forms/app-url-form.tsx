@@ -90,7 +90,13 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
             className="text-base font-medium hover:cursor-pointer"
             onClick={() => setIsEditing(true)}
           >
-            {app_url || "Add App URL Here"}
+            {app_url ? (
+              app_url
+            ) : (
+              <span className="text-muted-foreground">
+                Add app url here (optional)
+              </span>
+            )}
           </span>
           <Button
             onClick={toggleEdit}

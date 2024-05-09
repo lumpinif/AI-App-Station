@@ -2,7 +2,6 @@ import { clsx, type ClassValue } from "clsx"
 import { format, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -63,4 +62,8 @@ export function getSiteUrl() {
   } else {
     return process.env.NEXT_PUBLIC_PRO_URL || "https://aiappstation.com"
   }
+}
+
+export function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
