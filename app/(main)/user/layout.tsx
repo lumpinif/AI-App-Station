@@ -14,7 +14,7 @@ export default async function UserLayout({
 }) {
   const { data, error } = await getUserData()
   if (error || !data?.user) {
-    redirect("/login")
+    redirect("/signin")
   }
 
   const layout = cookies().get("react-resizable-panels:layout")

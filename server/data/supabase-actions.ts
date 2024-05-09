@@ -242,6 +242,32 @@ export async function UpdateAppByPricing(
   return { updatedApp, error }
 }
 
+export async function UpdateAppByCopyRight(
+  app_id: App["app_id"],
+  copy_right: App["copy_right"]
+) {
+  const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return { updatedApp: null, error: "Unauthorized!" }
+  }
+
+  const { data: updatedApp, error } = await supabase
+    .from("apps")
+    .update({ copy_right: copy_right })
+    .eq("app_id", app_id)
+    .select()
+
+  if (updatedApp) revalidatePath(`/user/apps/${app_id}`)
+
+  if (error) return { updatedApp: null, error: getErrorMessage(error) }
+
+  return { updatedApp, error }
+}
+
 // fetch Posts
 export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {
   const supabase = await createSupabaseServerClient()

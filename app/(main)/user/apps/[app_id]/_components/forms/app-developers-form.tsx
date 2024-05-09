@@ -182,7 +182,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
         className={cn("w-full flex-col space-y-2 sm:space-y-4", className)}
       >
         <span className="flex items-center space-x-2">
-          <h1 className="w-fit select-none text-2xl font-semibold">
+          <h1 className="w-fit select-none text-xl font-semibold">
             Add Developers
           </h1>
           <InfoPopover>

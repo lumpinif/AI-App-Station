@@ -102,12 +102,10 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
   return (
     <section className="w-full flex-col space-y-2 sm:space-y-4">
       <span className="flex items-center space-x-2">
-        <h1 className="w-fit select-none text-2xl font-semibold">
-          Add Pricing
-        </h1>
+        <h1 className="w-fit select-none text-xl font-semibold">Add Pricing</h1>
         <InfoPopover>
           <div className="px-2">
-            <h3>Pricing Form</h3>
+            <h3>Pricing (Required) </h3>
             <Separator />
             <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
               <li className="flex items-center space-x-4">

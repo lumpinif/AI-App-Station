@@ -152,8 +152,8 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
       </div>
 
       {/* content */}
-      <div className="relative z-20 mt-6 sm:mt-12">
-        <div className="flex flex-col items-start space-y-8 sm:mt-8 md:mt-10 md:space-y-14 lg:space-y-20">
+      <div className="relative z-20 mt-4 sm:mt-8">
+        <div className="flex flex-col items-start gap-y-14 md:gap-y-16 lg:gap-y-24">
           {/* Icon Title Description */}
           <div className="flex w-full items-start space-x-6 md:space-x-10 lg:space-x-14">
             <div className="size-24 flex-none sm:size-32 md:size-40">

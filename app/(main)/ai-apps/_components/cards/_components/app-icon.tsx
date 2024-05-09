@@ -49,6 +49,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
             className
           )}
           href={`/ai-apps/${app_slug || "#"}`}
+          target="_blank"
         >
           {ImageElement}
         </Link>

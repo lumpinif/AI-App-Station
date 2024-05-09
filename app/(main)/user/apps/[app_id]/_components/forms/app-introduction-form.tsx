@@ -147,7 +147,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           <div className="flex items-baseline justify-between">
             <div className="flex items-baseline space-x-2">
               <span className="flex items-center space-x-2">
-                <h1 className="w-fit select-none text-2xl font-semibold hover:cursor-pointer">
+                <h1 className="w-fit select-none text-xl font-semibold hover:cursor-pointer">
                   App Inroduction
                 </h1>
                 <InfoPopover>
