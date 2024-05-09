@@ -32,14 +32,14 @@ export const InfoPopover: React.FC<InfoModalProps> = ({
           {isQuestionIcon ? (
             <CircleHelp
               className={cn(
-                "text-muted-foreground sm:hover:text-primary size-4 transition-colors duration-200 ease-out",
+                "text-muted-foreground sm:hover:text-primary size-3 transition-colors duration-200 ease-out",
                 iconClassName
               )}
             />
           ) : (
             <Info
               className={cn(
-                "text-muted-foreground sm:hover:text-primary size-4 transition-colors duration-200 ease-out",
+                "text-muted-foreground sm:hover:text-primary size-3 transition-colors duration-200 ease-out",
                 iconClassName
               )}
             />

@@ -23,7 +23,7 @@ import { AppPublishButton } from "./_components/forms/app-publish-button"
 import { AppScreenshotsForm } from "./_components/forms/app-screenshots-form"
 import { AppSubInfoForm } from "./_components/forms/app-sub-info-form"
 import { AppTitleDescriptionUrlForms } from "./_components/forms/app-title-description-url-form"
-import { InfoPopover } from "./_components/forms/info-modal"
+import { InfoPopover } from "./_components/forms/info-popover"
 
 type SubmittedAppIdPageProps = {
   params: { app_id: string }

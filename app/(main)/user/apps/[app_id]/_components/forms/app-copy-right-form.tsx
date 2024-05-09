@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
 import { Separator } from "@/components/ui/separator"
 
-import { InfoPopover } from "./info-modal"
+import { InfoPopover } from "./info-popover"
 
 type AppCopyRightFormProps = {
   app_id: App["app_id"]

@@ -46,7 +46,7 @@ import {
 } from "@/components/ui/tooltip"
 
 import { DevDetailForm } from "./developer-detail-form"
-import { InfoPopover } from "./info-modal"
+import { InfoPopover } from "./info-popover"
 
 const optionSchema = z.object({
   label: z.string(),
@@ -217,6 +217,13 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                   <Search className="size-4" />
                   <span className="w-full">
                     Search for developers in the database
+                  </span>
+                </li>
+                <li className="flex items-center space-x-4">
+                  <Settings2 className="size-4" />
+                  <span className="w-full">
+                    You can edit developer details by clicking on the settings
+                    icon
                   </span>
                 </li>
               </ul>

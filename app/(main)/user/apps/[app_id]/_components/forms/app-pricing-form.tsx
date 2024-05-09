@@ -41,7 +41,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { InfoPopover } from "./info-modal"
+import { InfoPopover } from "./info-popover"
 
 type AppPricingFormProps = { app_id: App["app_id"]; pricing: App["pricing"] }
 

@@ -25,7 +25,7 @@ import { Separator } from "@/components/ui/separator"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
-import { InfoPopover } from "./info-modal"
+import { InfoPopover } from "./info-popover"
 
 type AppIntroductionFormProps = {
   app_id: App["app_id"]

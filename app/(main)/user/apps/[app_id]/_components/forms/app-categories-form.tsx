@@ -36,7 +36,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip"
 
-import { InfoPopover } from "./info-modal"
+import { InfoPopover } from "./info-popover"
 
 const optionSchema = z.object({
   label: z.string(),
