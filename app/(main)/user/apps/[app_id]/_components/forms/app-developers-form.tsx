@@ -9,7 +9,16 @@ import {
   removeAppsDevelopers,
 } from "@/server/data/supabase-actions"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Check, Info, Loader2, Plus, Search, Tags, X } from "lucide-react"
+import {
+  Check,
+  Info,
+  Loader2,
+  Plus,
+  Search,
+  Settings2,
+  Tags,
+  X,
+} from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -36,6 +45,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { DevDetailForm } from "./developer-detail-form"
 import { InfoPopover } from "./info-modal"
 
 const optionSchema = z.object({
@@ -242,17 +252,33 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
             className={cn(
               "group flex w-fit items-center justify-start space-x-2 md:space-x-4"
             )}
-            onClick={() => setIsEditing(true)}
           >
             <span className="flex h-full flex-wrap items-center justify-start">
               {developers && developers.length > 0 ? (
                 developers.map((dev) => (
                   <Badge
                     key={dev.developer_name}
-                    className="mb-1 mr-1 cursor-pointer font-normal dark:font-medium"
-                    onClick={() => setIsEditing(true)}
+                    className="group/badge mb-1 mr-2 cursor-default font-normal dark:font-medium"
                   >
                     {dev.developer_name}
+
+                    <DevDetailForm app_id={app_id} {...dev}>
+                      <Tooltip delayDuration={0}>
+                        <TooltipTrigger asChild>
+                          <Settings2 className="group-hover/badge:text-background text-background/50 ml-2 size-3 transition-all duration-150 ease-out" />
+                        </TooltipTrigger>
+                        <TooltipContent
+                          align="start"
+                          side="bottom"
+                          sideOffset={10}
+                          className="dark:bg-foreground dark:text-background flex items-center gap-2"
+                        >
+                          <span className="text-xs">
+                            Edit {dev.developer_name} Details
+                          </span>
+                        </TooltipContent>
+                      </Tooltip>
+                    </DevDetailForm>
                   </Badge>
                 ))
               ) : (
@@ -359,6 +385,14 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
             </form>
           </Form>
         )}
+
+        <div className="grid w-full grid-cols-3">
+          {developers &&
+            developers.length > 0 &&
+            developers.map((dev) => (
+              <DevDetailForm key={dev.developer_id} app_id={app_id} {...dev} />
+            ))}
+        </div>
       </section>
     </TooltipProvider>
   )

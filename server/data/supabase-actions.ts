@@ -981,6 +981,38 @@ export async function checkExistingCategories(
   return data
 }
 
+// DEVELOPERS
+export async function UpdateDevByUrlEmail(
+  app_id: App["app_id"],
+  developer_id: Developer["developer_id"],
+  developer_url: Developer["developer_url"],
+  developer_email: Developer["developer_email"]
+) {
+  const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return { updatedDev: null, error: "Unauthorized!" }
+  }
+
+  const { data: updatedDev, error } = await supabase
+    .from("developers")
+    .update({
+      developer_url: developer_url,
+      developer_email: developer_email || null,
+    })
+    .eq("developer_id", developer_id)
+    .select()
+
+  if (updatedDev) revalidatePath(`/user/apps/${app_id}`)
+
+  if (error) return { updatedDev: null, error: getErrorMessage(error) }
+
+  return { updatedDev, error }
+}
+
 // STORAGE
 
 export async function getScreenshotsFileNames(
