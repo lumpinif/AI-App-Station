@@ -7,7 +7,16 @@ import { Uppy } from "@uppy/core"
 import { Dashboard } from "@uppy/react"
 import Tus from "@uppy/tus"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
-import { ImageIcon, Loader2, Plus, X } from "lucide-react"
+import {
+  Files,
+  Grab,
+  ImageIcon,
+  Info,
+  Loader2,
+  Plus,
+  ScanSearch,
+  X,
+} from "lucide-react"
 import { toast } from "sonner"
 
 import {
@@ -37,6 +46,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Separator } from "@/components/ui/separator"
 import {
   Tooltip,
   TooltipContent,
@@ -45,6 +55,8 @@ import {
 } from "@/components/ui/tooltip"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 import { AppDetailScreenshotsDialog } from "@/app/(main)/ai-apps/[slug]/_components/app-detail-screenshots-dialog"
+
+import { InfoPopover } from "./info-popover"
 
 type AppScreenshotsFormProps = {
   app_id: App["app_id"]
@@ -201,7 +213,57 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
     <TooltipProvider>
       <section className="w-full flex-col space-y-4 sm:space-y-6">
         <span className="flex items-center space-x-2 md:space-x-4">
-          <h1 className="w-fit text-xl font-semibold">Screenshots Gallary</h1>
+          <div className="flex items-center space-x-2">
+            <h1 className="w-fit text-xl font-semibold">Screenshots Gallary</h1>
+            <InfoPopover isQuestionIcon={false}>
+              <div className="px-2">
+                <h3>Image Uploader</h3>
+                <Separator />
+
+                <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
+                  <li className="flex items-center space-x-4">
+                    <Plus className="size-4" />
+                    <span className="w-full">Click + to add screenshots</span>
+                  </li>
+                  <li className="flex items-center space-x-4">
+                    <Grab className="size-4" />
+                    <span className="w-full">
+                      Drag and drop images to the uploader
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-4">
+                    <Files className="size-4" />
+                    <span className="w-full">
+                      Select images files to upload
+                    </span>
+                  </li>
+                  <li className="flex items-center space-x-4">
+                    <ScanSearch className="size-4" />
+                    <span className="w-full">
+                      Preview the images you uploaded
+                    </span>
+                  </li>
+                </ul>
+
+                <h3 className="flex items-center space-x-2">
+                  <Info className="size-4" />
+                  <span>Key Info</span>
+                </h3>
+                <Separator />
+                <ul className="text-muted-foreground mt-2">
+                  <li> - A maximum of 6 screenshot images can be uploaded</li>
+                  <li>
+                    - Images are automatically saved when uploaded successfully
+                  </li>
+                  <li> - Avoid uploading duplicate images</li>
+                  <li>
+                    - Harmful or inappropriate images will be reported, deleted
+                    and prohibited
+                  </li>
+                </ul>
+              </div>
+            </InfoPopover>
+          </div>
           {allowContinueUploading && (
             <span className="flex items-center space-x-2">
               <span className="text-muted-foreground flex items-center space-x-2 text-sm">
