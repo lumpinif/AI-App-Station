@@ -201,12 +201,7 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
                                 value={pricing.value}
                                 onSelect={() => {
                                   form.setValue("pricing", pricing.value)
-                                  // setIsEditing(false)
                                 }}
-                                className={cn(
-                                  pricing.value === field.value &&
-                                    "underline underline-offset-2"
-                                )}
                               >
                                 {pricing.label}
                                 <Check
