@@ -36,6 +36,7 @@ export const UserPagesMobileNavSheet = () => {
               {groupIndex > 0 && <Separator />}
               {group.items.map((item, itemIndex) => (
                 <Link
+                  key={itemIndex}
                   href={item.href}
                   className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
                 >
