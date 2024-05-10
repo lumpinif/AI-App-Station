@@ -180,7 +180,7 @@ const RatingsAndReviews = ({
   className?: string
 }) => {
   return (
-    <div
+    <section
       className={cn(
         "text-muted-foreground flex h-full flex-col items-center justify-center space-y-1",
         className
@@ -195,7 +195,7 @@ const RatingsAndReviews = ({
         precision={0.5}
         emptyIcon={<Star className="fill-muted stroke-0" size={18} />}
       />
-    </div>
+    </section>
   )
 }
 

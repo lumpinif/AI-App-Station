@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getAllComments, getAppBySlug } from "@/server/data"
 import {
@@ -71,7 +70,7 @@ export default async function AppPagePage({
 
   return (
     <main
-      className="mt-4 flex flex-col space-y-4 md:mt-6 lg:mt-8 xl:mt-12"
+      className="mb-4 mt-4 flex flex-col space-y-4 md:mt-6 lg:mt-8 xl:mt-12"
       suppressHydrationWarning
     >
       {app.is_featured && (
@@ -128,7 +127,6 @@ export default async function AppPagePage({
                       app_id={app.app_id}
                       data={app.app_bookmarks}
                     />
-                    {/* <Star className="size-4 stroke-1 text-muted-foreground md:size-5" /> */}
                   </span>
                 </span>
               </span>
@@ -145,17 +143,17 @@ export default async function AppPagePage({
             <AppDetailScreenshots
               screenshotsPublicUrls={screenshotsPublicUrls || []}
             />
+
             <AppDetailIntroduction data={app.introduction} />
+
             <AppDetailReviews {...ratingData} />
-            {/* TODO: HANDLE LOADING */}
-            <Suspense fallback={<div>Loading...</div>}>
-              <AppDetailCommentSection
-                allComments={allComments}
-                app_id={app.app_id}
-                c_order={c_order}
-                orderBy={orderBy}
-              />
-            </Suspense>
+
+            <AppDetailCommentSection
+              allComments={allComments}
+              app_id={app.app_id}
+              c_order={c_order}
+              orderBy={orderBy}
+            />
           </div>
           <div className="mt-2 xl:mt-0">
             <AppDetailSubInfo {...app} {...app.profiles} {...app.developers} />
