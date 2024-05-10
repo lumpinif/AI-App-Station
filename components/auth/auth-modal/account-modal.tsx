@@ -1,6 +1,6 @@
 "use client"
 
-import { Session } from "@supabase/supabase-js"
+import { Session, User } from "@supabase/supabase-js"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/theme/theme-toggle"
 import UserAccount from "../avatar/user-account"
 import LoginCard from "../signin/login-card"
 
-const AccountModal = ({ session }: { session: Session | null }) => {
+const AccountModal = ({ user }: { user: User | null }) => {
   const isOpen = useAccountModal((state) => state.isOpen)
   const CloseModal = useAccountModal((state) => state.CloseModal)
   const onChange = (open: boolean) => {
@@ -25,7 +25,7 @@ const AccountModal = ({ session }: { session: Session | null }) => {
       dialogContentClassName="max-w-xl rounded-2xl overflow-hidden"
       title="Account"
     >
-      {session ? (
+      {user?.id ? (
         <UserAccount />
       ) : (
         <LoginCard className="flex flex-col gap-10">

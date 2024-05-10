@@ -1,13 +1,13 @@
-import { getUserSession } from "@/server/auth"
+import { getUserData } from "@/server/auth"
 
 import AccountModal from "./account-modal"
 
 const AccountModalProvider = async () => {
   const {
-    data: { session },
-  } = await getUserSession()
+    data: { user },
+  } = await getUserData()
 
-  return <AccountModal session={session} />
+  return <AccountModal user={user} />
 }
 
 export default AccountModalProvider
