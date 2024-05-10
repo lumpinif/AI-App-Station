@@ -42,12 +42,12 @@ export const ImageElement: React.FC<
 > = ({ image_src, className }) => {
   return (
     <Image
-      alt=""
+      alt={image_src ? "Post Image" : "Feature Image"}
       src={image_src ? image_src : "/images/Feature-thumbnail.png"}
       className={cn("rounded-lg", className)}
       objectPosition="center"
       fill
-      objectFit="cover"
+      style={{ objectFit: "cover" }}
     />
   )
 }

@@ -48,7 +48,6 @@ export const AppDetailScreenshotsDialog: React.FC<
             }
             fill
             alt=""
-            objectFit="cover"
             className="rounded-md object-cover"
             style={{ objectFit: "cover" }}
           />
@@ -101,8 +100,7 @@ export const AppDetailScreenshotsDialog: React.FC<
                             : `/images/image-not-found.png`
                         }
                         fill
-                        alt=""
-                        objectFit="cover"
+                        alt={screenshot_url}
                         style={{ objectFit: "cover" }}
                         className="rounded-md object-cover"
                         data-vaul-no-drag
@@ -130,8 +128,7 @@ export const AppDetailScreenshotsDialog: React.FC<
                               : `/images/image-not-found.png`
                           }
                           fill
-                          alt=""
-                          objectFit="cover"
+                          alt={screenshot_url}
                           className="rounded-md object-cover"
                           style={{ objectFit: "cover" }}
                           data-vaul-no-drag

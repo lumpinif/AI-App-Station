@@ -18,10 +18,9 @@ const PostCard: React.FC<PostCardProps> = ({
           {/* Image */}
           <div className="relative h-full w-full ">
             <Image
-              alt=""
+              alt={image_src ? "Post Image" : "Feature Image"}
               src={image_src ? image_src : "/images/preview1.png"}
               fill
-              objectFit="cover"
               className="rounded-lg"
               objectPosition="center"
               style={{
