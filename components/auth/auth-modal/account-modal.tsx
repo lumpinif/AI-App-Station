@@ -1,6 +1,6 @@
 "use client"
 
-import { Session } from "@supabase/auth-helpers-nextjs"
+import { Session } from "@supabase/supabase-js"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"

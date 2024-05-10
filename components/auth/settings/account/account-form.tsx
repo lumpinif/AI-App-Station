@@ -3,7 +3,6 @@
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "@radix-ui/react-icons"
-import { User } from "@supabase/auth-helpers-nextjs"
 import { format } from "date-fns"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -63,9 +62,9 @@ const defaultValues: Partial<AccountFormValues> = {
   // name: "Your name",
   // dob: new Date("2023-01-23"),
 }
-interface AccountFormProps {
-  user: User | null
-}
+// interface AccountFormProps {
+//   user: User | null
+// }
 
 export function AccountForm() {
   const form = useForm<AccountFormValues>({
