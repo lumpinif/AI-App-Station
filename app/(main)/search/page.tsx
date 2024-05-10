@@ -3,8 +3,6 @@
 import { useState } from "react"
 import { JSONContent } from "novel"
 
-import NovelEditor from "@/components/editor/advanced-editor"
-
 import { defaultValue } from "./default-value"
 
 const SearchPage = () => {

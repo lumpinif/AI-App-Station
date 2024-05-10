@@ -1,3 +1,4 @@
+import { EditorView } from "@tiptap/pm/view"
 import {
   CheckSquare,
   Code,
@@ -19,11 +20,27 @@ import {
   SuggestionItem,
 } from "novel/extensions"
 
-import { uploadFn } from "./image-upload"
+import { App } from "@/types/db_tables"
 
-export const suggestionItems = (
+interface SlashCommandProps {
   setOpenYoutubeLink: (open: boolean) => void
-): SuggestionItem[] =>
+  uploadFn: (
+    file: File,
+    view: EditorView,
+    pos: number,
+    app_id: App["app_id"],
+    submitted_by_user_id: App["submitted_by_user_id"]
+  ) => void
+  app_id: App["app_id"]
+  submitted_by_user_id: App["submitted_by_user_id"]
+}
+
+export const suggestionItems = ({
+  setOpenYoutubeLink,
+  uploadFn,
+  app_id,
+  submitted_by_user_id,
+}: SlashCommandProps): SuggestionItem[] =>
   createSuggestionItems([
     // {
     //   title: "Send Feedback",
@@ -154,7 +171,7 @@ export const suggestionItems = (
           if (input.files?.length) {
             const file = input.files[0]
             const pos = editor.view.state.selection.from
-            uploadFn(file, editor.view, pos)
+            uploadFn(file, editor.view, pos, app_id, submitted_by_user_id)
           }
         }
         input.click()
@@ -172,10 +189,21 @@ export const suggestionItems = (
     },
   ])
 
-export const slashCommand = (setOpenYoutubeLink: (open: boolean) => void) =>
+export const slashCommand = ({
+  setOpenYoutubeLink,
+  uploadFn,
+  app_id,
+  submitted_by_user_id,
+}: SlashCommandProps) =>
   Command.configure({
     suggestion: {
-      items: () => suggestionItems(setOpenYoutubeLink),
+      items: () =>
+        suggestionItems({
+          setOpenYoutubeLink,
+          uploadFn,
+          app_id,
+          submitted_by_user_id,
+        }),
       render: renderItems,
     },
   })

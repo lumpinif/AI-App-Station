@@ -15,11 +15,12 @@ import {
 import { handleCommandNavigation, ImageResizer } from "novel/extensions"
 import { handleImageDrop, handleImagePaste } from "novel/plugins"
 
+import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { Separator } from "../ui/separator"
 import { defaultExtensions } from "./extensions"
-import { uploadFn } from "./image-upload"
+import { createUploadFn } from "./image-upload"
 // import { ColorSelector } from "./selectors/color-selector"
 import { LinkSelector } from "./selectors/link-selector"
 import { NodeSelector } from "./selectors/node-selector"
@@ -28,6 +29,8 @@ import { YoutubeSelector } from "./selectors/youtube-selector"
 import { slashCommand, suggestionItems } from "./slash-command"
 
 interface EditorProp {
+  app_id: App["app_id"]
+  submitted_by_user_id: App["submitted_by_user_id"]
   initialValue?: JSONContent
   onChange: (value: JSONContent) => void
   className?: string
@@ -36,12 +39,15 @@ interface EditorProp {
   setCharsCount?: (count: number) => void
 }
 const NovelEditor = ({
+  app_id,
+  submitted_by_user_id,
   initialValue,
   onChange,
   className,
   setSaveStatus,
   setCharsCount,
 }: EditorProp) => {
+  const uploadFn = createUploadFn(app_id, submitted_by_user_id)
   const youtubeTriggerRef = useRef<HTMLDivElement>(null)
   const [openNode, setOpenNode] = useState(false)
   // const [openColor, setOpenColor] = useState(false)
@@ -60,7 +66,15 @@ const NovelEditor = ({
         <EditorContent
           className={cn("rounded-xl p-2", className)}
           {...(initialValue && { initialContent: initialValue })}
-          extensions={[...defaultExtensions, slashCommand(setOpenYoutubeLink)]}
+          extensions={[
+            ...defaultExtensions,
+            slashCommand({
+              setOpenYoutubeLink,
+              uploadFn,
+              app_id,
+              submitted_by_user_id,
+            }),
+          ]}
           editorProps={{
             handleDOMEvents: {
               keydown: (_view, event) => handleCommandNavigation(event),
@@ -107,7 +121,12 @@ const NovelEditor = ({
               No results
             </EditorCommandEmpty>
             <EditorCommandList>
-              {suggestionItems(setOpenYoutubeLink).map((item) => (
+              {suggestionItems({
+                setOpenYoutubeLink,
+                uploadFn,
+                app_id,
+                submitted_by_user_id,
+              }).map((item) => (
                 <EditorCommandItem
                   value={item.title}
                   onCommand={(val) => item.command?.(val)}

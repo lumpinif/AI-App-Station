@@ -1,58 +1,68 @@
-import { createImageUpload } from "novel/plugins";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation"
+import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
+import { createImageUpload } from "novel/plugins"
+import { toast } from "sonner"
 
-const onUpload = (file: File) => {
-  const promise = fetch("/api/upload", {
-    method: "POST",
-    headers: {
-      "content-type": file?.type || "application/octet-stream",
-      "x-vercel-filename": file?.name || "image.png",
-    },
-    body: file,
-  });
+import { App } from "@/types/db_tables"
 
-  return new Promise((resolve) => {
-    toast.promise(
-      promise.then(async (res) => {
-        // Successfully uploaded image
-        if (res.status === 200) {
-          const { url } = (await res.json()) as any;
-          // preload the image
-          let image = new Image();
-          image.src = url;
-          image.onload = () => {
-            resolve(url);
-          };
-          // No blob store configured
-        } else if (res.status === 401) {
-          resolve(file);
-          throw new Error(
-            "`BLOB_READ_WRITE_TOKEN` environment variable not found, reading image locally instead.",
-          );
-          // Unknown error
+const onUpload = async (
+  file: File,
+  app_id: App["app_id"],
+  submitted_by_user_id: App["submitted_by_user_id"]
+) => {
+  const bucketNameApp = process.env
+    .NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP as string
+  const uploadPath = `${app_id}/${submitted_by_user_id}/introduction/${file.name}`
+
+  return new Promise<string>((resolve, reject) => {
+    const supabase = createSupabaseBrowserClient()
+    supabase.storage
+      .from(bucketNameApp)
+      .upload(uploadPath, file, {
+        cacheControl: "3600",
+        upsert: true,
+      })
+      .then(({ error }) => {
+        if (error) {
+          toast.error("Error uploading image. Please try again.")
+          reject(error)
         } else {
-          throw new Error(`Error uploading image. Please try again.`);
-        }
-      }),
-      {
-        loading: "Uploading image...",
-        success: "Image uploaded successfully.",
-        error: (e) => e.message,
-      },
-    );
-  });
-};
+          const { data: publicUrlData } = supabase.storage
+            .from("apps")
+            .getPublicUrl(uploadPath)
+          const publicUrl = publicUrlData.publicUrl
 
-export const uploadFn = createImageUpload({
-  onUpload,
-  validateFn: (file) => {
-    if (!file.type.includes("image/")) {
-      toast.error("File type not supported.");
-      return false;
-    } else if (file.size / 1024 / 1024 > 20) {
-      toast.error("File size too big (max 20MB).");
-      return false;
-    }
-    return true;
-  },
-});
+          // Preload the image
+          const image = new Image()
+          image.src = publicUrl
+          image.onload = () => {
+            toast.success("Image uploaded successfully.")
+            resolve(publicUrl)
+          }
+          image.onerror = () => {
+            toast.error("Error loading the uploaded image.")
+            reject(new Error("Failed to load the uploaded image."))
+          }
+        }
+      })
+  })
+}
+
+export const createUploadFn = (
+  app_id: App["app_id"],
+  submitted_by_user_id: App["submitted_by_user_id"]
+) => {
+  return createImageUpload({
+    onUpload: (file) => onUpload(file, app_id, submitted_by_user_id),
+    validateFn: (file) => {
+      if (!file.type.includes("image/")) {
+        toast.error("File type not supported.")
+        return false
+      } else if (file.size / 1024 / 1024 > 20) {
+        toast.error("File size too big (max 20MB).")
+        return false
+      }
+      return true
+    },
+  })
+}

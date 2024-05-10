@@ -215,6 +215,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           {/* Introduction */}
           <AppIntroductionForm
             app_id={app.app_id}
+            submitted_by_user_id={user.id}
             introduction={app.introduction as JSONContent}
           />
 

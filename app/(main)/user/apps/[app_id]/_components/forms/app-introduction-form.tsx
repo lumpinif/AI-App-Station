@@ -29,6 +29,7 @@ import { InfoPopover } from "./info-popover"
 
 type AppIntroductionFormProps = {
   app_id: App["app_id"]
+  submitted_by_user_id: App["submitted_by_user_id"]
   introduction: JSONContent
 }
 
@@ -38,6 +39,7 @@ export const CHARS_LIMIT = 5000
 
 export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
   app_id,
+  submitted_by_user_id,
   introduction,
 }) => {
   if (!introduction || introduction === null) {
@@ -277,6 +279,8 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           </span>
         </div>
         <NovelEditor
+          app_id={app_id}
+          submitted_by_user_id={submitted_by_user_id}
           initialValue={value}
           onChange={handleEditorDebouncedSave}
           setSaveStatus={setSaveStatus}

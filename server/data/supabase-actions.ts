@@ -10,7 +10,6 @@ import {
   Comment,
   CommentWithProfile,
   Developer,
-  Profile,
 } from "@/types/db_tables"
 import { capitalizeFirstLetter, nameToSlug } from "@/lib/utils"
 
@@ -1063,6 +1062,7 @@ export async function getScreenshotsPublicUrls(
 
   return screenshotsPublicUrls
 }
+
 export async function getAppIconFileName(
   app_id: App["app_id"],
   app_submitted_by_user_id: App["submitted_by_user_id"]
