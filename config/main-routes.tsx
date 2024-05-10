@@ -145,6 +145,11 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         items: [],
       },
       {
+        title: "Writing",
+        href: "/ai-apps/categories/writing",
+        items: [],
+      },
+      {
         title: "Develop",
         href: "/ai-apps/categories/develop",
         items: [],
