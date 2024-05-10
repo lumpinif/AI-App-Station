@@ -15,7 +15,7 @@ export default function CollectionsPage() {
 
       <div className="grid w-full sm:grid-cols-2 md:grid-cols-3">
         {collectionRoutes?.items.map((collection, index) => (
-          <div className="col-span-1">
+          <div className="col-span-1" key={index}>
             <Link href={collection.href}>
               {index}-{collection.title}
             </Link>

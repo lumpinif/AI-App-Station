@@ -18,7 +18,7 @@ export default async function CategoriesPage() {
 
       <div className="grid w-full sm:grid-cols-2 md:grid-cols-3">
         {allCategories?.map((cat, index) => (
-          <div className="col-span-1">
+          <div className="col-span-1" key={index}>
             <Link href={`/ai-apps/categories/${cat.category_slug}`}>
               {index}-{cat.category_name}
             </Link>

@@ -63,7 +63,7 @@ export default async function CategoryPage({
       <div className="">
         ALL CATEGORIES:{" "}
         {allCategories?.map((cat, index) => (
-          <ul className="divide-y-2">
+          <ul className="divide-y-2" key={index}>
             <Link href={`/ai-apps/categories/${cat.category_slug}`}>
               {index}-{cat.category_name}
             </Link>
