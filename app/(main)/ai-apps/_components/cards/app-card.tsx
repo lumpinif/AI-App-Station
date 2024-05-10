@@ -4,7 +4,7 @@ import { AppCardContentWithCategories } from "@/types/db_tables"
 import { Separator } from "@/components/ui/separator"
 
 import { AppCardActions } from "./_components/app-card-actions"
-import { AppCardLabelDescription } from "./_components/app-card-label-description"
+import { AppCardCatLabel } from "./_components/app-card-label-description"
 import { AppIcon } from "./_components/app-icon"
 import { AppTitleWithDescription } from "./_components/app-title-description"
 import { AppCommentsBadge } from "./app-comments-badge"
@@ -43,18 +43,20 @@ const AppCard: React.FC<AppCardWithIndex> = ({
             description={description}
             className="w-20 flex-1"
           />
-          <div className="flex flex-none flex-col items-center gap-y-2">
-            <div className="flex w-full items-center justify-end gap-x-2 sm:justify-between">
-              <AppCommentsBadge
-                app_slug={app_slug}
-                comments_count={comments_count}
-                className="text-muted-foreground"
-              />
-              <span className="hidden sm:flex">
-                <MemoizedAppCardActions />
-              </span>
+          <div className="flex flex-none flex-col items-end gap-y-2">
+            <span className="hidden sm:flex">
+              <MemoizedAppCardActions />
+            </span>
+            <div className="flex w-fit items-center justify-end gap-x-2 sm:justify-between">
+              {comments_count > 0 && (
+                <AppCommentsBadge
+                  app_slug={app_slug}
+                  comments_count={comments_count}
+                  className="text-muted-foreground"
+                />
+              )}
             </div>
-            <AppCardLabelDescription categories={categories} />
+            {/* <AppCardCatLabel categories={categories} /> */}
           </div>
         </div>
         {index < 2 && <Separator />}
