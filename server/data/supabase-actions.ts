@@ -653,6 +653,22 @@ export async function getAllCategories() {
   return { categories, error }
 }
 
+export async function getCategoryBySlug(
+  category_slug: Category["category_slug"]
+) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: category, error } = await supabase
+    .from("categories")
+    .select("*")
+    .eq("category_slug", category_slug)
+
+  // error handling
+  if (error) return { error: getErrorMessage(error) }
+
+  return { category, error }
+}
+
 export async function insertAppsDevelopers(
   app_id: App["app_id"],
   developer_ids: Developer["developer_id"][]

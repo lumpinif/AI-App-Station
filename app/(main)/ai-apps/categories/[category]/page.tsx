@@ -1,6 +1,11 @@
 import Link from "next/link"
-import { getAllCategories } from "@/server/data/supabase-actions"
+import {
+  getAllCategories,
+  getCategoryBySlug,
+} from "@/server/data/supabase-actions"
 import supabase from "@/utils/supabase/supabase"
+
+import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 
 export const dynamicParams = false
 
@@ -33,20 +38,38 @@ export default async function CategoryPage({
   params: { category: string }
 }) {
   const { category } = params
-  const { categories: allCategories, error } = await getAllCategories()
+
+  // TODO: REMOVE THIS BEFORE PRODUCTION
+  const { categories: allCategories } = await getAllCategories()
+
+  const { category: categoryBySlug, error: getCategoryBySlugError } =
+    await getCategoryBySlug(category)
+
+  if (getCategoryBySlugError) {
+    // TODO: HANDLE ERROR BEFORE PRODUCTION
+    console.error(getCategoryBySlugError)
+  }
+
+  const pageTitle =
+    (categoryBySlug && categoryBySlug[0]?.category_name) || "Category"
+
   return (
-    <div>
-      Category Page: {category}
+    <section className="flex flex-col gap-y-4">
+      <AiAppsPagesTitle
+        title={pageTitle}
+        href={`/ai-apps/categories/${category}`}
+      />
+
       <div className="">
-        SideNavRoutes:{" "}
+        ALL CATEGORIES:{" "}
         {allCategories?.map((cat, index) => (
-          <ul>
+          <ul className="divide-y-2">
             <Link href={`/ai-apps/categories/${cat.category_slug}`}>
               {index}-{cat.category_name}
             </Link>
           </ul>
         ))}
       </div>
-    </div>
+    </section>
   )
 }

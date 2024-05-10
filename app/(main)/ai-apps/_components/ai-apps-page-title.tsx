@@ -11,8 +11,8 @@ type AiAppsPageTitleProps = {
   href?: string
 }
 
-const AiAppsPageTitle = ({
-  isLayout = true,
+const AiAppsPagesTitle = ({
+  isLayout = false,
   title = "Apps",
   href = "/ai-apps",
 }: AiAppsPageTitleProps) => {
@@ -30,4 +30,4 @@ const AiAppsPageTitle = ({
   )
 }
 
-export default AiAppsPageTitle
+export default AiAppsPagesTitle
