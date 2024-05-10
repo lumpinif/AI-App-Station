@@ -9,15 +9,18 @@ import numeral from "numeral"
 import { AppDetails, Category as CategoriesProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
+import LucideIcon, {
+  dynamicLucidIconProps,
+} from "@/components/icons/lucide-icon"
 
-type AppDetailInfoProps = {
+type AppDetailCarouselProps = {
   data: AppDetails
   className?: string
   rating_score: number
   rating_count: number
 }
 
-export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
+export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
   data: app,
   className,
   rating_score,
@@ -86,6 +89,7 @@ export const AppDetailInfo: React.FC<AppDetailInfoProps> = ({
                 <InfoBox>
                   <InfoBoxTitle>Category</InfoBoxTitle>
                   <Category
+                    category_icon_name={category.category_icon_name}
                     category_slug={category.category_slug}
                     category_name={category.category_name}
                   />
@@ -198,8 +202,10 @@ const RatingsAndReviews = ({
 const Category = ({
   category_name,
   category_slug,
+  category_icon_name,
   className,
 }: {
+  category_icon_name: CategoriesProps["category_icon_name"]
   category_name: CategoriesProps["category_name"]
   category_slug: CategoriesProps["category_slug"]
   className?: string
@@ -208,10 +214,16 @@ const Category = ({
     <Link
       href={`/ai-apps/categories/${category_slug}`}
       className={cn(
-        "text-muted-foreground hover:text-primary flex h-full flex-col items-center justify-center overflow-hidden text-center underline-offset-4 hover:underline",
+        "text-muted-foreground hover:text-primary flex h-full flex-col items-center justify-center space-y-2 overflow-hidden text-center underline-offset-4 hover:underline md:space-y-1",
         className
       )}
     >
+      {category_icon_name && (
+        <LucideIcon
+          name={category_icon_name as dynamicLucidIconProps}
+          className="size-6 stroke-1 md:size-7 md:stroke-[1.5]"
+        />
+      )}
       <span className="text-xs">{category_name}</span>
     </Link>
   )

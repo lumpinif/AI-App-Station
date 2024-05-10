@@ -35,6 +35,9 @@ import {
   TooltipContent,
   TooltipProvider,
 } from "@/components/ui/tooltip"
+import LucideIcon, {
+  dynamicLucidIconProps,
+} from "@/components/icons/lucide-icon"
 
 import { InfoPopover } from "./info-popover"
 
@@ -89,6 +92,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
       label: category.category_name,
       value: category.category_slug,
       id: category.category_id,
+      icon: category.category_icon_name as dynamicLucidIconProps,
     })) || []
 
   const allCategoriesOptions: Option[] =
@@ -96,6 +100,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
       label: category.category_name,
       value: category.category_slug,
       id: category.category_id,
+      icon: category.category_icon_name as dynamicLucidIconProps,
     })) || []
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -264,6 +269,12 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                     onClick={() => setIsEditing(true)}
                   >
                     {cat.category_name}
+                    {cat.category_icon_name && (
+                      <LucideIcon
+                        name={cat.category_icon_name as dynamicLucidIconProps}
+                        className="text-background/50 ml-1 size-3"
+                      />
+                    )}
                   </Badge>
                 ))
               ) : (

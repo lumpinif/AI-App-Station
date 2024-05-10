@@ -14,6 +14,8 @@ import {
   CommandList,
 } from "@/components/ui/command"
 
+import LucideIcon, { dynamicLucidIconProps } from "../icons/lucide-icon"
+
 export interface Option {
   value: string
   label: string
@@ -23,6 +25,7 @@ export interface Option {
   fixed?: boolean
   /** Group the options by providing key. */
   [key: string]: string | boolean | undefined
+  icon?: dynamicLucidIconProps
 }
 interface GroupOption {
   [key: string]: Option[]
@@ -412,8 +415,14 @@ const MultipleSelector = React.forwardRef<
                   data-fixed={option.fixed}
                   data-disabled={disabled}
                 >
-                  <span className="font-normal dark:font-medium">
+                  <span className="flex w-fit items-center font-normal dark:font-medium">
                     {option.label}
+                    {option.icon && (
+                      <LucideIcon
+                        name={option.icon}
+                        className="text-background/50 ml-1 size-3"
+                      />
+                    )}
                   </span>
                   <button
                     className={cn(
@@ -469,7 +478,7 @@ const MultipleSelector = React.forwardRef<
         </div>
         <div className="relative">
           {open && (
-            <CommandList className="bg-background animate-in absolute top-0 z-10 w-full rounded-md border shadow-lg outline-none">
+            <CommandList className="bg-background animate-in absolute top-0 z-10 w-full max-w-sm rounded-md border shadow-lg outline-none">
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (
@@ -507,11 +516,17 @@ const MultipleSelector = React.forwardRef<
                                 onChange?.(newOptions)
                               }}
                               className={cn(
-                                "cursor-pointer",
+                                "group/commandItem cursor-pointer",
                                 option.disable &&
-                                  "text-muted-foreground cursor-default"
+                                  "text-muted-foreground cursor-default "
                               )}
                             >
+                              {option.icon && (
+                                <LucideIcon
+                                  name={option.icon}
+                                  className="group-hover/commandItem:text-primary text-muted-foreground mr-2 size-4 transition-all duration-150 ease-out md:mr-3"
+                                />
+                              )}
                               {option.label}
                             </CommandItem>
                           )

@@ -108,29 +108,27 @@ type ItemContentProps = {
 
 const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => {
   return (
-    <>
-      <div className="flex min-w-full items-center justify-between gap-4 text-nowrap">
-        <div className="flex items-center gap-2">
-          {item.icon && (
-            <div className="group-hover:text-foreground flex h-5 w-5 items-center">
-              {item.icon}
-            </div>
-          )}
-          {isOpen && <div>{item.title}</div>}
-        </div>
-
-        {item.shortcutNumber && isOpen && (
-          <kbd className="bg-muted dark:bg-muted-foreground/30 pointer-events-none flex h-5 w-5 select-none items-center justify-center rounded px-1.5 font-mono text-[10px] font-medium opacity-100">
-            <span className="text-xs">{item.shortcutNumber}</span>
-          </kbd>
+    <div className="flex min-w-full items-center justify-between gap-4 text-nowrap">
+      <div className="flex items-center gap-2">
+        {item.icon && (
+          <div className="group-hover:text-foreground flex h-5 w-5 items-center">
+            {item.icon}
+          </div>
         )}
-        {item.label && isOpen && (
-          <span className="rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-black no-underline group-hover:no-underline">
-            {item.label}
-          </span>
-        )}
+        {isOpen && <div>{item.title}</div>}
       </div>
-    </>
+
+      {item.shortcutNumber && isOpen && (
+        <kbd className="bg-muted dark:bg-muted-foreground/30 pointer-events-none flex h-5 w-5 select-none items-center justify-center rounded px-1.5 font-mono text-[10px] font-medium opacity-100">
+          <span className="text-xs">{item.shortcutNumber}</span>
+        </kbd>
+      )}
+      {item.label && isOpen && (
+        <span className="rounded-md bg-[#adfa1d] px-1.5 py-0.5 text-xs leading-none text-black no-underline group-hover:no-underline">
+          {item.label}
+        </span>
+      )}
+    </div>
   )
 }
 

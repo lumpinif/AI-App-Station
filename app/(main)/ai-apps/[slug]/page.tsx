@@ -13,9 +13,9 @@ import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
 import { AppCommentsBadge } from "../_components/cards/app-comments-badge"
 import { AppDetailBookmark } from "./_components/app-detail-bookmark"
+import { AppDetailCarousel } from "./_components/app-detail-carousel"
 import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
-import { AppDetailInfo } from "./_components/app-detail-info"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailLikeButton } from "./_components/app-detail-like-button"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
@@ -134,7 +134,7 @@ export default async function AppPagePage({
               </span>
             </div>
           </div>
-          <AppDetailInfo data={app} {...ratingData} className="py-4" />
+          <AppDetailCarousel data={app} {...ratingData} className="py-4" />
           <AppLaunchButton
             app_url={app.app_url}
             className="dark:shadow-outline mx-auto w-full max-w-xl border sm:hidden dark:border-0 dark:outline-none"
