@@ -7,11 +7,13 @@ import {
 } from "@/server/data/supabase-actions"
 import {
   CloudUpload,
+  ImageIcon,
   Loader2,
   RotateCw,
   TextCursorInput,
   Type,
   Unplug,
+  Video,
 } from "lucide-react"
 import { JSONContent } from "novel"
 import { toast } from "sonner"
@@ -165,6 +167,18 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
                         </span>
                       </li>
                       <li className="flex items-center space-x-4">
+                        <ImageIcon className="size-4" />
+                        <span className="w-full">
+                          Drag and drop images to put at where you want
+                        </span>
+                      </li>
+                      <li className="flex items-center space-x-4">
+                        <Video className="size-4" />
+                        <span className="w-full">
+                          Support embeding Youtube videos
+                        </span>
+                      </li>
+                      <li className="flex items-center space-x-4">
                         <TextCursorInput className="size-4" />
                         <span className="w-full">
                           Select text to customize it
@@ -198,8 +212,9 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
                       <li> - To-do List</li>
                       <li> - Bullet List</li>
                       <li> - Numbered List</li>
+                      <li> - Uploading Images</li>
+                      <li> - Embedding Youtube Videos</li>
                       <li> - Embedding links</li>
-                      <li> - Embedding Images</li>
                       <li> - Embedding code snippets</li>
                     </ul>
                   </div>
