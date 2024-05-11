@@ -6,9 +6,11 @@ import { signOut } from "@/server/auth"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
+import useAccountModal from "@/hooks/use-account-modal-store"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
 const SignOutButton = () => {
+  const CloseModal = useAccountModal((state) => state.CloseModal)
   const [isPending, startTransition] = useTransition()
   const queryClient = useQueryClient()
   const router = useRouter()
@@ -20,6 +22,7 @@ const SignOutButton = () => {
         const result = await signOut()
         if (result !== null) {
           toast.success("Signed Out.")
+          CloseModal()
         } else {
           toast.error("You need to Sign In first.")
           router.push("/signin")
@@ -36,18 +39,16 @@ const SignOutButton = () => {
   }
 
   return (
-    <>
-      <form action={handleSignOut}>
-        <SpinnerButton
-          type="submit"
-          isLoading={isPending}
-          buttonClassName="w-full"
-          buttonVariant={"destructive"}
-        >
-          Sign Out
-        </SpinnerButton>
-      </form>
-    </>
+    <form action={handleSignOut}>
+      <SpinnerButton
+        type="submit"
+        isLoading={isPending}
+        buttonClassName="w-full"
+        buttonVariant={"destructive"}
+      >
+        Sign Out
+      </SpinnerButton>
+    </form>
   )
 }
 

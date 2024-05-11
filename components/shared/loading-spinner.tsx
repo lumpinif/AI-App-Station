@@ -1,13 +1,19 @@
+import { cn } from "@/lib/utils"
+
 const bars = Array(12).fill(0)
 
-type LoadingSpinnerProps = { size?: number }
+type LoadingSpinnerProps = { size?: number; className?: string }
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  className,
   size = 20,
 }) => {
   return (
     <div
-      className="relative h-[var(--spinner-size)] w-[var(--spinner-size)]"
+      className={cn(
+        "relative h-[var(--spinner-size)] w-[var(--spinner-size)]",
+        className
+      )}
       style={
         {
           ["--spinner-size"]: `${size}px`,

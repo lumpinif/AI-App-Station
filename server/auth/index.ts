@@ -1,7 +1,10 @@
 "use server"
 
+import { error } from "console"
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
+
+import { Profile } from "@/types/db_tables"
 
 export async function signUpWithEmailAndPassword(signUpData: {
   email: string
@@ -90,7 +93,7 @@ export async function getUserSession() {
 
 export async function getUserData() {
   const supabase = await createSupabaseServerClient()
-  // const { data, error } = await supabase.auth.getUser()
+  // Useabge: const { data:{user}, error } = await supabase.auth.getUser()
   return await supabase.auth.getUser()
 }
 
@@ -98,18 +101,83 @@ export async function getUserProfile() {
   const supabase = await createSupabaseServerClient()
 
   const {
-    data: { session },
-  } = await getUserSession()
+    data: { user },
+  } = await getUserData()
 
-  if (session?.user) {
+  if (user?.id) {
     const { data: profile, error } = await supabase
       .from("profiles")
       .select("*")
-      .eq("user_id", session.user.id)
+      .eq("user_id", user.id)
       .single()
 
     return { profile, error }
   }
 
+  revalidatePath("/", "layout")
+  revalidatePath("/user", "layout")
+
   return { profile: null }
+}
+
+export async function getUserAvatarUrl(filePath: string) {
+  const supabase = await createSupabaseServerClient()
+  const bucketName =
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_AVATAR || "avatars"
+
+  const { data: avatarPublicUrl } = supabase.storage
+    .from(bucketName)
+    .getPublicUrl(filePath)
+
+  return avatarPublicUrl.publicUrl
+}
+
+export async function updateProfileAvatar(
+  profile: Profile,
+  avatar_public_url: string
+) {
+  const supabase = await createSupabaseServerClient()
+
+  const { error: updateProfileError } = await supabase
+    .from("profiles")
+    .update({ avatar_url: avatar_public_url })
+    .match({ user_id: profile.user_id })
+
+  revalidatePath("/", "layout")
+
+  return { updateProfileError }
+}
+
+export async function removeExistingAvatars(profile?: Profile) {
+  const supabase = await createSupabaseServerClient()
+  const bucketName =
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_AVATAR || "avatars"
+  const { data: allAvatars, error: listAllAvatarsError } =
+    await supabase.storage.from(bucketName).list(`${profile?.user_id}`, {
+      sortBy: { column: "name", order: "asc" },
+    })
+
+  if (listAllAvatarsError) {
+    return { error: listAllAvatarsError }
+  }
+
+  // remove all allAvatars if there exist any before uploading new one
+  if (allAvatars !== null && allAvatars.length !== 0) {
+    for (const avatar of allAvatars) {
+      const { data: removedAvatars, error: removeExistingAvatarError } =
+        await supabase.storage
+          .from(bucketName)
+          .remove([`${profile?.user_id}/${avatar.name}`])
+
+      if (removeExistingAvatarError) {
+        return { error: removeExistingAvatarError }
+      }
+
+      if (removedAvatars) {
+        return { data: removedAvatars }
+      }
+    }
+  }
+
+  return { data: null, error: null }
 }
