@@ -49,7 +49,7 @@ export function AuthForm() {
         Sign in to Continue
       </h1>
       <Tabs defaultValue="signin" className="w-full">
-        <TabsList className="mb-4 grid w-full grid-cols-2">
+        <TabsList className="bg-card mb-4 grid w-full grid-cols-2">
           <TabsTrigger value="signin">Sign In</TabsTrigger>
           <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
