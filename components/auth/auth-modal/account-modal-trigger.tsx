@@ -30,7 +30,7 @@ const AccountModalTrigger = ({
   className,
   avatarClassName,
   profile: propProfile,
-  withAvartarUploader,
+  withAvartarUploader = false,
   isTriggerModal = true,
   isFetching: propIsFetching,
 }: AccountModalTriggerProps) => {
@@ -59,13 +59,13 @@ const AccountModalTrigger = ({
     return (
       <Avatar
         className={cn(
-          "hover:bg-foreground/10 flex animate-pulse items-center justify-center hover:cursor-pointer",
+          "hover:bg-foreground/10 flex animate-pulse items-center justify-center",
           className
         )}
       >
         <Icons.user
           className={cn(
-            "animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer",
+            "animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full",
             avatarClassName
           )}
         />
@@ -129,7 +129,12 @@ const AccountModalTrigger = ({
         <UserAvatar
           profile={profile}
           onClick={handleAvartarModalTriggerClick}
-          className={className}
+          className={cn(
+            className,
+            isTriggerModal
+              ? "hover:cursor-pointer"
+              : "cursor-default hover:cursor-default"
+          )}
           avatarClassName={avatarClassName}
         />
       )}
