@@ -13,7 +13,7 @@ const UserAccount = () => {
       <div className="flex flex-col justify-start space-y-6 md:space-y-8 xl:space-y-10">
         <UserCard
           className={cn(cardVariants({ variant: "user-card" }))}
-          modalTriggerCN="size-14"
+          accountModalTriggerCN="size-14"
           profileNameCN="text-lg font-medium sm:text-xl"
           profileEmailCN="text-muted-foreground tracking-wide"
         />

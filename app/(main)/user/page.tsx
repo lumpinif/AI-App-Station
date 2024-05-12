@@ -19,14 +19,5 @@ export default async function UserPage() {
   //   redirect("/signin")
   // }
 
-  return (
-    <div className="flex items-center space-x-2">
-      {/* <AccountModalTrigger
-        withAvartarUploader={true}
-        isTriggerModal={false}
-        className="size-16 md:size-20 lg:size-24"
-      /> */}
-      <UserPageLayout />
-    </div>
-  )
+  return <UserPageLayout />
 }

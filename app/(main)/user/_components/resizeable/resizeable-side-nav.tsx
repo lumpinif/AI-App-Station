@@ -104,7 +104,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
               buttonVariants({ variant: "ghost", size: "sm" }),
               "flex items-center justify-start"
             )}
-            modalTriggerCN="mr-2 md:size-6 rounded-md"
+            accountModalTriggerCN="mr-2 md:size-6 rounded-md"
             avatarCN="size-full rounded-md"
             profileNameCN="text-primary text-xs"
             profileEmailCN="text-muted-foreground text-xs"
