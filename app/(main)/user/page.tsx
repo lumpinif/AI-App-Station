@@ -1,27 +1,32 @@
-import Image from "next/image"
 import { redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
 
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 
+import { UserPageLayout } from "./_components/pages/user-page/user-page-layout"
+
 export default async function UserPage() {
-  const { data, error } = await getUserData()
+  // const {
+  //   data: { user },
+  //   error,
+  // } = await getUserData()
 
-  if (error) {
-    console.error(error)
-  }
+  // if (error) {
+  //   console.error(error)
+  // }
 
-  if (!data?.user) {
-    redirect("/signin")
-  }
+  // if (!user) {
+  //   redirect("/signin")
+  // }
 
   return (
-    <div className="">
-      <AccountModalTrigger
+    <div className="flex items-center space-x-2">
+      {/* <AccountModalTrigger
         withAvartarUploader={true}
         isTriggerModal={false}
-        className="size-20 md:size-32 lg:size-36"
-      />
+        className="size-16 md:size-20 lg:size-24"
+      /> */}
+      <UserPageLayout />
     </div>
   )
 }
