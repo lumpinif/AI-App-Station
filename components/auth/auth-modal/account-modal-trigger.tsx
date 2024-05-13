@@ -73,6 +73,7 @@ const AccountModalTrigger = ({
     )
   }
 
+  // TODO: CONSIDER MOVING THIS FUNCTION TO THE USE AVATAR UPLOADER HOOK
   const handleUpdateProfileAvatar = async (avatarPublicUrl: string) => {
     // Ensure that the promise returned from updateProfileAvatar is used correctly
     const updatePromise = updateProfileAvatar(

@@ -1,12 +1,21 @@
 "use client"
 
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useQueryClient } from "@tanstack/react-query"
+import { Control, useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { cn } from "@/lib/utils"
+import { Profile } from "@/types/db_tables"
+import {
+  FULL_NAME_MAX_LENGTH,
+  USER_BIO_MAX_LENGTH,
+  USER_LOCATION_MAX_LENGTH,
+  USER_NAME_MAX_LENGTH,
+  USER_WEBSITE_MAX_LENGTH,
+} from "@/config/profile-form-config"
+import { websiteValidator } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -18,65 +27,109 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { updateUserProfile } from "@/app/(main)/user/_server/profile/data"
 
 const profileFormSchema = z.object({
-  username: z
-    .string()
+  full_name: z
+    .string({
+      required_error: "Name is required.",
+    })
     .min(2, {
       message: "Username must be at least 2 characters.",
     })
-    .max(30, {
+    .max(FULL_NAME_MAX_LENGTH, {
       message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
     })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
+    .nullable(),
+  user_name: z
+    .string({
+      required_error: "Username is required.",
+    })
+    .min(4, {
+      message: "Username must be at least 4 characters.",
+    })
+    .max(USER_NAME_MAX_LENGTH, {
+      message: "Username must not be longer than 15 characters.",
+    })
+    .nullable(),
+  user_bio: z.string().max(USER_BIO_MAX_LENGTH).nullable(),
+  user_location: z.string().max(USER_LOCATION_MAX_LENGTH).nullable(),
+  user_website: websiteValidator.nullable().or(z.literal("")),
 })
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+export type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a cyber-truck.",
-  urls: [
-    { value: "https://aiappstation.com/beff-jezos" },
-    { value: "http://x.com/beff-jezos" },
-  ],
+type ProfileFormProps = Profile & {
+  onFormSubmitted?: () => void
 }
 
-export function ProfileForm() {
+const TypeCount = ({
+  control,
+  formName,
+  maxLength,
+}: {
+  formName: keyof ProfileFormValues
+  control: Control<ProfileFormValues>
+  maxLength: number
+}) => {
+  const currentTypeCount = useWatch({ control, name: formName })?.length ?? 0
+
+  return (
+    <span className="text-xs">
+      {currentTypeCount}/{maxLength}
+    </span>
+  )
+}
+
+export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
+  const queryClient = useQueryClient()
+  const router = useRouter()
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues,
+    defaultValues: {
+      user_name: profile.user_name,
+      full_name: profile.full_name,
+      user_bio: profile.user_bio,
+      user_website: profile.user_website,
+      user_location: profile.user_location,
+    },
     mode: "onChange",
   })
 
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  })
+  const { isSubmitting, isValid, isDirty } = form.formState
 
-  function onSubmit(data: ProfileFormValues) {
-    toast.success("Profile updated for", {
-      description: <text>{`${data.username}`}</text>,
+  function onSubmit(profileFormData: ProfileFormValues) {
+    if (!isDirty || !isValid) {
+      if (onFormSubmitted) onFormSubmitted()
+      return
+    }
+
+    const updateProfilePromise = async () => {
+      const { error: updateUserProfileError } = await updateUserProfile(
+        profile.user_id,
+        profileFormData
+      )
+
+      if (updateUserProfileError) {
+        throw new Error(updateUserProfileError.details)
+      }
+    }
+
+    toast.promise(updateProfilePromise(), {
+      loading: "Updating profile...",
+      success: () => {
+        if (onFormSubmitted) onFormSubmitted()
+        queryClient.invalidateQueries({
+          queryKey: ["profile"],
+          exact: true,
+        })
+        router.refresh()
+        return "Profile updated"
+      },
+      error: (error) => {
+        return error.message || "Error updating profile"
+      },
     })
   }
 
@@ -85,101 +138,135 @@ export function ProfileForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="full_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel className="text-muted-foreground flex items-center justify-between">
+                Name{" "}
+                <TypeCount
+                  formName="full_name"
+                  control={form.control}
+                  maxLength={FULL_NAME_MAX_LENGTH}
+                />
+              </FormLabel>
+              <Input
+                placeholder="Beff Jezos"
+                {...field}
+                value={field.value ?? ""}
+              />
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="user_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-muted-foreground flex items-center justify-between">
+                Username
+                <TypeCount
+                  formName="user_name"
+                  control={form.control}
+                  maxLength={USER_NAME_MAX_LENGTH}
+                />
+              </FormLabel>
               <FormControl>
-                <Input placeholder="Beff Jezos" {...field} />
+                <Input
+                  placeholder="beff_jezos"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
+              <FormDescription>This is your user name.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="email"
+          name="user_bio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel className="text-muted-foreground flex items-center justify-between">
+                Bio
+                <TypeCount
+                  formName="user_bio"
+                  control={form.control}
+                  maxLength={USER_BIO_MAX_LENGTH}
+                />
+              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
                   className="resize-none"
                   {...field}
+                  value={field.value ?? ""}
                 />
               </FormControl>
-              <FormDescription>
-                You can add a short bio about yourself here. It will be visible
-                to others.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({ value: "" })}
-          >
-            Add URL
-          </Button>
-        </div>
-        <Button type="submit">Update profile</Button>
+
+        <FormField
+          control={form.control}
+          name="user_location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-muted-foreground flex items-center justify-between">
+                Location
+                <TypeCount
+                  formName="user_location"
+                  control={form.control}
+                  maxLength={USER_LOCATION_MAX_LENGTH}
+                />
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Where are you at?"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="user_website"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-muted-foreground flex items-center justify-between">
+                Website
+                <TypeCount
+                  formName="user_website"
+                  control={form.control}
+                  maxLength={USER_WEBSITE_MAX_LENGTH}
+                />
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Website of yourself or your company"
+                  {...field}
+                  value={field.value ?? ""}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button type="submit" disabled={isSubmitting || !isValid}>
+          Update profile
+        </Button>
       </form>
     </Form>
   )

@@ -1,5 +1,8 @@
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 
+import { Profile } from "@/types/db_tables"
+import useUser from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -10,49 +13,92 @@ import {
 } from "@/components/ui/card"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { UserCard } from "@/components/auth/auth-modal/user-card"
+import { UserAvatar } from "@/components/auth/avatar/user-avatar"
+import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
-type UserProfileCardProps = {}
+import { UserBio } from "./user-bio"
+import { UserJoinTime } from "./user-join-time"
+import { UserLocation } from "./user-location"
+import { UserProfileEditForm } from "./user-profile-edit/user-profile-edit-form"
+import { UserWebsite } from "./user-website"
 
-export const UserProfileCard: React.FC<UserProfileCardProps> = () => {
-  const router = useRouter()
+export const UserProfileCard = () => {
+  const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false)
+
+  const { data: profile } = useUser()
+
+  if (!profile) return null
+
+  const onChange = (open: boolean) => {
+    if (!open) setIsProfileEditModalOpen(false)
+  }
   return (
-    <Card
-      className={
-        "bg-background relative mx-auto border sm:border-0 md:max-w-xl lg:max-w-2xl"
-      }
-    >
-      <CardHeader className="space-y-2 pb-3">
-        <CardTitle className="flex items-center gap-x-4 md:flex-col">
-          <div className="flex w-full items-center justify-between">
-            <UserCard
-              isWithLink={false}
-              isTriggerModal={false}
-              className="space-x-2 sm:space-x-4"
-              profileNameCN="text-lg font-medium sm:text-2xl"
-              profileEmailCN="text-sm font-normal text-muted-foreground tracking-normal"
-              accountModalTriggerCN="size-16 md:size-20 lg:size-24"
-              display="user_name"
-            />
-            <Button
-              className="hidden rounded-full sm:block"
-              size={"sm"}
-              variant={"outline"}
-            >
-              Edit profile
-            </Button>
+    <>
+      <ResponsiveContentModal
+        isOpen={isProfileEditModalOpen}
+        onChange={onChange}
+        drawerContentClassName="outline-none rounded-t-3xl"
+        drawerHeight="h-[90%]"
+        dialogContentClassName="max-w-xl rounded-2xl overflow-hidden"
+        title="Account"
+      >
+        <UserProfileEditForm
+          profile={profile}
+          onFormSubmitted={() => setIsProfileEditModalOpen(false)}
+        />
+      </ResponsiveContentModal>
+      <div
+        className={
+          "bg-background relative mx-auto w-full md:max-w-xl lg:max-w-2xl"
+        }
+      >
+        <div className="flex flex-col space-y-4 border sm:space-y-6">
+          {/* User card and edit button */}
+          <div className="flex items-center gap-x-4 md:flex-col">
+            <div className="flex w-full items-center justify-between">
+              <UserCard
+                isWithLink={false}
+                isTriggerModal={false}
+                className="space-x-2 sm:space-x-4"
+                profileNameCN="text-lg font-medium sm:text-2xl"
+                profileEmailCN="text-sm font-normal text-muted-foreground tracking-normal"
+                accountModalTriggerCN="size-16 md:size-20 lg:size-24"
+                display="user_name"
+              />
+              <Button
+                className="hidden rounded-full sm:block"
+                size={"sm"}
+                variant={"outline"}
+                onClick={() => setIsProfileEditModalOpen(true)}
+              >
+                Edit profile
+              </Button>
+            </div>
           </div>
-        </CardTitle>
 
-        <CardDescription className="max-w-lg text-balance leading-relaxed">
-          This is the bio info about the user. Lorem ipsum dolor sit amet
-          consectetur adipisicing elit.
-        </CardDescription>
-      </CardHeader>
-      <CardFooter>
-        <Button className="w-full sm:hidden" size={"sm"} variant={"default"}>
-          Edit profile
-        </Button>
-      </CardFooter>
-    </Card>
+          {/* User bio */}
+          <UserBio user_bio={profile?.user_bio} />
+
+          {/* User location, website, join time */}
+          <div className="flex items-center space-x-4">
+            <UserLocation user_location={profile?.user_location} />
+            <UserWebsite user_website={profile?.user_website} />
+            <UserJoinTime created_at={profile?.created_at} />
+          </div>
+        </div>
+
+        {/* Mobile Edit button */}
+        <div>
+          <Button
+            className="w-full sm:hidden"
+            size={"sm"}
+            variant={"default"}
+            onClick={() => setIsProfileEditModalOpen(true)}
+          >
+            Edit profile
+          </Button>
+        </div>
+      </div>
+    </>
   )
 }

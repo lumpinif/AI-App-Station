@@ -1,6 +1,9 @@
 import { clsx, type ClassValue } from "clsx"
 import { format, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
+import * as z from "zod"
+
+import { USER_WEBSITE_MAX_LENGTH } from "@/config/profile-form-config"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -67,3 +70,20 @@ export function getSiteUrl() {
 export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+export const websiteValidator = z
+  .string()
+  .max(USER_WEBSITE_MAX_LENGTH)
+  .refine(
+    (value) => {
+      if (!value) return true // Allow empty string
+      const urlPattern =
+        /^(?:https?:\/\/)?(?:www\.)?[a-z0-9]+(?:\.[a-z0-9]+)*\.[a-z]{2,}$/i
+      return urlPattern.test(value)
+    },
+    { message: "Please enter a valid URL." }
+  )
+  .transform((value) => {
+    if (!value) return value
+    return value.replace(/^(?!https?:\/\/)/, "https://")
+  })

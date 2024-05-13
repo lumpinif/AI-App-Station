@@ -47,7 +47,7 @@ export default function SettingsProfilePage() {
                 </p>
               </div>
               <Separator />
-              <ProfileForm />
+              {/* <ProfileForm /> */}
             </div>
           </Suspense>
         </div>
