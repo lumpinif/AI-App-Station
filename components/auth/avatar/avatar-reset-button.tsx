@@ -5,28 +5,23 @@ import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 import { Profile } from "@/types/db_tables"
-import { useUserData } from "@/hooks/react-hooks/use-user"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
 type AvatarResetButtonProps = {
   profile?: Profile
   setIsUploading?: (isUploading: boolean) => void
+  isDefaultAvatar?: boolean
 }
 
 export const AvatarResetButton: React.FC<AvatarResetButtonProps> = ({
   profile,
   setIsUploading,
+  isDefaultAvatar,
 }) => {
   const [isReseting, setIsReseting] = useState(false)
-  const { data: user } = useUserData()
 
   const router = useRouter()
   const queryClient = useQueryClient()
-
-  const isDefaultAvatar =
-    !profile?.avatar_url ||
-    profile?.avatar_url === "" ||
-    user?.user_metadata.avatar_url === profile?.avatar_url
 
   const handleOnClick = async () => {
     const updateAvatarProcess = async () => {
@@ -68,17 +63,16 @@ export const AvatarResetButton: React.FC<AvatarResetButtonProps> = ({
     })
   }
 
-  if (!isDefaultAvatar)
-    return (
-      <SpinnerButton
-        isLoading={isReseting}
-        size={"sm"}
-        variant={"outline"}
-        onClick={handleOnClick}
-        disabled={isDefaultAvatar}
-        className="text-muted-foreground text-sm"
-      >
-        Reset Avatar
-      </SpinnerButton>
-    )
+  return (
+    <SpinnerButton
+      isLoading={isReseting}
+      size={"sm"}
+      variant={"outline"}
+      onClick={handleOnClick}
+      disabled={isDefaultAvatar}
+      buttonClassName="text-muted-foreground w-28 max-w-28 text-sm"
+    >
+      Reset Avatar
+    </SpinnerButton>
+  )
 }

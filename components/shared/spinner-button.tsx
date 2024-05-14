@@ -10,7 +10,7 @@ import { LoadingSpinner } from "./loading-spinner"
 type SpinnerButtonProps = ButtonProps & {
   isLoading: boolean
   children?: React.ReactNode
-  className?: string
+  motionClassName?: string
   buttonClassName?: string
   buttonVariant?: ButtonProps["variant"]
 }
@@ -18,7 +18,7 @@ type SpinnerButtonProps = ButtonProps & {
 export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
   children,
   isLoading,
-  className,
+  motionClassName,
   buttonClassName,
   buttonVariant,
   ...props
@@ -46,7 +46,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
           key={buttonState}
           className={cn(
             "flex w-full items-center justify-center space-x-2 text-nowrap",
-            className
+            motionClassName
           )}
         >
           {buttonCopy[buttonState]}

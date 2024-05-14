@@ -4,6 +4,7 @@ import { Camera } from "lucide-react"
 
 import { Profile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import { useUserData } from "@/hooks/react-hooks/use-user"
 import { useAvatarUploader } from "@/hooks/use-avatar-uploader"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons/icons"
@@ -33,6 +34,11 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     profile as Profile,
     onUpload
   )
+  const { data: user } = useUserData()
+  const isDefaultAvatar =
+    !profile?.avatar_url ||
+    profile?.avatar_url === "" ||
+    user?.user_metadata.avatar_url === profile?.avatar_url
 
   return (
     <>
@@ -115,11 +121,13 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
               )}
             </div>
           </Avatar>
-
-          <AvatarResetButton
-            setIsUploading={setIsUploading}
-            profile={profile}
-          />
+          {!isDefaultAvatar && (
+            <AvatarResetButton
+              setIsUploading={setIsUploading}
+              profile={profile}
+              isDefaultAvatar={isDefaultAvatar}
+            />
+          )}
         </div>
       )}
     </>

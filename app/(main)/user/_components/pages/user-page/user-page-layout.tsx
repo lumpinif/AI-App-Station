@@ -1,5 +1,3 @@
-"use client"
-
 import { UserProfileCard } from "./user-profile-card"
 
 type UserPageLayoutProps = {}

@@ -1,19 +1,10 @@
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+"use client"
 
-import { Profile } from "@/types/db_tables"
+import { useState } from "react"
+
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { UserCard } from "@/components/auth/auth-modal/user-card"
-import { UserAvatar } from "@/components/auth/avatar/user-avatar"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 import { UserBio } from "./user-bio"
