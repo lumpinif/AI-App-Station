@@ -11,7 +11,7 @@ import {
 
 import { CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 
 import {
   AlertDialog,
@@ -44,7 +44,7 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
   setIsEditing,
   isEditing,
 }) => {
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
   return (
     <AlertDialog>
       <AlertDialogContent className="dark:glass-card-background shadow-outline rounded-lg border-none backdrop-blur-xl max-sm:max-w-sm ">

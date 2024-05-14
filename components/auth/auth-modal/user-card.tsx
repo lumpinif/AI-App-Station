@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 import AccountModalTrigger from "./account-modal-trigger"
@@ -31,7 +31,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
   withAvartarUploader = false,
   display = "email",
 }) => {
-  const { isFetching, data: profile } = useUser()
+  const { isFetching, data: profile } = useUserProfile()
   const CloseModal = useAccountModal((state) => state.CloseModal)
 
   return (

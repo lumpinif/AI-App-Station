@@ -1,6 +1,6 @@
 "use client"
 
-import { getUserProfile } from "@/server/auth"
+import { getUserData, getUserProfile } from "@/server/auth"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 
@@ -20,19 +20,39 @@ const initUser: Record<keyof Profile, string> = {
   user_pronouns: "",
 }
 
-export default function useUser() {
+export default function useUserProfile() {
   return useQuery({
     queryKey: ["profile"],
     queryFn: fetchUserProfile,
   })
 }
 
-async function fetchUserProfile() {
-  const { profile, error } = await getUserProfile()
+export function useUserData() {
+  return useQuery({
+    queryKey: ["user_data"],
+    queryFn: fetchUserData,
+  })
+}
 
-  if (error) {
-    toast.error(`Error loading profile! Please try again later.`)
+async function fetchUserProfile() {
+  const { profile, error: getUserProfileError } = await getUserProfile()
+
+  if (getUserProfileError) {
+    toast.error("Error loading profile! Please try again later.")
   }
 
   return profile || initUser
+}
+
+async function fetchUserData() {
+  const {
+    data: { user },
+    error: getUserDataError,
+  } = await getUserData()
+
+  if (getUserDataError) {
+    toast.error("Error getting user data! Please try again later.")
+  }
+
+  return user
 }

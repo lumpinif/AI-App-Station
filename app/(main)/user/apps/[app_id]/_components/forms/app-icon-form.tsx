@@ -18,7 +18,7 @@ import { toast } from "sonner"
 
 import { App } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -54,7 +54,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   appIconFileName,
   appIconPublicUrl,
 }) => {
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
   const router = useRouter()
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false)
   const [showUploadButton, setUploadButton] = useState<boolean>(false)

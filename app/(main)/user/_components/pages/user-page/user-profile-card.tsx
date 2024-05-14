@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 import { Profile } from "@/types/db_tables"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -25,7 +25,7 @@ import { UserWebsite } from "./user-website"
 export const UserProfileCard = () => {
   const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false)
 
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
 
   if (!profile) return null
 
@@ -40,7 +40,7 @@ export const UserProfileCard = () => {
         drawerContentClassName="outline-none rounded-t-3xl"
         drawerHeight="h-[90%]"
         dialogContentClassName="max-w-xl rounded-2xl overflow-hidden"
-        title="Account"
+        title="Update Profile"
       >
         <UserProfileEditForm
           profile={profile}

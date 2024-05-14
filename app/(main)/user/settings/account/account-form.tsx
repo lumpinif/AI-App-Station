@@ -4,7 +4,7 @@ import { useState } from "react"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { toast } from "sonner"
 
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
 import SignOutButton from "@/components/auth/signout/sign-out-button"
 
@@ -16,7 +16,7 @@ export default function AccountFormSupabase() {
   // const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
 
-  const { data: profile, isFetching } = useUser()
+  const { data: profile, isFetching } = useUserProfile()
 
   if (isFetching) {
     setLoading(true)

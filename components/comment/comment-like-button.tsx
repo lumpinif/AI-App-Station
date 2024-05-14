@@ -8,7 +8,7 @@ import { useDebouncedCallback } from "use-debounce"
 
 import { CommentWithProfile, Profile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type CommentLIkeButtonProps = {
@@ -28,7 +28,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   const OpenModal = useAccountModal((state) => state.OpenModal)
 
   const router = useRouter()
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
 
   const handleLikeDebounced = useDebouncedCallback(
     async (profile: Profile) => {

@@ -1,10 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 
 function UserNameEmail({ className }: { className?: string }) {
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
   return (
     <div>
       <h2

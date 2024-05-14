@@ -25,7 +25,7 @@ import {
   ScreenshotsFormCarouselProps,
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -78,7 +78,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   screenshotsPublicUrls,
 }) => {
   const router = useRouter()
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
 
   const allowedNumberOfImages = 6 - screenshotsPublicUrls.length
 

@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react"
 
 import { CommentActionsProp, CommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type CommentReplyButtonProps = Pick<
@@ -22,7 +22,7 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   className,
   toggleReplying,
 }) => {
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
   const OpenModal = useAccountModal((state) => state.OpenModal)
   const handleClick = () => {
     if (!profile?.user_id) {

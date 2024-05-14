@@ -1,3 +1,5 @@
+import { Camera } from "lucide-react"
+
 import {
   Tooltip,
   TooltipContent,
@@ -16,19 +18,22 @@ export const AvatarUploader: React.FC<AvatarUploaderProps> = ({
   return (
     <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>
-        <div>
-          <label htmlFor="avatarUpload" className="sr-only">
+        <form>
+          <label
+            htmlFor="avatarUpload"
+            className="absolute inset-0 inline-block h-full w-full cursor-pointer text-center text-xs opacity-0 outline-none"
+          >
             Upload Avatar
           </label>
           <input
-            className="absolute inset-0 left-0 top-0 size-full cursor-pointer border-0 opacity-0 outline-none"
+            className="hidden"
             type="file"
             id="avatarUpload"
             accept="image/*"
             onChange={uploadAvatar}
             disabled={isUploading}
           />
-        </div>
+        </form>
       </TooltipTrigger>
       <TooltipContent
         side="right"

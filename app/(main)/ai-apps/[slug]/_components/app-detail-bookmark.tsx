@@ -9,7 +9,7 @@ import { useDebouncedCallback } from "use-debounce"
 
 import { App_bookmarks, AppDetails, Profile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUser from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type AppDetailBookmarkProps = {
@@ -28,7 +28,7 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   data: app_bookmarks,
   app_id,
 }) => {
-  const { data: profile } = useUser()
+  const { data: profile } = useUserProfile()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const OpenModal = useAccountModal((state) => state.OpenModal)

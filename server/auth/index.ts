@@ -134,7 +134,7 @@ export async function getUserAvatarUrl(filePath: string) {
 
 export async function updateProfileAvatar(
   profile: Profile,
-  avatar_public_url: string
+  avatar_public_url: string | null
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -180,4 +180,51 @@ export async function removeExistingAvatars(profile?: Profile) {
   }
 
   return { data: null, error: null }
+}
+
+export async function resetAvatarUrl(profile?: Profile) {
+  const {
+    data: { user },
+    error: getUserDataError,
+  } = await getUserData()
+
+  if (getUserDataError) {
+    return { error: getUserDataError }
+  }
+
+  const oauth_avatar_url = user?.user_metadata.avatar_url
+
+  const isOauthAvatar =
+    oauth_avatar_url !== null &&
+    oauth_avatar_url !== "" &&
+    oauth_avatar_url !== undefined
+
+  const isDefaultAvatar =
+    profile?.avatar_url === oauth_avatar_url || profile?.avatar_url === null
+
+  if (isDefaultAvatar) {
+    return { error: "No need to rest avatar" }
+  }
+
+  if (isOauthAvatar) {
+    const { updateProfileError } = await updateProfileAvatar(
+      profile as Profile,
+      oauth_avatar_url
+    )
+
+    if (updateProfileError) {
+      return { error: updateProfileError }
+    }
+  } else {
+    const { updateProfileError } = await updateProfileAvatar(
+      profile as Profile,
+      null
+    )
+
+    if (updateProfileError) {
+      return { error: updateProfileError }
+    }
+  }
+
+  return { error: null }
 }
