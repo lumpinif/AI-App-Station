@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 
 import { DataTableFilterField } from "@/types/data-table"
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { useDataTable } from "@/hooks/data-table/use-data-table"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar"
@@ -14,7 +14,7 @@ import { TasksTableFloatingBar } from "./submitted-apps-floating-bar"
 import { TasksTableToolbarActions } from "./submitted-apps-table-toolbar-actions"
 
 interface SubmittedAppsTableProps {
-  apps: App[]
+  apps: Apps[]
   pageCount: number
   totalAppsCount: number
 }
@@ -42,7 +42,7 @@ export function SubmittedAppsTable({
    * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
    * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
    */
-  const filterFields: DataTableFilterField<App>[] = [
+  const filterFields: DataTableFilterField<Apps>[] = [
     {
       label: "Title",
       value: "app_title",

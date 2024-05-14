@@ -1,9 +1,9 @@
 import { MapPin } from "lucide-react"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 
 type UserLocationProps = {
-  user_location?: Profile["user_location"]
+  user_location?: Profiles["user_location"]
 }
 
 export const UserLocation: React.FC<UserLocationProps> = ({

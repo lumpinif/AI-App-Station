@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { Comment } from "@/types/db_tables"
+import { App_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -33,8 +33,8 @@ const FormSchema = z.object({
 })
 
 type CommentReplyFormProps = {
-  app_id: Comment["app_id"]
-  parent_id?: Comment["comment_id"]
+  app_id: App_Comments["app_id"]
+  parent_id?: App_Comments["comment_id"]
   className?: string
   parent_name?: string
   toggleReplying: () => void

@@ -9,10 +9,10 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 
 export function useAvatarUploader(
-  profile: Profile,
+  profile: Profiles,
   onUpload?: (filePath: string) => void
 ) {
   const [isUploading, setIsUploading] = useState(false)
@@ -32,7 +32,7 @@ export function useAvatarUploader(
 
     const onUploadSuccess = async (avatarPublicUrl: string) => {
       const { updateProfileError } = await updateProfileAvatar(
-        profile as Profile,
+        profile as Profiles,
         avatarPublicUrl
       )
 

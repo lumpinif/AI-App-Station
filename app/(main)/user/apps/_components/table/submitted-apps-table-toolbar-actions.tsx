@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { DownloadIcon, ReloadIcon } from "@radix-ui/react-icons"
 import { type Table } from "@tanstack/react-table"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
@@ -14,7 +14,7 @@ import { exportTableToCSV } from "../../_lib/export"
 import { DeleteAppsDialog } from "./submitted-apps-actions-dialog"
 
 interface SubmittedAppsTableToolbarActionsProps {
-  table: Table<App>
+  table: Table<Apps>
 }
 
 export function TasksTableToolbarActions({

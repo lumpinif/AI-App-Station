@@ -2,7 +2,10 @@
 
 import { useState } from "react"
 
-import { Comment as CommentType, CommentWithProfile } from "@/types/db_tables"
+import {
+  App_Comments as CommentType,
+  CommentWithProfile,
+} from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { CommentCard } from "./comment-card"

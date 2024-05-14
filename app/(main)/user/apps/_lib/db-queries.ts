@@ -7,7 +7,7 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { Row } from "@tanstack/react-table"
 import * as z from "zod"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 
 import { searchParamsSchema } from "./validations"
 
@@ -46,7 +46,7 @@ export async function getSubmittedApps(
     const [column, order] = (sort?.split(".").filter(Boolean) ?? [
       "created_at",
       "desc",
-    ]) as [keyof App, "asc" | "desc"]
+    ]) as [keyof Apps, "asc" | "desc"]
 
     // Convert the date strings to Date objects
     const fromDate = from ? new Date(from) : undefined
@@ -121,7 +121,7 @@ export async function getSubmittedApps(
   }
 }
 
-export async function deleteApp(app_id: App["app_id"]) {
+export async function deleteApp(app_id: Apps["app_id"]) {
   try {
     const supabase = await createSupabaseServerClient()
     const slug = await getSlugFromAppId(app_id)
@@ -148,7 +148,7 @@ export async function deleteApp(app_id: App["app_id"]) {
     return { error: "An error occurred while deleting the app." } // Return a generic error message
   }
 }
-export async function unpublishApp(app_id: App["app_id"]) {
+export async function unpublishApp(app_id: Apps["app_id"]) {
   try {
     const supabase = await createSupabaseServerClient()
     const slug = await getSlugFromAppId(app_id)
@@ -179,7 +179,7 @@ export async function unpublishApp(app_id: App["app_id"]) {
   }
 }
 
-export async function publishApp(app_id: App["app_id"]) {
+export async function publishApp(app_id: Apps["app_id"]) {
   try {
     const supabase = await createSupabaseServerClient()
     const slug = await getSlugFromAppId(app_id)

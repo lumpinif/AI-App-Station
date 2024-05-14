@@ -3,7 +3,7 @@
 import React from "react"
 
 import {
-  Comment,
+  App_Comments,
   CommentActionsProp,
   CommentWithProfile,
 } from "@/types/db_tables"
@@ -18,7 +18,7 @@ type CommentActionsProps = Pick<
   "isEditing" | "isReplied" | "comment" | "setIsEditing"
 > & {
   commentsList: CommentWithProfile[]
-  parent_id: Comment["parent_id"]
+  parent_id: App_Comments["parent_id"]
   isFetching?: boolean
   setOptimisitcComment: (newComment: CommentWithProfile) => void
 }

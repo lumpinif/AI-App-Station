@@ -4,12 +4,12 @@ import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import {
-  App,
+  App_Comments,
   AppDetails,
-  Category,
-  Comment,
+  Apps,
+  Categories,
   CommentWithProfile,
-  Developer,
+  Developers,
 } from "@/types/db_tables"
 import { capitalizeFirstLetter, nameToSlug } from "@/lib/utils"
 
@@ -32,8 +32,8 @@ const getErrorMessage = (error: unknown) => {
 // TODO: CHECK ALL THE ERROR HANDLING BEFORE PRODUCTION
 
 export async function GetAppByAppIdUserId(
-  app_id: App["app_id"],
-  user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"],
+  user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -62,7 +62,7 @@ export async function GetAppByAppIdUserId(
   return { app: app[0], error }
 }
 
-export async function SubmitApp(title: App["app_title"]) {
+export async function SubmitApp(title: Apps["app_title"]) {
   // TODO: CONSIDER PASSING USER_ID FROM CLIENT BY USING USEUSER HOOK IN ORDER TO CHECK IF USER.ID FROM GETUSER IS SAME AS FROM USEUSER
   const supabase = await createSupabaseServerClient()
   const {
@@ -112,8 +112,8 @@ export async function SubmitApp(title: App["app_title"]) {
 }
 
 export async function UpdateAppByTitle(
-  app_id: App["app_id"],
-  newTitle: App["app_title"]
+  app_id: Apps["app_id"],
+  newTitle: Apps["app_title"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -158,8 +158,8 @@ export async function UpdateAppByTitle(
 }
 
 export async function UpdateAppByDescription(
-  app_id: App["app_id"],
-  description: App["description"]
+  app_id: Apps["app_id"],
+  description: Apps["description"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -187,8 +187,8 @@ export async function UpdateAppByDescription(
 }
 
 export async function UpdateAppByUrl(
-  app_id: App["app_id"],
-  app_url: App["app_url"]
+  app_id: Apps["app_id"],
+  app_url: Apps["app_url"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -216,8 +216,8 @@ export async function UpdateAppByUrl(
 }
 
 export async function UpdateAppByPricing(
-  app_id: App["app_id"],
-  pricing: App["pricing"]
+  app_id: Apps["app_id"],
+  pricing: Apps["pricing"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -242,8 +242,8 @@ export async function UpdateAppByPricing(
 }
 
 export async function UpdateAppByCopyRight(
-  app_id: App["app_id"],
-  copy_right: App["copy_right"]
+  app_id: Apps["app_id"],
+  copy_right: Apps["copy_right"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -368,7 +368,7 @@ export async function getAppBySlug(app_slug: string) {
   return { app: app[0], ratingData: ratingData[0], error }
 }
 
-export async function getAllApps(withTable?: string, orderBy?: keyof App) {
+export async function getAllApps(withTable?: string, orderBy?: keyof Apps) {
   const supabase = await createSupabaseServerClient()
 
   let query = supabase.from("apps").select(`*, ${withTable}`).match({
@@ -387,7 +387,7 @@ export async function getAllApps(withTable?: string, orderBy?: keyof App) {
   return { apps, error }
 }
 
-export async function getAppsWithCatWithOrderBy(orderBy?: keyof App) {
+export async function getAppsWithCatWithOrderBy(orderBy?: keyof Apps) {
   const supabase = await createSupabaseServerClient()
 
   let query = supabase.from("apps").select(`*, categories(*)`).match({
@@ -408,9 +408,9 @@ export async function getAppsWithCatWithOrderBy(orderBy?: keyof App) {
 
 // HANDLE COMMNETS
 export async function getAllComments(
-  app_id: App["app_id"],
+  app_id: Apps["app_id"],
   c_order?: "asc" | "desc",
-  orderBy?: keyof Comment
+  orderBy?: keyof App_Comments
 ) {
   const supabase = await createSupabaseServerClient()
   const slug = await getSlugFromAppId(app_id)
@@ -472,7 +472,7 @@ export async function getAllComments(
 // }
 
 // TODO: Refactor OR remove it is Almost Identical to the getInitialComments
-export async function getReplies(comment_id: Comment["comment_id"]) {
+export async function getReplies(comment_id: App_Comments["comment_id"]) {
   const supabase = await createSupabaseServerClient()
 
   let query = supabase
@@ -492,10 +492,10 @@ export async function getReplies(comment_id: Comment["comment_id"]) {
 }
 
 export async function AddComment(
-  comment_content: Comment["comment"],
-  app_id: App["app_id"],
-  replyToCommentId?: Comment["parent_id"],
-  rating?: Comment["rating"]
+  comment_content: App_Comments["comment"],
+  app_id: Apps["app_id"],
+  replyToCommentId?: App_Comments["parent_id"],
+  rating?: App_Comments["rating"]
 ) {
   const supabase = await createSupabaseServerClient()
   const slug = await getSlugFromAppId(app_id)
@@ -534,7 +534,7 @@ export async function AddComment(
   return { comment, error }
 }
 
-export async function getSlugFromAppId(app_id: App["app_id"]) {
+export async function getSlugFromAppId(app_id: Apps["app_id"]) {
   const supabase = await createSupabaseServerClient()
 
   let { data: slug, error } = await supabase
@@ -556,10 +556,10 @@ export async function getSlugFromAppId(app_id: App["app_id"]) {
 }
 
 export async function UpdateComment(
-  comment_content: Comment["comment"],
-  comment_id: Comment["comment_id"],
-  app_id: App["app_id"],
-  rating?: Comment["rating"]
+  comment_content: App_Comments["comment"],
+  comment_id: App_Comments["comment_id"],
+  app_id: Apps["app_id"],
+  rating?: App_Comments["rating"]
 ) {
   const supabase = await createSupabaseServerClient()
   const slug = await getSlugFromAppId(app_id)
@@ -596,8 +596,8 @@ export async function UpdateComment(
 }
 
 export async function DeleteComment(
-  comment_id: Comment["comment_id"],
-  app_id: App["app_id"]
+  comment_id: App_Comments["comment_id"],
+  app_id: Apps["app_id"]
 ) {
   const supabase = await createSupabaseServerClient()
   const slug = await getSlugFromAppId(app_id)
@@ -654,7 +654,7 @@ export async function getAllCategories() {
 }
 
 export async function getCategoryBySlug(
-  category_slug: Category["category_slug"]
+  category_slug: Categories["category_slug"]
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -670,8 +670,8 @@ export async function getCategoryBySlug(
 }
 
 export async function insertAppsDevelopers(
-  app_id: App["app_id"],
-  developer_ids: Developer["developer_id"][]
+  app_id: Apps["app_id"],
+  developer_ids: Developers["developer_id"][]
 ) {
   try {
     const supabase = await createSupabaseServerClient()
@@ -728,8 +728,8 @@ export async function insertAppsDevelopers(
   }
 }
 export async function insertAppsCategories(
-  app_id: App["app_id"],
-  category_ids: Category["category_id"][]
+  app_id: Apps["app_id"],
+  category_ids: Categories["category_id"][]
 ) {
   try {
     const supabase = await createSupabaseServerClient()
@@ -850,8 +850,8 @@ export async function insertCategories(
 }
 
 export async function removeAppsDevelopers(
-  app_id: App["app_id"],
-  developer_ids: Developer["developer_id"][]
+  app_id: Apps["app_id"],
+  developer_ids: Developers["developer_id"][]
 ) {
   try {
     const supabase = await createSupabaseServerClient()
@@ -902,8 +902,8 @@ export async function removeAppsDevelopers(
   }
 }
 export async function removeAppsCategories(
-  app_id: App["app_id"],
-  category_ids: Category["category_id"][]
+  app_id: Apps["app_id"],
+  category_ids: Categories["category_id"][]
 ) {
   try {
     const supabase = await createSupabaseServerClient()
@@ -998,10 +998,10 @@ export async function checkExistingCategories(
 
 // DEVELOPERS
 export async function UpdateDevByUrlEmail(
-  app_id: App["app_id"],
-  developer_id: Developer["developer_id"],
-  developer_url: Developer["developer_url"],
-  developer_email: Developer["developer_email"]
+  app_id: Apps["app_id"],
+  developer_id: Developers["developer_id"],
+  developer_url: Developers["developer_url"],
+  developer_email: Developers["developer_email"]
 ) {
   const supabase = await createSupabaseServerClient()
   const {
@@ -1031,8 +1031,8 @@ export async function UpdateDevByUrlEmail(
 // STORAGE
 
 export async function getScreenshotsFileNames(
-  app_id: App["app_id"],
-  app_submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"],
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -1058,8 +1058,8 @@ export async function getScreenshotsFileNames(
 }
 
 export async function getScreenshotsPublicUrls(
-  app_id: App["app_id"],
-  app_submitted_by_user_id: App["submitted_by_user_id"],
+  app_id: Apps["app_id"],
+  app_submitted_by_user_id: Apps["submitted_by_user_id"],
   fileNames: string[]
 ) {
   const supabase = await createSupabaseServerClient()
@@ -1080,8 +1080,8 @@ export async function getScreenshotsPublicUrls(
 }
 
 export async function getAppIconFileName(
-  app_id: App["app_id"],
-  app_submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"],
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -1107,8 +1107,8 @@ export async function getAppIconFileName(
 }
 
 export async function getAppIconUrl(
-  app_id: App["app_id"],
-  app_submitted_by_user_id: App["submitted_by_user_id"],
+  app_id: Apps["app_id"],
+  app_submitted_by_user_id: Apps["submitted_by_user_id"],
   fileName: string
 ) {
   const supabase = await createSupabaseServerClient()
@@ -1122,8 +1122,8 @@ export async function getAppIconUrl(
 }
 
 export async function deleteAppIcon(
-  app_slug: App["app_slug"],
-  app_submitted_by_user_id: App["submitted_by_user_id"],
+  app_slug: Apps["app_slug"],
+  app_submitted_by_user_id: Apps["submitted_by_user_id"],
   appIconFileName: string
 ) {
   const supabase = await createSupabaseServerClient()
@@ -1164,8 +1164,8 @@ export async function deleteAppIcon(
 }
 
 export async function deleteScreenshot(
-  app_slug: App["app_slug"],
-  app_submitted_by_user_id: App["submitted_by_user_id"],
+  app_slug: Apps["app_slug"],
+  app_submitted_by_user_id: Apps["submitted_by_user_id"],
   screenshotFileName: string
 ) {
   const supabase = await createSupabaseServerClient()
@@ -1197,7 +1197,7 @@ export async function deleteScreenshot(
 // Handle Introduction
 
 export async function insertIntroduction(
-  app_id: App["app_id"],
+  app_id: Apps["app_id"],
   introduction: Record<string, any>
 ) {
   const supabase = await createSupabaseServerClient()
@@ -1224,7 +1224,7 @@ export async function insertIntroduction(
   }
 }
 
-export async function removeEmptyIntroduction(app_id: App["app_id"]) {
+export async function removeEmptyIntroduction(app_id: Apps["app_id"]) {
   const supabase = await createSupabaseServerClient()
   const slug = await getSlugFromAppId(app_id)
   try {

@@ -5,21 +5,21 @@ import Link from "next/link"
 import { PostCardProps } from "@/types/db_tables"
 
 const PostCard: React.FC<PostCardProps> = ({
-  label,
-  title,
-  description,
-  image_src,
-  slug,
+  post_label,
+  post_title,
+  post_description,
+  post_image_src,
+  post_slug,
 }) => {
   return (
     <>
-      <Link href={`/story/${slug}`} scroll={false} passHref>
+      <Link href={`/story/${post_slug}`} scroll={false} passHref>
         <div className="bg-card relative h-80 w-full cursor-pointer rounded-2xl px-8">
           {/* Image */}
           <div className="relative h-full w-full ">
             <Image
-              alt={image_src ? "Post Image" : "Feature Image"}
-              src={image_src ? image_src : "/images/preview1.png"}
+              alt={post_image_src ? "Post Image" : "Feature Image"}
+              src={post_image_src ? post_image_src : "/images/preview1.png"}
               fill
               className="rounded-lg"
               objectPosition="center"
@@ -35,13 +35,13 @@ const PostCard: React.FC<PostCardProps> = ({
           {/* Text */}
           <div className="absolute top-[15%] z-20 flex max-w-xs flex-col items-start justify-between gap-y-3">
             <span className="text-xs font-medium uppercase leading-none tracking-tight mix-blend-difference">
-              {label}
+              {post_label}
             </span>
             <span className="text-2xl font-medium leading-none tracking-tight">
-              {title}
+              {post_title}
             </span>
             <span className="text-xs tracking-tight mix-blend-difference">
-              {description}
+              {post_description}
             </span>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 import { toast } from "sonner"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,7 +27,7 @@ export async function deleteApps({
   rows,
   onSuccess,
 }: {
-  rows: Row<App>[]
+  rows: Row<Apps>[]
   onSuccess?: () => void
 }) {
   try {
@@ -56,7 +56,7 @@ export async function unpublishApps({
   rows,
   onSuccess,
 }: {
-  rows: Row<App>[]
+  rows: Row<Apps>[]
   onSuccess?: () => void
 }) {
   try {
@@ -86,7 +86,7 @@ export async function publishApps({
   rows,
   onSuccess,
 }: {
-  rows: Row<App>[]
+  rows: Row<Apps>[]
   onSuccess?: () => void
 }) {
   try {
@@ -114,7 +114,7 @@ export async function publishApps({
 
 interface AppActionDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
-  apps: Row<App>[]
+  apps: Row<Apps>[]
   onSuccess?: () => void
   showTrigger?: boolean
   triggerClassName?: string

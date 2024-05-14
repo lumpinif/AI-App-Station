@@ -1,10 +1,10 @@
 import { CalendarDays } from "lucide-react"
 import moment from "moment"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 
 type UserJoinTimeProps = {
-  created_at?: Profile["created_at"]
+  created_at?: Profiles["created_at"]
 }
 
 export const UserJoinTime: React.FC<UserJoinTimeProps> = ({ created_at }) => {

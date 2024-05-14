@@ -8,7 +8,7 @@ import numeral from "numeral"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { App_likes, AppDetails, Profile } from "@/types/db_tables"
+import { App_likes, AppDetails, Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
@@ -46,7 +46,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   )
 
   const handleRemoveLikeDebounced = useDebouncedCallback(
-    async (profile: Profile) => {
+    async (profile: Profiles) => {
       const { error: removeLikeError } = await supabase
         .from("app_likes")
         .delete()
@@ -61,7 +61,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   )
 
   const handleLikeDebounced = useDebouncedCallback(
-    async (profile: Profile) => {
+    async (profile: Profiles) => {
       const { error: addLikeError } = await supabase.from("app_likes").insert({
         app_id: app_id,
         user_id: profile.user_id,

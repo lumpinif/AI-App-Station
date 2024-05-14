@@ -5,7 +5,7 @@ import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { Post } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -18,7 +18,7 @@ import {
 import PostCard from "../../cards/post-card"
 
 type PostsCarouselProps = {
-  data: Post[]
+  data: Posts[]
   className?: string
   isMarginRight?: boolean
   options?: EmblaOptionsType
@@ -64,7 +64,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
           <Suspense fallback={"Loading..."}>
             {data.map((post, index) => (
               <CarouselItem key={index} className={cn("", className)}>
-                <PostCard key={post.id} {...post} />
+                <PostCard key={post.post_id} {...post} />
               </CarouselItem>
             ))}
           </Suspense>

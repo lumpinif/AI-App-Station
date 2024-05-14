@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
@@ -14,7 +14,7 @@ import { UserAvatar } from "../avatar/user-avatar"
 
 type AccountModalTriggerProps = {
   href?: string
-  profile?: Profile
+  profile?: Profiles
   className?: string
   isFetching?: boolean
   isTriggerModal?: boolean

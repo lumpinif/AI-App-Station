@@ -15,7 +15,7 @@ import {
 import { handleCommandNavigation, ImageResizer } from "novel/extensions"
 import { handleImageDrop, handleImagePaste } from "novel/plugins"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { Separator } from "../ui/separator"
@@ -29,8 +29,8 @@ import { YoutubeSelector } from "./selectors/youtube-selector"
 import { slashCommand, suggestionItems } from "./slash-command"
 
 interface EditorProp {
-  app_id: App["app_id"]
-  submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"]
+  submitted_by_user_id: Apps["submitted_by_user_id"]
   initialValue?: JSONContent
   onChange: (value: JSONContent) => void
   className?: string

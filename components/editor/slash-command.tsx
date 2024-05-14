@@ -20,7 +20,7 @@ import {
   SuggestionItem,
 } from "novel/extensions"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 
 interface SlashCommandProps {
   setOpenYoutubeLink: (open: boolean) => void
@@ -28,11 +28,11 @@ interface SlashCommandProps {
     file: File,
     view: EditorView,
     pos: number,
-    app_id: App["app_id"],
-    submitted_by_user_id: App["submitted_by_user_id"]
+    app_id: Apps["app_id"],
+    submitted_by_user_id: Apps["submitted_by_user_id"]
   ) => void
-  app_id: App["app_id"]
-  submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"]
+  submitted_by_user_id: Apps["submitted_by_user_id"]
 }
 
 export const suggestionItems = ({

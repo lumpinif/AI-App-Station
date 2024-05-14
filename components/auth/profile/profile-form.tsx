@@ -7,7 +7,7 @@ import { Control, useForm, useWatch } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 import {
   FULL_NAME_MAX_LENGTH,
   USER_BIO_MAX_LENGTH,
@@ -60,7 +60,7 @@ const profileFormSchema = z.object({
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-type ProfileFormProps = Profile & {
+type ProfileFormProps = Profiles & {
   onFormSubmitted?: () => void
 }
 

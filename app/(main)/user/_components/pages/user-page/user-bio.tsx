@@ -1,7 +1,7 @@
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 
 type UserBioProps = {
-  user_bio?: Profile["user_bio"]
+  user_bio?: Profiles["user_bio"]
 }
 
 export const UserBio: React.FC<UserBioProps> = ({ user_bio }) => {

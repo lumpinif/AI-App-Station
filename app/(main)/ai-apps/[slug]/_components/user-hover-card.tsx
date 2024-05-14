@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { CalendarDays } from "lucide-react"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 import { cn, timeConverter } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -14,9 +14,9 @@ import { Icons } from "@/components/icons/icons"
 
 type UserHoverCardProps = {
   triggerClassName?: string
-  user_name: Profile["full_name"]
-  avatar_url: Profile["avatar_url"]
-  user_joined: Profile["created_at"]
+  user_name: Profiles["full_name"]
+  avatar_url: Profiles["avatar_url"]
+  user_joined: Profiles["created_at"]
 }
 
 export const UserHoverCard: React.FC<UserHoverCardProps> = ({

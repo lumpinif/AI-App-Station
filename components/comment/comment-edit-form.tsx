@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { Comment, CommentActionsProp } from "@/types/db_tables"
+import { App_Comments, CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -38,9 +38,9 @@ type CommentEditFormProps = Pick<
   CommentActionsProp,
   "comment" | "setIsEditing" | "className"
 > & {
-  app_id: Comment["app_id"]
-  comment_id: Comment["comment_id"]
-  parent_id?: Comment["parent_id"]
+  app_id: App_Comments["app_id"]
+  comment_id: App_Comments["comment_id"]
+  parent_id?: App_Comments["parent_id"]
 }
 
 const CommentEditForm: React.FC<CommentEditFormProps> = ({

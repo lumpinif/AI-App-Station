@@ -1,6 +1,6 @@
 import { getUserData } from "@/server/auth"
 
-import { Comment, CommentWithProfile } from "@/types/db_tables"
+import { App_Comments, CommentWithProfile } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CommentCard } from "@/components/comment/comment-card"
 import { CommentForm } from "@/components/comment/comment-form"
@@ -19,7 +19,7 @@ type CommentListProps = {
   allComments: CommentWithProfile[] | null
   app_id: CommentWithProfile["app_id"]
   c_order?: "asc" | "desc"
-  orderBy?: keyof Comment
+  orderBy?: keyof App_Comments
 }
 
 const AppDetailCommentSection = async ({

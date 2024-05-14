@@ -3,13 +3,13 @@
 import React from "react"
 import { MessageCircleMore } from "lucide-react"
 
-import { Comment } from "@/types/db_tables"
+import { App_Comments } from "@/types/db_tables"
 
 import { Button } from "../ui/button"
 import CommentReplyForm from "./comment-reply-form"
 
 type CommentFormProps = {
-  app_id: Comment["app_id"]
+  app_id: App_Comments["app_id"]
 }
 
 export const CommentForm: React.FC<CommentFormProps> = ({ app_id }) => {

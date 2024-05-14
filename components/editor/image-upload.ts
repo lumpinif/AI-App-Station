@@ -3,12 +3,12 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { createImageUpload } from "novel/plugins"
 import { toast } from "sonner"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 
 const onUpload = async (
   file: File,
-  app_id: App["app_id"],
-  submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"],
+  submitted_by_user_id: Apps["submitted_by_user_id"]
 ) => {
   const bucketNameApp = process.env
     .NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP as string
@@ -49,8 +49,8 @@ const onUpload = async (
 }
 
 export const createUploadFn = (
-  app_id: App["app_id"],
-  submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"],
+  submitted_by_user_id: Apps["submitted_by_user_id"]
 ) => {
   return createImageUpload({
     onUpload: (file) => onUpload(file, app_id, submitted_by_user_id),

@@ -10,7 +10,7 @@ import { SelectTrigger } from "@radix-ui/react-select"
 import { type Table } from "@tanstack/react-table"
 import { Rocket } from "lucide-react"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -38,7 +38,7 @@ import {
 } from "./submitted-apps-actions-dialog"
 
 interface TasksTableFloatingBarProps {
-  table: Table<App>
+  table: Table<Apps>
 }
 
 export function TasksTableFloatingBar({ table }: TasksTableFloatingBarProps) {

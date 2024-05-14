@@ -2,7 +2,7 @@
 
 import { Camera } from "lucide-react"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useUserData } from "@/hooks/react-hooks/use-user"
 import { useAvatarUploader } from "@/hooks/use-avatar-uploader"
@@ -14,7 +14,7 @@ import { AvatarResetButton } from "./avatar-reset-button"
 import { AvatarUploader } from "./avatar-uploader"
 
 type UserAvatarProps = {
-  profile?: Profile
+  profile?: Profiles
   onClick?: (e: any) => void
   onUpload?: (filePath: string) => void
   className?: string
@@ -31,7 +31,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   withAvatarUploader = false,
 }) => {
   const { uploadAvatar, isUploading, setIsUploading } = useAvatarUploader(
-    profile as Profile,
+    profile as Profiles,
     onUpload
   )
   const { data: user } = useUserData()

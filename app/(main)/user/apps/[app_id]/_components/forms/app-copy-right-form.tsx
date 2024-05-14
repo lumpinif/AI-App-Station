@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
@@ -26,8 +26,8 @@ import { Separator } from "@/components/ui/separator"
 import { InfoPopover } from "./info-popover"
 
 type AppCopyRightFormProps = {
-  app_id: App["app_id"]
-  copy_right: App["copy_right"]
+  app_id: Apps["app_id"]
+  copy_right: Apps["copy_right"]
 }
 
 const formSchema = z.object({

@@ -7,7 +7,7 @@ import { Bookmark } from "lucide-react"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { App_bookmarks, AppDetails, Profile } from "@/types/db_tables"
+import { App_bookmarks, AppDetails, Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
@@ -45,7 +45,7 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   )
 
   const handleRemoveBookmarkDebounced = useDebouncedCallback(
-    async (profile: Profile) => {
+    async (profile: Profiles) => {
       const { error: removeBookmarkError } = await supabase
         .from("app_bookmarks")
         .delete()
@@ -60,7 +60,7 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   )
 
   const handleBookmarkDebounced = useDebouncedCallback(
-    async (profile: Profile) => {
+    async (profile: Profiles) => {
       const { error: addBookmarkError } = await supabase
         .from("app_bookmarks")
         .insert({

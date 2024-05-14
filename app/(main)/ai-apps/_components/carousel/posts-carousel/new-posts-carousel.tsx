@@ -6,7 +6,7 @@ import AutoScroll from "embla-carousel-auto-scroll"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { Post } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -21,7 +21,7 @@ import {
 import { PostCard } from "../../cards/new-post-card"
 
 type PostsCarouselProps = {
-  data: Post[]
+  data: Posts[]
   className?: string
   isAutpPlay?: boolean
   isWheelGestures?: boolean
@@ -72,7 +72,7 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
               <div className="bg-card relative flex size-full items-center justify-center rounded-2xl">
                 <PostCard
                   {...post}
-                  image_src={`https://picsum.photos/600/350?v=${index}`}
+                  post_image_src={`https://picsum.photos/600/350?v=${index}`}
                 />
               </div>
             </SliderMainItem>

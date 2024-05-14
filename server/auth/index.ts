@@ -4,7 +4,7 @@ import { error } from "console"
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 
 export async function signUpWithEmailAndPassword(signUpData: {
   email: string
@@ -133,7 +133,7 @@ export async function getUserAvatarUrl(filePath: string) {
 }
 
 export async function updateProfileAvatar(
-  profile: Profile,
+  profile: Profiles,
   avatar_public_url: string | null
 ) {
   const supabase = await createSupabaseServerClient()
@@ -148,7 +148,7 @@ export async function updateProfileAvatar(
   return { updateProfileError }
 }
 
-export async function removeExistingAvatars(profile?: Profile) {
+export async function removeExistingAvatars(profile?: Profiles) {
   const supabase = await createSupabaseServerClient()
   const bucketName =
     process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_AVATAR || "avatars"
@@ -182,7 +182,7 @@ export async function removeExistingAvatars(profile?: Profile) {
   return { data: null, error: null }
 }
 
-export async function resetAvatarUrl(profile?: Profile) {
+export async function resetAvatarUrl(profile?: Profiles) {
   const {
     data: { user },
     error: getUserDataError,
@@ -208,7 +208,7 @@ export async function resetAvatarUrl(profile?: Profile) {
 
   if (isOauthAvatar) {
     const { updateProfileError } = await updateProfileAvatar(
-      profile as Profile,
+      profile as Profiles,
       oauth_avatar_url
     )
 
@@ -217,7 +217,7 @@ export async function resetAvatarUrl(profile?: Profile) {
     }
   } else {
     const { updateProfileError } = await updateProfileAvatar(
-      profile as Profile,
+      profile as Profiles,
       null
     )
 

@@ -3,15 +3,15 @@
 import { useState } from "react"
 import { SquarePen } from "lucide-react"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 import { IntroductionFormTextarea } from "./description-form-textarea"
 
 type DescriptionFormProps = {
-  app_id: App["app_id"]
-  description: App["description"]
+  app_id: Apps["app_id"]
+  description: Apps["description"]
 }
 
 const DescriptionForm = ({ description, app_id }: DescriptionFormProps) => {

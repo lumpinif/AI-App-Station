@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { ListFilter } from "lucide-react"
 
-import { Comment } from "@/types/db_tables"
+import { App_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
@@ -20,7 +20,7 @@ import { Button } from "../ui/button"
 
 type CommentListFilterProps = {
   c_order?: "asc" | "desc"
-  orderBy?: keyof Comment
+  orderBy?: keyof App_Comments
   className?: string
 }
 

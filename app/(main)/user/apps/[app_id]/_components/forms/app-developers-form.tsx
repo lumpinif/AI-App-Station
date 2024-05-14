@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App, Developer } from "@/types/db_tables"
+import { Apps, Developers } from "@/types/db_tables"
 import { cn, nameToSlug } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Badge } from "@/components/ui/badge"
@@ -60,8 +60,8 @@ const formSchema = z.object({
 })
 
 type AppDevelopersFormProps = {
-  app_id: App["app_id"]
-  developers?: Developer[]
+  app_id: Apps["app_id"]
+  developers?: Developers[]
   className?: string
 }
 

@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App, Developer } from "@/types/db_tables"
+import { Apps, Developers } from "@/types/db_tables"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -31,11 +31,11 @@ import { SpinnerButton } from "@/components/shared/spinner-button"
 
 type DeveloerpDetailFormProps = {
   children?: React.ReactNode
-  app_id: App["app_id"]
-  developer_id: Developer["developer_id"]
-  developer_name: Developer["developer_name"]
-  developer_url: Developer["developer_url"]
-  developer_email: Developer["developer_email"]
+  app_id: Apps["app_id"]
+  developer_id: Developers["developer_id"]
+  developer_name: Developers["developer_name"]
+  developer_url: Developers["developer_url"]
+  developer_email: Developers["developer_email"]
 }
 
 // TODO: CHECK THE SCHEMA BEFORE PRODUCTION

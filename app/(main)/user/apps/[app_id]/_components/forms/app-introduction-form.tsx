@@ -19,7 +19,7 @@ import { JSONContent } from "novel"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { defaultEditorContent } from "@/config/default-editor-content"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -30,8 +30,8 @@ import NovelEditor from "@/components/editor/advanced-editor"
 import { InfoPopover } from "./info-popover"
 
 type AppIntroductionFormProps = {
-  app_id: App["app_id"]
-  submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"]
+  submitted_by_user_id: Apps["submitted_by_user_id"]
   introduction: JSONContent
 }
 

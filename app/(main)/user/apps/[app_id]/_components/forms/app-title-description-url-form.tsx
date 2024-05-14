@@ -1,4 +1,4 @@
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import DescriptionForm from "./app-description-form"
@@ -6,10 +6,10 @@ import TitleForm from "./app-title-form"
 import { AppUrlForm } from "./app-url-form"
 
 type AppTitleWithDescriptionFormProps = {
-  app_id: App["app_id"]
-  app_title: App["app_title"]
-  description: App["description"]
-  app_url: App["app_url"]
+  app_id: Apps["app_id"]
+  app_title: Apps["app_title"]
+  description: Apps["description"]
+  app_url: Apps["app_url"]
 }
 
 export const AppTitleDescriptionUrlForms: React.FC<

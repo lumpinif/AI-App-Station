@@ -20,7 +20,7 @@ import {
 import { toast } from "sonner"
 
 import {
-  App,
+  Apps,
   ScreenshotItem,
   ScreenshotsFormCarouselProps,
 } from "@/types/db_tables"
@@ -59,8 +59,8 @@ import { AppDetailScreenshotsDialog } from "@/app/(main)/ai-apps/[slug]/_compone
 import { InfoPopover } from "./info-popover"
 
 type AppScreenshotsFormProps = {
-  app_id: App["app_id"]
-  app_submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"]
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
   access_token: string
   screenshotsFileNames: string[]
   screenshotsPublicUrls: string[]

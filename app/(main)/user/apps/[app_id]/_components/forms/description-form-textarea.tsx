@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import useClickOutside from "@/hooks/use-click-out-side"
 import useMediaQuery from "@/hooks/use-media-query"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
@@ -33,8 +33,8 @@ const formSchema = z.object({
 })
 
 type IntroductionFormTextareaProps = {
-  app_id: App["app_id"]
-  description: App["description"]
+  app_id: Apps["app_id"]
+  description: Apps["description"]
   setIsEditing: (value: boolean) => void
 }
 

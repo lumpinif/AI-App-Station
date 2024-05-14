@@ -5,25 +5,25 @@ import { PostCardProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 export const PostCard: React.FC<PostCardProps> = ({
-  label,
-  title,
-  description,
-  image_src,
-  slug,
+  post_label,
+  post_title,
+  post_description,
+  post_image_src,
+  post_slug,
 }) => {
   return (
     <Link
-      href={`/story/${slug}`}
+      href={`/story/${post_slug}`}
       scroll={false}
       passHref
       className="size-full rounded-2xl"
     >
-      <ImageElement image_src={image_src} />
+      <ImageElement post_image_src={post_image_src} />
       <div className="relative h-full w-full rounded-2xl">
         <ImageText
-          label={label}
-          title={title}
-          description={description}
+          post_label={post_label}
+          post_title={post_title}
+          post_description={post_description}
           className="bottom-6"
         />
 
@@ -38,12 +38,12 @@ export const PostCard: React.FC<PostCardProps> = ({
 }
 
 export const ImageElement: React.FC<
-  Pick<PostCardProps, "image_src"> & { className?: string }
-> = ({ image_src, className }) => {
+  Pick<PostCardProps, "post_image_src"> & { className?: string }
+> = ({ post_image_src, className }) => {
   return (
     <Image
-      alt={image_src ? "Post Image" : "Feature Image"}
-      src={image_src ? image_src : "/images/Feature-thumbnail.png"}
+      alt={post_image_src ? "Post Image" : "Feature Image"}
+      src={post_image_src ? post_image_src : "/images/Feature-thumbnail.png"}
       className={cn("rounded-lg", className)}
       objectPosition="center"
       fill
@@ -53,8 +53,8 @@ export const ImageElement: React.FC<
 }
 
 const ImageText: React.FC<
-  Omit<PostCardProps, "image_src" | "slug"> & { className?: string }
-> = ({ className, label, title, description }) => {
+  Omit<PostCardProps, "post_image_src" | "post_slug"> & { className?: string }
+> = ({ className, post_label, post_title, post_description }) => {
   return (
     <div
       className={cn(
@@ -64,14 +64,14 @@ const ImageText: React.FC<
     >
       <span className="flex flex-col space-y-2">
         <span className="text-primary text-xs font-medium uppercase leading-none tracking-wide mix-blend-difference md:text-sm">
-          {label} what to watch
+          {post_label} what to watch
         </span>
         <span className="w-full text-wrap text-2xl font-semibold leading-none 2xl:text-3xl">
-          {title}
+          {post_title}
         </span>
       </span>
       <span className="text-primary/80 text-xs tracking-wide mix-blend-difference md:text-sm">
-        {description}
+        {post_description}
       </span>
     </div>
   )

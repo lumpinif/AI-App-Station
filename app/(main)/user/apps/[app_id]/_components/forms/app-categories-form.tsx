@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App, Category } from "@/types/db_tables"
+import { Apps, Categories } from "@/types/db_tables"
 import { cn, nameToSlug } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Badge } from "@/components/ui/badge"
@@ -53,9 +53,9 @@ const formSchema = z.object({
 })
 
 type AppCategoriesFormProps = {
-  app_id: App["app_id"]
-  categories?: Category[]
-  allCategories?: Category[] | null
+  app_id: Apps["app_id"]
+  categories?: Categories[]
+  allCategories?: Categories[] | null
   className?: string
 }
 

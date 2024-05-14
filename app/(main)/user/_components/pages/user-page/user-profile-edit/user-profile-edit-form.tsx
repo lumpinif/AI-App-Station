@@ -1,9 +1,9 @@
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 import { UserAvatar } from "@/components/auth/avatar/user-avatar"
 import { ProfileForm } from "@/components/auth/profile/profile-form"
 
 type UserProfileEditFormProps = {
-  profile: Profile
+  profile: Profiles
   onFormSubmitted: () => void
 }
 

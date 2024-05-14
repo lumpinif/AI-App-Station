@@ -4,9 +4,9 @@ import { getUserData, getUserProfile } from "@/server/auth"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 
-const initUser: Record<keyof Profile, string> = {
+const initUser: Record<keyof Profiles, string> = {
   user_id: "",
   email: "",
   user_name: "",

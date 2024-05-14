@@ -1,12 +1,12 @@
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 
 import { AppCopyRightForm } from "./app-copy-right-form"
 import { AppPricingForm } from "./app-pricing-form"
 
 type AppSubInfoFormProps = {
-  app_id: App["app_id"]
-  pricing: App["pricing"]
-  copy_right: App["copy_right"]
+  app_id: Apps["app_id"]
+  pricing: Apps["pricing"]
+  copy_right: Apps["copy_right"]
 }
 
 export const AppSubInfoForm: React.FC<AppSubInfoFormProps> = ({

@@ -4,13 +4,13 @@ import { revalidatePath } from "next/cache"
 import { getUserData } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 
 import { getSlugFromAppId } from "../supabase-actions"
 
 export async function uploadAndGetIntroductionImage(
-  app_id: App["app_id"],
-  submitted_by_user_id: App["submitted_by_user_id"],
+  app_id: Apps["app_id"],
+  submitted_by_user_id: Apps["submitted_by_user_id"],
   file: File,
   uploadPath: string
 ) {

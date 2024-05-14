@@ -3,11 +3,11 @@
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 import { ProfileFormValues } from "@/components/auth/profile/profile-form"
 
 export async function updateUserProfile(
-  user_id: Profile["user_id"],
+  user_id: Profiles["user_id"],
   formData: ProfileFormValues
 ) {
   const supabase = await createSupabaseServerClient()

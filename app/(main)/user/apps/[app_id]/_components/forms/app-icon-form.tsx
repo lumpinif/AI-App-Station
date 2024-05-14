@@ -16,7 +16,7 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import Tus from "@uppy/tus"
 import { toast } from "sonner"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import {
@@ -40,8 +40,8 @@ import {
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 type AppIconFormProps = {
-  app_id: App["app_id"]
-  app_submitted_by_user_id: App["submitted_by_user_id"]
+  app_id: Apps["app_id"]
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
   access_token: string
   appIconFileName: string
   appIconPublicUrl: string

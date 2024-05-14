@@ -4,7 +4,7 @@ import { useRef, useState } from "react"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import moment from "moment"
 
-import { App, Developer, Profile } from "@/types/db_tables"
+import { Apps, Developers, Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
@@ -17,14 +17,14 @@ import {
 import { UserHoverCard } from "./user-hover-card"
 
 type AppDetailSubInfoProps = {
-  full_name: Profile["full_name"]
-  created_at: Profile["created_at"]
-  avatar_url: Profile["avatar_url"]
-  updated_at: App["updated_at"]
-  app_url: App["app_url"]
-  pricing: App["pricing"]
-  copy_right: App["copy_right"]
-  developers?: Developer[]
+  full_name: Profiles["full_name"]
+  created_at: Profiles["created_at"]
+  avatar_url: Profiles["avatar_url"]
+  updated_at: Apps["updated_at"]
+  app_url: Apps["app_url"]
+  pricing: Apps["pricing"]
+  copy_right: Apps["copy_right"]
+  developers?: Developers[]
 }
 
 export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({

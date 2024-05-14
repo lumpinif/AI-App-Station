@@ -2,11 +2,11 @@ import Link from "next/link"
 import { MessageCircle } from "lucide-react"
 import numeral from "numeral"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 type AppCommentsBadgeProps = {
-  app_slug: App["app_slug"]
+  app_slug: Apps["app_slug"]
   comments_count: number
   className?: string
 }

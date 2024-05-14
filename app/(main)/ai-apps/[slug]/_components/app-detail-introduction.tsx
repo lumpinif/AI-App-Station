@@ -7,13 +7,13 @@ import "@/styles/prosemirror.css"
 import { useState } from "react"
 import { LinearBlur } from "progressive-blur"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { defaultExtensions } from "@/components/editor/extensions"
 import { ProgressiveBlur } from "@/components/shared/progressive-blur"
 
 type AppDetailIntroductionProps = {
-  data: App["introduction"]
+  data: Apps["introduction"]
 }
 
 export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({

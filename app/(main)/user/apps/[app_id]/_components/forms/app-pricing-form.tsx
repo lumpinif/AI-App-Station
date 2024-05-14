@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
@@ -43,7 +43,7 @@ import {
 
 import { InfoPopover } from "./info-popover"
 
-type AppPricingFormProps = { app_id: App["app_id"]; pricing: App["pricing"] }
+type AppPricingFormProps = { app_id: Apps["app_id"]; pricing: Apps["pricing"] }
 
 const pricing_obj = [
   "Free",

@@ -5,7 +5,7 @@ import {
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase-actions"
 
-import { Comment } from "@/types/db_tables"
+import { App_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
@@ -33,7 +33,7 @@ export default async function AppPagePage({
   searchParams,
 }: AppPageProps) {
   const c_order = searchParams?.c_order as "asc" | "desc" | undefined
-  const orderBy = searchParams?.orderBy as keyof Comment | undefined
+  const orderBy = searchParams?.orderBy as keyof App_Comments | undefined
 
   // TODO: ERROR HANDLING
   const { app, ratingData, error } = await getAppBySlug(params.slug)

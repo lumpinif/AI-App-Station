@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
 import { toast } from "sonner"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { ButtonProps } from "@/components/ui/button"
 import { SpinnerButton } from "@/components/shared/spinner-button"
@@ -27,10 +27,10 @@ type TConductorInstance = {
 
 type AppApprovalSubmitProps = ButtonProps & {
   isAllFieldsComplete: boolean
-  app_publish_status: App["app_publish_status"]
+  app_publish_status: Apps["app_publish_status"]
   children?: React.ReactNode
   className?: string
-  app_id: App["app_id"]
+  app_id: Apps["app_id"]
 }
 
 export const AppPublishButton: React.FC<AppApprovalSubmitProps> = ({

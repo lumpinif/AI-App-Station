@@ -22,7 +22,7 @@ import {
   XIcon,
 } from "react-share"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { getSiteUrl } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 import {
@@ -38,9 +38,9 @@ import { EnhancedDrawerClose } from "@/components/shared/enhanced-drawer"
 import { SocialShare } from "@/components/shared/social-share"
 
 type AppDetailShareProps = {
-  app_title: App["app_title"]
-  description: App["description"]
-  app_slug: App["app_slug"]
+  app_title: Apps["app_title"]
+  description: Apps["description"]
+  app_slug: Apps["app_slug"]
 }
 
 export const AppDetailShare: React.FC<AppDetailShareProps> = ({

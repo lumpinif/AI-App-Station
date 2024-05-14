@@ -4,11 +4,11 @@ import { resetAvatarUrl } from "@/server/auth"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
 type AvatarResetButtonProps = {
-  profile?: Profile
+  profile?: Profiles
   setIsUploading?: (isUploading: boolean) => void
   isDefaultAvatar?: boolean
 }

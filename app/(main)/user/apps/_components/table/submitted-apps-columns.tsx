@@ -9,7 +9,7 @@ import moment from "moment"
 import numeral from "numeral"
 import { toast } from "sonner"
 
-import { App, Publish_Status } from "@/types/db_tables"
+import { Apps, Publish_Status } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -39,7 +39,7 @@ import {
   UnpublishAppsDialog,
 } from "./submitted-apps-actions-dialog"
 
-export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
+export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
   return [
     {
       id: "select",
@@ -71,9 +71,9 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
       size: 20,
       header: "Icon",
       cell: ({ row }) => {
-        const app_title = row.original.app_title as App["app_title"]
-        const app_slug = row.original.app_slug as App["app_slug"]
-        const app_icon_src = row.original.app_icon_src as App["app_icon_src"]
+        const app_title = row.original.app_title as Apps["app_title"]
+        const app_slug = row.original.app_slug as Apps["app_slug"]
+        const app_icon_src = row.original.app_icon_src as Apps["app_icon_src"]
 
         return (
           <AppIcon
@@ -92,7 +92,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         <DataTableColumnHeader column={column} title="Title" />
       ),
       cell: ({ row }) => {
-        const app_title = row.original.app_title as App["app_title"]
+        const app_title = row.original.app_title as Apps["app_title"]
 
         return (
           <div className="flex max-w-60">
@@ -144,7 +144,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         <DataTableColumnHeader column={column} title="Likes" />
       ),
       cell: ({ row }) => {
-        const likes_count = row.original.likes_count as App["likes_count"]
+        const likes_count = row.original.likes_count as Apps["likes_count"]
         const formattedLikesCount = numeral(likes_count).format("0.[0]a")
         return (
           <div className="text-muted-foreground flex items-center gap-x-2">
@@ -162,7 +162,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<App>[] {
         <DataTableColumnHeader column={column} title="Views (no)" />
       ),
       cell: ({ row }) => {
-        const views_count = row.original.views_count as App["views_count"]
+        const views_count = row.original.views_count as Apps["views_count"]
         const formattedViewsCount = numeral(views_count).format("0.[0]a")
         return (
           <span className="text-muted-foreground w-full truncate font-normal">

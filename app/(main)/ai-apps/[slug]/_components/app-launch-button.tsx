@@ -1,11 +1,11 @@
 import Link from "next/link"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 type AppLaunchButtonProps = {
-  app_url: App["app_url"]
+  app_url: Apps["app_url"]
   className?: string
   children?: React.ReactNode
 }

@@ -1,17 +1,17 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 type AppIconProps = {
-  app_slug: App["app_slug"]
-  app_title: App["app_title"]
-  app_icon_src?: App["app_icon_src"]
+  app_slug: Apps["app_slug"]
+  app_title: Apps["app_title"]
+  app_icon_src?: Apps["app_icon_src"]
   size?: number | string
   className?: string
   isLink?: boolean
-  externalLink?: App["app_url"]
+  externalLink?: Apps["app_url"]
 }
 
 export const AppIcon: React.FC<AppIconProps> = ({

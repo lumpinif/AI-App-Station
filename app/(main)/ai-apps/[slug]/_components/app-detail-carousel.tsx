@@ -6,7 +6,7 @@ import { Rating } from "@mui/material"
 import { ArrowRight, Star } from "lucide-react"
 import numeral from "numeral"
 
-import { AppDetails, Category as CategoriesProps } from "@/types/db_tables"
+import { AppDetails, Categories as CategoriesProps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 import LucideIcon, {

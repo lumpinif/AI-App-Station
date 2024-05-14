@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Button } from "@/components/ui/button"
@@ -23,8 +23,8 @@ import { Input } from "@/components/ui/input"
 import { LoadingButton } from "@/components/ui/loading-button"
 
 type TitleFormProps = {
-  app_id: App["app_id"]
-  app_title: App["app_title"]
+  app_id: Apps["app_id"]
+  app_title: Apps["app_title"]
 }
 
 const formSchema = z.object({

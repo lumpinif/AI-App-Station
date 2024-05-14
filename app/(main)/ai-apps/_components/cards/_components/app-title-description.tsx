@@ -1,12 +1,12 @@
 import Link from "next/link"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 type AppTitleWithDescriptionProps = {
-  app_slug: App["app_slug"]
-  app_title: App["app_title"]
-  description: App["description"]
+  app_slug: Apps["app_slug"]
+  app_title: Apps["app_title"]
+  description: Apps["description"]
   className?: string
   titleSize?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl"
   titleFont?: "semi-bold" | "bold" | "medium" | "regular" | "light"

@@ -1,9 +1,9 @@
 import { Link2 } from "lucide-react"
 
-import { Profile } from "@/types/db_tables"
+import { Profiles } from "@/types/db_tables"
 
 type UserWebsiteProps = {
-  user_website?: Profile["user_website"]
+  user_website?: Profiles["user_website"]
 }
 
 export const UserWebsite: React.FC<UserWebsiteProps> = ({ user_website }) => {

@@ -4,13 +4,13 @@ import { useQueryClient } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
-import { Comment } from "@/types/db_tables"
+import { App_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 type CommentDeleteButtonProps = {
-  app_id: Comment["app_id"]
-  comment_id: Comment["comment_id"]
-  parent_id: Comment["parent_id"]
+  app_id: App_Comments["app_id"]
+  comment_id: App_Comments["comment_id"]
+  parent_id: App_Comments["parent_id"]
   className?: string
 }
 

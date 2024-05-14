@@ -6,7 +6,7 @@ import numeral from "numeral"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { CommentWithProfile, Profile } from "@/types/db_tables"
+import { CommentWithProfile, Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
@@ -31,7 +31,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   const { data: profile } = useUserProfile()
 
   const handleLikeDebounced = useDebouncedCallback(
-    async (profile: Profile) => {
+    async (profile: Profiles) => {
       const { error: addLikeError } = await supabase
         .from("comment_likes")
         .insert({
@@ -47,7 +47,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   )
 
   const handleRemoveLikeDebounced = useDebouncedCallback(
-    async (profile: Profile) => {
+    async (profile: Profiles) => {
       const { error: removeLikeError } = await supabase
         .from("comment_likes")
         .delete()

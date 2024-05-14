@@ -12,7 +12,7 @@ import {
 } from "@radix-ui/react-icons"
 import { Rocket } from "lucide-react"
 
-import { App } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 
 /**
  * Returns the appropriate status icon based on the provided status.
@@ -20,7 +20,7 @@ import { App } from "@/types/db_tables"
  * @returns A React component representing the status icon.
  */
 
-export function getStatusIcon(status: App["app_publish_status"]) {
+export function getStatusIcon(status: Apps["app_publish_status"]) {
   const statusIcons = {
     pending: LapTimerIcon,
     published: Rocket,
@@ -31,7 +31,7 @@ export function getStatusIcon(status: App["app_publish_status"]) {
   return statusIcons[status] || CircleIcon
 }
 
-export function getStatusColor(status: App["app_publish_status"]) {
+export function getStatusColor(status: Apps["app_publish_status"]) {
   const statusColor = {
     draft: "text-muted-foreground",
     pending: "text-yellow-500",
