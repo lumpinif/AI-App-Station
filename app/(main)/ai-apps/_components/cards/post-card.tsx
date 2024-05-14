@@ -21,11 +21,7 @@ const PostCard: React.FC<PostCardProps> = ({
               alt={post_image_src ? "Post Image" : "Feature Image"}
               src={post_image_src ? post_image_src : "/images/preview1.png"}
               fill
-              className="rounded-lg"
-              objectPosition="center"
-              style={{
-                objectFit: "cover",
-              }}
+              className="rounded-lg object-contain object-center"
             />
           </div>
 

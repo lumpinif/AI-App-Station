@@ -44,8 +44,7 @@ export const ImageElement: React.FC<
     <Image
       alt={post_image_src ? "Post Image" : "Feature Image"}
       src={post_image_src ? post_image_src : "/images/Feature-thumbnail.png"}
-      className={cn("rounded-lg object-cover", className)}
-      objectPosition="center"
+      className={cn("rounded-lg object-cover object-center", className)}
       fill
     />
   )
