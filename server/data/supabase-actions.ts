@@ -308,7 +308,7 @@ export async function getPost(slug: string) {
     .from("posts")
     .select(`*, posts_categories(*), profiles(*)`)
     .eq("slug", slug)
-    .eq("post_publish_status", "published")
+    .match({ post_publish_status: "published" })
     .single()
 
   // error handling
