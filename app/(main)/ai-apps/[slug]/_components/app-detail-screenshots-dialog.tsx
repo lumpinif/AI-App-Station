@@ -49,7 +49,6 @@ export const AppDetailScreenshotsDialog: React.FC<
             fill
             alt=""
             className="rounded-md object-cover"
-            style={{ objectFit: "cover" }}
           />
         </AspectRatio>
       </ResponsiveModalTrigger>
@@ -101,7 +100,6 @@ export const AppDetailScreenshotsDialog: React.FC<
                         }
                         fill
                         alt={screenshot_url}
-                        style={{ objectFit: "cover" }}
                         className="rounded-md object-cover"
                         data-vaul-no-drag
                       />
@@ -130,7 +128,6 @@ export const AppDetailScreenshotsDialog: React.FC<
                           fill
                           alt={screenshot_url}
                           className="rounded-md object-cover"
-                          style={{ objectFit: "cover" }}
                           data-vaul-no-drag
                         />
                       </AspectRatio>

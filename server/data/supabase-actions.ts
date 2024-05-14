@@ -416,7 +416,7 @@ export async function getAllComments(
 
   let query = supabase
     .from("app_comments")
-    .select("*, profiles(*),app_comment_likes(user_id)")
+    .select("*, profiles(*),app_comment_likes(*)")
     .eq("app_id", app_id)
 
   // Conditional additional ordering by another field
