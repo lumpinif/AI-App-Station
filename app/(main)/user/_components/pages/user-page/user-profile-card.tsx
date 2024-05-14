@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 
+import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
 import { UserCard } from "@/components/auth/auth-modal/user-card"
@@ -13,7 +14,7 @@ import { UserLocation } from "./user-location"
 import { UserProfileEditForm } from "./user-profile-edit/user-profile-edit-form"
 import { UserWebsite } from "./user-website"
 
-export const UserProfileCard = () => {
+export const UserProfileCard = ({ className }: { className?: string }) => {
   const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false)
 
   const { data: profile } = useUserProfile()
@@ -38,11 +39,7 @@ export const UserProfileCard = () => {
           onFormSubmitted={() => setIsProfileEditModalOpen(false)}
         />
       </ResponsiveContentModal>
-      <div
-        className={
-          "bg-background relative mx-auto w-full md:max-w-xl lg:max-w-2xl"
-        }
-      >
+      <div className={cn("bg-background relative", className)}>
         <div className="flex flex-col space-y-4 sm:space-y-6">
           {/* User card and edit button */}
           <div className="flex items-center gap-x-4 md:flex-col">
