@@ -5,6 +5,8 @@ import {
 } from "@/server/data/supabase-actions"
 import supabase from "@/utils/supabase/supabase"
 
+import { Categories } from "@/types/db_tables"
+
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 
 export const dynamicParams = false
@@ -14,6 +16,7 @@ export async function generateStaticParams() {
   let { data: allCategories, error } = await supabase
     .from("categories")
     .select("*")
+    .returns<Categories[]>()
 
   if (error) {
     throw new Error(error.message)
