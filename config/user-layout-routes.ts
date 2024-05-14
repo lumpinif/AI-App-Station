@@ -71,15 +71,15 @@ export const userLayoutRoutes: UserLayoutRouteProps[] = [
       },
     ],
   },
-  {
-    group: "General",
-    items: [
-      {
-        title: "Profile Settings",
-        href: "/user/settings",
-        label: "",
-        icon: Settings,
-      },
-    ],
-  },
+  // {
+  //   group: "General",
+  //   items: [
+  //     {
+  //       title: "Profile Settings",
+  //       href: "/user/settings",
+  //       label: "",
+  //       icon: Settings,
+  //     },
+  //   ],
+  // },
 ]

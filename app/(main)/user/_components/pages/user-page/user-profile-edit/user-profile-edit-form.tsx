@@ -1,6 +1,6 @@
 import { Profile } from "@/types/db_tables"
 import { UserAvatar } from "@/components/auth/avatar/user-avatar"
-import { ProfileForm } from "@/components/auth/settings/profile/profile-form"
+import { ProfileForm } from "@/components/auth/profile/profile-form"
 
 type UserProfileEditFormProps = {
   profile: Profile

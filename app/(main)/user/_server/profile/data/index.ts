@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Profile } from "@/types/db_tables"
-import { ProfileFormValues } from "@/components/auth/settings/profile/profile-form"
+import { ProfileFormValues } from "@/components/auth/profile/profile-form"
 
 export async function updateUserProfile(
   user_id: Profile["user_id"],
