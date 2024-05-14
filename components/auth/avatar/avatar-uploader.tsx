@@ -37,6 +37,7 @@ export const AvatarUploader: React.FC<AvatarUploaderProps> = ({
       </TooltipTrigger>
       <TooltipContent
         side="right"
+        sideOffset={10}
         className="dark:bg-foreground dark:text-background flex items-center gap-2"
       >
         <span>Upload Avatar</span>

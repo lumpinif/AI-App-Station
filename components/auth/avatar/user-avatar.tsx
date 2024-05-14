@@ -80,8 +80,8 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
                       avatarClassName
                     )}
                   />
-                  <span className="bg-background/20 absolute rounded-full p-2">
-                    <Camera className="text-muted-foreground size-6" />
+                  <span className="bg-background/20 absolute rounded-full p-2 backdrop-blur-[1px]">
+                    <Camera className="size-6" />
                   </span>
 
                   <AvatarUploader
@@ -101,8 +101,8 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
                       avatarClassName
                     )}
                   />
-                  <span className="bg-background/20 absolute rounded-full p-2">
-                    <Camera className="text-muted-foreground size-6" />
+                  <span className="bg-background/20 absolute rounded-full p-2 backdrop-blur-[1px]">
+                    <Camera className="size-6" />
                   </span>
 
                   <AvatarUploader

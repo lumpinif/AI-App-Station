@@ -52,21 +52,21 @@ export const UserProfileCard = () => {
           "bg-background relative mx-auto w-full md:max-w-xl lg:max-w-2xl"
         }
       >
-        <div className="flex flex-col space-y-4 border sm:space-y-6">
+        <div className="flex flex-col space-y-4 sm:space-y-6">
           {/* User card and edit button */}
           <div className="flex items-center gap-x-4 md:flex-col">
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full items-start justify-between gap-x-2">
               <UserCard
                 isWithLink={false}
                 isTriggerModal={false}
-                className="space-x-2 sm:space-x-4"
+                className="flex-1 space-x-2 sm:space-x-4"
                 profileNameCN="text-lg font-medium sm:text-2xl"
                 profileEmailCN="text-sm font-normal text-muted-foreground tracking-normal"
                 accountModalTriggerCN="size-16 md:size-20 lg:size-24"
                 display="user_name"
               />
               <Button
-                className="hidden rounded-full sm:block"
+                className="rounded-full max-sm:h-7 max-sm:px-2"
                 size={"sm"}
                 variant={"outline"}
                 onClick={() => setIsProfileEditModalOpen(true)}
@@ -80,23 +80,11 @@ export const UserProfileCard = () => {
           <UserBio user_bio={profile?.user_bio} />
 
           {/* User location, website, join time */}
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-wrap items-center gap-x-2 sm:gap-x-4">
             <UserLocation user_location={profile?.user_location} />
             <UserWebsite user_website={profile?.user_website} />
             <UserJoinTime created_at={profile?.created_at} />
           </div>
-        </div>
-
-        {/* Mobile Edit button */}
-        <div>
-          <Button
-            className="w-full sm:hidden"
-            size={"sm"}
-            variant={"default"}
-            onClick={() => setIsProfileEditModalOpen(true)}
-          >
-            Edit profile
-          </Button>
         </div>
       </div>
     </>

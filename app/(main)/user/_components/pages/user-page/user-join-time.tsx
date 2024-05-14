@@ -9,7 +9,7 @@ type UserJoinTimeProps = {
 
 export const UserJoinTime: React.FC<UserJoinTimeProps> = ({ created_at }) => {
   return (
-    <div className="text-muted-foreground flex items-center gap-x-2">
+    <div className="text-muted-foreground flex items-center gap-x-1 font-light sm:gap-x-2">
       <CalendarDays className="size-4" />
       <div className="max-w-lg text-balance leading-relaxed">
         Joined {created_at && moment(created_at).format("MMMM YYYY")}

@@ -264,7 +264,11 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
           )}
         />
 
-        <Button type="submit" disabled={isSubmitting || !isValid}>
+        <Button
+          type="submit"
+          disabled={isSubmitting || !isValid}
+          className="w-full"
+        >
           Update profile
         </Button>
       </form>
