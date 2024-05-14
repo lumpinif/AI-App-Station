@@ -4,9 +4,10 @@ import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase-actions"
+import supabase from "@/utils/supabase/supabase"
 
 import { SearchParams } from "@/types/data-table"
-import { App_Comments } from "@/types/db_tables"
+import { App_Comments, Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
@@ -23,11 +24,36 @@ import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
 import { AppDetailShare } from "./_components/app-detail-share"
 import { AppDetailSubInfo } from "./_components/app-detail-sub-info"
 import { AppLaunchButton } from "./_components/app-launch-button"
-import { AppsPageSearchParamsSchema } from "./_lib/validations"
 
 export type AppPageProps = {
   params: { slug: string }
   searchParams: SearchParams
+}
+
+export const dynamicParams = false
+
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams() {
+  let { data: allApps, error } = await supabase
+    .from("apps")
+    .select("*")
+    .returns<Apps[]>()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  if (!allApps) {
+    return []
+  }
+
+  if (allApps) {
+    const aiappsParams = allApps.map((app) => ({
+      slug: app.app_slug,
+    }))
+    return aiappsParams
+  }
+  return []
 }
 
 export default async function AiAppsMainPage({
