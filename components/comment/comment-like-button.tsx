@@ -33,7 +33,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   const handleLikeDebounced = useDebouncedCallback(
     async (profile: Profiles) => {
       const { error: addLikeError } = await supabase
-        .from("comment_likes")
+        .from("app_comment_likes")
         .insert({
           comment_id: comment.comment_id,
           user_id: profile.user_id,
@@ -49,7 +49,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   const handleRemoveLikeDebounced = useDebouncedCallback(
     async (profile: Profiles) => {
       const { error: removeLikeError } = await supabase
-        .from("comment_likes")
+        .from("app_comment_likes")
         .delete()
         .match({ comment_id: comment.comment_id, user_id: profile.user_id })
 
