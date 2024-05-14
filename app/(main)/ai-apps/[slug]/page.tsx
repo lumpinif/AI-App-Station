@@ -50,7 +50,7 @@ export default async function AppPagePage({
     await getAllComments(app.app_id, c_order, orderBy)
   // TODO: HANDLE NO COMMENTS AND ERROR
 
-  if (!getAllCommentsError) {
+  if (getAllCommentsError) {
     console.error(getAllCommentsError)
   }
 

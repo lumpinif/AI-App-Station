@@ -48,12 +48,14 @@ const AppDetailCommentSection = async ({
     )
 
   const commentsList =
-    allComments.map((comment) => ({
+    allComments?.map((comment) => ({
       ...comment,
-      user_has_liked_comment: !!comment.comment_likes.find(
-        (like) => like.user_id === user?.id
-      ),
-      likes_count: comment.comment_likes.length,
+      user_has_liked_comment: Array.isArray(comment.app_comment_likes)
+        ? !!comment.app_comment_likes.find((like) => like.user_id === user?.id)
+        : false,
+      likes_count: Array.isArray(comment.app_comment_likes)
+        ? comment.app_comment_likes.length
+        : 0,
     })) ?? []
 
   if (allComments && allComments.length > 0)

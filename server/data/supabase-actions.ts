@@ -413,11 +413,10 @@ export async function getAllComments(
   orderBy?: keyof App_Comments
 ) {
   const supabase = await createSupabaseServerClient()
-  const slug = await getSlugFromAppId(app_id)
 
   let query = supabase
     .from("app_comments")
-    .select("*, profiles(*),comment_likes(user_id)")
+    .select("*, profiles(*),app_comment_likes(user_id)")
     .eq("app_id", app_id)
 
   // Conditional additional ordering by another field
@@ -443,33 +442,19 @@ export async function getAllComments(
     CommentWithProfile[] | null
   >()
 
+  // Ensure all comments have app_comment_likes as an array
+  comments =
+    comments?.map((comment) => ({
+      ...comment,
+      app_comment_likes: comment.app_comment_likes ?? [],
+    })) ?? []
+
   if (error) {
     console.error(error.message)
+    return { comments: null, error: getErrorMessage(error) }
   }
   return { comments, error }
 }
-
-// export async function getInitialComments(app_id: App["app_id"]) {
-//   const supabase = await createSupabaseServerClient()
-
-//   let query = supabase
-//     .from("app_comments")
-//     .select("*, profiles(*),comment_likes(user_id)")
-//     .eq("app_id", app_id)
-//     .is("parent_id", null)
-//     .order("created_at", {
-//       ascending: false,
-//     })
-
-//   let { data: comments, error } = await query.returns<
-//     CommentWithProfile[] | null
-//   >()
-
-//   if (error) {
-//     console.error(error.message)
-//   }
-//   return { comments, error }
-// }
 
 // TODO: Refactor OR remove it is Almost Identical to the getInitialComments
 export async function getReplies(comment_id: App_Comments["comment_id"]) {
@@ -477,7 +462,7 @@ export async function getReplies(comment_id: App_Comments["comment_id"]) {
 
   let query = supabase
     .from("app_comments")
-    .select("*, profiles(*),comment_likes(user_id)")
+    .select("*, profiles(*),app_comment_likes(user_id)")
     .eq("parent_id", comment_id)
     .order("created_at", {
       ascending: false,

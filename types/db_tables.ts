@@ -65,7 +65,7 @@ export type PostCardProps = Pick<
 // Comment with profile and additional properties
 export type CommentWithProfile = App_Comments & {
   profiles: Profiles
-  comment_likes: App_Comment_likes[]
+  app_comment_likes: App_Comment_likes[]
   user_has_liked_comment?: boolean
   user_has_commented?: boolean
 }
