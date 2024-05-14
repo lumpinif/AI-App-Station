@@ -28,7 +28,7 @@ export type AppPageProps = {
   searchParams?: { [key: string]: string | string[] | undefined }
 }
 
-export default async function AppPagePage({
+export default async function AiAppsMainPage({
   params,
   searchParams,
 }: AppPageProps) {
