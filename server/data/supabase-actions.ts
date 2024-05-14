@@ -275,8 +275,8 @@ export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {
     .from("posts")
     .select("*")
     // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE
-    .eq("published", true)
-    .eq("hero_featured", noHeroFeaturedPosts)
+    .eq("post_publish_status", "published")
+    .eq("is_hero_featured", noHeroFeaturedPosts)
     .order("created_at", { ascending: false })
 
   // error handling
@@ -291,8 +291,8 @@ export async function getAllHeroFeaturedPosts() {
   let { data: posts, error } = await supabase
     .from("posts")
     .select("*")
-    .eq("published", true)
-    .eq("hero_featured", true)
+    .eq("is_hero_featured", true)
+    .match({ post_publish_status: "published" })
     .order("created_at", { ascending: false })
 
   // error handling
@@ -308,7 +308,7 @@ export async function getPost(slug: string) {
     .from("posts")
     .select(`*, posts_categories(*), profiles(*)`)
     .eq("slug", slug)
-    .eq("published", true)
+    .eq("post_publish_status", "published")
     .single()
 
   // error handling

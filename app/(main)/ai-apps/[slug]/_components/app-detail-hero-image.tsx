@@ -20,7 +20,7 @@ export const AppDetailHeroImage: React.FC<AppDetailHeroImageProps> = ({
       <BackButton className="bg-muted/50 absolute left-4 top-2 z-50" />
       <div className="flex h-full items-center justify-center">
         <ImageElement
-          image_src={"/images/Feature-thumbnail.png"}
+          post_image_src={"/images/Feature-thumbnail.png"}
           className="select-none rounded-none"
         />
       </div>
