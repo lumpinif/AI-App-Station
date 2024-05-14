@@ -29,17 +29,12 @@ export const CommentListFilter: React.FC<CommentListFilterProps> = ({
   c_order,
   orderBy,
 }) => {
-  const [isClient, setIsClient] = useState(false)
   const [filter, setFilter] = useState<string | undefined>(
     c_order || orderBy || "likes_count"
   )
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
 
   // Get a new searchParams string by merging the current
   // searchParams with a provided key/value pair
@@ -70,50 +65,46 @@ export const CommentListFilter: React.FC<CommentListFilterProps> = ({
   }
 
   return (
-    isClient && (
-      <div className={cn(className)}>
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            asChild
-            className="ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+    <div className={cn(className)}>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          asChild
+          className="ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+        >
+          <Button
+            className="flex h-8 items-center space-x-2 rounded-full"
+            variant="ghost"
+            size="sm"
           >
-            <Button
-              className="flex h-8 items-center space-x-2 rounded-full"
-              variant="ghost"
-              size="sm"
-            >
-              <ListFilter className="text-muted-foreground size-3" />
-              <span className="text-muted-foreground select-none text-xs">
-                Filter
-              </span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="start"
-            sideOffset={10}
-            className="glass-card-background backdrop-blur-lg"
+            <ListFilter className="text-muted-foreground size-3" />
+            <span className="text-muted-foreground select-none text-xs">
+              Filter
+            </span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="start"
+          sideOffset={10}
+          className="glass-card-background backdrop-blur-lg"
+        >
+          <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuRadioGroup
+            value={filter}
+            onValueChange={handleOnValueChange}
           >
-            <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup
-              value={filter}
-              onValueChange={handleOnValueChange}
-            >
-              <DropdownMenuRadioItem value="likes_count">
-                Top Comments
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="desc">Newest</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="asc">Oldest</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="updated_at">
-                Recently Updated
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="rating">
-                Rating
-              </DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    )
+            <DropdownMenuRadioItem value="likes_count">
+              Top Comments
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="desc">Newest</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="asc">Oldest</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="updated_at">
+              Recently Updated
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="rating">Rating</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   )
 }

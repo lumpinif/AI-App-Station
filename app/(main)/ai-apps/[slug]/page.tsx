@@ -5,6 +5,7 @@ import {
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase-actions"
 
+import { SearchParams } from "@/types/data-table"
 import { App_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
@@ -22,10 +23,11 @@ import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
 import { AppDetailShare } from "./_components/app-detail-share"
 import { AppDetailSubInfo } from "./_components/app-detail-sub-info"
 import { AppLaunchButton } from "./_components/app-launch-button"
+import { AppsPageSearchParamsSchema } from "./_lib/validations"
 
 export type AppPageProps = {
   params: { slug: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams: SearchParams
 }
 
 export default async function AiAppsMainPage({
