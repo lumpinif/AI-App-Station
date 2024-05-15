@@ -1,0 +1,34 @@
+import { User } from "@supabase/supabase-js"
+
+import { getFavoriteApps } from "../../_server/favorites/data"
+import { FavoriteAppCard } from "./favorite-app-card"
+
+type AppCardGridProps = {
+  user_id: User["id"]
+}
+
+export const AppCardsGrid: React.FC<AppCardGridProps> = async ({ user_id }) => {
+  const { favoriteApps, error: getFavoriteAppsError } =
+    await getFavoriteApps(user_id)
+
+  if (getFavoriteAppsError) {
+    return (
+      <div className="text-destructive">
+        Something went wrong: {getFavoriteAppsError}
+      </div>
+    )
+  }
+
+  if (!favoriteApps || favoriteApps.length === 0) {
+    return <div>Add some apps to your favorite...</div>
+  }
+
+  return (
+    <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 md:gap-8">
+      {favoriteApps &&
+        favoriteApps.map((favorite) => (
+          <FavoriteAppCard key={favorite.app_id} favoriteApp={favorite} />
+        ))}
+    </div>
+  )
+}

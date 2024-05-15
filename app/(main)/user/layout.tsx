@@ -12,6 +12,7 @@ export default async function UserLayout({
 }: {
   children: React.ReactNode
 }) {
+  // TODO: PROTECT ROUTE BEFORE PRODUCTION
   // const { data, error } = await getUserData()
   // if (error || !data?.user) {
   //   redirect("/signin")

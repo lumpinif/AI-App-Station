@@ -43,7 +43,9 @@ export async function GetAppByAppIdUserId(
 
   let { data: app, error } = await supabase
     .from("apps")
-    .select("*,categories(*),profiles(*),developers(*),app_likes(*)")
+    .select(
+      "*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*)"
+    )
     .match({ app_id: app_id, submitted_by_user_id: user_id })
     .limit(1)
     .returns<AppDetails[]>()

@@ -4,7 +4,6 @@ import { AppCardContentWithCategories } from "@/types/db_tables"
 import { Separator } from "@/components/ui/separator"
 
 import { AppCardActions } from "./_components/app-card-actions"
-import { AppCardCatLabel } from "./_components/app-card-label-description"
 import { AppIcon } from "./_components/app-icon"
 import { AppTitleWithDescription } from "./_components/app-title-description"
 import { AppCommentsBadge } from "./app-comments-badge"

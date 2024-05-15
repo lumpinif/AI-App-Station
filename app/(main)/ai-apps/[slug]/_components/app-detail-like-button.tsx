@@ -50,7 +50,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
       const { error: removeLikeError } = await supabase
         .from("app_likes")
         .delete()
-        .match({ user_id: profile.user_id })
+        .match({ app_id: app_id, user_id: profile.user_id })
 
       if (removeLikeError) {
         toast.error("Failed to remove like. Please try again.")
