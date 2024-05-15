@@ -35,7 +35,7 @@ export default async function FavoritesPage() {
           value="stories"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          Change your password here.
+          Story cards grid here
         </TabsContent>
       </Tabs>
     </div>

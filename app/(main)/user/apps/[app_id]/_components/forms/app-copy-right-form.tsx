@@ -125,8 +125,8 @@ export const AppCopyRightForm: React.FC<AppCopyRightFormProps> = ({
         >
           <span
             className={cn(
-              "hover:cursor-pointer",
-              !copy_right && "text-muted-foreground"
+              "text-sm hover:cursor-pointer",
+              !copy_right && "text-muted-foreground text-xs"
             )}
             onClick={() => setIsEditing(true)}
           >

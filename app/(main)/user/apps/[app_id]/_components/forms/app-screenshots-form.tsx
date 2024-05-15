@@ -1,5 +1,6 @@
 "use client"
 
+// TODO: THIS IS A LONG COMPONENT REFACTOR IT INTO SMALLER ONE
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { deleteScreenshot } from "@/server/data/supabase-actions"
@@ -427,12 +428,12 @@ const ScreenshotsFormCarousel = ({
           ? Array.from({ length: 6 }).map((_, index) => (
               <CarouselItem
                 key={index}
-                className="bg-transparent md:basis-1/2 lg:basis-1/3"
+                className="group bg-transparent hover:cursor-pointer md:basis-1/2 lg:basis-1/3"
                 onClick={() => setShowUploadModal(true)}
               >
                 <AspectRatio ratio={16 / 9}>
                   <div className="bg-card relative flex size-full items-center justify-center overflow-hidden rounded-2xl">
-                    <ImageIcon className="stroke-muted size-3/4 stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
+                    <ImageIcon className="stroke-muted size-3/4 stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
                   </div>
                 </AspectRatio>
               </CarouselItem>

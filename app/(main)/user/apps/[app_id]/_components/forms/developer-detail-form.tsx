@@ -135,12 +135,12 @@ export const DevDetailForm: React.FC<DeveloerpDetailFormProps> = ({
         onChange={onChange}
         drawerContentClassName="outline-none rounded-t-3xl"
         drawerHeight="h-fit"
-        dialogContentClassName="max-w-xl rounded-2xl"
+        dialogContentClassName="max-w-xl rounded-2xl border-0 outline-none"
         title="Developer Details"
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <Card className="bg-background w-full border-0 p-2 py-6 sm:border sm:p-6">
+            <Card className="bg-background w-full border-0 p-2 py-6 sm:p-6">
               <CardHeader className="hidden text-center sm:block">
                 <CardTitle>Enter {developer_name} Details</CardTitle>
                 <CardDescription>

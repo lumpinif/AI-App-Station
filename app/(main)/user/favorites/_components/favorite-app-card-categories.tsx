@@ -17,7 +17,7 @@ export const FavoriteAppCardCategories: React.FC<
           <Badge
             key={category.category_id + index}
             variant={"outline"}
-            className="border-border/40 hover:shadow-outline hover:bg-card/50 hover:border-border/0"
+            className="border-border/40 hover:shadow-outline hover:bg-card hover:border-border/0"
           >
             <Category
               className="flex items-center gap-x-2 font-light hover:no-underline"
