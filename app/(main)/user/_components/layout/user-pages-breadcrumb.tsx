@@ -15,6 +15,8 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
+import { UserPagesMobileNavSheet } from "./user-pages-mobile-nav-sheet"
+
 type UserBreadCrumbProps = {}
 
 export const UserPagesBreadCrumb: React.FC<UserBreadCrumbProps> = () => {
@@ -45,24 +47,27 @@ export const UserPagesBreadCrumb: React.FC<UserBreadCrumbProps> = () => {
 
   if (items.length > 0)
     return (
-      <Breadcrumb>
-        <BreadcrumbList>
-          {items.length > 0 && (
-            <>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href="/user">User</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link href={items[0].href}>{items[0].title}</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            </>
-          )}
-        </BreadcrumbList>
-      </Breadcrumb>
+      <div className="flex items-center justify-between gap-x-2">
+        <Breadcrumb>
+          <BreadcrumbList>
+            {items.length > 0 && (
+              <>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href="/user">User</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href={items[0].href}>{items[0].title}</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              </>
+            )}
+          </BreadcrumbList>
+        </Breadcrumb>
+        <UserPagesMobileNavSheet />
+      </div>
     )
 }
