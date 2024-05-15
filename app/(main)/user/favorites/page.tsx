@@ -2,7 +2,7 @@ import { getUserData } from "@/server/auth"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-import { AppCardsGrid } from "./_components/app-cards-grid"
+import { AppCardsGrid } from "../_components/bookmark-favorites/_components/app-cards-grid"
 
 export const dynamic = "force-dynamic"
 

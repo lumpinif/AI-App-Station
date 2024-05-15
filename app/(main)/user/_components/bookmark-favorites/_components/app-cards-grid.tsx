@@ -1,15 +1,21 @@
 import { User } from "@supabase/supabase-js"
 
-import { getFavoriteApps } from "../../_server/favorites/data"
+import { getFavoriteApps } from "../../../_server/favorites/data"
 import { FavoriteAppCard } from "./favorite-app-card"
 
 type AppCardGridProps = {
+  collectionType?: "favorite" | "bookmark"
   user_id: User["id"]
 }
 
-export const AppCardsGrid: React.FC<AppCardGridProps> = async ({ user_id }) => {
-  const { favoriteApps, error: getFavoriteAppsError } =
-    await getFavoriteApps(user_id)
+export const AppCardsGrid: React.FC<AppCardGridProps> = async ({
+  user_id,
+  collectionType,
+}) => {
+  const { favoriteApps, error: getFavoriteAppsError } = await getFavoriteApps(
+    user_id,
+    collectionType
+  )
 
   if (getFavoriteAppsError) {
     return (

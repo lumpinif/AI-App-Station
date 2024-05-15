@@ -51,14 +51,19 @@ export async function getAppsByAppId(app_id: Apps["app_id"]) {
   }
 }
 
-export async function getFavoriteApps(user_id: Profiles["user_id"]) {
+export async function getFavoriteApps(
+  user_id: Profiles["user_id"],
+  collectionType?: "favorite" | "bookmark"
+) {
   noStore()
   const supabase = await createSupabaseServerClient()
+  const collection =
+    collectionType === "bookmark" ? "app_bookmarks" : "app_likes"
 
   try {
     const { data: favoriteAppIds, error: getFavoriteAppIdsError } =
       await supabase
-        .from("app_likes")
+        .from(collection)
         .select("app_id")
         .match({ user_id })
         .order("created_at", { ascending: false })
