@@ -25,10 +25,18 @@ export default async function FavoritesPage() {
           <TabsTrigger value="apps">Apps</TabsTrigger>
           <TabsTrigger value="stories">Stories</TabsTrigger>
         </TabsList>
-        <TabsContent value="apps">
+        <TabsContent
+          value="apps"
+          className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+        >
           <AppCardsGrid user_id={user.id} />
         </TabsContent>
-        <TabsContent value="stories">Change your password here.</TabsContent>
+        <TabsContent
+          value="stories"
+          className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+        >
+          Change your password here.
+        </TabsContent>
       </Tabs>
     </div>
   )

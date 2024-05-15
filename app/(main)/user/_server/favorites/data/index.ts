@@ -57,12 +57,15 @@ export async function getFavoriteApps(user_id: Profiles["user_id"]) {
 
   try {
     const { data: favoriteAppIds, error: getFavoriteAppIdsError } =
-      await supabase.from("app_likes").select("app_id").match({ user_id })
+      await supabase
+        .from("app_likes")
+        .select("app_id")
+        .match({ user_id })
+        .order("created_at", { ascending: false })
 
     if (getFavoriteAppIdsError) {
       console.error("Error getting favorite app ids:", getFavoriteAppIdsError)
       return {
-        favoriteApps: [],
         error: `An error occurred while getting favorite app ids: ${getFavoriteAppIdsError.message}`,
       }
     }

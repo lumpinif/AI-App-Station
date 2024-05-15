@@ -24,11 +24,11 @@ export const AppCardsGrid: React.FC<AppCardGridProps> = async ({ user_id }) => {
   }
 
   return (
-    <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 md:gap-8">
-      {favoriteApps &&
-        favoriteApps.map((favorite) => (
-          <FavoriteAppCard key={favorite.app_id} favoriteApp={favorite} />
-        ))}
+    <div className="mt-6 grid auto-rows-max grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3 xl:gap-8">
+      {favoriteApps.map((favorite) => {
+        if (!favorite) return null // Type guard to handle potential null values
+        return <FavoriteAppCard key={favorite.app_id} favoriteApp={favorite} />
+      })}
     </div>
   )
 }

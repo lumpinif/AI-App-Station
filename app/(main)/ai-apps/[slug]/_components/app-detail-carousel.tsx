@@ -89,6 +89,7 @@ export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
                 <InfoBox>
                   <InfoBoxTitle>Category</InfoBoxTitle>
                   <Category
+                    className="flex h-full flex-col items-center justify-center space-y-2 overflow-hidden text-center md:space-y-1"
                     category_icon_name={category.category_icon_name}
                     category_slug={category.category_slug}
                     category_name={category.category_name}
@@ -199,14 +200,17 @@ const RatingsAndReviews = ({
   )
 }
 
-const Category = ({
+// TODO: CONSIDER MOVE THIS COMPOENT TO A SEPARATE FILE
+export const Category = ({
+  className,
+  category_icon_cn,
   category_name,
   category_slug,
   category_icon_name,
-  className,
 }: {
+  category_icon_cn?: string
   category_icon_name: CategoriesProps["category_icon_name"]
-  category_name: CategoriesProps["category_name"]
+  category_name?: CategoriesProps["category_name"]
   category_slug: CategoriesProps["category_slug"]
   className?: string
 }) => {
@@ -214,17 +218,20 @@ const Category = ({
     <Link
       href={`/ai-apps/categories/${category_slug}`}
       className={cn(
-        "text-muted-foreground hover:text-primary flex h-full flex-col items-center justify-center space-y-2 overflow-hidden text-center underline-offset-4 hover:underline md:space-y-1",
+        "text-muted-foreground hover:text-primary  text-center underline-offset-4 hover:underline",
         className
       )}
     >
       {category_icon_name && (
         <LucideIcon
           name={category_icon_name as dynamicLucidIconProps}
-          className="size-6 stroke-1 md:size-7 md:stroke-[1.5]"
+          className={cn(
+            "size-6 stroke-1 md:size-7 md:stroke-[1.5]",
+            category_icon_cn
+          )}
         />
       )}
-      <span className="text-xs">{category_name}</span>
+      {category_name ? <span className="text-xs">{category_name}</span> : null}
     </Link>
   )
 }
