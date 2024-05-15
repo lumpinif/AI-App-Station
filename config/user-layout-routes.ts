@@ -46,14 +46,14 @@ export const userLayoutRoutes: UserLayoutRouteProps[] = [
         href: "/user/favorites",
         label: "",
         icon: Heart,
-        description: "Your favorite apps",
+        description: "Your favorite apps or stories",
       },
       {
         title: "Bookmarks",
         href: "/user/bookmarks",
         label: "",
         icon: Bookmark,
-        description: "Your bookmarked apps",
+        description: "Your bookmarked apps or stories",
       },
       {
         title: "Submitted Apps",
