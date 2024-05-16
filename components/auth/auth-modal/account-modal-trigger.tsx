@@ -74,14 +74,14 @@ const AccountModalTrigger = ({
     <TooltipProvider>
       {withAvartarUploader ? (
         <UserAvatar
-          profile={profile}
+          profile={profile as Profiles}
           className={className}
           avatarClassName={avatarClassName}
           withAvatarUploader={withAvartarUploader}
         />
       ) : (
         <UserAvatar
-          profile={profile}
+          profile={profile as Profiles}
           onClick={handleAvartarModalTriggerClick}
           className={cn(
             className,
