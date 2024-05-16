@@ -1,8 +1,4 @@
-import Image from "next/image"
-
 import { PostDetails } from "@/types/db_tables"
-import { UserCard } from "@/components/auth/auth-modal/user-card"
-import { UserAvatar } from "@/components/auth/avatar/user-avatar"
 
 import { getAuthorProfileById } from "../../_server/data"
 import { AuthorCard } from "./story-auth-card"
@@ -28,7 +24,6 @@ export const Story: React.FC<StoryProps> = async ({ post }) => {
         <StoryTitle post_title={post.post_title} />
 
         <AuthorCard author={authorProfile} post_created_at={post.created_at} />
-        <div className="h-20 border text-center">Author Avatar</div>
 
         <div className="">Post actions bar here</div>
 

@@ -8,7 +8,7 @@ interface StoryPageLayoutProps {
 
 const StoryPageLayout = ({ children }: StoryPageLayoutProps) => {
   return (
-    <div className="container flex flex-col">
+    <div className="container flex w-full flex-col">
       <StoryPageTitle />
       <BackButton className="dark:shadow-outline mt-4" />
       <main className="mt-5 flex-1">{children}</main>

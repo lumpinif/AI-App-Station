@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import AccountModalTrigger from "../auth/auth-modal/account-modal-trigger"
 
 interface PageTitleProps {
+  children?: React.ReactNode
   title: string
   subtitle?: string
   className?: string
@@ -15,6 +16,7 @@ interface PageTitleProps {
 }
 
 export const PageTitle = ({
+  children,
   title,
   subtitle,
   className,
@@ -57,11 +59,18 @@ export const PageTitle = ({
           </div>
         )}
       </div>
-      {WithAccountModalTrigger && (
-        <div className="sm:hidden">
-          <AccountModalTrigger />
-        </div>
-      )}
+      {WithAccountModalTrigger ||
+        (children && (
+          <div
+            className={cn(
+              children && "flex items-center gap-x-2",
+              WithAccountModalTrigger && "sm:hidden"
+            )}
+          >
+            {children}
+            {WithAccountModalTrigger && <AccountModalTrigger />}
+          </div>
+        ))}
     </div>
   )
 }
