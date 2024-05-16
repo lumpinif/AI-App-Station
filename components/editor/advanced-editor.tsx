@@ -13,9 +13,9 @@ import {
   type JSONContent,
 } from "novel"
 import { handleCommandNavigation, ImageResizer } from "novel/extensions"
-import { handleImageDrop, handleImagePaste } from "novel/plugins"
+import { handleImageDrop, handleImagePaste, UploadFn } from "novel/plugins"
 
-import { Apps } from "@/types/db_tables"
+import { Apps, Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { Separator } from "../ui/separator"
@@ -29,25 +29,29 @@ import { YoutubeSelector } from "./selectors/youtube-selector"
 import { slashCommand, suggestionItems } from "./slash-command"
 
 interface EditorProp {
-  app_id: Apps["app_id"]
-  submitted_by_user_id: Apps["submitted_by_user_id"]
+  content_id: Apps["app_id"] | Posts["post_id"]
+  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
   initialValue?: JSONContent
   onChange: (value: JSONContent) => void
   className?: string
   saveStatus?: string
   setSaveStatus: (status: string) => void
   setCharsCount?: (count: number) => void
+  uploadTo: string
+  bucketName: string
 }
 const NovelEditor = ({
-  app_id,
-  submitted_by_user_id,
+  uploadTo,
+  content_id,
+  user_id,
   initialValue,
   onChange,
   className,
   setSaveStatus,
   setCharsCount,
+  bucketName,
 }: EditorProp) => {
-  const uploadFn = createUploadFn(app_id, submitted_by_user_id)
+  const uploadFn = createUploadFn(content_id, user_id, uploadTo, bucketName)
   const youtubeTriggerRef = useRef<HTMLDivElement>(null)
   const [openNode, setOpenNode] = useState(false)
   // const [openColor, setOpenColor] = useState(false)
@@ -71,8 +75,8 @@ const NovelEditor = ({
             slashCommand({
               setOpenYoutubeLink,
               uploadFn,
-              app_id,
-              submitted_by_user_id,
+              content_id: content_id,
+              user_id: user_id,
             }),
           ]}
           editorProps={{
@@ -124,8 +128,8 @@ const NovelEditor = ({
               {suggestionItems({
                 setOpenYoutubeLink,
                 uploadFn,
-                app_id,
-                submitted_by_user_id,
+                content_id: content_id,
+                user_id: user_id,
               }).map((item) => (
                 <EditorCommandItem
                   value={item.title}

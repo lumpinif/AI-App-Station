@@ -19,7 +19,6 @@ interface AppContinueSubmitFormProps {
   initialData: Apps
   appId: string
 }
-
 const steps = [
   {
     id: "Step 1",
@@ -34,6 +33,7 @@ const steps = [
   { id: "Step 3", name: "Complete" },
 ]
 
+// TODO:REMOVE THIS COMPONENT BEFORE PRODUCTION
 export default function AppContinueSubmitForm({
   initialData,
   appId,

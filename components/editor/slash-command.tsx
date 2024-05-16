@@ -20,7 +20,7 @@ import {
   SuggestionItem,
 } from "novel/extensions"
 
-import { Apps } from "@/types/db_tables"
+import { Apps, Posts } from "@/types/db_tables"
 
 interface SlashCommandProps {
   setOpenYoutubeLink: (open: boolean) => void
@@ -28,18 +28,18 @@ interface SlashCommandProps {
     file: File,
     view: EditorView,
     pos: number,
-    app_id: Apps["app_id"],
-    submitted_by_user_id: Apps["submitted_by_user_id"]
+    content_id: Apps["app_id"] | Posts["post_id"],
+    user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
   ) => void
-  app_id: Apps["app_id"]
-  submitted_by_user_id: Apps["submitted_by_user_id"]
+  content_id: Apps["app_id"] | Posts["post_id"]
+  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
 }
 
 export const suggestionItems = ({
   setOpenYoutubeLink,
   uploadFn,
-  app_id,
-  submitted_by_user_id,
+  content_id,
+  user_id,
 }: SlashCommandProps): SuggestionItem[] =>
   createSuggestionItems([
     // {
@@ -171,7 +171,7 @@ export const suggestionItems = ({
           if (input.files?.length) {
             const file = input.files[0]
             const pos = editor.view.state.selection.from
-            uploadFn(file, editor.view, pos, app_id, submitted_by_user_id)
+            uploadFn(file, editor.view, pos, content_id, user_id)
           }
         }
         input.click()
@@ -192,8 +192,8 @@ export const suggestionItems = ({
 export const slashCommand = ({
   setOpenYoutubeLink,
   uploadFn,
-  app_id,
-  submitted_by_user_id,
+  content_id,
+  user_id,
 }: SlashCommandProps) =>
   Command.configure({
     suggestion: {
@@ -201,8 +201,8 @@ export const slashCommand = ({
         suggestionItems({
           setOpenYoutubeLink,
           uploadFn,
-          app_id,
-          submitted_by_user_id,
+          content_id: content_id,
+          user_id: user_id,
         }),
       render: renderItems,
     },

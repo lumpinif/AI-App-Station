@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { SquarePen } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -14,6 +15,9 @@ import {
 type StoryPostButtonProps = {}
 
 export const StoryPostButton: React.FC<StoryPostButtonProps> = ({}) => {
+  const currentPath = usePathname()
+  if (currentPath === "/story/post") return null
+
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>

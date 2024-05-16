@@ -1,23 +1,22 @@
-import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { createImageUpload } from "novel/plugins"
 import { toast } from "sonner"
 
-import { Apps } from "@/types/db_tables"
+import { Apps, Posts } from "@/types/db_tables"
 
 const onUpload = async (
   file: File,
-  app_id: Apps["app_id"],
-  submitted_by_user_id: Apps["submitted_by_user_id"]
+  bucketName: string,
+  content_id?: Apps["app_id"] | Posts["post_id"],
+  user_id?: Apps["submitted_by_user_id"] | Posts["post_author_id"],
+  uploadTo: string = "introduction"
 ) => {
-  const bucketNameApp = process.env
-    .NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP as string
-  const uploadPath = `${app_id}/${submitted_by_user_id}/introduction/${file.name}`
+  const uploadPath = `${content_id}/${user_id}/${uploadTo}/${file.name}`
 
   return new Promise<string>((resolve, reject) => {
     const supabase = createSupabaseBrowserClient()
     supabase.storage
-      .from(bucketNameApp)
+      .from(bucketName)
       .upload(uploadPath, file, {
         cacheControl: "3600",
         upsert: true,
@@ -49,11 +48,14 @@ const onUpload = async (
 }
 
 export const createUploadFn = (
-  app_id: Apps["app_id"],
-  submitted_by_user_id: Apps["submitted_by_user_id"]
+  content_id: Apps["app_id"] | Posts["post_id"],
+  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"],
+  uploadTo: string,
+  bucketName: string
 ) => {
   return createImageUpload({
-    onUpload: (file) => onUpload(file, app_id, submitted_by_user_id),
+    onUpload: (file) =>
+      onUpload(file, content_id, user_id, uploadTo, bucketName),
     validateFn: (file) => {
       if (!file.type.includes("image/")) {
         toast.error("File type not supported.")

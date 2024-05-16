@@ -1,57 +1,46 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import {
-  insertIntroduction,
-  removeEmptyIntroduction,
-} from "@/server/data/supabase-actions"
-import {
-  CloudUpload,
-  ImageIcon,
-  Loader2,
-  RotateCw,
-  TextCursorInput,
-  Type,
-  Unplug,
-  Video,
-} from "lucide-react"
+import { Loader2, RotateCw } from "lucide-react"
 import { JSONContent } from "novel"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { Apps } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
 import { defaultEditorContent } from "@/config/default-editor-content"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
-import { InfoPopover } from "./info-popover"
+import { insertStory, removeEmptyStoryContent } from "../../_server/data"
+import { StoryEditorInfoPopover } from "./story-editor-info-popover"
 
-type AppIntroductionFormProps = {
-  app_id: Apps["app_id"]
-  submitted_by_user_id: Apps["submitted_by_user_id"]
-  introduction: JSONContent
+type StoryPostEditorProps = {
+  post_id: Posts["post_id"]
+  post_slug: Posts["post_slug"]
+  post_author_id: Posts["post_author_id"]
+  post_content: JSONContent
 }
 
 // TODO: MOVE CONFIG SOMEWHERE ELSE
 // REMBER TO UPDATE THE LIMIT IN THE EXTENSION
 export const CHARS_LIMIT = 5000
 
-export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
-  app_id,
-  submitted_by_user_id,
-  introduction,
+export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
+  post_id,
+  post_slug,
+  post_author_id,
+  post_content,
 }) => {
-  if (!introduction || introduction === null) {
-    introduction = defaultEditorContent
+  if (!post_content || post_content === null) {
+    post_content = defaultEditorContent
   }
-  const isIntroductionEmpty =
-    JSON.stringify(introduction) ===
+  const isStoryEmpty =
+    JSON.stringify(post_content) ===
     '{"type":"doc","content":[{"type":"paragraph"}]}'
 
-  const [value, setValue] = useState<JSONContent>(introduction)
+  const [value, setValue] = useState<JSONContent>(post_content)
   const [isRetrying, setIsRetrying] = useState(false)
   const [saveStatus, setSaveStatus] = useState("Saved")
   const [retryCount, setRetryCount] = useState(0)
@@ -61,28 +50,28 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
   const MAX_RETRY_ATTEMPTS = 3
 
   useEffect(() => {
-    const handleRemoveEmptyIntroduction = async () => {
+    const handleRemoveEmptyStoryContent = async () => {
       if (
         value === null ||
-        isIntroductionEmpty ||
+        isStoryEmpty ||
         isEmpty ||
-        introduction === defaultEditorContent
+        post_content === defaultEditorContent
       ) {
-        // If the editor content is empty and the introduction is not already null,
-        // delete the introduction from the database
-        const { error } = await removeEmptyIntroduction(app_id)
+        // If the editor content is empty and the story is not already null,
+        // delete the story from the database
+        const { error } = await removeEmptyStoryContent(post_id, post_slug)
 
         if (error) {
-          console.error("Failed to remove empty introduction", error)
-          toast.error("Failed to save introduction. Please try again later.")
+          console.error("Failed to remove empty story", error)
+          toast.error("Failed to save story. Please try again later.")
           setSaveStatus("Failed to save")
           return null
         }
       }
     }
 
-    handleRemoveEmptyIntroduction()
-  }, [value, isIntroductionEmpty, app_id, isEmpty, introduction])
+    handleRemoveEmptyStoryContent()
+  }, [value, isStoryEmpty, isEmpty, post_content, post_id, post_slug])
 
   const handleEditorDebouncedSave = useDebouncedCallback(
     async (value: JSONContent) => {
@@ -95,7 +84,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
 
       setIsEmpty(isValueEmpty)
 
-      if (introduction !== value) {
+      if (post_content !== value) {
         const startTime = Date.now()
         const timeout = 5000 // 5 seconds timeout
         let error = null
@@ -104,10 +93,7 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           Date.now() - startTime < timeout &&
           retryCount < MAX_RETRY_ATTEMPTS
         ) {
-          error = await insertIntroduction(
-            app_id,
-            JSON.parse(JSON.stringify(value))
-          )
+          error = await insertStory(post_id, JSON.parse(JSON.stringify(value)))
           if (!error?.error) {
             break
           }
@@ -115,17 +101,17 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
         }
 
         if (error?.error) {
-          // console.log(
-          //   "Auto-retry failed. Max retry attempts reached or timeout exceeded."
-          // )
-          toast.error("Failed to save introduction. Please try again later.")
+          console.log(
+            "Auto-retry failed. Max retry attempts reached or timeout exceeded."
+          )
+          toast.error("Failed to save story. Please try again later.")
           setSaveStatus("Failed to save")
           setIsRetrying(false) // Set isRetring to false when auto-retry fails
           setRetryCount(0) // Reset retryCount to 0
           return null
         }
         if (saveStatus === "Failed to save") {
-          console.log("Auto-retry successful. Introduction saved.")
+          console.log("Auto-retry successful. Story saved.")
           setIsRetrying(false)
           setRetryCount(0)
         }
@@ -137,7 +123,6 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
 
   const handleRetry = () => {
     if (saveStatus === "Failed to save" && retryCount < MAX_RETRY_ATTEMPTS) {
-      console.log("Retry button clicked. Starting auto-retry...")
       setIsRetrying(true)
       setRetryCount((prevCount) => prevCount + 1)
       handleEditorDebouncedSave(value as JSONContent)
@@ -152,80 +137,16 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
             <div className="flex items-baseline space-x-2">
               <span className="flex items-center space-x-2">
                 <h1 className="w-fit select-none text-xl font-semibold hover:cursor-pointer">
-                  App Inroduction
+                  Enter your story here
                 </h1>
-                <InfoPopover>
-                  <div className="px-2">
-                    <h3>Editor Actions</h3>
-                    <Separator />
-
-                    <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
-                      <li className="flex items-center space-x-4">
-                        <Type className="size-4" />
-                        <span className="w-full">
-                          Start typing to add your content
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-4">
-                        <ImageIcon className="size-4" />
-                        <span className="w-full">
-                          Drag and drop images to put at where you want
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-4">
-                        <Video className="size-4" />
-                        <span className="w-full">
-                          Support embeding Youtube videos
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-4">
-                        <TextCursorInput className="size-4" />
-                        <span className="w-full">
-                          Select text to customize it
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-4">
-                        <kbd className="bg-muted rounded p-1">/</kbd>
-                        <span className="w-full">
-                          Press / to open the command menu
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-4">
-                        <Unplug className="size-4" />
-                        <span className="w-full">
-                          Select Text to embed links or videos
-                        </span>
-                      </li>
-                      <li className="flex items-center space-x-4">
-                        <CloudUpload className="size-4" />
-                        <span className="w-full">
-                          Automatically saves your content
-                        </span>
-                      </li>
-                    </ul>
-
-                    <h3>Editor Features</h3>
-                    <Separator />
-                    <ul className="text-muted-foreground mt-2">
-                      <li> - Rich text editing</li>
-                      <li> - Capture Quote</li>
-                      <li> - To-do List</li>
-                      <li> - Bullet List</li>
-                      <li> - Numbered List</li>
-                      <li> - Uploading Images</li>
-                      <li> - Embedding Youtube Videos</li>
-                      <li> - Embedding links</li>
-                      <li> - Embedding code snippets</li>
-                    </ul>
-                  </div>
-                </InfoPopover>
+                <StoryEditorInfoPopover />
               </span>
             </div>
             <div className="flex items-center gap-x-2">
               {/* TODO: ADD A CLEAR BUTTON FOR THE DEFAUL CONTENT */}
               {/* {!isEmpty &&
-                !isIntroductionEmpty &&
-                introduction === defaultEditorContent && (
+                !isStoryEmpty &&
+                story === defaultEditorContent && (
                   <Button
                     size={"sm"}
                     className="bg-accent hover:bg-accent/80 text-muted-foreground h-fit rounded-lg px-2 py-1 text-xs"
@@ -294,12 +215,12 @@ export const AppIntroductionForm: React.FC<AppIntroductionFormProps> = ({
           </span>
         </div>
         <NovelEditor
-          uploadTo="introduction"
+          uploadTo="story"
           bucketName={
-            process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP as string
+            process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_POST as string
           }
-          content_id={app_id}
-          user_id={submitted_by_user_id}
+          content_id={post_id}
+          user_id={post_author_id}
           initialValue={value}
           onChange={handleEditorDebouncedSave}
           setSaveStatus={setSaveStatus}
