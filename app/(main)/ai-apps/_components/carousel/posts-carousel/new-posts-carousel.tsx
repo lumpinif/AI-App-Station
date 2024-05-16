@@ -7,6 +7,7 @@ import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
 import { PostWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import useMediaQuery from "@/hooks/use-media-query"
 import {
   Carousel,
   CarouselIndicator,
@@ -35,6 +36,7 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
   isIndicator,
 }) => {
   const [isHovered, setIsHovered] = useState(false)
+  const { isMobile } = useMediaQuery()
 
   const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
     playOnInit: true,
@@ -58,8 +60,12 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
         dragThreshold: 5,
       }}
       plugins={plugins}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => {
+        if (!isMobile) setIsHovered(true)
+      }}
+      onMouseLeave={() => {
+        if (!isMobile) setIsHovered(false)
+      }}
     >
       <div className="relative">
         <CarouselMainContainer className="h-96 space-x-4">
