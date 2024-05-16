@@ -6,15 +6,16 @@ import { Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useUserData } from "@/hooks/react-hooks/use-user"
 import { useAvatarUploader } from "@/hooks/use-avatar-uploader"
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons/icons"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
+import { AvatarIcon } from "./avatar-icon"
 import { AvatarResetButton } from "./avatar-reset-button"
 import { AvatarUploader } from "./avatar-uploader"
 
 type UserAvatarProps = {
-  profile?: Profiles
+  profile: Profiles
   onClick?: (e: any) => void
   onUpload?: (filePath: string) => void
   className?: string
@@ -43,31 +44,12 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   return (
     <>
       {!withAvatarUploader ? (
-        <Avatar
-          className={cn(
-            "flex items-center justify-center hover:cursor-pointer",
-            className
-          )}
+        <AvatarIcon
+          profile={profile}
           onClick={onClick}
-        >
-          {!profile?.avatar_url ? (
-            <Icons.user
-              className={cn(
-                "h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer",
-                avatarClassName
-              )}
-            />
-          ) : (
-            <AvatarImage
-              src={`${profile.avatar_url}`}
-              alt={`${profile.full_name || profile.user_name || "User"}`}
-              className={cn(
-                "animate-fade h-full w-full rounded-full object-cover",
-                avatarClassName
-              )}
-            />
-          )}
-        </Avatar>
+          className={className}
+          avatarClassName={avatarClassName}
+        />
       ) : (
         <div className="flex w-full items-center justify-between space-x-2 sm:space-x-4">
           <Avatar
@@ -78,6 +60,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
             )}
           >
             <div className="relative flex size-full cursor-pointer items-center justify-center">
+              {/* TODO: CHECK IF WE CAN USE AVATARFALLBACK HERE */}
               {!profile?.avatar_url ? (
                 <>
                   <Icons.user

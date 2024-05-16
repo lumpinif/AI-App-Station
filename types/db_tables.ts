@@ -26,6 +26,7 @@ export type Post_Comments = Tables<"post_comments">
 export type Post_likes = Tables<"post_likes">
 export type Posts = Tables<"posts">
 export type Posts_Categories = Tables<"posts_categories">
+export type Post_Bookmarks = Tables<"post_bookmarks">
 
 // Profile and user collection tables
 export type Profiles = Tables<"profiles">
@@ -59,6 +60,13 @@ export type PostCardProps = Pick<
   | "post_image_src"
   | "post_slug"
 >
+// Post details with categories and other related data
+export type PostDetails = Posts & {
+  categories?: Categories[]
+  profiles: Profiles
+  post_likes: Post_likes[]
+  post_bookmarks: Post_Bookmarks[]
+}
 
 // Comment related types
 

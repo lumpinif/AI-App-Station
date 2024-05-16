@@ -10,6 +10,7 @@ import {
   Categories,
   CommentWithProfile,
   Developers,
+  PostDetails,
 } from "@/types/db_tables"
 import { capitalizeFirstLetter, nameToSlug } from "@/lib/utils"
 
@@ -308,10 +309,12 @@ export async function getPost(post_slug: string) {
 
   let { data: post, error } = await supabase
     .from("posts")
-    .select(`*, posts_categories(*), profiles(*)`)
+    .select(
+      `*, posts_categories(*), profiles(*), post_likes(*), post_bookmarks(*)`
+    )
     .eq("post_slug", post_slug)
     .match({ post_publish_status: "published" })
-    .single()
+    .single<PostDetails>()
 
   // error handling
   if (error) return { post: null, error: getErrorMessage(error) }
