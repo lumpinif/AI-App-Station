@@ -27,12 +27,12 @@ export const Story: React.FC<StoryProps> = async ({ post }) => {
       <div className="mx-auto w-full max-w-4xl space-y-4 rounded-lg border p-2 shadow-sm sm:space-y-6 sm:px-6 sm:py-4 md:space-y-8">
         <StoryTitle post_title={post.post_title} />
 
-        <AuthorCard author={authorProfile} />
+        <AuthorCard author={authorProfile} post_created_at={post.created_at} />
         <div className="h-20 border text-center">Author Avatar</div>
 
-        <div className="">Post actions bar</div>
+        <div className="">Post actions bar here</div>
 
-        <div className="">Post content</div>
+        <div className="">Post content here</div>
       </div>
     </section>
   )
