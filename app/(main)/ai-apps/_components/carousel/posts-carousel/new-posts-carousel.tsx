@@ -2,11 +2,10 @@
 
 import { useMemo, useState } from "react"
 import { EmblaPluginType } from "embla-carousel"
-import AutoScroll from "embla-carousel-auto-scroll"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { Posts } from "@/types/db_tables"
+import { PostWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -21,7 +20,7 @@ import {
 import { PostCard } from "../../cards/new-post-card"
 
 type PostsCarouselProps = {
-  data: Posts[]
+  posts: PostWithProfile[]
   className?: string
   isAutpPlay?: boolean
   isWheelGestures?: boolean
@@ -29,7 +28,7 @@ type PostsCarouselProps = {
 }
 
 const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
-  data: Posts,
+  posts,
   className,
   isWheelGestures,
   isAutpPlay,
@@ -64,15 +63,15 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
     >
       <div className="relative">
         <CarouselMainContainer className="h-96 space-x-4">
-          {Posts.map((post, index) => (
+          {posts.map((post, index) => (
             <SliderMainItem
               key={index}
               className={cn("bg-transparent", className)}
             >
               <div className="bg-card relative flex size-full items-center justify-center rounded-2xl">
                 <PostCard
-                  {...post}
-                  post_image_src={`https://picsum.photos/600/350?v=${index}`}
+                  post={post}
+                  // post_image_src={`https://picsum.photos/600/350?v=${index}`}
                 />
               </div>
             </SliderMainItem>
@@ -81,7 +80,7 @@ const NewPostsCarousel: React.FC<PostsCarouselProps> = ({
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
           <CarouselThumbsContainer className="gap-x-2">
             {isIndicator &&
-              Array.from({ length: Posts.length }).map((_, index) => (
+              Array.from({ length: posts.length }).map((_, index) => (
                 <CarouselIndicator key={index} index={index} />
               ))}
           </CarouselThumbsContainer>

@@ -51,16 +51,11 @@ export type AppDetails = Apps & {
   app_bookmarks: App_bookmarks[]
 }
 
-// Post card properties
-export type PostCardProps = Pick<
-  Posts,
-  | "post_label"
-  | "post_title"
-  | "post_description"
-  | "post_image_src"
-  | "post_slug"
->
 // Post details with categories and other related data
+export type PostWithProfile = Posts & {
+  profiles: Profiles
+}
+
 export type PostDetails = Posts & {
   categories?: Categories[]
   profiles: Profiles

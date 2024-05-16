@@ -64,7 +64,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
           <Suspense fallback={"Loading..."}>
             {data.map((post, index) => (
               <CarouselItem key={index} className={cn("", className)}>
-                <PostCard key={post.post_id} {...post} />
+                <PostCard post={post} />
               </CarouselItem>
             ))}
           </Suspense>

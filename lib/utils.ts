@@ -40,7 +40,7 @@ export function nameToSlug(title: string) {
     .replace(/-+/g, "-")
 }
 
-function normalizeString(value: string): string {
+export function normalizeString(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]/g, "")
 }
 

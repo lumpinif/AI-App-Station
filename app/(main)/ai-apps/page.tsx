@@ -61,14 +61,14 @@ const AIAppsMainPage = async () => {
         <AiAppsPagesTitle />
         <Suspense fallback={<div>Loading...</div>}>
           <NewPostsCarousel
-            data={heroPosts}
+            posts={heroPosts}
             isAutpPlay={true}
             isWheelGestures={true}
             isIndicator={true}
           />
         </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
-          <NewPostsCarousel data={allPosts} className="md:basis-1/2" />
+          <NewPostsCarousel posts={allPosts} className="md:basis-1/2" />
         </Suspense>
         <div className="mt-4">
           <AppCardsCarousel

@@ -1,19 +1,27 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { PostCardProps } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import { Posts, PostWithProfile } from "@/types/db_tables"
+import { cn, normalizeString } from "@/lib/utils"
 
-export const PostCard: React.FC<PostCardProps> = ({
-  post_label,
-  post_title,
-  post_description,
-  post_image_src,
-  post_slug,
-}) => {
+type PostCardProps = {
+  post: PostWithProfile
+}
+
+export const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const {
+    post_id,
+    post_slug,
+    post_title,
+    post_label,
+    post_author_id,
+    post_image_src,
+    post_description,
+  } = post
+
   return (
     <Link
-      href={`/story/${post_slug}`}
+      href={`/story/${post_slug}~${post_id}`}
       scroll={false}
       passHref
       className="size-full rounded-2xl"
@@ -37,9 +45,13 @@ export const PostCard: React.FC<PostCardProps> = ({
   )
 }
 
-export const ImageElement: React.FC<
-  Pick<PostCardProps, "post_image_src"> & { className?: string }
-> = ({ post_image_src, className }) => {
+export const ImageElement = ({
+  post_image_src,
+  className,
+}: {
+  post_image_src: Posts["post_image_src"]
+  className?: string
+}) => {
   return (
     <Image
       alt={post_image_src ? "Post Image" : "Feature Image"}
@@ -50,9 +62,17 @@ export const ImageElement: React.FC<
   )
 }
 
-const ImageText: React.FC<
-  Omit<PostCardProps, "post_image_src" | "post_slug"> & { className?: string }
-> = ({ className, post_label, post_title, post_description }) => {
+const ImageText = ({
+  className,
+  post_label,
+  post_title,
+  post_description,
+}: {
+  post_label: Posts["post_label"]
+  post_title: Posts["post_title"]
+  post_description: Posts["post_description"]
+  className?: string
+}) => {
   return (
     <div
       className={cn(

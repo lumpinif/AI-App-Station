@@ -27,7 +27,7 @@ export async function generateStaticParams() {
 
   if (allPosts) {
     const storyParams = allPosts.map((post) => ({
-      slug: post.post_slug,
+      slug: `${post.post_slug}~${post.post_id}`,
     }))
     return storyParams
   }
@@ -39,9 +39,9 @@ export default async function StoryPage({
 }: {
   params: { slug: string }
 }) {
-  const post_slug = nameToSlug(params.slug)
+  const [post_slug, post_id] = params.slug.split("~")
 
-  const { post, error: getPostError } = await getPost(post_slug)
+  const { post, error: getPostError } = await getPost(post_slug, post_id)
 
   if (!post) {
     notFound()
