@@ -23,7 +23,7 @@ const AccountModal = ({ user }: { user: User | null }) => {
       onChange={onChange}
       drawerContentClassName="outline-none rounded-t-3xl"
       drawerHeight="h-[90%]"
-      dialogContentClassName="max-w-xl rounded-2xl overflow-hidden"
+      dialogContentClassName="max-w-xl rounded-2xl border-0 outline-none"
       title="Account"
     >
       {user?.id ? (

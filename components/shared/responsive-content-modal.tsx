@@ -56,7 +56,7 @@ export default function ResponsiveContentModal({
     <Dialog open={isOpen} onOpenChange={onChange} defaultOpen={isOpen}>
       <DialogContent
         onOpenAutoFocus={(e) => e.preventDefault()}
-        onCloseAutoFocus={(e) => e.preventDefault()}
+        // onCloseAutoFocus={(e) => e.preventDefault()}
         className={cn(dialogContentClassName)}
       >
         {children}
