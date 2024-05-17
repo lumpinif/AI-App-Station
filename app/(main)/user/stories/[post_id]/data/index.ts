@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
+import { JSONContent } from "novel"
 
 import { Posts, Profiles } from "@/types/db_tables"
 
@@ -34,6 +35,18 @@ export async function getAuthorProfileById(
   }
 
   return { authorProfile }
+}
+
+export async function getPostSlugById(post_id: Posts["post_id"]) {
+  const supabase = await createSupabaseServerClient()
+
+  const { data: post_slug, error } = await supabase
+    .from("posts")
+    .select("post_slug")
+    .match({ post_id })
+    .single()
+
+  return { post_slug, error }
 }
 
 export async function removeEmptyStoryContent(
@@ -71,20 +84,19 @@ export async function removeEmptyStoryContent(
     revalidatePath(`/story/${post_slug}~${post_id}`)
     revalidatePath(`/user/posts/${post_id}`)
 
-    return { error: null }
+    return { error: updateError }
   } catch (error) {
     console.error("Error in removeEmptyStoryContent:", error)
     return { error: error as Error }
   }
 }
 
-export async function insertStory(
+export async function insertStoryContent(
   post_id: Posts["post_id"],
-  post_content: Record<string, any>
+  post_content: JSONContent
 ) {
   const supabase = await createSupabaseServerClient()
-  // const slug = await getSlugFromAppId(app_id)
-
+  const { post_slug } = await getPostSlugById(post_id)
   if (!post_id || !post_content) {
     return { error: null }
   }
@@ -101,7 +113,7 @@ export async function insertStory(
     }
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
-    // revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/ai-apps/${post_slug}~${post_id}`)
     revalidatePath(`/user/stories/${post_id}`)
 
     return { error }

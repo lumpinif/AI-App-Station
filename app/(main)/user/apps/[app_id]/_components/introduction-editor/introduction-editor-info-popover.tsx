@@ -1,3 +1,4 @@
+import { Separator } from "@radix-ui/react-dropdown-menu"
 import {
   CloudUpload,
   ImageIcon,
@@ -7,17 +8,15 @@ import {
   Video,
 } from "lucide-react"
 
-import { Separator } from "@/components/ui/separator"
+import { InfoPopover } from "@/app/(main)/user/apps/[app_id]/_components/forms/info-popover"
 
-import { InfoPopover } from "./info-popover"
+type IntroductionEditorInfoPopoverProps = {}
 
-type AppIntroductionFormInfoPopoverProps = {}
-
-export const AppIntroductionFormInfoPopover: React.FC<
-  AppIntroductionFormInfoPopoverProps
+export const IntroductionEditorInfoPopover: React.FC<
+  IntroductionEditorInfoPopoverProps
 > = ({}) => {
   return (
-    <InfoPopover>
+    <InfoPopover align="end">
       <div className="px-2">
         <h3>Editor Actions</h3>
         <Separator />

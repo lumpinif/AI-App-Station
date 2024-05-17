@@ -1,27 +1,33 @@
 import { useCallback, useEffect, useState } from "react"
+import _ from "lodash"
 import { JSONContent } from "novel"
 import { toast } from "sonner"
 
-import { insertStory as insertStoryService } from "@/app/(main)/story/_server/data"
+import { insertContentServiceResult } from "@/types/shared"
 
-interface UseInsertStoryProps {
-  post_id: string
-  post_content: JSONContent
+interface UseInsertContentProps<T> {
+  content_id: T
+  content: JSONContent
   maxRetryAttempts: number
+  insertContentService: (
+    content_id: T,
+    content: JSONContent
+  ) => Promise<insertContentServiceResult>
 }
 
-const useInsertStory = ({
-  post_id,
-  post_content,
+const useInsertContent = <T>({
+  content_id,
+  content,
   maxRetryAttempts,
-}: UseInsertStoryProps) => {
+  insertContentService,
+}: UseInsertContentProps<T>) => {
   const [saveStatus, setSaveStatus] = useState<string>("Saved")
   const [isRetrying, setIsRetrying] = useState<boolean>(false)
   const [retryCount, setRetryCount] = useState<number>(0)
 
-  const insertStory = useCallback(
+  const insertContent = useCallback(
     async (value: JSONContent, isRetry = false) => {
-      if (post_content !== value || isRetry) {
+      if (!_.isEqual(content, value) || isRetry) {
         const startTime = Date.now()
         const timeout = 5000 // 5 seconds timeout
         let error = null
@@ -31,8 +37,8 @@ const useInsertStory = ({
           Date.now() - startTime < timeout &&
           currentRetryCount < maxRetryAttempts
         ) {
-          error = await insertStoryService(
-            post_id,
+          error = await insertContentService(
+            content_id,
             JSON.parse(JSON.stringify(value))
           )
 
@@ -48,7 +54,7 @@ const useInsertStory = ({
         }
 
         if (error?.error) {
-          toast.error("Failed to save story. Please try again later.")
+          toast.error("Failed to save content. Please try again later.")
           setSaveStatus("Failed to save")
           setIsRetrying(false) // Set isRetrying to false when auto-retry fails
           setRetryCount(0) // Reset retryCount to 0
@@ -57,7 +63,7 @@ const useInsertStory = ({
         }
       }
     },
-    [post_id, post_content, maxRetryAttempts]
+    [content_id, content, maxRetryAttempts, insertContentService]
   )
 
   const handleRetry = useCallback(() => {
@@ -69,12 +75,12 @@ const useInsertStory = ({
 
   useEffect(() => {
     if (isRetrying && retryCount < maxRetryAttempts) {
-      insertStory(post_content, true)
+      insertContent(content, true)
     }
-  }, [isRetrying, retryCount, maxRetryAttempts, post_content, insertStory])
+  }, [isRetrying, retryCount, maxRetryAttempts, content, insertContent])
 
   return {
-    insertStory,
+    insertContent,
     saveStatus,
     setSaveStatus,
     isRetrying,
@@ -83,4 +89,4 @@ const useInsertStory = ({
   }
 }
 
-export default useInsertStory
+export default useInsertContent

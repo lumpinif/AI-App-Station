@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import _ from "lodash"
 import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 
-import { Posts } from "@/types/db_tables"
+import { Apps } from "@/types/db_tables"
 import { defaultEditorContent } from "@/config/default-editor-content"
 import { EMPTY_CONTENT_STRING, MAX_RETRY_ATTEMPTS } from "@/config/editor"
 import useInsertContent from "@/hooks/editor/use-insert-content"
@@ -13,25 +13,25 @@ import useRemoveContent from "@/hooks/editor/use-remove-content"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
-import { insertStoryContent, removeEmptyStoryContent } from "../data"
-import { StoryEditorHeader } from "./story-editor-header"
+import { insertIntroduction, removeEmptyIntroduction } from "../_server"
+import { IntroductionEditorHeader } from "./introduction-editor-header"
 
-type StoryPostEditorProps = {
-  post_id: Posts["post_id"]
-  post_slug: Posts["post_slug"]
-  post_author_id: Posts["post_author_id"]
-  post_content: JSONContent
+type AppIntroductionEditorProps = {
+  app_id: Apps["app_id"]
+  app_slug: Apps["app_slug"]
+  submitted_by_user_id: Apps["submitted_by_user_id"]
+  introduction: JSONContent
 }
 
-export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
-  post_id,
-  post_slug,
-  post_author_id,
-  post_content,
+export const AppIntroductionEditor: React.FC<AppIntroductionEditorProps> = ({
+  app_id,
+  app_slug,
+  submitted_by_user_id,
+  introduction,
 }) => {
   const initialContent = useMemo(
-    () => post_content || defaultEditorContent,
-    [post_content]
+    () => introduction || defaultEditorContent,
+    [introduction]
   )
 
   const isStoryEmpty = JSON.stringify(initialContent) === EMPTY_CONTENT_STRING
@@ -41,22 +41,19 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   const [isEmpty, setIsEmpty] = useState(isStoryEmpty)
 
   const { insertContent, saveStatus, setSaveStatus, isRetrying, handleRetry } =
-    useInsertContent<Posts["post_id"]>({
-      content_id: post_id,
+    useInsertContent<Apps["app_id"]>({
+      content_id: app_id,
       content: value,
       maxRetryAttempts: MAX_RETRY_ATTEMPTS,
-      insertContentService: insertStoryContent,
+      insertContentService: insertIntroduction,
     })
 
-  const { removeContent } = useRemoveContent<
-    Posts["post_id"],
-    Posts["post_slug"]
-  >({
-    content_id: post_id,
-    content_slug: post_slug,
+  const { removeContent } = useRemoveContent<Apps["app_id"], Apps["app_slug"]>({
+    content_id: app_id,
+    content_slug: app_slug,
     value,
     initialContent,
-    removeContentService: removeEmptyStoryContent,
+    removeContentService: removeEmptyIntroduction,
   })
 
   const handleEditorDebouncedSave = useDebouncedCallback(
@@ -68,7 +65,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
 
       setIsEmpty(isValueEmpty)
 
-      if (!_.isEqual(post_content, newValue)) {
+      if (!_.isEqual(introduction, newValue)) {
         insertContent(newValue)
       }
 
@@ -79,49 +76,37 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     1000
   )
 
-  useEffect(() => {
-    const isStoryDefault = _.isEqual(value, defaultEditorContent)
-
-    if (
-      value === null ||
-      isStoryDefault ||
-      JSON.stringify(value) === EMPTY_CONTENT_STRING
-    ) {
-      removeContent()
-    }
-  }, [value, removeContent])
-
   const memoizedNovelEditor = useMemo(
     () => (
       <NovelEditor
-        uploadTo="story"
+        uploadTo="introduction"
         bucketName={
-          process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_POST as string
+          process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP as string
         }
-        content_id={post_id}
-        user_id={post_author_id}
+        content_id={app_id}
+        user_id={submitted_by_user_id}
         initialValue={value}
         onChange={handleEditorDebouncedSave}
         setSaveStatus={setSaveStatus}
         setCharsCount={setCharsCount}
         saveStatus={saveStatus}
-        className="border-0"
+        className="border-muted-foreground dark:border-border border border-dashed md:p-8 md:py-4 lg:p-12 lg:py-6"
       />
     ),
     [
-      post_id,
-      post_author_id,
-      value,
+      app_id,
       handleEditorDebouncedSave,
-      setSaveStatus,
       saveStatus,
+      setSaveStatus,
+      submitted_by_user_id,
+      value,
     ]
   )
 
   return (
     <TooltipProvider>
       <section className="w-full flex-col space-y-6 sm:space-y-8">
-        <StoryEditorHeader
+        <IntroductionEditorHeader
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}

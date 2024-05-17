@@ -4,25 +4,47 @@ import { CHARS_LIMIT } from "@/config/editor"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-import { StoryEditorInfoPopover } from "./story-editor-info-popover"
+import { IntroductionEditorInfoPopover } from "./introduction-editor-info-popover"
 
-type StoryEditorHeaderProps = {
+type IntroductionEditorHeaderProps = {
   charsCount: number
   saveStatus: string
   handleRetry: () => void
   isRetrying: boolean
 }
 
-export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
-  charsCount,
-  saveStatus,
-  isRetrying,
-  handleRetry,
-}) => {
+export const IntroductionEditorHeader: React.FC<
+  IntroductionEditorHeaderProps
+> = ({ charsCount, saveStatus, isRetrying, handleRetry }) => {
   return (
     <div className="flex-col space-y-2">
-      <div className="flex items-center justify-end gap-x-2">
+      <div className="flex items-baseline justify-between">
+        <div className="flex items-baseline space-x-2">
+          <span className="flex items-center space-x-2">
+            <h1 className="w-fit select-none text-xl font-semibold hover:cursor-pointer">
+              App Inroduction
+            </h1>
+            <IntroductionEditorInfoPopover />
+          </span>
+        </div>
         <div className="flex items-center gap-x-2">
+          {/* TODO: ADD A CLEAR BUTTON FOR THE DEFAUL CONTENT */}
+          {/* {!isEmpty &&
+                !isIntroductionEmpty &&
+                introduction === defaultEditorContent && (
+                  <Button
+                    size={"sm"}
+                    className="bg-accent hover:bg-accent/80 text-muted-foreground h-fit rounded-lg px-2 py-1 text-xs"
+                    variant={"default"}
+                    onClick={handleClearDefaultContent}
+                    disabled={isEmpty}
+                  >
+                    <span className="flex items-center gap-x-2">
+                      <span className="flex">Clear the default content</span>
+                    </span>
+                  </Button>
+                )} */}
+
           <div className="bg-accent text-muted-foreground flex h-fit select-none rounded-lg px-2 py-1 text-xs">
             <span>
               {charsCount}/{CHARS_LIMIT}
@@ -71,15 +93,9 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
             )}
           </div>
         </div>
-
-        <div className="flex items-center space-x-2">
-          <span className="flex items-center space-x-2">
-            <StoryEditorInfoPopover />
-          </span>
-        </div>
       </div>
-
-      <span className="text-muted-foreground/80 flex cursor-default select-none justify-end text-xs">
+      {/* <Separator /> */}
+      <span className="text-muted-foreground/80 flex cursor-default select-none text-xs">
         Select text to edit or Press &apos;/&apos; for commands
       </span>
     </div>

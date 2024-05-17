@@ -18,12 +18,12 @@ import { PageTitle } from "@/components/layout/page-title"
 import AppCategoriesForm from "./_components/forms/app-categories-form"
 import { AppDevelopersForm } from "./_components/forms/app-developers-form"
 import { AppIconForm } from "./_components/forms/app-icon-form"
-import { AppIntroductionForm } from "./_components/forms/app-introduction-form"
 import { AppPublishButton } from "./_components/forms/app-publish-button"
 import { AppScreenshotsForm } from "./_components/forms/app-screenshots-form"
 import { AppSubInfoForm } from "./_components/forms/app-sub-info-form"
 import { AppTitleDescriptionUrlForms } from "./_components/forms/app-title-description-url-form"
 import { InfoPopover } from "./_components/forms/info-popover"
+import { AppIntroductionEditor } from "./_components/introduction-editor/app-introduction-editor"
 
 type SubmittedAppIdPageProps = {
   params: { app_id: string }
@@ -213,8 +213,9 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
           </Suspense>
 
           {/* Introduction */}
-          <AppIntroductionForm
+          <AppIntroductionEditor
             app_id={app.app_id}
+            app_slug={app.app_slug}
             submitted_by_user_id={user.id}
             introduction={app.introduction as JSONContent}
           />

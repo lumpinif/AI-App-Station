@@ -1,6 +1,6 @@
 import { PostDetails } from "@/types/db_tables"
 
-import { getAuthorProfileById } from "../../_server/data"
+import { getAuthorProfileById } from "../../../user/stories/[post_id]/data"
 import StoryPageWrapper from "../story-page-wrapper"
 import { AuthorCard } from "./story-auth-card"
 import { StoryTitle } from "./story-title"

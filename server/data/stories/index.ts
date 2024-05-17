@@ -1,20 +1,8 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import {
-  App_Comments,
-  AppDetails,
-  Apps,
-  Categories,
-  CommentWithProfile,
-  Developers,
-  PostDetails,
-  Posts,
-  PostWithProfile,
-} from "@/types/db_tables"
-import { capitalizeFirstLetter, nameToSlug } from "@/lib/utils"
+import { PostDetails, Posts, PostWithProfile } from "@/types/db_tables"
 import { getErrorMessage } from "@/app/(main)/user/apps/_lib/handle-error"
 
 // fetch Posts
