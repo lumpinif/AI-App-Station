@@ -16,7 +16,7 @@ export const StoryEditorInfoPopover: React.FC<
   StoryEditorInfoPopoverProps
 > = ({}) => {
   return (
-    <InfoPopover>
+    <InfoPopover align="end">
       <div className="px-2">
         <h3>Editor Actions</h3>
         <Separator />

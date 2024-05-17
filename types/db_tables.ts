@@ -16,9 +16,10 @@ export type Apps = Tables<"apps">
 export type Apps_Categories = Tables<"apps_categories">
 export type App_Developers = Tables<"apps_developers">
 
-// Category and developer tables
+// Category , developer and label tables
 export type Categories = Tables<"categories">
 export type Developers = Tables<"developers">
+export type Labels = Tables<"labels">
 
 // Post related tables
 export type Post_Comment_likes = Tables<"post_comment_likes">
@@ -57,6 +58,7 @@ export type PostWithProfile = Posts & {
 }
 
 export type PostDetails = Posts & {
+  labels?: Labels[]
   categories?: Categories[]
   profiles: Profiles
   post_likes: Post_likes[]

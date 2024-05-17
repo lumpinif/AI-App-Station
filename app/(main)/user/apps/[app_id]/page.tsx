@@ -40,7 +40,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   } = await getUserSession()
 
   // TODO: HANDLE ERROR
-  if (!user) {
+  if (!user?.id) {
     return redirect("/signin")
   }
 

@@ -67,7 +67,8 @@ export async function removeEmptyStoryContent(
     }
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION CONSIDER USE AUTHOR ID TO GET THE PROFILE NAME FOR THE ROUTE SEGEMENT
-    revalidatePath(`/story/${user.id}/${post_slug}`)
+
+    revalidatePath(`/story/${post_slug}~${post_id}`)
     revalidatePath(`/user/posts/${post_id}`)
 
     return { error: null }
@@ -92,7 +93,7 @@ export async function insertStory(
     const { error } = await supabase
       .from("posts")
       .update({ post_content: post_content })
-      .eq("post_id", post_id)
+      .match({ post_id })
 
     if (error) {
       console.error("Error inserting story:", error)
@@ -101,7 +102,7 @@ export async function insertStory(
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
     // revalidatePath(`/ai-apps/${slug?.app_slug}`)
-    // revalidatePath(`/user/apps/${app_id}`)
+    revalidatePath(`/user/stories/${post_id}`)
 
     return { error }
   } catch (error) {

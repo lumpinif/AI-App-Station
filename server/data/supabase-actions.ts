@@ -272,62 +272,6 @@ export async function UpdateAppByCopyRight(
   return { updatedApp, error }
 }
 
-// fetch Posts
-export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {
-  const supabase = await createSupabaseServerClient()
-
-  let { data: posts, error } = await supabase
-    .from("posts")
-    .select("*,profiles(*)")
-    // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE
-    .eq("post_publish_status", "published")
-    .eq("is_hero_featured", noHeroFeaturedPosts)
-    .order("created_at", { ascending: false })
-    .returns<PostWithProfile[]>()
-
-  // error handling
-  if (error) return { posts: null, error: getErrorMessage(error) }
-
-  return { posts, error }
-}
-
-export async function getAllHeroFeaturedPosts() {
-  const supabase = await createSupabaseServerClient()
-
-  let { data: posts, error } = await supabase
-    .from("posts")
-    .select("*,profiles(*)")
-    .eq("is_hero_featured", true)
-    .match({ post_publish_status: "published" })
-    .order("created_at", { ascending: false })
-    .returns<PostWithProfile[]>()
-
-  // error handling
-  if (error) return { posts: null, error: getErrorMessage(error) }
-
-  return { posts, error }
-}
-
-export async function getPost(
-  post_slug: Posts["post_slug"],
-  post_id: Posts["post_id"]
-) {
-  const supabase = await createSupabaseServerClient()
-
-  let { data: post, error } = await supabase
-    .from("posts")
-    .select(
-      `*, posts_categories(*), profiles(*), post_likes(*), post_bookmarks(*)`
-    )
-    .match({ post_publish_status: "published", post_slug, post_id })
-    .single<PostDetails>()
-
-  // error handling
-  if (error) return { post: null, error: getErrorMessage(error) }
-
-  return { post, error }
-}
-
 // Fetch Apps
 
 export async function getAppBySlug(app_slug: string) {
