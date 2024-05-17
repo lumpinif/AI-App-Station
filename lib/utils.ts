@@ -3,7 +3,7 @@ import { format, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
 import * as z from "zod"
 
-import { USER_WEBSITE_MAX_LENGTH } from "@/config/profile-form-config"
+import { USER_WEBSITE_MAX_LENGTH } from "@/config/profile/profile-form-config"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

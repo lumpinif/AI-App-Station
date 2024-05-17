@@ -51,7 +51,7 @@ const NovelEditor = ({
   setCharsCount,
   bucketName,
 }: EditorProp) => {
-  const uploadFn = createUploadFn(content_id, user_id, uploadTo, bucketName)
+  const uploadFn = createUploadFn(bucketName, uploadTo, content_id, user_id)
   const youtubeTriggerRef = useRef<HTMLDivElement>(null)
   const [openNode, setOpenNode] = useState(false)
   // const [openColor, setOpenColor] = useState(false)

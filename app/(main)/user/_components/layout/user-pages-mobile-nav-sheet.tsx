@@ -4,7 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { PanelLeft } from "lucide-react"
 
-import { userLayoutRoutes } from "@/config/user-layout-routes"
+import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"

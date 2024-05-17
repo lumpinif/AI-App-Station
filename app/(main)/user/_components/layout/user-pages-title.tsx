@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import {
   UserLayoutRouteProps,
   userLayoutRoutes,
-} from "@/config/user-layout-routes"
+} from "@/config/routes/user-layout-routes"
 import { PageTitle } from "@/components/layout/page-title"
 
 type UserPagesTitleProps = { className?: string }

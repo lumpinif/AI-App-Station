@@ -6,8 +6,8 @@ import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 
 import { Apps } from "@/types/db_tables"
-import { defaultEditorContent } from "@/config/default-editor-content"
 import { EMPTY_CONTENT_STRING, MAX_RETRY_ATTEMPTS } from "@/config/editor"
+import { defaultEditorContent } from "@/config/editor/default-editor-content"
 import useInsertContent from "@/hooks/editor/use-insert-content"
 import useRemoveContent from "@/hooks/editor/use-remove-content"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -80,9 +80,7 @@ export const AppIntroductionEditor: React.FC<AppIntroductionEditorProps> = ({
     () => (
       <NovelEditor
         uploadTo="introduction"
-        bucketName={
-          process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP as string
-        }
+        bucketName={"apps"}
         content_id={app_id}
         user_id={submitted_by_user_id}
         initialValue={value}

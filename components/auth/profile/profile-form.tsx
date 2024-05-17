@@ -14,7 +14,7 @@ import {
   USER_LOCATION_MAX_LENGTH,
   USER_NAME_MAX_LENGTH,
   USER_WEBSITE_MAX_LENGTH,
-} from "@/config/profile-form-config"
+} from "@/config/profile/profile-form-config"
 import { websiteValidator } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {

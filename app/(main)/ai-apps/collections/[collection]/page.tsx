@@ -1,4 +1,4 @@
-import { SIDENAVROUTES } from "@/config/main-routes"
+import { SIDENAVROUTES } from "@/config/routes/main-routes"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 

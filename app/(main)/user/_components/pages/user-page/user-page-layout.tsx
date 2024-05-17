@@ -2,7 +2,7 @@ import React from "react"
 import Link from "next/link"
 import { Separator } from "@radix-ui/react-dropdown-menu"
 
-import { userLayoutRoutes } from "@/config/user-layout-routes"
+import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
 
 import { UserProfileCard } from "./user-profile-card"
 

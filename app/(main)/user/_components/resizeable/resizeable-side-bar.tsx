@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ImperativePanelHandle } from "react-resizable-panels"
 
-import { userLayoutRoutes } from "@/config/user-layout-routes"
+import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 import {

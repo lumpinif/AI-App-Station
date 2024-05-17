@@ -7,9 +7,9 @@ import { Apps, Posts } from "@/types/db_tables"
 const onUpload = async (
   file: File,
   bucketName: string,
+  uploadTo: string,
   content_id?: Apps["app_id"] | Posts["post_id"],
-  user_id?: Apps["submitted_by_user_id"] | Posts["post_author_id"],
-  uploadTo: string = "introduction"
+  user_id?: Apps["submitted_by_user_id"] | Posts["post_author_id"]
 ) => {
   const uploadPath = `${content_id}/${user_id}/${uploadTo}/${file.name}`
 
@@ -27,7 +27,7 @@ const onUpload = async (
           reject(error)
         } else {
           const { data: publicUrlData } = supabase.storage
-            .from("apps")
+            .from(bucketName)
             .getPublicUrl(uploadPath)
           const publicUrl = publicUrlData.publicUrl
 
@@ -48,14 +48,14 @@ const onUpload = async (
 }
 
 export const createUploadFn = (
-  content_id: Apps["app_id"] | Posts["post_id"],
-  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"],
+  bucketName: string,
   uploadTo: string,
-  bucketName: string
+  content_id: Apps["app_id"] | Posts["post_id"],
+  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
 ) => {
   return createImageUpload({
     onUpload: (file) =>
-      onUpload(file, content_id, user_id, uploadTo, bucketName),
+      onUpload(file, bucketName, uploadTo, content_id, user_id),
     validateFn: (file) => {
       if (!file.type.includes("image/")) {
         toast.error("File type not supported.")

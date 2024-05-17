@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { MAINROUTES } from "@/config/main-routes"
+import { MAINROUTES } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,

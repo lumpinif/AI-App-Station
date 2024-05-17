@@ -4,7 +4,7 @@ import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react"
 
-import { SIDENAVROUTES } from "@/config/main-routes"
+import { SIDENAVROUTES } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
 import useSideNav from "@/hooks/use-side-nav-store"
