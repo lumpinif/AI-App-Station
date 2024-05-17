@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback } from "react"
+import _ from "lodash"
 import { JSONContent } from "novel"
 import { toast } from "sonner"
 
@@ -8,8 +9,6 @@ interface UseRemoveEmptyStoryProps {
   post_id: string
   post_slug: string
   value: JSONContent
-  isStoryEmpty: boolean
-  isEmpty: boolean
   initialContent: JSONContent
 }
 
@@ -17,8 +16,6 @@ const useRemoveEmptyStory = ({
   post_id,
   post_slug,
   value,
-  isStoryEmpty,
-  isEmpty,
   initialContent,
 }: UseRemoveEmptyStoryProps) => {
   const isContentEmpty = useCallback((content: JSONContent) => {
@@ -30,12 +27,7 @@ const useRemoveEmptyStory = ({
   }, [])
 
   const removeEmptyStoryContent = useCallback(async () => {
-    if (
-      value === null ||
-      JSON.stringify(value) ===
-        '{"type":"doc","content":[{"type":"paragraph"}]}' ||
-      JSON.stringify(value) === JSON.stringify(initialContent)
-    ) {
+    if (isContentEmpty(value) || _.isEqual(value, initialContent)) {
       const { error } = await removeEmptyStoryContentService(post_id, post_slug)
 
       if (error) {
@@ -44,11 +36,7 @@ const useRemoveEmptyStory = ({
         return null
       }
     }
-  }, [post_id, post_slug, value, initialContent])
-
-  useEffect(() => {
-    removeEmptyStoryContent()
-  }, [value, removeEmptyStoryContent])
+  }, [post_id, post_slug, value, initialContent, isContentEmpty])
 
   return { removeEmptyStoryContent }
 }

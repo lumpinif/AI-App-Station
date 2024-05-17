@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import _ from "lodash"
 import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 
@@ -52,8 +53,6 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     post_id,
     post_slug,
     value,
-    isStoryEmpty,
-    isEmpty,
     initialContent,
   })
 
@@ -62,18 +61,17 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
       setValue(newValue)
 
       const isValueEmpty = JSON.stringify(newValue) === EMPTY_CONTENT_STRING
+      const isStoryDefault = _.isEqual(newValue, defaultEditorContent)
 
       setIsEmpty(isValueEmpty)
 
-      if (post_content !== newValue) {
+      if (!_.isEqual(post_content, newValue)) {
         insertStory(newValue)
       }
 
-      if (
-        newValue === null ||
-        JSON.stringify(newValue) === EMPTY_CONTENT_STRING ||
-        JSON.stringify(newValue) === JSON.stringify(defaultEditorContent)
-      ) {
+      if (isStoryDefault || newValue === null || isValueEmpty) {
+        console.log("🚀 ~ isStoryDefault:", isStoryDefault)
+        console.log("calling removeEmptyStoryContent!!!")
         removeEmptyStoryContent()
       }
     },
@@ -81,11 +79,14 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   )
 
   useEffect(() => {
+    const isStoryDefault = _.isEqual(value, defaultEditorContent)
+
     if (
       value === null ||
-      JSON.stringify(value) === EMPTY_CONTENT_STRING ||
-      JSON.stringify(value) === JSON.stringify(defaultEditorContent)
+      isStoryDefault ||
+      JSON.stringify(value) === EMPTY_CONTENT_STRING
     ) {
+      console.log("calling removeEmptyStoryContent!!!")
       removeEmptyStoryContent()
     }
   }, [value, removeEmptyStoryContent])
