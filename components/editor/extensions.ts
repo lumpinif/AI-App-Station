@@ -1,4 +1,5 @@
 import CharacterCount from "@tiptap/extension-character-count"
+import Document from "@tiptap/extension-document"
 import Youtube from "@tiptap/extension-youtube"
 import { cx } from "class-variance-authority"
 import {
@@ -15,7 +16,20 @@ import {
 import { UploadImagesPlugin } from "novel/plugins"
 
 const aiHighlight = AIHighlight
-const placeholder = Placeholder
+
+const CustomDocument = Document.extend({
+  content: "heading block*",
+})
+
+const placeholder = Placeholder.configure({
+  placeholder: ({ node }) => {
+    if (node.type.name === "heading") {
+      return "What’s the title?"
+    }
+    return "Press '/' for commands"
+  },
+})
+
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
     class: cx(
@@ -114,9 +128,11 @@ const starterKit = StarterKit.configure({
     width: 4,
   },
   gapcursor: false,
+  document: false,
 })
 
 export const defaultExtensions = [
+  CustomDocument,
   starterKit,
   placeholder,
   tiptapLink,

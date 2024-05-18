@@ -4,7 +4,7 @@ import { JSONContent } from "novel"
 import { toast } from "sonner"
 
 import { removeContentServiceResult } from "@/types/shared"
-import { EMPTY_CONTENT_STRING } from "@/config/editor"
+import { EMPTY_CONTENT_STRING } from "@/config/editor/editor-config"
 
 interface UseRemoveContentProps<T, U> {
   content_id: T
@@ -25,7 +25,10 @@ const useRemoveContent = <T, U>({
   removeContentService,
 }: UseRemoveContentProps<T, U>) => {
   const isContentEmpty = useCallback((content: JSONContent) => {
-    return content === null || JSON.stringify(content) === EMPTY_CONTENT_STRING
+    return (
+      content === null || _.isEqual(content, EMPTY_CONTENT_STRING)
+      // JSON.stringify(content) === JSON.stringify(EMPTY_CONTENT_STRING)
+    )
   }, [])
 
   const removeContent = useCallback(async () => {

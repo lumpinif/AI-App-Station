@@ -6,8 +6,11 @@ import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 
 import { Posts } from "@/types/db_tables"
-import { EMPTY_CONTENT_STRING, MAX_RETRY_ATTEMPTS } from "@/config/editor"
 import { defaultEditorContent } from "@/config/editor/default-editor-content"
+import {
+  EMPTY_CONTENT_STRING,
+  MAX_RETRY_ATTEMPTS,
+} from "@/config/editor/editor-config"
 import useInsertContent from "@/hooks/editor/use-insert-content"
 import useRemoveContent from "@/hooks/editor/use-remove-content"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -34,11 +37,11 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     [post_content]
   )
 
-  const isStoryEmpty = JSON.stringify(initialContent) === EMPTY_CONTENT_STRING
+  const isContentEmpty = _.isEqual(initialContent, EMPTY_CONTENT_STRING)
 
   const [value, setValue] = useState<JSONContent>(initialContent)
   const [charsCount, setCharsCount] = useState(0)
-  const [isEmpty, setIsEmpty] = useState(isStoryEmpty)
+  const [isEmpty, setIsEmpty] = useState(isContentEmpty)
 
   const { insertContent, saveStatus, setSaveStatus, isRetrying, handleRetry } =
     useInsertContent<Posts["post_id"]>({
@@ -63,8 +66,8 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     (newValue: JSONContent) => {
       setValue(newValue)
 
-      const isValueEmpty = JSON.stringify(newValue) === EMPTY_CONTENT_STRING
-      const isStoryDefault = _.isEqual(newValue, defaultEditorContent)
+      const isValueEmpty = _.isEqual(newValue, EMPTY_CONTENT_STRING)
+      const isContentDefault = _.isEqual(newValue, defaultEditorContent)
 
       setIsEmpty(isValueEmpty)
 
@@ -72,7 +75,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
         insertContent(newValue)
       }
 
-      if (isStoryDefault || newValue === null || isValueEmpty) {
+      if (isContentDefault || newValue === null || isValueEmpty) {
         removeContent()
       }
     },
@@ -80,12 +83,12 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   )
 
   useEffect(() => {
-    const isStoryDefault = _.isEqual(value, defaultEditorContent)
+    const isContentDefault = _.isEqual(value, defaultEditorContent)
 
     if (
       value === null ||
-      isStoryDefault ||
-      JSON.stringify(value) === EMPTY_CONTENT_STRING
+      isContentDefault ||
+      _.isEqual(value, EMPTY_CONTENT_STRING)
     ) {
       removeContent()
     }

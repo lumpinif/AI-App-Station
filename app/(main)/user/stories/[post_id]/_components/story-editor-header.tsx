@@ -1,6 +1,6 @@
 import { Loader2, RotateCw } from "lucide-react"
 
-import { CHARS_LIMIT } from "@/config/editor"
+import { CHARS_LIMIT } from "@/config/editor/editor-config"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
