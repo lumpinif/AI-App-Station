@@ -6,21 +6,30 @@ import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 
 import { Posts } from "@/types/db_tables"
-import { defaultEditorContent } from "@/config/editor/default-editor-content"
+import {
+  defaultEditorContent,
+  defaultEditorContentWithoutHeading,
+} from "@/config/editor/default-editor-content"
 import {
   EMPTY_CONTENT_STRING,
   MAX_RETRY_ATTEMPTS,
 } from "@/config/editor/editor-config"
 import useInsertContent from "@/hooks/editor/use-insert-content"
 import useRemoveContent from "@/hooks/editor/use-remove-content"
+import useUpdateContentHeading from "@/hooks/editor/use-update-content-heading"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
-import { insertStoryContent, removeEmptyStoryContent } from "../data"
+import {
+  insertStoryContent,
+  removeEmptyStoryContent,
+  updateStoryTitle,
+} from "../data"
 import { StoryEditorHeader } from "./story-editor-header"
 
 type StoryPostEditorProps = {
   post_id: Posts["post_id"]
+  post_title: Posts["post_title"]
   post_slug: Posts["post_slug"]
   post_author_id: Posts["post_author_id"]
   post_content: JSONContent
@@ -29,6 +38,7 @@ type StoryPostEditorProps = {
 export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_id,
   post_slug,
+  post_title,
   post_author_id,
   post_content,
 }) => {
@@ -42,6 +52,13 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   const [value, setValue] = useState<JSONContent>(initialContent)
   const [charsCount, setCharsCount] = useState(0)
   const [isEmpty, setIsEmpty] = useState(isContentEmpty)
+
+  const { currentTitle: postTitle } = useUpdateContentHeading({
+    content: value,
+    defaultTitle: post_title,
+    updateTitleService: updateStoryTitle,
+    content_id: post_id,
+  })
 
   const { insertContent, saveStatus, setSaveStatus, isRetrying, handleRetry } =
     useInsertContent<Posts["post_id"]>({
@@ -67,7 +84,9 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
       setValue(newValue)
 
       const isValueEmpty = _.isEqual(newValue, EMPTY_CONTENT_STRING)
-      const isContentDefault = _.isEqual(newValue, defaultEditorContent)
+      const isContentDefault =
+        _.isEqual(newValue, defaultEditorContent) ||
+        _.isEqual(value, defaultEditorContentWithoutHeading)
 
       setIsEmpty(isValueEmpty)
 
@@ -83,7 +102,9 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   )
 
   useEffect(() => {
-    const isContentDefault = _.isEqual(value, defaultEditorContent)
+    const isContentDefault =
+      _.isEqual(value, defaultEditorContent) ||
+      _.isEqual(value, defaultEditorContentWithoutHeading)
 
     if (
       value === null ||

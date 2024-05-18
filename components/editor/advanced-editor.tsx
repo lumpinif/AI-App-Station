@@ -13,7 +13,7 @@ import {
   type JSONContent,
 } from "novel"
 import { handleCommandNavigation, ImageResizer } from "novel/extensions"
-import { handleImageDrop, handleImagePaste, UploadFn } from "novel/plugins"
+import { handleImageDrop, handleImagePaste } from "novel/plugins"
 
 import { Apps, Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -31,25 +31,26 @@ import { slashCommand, suggestionItems } from "./slash-command"
 interface EditorProp {
   content_id: Apps["app_id"] | Posts["post_id"]
   user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
-  initialValue?: JSONContent
+  bucketName: string
+  uploadTo: string
   onChange: (value: JSONContent) => void
+  setSaveStatus: (status: string) => void
+  initialValue?: JSONContent
   className?: string
   saveStatus?: string
-  setSaveStatus: (status: string) => void
   setCharsCount?: (count: number) => void
-  uploadTo: string
-  bucketName: string
 }
 const NovelEditor = ({
-  uploadTo,
   content_id,
   user_id,
-  initialValue,
-  onChange,
-  className,
-  setSaveStatus,
-  setCharsCount,
   bucketName,
+  uploadTo,
+  onChange,
+  setSaveStatus,
+  initialValue,
+  className,
+  saveStatus,
+  setCharsCount,
 }: EditorProp) => {
   const uploadFn = createUploadFn(bucketName, uploadTo, content_id, user_id)
   const youtubeTriggerRef = useRef<HTMLDivElement>(null)

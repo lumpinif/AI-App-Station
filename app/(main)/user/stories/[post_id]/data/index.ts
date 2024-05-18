@@ -123,3 +123,36 @@ export async function insertStoryContent(
     }
   }
 }
+
+export async function updateStoryTitle(
+  post_id: Posts["post_id"],
+  post_title: Posts["post_title"]
+) {
+  const supabase = await createSupabaseServerClient()
+  const { post_slug } = await getPostSlugById(post_id)
+  if (!post_id || !post_title) {
+    return { error: null }
+  }
+
+  try {
+    const { error } = await supabase
+      .from("posts")
+      .update({ post_title: post_title })
+      .match({ post_id })
+
+    if (error) {
+      console.error("Error updating title:", error)
+      return { error: error }
+    }
+
+    // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
+    revalidatePath(`/ai-apps/${post_slug}~${post_id}`)
+    revalidatePath(`/user/stories/${post_id}`)
+
+    return { error }
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
+  }
+}

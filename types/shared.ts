@@ -1,5 +1,14 @@
 import { PostgrestError } from "@supabase/supabase-js"
 
+export type updateContentTitleResult =
+  | {
+      error: null
+    }
+  | {
+      error: PostgrestError
+    }
+  | undefined
+
 export type insertContentServiceResult =
   | {
       error: null
