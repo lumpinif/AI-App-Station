@@ -106,7 +106,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
         setSaveStatus={setSaveStatus}
         setCharsCount={setCharsCount}
         saveStatus={saveStatus}
-        className="border-0"
+        className="rounded-xl py-0"
       />
     ),
     [
@@ -121,8 +121,9 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
 
   return (
     <TooltipProvider>
-      <section className="w-full flex-col space-y-6 sm:space-y-8">
+      <section className="relative w-full flex-col">
         <StoryEditorHeader
+          className="bg-background/60 sticky top-0 z-50 w-full justify-end rounded-xl py-1 backdrop-blur-sm"
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}

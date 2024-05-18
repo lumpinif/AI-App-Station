@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { StoryEditorInfoPopover } from "./story-editor-info-popover"
 
 type StoryEditorHeaderProps = {
+  className?: string
   charsCount: number
   saveStatus: string
   handleRetry: () => void
@@ -18,9 +19,10 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
   saveStatus,
   isRetrying,
   handleRetry,
+  className,
 }) => {
   return (
-    <div className="flex-col space-y-2">
+    <div className={cn("flex-col space-y-2", className)}>
       <div className="flex items-center justify-end gap-x-2">
         <div className="flex items-center gap-x-2">
           <div className="bg-accent text-muted-foreground flex h-fit select-none rounded-lg px-2 py-1 text-xs">

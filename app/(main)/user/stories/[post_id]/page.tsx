@@ -40,13 +40,11 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
   }
 
   return (
-    <main>
-      <StoryPageWrapper>
-        <StoryPostEditor
-          {...post}
-          post_content={post.post_content as JSONContent}
-        />
-      </StoryPageWrapper>
-    </main>
+    <StoryPageWrapper>
+      <StoryPostEditor
+        {...post}
+        post_content={post.post_content as JSONContent}
+      />
+    </StoryPageWrapper>
   )
 }
