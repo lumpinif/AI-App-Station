@@ -20,51 +20,36 @@
 }
 
 .ProseMirror h1 {
-  /* font-size: 1.875rem; 30px */
   @apply text-5xl;
-  line-height: 2.5rem; /* 36px */
   letter-spacing: 0.025em;
-  margin: 0.45em 0;
+  margin: 0.5em 0 0.75em 0;
 }
 .ProseMirror h2 {
-  /* font-size: 1.5rem; 24px */
   @apply text-3xl;
-  line-height: 2rem; /* 32px */
   letter-spacing: 0.025em;
-  margin: 0.45em 0;
+  margin: 0.45em 0 0.65em 0;
 }
 .ProseMirror h3 {
-  /* font-size: 1.25rem; 20px */
   @apply text-2xl;
-  line-height: 1.75rem; /* 28px */
   letter-spacing: 0.025em;
   margin: 0.45em 0 0.65em 0;
 }
 
 @media screen and (max-width: 768px) {
   .ProseMirror h1 {
-    /* font-size: 1.5rem;  */
-    @apply !text-3xl;
-    line-height: 2rem; /* 32px */
-    margin: 0.35em 0;
+    @apply !text-4xl;
   }
 
   .ProseMirror h2 {
-    /* font-size: 1.25rem;  */
     @apply !text-2xl;
-    line-height: 1.75rem; /* 28px */
-    margin: 0.35em 0;
   }
 
   .ProseMirror h3 {
-    /* font-size: 1.125rem;  */
     @apply !text-xl;
-    line-height: 1.5rem; /* 24px */
-    margin: 0.35em 0 0.5em 0;
   }
+
   .ProseMirror p {
     @apply !text-base;
-    line-height: 1.5rem; /* 24px */
   }
 }
 
