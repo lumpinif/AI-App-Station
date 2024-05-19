@@ -5,37 +5,7 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { JSONContent } from "novel"
 
 import { Posts, Profiles } from "@/types/db_tables"
-
-export async function getAuthorProfileById(
-  post_author_id: Posts["post_author_id"]
-) {
-  const supabase = await createSupabaseServerClient()
-
-  const { data: authorProfile, error: getAuthorProfileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .match({ user_id: post_author_id })
-    .single<Profiles>()
-
-  if (getAuthorProfileError) {
-    console.error("Error getting author profile:", getAuthorProfileError)
-    return {
-      error: {
-        message: "An error occurred while getting the author profile.",
-        details: getAuthorProfileError.message,
-      },
-    }
-  }
-
-  if (!authorProfile) {
-    return {
-      data: null,
-      getAuthorProfileError: { message: "Author profile not found." },
-    }
-  }
-
-  return { authorProfile }
-}
+import { nameToSlug } from "@/lib/utils"
 
 export async function getPostSlugById(post_id: Posts["post_id"]) {
   const supabase = await createSupabaseServerClient()
@@ -51,7 +21,8 @@ export async function getPostSlugById(post_id: Posts["post_id"]) {
 
 export async function removeEmptyStoryContent(
   post_id: Posts["post_id"],
-  post_slug: Posts["post_slug"]
+  post_slug: Posts["post_slug"],
+  profiles?: Profiles
 ) {
   const supabase = await createSupabaseServerClient()
 
@@ -81,8 +52,11 @@ export async function removeEmptyStoryContent(
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION CONSIDER USE AUTHOR ID TO GET THE PROFILE NAME FOR THE ROUTE SEGEMENT
 
-    revalidatePath(`/story/${post_slug}~${post_id}`)
-    revalidatePath(`/user/posts/${post_id}`)
+    revalidatePath(
+      `/story/${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}/${post_id}`
+    )
+
+    revalidatePath(`/user/stories/${post_id}`)
 
     return { error: updateError }
   } catch (error) {
@@ -93,10 +67,11 @@ export async function removeEmptyStoryContent(
 
 export async function insertStoryContent(
   post_id: Posts["post_id"],
-  post_content: JSONContent
+  post_content: JSONContent,
+  profiles?: Profiles
 ) {
   const supabase = await createSupabaseServerClient()
-  const { post_slug } = await getPostSlugById(post_id)
+  // const { post_slug } = await getPostSlugById(post_id)
   if (!post_id || !post_content) {
     return { error: null }
   }
@@ -113,7 +88,11 @@ export async function insertStoryContent(
     }
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
-    revalidatePath(`/ai-apps/${post_slug}~${post_id}`)
+
+    revalidatePath(
+      `/story/${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}/${post_id}`
+    )
+
     revalidatePath(`/user/stories/${post_id}`)
 
     return { error }
@@ -126,10 +105,12 @@ export async function insertStoryContent(
 
 export async function updateStoryTitle(
   post_id: Posts["post_id"],
-  post_title: Posts["post_title"]
+  post_title: Posts["post_title"],
+  profiles?: Profiles
 ) {
   const supabase = await createSupabaseServerClient()
-  const { post_slug } = await getPostSlugById(post_id)
+  // const { post_slug } = await getPostSlugById(post_id)
+
   if (!post_id || !post_title) {
     return { error: null }
   }
@@ -137,7 +118,7 @@ export async function updateStoryTitle(
   try {
     const { error } = await supabase
       .from("posts")
-      .update({ post_title: post_title })
+      .update({ post_title: post_title, post_slug: nameToSlug(post_title) })
       .match({ post_id })
 
     if (error) {
@@ -146,7 +127,11 @@ export async function updateStoryTitle(
     }
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
-    revalidatePath(`/ai-apps/${post_slug}~${post_id}`)
+
+    revalidatePath(
+      `/story/${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}/${post_id}`
+    )
+
     revalidatePath(`/user/stories/${post_id}`)
 
     return { error }

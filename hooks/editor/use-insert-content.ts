@@ -3,21 +3,25 @@ import _ from "lodash"
 import { JSONContent } from "novel"
 import { toast } from "sonner"
 
+import { Profiles } from "@/types/db_tables"
 import { insertContentServiceResult } from "@/types/shared"
 
 interface UseInsertContentProps<T> {
   content_id: T
   content: JSONContent
+  profiles?: Profiles
   maxRetryAttempts: number
   insertContentService: (
     content_id: T,
-    content: JSONContent
+    content: JSONContent,
+    profiles?: Profiles
   ) => Promise<insertContentServiceResult>
 }
 
 const useInsertContent = <T>({
   content_id,
   content,
+  profiles,
   maxRetryAttempts,
   insertContentService,
 }: UseInsertContentProps<T>) => {
@@ -39,7 +43,8 @@ const useInsertContent = <T>({
         ) {
           error = await insertContentService(
             content_id,
-            JSON.parse(JSON.stringify(value))
+            JSON.parse(JSON.stringify(value)),
+            profiles
           )
 
           if (!error?.error) {
@@ -63,7 +68,7 @@ const useInsertContent = <T>({
         }
       }
     },
-    [content_id, content, maxRetryAttempts, insertContentService]
+    [content, maxRetryAttempts, insertContentService, content_id, profiles]
   )
 
   const handleRetry = useCallback(() => {

@@ -41,10 +41,7 @@ export async function getAllHeroFeaturedPosts() {
   return { posts, error }
 }
 
-export async function getPostBySlugAndId(
-  post_slug: Posts["post_slug"],
-  post_id: Posts["post_id"]
-) {
+export async function getPostByPostId(post_id: Posts["post_id"]) {
   const supabase = await createSupabaseServerClient()
 
   let { data: post, error } = await supabase
@@ -52,7 +49,7 @@ export async function getPostBySlugAndId(
     .select(
       `*, categories(*), labels(*), profiles(*), post_likes(*), post_bookmarks(*)`
     )
-    .match({ post_publish_status: "published", post_slug, post_id })
+    .match({ post_publish_status: "published", post_id })
     .single<PostDetails>()
 
   // error handling
@@ -61,7 +58,7 @@ export async function getPostBySlugAndId(
   return { post, error }
 }
 
-export async function getPostById(
+export async function getPostByIds(
   post_id: Posts["post_id"],
   post_author_id: Posts["post_author_id"]
 ) {

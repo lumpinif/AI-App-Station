@@ -55,7 +55,6 @@ export const AppIntroductionEditor: React.FC<AppIntroductionEditorProps> = ({
     content_id: app_id,
     content_slug: app_slug,
     value,
-    initialContent,
     removeContentService: removeEmptyIntroduction,
   })
 

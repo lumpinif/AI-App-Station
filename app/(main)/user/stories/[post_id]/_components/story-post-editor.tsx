@@ -5,7 +5,7 @@ import _ from "lodash"
 import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 
-import { Posts } from "@/types/db_tables"
+import { PostDetails, Posts } from "@/types/db_tables"
 import {
   defaultEditorContent,
   defaultEditorContentWithoutHeading,
@@ -24,7 +24,7 @@ import {
   insertStoryContent,
   removeEmptyStoryContent,
   updateStoryTitle,
-} from "../data"
+} from "../../../_server/stories"
 import { StoryEditorHeader } from "./story-editor-header"
 
 type StoryPostEditorProps = {
@@ -33,6 +33,7 @@ type StoryPostEditorProps = {
   post_slug: Posts["post_slug"]
   post_author_id: Posts["post_author_id"]
   post_content: JSONContent
+  profiles: PostDetails["profiles"]
 }
 
 export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
@@ -41,6 +42,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_title,
   post_author_id,
   post_content,
+  profiles,
 }) => {
   const initialContent = useMemo(
     () => post_content || defaultEditorContent,
@@ -55,6 +57,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
 
   const { currentTitle: postTitle } = useUpdateContentHeading({
     content: value,
+    profiles: profiles,
     defaultTitle: post_title,
     updateTitleService: updateStoryTitle,
     content_id: post_id,
@@ -63,6 +66,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   const { insertContent, saveStatus, setSaveStatus, isRetrying, handleRetry } =
     useInsertContent<Posts["post_id"]>({
       content_id: post_id,
+      profiles: profiles,
       content: value,
       maxRetryAttempts: MAX_RETRY_ATTEMPTS,
       insertContentService: insertStoryContent,
@@ -73,9 +77,9 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     Posts["post_slug"]
   >({
     content_id: post_id,
+    profiles: profiles,
     content_slug: post_slug,
     value,
-    initialContent,
     removeContentService: removeEmptyStoryContent,
   })
 

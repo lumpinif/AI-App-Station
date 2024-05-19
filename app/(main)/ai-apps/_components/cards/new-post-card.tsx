@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { Posts, PostWithProfile } from "@/types/db_tables"
-import { cn, normalizeString } from "@/lib/utils"
+import { cn, nameToSlug } from "@/lib/utils"
 
 type PostCardProps = {
   post: PostWithProfile
@@ -21,7 +21,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
   return (
     <Link
-      href={`/story/${post_slug}~${post_id}`}
+      href={`/story/${nameToSlug(post.profiles.full_name ?? post.profiles.email)}/${post.post_id}`}
       scroll={false}
       passHref
       className="size-full rounded-2xl"

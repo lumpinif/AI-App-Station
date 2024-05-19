@@ -3,15 +3,18 @@ import _ from "lodash"
 import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 
+import { Profiles } from "@/types/db_tables"
 import { updateContentTitleResult } from "@/types/shared"
 import { defaultEditorContent } from "@/config/editor/default-editor-content"
 
 interface UseUpdateContentHeadingProps<T> {
   content: JSONContent
   defaultTitle: string
+  profiles: Profiles
   updateTitleService: (
     content_id: T,
-    title: string
+    title: string,
+    profiles?: Profiles
   ) => Promise<updateContentTitleResult>
   content_id: T
 }
@@ -21,6 +24,7 @@ const useUpdateContentHeading = <T>({
   defaultTitle,
   updateTitleService,
   content_id,
+  profiles,
 }: UseUpdateContentHeadingProps<T>) => {
   const [currentTitle, setCurrentTitle] = useState<string>(defaultTitle)
 
@@ -41,7 +45,7 @@ const useUpdateContentHeading = <T>({
 
   const handleDebouncedUpdateTitleService = useDebouncedCallback(
     async (content_id, title: string) => {
-      await updateTitleService(content_id, title)
+      await updateTitleService(content_id, title, profiles)
     },
     1000
   )

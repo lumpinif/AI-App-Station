@@ -3,6 +3,7 @@ import _ from "lodash"
 import { JSONContent } from "novel"
 import { toast } from "sonner"
 
+import { Profiles } from "@/types/db_tables"
 import { removeContentServiceResult } from "@/types/shared"
 import {
   defaultEditorContent,
@@ -14,10 +15,11 @@ interface UseRemoveContentProps<T, U> {
   content_id: T
   content_slug: U
   value: JSONContent
-  initialContent: JSONContent
+  profiles?: Profiles
   removeContentService: (
     content_id: T,
-    content_slug: U
+    content_slug: U,
+    profiles?: Profiles
   ) => Promise<removeContentServiceResult>
 }
 
@@ -25,7 +27,7 @@ const useRemoveContent = <T, U>({
   content_id,
   content_slug,
   value,
-  initialContent,
+  profiles,
   removeContentService,
 }: UseRemoveContentProps<T, U>) => {
   const isContentEmpty = useCallback((content: JSONContent) => {
@@ -38,7 +40,11 @@ const useRemoveContent = <T, U>({
       _.isEqual(value, defaultEditorContent) ||
       _.isEqual(value, defaultEditorContentWithoutHeading)
     ) {
-      const { error } = await removeContentService(content_id, content_slug)
+      const { error } = await removeContentService(
+        content_id,
+        content_slug,
+        profiles
+      )
 
       if (error) {
         console.error("Failed to remove content", error)
@@ -46,7 +52,14 @@ const useRemoveContent = <T, U>({
         return null
       }
     }
-  }, [content_id, content_slug, value, isContentEmpty, removeContentService])
+  }, [
+    isContentEmpty,
+    value,
+    removeContentService,
+    content_id,
+    content_slug,
+    profiles,
+  ])
 
   return { removeContent }
 }

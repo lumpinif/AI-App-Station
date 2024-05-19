@@ -1,12 +1,10 @@
-import Image from "next/image"
 import { notFound } from "next/navigation"
-import { getPost } from "@/server/data"
+import { getPostByPostId } from "@/server/data/stories"
 import supabase from "@/utils/supabase/supabase"
 
-import { Posts } from "@/types/db_tables"
-import { nameToSlug } from "@/lib/utils"
+import { PostWithProfile } from "@/types/db_tables"
 
-import { Story } from "../_components/story/story"
+import { Story } from "../../_components/story/story"
 
 export const dynamicParams = false
 
@@ -14,8 +12,8 @@ export const dynamicParams = false
 export async function generateStaticParams() {
   let { data: allPosts, error } = await supabase
     .from("posts")
-    .select("*")
-    .returns<Posts[]>()
+    .select("*,profiles(*)")
+    .returns<PostWithProfile[]>()
 
   if (error) {
     throw new Error(error.message)
@@ -27,7 +25,7 @@ export async function generateStaticParams() {
 
   if (allPosts) {
     const storyParams = allPosts.map((post) => ({
-      slug: `${post.post_slug}~${post.post_id}`,
+      post_id: `${post.post_id}`,
     }))
     return storyParams
   }
@@ -37,11 +35,9 @@ export async function generateStaticParams() {
 export default async function StoryPage({
   params,
 }: {
-  params: { slug: string }
+  params: { post_id: string }
 }) {
-  const [post_slug, post_id] = params.slug.split("~")
-
-  const { post, error: getPostError } = await getPost(post_slug, post_id)
+  const { post, error: getPostError } = await getPostByPostId(params.post_id)
 
   if (!post) {
     notFound()
