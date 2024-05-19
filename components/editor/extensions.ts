@@ -15,7 +15,11 @@ import {
 } from "novel/extensions"
 import { UploadImagesPlugin } from "novel/plugins"
 
+import { TweetExtension } from "./tweet-extension"
+
 const aiHighlight = AIHighlight
+
+const twitter = TweetExtension
 
 const CustomDocument = Document.extend({
   content: "heading block*",
@@ -144,4 +148,5 @@ export const defaultExtensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
+  twitter,
 ]
