@@ -10,7 +10,7 @@ import { nameToSlug } from "@/lib/utils"
 export async function getPostSlugById(post_id: Posts["post_id"]) {
   const supabase = await createSupabaseServerClient()
 
-  const { data: post_slug, error } = await supabase
+  let { data: post_slug, error } = await supabase
     .from("posts")
     .select("post_slug")
     .match({ post_id })

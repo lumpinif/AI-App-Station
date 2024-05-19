@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import _ from "lodash"
 import { JSONContent } from "novel"
+import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
 import { PostDetails, Posts } from "@/types/db_tables"
@@ -17,6 +18,7 @@ import {
 import useInsertContent from "@/hooks/editor/use-insert-content"
 import useRemoveContent from "@/hooks/editor/use-remove-content"
 import useUpdateContentHeading from "@/hooks/editor/use-update-content-heading"
+import useEditorLaunchingToastStore from "@/hooks/use-toast-store"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
@@ -44,6 +46,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_content,
   profiles,
 }) => {
+  const toastId = useEditorLaunchingToastStore((state) => state.toastId)
   const initialContent = useMemo(
     () => post_content || defaultEditorContent,
     [post_content]
@@ -118,6 +121,15 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
       removeContent()
     }
   }, [value, removeContent])
+
+  useEffect(() => {
+    // This code will run once the component is mounted
+    toast.success("The editor has been launched", {
+      duration: 3000,
+      id: toastId,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Empty dependency array means this effect runs once on mount and not on updates
 
   const memoizedNovelEditor = useMemo(
     () => (

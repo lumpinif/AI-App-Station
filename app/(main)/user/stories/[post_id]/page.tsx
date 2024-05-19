@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { getPostByIds } from "@/server/data/stories"
+import { getPostById } from "@/server/data/stories"
 import { JSONContent } from "novel"
 
 import StoryPageWrapper from "@/app/(main)/story/_components/story-page-wrapper"
@@ -26,10 +26,7 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     return redirect("/signin")
   }
 
-  const { post, error: getPostError } = await getPostByIds(
-    params.post_id,
-    user?.id
-  )
+  const { post, error: getPostError } = await getPostById(params.post_id)
 
   if (getPostError) {
     console.error(getPostError)

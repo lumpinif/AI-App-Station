@@ -1,46 +1,15 @@
 "use client"
 
-import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { SquarePen } from "lucide-react"
+import { User } from "@supabase/supabase-js"
 
-import { Button } from "@/components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { NewStoryButton } from "./new-story-button"
 
-type StoryPostButtonProps = {}
+type StoryPostButtonProps = { user: User | null | undefined }
 
-export const StoryPostButton: React.FC<StoryPostButtonProps> = ({}) => {
+export const StoryPostButton: React.FC<StoryPostButtonProps> = ({ user }) => {
   const currentPath = usePathname()
-  if (currentPath === "/story/post") return null
+  if (currentPath === "/story/new") return null
 
-  return (
-    <TooltipProvider>
-      <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild>
-          <Link href="/story/post" className="flex items-center gap-2">
-            <Button
-              variant={"ghost"}
-              size={"icon"}
-              className="text-muted-foreground text-sm tracking-[-.016em] md:tracking-[-.024em]"
-            >
-              <SquarePen className="size-4" />
-            </Button>
-          </Link>
-        </TooltipTrigger>
-        <TooltipContent
-          side="bottom"
-          align="end"
-          sideOffset={10}
-          className="dark:bg-foreground dark:text-background flex items-center gap-2"
-        >
-          <span>Write a new story</span>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  )
+  return <NewStoryButton user={user} />
 }
