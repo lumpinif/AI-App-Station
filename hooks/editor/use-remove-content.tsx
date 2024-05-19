@@ -35,7 +35,6 @@ const useRemoveContent = <T, U>({
   const removeContent = useCallback(async () => {
     if (
       isContentEmpty(value) ||
-      _.isEqual(value, initialContent) ||
       _.isEqual(value, defaultEditorContent) ||
       _.isEqual(value, defaultEditorContentWithoutHeading)
     ) {
@@ -47,14 +46,7 @@ const useRemoveContent = <T, U>({
         return null
       }
     }
-  }, [
-    content_id,
-    content_slug,
-    value,
-    initialContent,
-    isContentEmpty,
-    removeContentService,
-  ])
+  }, [content_id, content_slug, value, isContentEmpty, removeContentService])
 
   return { removeContent }
 }

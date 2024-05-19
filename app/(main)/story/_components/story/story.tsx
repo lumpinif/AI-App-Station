@@ -3,6 +3,7 @@ import { PostDetails } from "@/types/db_tables"
 import { getAuthorProfileById } from "../../../user/stories/[post_id]/data"
 import StoryPageWrapper from "../story-page-wrapper"
 import { AuthorCard } from "./story-auth-card"
+import { StoryEditorContent } from "./story-editor-content"
 import { StoryTitle } from "./story-title"
 
 type StoryProps = {
@@ -26,9 +27,7 @@ export const Story: React.FC<StoryProps> = async ({ post }) => {
 
         <AuthorCard author={authorProfile} post_created_at={post.created_at} />
 
-        <div className="">Post actions bar here</div>
-
-        <div className="">Post content here</div>
+        <StoryEditorContent post_content={post.post_content} />
       </StoryPageWrapper>
     </section>
   )

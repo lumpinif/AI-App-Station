@@ -172,7 +172,7 @@ export default async function AiAppsMainPage({
               screenshotsPublicUrls={screenshotsPublicUrls || []}
             />
 
-            <AppDetailIntroduction data={app.introduction} />
+            <AppDetailIntroduction introduction={app.introduction} />
 
             <AppDetailReviews {...ratingData} />
 
