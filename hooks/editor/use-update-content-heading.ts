@@ -5,7 +5,6 @@ import { useDebouncedCallback } from "use-debounce"
 
 import { updateContentTitleResult } from "@/types/shared"
 import { defaultEditorContent } from "@/config/editor/default-editor-content"
-import { EMPTY_CONTENT_STRING } from "@/config/editor/editor-config"
 
 interface UseUpdateContentHeadingProps<T> {
   content: JSONContent
