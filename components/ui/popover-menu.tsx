@@ -105,7 +105,7 @@ export default function PopoverMenu({
           >
             <motion.ul
               variants={contentVariants}
-              className="relative flex w-full flex-col space-y-1"
+              className="relative flex h-full w-full flex-col space-y-1"
             >
               <PopoverMenuList />
             </motion.ul>

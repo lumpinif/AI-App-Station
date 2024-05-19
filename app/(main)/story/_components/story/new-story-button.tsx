@@ -8,26 +8,31 @@ import { Rocket, SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
 import { cn } from "@/lib/utils"
+import { useUserData } from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import useEditorLaunchingToastStore from "@/hooks/use-toast-store"
-import { Button } from "@/components/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
-type StoryNewFormProps = {
+type StoryNewFormProps = ButtonProps & {
   children?: React.ReactNode
   user?: User | null | undefined
   spinnerButtonCN?: string
 }
 
 export const NewStoryButton: React.FC<StoryNewFormProps> = ({
-  user,
+  user: propUser,
   children,
   spinnerButtonCN,
+  variant = "default",
+  size = "sm",
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const setToastId = useEditorLaunchingToastStore((state) => state.setToastId)
   const OpenModal = useAccountModal((state) => state.OpenModal)
+  const { data: hookUser } = useUserData()
+  const user = propUser || hookUser
   const isUserLogged = !!user && user.id
   const router = useRouter()
 
@@ -48,7 +53,8 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
     }
 
     const newLaunchingToast = toast.promise(createNewStoryPromise(), {
-      duration: 6000,
+      dismissible: false,
+      duration: 10000,
       className: "bg-black",
       loading: "creating the new story...",
       success: (newStory) => {
@@ -63,7 +69,7 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
             <Button
               variant={"outline"}
               size={"sm"}
-              className="shadow-outline text-primary dark:text-background hover:bg-muted flex h-8 items-center gap-x-2 bg-white active:scale-[0.98] dark:border-0"
+              className="shadow-outline text-primary dark:text-background flex h-8 items-center gap-x-2 bg-white hover:bg-white/80 active:scale-[0.98] dark:border-0"
               onClick={() => router.push(`/user/stories/${newStory.post_id}`)}
             >
               <Rocket className="size-4 stroke-1" />
@@ -83,8 +89,8 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
     <SpinnerButton
       onClick={isUserLogged ? handleCreateNewStory : OpenModal}
       isLoading={isLoading}
-      variant={"default"}
-      size={"sm"}
+      variant={variant}
+      size={size}
       className={cn("w-28 text-sm", spinnerButtonCN)}
     >
       {children ? (

@@ -125,11 +125,12 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   useEffect(() => {
     // This code will run once the component is mounted
     toast.success("The editor has been launched", {
-      duration: 3000,
       id: toastId,
+      duration: 3000,
+      description: "Happy writing 📝",
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Empty dependency array means this effect runs once on mount and not on updates
+  }, [toastId]) // Empty dependency array means this effect runs once on mount and not on updates
 
   const memoizedNovelEditor = useMemo(
     () => (
