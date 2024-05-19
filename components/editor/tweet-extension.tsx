@@ -13,7 +13,8 @@ export const TweetComponent = ({ node }: NodeViewProps) => {
   const id = tweetIdRegex.exec(url)?.[1]
 
   return (
-    <NodeViewWrapper className="twitter-react-component">
+    <NodeViewWrapper className="twitter-react-component mx-auto w-fit">
+      {/* TODO: ADD OUR OWN API ROUTE TO FETCH THE TWEET  `/api/tweet/${id}` */}
       <Tweet id={id || ""} />
     </NodeViewWrapper>
   )

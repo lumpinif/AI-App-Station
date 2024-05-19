@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['lucide-react'],
+  transpilePackages: ["lucide-react"],
   reactStrictMode: true,
   // swcMinify: true,
   images: {
@@ -20,6 +20,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "pbs.twimg.com",
+      },
+      {
+        protocol: "https",
+        hostname: "abs.twimg.com",
       },
       {
         protocol: "https",

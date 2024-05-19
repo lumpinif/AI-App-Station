@@ -144,7 +144,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     <TooltipProvider>
       <section className="relative w-full flex-col">
         <StoryEditorHeader
-          className="bg-background/60 sticky top-0 z-50 w-full justify-end rounded-xl py-1 backdrop-blur-sm"
+          className="bg-background/60 sticky top-0 z-40 w-full justify-end rounded-xl py-1 backdrop-blur-sm"
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}

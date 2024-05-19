@@ -13,6 +13,11 @@
   height: 0;
 }
 
+.prose-lg
+  :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  margin-top: 0 !important;
+}
+
 .ProseMirror h1 {
   /* font-size: 1.875rem; 30px */
   @apply text-3xl;

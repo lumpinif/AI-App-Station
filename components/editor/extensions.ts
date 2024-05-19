@@ -19,7 +19,11 @@ import { TweetExtension } from "./tweet-extension"
 
 const aiHighlight = AIHighlight
 
-const twitter = TweetExtension
+const twitter = TweetExtension.configure({
+  HTMLAttributes: {
+    class: cx(""),
+  },
+})
 
 const CustomDocument = Document.extend({
   content: "heading block*",
