@@ -63,11 +63,11 @@ export const userLayoutRoutes: UserLayoutRouteProps[] = [
         description: "Table of apps your submitted",
       },
       {
-        title: "Stories",
+        title: "Posted Stories",
         href: "/user/stories",
         label: "",
         icon: FileText,
-        description: "Table of stories you submitted",
+        description: "Table of stories you posted",
       },
     ],
   },
