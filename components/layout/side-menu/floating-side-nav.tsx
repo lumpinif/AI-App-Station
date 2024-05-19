@@ -14,7 +14,7 @@ import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trig
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
-import AppSubmitButton from "@/app/(main)/ai-apps/_components/app-submit-button"
+import AppSubmitButton from "@/app/(main)/submit/_components/app-submit-button"
 
 import {
   Tooltip,

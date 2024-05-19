@@ -7,7 +7,7 @@ import { ChevronDown, ChevronRight } from "lucide-react"
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
 
-import AppSubmitButton from "./app-submit-button"
+import AppSubmitButton from "../../submit/_components/app-submit-button"
 import { TagsCarousel } from "./carousel/mobile-nav-carousel/tags-carousel"
 
 export function MobileCategoryNav() {
