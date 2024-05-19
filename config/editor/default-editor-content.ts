@@ -249,12 +249,12 @@ export const defaultEditorContent = {
                 },
               ],
             },
-            {
-              type: "paragraph",
-            },
           ],
         },
       ],
+    },
+    {
+      type: "paragraph",
     },
     {
       type: "heading",
@@ -305,7 +305,22 @@ export const defaultEditorContent = {
       ],
     },
     {
-      type: "paragraph",
+      type: "heading",
+      attrs: {
+        level: 3,
+      },
+      content: [
+        {
+          text: "Embed tweet",
+          type: "text",
+        },
+      ],
+    },
+    {
+      type: "twitter",
+      attrs: {
+        url: "https://twitter.com/vercel/status/1683920951807971329",
+      },
     },
     {
       type: "horizontalRule",
@@ -490,6 +505,20 @@ export const defaultEditorContent = {
               content: [
                 {
                   text: "Embedding youtube videos",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "listItem",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "Embedding tweet",
                   type: "text",
                 },
               ],
@@ -779,12 +808,12 @@ export const defaultEditorContentWithoutHeading = {
                 },
               ],
             },
-            {
-              type: "paragraph",
-            },
           ],
         },
       ],
+    },
+    {
+      type: "paragraph",
     },
     {
       type: "heading",
@@ -835,7 +864,22 @@ export const defaultEditorContentWithoutHeading = {
       ],
     },
     {
-      type: "paragraph",
+      type: "heading",
+      attrs: {
+        level: 3,
+      },
+      content: [
+        {
+          text: "Embed tweet",
+          type: "text",
+        },
+      ],
+    },
+    {
+      type: "twitter",
+      attrs: {
+        url: "https://twitter.com/vercel/status/1683920951807971329",
+      },
     },
     {
       type: "horizontalRule",
@@ -1020,6 +1064,20 @@ export const defaultEditorContentWithoutHeading = {
               content: [
                 {
                   text: "Embedding youtube videos",
+                  type: "text",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          type: "listItem",
+          content: [
+            {
+              type: "paragraph",
+              content: [
+                {
+                  text: "Embedding tweet",
                   type: "text",
                 },
               ],
