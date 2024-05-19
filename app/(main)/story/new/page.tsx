@@ -5,8 +5,7 @@ export default function PostPage() {
   return (
     <main>
       <StoryPageWrapper>
-        <div className="">jumpt to user/stories/... maybe</div>
-        <div className=""></div>
+        <div className="">Show the post submit button</div>
       </StoryPageWrapper>
     </main>
   )

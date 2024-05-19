@@ -11,28 +11,44 @@ import {
 } from "@radix-ui/react-icons"
 import { AnimatePresence, motion } from "framer-motion"
 
+import { cn } from "@/lib/utils"
 import useClickOutside from "@/hooks/use-click-out-side"
 import useMediaQuery from "@/hooks/use-media-query"
 
-export default function PopoverMenu() {
+import { PopoverMenuList } from "../popover-menu/popover-menu-list"
+
+type PopoverMenuProps = {
+  className?: string
+  buttonClassName?: string
+  openedClassName?: string
+}
+
+export default function PopoverMenu({
+  className,
+  buttonClassName,
+  openedClassName,
+}: PopoverMenuProps) {
   const refMenu = React.useRef<HTMLDivElement>(null)
   const [openMenu, setOpenMenu] = useState(false)
 
   const { isMobile } = useMediaQuery()
 
-  const duration = 0.2
+  const duration = 0.25
   const transition = { duration, ease: [0.32, 0.72, 0, 1] }
 
   const menuVariants = {
     open: {
+      filter: "blur(0px)",
       opacity: 1,
       width: isMobile ? "100%" : "320px",
-      height: 220,
+      height: 150,
       borderRadius: "16px",
       bottom: -44,
       transition,
+      // backgroundColor: "#f0f0f4",
     },
     closed: {
+      filter: "blur(1.5px)",
       bottom: 0,
       opacity: 1,
       width: "48px",
@@ -62,34 +78,24 @@ export default function PopoverMenu() {
     },
   }
 
-  const items = [
-    {
-      title: "Settings",
-      text: "Adjust your preferences",
-      icon: GearIcon,
-    },
-    {
-      title: "Messages",
-      text: "View your messages",
-      icon: EnvelopeClosedIcon,
-    },
-    {
-      title: "Favorites",
-      text: "Manage your favorites",
-      icon: HeartIcon,
-    },
-  ]
-
   useClickOutside<HTMLDivElement>(refMenu, () => {
     setOpenMenu(false)
   })
 
   return (
-    <div className="relative flex h-[50px] w-full items-end justify-start border">
+    <div
+      className={cn(
+        "relative z-50 flex h-[55px] items-end justify-start",
+        className
+      )}
+    >
       <AnimatePresence>
         {openMenu && (
           <motion.div
-            className="bg-primary absolute bottom-0 left-0 flex flex-col items-center overflow-hidden p-1"
+            className={cn(
+              "bg-muted absolute bottom-0 left-4 !z-50 flex flex-col items-center overflow-hidden p-1 ",
+              openedClassName
+            )}
             initial="closed"
             animate="open"
             exit="closed"
@@ -101,34 +107,16 @@ export default function PopoverMenu() {
               variants={contentVariants}
               className="relative flex w-full flex-col space-y-1"
             >
-              {items.map((item, index) => {
-                return (
-                  <li
-                    key={index}
-                    className="bg-primary w-full select-none rounded-b-[4px] rounded-t-[4px] transition-transform first:rounded-t-[12px] last:rounded-b-[12px] active:scale-[0.98]"
-                  >
-                    <div className="flex items-center py-3">
-                      <div className="px-4">
-                        <item.icon className="text-background  h-5 w-5" />
-                      </div>
-                      <div>
-                        <h3 className="text-background  text-base">
-                          {item.title}
-                        </h3>
-                        <p className="text-muted-foreground text-sm">
-                          {item.text}
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                )
-              })}
+              <PopoverMenuList />
             </motion.ul>
           </motion.div>
         )}
       </AnimatePresence>
       <motion.button
-        className="bg-primary text-background  absolute bottom-0 left-0 flex h-12 w-12 items-center justify-center rounded-full p-2 outline-none"
+        className={cn(
+          "bg-muted dark:bg-muted/50 text-muted-foreground absolute bottom-0 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 outline-none",
+          buttonClassName
+        )}
         disabled={openMenu}
         onClick={(e) => {
           e.stopPropagation()

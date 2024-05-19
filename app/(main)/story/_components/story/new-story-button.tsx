@@ -7,6 +7,7 @@ import { User } from "@supabase/supabase-js"
 import { Rocket, SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
+import { cn } from "@/lib/utils"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import useEditorLaunchingToastStore from "@/hooks/use-toast-store"
 import { Button } from "@/components/ui/button"
@@ -14,10 +15,16 @@ import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
 type StoryNewFormProps = {
-  user: User | null | undefined
+  children?: React.ReactNode
+  user?: User | null | undefined
+  spinnerButtonCN?: string
 }
 
-export const NewStoryButton: React.FC<StoryNewFormProps> = ({ user }) => {
+export const NewStoryButton: React.FC<StoryNewFormProps> = ({
+  user,
+  children,
+  spinnerButtonCN,
+}) => {
   const [isLoading, setIsLoading] = useState(false)
   const setToastId = useEditorLaunchingToastStore((state) => state.setToastId)
   const OpenModal = useAccountModal((state) => state.OpenModal)
@@ -78,10 +85,16 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({ user }) => {
       isLoading={isLoading}
       variant={"default"}
       size={"sm"}
-      className="w-28 text-sm"
+      className={cn("w-28 text-sm", spinnerButtonCN)}
     >
-      <span>New Post</span>
-      <SquarePen className="size-4" />
+      {children ? (
+        children
+      ) : (
+        <>
+          <span>New Post</span>
+          <SquarePen className="size-4" />
+        </>
+      )}
     </SpinnerButton>
   )
 }

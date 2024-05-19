@@ -8,7 +8,7 @@ import { SIDENAVROUTES } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
 import useSideNav from "@/hooks/use-side-nav-store"
-import { Button } from "@/components/ui/button"
+import PopoverMenu from "@/components/ui/popover-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
@@ -72,12 +72,12 @@ const FloatingSideNav: React.FC = () => {
   return (
     <aside
       className={cn(
-        "cubic-bezier(0.32, 0.72, 0, 1) z-50 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 md:flex",
+        "cubic-bezier(0.32, 0.72, 0, 1) z-40 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 md:flex md:flex-col",
         !isOpen ? "-ml-6 rounded-[2.5rem]" : "-ml-4 mt-16"
       )}
     >
       <TooltipProvider>
-        <ScrollArea className="h-full w-full rounded-3xl">
+        <ScrollArea className="relative z-40 h-full w-full rounded-3xl">
           <div className={sideNavClass}>
             <SideNavToggle isOpen={isOpen} />
             {isOpen && <SearchTrigger isOpen={isOpen} />}
@@ -89,6 +89,7 @@ const FloatingSideNav: React.FC = () => {
             <SideMenuAuthTrigger isOpen={isOpen} />
           </div>
         </ScrollArea>
+        {!isOpen && <PopoverMenu className={!isOpen ? "!w-20" : "!w-48"} />}
       </TooltipProvider>
     </aside>
   )
@@ -233,6 +234,7 @@ export const SideNavAppSubmit: React.FC<SideNavToggleProps> = React.memo(
     return (
       <div className={cn("relative flex items-center justify-start")}>
         <AppSubmitButton className={buttonClass} />
+        {/* <PopoverMenu /> */}
         <h1
           className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm opacity-100 duration-300 ${
             !isOpen && "scale-0"
