@@ -30,29 +30,22 @@ export type AppPageProps = {
   searchParams: SearchParams
 }
 
-export const dynamicParams = false
-
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
-  let { data: allApps, error } = await supabase
+  const { data: allApps, error } = await supabase
     .from("apps")
-    .select("*")
+    .select("*,profiles(*)")
     .returns<Apps[]>()
 
   if (error) {
-    throw new Error(error.message)
+    throw new Error("Error fetching data: " + error.message)
   }
 
-  if (!allApps) {
-    return []
-  }
-
-  if (allApps) {
-    const aiappsParams = allApps.map((app) => ({
+  if (allApps)
+    return allApps.map((app) => ({
       slug: app.app_slug,
     }))
-    return aiappsParams
-  }
+
   return []
 }
 
