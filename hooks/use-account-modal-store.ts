@@ -2,14 +2,14 @@ import { create } from "zustand"
 
 type ModalStore = {
   isOpen: boolean
-  OpenModal: () => void
-  CloseModal: () => void
+  openModal: () => void
+  closeModal: () => void
 }
 
 const useAccountModal = create<ModalStore>((set) => ({
   isOpen: false,
-  OpenModal: () => set({ isOpen: true }),
-  CloseModal: () => set({ isOpen: false }),
+  openModal: () => set({ isOpen: true }),
+  closeModal: () => set({ isOpen: false }),
 }))
 
 export default useAccountModal

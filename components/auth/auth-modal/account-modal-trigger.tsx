@@ -31,7 +31,7 @@ const AccountModalTrigger = ({
   isTriggerModal = true,
   isFetching: propIsFetching,
 }: AccountModalTriggerProps) => {
-  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const openAccountModal = useAccountModal((state) => state.openModal)
   const isModalOpen = useAccountModal((state) => state.isOpen)
   const { isFetching: hookIsFetching, data: hookProfile } = useUserProfile()
 
@@ -45,7 +45,7 @@ const AccountModalTrigger = ({
     if (!isTriggerModal) return
     if (!isModalOpen) {
       e.preventDefault()
-      OpenModal()
+      openAccountModal()
       e.stopPropagation()
     } else {
       router.push(href || "/user")

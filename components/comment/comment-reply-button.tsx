@@ -23,10 +23,10 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   toggleReplying,
 }) => {
   const { data: profile } = useUserProfile()
-  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const openAccountModal = useAccountModal((state) => state.openModal)
   const handleClick = () => {
     if (!profile?.user_id) {
-      OpenModal()
+      openAccountModal()
       return
     }
     toggleReplying()

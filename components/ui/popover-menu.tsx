@@ -7,8 +7,10 @@ import { PlusIcon } from "@radix-ui/react-icons"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
+import { useAppSubmitModalStore } from "@/hooks/use-app-submit-modal-store"
 import useClickOutside from "@/hooks/use-click-out-side"
 import useMediaQuery from "@/hooks/use-media-query"
+import { usePopoverStore } from "@/hooks/use-popover-store"
 
 import { PopoverMenuList } from "../popover-menu/popover-menu-list"
 
@@ -24,7 +26,12 @@ export default function PopoverMenu({
   openedClassName,
 }: PopoverMenuProps) {
   const refMenu = React.useRef<HTMLDivElement>(null)
-  const [openMenu, setOpenMenu] = useState(false)
+
+  const isAppSubmitModalOpen = useAppSubmitModalStore(
+    (state) => state.isAppSubmitModalOpen
+  )
+
+  const { isPopoverOpen, togglePopover } = usePopoverStore()
 
   const { isMobile } = useMediaQuery()
 
@@ -73,9 +80,7 @@ export default function PopoverMenu({
     },
   }
 
-  useClickOutside<HTMLDivElement>(refMenu, () => {
-    setOpenMenu(false)
-  })
+  useClickOutside<HTMLDivElement>(refMenu, togglePopover, isAppSubmitModalOpen)
 
   return (
     <div
@@ -85,7 +90,7 @@ export default function PopoverMenu({
       )}
     >
       <AnimatePresence>
-        {openMenu && (
+        {isPopoverOpen && (
           <motion.div
             className={cn(
               "bg-muted absolute bottom-0 left-4 !z-50 flex flex-col items-center overflow-hidden p-1 ",
@@ -112,14 +117,14 @@ export default function PopoverMenu({
           "bg-muted dark:bg-muted/50 text-muted-foreground absolute bottom-0 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 outline-none",
           buttonClassName
         )}
-        disabled={openMenu}
+        disabled={isPopoverOpen}
         onClick={(e) => {
           e.stopPropagation()
-          setOpenMenu(true)
+          togglePopover()
         }}
         variants={buttonVariants}
         initial="closed"
-        animate={openMenu ? "open" : "closed"}
+        animate={isPopoverOpen ? "open" : "closed"}
         whileTap={{ scale: 0.95 }}
       >
         <PlusIcon className="h-6 w-6" />

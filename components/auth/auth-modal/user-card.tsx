@@ -32,7 +32,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
   display = "email",
 }) => {
   const { isFetching, data: profile } = useUserProfile()
-  const CloseModal = useAccountModal((state) => state.CloseModal)
+  const closeAccountModal = useAccountModal((state) => state.closeModal)
 
   return (
     <>
@@ -40,7 +40,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
         <Link
           href="/user"
           className={cn("flex items-center overflow-hidden", className)}
-          onClick={CloseModal}
+          onClick={closeAccountModal}
           passHref
         >
           <AccountModalTrigger
@@ -64,7 +64,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
       ) : (
         <div
           className={cn("flex items-center overflow-hidden", className)}
-          onClick={CloseModal}
+          onClick={closeAccountModal}
         >
           <AccountModalTrigger
             withAvartarUploader={withAvartarUploader}

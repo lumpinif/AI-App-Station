@@ -11,10 +11,10 @@ import LoginCard from "../signin/login-card"
 
 const AccountModal = ({ user }: { user: User | null }) => {
   const isOpen = useAccountModal((state) => state.isOpen)
-  const CloseModal = useAccountModal((state) => state.CloseModal)
+  const closeAccountModal = useAccountModal((state) => state.closeModal)
 
   const onChange = (open: boolean) => {
-    if (!open) CloseModal()
+    if (!open) closeAccountModal()
   }
 
   return (

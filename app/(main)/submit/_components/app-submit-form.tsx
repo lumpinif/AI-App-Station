@@ -1,12 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { SubmitApp } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rocket } from "lucide-react"
 import { useForm } from "react-hook-form"
-import { ThreeDots } from "react-loader-spinner"
 import { toast } from "sonner"
 import * as z from "zod"
 
@@ -40,7 +39,8 @@ const formSchema = z.object({
 const AppSubmitForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [existingError, setexistingError] = useState("")
-  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const openAccountModal = useAccountModal((state) => state.openModal)
+
   const setToastId = useAppSubmitToastStore((state) => state.setToastId)
   const { data: user } = useUserData()
   const router = useRouter()
@@ -80,6 +80,7 @@ const AppSubmitForm = () => {
         router.push(`/user/apps/${newApp.app_id}`)
         setToastId(newAppSubmittingToast)
         setIsLoading(false)
+
         return (
           <div className="flex w-full items-center justify-between">
             <span className="flex items-center gap-x-2">
@@ -100,6 +101,7 @@ const AppSubmitForm = () => {
       },
       error: (error) => {
         setIsLoading(false)
+        setexistingError(error.message)
         return error.message || "Error creating new app"
       },
     })
@@ -144,7 +146,9 @@ const AppSubmitForm = () => {
             isLoading={isLoading}
             disabled={!isValid || isSubmitting || isLoading}
             onClick={
-              !user?.id ? OpenModal : form.handleSubmit(handleSubmitNewApp)
+              !user?.id
+                ? openAccountModal
+                : form.handleSubmit(handleSubmitNewApp)
             }
           >
             <span>Continue</span>

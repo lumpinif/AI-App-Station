@@ -25,7 +25,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   const supabase = createSupabaseBrowserClient()
   const [isPending, startTransition] = useTransition()
 
-  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const openAccountModal = useAccountModal((state) => state.openModal)
 
   const router = useRouter()
   const { data: profile } = useUserProfile()
@@ -65,7 +65,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
     // checking if we have a user login
     if (!profile?.user_id) {
       toast.error("Please login to like a comment.")
-      OpenModal()
+      openAccountModal()
       return
     }
 

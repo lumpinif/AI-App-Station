@@ -29,7 +29,7 @@ const FormSchema = z.object({
 
 export default function SignInForm() {
   const [isPending, startTransition] = useTransition()
-  const CloseModal = useAccountModal((state) => state.CloseModal)
+  const closeAccountModal = useAccountModal((state) => state.closeModal)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -56,7 +56,7 @@ export default function SignInForm() {
           })
         }
       } else {
-        CloseModal()
+        closeAccountModal()
         toast.success("Successfully Signed In !", {
           description: "Welcome back " + data?.user?.email,
         })

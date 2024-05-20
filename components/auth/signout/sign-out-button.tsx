@@ -10,7 +10,7 @@ import useAccountModal from "@/hooks/use-account-modal-store"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
 const SignOutButton = () => {
-  const CloseModal = useAccountModal((state) => state.CloseModal)
+  const closeAccountModal = useAccountModal((state) => state.closeModal)
   const [isPending, startTransition] = useTransition()
   const queryClient = useQueryClient()
   const router = useRouter()
@@ -22,7 +22,7 @@ const SignOutButton = () => {
         const result = await signOut()
         if (result !== null) {
           toast.success("Signed Out.")
-          CloseModal()
+          closeAccountModal()
         } else {
           toast.error("You need to Sign In first.")
           router.push("/signin")

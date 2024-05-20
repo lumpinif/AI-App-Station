@@ -32,7 +32,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   const { data: profile } = useUserProfile()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const openAccountModal = useAccountModal((state) => state.openModal)
   const supabase = createSupabaseBrowserClient()
 
   const isUserLiked = app_likes.some(
@@ -77,7 +77,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   const handleLikes = async () => {
     if (!profile?.user_id) {
       toast.error("Please login to like a app.")
-      OpenModal()
+      openAccountModal()
       return
     }
 

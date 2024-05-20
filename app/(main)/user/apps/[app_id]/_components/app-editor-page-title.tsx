@@ -4,7 +4,9 @@ import { useEffect } from "react"
 import { toast } from "sonner"
 
 import { Apps } from "@/types/db_tables"
+import { useAppSubmitModalStore } from "@/hooks/use-app-submit-modal-store"
 import useAppSubmitToastStore from "@/hooks/use-app-toast-store"
+import { usePopoverStore } from "@/hooks/use-popover-store"
 import { PageTitle } from "@/components/layout/page-title"
 
 import { InfoPopover } from "./forms/info-popover"
@@ -18,6 +20,13 @@ export const AppEditorPageTitle: React.FC<AppEditorPageTitleProps> = ({
 }) => {
   const toastId = useAppSubmitToastStore((state) => state.toastId)
   const setToastId = useAppSubmitToastStore((state) => state.setToastId)
+  const closeAppSubmitModal = useAppSubmitModalStore(
+    (state) => state.closeAppSubmitModal
+  )
+  const closePopover = usePopoverStore((state) => state.closePopover)
+  const isAppSubmitModalOpen = useAppSubmitModalStore(
+    (state) => state.isAppSubmitModalOpen
+  )
 
   useEffect(() => {
     // This code will run once the component is mounted
@@ -27,6 +36,11 @@ export const AppEditorPageTitle: React.FC<AppEditorPageTitleProps> = ({
         duration: 3000,
         description: "Happy editing",
       })
+    }
+
+    if (isAppSubmitModalOpen) {
+      closeAppSubmitModal()
+      closePopover()
     }
 
     // Reset toastId after showing the toast

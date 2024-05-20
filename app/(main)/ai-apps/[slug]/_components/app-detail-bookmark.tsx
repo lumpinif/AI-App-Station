@@ -31,7 +31,7 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   const { data: profile } = useUserProfile()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const openAccountModal = useAccountModal((state) => state.openModal)
   const supabase = createSupabaseBrowserClient()
 
   const isUserBookmarked = app_bookmarks.some(
@@ -78,7 +78,7 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   const handleBookmarks = async () => {
     if (!profile?.user_id) {
       toast.error("Please login to bookmark a app.")
-      OpenModal()
+      openAccountModal()
       return
     }
 

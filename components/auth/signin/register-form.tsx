@@ -37,7 +37,7 @@ const FormSchema = z
 
 export default function RegisterForm() {
   const [isPending, startTransition] = useTransition()
-  const CloseModal = useAccountModal((state) => state.CloseModal)
+  const closeAccountModal = useAccountModal((state) => state.closeModal)
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -70,7 +70,7 @@ export default function RegisterForm() {
           })
         }
       } else {
-        CloseModal()
+        closeAccountModal()
         toast.success("Successfully Registered!", {
           description: "Welcome " + data?.user?.email,
         })

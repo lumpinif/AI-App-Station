@@ -15,13 +15,13 @@ import { Button, ButtonProps } from "@/components/ui/button"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
-type StoryNewFormProps = ButtonProps & {
+type NewStoryButtonProps = ButtonProps & {
   children?: React.ReactNode
   user?: User | null | undefined
   spinnerButtonCN?: string
 }
 
-export const NewStoryButton: React.FC<StoryNewFormProps> = ({
+export const NewStoryButton: React.FC<NewStoryButtonProps> = ({
   user: propUser,
   children,
   spinnerButtonCN,
@@ -30,7 +30,7 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false)
   const setToastId = useNewStoryToastStore((state) => state.setToastId)
-  const OpenModal = useAccountModal((state) => state.OpenModal)
+  const openAccountModal = useAccountModal((state) => state.openModal)
   const { data: hookUser } = useUserData()
   const user = propUser || hookUser
   const isUserLogged = !!user && user.id
@@ -88,7 +88,7 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
 
   return (
     <SpinnerButton
-      onClick={isUserLogged ? handleCreateNewStory : OpenModal}
+      onClick={isUserLogged ? handleCreateNewStory : openAccountModal}
       isLoading={isLoading}
       variant={variant}
       size={size}
