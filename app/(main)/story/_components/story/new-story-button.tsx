@@ -10,7 +10,7 @@ import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 import { useUserData } from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
-import useEditorLaunchingToastStore from "@/hooks/use-toast-store"
+import useNewStoryToastStore from "@/hooks/use-story-toast-store"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import { SpinnerButton } from "@/components/shared/spinner-button"
@@ -29,7 +29,7 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
   size = "sm",
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const setToastId = useEditorLaunchingToastStore((state) => state.setToastId)
+  const setToastId = useNewStoryToastStore((state) => state.setToastId)
   const OpenModal = useAccountModal((state) => state.OpenModal)
   const { data: hookUser } = useUserData()
   const user = propUser || hookUser
@@ -52,14 +52,13 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
       return newStory
     }
 
-    const newLaunchingToast = toast.promise(createNewStoryPromise(), {
+    const newStoryLaunchingToast = toast.promise(createNewStoryPromise(), {
       dismissible: false,
-      duration: 10000,
-      className: "bg-black",
+      duration: 100000,
       loading: "creating the new story...",
       success: (newStory) => {
         router.push(`/user/stories/${newStory.post_id}`)
-        setToastId(newLaunchingToast)
+        setToastId(newStoryLaunchingToast)
         setIsLoading(false)
         return (
           <div className="flex w-full items-center justify-between gap-x-2">

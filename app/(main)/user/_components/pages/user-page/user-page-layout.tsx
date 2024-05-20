@@ -1,8 +1,4 @@
 import React from "react"
-import Link from "next/link"
-import { Separator } from "@radix-ui/react-dropdown-menu"
-
-import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
 
 import { UserProfileCard } from "./user-profile-card"
 
@@ -16,48 +12,5 @@ export const UserPageLayout: React.FC<UserPageLayoutProps> = ({}) => {
         <UserProfileCard className="mx-auto w-full md:max-w-xl lg:max-w-2xl" />
       </main>
     </section>
-  )
-}
-
-function UserPageLinks() {
-  return (
-    <>
-      <div className="mx-auto flex w-full max-w-5xl items-center gap-4 text-xl font-normal">
-        <Link href={"/user/favorites"}>
-          <span>Favorites</span>
-          <span className="sr-only">Favorites</span>
-        </Link>
-      </div>
-
-      <div className="mx-auto flex w-full max-w-5xl items-center gap-4 text-xl font-normal">
-        <Link
-          href={"/user/bookmarks"}
-          className="mx-auto flex w-full max-w-5xl items-center gap-4 text-xl font-normal"
-        >
-          <span>Bookmarks</span>
-          <span className="sr-only">Bookmarks</span>
-        </Link>
-      </div>
-
-      <div className="mx-auto flex w-full max-w-5xl items-center gap-4 text-xl font-normal">
-        <Link
-          href={"/user/apps"}
-          className="mx-auto flex w-full max-w-5xl items-center gap-4 text-xl font-normal"
-        >
-          <span>Submitted</span>
-          <span className="sr-only">Submitted</span>
-        </Link>
-      </div>
-
-      <div className="mx-auto flex w-full max-w-5xl items-center gap-4 text-xl font-normal">
-        <Link
-          href={"/user/posts"}
-          className="mx-auto flex w-full max-w-5xl items-center gap-4 text-xl font-normal"
-        >
-          <span>Posts</span>
-          <span className="sr-only">Posts</span>
-        </Link>
-      </div>
-    </>
   )
 }

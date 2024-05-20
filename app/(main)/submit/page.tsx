@@ -1,5 +1,3 @@
-import { Suspense } from "react"
-
 import AppSubmitForm from "./_components/app-submit-form"
 
 const AppSubmitPage = () => {
@@ -10,7 +8,6 @@ const AppSubmitPage = () => {
         <p className="text-muted-foreground mt-1 text-sm">
           Help us to expand our knowledge for the whole humanity.
         </p>
-
         <AppSubmitForm />
       </div>
     </div>

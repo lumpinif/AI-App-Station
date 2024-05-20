@@ -1,3 +1,5 @@
+// Purpose: Store for the toast that appears when the app submit editor is launching.
+
 import { create } from "zustand"
 
 type ToastStore = {
@@ -5,9 +7,9 @@ type ToastStore = {
   setToastId: (toastId: string | number | undefined) => void
 }
 
-const useEditorLaunchingToastStore = create<ToastStore>((set) => ({
+const useAppSubmitToastStore = create<ToastStore>((set) => ({
   toastId: undefined,
   setToastId: (toastId) => set({ toastId: toastId }),
 }))
 
-export default useEditorLaunchingToastStore
+export default useAppSubmitToastStore

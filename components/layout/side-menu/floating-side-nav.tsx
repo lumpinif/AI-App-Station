@@ -234,7 +234,6 @@ export const SideNavAppSubmit: React.FC<SideNavToggleProps> = React.memo(
     return (
       <div className={cn("relative flex items-center justify-start")}>
         <AppSubmitButton className={buttonClass} />
-        {/* <PopoverMenu /> */}
         <h1
           className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm opacity-100 duration-300 ${
             !isOpen && "scale-0"

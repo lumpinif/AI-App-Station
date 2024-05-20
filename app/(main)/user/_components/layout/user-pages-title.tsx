@@ -8,6 +8,8 @@ import {
 } from "@/config/routes/user-layout-routes"
 import { PageTitle } from "@/components/layout/page-title"
 
+import { UserPagesMobileNavSheet } from "./user-pages-mobile-nav-sheet"
+
 type UserPagesTitleProps = { className?: string }
 
 export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
@@ -16,7 +18,12 @@ export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
   const pathname = usePathname()
 
   if (pathname === "/user") {
-    return <PageTitle title="User" withBorder={false} className={className} />
+    return (
+      <div className="flex items-center justify-between">
+        <PageTitle title="User" withBorder={false} className={className} />
+        <UserPagesMobileNavSheet />
+      </div>
+    )
   }
 
   const matchedRoute = userLayoutRoutes.reduce<UserLayoutRouteProps | null>(

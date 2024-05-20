@@ -18,7 +18,7 @@ import {
 import useInsertContent from "@/hooks/editor/use-insert-content"
 import useRemoveContent from "@/hooks/editor/use-remove-content"
 import useUpdateContentHeading from "@/hooks/editor/use-update-content-heading"
-import useEditorLaunchingToastStore from "@/hooks/use-toast-store"
+import useNewStoryToastStore from "@/hooks/use-story-toast-store"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
@@ -46,7 +46,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_content,
   profiles,
 }) => {
-  const toastId = useEditorLaunchingToastStore((state) => state.toastId)
+  const toastId = useNewStoryToastStore((state) => state.toastId)
   const initialContent = useMemo(
     () => post_content || defaultEditorContent,
     [post_content]

@@ -4,12 +4,15 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { SubmitApp } from "@/server/data"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Rocket } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { ThreeDots } from "react-loader-spinner"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { useUserData } from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
+import useAppSubmitToastStore from "@/hooks/use-app-toast-store"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -21,7 +24,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
+import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import { SpinnerButton } from "@/components/shared/spinner-button"
 
+// TODO: COMBINE THE FORMSCHEMA WITH THE APP TITLE FORM
 const formSchema = z.object({
   title: z
     .string()
@@ -32,17 +38,15 @@ const formSchema = z.object({
 })
 
 const AppSubmitForm = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [existingError, setexistingError] = useState("")
   const OpenModal = useAccountModal((state) => state.OpenModal)
+  const setToastId = useAppSubmitToastStore((state) => state.setToastId)
+  const { data: user } = useUserData()
   const router = useRouter()
 
-  useEffect(() => {
-    if (existingError === "You need to login to continue.") {
-      OpenModal()
-    }
-  }, [OpenModal, existingError])
-
   const form = useForm<z.infer<typeof formSchema>>({
+    mode: "onChange",
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
@@ -51,30 +55,62 @@ const AppSubmitForm = () => {
 
   const { isSubmitting, isValid } = form.formState
 
-  const onSubmit = async (
-    values: z.infer<typeof formSchema>
-  ): Promise<void> => {
-    const { newApp, error } = await SubmitApp(values.title)
+  function handleSubmitNewApp(values: z.infer<typeof formSchema>) {
+    setIsLoading(true)
 
-    if (newApp) {
-      setexistingError("")
-      toast.success(
-        `You're submitting : ${newApp[0].app_title}  -  Redirecting to continue 🎉 Please Don't refresh.`
-      )
-      router.push(`/user/apps/${newApp[0].app_id}`)
+    const submitNewAppPromise = async () => {
+      const { newApp, error: newAppError } = await SubmitApp(values.title)
+
+      if (newAppError) {
+        throw new Error(newAppError.message)
+      }
+
+      if (!newApp) {
+        throw new Error("Failed to create new App, please try agin.")
+      }
+
+      return newApp
     }
 
-    if (typeof error === "string") {
-      setexistingError(error)
-      toast.error(`${error} 🥲`)
-    } else if (error) {
-      toast.error(`${error?.message} - Please Contact Support 🥲`)
-    }
+    const newAppSubmittingToast = toast.promise(submitNewAppPromise(), {
+      dismissible: false,
+      duration: 100000,
+      loading: "Creating the new app...",
+      success: (newApp) => {
+        router.push(`/user/apps/${newApp.app_id}`)
+        setToastId(newAppSubmittingToast)
+        setIsLoading(false)
+        return (
+          <div className="flex w-full items-center justify-between">
+            <span className="flex items-center gap-x-2">
+              <LoadingSpinner size={16} />
+              Redircting to the the app details page, please wait...
+            </span>
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              className="shadow-outline text-primary dark:text-background flex h-8 w-fit shrink-0 flex-nowrap items-center gap-x-2 bg-white hover:bg-white/80 active:scale-[0.98] dark:border-0"
+              onClick={() => router.push(`/user/apps/${newApp.app_id}`)}
+            >
+              <Rocket className="size-4 stroke-1" />
+              Launch
+            </Button>
+          </div>
+        )
+      },
+      error: (error) => {
+        setIsLoading(false)
+        return error.message || "Error creating new app"
+      },
+    })
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-8">
+      <form
+        onSubmit={form.handleSubmit(handleSubmitNewApp)}
+        className="mt-8 space-y-8"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -101,24 +137,18 @@ const AppSubmitForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex items-center gap-x-2">
-          <Button type="submit" disabled={!isValid || isSubmitting}>
-            {isSubmitting ? (
-              <>
-                Please wait{" "}
-                <ThreeDots
-                  color="gray"
-                  visible={true}
-                  height="20"
-                  width="20"
-                  ariaLabel="three-dots-loading"
-                  wrapperClass="ml-2"
-                />
-              </>
-            ) : (
-              <>Continue</>
-            )}
-          </Button>
+        <div className="flex items-center justify-end gap-x-2">
+          <SpinnerButton
+            type="button"
+            buttonClassName="w-24"
+            isLoading={isLoading}
+            disabled={!isValid || isSubmitting || isLoading}
+            onClick={
+              !user?.id ? OpenModal : form.handleSubmit(handleSubmitNewApp)
+            }
+          >
+            <span>Continue</span>
+          </SpinnerButton>
         </div>
       </form>
     </Form>

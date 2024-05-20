@@ -3,12 +3,7 @@
 "use client"
 
 import React, { useState } from "react"
-import {
-  EnvelopeClosedIcon,
-  GearIcon,
-  HeartIcon,
-  PlusIcon,
-} from "@radix-ui/react-icons"
+import { PlusIcon } from "@radix-ui/react-icons"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"

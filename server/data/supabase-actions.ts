@@ -14,7 +14,7 @@ import {
   Posts,
   PostWithProfile,
 } from "@/types/db_tables"
-import { capitalizeFirstLetter, nameToSlug } from "@/lib/utils"
+import { capitalizeFirstLetter, nameToSlug, normalizeString } from "@/lib/utils"
 
 const getErrorMessage = (error: unknown) => {
   let message: string
@@ -68,7 +68,6 @@ export async function GetAppByAppIdUserId(
 }
 
 export async function SubmitApp(title: Apps["app_title"]) {
-  // TODO: CONSIDER PASSING USER_ID FROM CLIENT BY USING USEUSER HOOK IN ORDER TO CHECK IF USER.ID FROM GETUSER IS SAME AS FROM USEUSER
   const supabase = await createSupabaseServerClient()
   const {
     data: { user },
@@ -77,26 +76,29 @@ export async function SubmitApp(title: Apps["app_title"]) {
   if (!user) {
     return {
       newApp: null,
-      error: "You need to login to continue.",
+      error: new Error("You need to login to continue."),
     }
   }
 
   if (title === null) {
-    return { newApp: null, error: "Title is required." }
+    return { newApp: null, error: new Error("Title is required.") }
   }
 
   // Check if title already exists
   const { data: existingApp, error: existingAppError } = await supabase
     .from("apps")
     .select("app_title")
-    .ilike("app_title", title)
+    .ilike("app_title", normalizeString(title))
 
   if (existingAppError) {
     return { newApp: null, error: existingAppError }
   }
 
   if (existingApp && existingApp.length > 0) {
-    return { newApp: null, error: "The App already exists. Please try again." }
+    return {
+      newApp: null,
+      error: new Error("The App already exists. Please try again."),
+    }
   }
 
   const { data: newApp, error } = await supabase
@@ -106,12 +108,10 @@ export async function SubmitApp(title: Apps["app_title"]) {
         app_title: title,
         app_slug: nameToSlug(title),
         submitted_by_user_id: user.id,
-        // TODO: REMOVE THIS BEFORE PRODUCTION
-        // submitted_by: user.email ?? "",
-        // REMOVED: submitted_by_user.email
       },
     ])
     .select("*")
+    .single()
 
   return { newApp, error }
 }

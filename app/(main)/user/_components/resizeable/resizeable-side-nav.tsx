@@ -76,6 +76,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
               <Link
                 href="/user"
                 className={cn(
+                  "cursor-pointer",
                   buttonVariants({
                     variant: "ghost",
                     size: "icon",
@@ -83,7 +84,8 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                 )}
               >
                 <AccountModalTrigger
-                  className="size-8 rounded-md"
+                  className="size-8 cursor-pointer rounded-md"
+                  avatarClassName="cursor-pointer"
                   isTriggerModal={false}
                 />
                 <span className="sr-only">user account modal trigger</span>
@@ -93,7 +95,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
               side="right"
               className="dark:bg-foreground dark:text-background flex items-center gap-2 text-xs"
             >
-              Account
+              User Page
             </TooltipContent>
           </Tooltip>
         ) : (
@@ -150,15 +152,19 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                   key={itemIndex}
                   href={link.href}
                   className={cn(
-                    "text-muted-foreground mx-2 text-nowrap",
+                    "text-muted-foreground mx-2 text-nowrap font-normal",
                     buttonVariants({ variant: "ghost", size: "sm" }),
                     "justify-start"
                   )}
                 >
                   <link.icon className="text-muted-foreground mr-2 stroke-[1.5px] md:size-6" />
-                  {link.title}
+                  <span className="font-normal">{link.title}</span>
                   {link.label && (
-                    <span className={cn("text-muted-foreground ml-auto")}>
+                    <span
+                      className={cn(
+                        "text-muted-foreground ml-auto font-normal"
+                      )}
+                    >
                       {link.label}
                     </span>
                   )}

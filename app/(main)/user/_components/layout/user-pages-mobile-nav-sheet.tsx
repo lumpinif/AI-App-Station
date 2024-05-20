@@ -14,7 +14,11 @@ export const UserPagesMobileNavSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button size="icon" variant="outline" className="size-8 md:hidden">
+        <Button
+          size="icon"
+          variant="outline"
+          className="size-8 shrink-0 md:hidden"
+        >
           <PanelLeft className="text-muted-foreground size-4" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
@@ -23,7 +27,7 @@ export const UserPagesMobileNavSheet = () => {
         side="left"
         className="w-5/6 border-none sm:hidden sm:max-w-sm"
       >
-        <nav className="grid gap-6 text-lg font-medium">
+        <nav className="grid gap-6 text-base font-medium">
           <Link
             href="#"
             className="group flex shrink-0  items-center gap-4 rounded-full px-2.5 text-lg font-semibold md:text-base"
@@ -41,7 +45,7 @@ export const UserPagesMobileNavSheet = () => {
                   className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
                 >
                   <item.icon className="h-5 w-5 transition-all" />
-                  <span>{item.title}</span>
+                  <span className="font-normal">{item.title}</span>
                   <span className="sr-only">{item.title}</span>
                 </Link>
               ))}
