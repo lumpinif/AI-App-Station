@@ -15,8 +15,10 @@ export const PopoverMenuItem: React.FC<PopoverMenuItemProps> = ({ item }) => {
         <item.icon className="text-primary size-6" />
       </div>
       <div className="flex flex-col items-start">
-        <h3 className="text-primary text-base">{item.title}</h3>
-        <p className="text-muted-foreground text-sm">{item.text}</p>
+        <h3 className="text-base font-semibold leading-tight tracking-tight">
+          {item.title}
+        </h3>
+        <p className="text-muted-foreground text-sm font-normal">{item.text}</p>
       </div>
     </div>
   )
