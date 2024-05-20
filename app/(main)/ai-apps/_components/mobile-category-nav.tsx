@@ -22,7 +22,7 @@ export function MobileCategoryNav() {
   const isShowAllAppsTab = pathname !== "/ai-apps"
 
   return (
-    <div className="sm:hidden">
+    <div className="md:hidden">
       {isShowAllAppsTab && (
         <AllAppsTab
           className="mr-1"
@@ -31,7 +31,7 @@ export function MobileCategoryNav() {
         />
       )}
       <div className="flex flex-col">
-        <div className="scrollbar-none flex items-center justify-between overflow-x-auto py-1 sm:hidden">
+        <div className="scrollbar-none flex items-center justify-between overflow-x-auto py-1">
           <div className="flex gap-x-2">
             {SIDENAVROUTES.map((route) => (
               <div
