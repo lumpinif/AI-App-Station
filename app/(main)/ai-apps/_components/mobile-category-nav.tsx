@@ -7,7 +7,7 @@ import { ChevronDown, ChevronRight } from "lucide-react"
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
 
-import AppSubmitButton from "../../submit/_components/app-submit-button"
+import { AppSubmitButton } from "../../../../components/submit/app-submit-button"
 import { TagsCarousel } from "./carousel/mobile-nav-carousel/tags-carousel"
 
 export function MobileCategoryNav() {
@@ -25,7 +25,6 @@ export function MobileCategoryNav() {
     <div className="md:hidden">
       {isShowAllAppsTab && (
         <AllAppsTab
-          className="mr-1"
           pathname={pathname}
           handleTabSelection={handleTabSelection}
         />
@@ -71,11 +70,10 @@ export function MobileCategoryNav() {
           </div>
           <div className="group flex items-center">
             <AppSubmitButton
-              className="text-muted-foreground focus-visible:ring-ring group-hover:text-primary whitespace-nowrap transition-colors ease-out focus-visible:ring-4"
-              size={"xs"}
-            >
-              <span className="text-xs">Submit Apps</span>
-            </AppSubmitButton>
+              variant={"default"}
+              size={"label"}
+              className="w-fit border"
+            />
           </div>
         </div>
         {pathname === "/ai-apps" ? null : (
@@ -98,11 +96,11 @@ const AllAppsTab = ({
   return (
     <div
       className={cn(
-        "focus-visible:ring-ring relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4",
+        "focus-visible:ring-ring relative flex w-fit cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4",
         className,
         pathname === `/ai-apps`
           ? "border-primary text-primary"
-          : "text-muted-foreground hover:text-primary border-transparent"
+          : "text-muted-foreground hover:text-primary"
       )}
       style={{
         WebkitTapHighlightColor: "transparent",

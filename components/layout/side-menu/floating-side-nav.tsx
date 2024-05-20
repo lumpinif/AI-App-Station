@@ -14,7 +14,6 @@ import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trig
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
-import AppSubmitButton from "@/app/(main)/submit/_components/app-submit-button"
 
 import {
   Tooltip,
@@ -85,7 +84,6 @@ const FloatingSideNav: React.FC = () => {
             {!isOpen && <SearchTrigger isOpen={isOpen} />}
             {/* TODO: Consider remove the theme toggle before production */}
             <SideNavThemeToggle isOpen={isOpen} />
-            <SideNavAppSubmit isOpen={isOpen} />
             <SideMenuAuthTrigger isOpen={isOpen} />
           </div>
         </ScrollArea>
@@ -226,26 +224,5 @@ export const SideNavThemeToggle: React.FC<SideNavToggleProps> = React.memo(
 )
 
 SideNavThemeToggle.displayName = "SideNavThemeToggle"
-
-export const SideNavAppSubmit: React.FC<SideNavToggleProps> = React.memo(
-  ({ isOpen }) => {
-    const buttonClass = cn(buttonClassBase)
-
-    return (
-      <div className={cn("relative flex items-center justify-start")}>
-        <AppSubmitButton className={buttonClass} />
-        <h1
-          className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm opacity-100 duration-300 ${
-            !isOpen && "scale-0"
-          }`}
-        >
-          Submit Apps
-        </h1>
-      </div>
-    )
-  }
-)
-
-SideNavAppSubmit.displayName = "SideNavAppSubmit"
 
 export default FloatingSideNav

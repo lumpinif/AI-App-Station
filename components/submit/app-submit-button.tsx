@@ -11,13 +11,13 @@ import { useAppSubmitModalStore } from "@/hooks/use-app-submit-modal-store"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { AppSubmitModal } from "@/components/submit/app-submit-modal"
 
-type NewAppSubmitButtonProps = ButtonProps & {
+type AppSubmitButtonProps = ButtonProps & {
   children?: React.ReactNode
   user?: User | null | undefined
   className?: string
 }
 
-export const NewAppSubmitButton: React.FC<NewAppSubmitButtonProps> = ({
+export const AppSubmitButton: React.FC<AppSubmitButtonProps> = ({
   user: propUser,
   children,
   className,
@@ -56,10 +56,10 @@ export const NewAppSubmitButton: React.FC<NewAppSubmitButtonProps> = ({
         {children ? (
           children
         ) : (
-          <>
-            <span>New App</span>
+          <div className="flex items-center gap-x-2">
+            <span className="hidden sm:flex">New App</span>
             <Upload className="size-4" />
-          </>
+          </div>
         )}
       </Button>
     </>

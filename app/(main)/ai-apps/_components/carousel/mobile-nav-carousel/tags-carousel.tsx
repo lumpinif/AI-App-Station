@@ -103,7 +103,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
 
   return (
     <div className="flex items-center gap-4">
-      <div className="-ml-1 grow overflow-hidden transition-all duration-300 ease-linear sm:hidden">
+      <div className="-ml-1 grow overflow-hidden transition-all duration-300 ease-linear md:hidden">
         <Carousel
           opts={{
             duration: 20,

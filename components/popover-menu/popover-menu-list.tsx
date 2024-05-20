@@ -1,7 +1,7 @@
 import { SquarePen, Upload } from "lucide-react"
 
+import { AppSubmitButton } from "@/components/submit/app-submit-button"
 import { NewStoryButton } from "@/app/(main)/story/_components/story/new-story-button"
-import { NewAppSubmitButton } from "@/app/(main)/submit/_components/new-app-submit-button"
 
 import { PopoverMenuItem } from "./popover-menu-item"
 
@@ -22,13 +22,13 @@ const newStoryItem = {
 export const PopoverMenuList: React.FC<PopoverMenuListProps> = () => {
   return (
     <>
-      <NewAppSubmitButton
+      <AppSubmitButton
         variant={"ghost"}
         size={"default"}
         className="hover:bg-background/80 bg-background h-full w-full select-none rounded-b-[4px] rounded-t-[4px] transition-transform first:rounded-t-[12px] last:rounded-b-[12px] active:scale-[0.98]"
       >
         <PopoverMenuItem item={submitAppItem} />
-      </NewAppSubmitButton>
+      </AppSubmitButton>
       <NewStoryButton
         variant={"ghost"}
         size={"default"}
