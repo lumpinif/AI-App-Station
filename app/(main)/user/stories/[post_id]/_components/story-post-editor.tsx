@@ -47,6 +47,8 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   profiles,
 }) => {
   const toastId = useNewStoryToastStore((state) => state.toastId)
+  const setToastId = useNewStoryToastStore((state) => state.setToastId)
+
   const initialContent = useMemo(
     () => post_content || defaultEditorContent,
     [post_content]
@@ -123,12 +125,17 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   }, [value, removeContent])
 
   useEffect(() => {
-    // This code will run once the component is mounted
-    toast.success("The editor has been launched", {
-      id: toastId,
-      duration: 3000,
-      description: "Happy writing 📝",
-    })
+    if (toastId) {
+      toast.success("The editor has been launched! 🎉", {
+        id: toastId,
+        duration: 3000,
+        description: "Happy writing",
+      })
+    }
+
+    // Reset toastId after showing the toast
+    setToastId(undefined)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toastId]) // Empty dependency array means this effect runs once on mount and not on updates
 

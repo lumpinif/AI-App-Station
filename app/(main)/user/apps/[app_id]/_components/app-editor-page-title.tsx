@@ -17,14 +17,21 @@ export const AppEditorPageTitle: React.FC<AppEditorPageTitleProps> = ({
   app_title,
 }) => {
   const toastId = useAppSubmitToastStore((state) => state.toastId)
+  const setToastId = useAppSubmitToastStore((state) => state.setToastId)
 
   useEffect(() => {
     // This code will run once the component is mounted
-    toast.success("The editor has been launched", {
-      id: toastId,
-      duration: 3000,
-      description: "Happy editing 📝",
-    })
+    if (toastId) {
+      toast.success("The editor has been launched! 🎉", {
+        id: toastId,
+        duration: 3000,
+        description: "Happy editing",
+      })
+    }
+
+    // Reset toastId after showing the toast
+    setToastId(undefined)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toastId]) // Empty dependency array means this effect runs once on mount and not on updates
 

@@ -49,7 +49,9 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
         throw new Error("Failed to create new story")
       }
 
-      return newStory
+      // TODO: CHECK IF THIS IS NEEDED BEFORE PRODUCTION, IF IT IS, THEN ADD IT TO OTHER PLACES THAT PASSES THE JSON CONTENT
+
+      return JSON.parse(JSON.stringify(newStory))
     }
 
     const newStoryLaunchingToast = toast.promise(createNewStoryPromise(), {
@@ -63,7 +65,7 @@ export const NewStoryButton: React.FC<StoryNewFormProps> = ({
         return (
           <div className="flex w-full items-center justify-between gap-x-2">
             <span className="flex items-center gap-x-2">
-              <LoadingSpinner size={16} /> Launching the editor
+              <LoadingSpinner size={16} /> Launching the editor...Please wait
             </span>
             <Button
               variant={"outline"}
