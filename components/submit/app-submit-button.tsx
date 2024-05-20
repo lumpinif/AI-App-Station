@@ -9,7 +9,6 @@ import { useUserData } from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import { useAppSubmitModalStore } from "@/hooks/use-app-submit-modal-store"
 import { Button, ButtonProps } from "@/components/ui/button"
-import { AppSubmitModal } from "@/components/submit/app-submit-modal"
 
 type AppSubmitButtonProps = ButtonProps & {
   children?: React.ReactNode
@@ -28,9 +27,7 @@ export const AppSubmitButton: React.FC<AppSubmitButtonProps> = ({
   const openAppSubmitModal = useAppSubmitModalStore(
     (state) => state.openAppSubmitModal
   )
-  const isSubmitModalOpen = useAppSubmitModalStore(
-    (state) => state.isAppSubmitModalOpen
-  )
+
   const { data: hookUser } = useUserData()
   const user = propUser || hookUser
   const isUserLogged = !!user && user.id
@@ -46,7 +43,6 @@ export const AppSubmitButton: React.FC<AppSubmitButtonProps> = ({
 
   return (
     <>
-      <AppSubmitModal isOpen={isSubmitModalOpen} user={user} />
       <Button
         variant={variant}
         size={size}

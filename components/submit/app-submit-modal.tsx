@@ -12,13 +12,12 @@ import { ThemeToggle } from "../theme/theme-toggle"
 
 type AppSubmitModalProps = {
   user: User | null | undefined
-  isOpen: boolean
 }
 
-export const AppSubmitModal: React.FC<AppSubmitModalProps> = ({
-  user,
-  isOpen,
-}) => {
+export const AppSubmitModal: React.FC<AppSubmitModalProps> = ({ user }) => {
+  const isSubmitModalOpen = useAppSubmitModalStore(
+    (state) => state.isAppSubmitModalOpen
+  )
   const closeAppSubmitModal = useAppSubmitModalStore(
     (state) => state.closeAppSubmitModal
   )
@@ -29,7 +28,7 @@ export const AppSubmitModal: React.FC<AppSubmitModalProps> = ({
 
   return (
     <ResponsiveContentModal
-      isOpen={isOpen}
+      isOpen={isSubmitModalOpen}
       onChange={onChange}
       drawerContentClassName="outline-none rounded-t-3xl"
       drawerHeight="h-[55%]"

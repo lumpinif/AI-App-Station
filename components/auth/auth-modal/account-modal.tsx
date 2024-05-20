@@ -1,6 +1,6 @@
 "use client"
 
-import { Session, User } from "@supabase/supabase-js"
+import { User } from "@supabase/supabase-js"
 
 import useAccountModal from "@/hooks/use-account-modal-store"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
