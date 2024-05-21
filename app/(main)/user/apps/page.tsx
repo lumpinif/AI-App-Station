@@ -35,12 +35,12 @@ export default async function UserAppsPage({ searchParams }: UserPageProps) {
             searchableColumnCount={1}
             filterableColumnCount={1}
             cellWidths={[
-              "5rem",
-              "7rem",
+              "4rem",
               "7rem",
               "6rem",
-              "5rem",
-              "5rem",
+              "6rem",
+              "4rem",
+              "4rem",
               "3rem",
             ]}
             shrinkZero

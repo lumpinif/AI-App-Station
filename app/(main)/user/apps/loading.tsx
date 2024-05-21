@@ -6,7 +6,7 @@ export default function Loading() {
       columnCount={7}
       searchableColumnCount={1}
       filterableColumnCount={1}
-      cellWidths={["5rem", "7rem", "7rem", "6rem", "5rem", "5rem", "3rem"]}
+      cellWidths={["4rem", "7rem", "6rem", "6rem", "4rem", "4rem", "3rem"]}
       shrinkZero
     />
   )

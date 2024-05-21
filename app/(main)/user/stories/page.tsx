@@ -32,10 +32,10 @@ export default async function UserStoriesPage({ searchParams }: UserPageProps) {
       <Suspense
         fallback={
           <DataTableSkeleton
-            columnCount={4}
+            columnCount={6}
             searchableColumnCount={1}
             filterableColumnCount={1}
-            cellWidths={["20rem", "10rem", "10rem", "15rem"]}
+            cellWidths={["25rem", "10rem", "10rem", "8rem", "8rem", "5rem"]}
             shrinkZero
           />
         }
