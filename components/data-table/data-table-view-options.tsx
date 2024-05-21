@@ -39,6 +39,7 @@ export function DataTableViewOptions<TData>({
         align="end"
         className="bg-background/80 w-40 backdrop-blur-sm"
         sideOffset={10}
+        alignOffset={-10}
       >
         <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
         <DropdownMenuSeparator />
