@@ -35,7 +35,7 @@ export function exportTableToCSV<TData>(
   } = {}
 ): void {
   const {
-    filename = "submitted_apps",
+    filename,
     excludeColumns = [],
     onlySelected = false,
     allData = true,
@@ -69,7 +69,10 @@ export function exportTableToCSV<TData>(
             let cellValue: any = row[column as keyof TData]
 
             // Convert introduction JSON to string
-            if (column === "introduction" && typeof cellValue === "object") {
+            if (
+              column === "introduction" ||
+              ("post_content" && typeof cellValue === "object")
+            ) {
               cellValue = JSON.stringify(cellValue)
             }
 

@@ -1,5 +1,4 @@
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 export default function Loading() {
   return (

@@ -5,21 +5,21 @@ import { useRouter } from "next/navigation"
 import { DownloadIcon, ReloadIcon } from "@radix-ui/react-icons"
 import { type Table } from "@tanstack/react-table"
 
-import { Apps } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
 import { exportTableToCSV } from "@/lib/export"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 // import { CreateTaskDialog } from "./create-task-dialog"
-import { DeleteAppsDialog } from "./submitted-apps-actions-dialog"
+import { DeleteStoriesDialog } from "./posted-stories-actions-dialog"
 
-interface SubmittedAppsTableToolbarActionsProps {
-  table: Table<Apps>
+interface StoriesTableToolbarActionsProps {
+  table: Table<Posts>
 }
 
-export function SubmittedAppsTableToolbarActions({
+export function StoriesTableToolbarActions({
   table,
-}: SubmittedAppsTableToolbarActionsProps) {
+}: StoriesTableToolbarActionsProps) {
   const router = useRouter()
   const [isRefreshing, setIsRefreshing] = useState(false)
 
@@ -42,9 +42,9 @@ export function SubmittedAppsTableToolbarActions({
     <div className="flex items-center gap-2">
       {/* table.getFilteredSelectedRowModel().rows.length > 0 */}
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <DeleteAppsDialog
+        <DeleteStoriesDialog
           triggerClassName="h-8"
-          apps={table.getFilteredSelectedRowModel().rows}
+          posts={table.getFilteredSelectedRowModel().rows}
           onSuccess={() => table.toggleAllPageRowsSelected(false)}
         />
       ) : null}
@@ -69,7 +69,7 @@ export function SubmittedAppsTableToolbarActions({
         className="ml-auto h-8 active:scale-[0.98] lg:flex"
         onClick={() =>
           exportTableToCSV(table, {
-            filename: "submitted_apps",
+            filename: "posted_stories",
             excludeColumns: ["select", "actions"],
           })
         }

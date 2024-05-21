@@ -27,13 +27,16 @@ interface DataTableProps<TData> {
    */
   floatingBar?: React.ReactNode | null
 
-  totalAppsCount: number
+  totalItemsCount: number
+
+  itemsName?: string
 }
 
 export function DataTable<TData>({
   table,
   floatingBar = null,
-  totalAppsCount,
+  itemsName = "items",
+  totalItemsCount,
 }: DataTableProps<TData>) {
   return (
     <div className="w-full space-y-2.5 overflow-x-auto p-1">
@@ -99,7 +102,11 @@ export function DataTable<TData>({
         </Table>
       </div>
       <div className="flex flex-col gap-2.5">
-        <DataTablePagination table={table} totalAppsCount={totalAppsCount} />
+        <DataTablePagination
+          table={table}
+          totalItemsCount={totalItemsCount}
+          itemsName={itemsName}
+        />
         {table.getFilteredSelectedRowModel().rows.length > 0 && floatingBar}
       </div>
     </div>

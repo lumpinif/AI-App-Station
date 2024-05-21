@@ -14,20 +14,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 interface DataTableViewOptionsProps<TData> {
+  columnsTitles: Record<string, string>
   table: Table<TData>
 }
 
 export function DataTableViewOptions<TData>({
   table,
+  columnsTitles,
 }: DataTableViewOptionsProps<TData>) {
-  const columnsTitles = {
-    app_icon_src: "Icon",
-    app_title: "Title",
-    app_publish_status: "Status",
-    likes_count: "Likes",
-    views_count: "Views",
-    created_at: "Created At",
-  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

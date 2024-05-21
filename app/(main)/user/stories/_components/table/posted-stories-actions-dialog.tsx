@@ -3,12 +3,17 @@
 import { useTransition } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import {
+  deleteStory,
+  publishStory,
+  unpublishStory,
+} from "@/server/data/stories/table/post-table-services"
 import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 import { SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
-import { Apps } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,19 +27,17 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 
-import { deleteApp, publishApp, unpublishApp } from "../../_lib/db-queries"
-
-export async function deleteApps({
+export async function deleteStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<Apps>[]
+  rows: Row<Posts>[]
   onSuccess?: () => void
 }) {
   try {
     await Promise.all(
       rows.map(async (row) => {
-        const result = await deleteApp(row.original.app_id)
+        const result = await deleteStory(row.original.post_id)
 
         if (result && result.error) {
           if (typeof result.error === "string") {
@@ -46,24 +49,24 @@ export async function deleteApps({
       })
     )
 
-    toast.success("Apps deleted")
+    toast.success("Stories deleted")
     onSuccess?.()
   } catch (error) {
-    console.error("Error deleting apps:", error)
-    toast.error("Failed to delete apps. Please try again.")
+    console.error("Error deleting stories:", error)
+    toast.error("Failed to delete stories. Please try again.")
   }
 }
-export async function unpublishApps({
+export async function unpublishStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<Apps>[]
+  rows: Row<Posts>[]
   onSuccess?: () => void
 }) {
   try {
     await Promise.all(
       rows.map(async (row) => {
-        const result = await unpublishApp(row.original.app_id)
+        const result = await unpublishStory(row.original.post_id)
 
         if (result && result.error) {
           if (typeof result.error === "string") {
@@ -75,25 +78,25 @@ export async function unpublishApps({
       })
     )
 
-    toast.success("Apps unpublished")
+    toast.success("Stories unpublished")
     onSuccess?.()
   } catch (error) {
-    console.error("Error unpublishing apps:", error)
-    toast.error("Failed to unpublish apps. Please try again.")
+    console.error("Error unpublishing stories:", error)
+    toast.error("Failed to unpublish stories. Please try again.")
   }
 }
 
-export async function publishApps({
+export async function publishStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<Apps>[]
+  rows: Row<Posts>[]
   onSuccess?: () => void
 }) {
   try {
     await Promise.all(
       rows.map(async (row) => {
-        const result = await publishApp(row.original.app_id)
+        const result = await publishStory(row.original.post_id)
 
         if (result && result.error) {
           if (typeof result.error === "string") {
@@ -105,29 +108,29 @@ export async function publishApps({
       })
     )
 
-    toast.success("Apps published")
+    toast.success("Stories published")
     onSuccess?.()
   } catch (error) {
-    console.error("Error publishing apps:", error)
-    toast.error("Failed to publish apps. Please try again.")
+    console.error("Error publishing stories:", error)
+    toast.error("Failed to publish stories. Please try again.")
   }
 }
 
-interface AppActionDialogProps
+interface StoryActionDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
-  apps: Row<Apps>[]
+  posts: Row<Posts>[]
   onSuccess?: () => void
   showTrigger?: boolean
   triggerClassName?: string
 }
 
-export function DeleteAppsDialog({
-  apps,
+export function DeleteStoriesDialog({
+  posts,
   onSuccess,
   showTrigger = true,
   triggerClassName,
   ...props
-}: AppActionDialogProps) {
+}: StoryActionDialogProps) {
   const [isDeletePending, startDeleteTransition] = useTransition()
 
   return (
@@ -136,7 +139,7 @@ export function DeleteAppsDialog({
         <AlertDialogTrigger asChild>
           <Button variant="destructive" size="sm" className={triggerClassName}>
             <TrashIcon className="mr-1 size-4" aria-hidden="true" />
-            Delete ({apps.length})
+            Delete ({posts.length})
           </Button>
         </AlertDialogTrigger>
       ) : null}
@@ -145,8 +148,8 @@ export function DeleteAppsDialog({
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your{" "}
-            <span className="font-medium">{apps.length}</span>
-            {apps.length === 1 ? " app" : " apps"} from the server.
+            <span className="font-medium">{posts.length}</span>
+            {posts.length === 1 ? " story" : " stories"} from the server.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2 sm:space-x-0">
@@ -162,8 +165,8 @@ export function DeleteAppsDialog({
               variant="destructive"
               onClick={() => {
                 startDeleteTransition(() => {
-                  deleteApps({
-                    rows: apps,
+                  deleteStories({
+                    rows: posts,
                     onSuccess,
                   })
                 })
@@ -178,12 +181,13 @@ export function DeleteAppsDialog({
     </AlertDialog>
   )
 }
-export function UnpublishAppsDialog({
-  apps,
+
+export function UnpublishStoriesDialog({
+  posts,
   onSuccess,
   showTrigger = true,
   ...props
-}: AppActionDialogProps) {
+}: StoryActionDialogProps) {
   const [isUnpublishPending, startUnpublishTransition] = useTransition()
 
   return (
@@ -196,7 +200,7 @@ export function UnpublishAppsDialog({
             className="outline-none focus:ring-0 focus:!ring-transparent"
           >
             <TrashIcon className="mr-1 size-4" aria-hidden="true" />
-            Unpublish ({apps.length})
+            Unpublish ({posts.length})
           </Button>
         </AlertDialogTrigger>
       ) : null}
@@ -205,8 +209,8 @@ export function UnpublishAppsDialog({
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This will immediately unpublish your{" "}
-            <span className="font-medium">{apps.length}</span>
-            {apps.length === 1 ? " app" : " apps"} from the server.
+            <span className="font-medium">{posts.length}</span>
+            {posts.length === 1 ? " story" : " stories"} from the server.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2 sm:space-x-0">
@@ -222,8 +226,8 @@ export function UnpublishAppsDialog({
               variant="destructive"
               onClick={() => {
                 startUnpublishTransition(() => {
-                  unpublishApps({
-                    rows: apps,
+                  unpublishStories({
+                    rows: posts,
                     onSuccess,
                   })
                 })
@@ -238,12 +242,12 @@ export function UnpublishAppsDialog({
     </AlertDialog>
   )
 }
-export function PublishAppsDialog({
-  apps,
+export function PublishStoriesDialog({
+  posts,
   onSuccess,
   showTrigger = true,
   ...props
-}: AppActionDialogProps) {
+}: StoryActionDialogProps) {
   const [isPublishPending, startPublishTransition] = useTransition()
 
   return (
@@ -255,7 +259,7 @@ export function PublishAppsDialog({
             className="outline-none focus:ring-0 focus:!ring-transparent"
           >
             <RocketIcon className="mr-1 size-4" aria-hidden="true" />
-            Publish ({apps.length})
+            Publish ({posts.length})
           </Button>
         </AlertDialogTrigger>
       ) : null}
@@ -264,8 +268,8 @@ export function PublishAppsDialog({
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This will immediately publish your{" "}
-            <span className="font-medium">{apps.length}</span>
-            {apps.length === 1 ? " app" : " apps"} from the server.
+            <span className="font-medium">{posts.length}</span>
+            {posts.length === 1 ? " story" : " stories"} from the server.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2 sm:space-x-0">
@@ -280,8 +284,8 @@ export function PublishAppsDialog({
               aria-label="publish selected rows"
               onClick={() => {
                 startPublishTransition(() => {
-                  publishApps({
-                    rows: apps,
+                  publishStories({
+                    rows: posts,
                     onSuccess,
                   })
                 })
@@ -296,12 +300,12 @@ export function PublishAppsDialog({
     </AlertDialog>
   )
 }
-export function EditAppsDialog({
-  apps,
+export function EditStoiesDialog({
+  posts,
   onSuccess,
   showTrigger = true,
   ...props
-}: AppActionDialogProps) {
+}: StoryActionDialogProps) {
   const [isEditPending, startEditTransition] = useTransition()
 
   return (
@@ -321,8 +325,8 @@ export function EditAppsDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Before opening the editor</AlertDialogTitle>
           <AlertDialogDescription>
-            Caution: Keep in mind that editing the app will result in immediate
-            changes, regardless of its published status.
+            Caution: Keep in mind that editing the story will result in
+            immediate changes, regardless of its published status.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2 sm:space-x-0">
@@ -331,7 +335,7 @@ export function EditAppsDialog({
           </AlertDialogCancel>
           <AlertDialogAction asChild>
             <Link
-              href={`/user/apps/${apps[0].original.app_id}`}
+              href={`/user/stories/${posts[0].original.post_id}`}
               aria-label="edit selected row"
               target="_blank"
             >

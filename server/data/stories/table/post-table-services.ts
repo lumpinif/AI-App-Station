@@ -2,24 +2,23 @@
 
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
-import { getSlugFromAppId } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { Row } from "@tanstack/react-table"
 import * as z from "zod"
 
-import { Apps } from "@/types/db_tables"
-import { appsSearchParamsSchema } from "@/lib/validations"
+import { Posts } from "@/types/db_tables"
+import { postsSearchParamsSchema } from "@/lib/validations"
 
-export async function getSubmittedApps(
-  searchParams: z.infer<typeof appsSearchParamsSchema>
+export async function getPostedStories(
+  searchParams: z.infer<typeof postsSearchParamsSchema>
 ) {
   noStore()
   const {
     page,
     per_page,
     sort,
-    app_title,
-    app_publish_status,
+    post_title,
+    post_publish_status,
     operator,
     from,
     to,
@@ -33,7 +32,7 @@ export async function getSubmittedApps(
   } = await supabase.auth.getUser()
 
   if (!user || !user.id) {
-    return { apps: [], pageCount: 0, totalAppsCount: 0 }
+    return { posts: [], pageCount: 0, totalPostsCount: 0 }
   }
 
   try {
@@ -45,7 +44,7 @@ export async function getSubmittedApps(
     const [column, order] = (sort?.split(".").filter(Boolean) ?? [
       "created_at",
       "desc",
-    ]) as [keyof Apps, "asc" | "desc"]
+    ]) as [keyof Posts, "asc" | "desc"]
 
     // Convert the date strings to Date objects
     const fromDate = from ? new Date(from) : undefined
@@ -53,29 +52,30 @@ export async function getSubmittedApps(
 
     // Build the filter query based on the search parameters
     const query = supabase
-      .from("apps")
+      .from("posts")
       .select("*", { count: "exact" })
-      .match({ submitted_by_user_id: user.id })
+      .match({ post_author_id: user.id })
       .order(column, { ascending: order === "asc" })
 
     // Apply filters based on the search parameters
     if (!operator || operator === "and") {
-      if (app_title) query.ilike("app_title", `%${app_title}%`)
-      if (app_publish_status) query.eq("app_publish_status", app_publish_status)
+      if (post_title) query.ilike("post_title", `%${post_title}%`)
+      if (post_publish_status)
+        query.eq("post_publish_status", post_publish_status)
       if (fromDate && toDate) {
         query.gte("created_at", fromDate.toISOString())
         query.lte("created_at", toDate.toISOString())
       }
     } else if (operator === "or") {
       const orFilters: string[] = []
-      if (app_title && app_publish_status) {
+      if (post_title && post_publish_status) {
         orFilters.push(
-          `and(app_title.ilike.%${app_title}%,app_publish_status.eq.${app_publish_status})`
+          `and(post_title.ilike.%${post_title}%,post_publish_status.eq.${post_publish_status})`
         )
-      } else if (app_title) {
-        orFilters.push(`app_title.ilike.%${app_title}%`)
-      } else if (app_publish_status) {
-        orFilters.push(`app_publish_status.eq.${app_publish_status}`)
+      } else if (post_title) {
+        orFilters.push(`post_title.ilike.%${post_title}%`)
+      } else if (post_publish_status) {
+        orFilters.push(`post_publish_status.eq.${post_publish_status}`)
       }
       if (fromDate && toDate) {
         orFilters.push(
@@ -91,39 +91,43 @@ export async function getSubmittedApps(
     query.range(offset, offset + per_page - 1)
 
     // Execute the query and get the results
-    const { data: apps, error, count } = await query
+    const { data: posts, error, count } = await query
 
     if (error) {
-      throw new Error(`Failed to fetch submitted apps: ${error.message}`)
+      throw new Error(`Failed to fetch posted stories: ${error.message}`)
     }
 
     // Calculate the total page count
     const totalCount = count ? count : 0
     const pageCount = Math.ceil(totalCount / per_page)
 
-    // Get the total count of apps submitted by the user
-    const { count: totalAppsCount, error: totalAppsCountError } = await supabase
-      .from("apps")
-      .select("*", { count: "exact", head: true })
-      .match({ submitted_by_user_id: user.id })
+    // Get the total count of posts posted by the user
+    const { count: totalPostsCount, error: totalPostsCountError } =
+      await supabase
+        .from("posts")
+        .select("*", { count: "exact", head: true })
+        .match({ post_author_id: user.id })
 
-    if (totalAppsCountError) {
+    if (totalPostsCountError) {
       throw new Error(
-        `Failed to fetch total apps count: ${totalAppsCountError.message}`
+        `Failed to fetch total stories count: ${totalPostsCountError.message}`
       )
     }
 
-    return { apps: apps ?? [], pageCount, totalAppsCount: totalAppsCount ?? 0 }
+    return {
+      posts: posts ?? [],
+      pageCount,
+      totalPostsCount: totalPostsCount ?? 0,
+    }
   } catch (error) {
-    console.error("Error fetching submitted apps:", error)
-    return { apps: [], pageCount: 0, totalAppsCount: 0 }
+    console.error("Error fetching posted stories:", error)
+    return { posts: [], pageCount: 0, totalPostsCount: 0 }
   }
 }
 
-export async function deleteApp(app_id: Apps["app_id"]) {
+export async function deleteStory(post_id: Posts["post_id"]) {
   try {
     const supabase = await createSupabaseServerClient()
-    const slug = await getSlugFromAppId(app_id)
 
     const {
       data: { user },
@@ -131,26 +135,25 @@ export async function deleteApp(app_id: Apps["app_id"]) {
 
     if (!user?.id) return { error: "User not found" }
 
-    const { error } = await supabase.from("apps").delete().match({
-      app_id,
-      submitted_by_user_id: user.id,
+    const { error } = await supabase.from("posts").delete().match({
+      post_id,
+      post_author_id: user.id,
     })
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
-    revalidatePath(`/user/apps/${app_id}`)
+    revalidatePath(`/`)
+    revalidatePath(`/user/stories/${post_id}`)
 
     return { error: error ?? null } // Return { error: null } if no error occurs
   } catch (error) {
     if (error) {
       console.log(error)
     }
-    return { error: "An error occurred while deleting the app." } // Return a generic error message
+    return { error: "An error occurred while deleting the story." } // Return a generic error message
   }
 }
-export async function unpublishApp(app_id: Apps["app_id"]) {
+export async function unpublishStory(post_id: Posts["post_id"]) {
   try {
     const supabase = await createSupabaseServerClient()
-    const slug = await getSlugFromAppId(app_id)
 
     const {
       data: { user },
@@ -159,29 +162,28 @@ export async function unpublishApp(app_id: Apps["app_id"]) {
     if (!user?.id) return { error: "User not found" }
 
     const { error } = await supabase
-      .from("apps")
-      .update({ app_publish_status: "unpublished" })
+      .from("posts")
+      .update({ post_publish_status: "unpublished" })
       .match({
-        app_id,
-        submitted_by_user_id: user.id,
+        post_id,
+        post_author_id: user.id,
       })
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
-    revalidatePath(`/user/apps/${app_id}`)
+    revalidatePath(`/`)
+    revalidatePath(`/user/stories/${post_id}`)
 
     return { error: error ?? null } // Return { error: null } if no error occurs
   } catch (error) {
     if (error) {
       console.log(error)
     }
-    return { error: "An error occurred while unpublishing the app." } // Return a generic error message
+    return { error: "An error occurred while unpublishing the story." } // Return a generic error message
   }
 }
 
-export async function publishApp(app_id: Apps["app_id"]) {
+export async function publishStory(post_id: Posts["post_id"]) {
   try {
     const supabase = await createSupabaseServerClient()
-    const slug = await getSlugFromAppId(app_id)
 
     const {
       data: { user },
@@ -190,21 +192,21 @@ export async function publishApp(app_id: Apps["app_id"]) {
     if (!user?.id) return { error: "User not found" }
 
     const { error } = await supabase
-      .from("apps")
-      .update({ app_publish_status: "published" })
+      .from("posts")
+      .update({ post_publish_status: "published" })
       .match({
-        app_id,
-        submitted_by_user_id: user.id,
+        post_id,
+        post_author_id: user.id,
       })
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
-    revalidatePath(`/user/apps/${app_id}`)
+    revalidatePath(`/`)
+    revalidatePath(`/user/stories/${post_id}`)
 
     return { error: error ?? null } // Return { error: null } if no error occurs
   } catch (error) {
     if (error) {
       console.log(error)
     }
-    return { error: "An error occurred while publishing the app." } // Return a generic error message
+    return { error: "An error occurred while publishing the story." } // Return a generic error message
   }
 }

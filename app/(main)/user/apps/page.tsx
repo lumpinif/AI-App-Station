@@ -1,19 +1,19 @@
 import { Suspense } from "react"
 
 import { SearchParams } from "@/types/data-table"
+import { appsSearchParamsSchema } from "@/lib/validations"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/shared/date-range-picker"
 
 import { SubmittedAppsTable } from "./_components/table/submitted-apps-table"
 import { getSubmittedApps } from "./_lib/db-queries"
-import { searchParamsSchema } from "./_lib/validations"
 
 type UserPageProps = {
   searchParams: SearchParams
 }
 
 export default async function UserAppsPage({ searchParams }: UserPageProps) {
-  const search = searchParamsSchema.parse(searchParams)
+  const search = appsSearchParamsSchema.parse(searchParams)
 
   const { apps, pageCount, totalAppsCount } = await getSubmittedApps(search)
   return (
@@ -31,10 +31,18 @@ export default async function UserAppsPage({ searchParams }: UserPageProps) {
       <Suspense
         fallback={
           <DataTableSkeleton
-            columnCount={5}
+            columnCount={7}
             searchableColumnCount={1}
             filterableColumnCount={1}
-            cellWidths={["10rem", "15rem", "12rem", "12rem", "8rem"]}
+            cellWidths={[
+              "5rem",
+              "7rem",
+              "7rem",
+              "6rem",
+              "5rem",
+              "5rem",
+              "3rem",
+            ]}
             shrinkZero
           />
         }

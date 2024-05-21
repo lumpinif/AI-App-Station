@@ -1,9 +1,13 @@
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 
 export default function Loading() {
   return (
-    <div className="flex h-[calc(100vh-12rem)] w-full items-center justify-center">
-      <LoadingSpinner size={30} />
-    </div>
+    <DataTableSkeleton
+      columnCount={4}
+      searchableColumnCount={1}
+      filterableColumnCount={1}
+      cellWidths={["20rem", "10rem", "10rem", "15rem"]}
+      shrinkZero
+    />
   )
 }

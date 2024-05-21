@@ -4,7 +4,7 @@ import { getUserData } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { PostDetails, Posts, PostWithProfile } from "@/types/db_tables"
-import { getErrorMessage } from "@/app/(main)/user/apps/_lib/handle-error"
+import { getErrorMessage } from "@/lib/handle-error"
 
 // fetch Posts
 export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {

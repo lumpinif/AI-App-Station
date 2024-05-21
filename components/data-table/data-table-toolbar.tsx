@@ -14,6 +14,7 @@ import { DataTableViewOptions } from "@/components/data-table/data-table-view-op
 interface DataTableToolbarProps<TData>
   extends React.HTMLAttributes<HTMLDivElement> {
   table: Table<TData>
+  columnsTitles: Record<string, string>
   filterFields?: DataTableFilterField<TData>[]
 }
 
@@ -22,6 +23,7 @@ export function DataTableToolbar<TData>({
   filterFields = [],
   children,
   className,
+  columnsTitles,
   ...props
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
@@ -96,7 +98,7 @@ export function DataTableToolbar<TData>({
       </div>
       <div className="flex items-center gap-2">
         {children}
-        <DataTableViewOptions table={table} />
+        <DataTableViewOptions table={table} columnsTitles={columnsTitles} />
       </div>
     </div>
   )

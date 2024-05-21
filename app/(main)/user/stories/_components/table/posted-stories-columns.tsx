@@ -8,7 +8,7 @@ import { Delete, Heart } from "lucide-react"
 import moment from "moment"
 import numeral from "numeral"
 
-import { Apps, Publish_Status } from "@/types/db_tables"
+import { Posts, Publish_Status } from "@/types/db_tables"
 import { getStatusColor, getStatusIcon } from "@/lib/get-status-icon"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -25,16 +25,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
-import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-icon"
 
 import {
-  DeleteAppsDialog,
-  EditAppsDialog,
-  PublishAppsDialog,
-  UnpublishAppsDialog,
-} from "./submitted-apps-actions-dialog"
+  DeleteStoriesDialog,
+  EditStoiesDialog,
+  PublishStoriesDialog,
+  UnpublishStoriesDialog,
+} from "./posted-stories-actions-dialog"
 
-export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
+export function getPostedStoriesTableColumns(): ColumnDef<Posts>[] {
   return [
     {
       id: "select",
@@ -61,49 +60,49 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
       enableSorting: false,
       enableHiding: false,
     },
-    {
-      accessorKey: "app_icon_src",
-      size: 20,
-      header: "Icon",
-      cell: ({ row }) => {
-        const app_title = row.original.app_title as Apps["app_title"]
-        const app_slug = row.original.app_slug as Apps["app_slug"]
-        const app_icon_src = row.original.app_icon_src as Apps["app_icon_src"]
+    // {
+    //   accessorKey: "app_icon_src",
+    //   size: 20,
+    //   header: "Icon",
+    //   cell: ({ row }) => {
+    //     const app_title = row.original.app_title as Apps["app_title"]
+    //     const app_slug = row.original.app_slug as Apps["app_slug"]
+    //     const app_icon_src = row.original.app_icon_src as Apps["app_icon_src"]
 
-        return (
-          <AppIcon
-            size={10}
-            className="rounded-lg"
-            app_title={app_title}
-            app_slug={app_slug}
-            app_icon_src={app_icon_src}
-          />
-        )
-      },
-    },
+    //     return (
+    //       <AppIcon
+    //         size={10}
+    //         className="rounded-lg"
+    //         app_title={app_title}
+    //         app_slug={app_slug}
+    //         app_icon_src={app_icon_src}
+    //       />
+    //     )
+    //   },
+    // },
     {
-      accessorKey: "app_title",
+      accessorKey: "post_title",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Title" />
       ),
       cell: ({ row }) => {
-        const app_title = row.original.app_title as Apps["app_title"]
+        const post_title = row.original.post_title as Posts["post_title"]
 
         return (
-          <div className="flex max-w-60">
-            {/* {app_title && <Badge variant="outline">{app_title}</Badge>} */}
-            <span className="w-full truncate font-normal">{app_title}</span>
+          <div className="flex max-w-96">
+            {/* {post_title && <Badge variant="outline">{post_title}</Badge>} */}
+            <span className="w-full font-normal">{post_title}</span>
           </div>
         )
       },
     },
     {
-      accessorKey: "app_publish_status",
+      accessorKey: "post_publish_status",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Status" />
       ),
       cell: ({ row }) => {
-        const status = row.original.app_publish_status as Publish_Status
+        const status = row.original.post_publish_status as Publish_Status
 
         if (!status) return null
 
@@ -139,7 +138,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
         <DataTableColumnHeader column={column} title="Likes" />
       ),
       cell: ({ row }) => {
-        const likes_count = row.original.likes_count as Apps["likes_count"]
+        const likes_count = row.original.likes_count as Posts["likes_count"]
         const formattedLikesCount = numeral(likes_count).format("0.[0]a")
         return (
           <div className="text-muted-foreground flex items-center gap-x-2">
@@ -154,10 +153,10 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
     {
       accessorKey: "views_count",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Views (no)" />
+        <DataTableColumnHeader column={column} title="Views(WIP)" />
       ),
       cell: ({ row }) => {
-        const views_count = row.original.views_count as Apps["views_count"]
+        const views_count = row.original.views_count as Posts["views_count"]
         const formattedViewsCount = numeral(views_count).format("0.[0]a")
         return (
           <span className="text-muted-foreground w-full truncate font-normal">
@@ -169,11 +168,13 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
     {
       id: "actions",
       cell: function Cell({ row }) {
-        const [showDeleteAppDialog, setShowDeleteAppDialog] = useState(false)
-        const [showUnpublishAppDialog, setShowUnpublishAppDialog] =
+        const [showDeleteStoryDialog, setShowDeleteStoryDialog] =
           useState(false)
-        const [showPublishAppDialog, setShowPublishAppDialog] = useState(false)
-        const [showEditAppDialog, setShowEditAppDialog] = useState(false)
+        const [showUnpublishStoryDialog, setShowUnpublishStoryDialog] =
+          useState(false)
+        const [showPublishStoryDialog, setShowPublishStoryDialog] =
+          useState(false)
+        const [showEditStoryDialog, setShowEditStoryDialog] = useState(false)
 
         const router = useRouter()
 
@@ -184,28 +185,28 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
 
         return (
           <>
-            <DeleteAppsDialog
-              open={showDeleteAppDialog}
-              onOpenChange={setShowDeleteAppDialog}
-              apps={[row]}
+            <DeleteStoriesDialog
+              open={showDeleteStoryDialog}
+              onOpenChange={setShowDeleteStoryDialog}
+              posts={[row]}
               showTrigger={false}
             />
-            <UnpublishAppsDialog
-              open={showUnpublishAppDialog}
-              onOpenChange={setShowUnpublishAppDialog}
-              apps={[row]}
+            <UnpublishStoriesDialog
+              open={showUnpublishStoryDialog}
+              onOpenChange={setShowUnpublishStoryDialog}
+              posts={[row]}
               showTrigger={false}
             />
-            <PublishAppsDialog
-              open={showPublishAppDialog}
-              onOpenChange={setShowPublishAppDialog}
-              apps={[row]}
+            <PublishStoriesDialog
+              open={showPublishStoryDialog}
+              onOpenChange={setShowPublishStoryDialog}
+              posts={[row]}
               showTrigger={false}
             />
-            <EditAppsDialog
-              open={showEditAppDialog}
-              onOpenChange={setShowEditAppDialog}
-              apps={[row]}
+            <EditStoiesDialog
+              open={showEditStoryDialog}
+              onOpenChange={setShowEditStoryDialog}
+              posts={[row]}
               showTrigger={false}
             />
             <DropdownMenu>
@@ -221,7 +222,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
               <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem
                   className="active:scale-[0.98]"
-                  onSelect={() => setShowEditAppDialog(true)}
+                  onSelect={() => setShowEditStoryDialog(true)}
                 >
                   <span>Edit</span>
                   <DropdownMenuShortcut>
@@ -233,25 +234,25 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
-                        onSelect={() => setShowPublishAppDialog(true)}
+                        onSelect={() => setShowPublishStoryDialog(true)}
                         className="active:scale-[0.98]"
                       >
                         <PublishIcon
                           className={cn("mr-2 size-4", PublishStatusColor)}
                         />
                         <span className={PublishStatusColor}>
-                          Publish the app
+                          Publish the story
                         </span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        onSelect={() => setShowUnpublishAppDialog(true)}
+                        onSelect={() => setShowUnpublishStoryDialog(true)}
                         className="active:scale-[0.98]"
                       >
                         <UnpublishIcon
                           className={cn("mr-2 size-4", UnpublishStatusColor)}
                         />
                         <span className={UnpublishStatusColor}>
-                          Unpublish the app
+                          Unpublish the story
                         </span>
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
@@ -259,7 +260,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                 </DropdownMenuSub>
                 {/* <DropdownMenuSeparator /> */}
                 <DropdownMenuItem
-                  onSelect={() => setShowDeleteAppDialog(true)}
+                  onSelect={() => setShowDeleteStoryDialog(true)}
                   className="active:scale-[0.98]"
                 >
                   <span className={cn(UnpublishStatusColor)}>Delete</span>

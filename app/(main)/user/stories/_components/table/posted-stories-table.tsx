@@ -3,33 +3,33 @@
 import { useMemo } from "react"
 
 import { DataTableFilterField } from "@/types/data-table"
-import { Apps } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
+import { getStatusIcon } from "@/lib/get-status-icon"
 import { useDataTable } from "@/hooks/data-table/use-data-table"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar"
 
-import { getStatusIcon } from "../../../../../../lib/get-status-icon"
-import { getSubmittedAppsTableColumns } from "./submitted-apps-columns"
-import { SubmittedAppsTableFloatingBar } from "./submitted-apps-floating-bar"
-import { SubmittedAppsTableToolbarActions } from "./submitted-apps-table-toolbar-actions"
+import { getPostedStoriesTableColumns } from "./posted-stories-columns"
+import { StoriesTableFloatingBar } from "./posted-stories-floating-bar"
+import { StoriesTableToolbarActions } from "./posted-stories-table-toolbar-actions"
 
-interface SubmittedAppsTableProps {
-  apps: Apps[]
+interface PostedStoriesTableProps {
+  posts: Posts[]
   pageCount: number
-  totalAppsCount: number
+  totalPostsCount: number
 }
 
-export function SubmittedAppsTable({
-  apps,
+export function PostedStoriesTable({
+  posts,
   pageCount,
-  totalAppsCount,
-}: SubmittedAppsTableProps) {
+  totalPostsCount,
+}: PostedStoriesTableProps) {
   // Feature flags for showcasing some additional features. Feel free to remove them.
 
   // const { featureFlags } = useTasksTable()
 
   // Memoize the columns so they don't re-render on every render
-  const columns = useMemo(() => getSubmittedAppsTableColumns(), [])
+  const columns = useMemo(() => getPostedStoriesTableColumns(), [])
 
   /**
    * This component can render either a faceted filter or a search filter based on the `options` prop.
@@ -42,15 +42,15 @@ export function SubmittedAppsTable({
    * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
    * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
    */
-  const filterFields: DataTableFilterField<Apps>[] = [
+  const filterFields: DataTableFilterField<Posts>[] = [
     {
       label: "Title",
-      value: "app_title",
-      placeholder: "Filter App titles ...",
+      value: "post_title",
+      placeholder: "Filter Story titles ...",
     },
     {
       label: "Status",
-      value: "app_publish_status",
+      value: "post_publish_status",
       options: [
         {
           label: "Pending",
@@ -81,21 +81,20 @@ export function SubmittedAppsTable({
   ]
 
   const { table } = useDataTable({
-    data: apps,
+    data: posts,
     columns,
     pageCount,
     // optional props
     filterFields,
     // enableAdvancedFilter: featureFlags.includes("advancedFilter"),
     defaultPerPage: 10,
-    defaultSort: "app_publish_status.asc",
+    defaultSort: "post_publish_status.asc",
   })
 
   // THIS IS FOR THE VIEW OPTIONS
-  const appsColumnsTitles = {
-    app_icon_src: "Icon",
-    app_title: "Title",
-    app_publish_status: "Status",
+  const storyColumnsTitles = {
+    post_title: "Title",
+    post_publish_status: "Status",
     likes_count: "Likes",
     views_count: "Views",
     created_at: "Created At",
@@ -112,20 +111,20 @@ export function SubmittedAppsTable({
       <DataTableToolbar
         table={table}
         filterFields={filterFields}
-        columnsTitles={appsColumnsTitles}
+        columnsTitles={storyColumnsTitles}
       >
-        <SubmittedAppsTableToolbarActions table={table} />
+        <StoriesTableToolbarActions table={table} />
       </DataTableToolbar>
       {/* )} */}
       <DataTable
         table={table}
         floatingBar={
           // featureFlags.includes("floatingBar") ? (
-          <SubmittedAppsTableFloatingBar table={table} />
+          <StoriesTableFloatingBar table={table} />
           // ) : null
         }
-        itemsName="apps"
-        totalItemsCount={totalAppsCount}
+        itemsName="stories"
+        totalItemsCount={totalPostsCount}
       />
     </div>
   )

@@ -45,7 +45,7 @@ export function DataTableColumnHeader<TData, TValue>({
             }
             variant="ghost"
             size="sm"
-            className="data-[state=open]:bg-accent -ml-3 h-8"
+            className="data-[state=open]:bg-accent -ml-3 h-8 shrink-0 flex-nowrap"
           >
             <span>{title}</span>
             {column.getCanSort() && column.getIsSorted() === "desc" ? (

@@ -2,7 +2,7 @@ import * as React from "react"
 import { Cross2Icon, DownloadIcon, TrashIcon } from "@radix-ui/react-icons"
 import { type Table } from "@tanstack/react-table"
 
-import { Apps } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
 import { exportTableToCSV } from "@/lib/export"
 import { getStatusColor, getStatusIcon } from "@/lib/get-status-icon"
 import { cn } from "@/lib/utils"
@@ -16,25 +16,27 @@ import {
 import { Kbd } from "@/components/shared/kbd"
 
 import {
-  DeleteAppsDialog,
-  PublishAppsDialog,
-  UnpublishAppsDialog,
-} from "./submitted-apps-actions-dialog"
+  DeleteStoriesDialog,
+  PublishStoriesDialog,
+  UnpublishStoriesDialog,
+} from "./posted-stories-actions-dialog"
 
-interface SubmittedAppsTableFloatingBarProps {
-  table: Table<Apps>
+interface StoriesTableFloatingBarProps {
+  table: Table<Posts>
 }
 
-export function SubmittedAppsTableFloatingBar({
+export function StoriesTableFloatingBar({
   table,
-}: SubmittedAppsTableFloatingBarProps) {
+}: StoriesTableFloatingBarProps) {
   const rows = table.getFilteredSelectedRowModel().rows
   const [isPending, startTransition] = React.useTransition()
 
-  const [showDeleteAppDialog, setShowDeleteAppDialog] = React.useState(false)
-  const [showUnpublishAppDialog, setShowUnpublishAppDialog] =
+  const [showDeleteStoryDialog, setShowDeleteStoryDialog] =
     React.useState(false)
-  const [showPublishAppDialog, setShowPublishAppDialog] = React.useState(false)
+  const [showUnpublishStoryDialog, setShowUnpublishStoryDialog] =
+    React.useState(false)
+  const [showPublishStoryDialog, setShowPublishStoryDialog] =
+    React.useState(false)
 
   const UnpublishIcon = getStatusIcon("unpublished")
   const UnpublishStatusColor = getStatusColor("unpublished")
@@ -55,24 +57,24 @@ export function SubmittedAppsTableFloatingBar({
 
   return (
     <>
-      <DeleteAppsDialog
-        open={showDeleteAppDialog}
-        onOpenChange={setShowDeleteAppDialog}
-        apps={rows}
+      <DeleteStoriesDialog
+        open={showDeleteStoryDialog}
+        onOpenChange={setShowDeleteStoryDialog}
+        posts={rows}
         showTrigger={false}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
-      <UnpublishAppsDialog
-        open={showUnpublishAppDialog}
-        onOpenChange={setShowUnpublishAppDialog}
-        apps={rows}
+      <UnpublishStoriesDialog
+        open={showUnpublishStoryDialog}
+        onOpenChange={setShowUnpublishStoryDialog}
+        posts={rows}
         showTrigger={false}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
-      <PublishAppsDialog
-        open={showPublishAppDialog}
-        onOpenChange={setShowPublishAppDialog}
-        apps={rows}
+      <PublishStoriesDialog
+        open={showPublishStoryDialog}
+        onOpenChange={setShowPublishStoryDialog}
+        posts={rows}
         showTrigger={false}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
@@ -114,14 +116,14 @@ export function SubmittedAppsTableFloatingBar({
                     variant="secondary"
                     size="icon"
                     className="size-7 border"
-                    onClick={() => setShowPublishAppDialog(true)}
+                    onClick={() => setShowPublishStoryDialog(true)}
                     disabled={isPending}
                   >
                     <PublishIcon className={cn("size-4")} aria-hidden="true" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p className={PublishStatusColor}>Publish Apps</p>
+                  <p className={PublishStatusColor}>Publish Stories</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -131,7 +133,7 @@ export function SubmittedAppsTableFloatingBar({
                     variant="secondary"
                     size="icon"
                     className="size-7 border"
-                    onClick={() => setShowUnpublishAppDialog(true)}
+                    onClick={() => setShowUnpublishStoryDialog(true)}
                     disabled={isPending}
                   >
                     <UnpublishIcon
@@ -141,7 +143,7 @@ export function SubmittedAppsTableFloatingBar({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p className={UnpublishStatusColor}>Unpublish Apps</p>
+                  <p className={UnpublishStatusColor}>Unpublish Stories</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -165,7 +167,7 @@ export function SubmittedAppsTableFloatingBar({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p>Export Apps</p>
+                  <p>Export Stoires</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -175,7 +177,7 @@ export function SubmittedAppsTableFloatingBar({
                     variant="secondary"
                     size="icon"
                     className="size-7 border"
-                    onClick={() => setShowDeleteAppDialog(true)}
+                    onClick={() => setShowDeleteStoryDialog(true)}
                     disabled={isPending}
                   >
                     <TrashIcon
@@ -185,7 +187,7 @@ export function SubmittedAppsTableFloatingBar({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p className="text-red-500">Delete Apps</p>
+                  <p className="text-red-500">Delete Stories</p>
                 </TooltipContent>
               </Tooltip>
             </div>
