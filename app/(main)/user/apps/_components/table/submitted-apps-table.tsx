@@ -88,7 +88,7 @@ export function SubmittedAppsTable({
     filterFields,
     // enableAdvancedFilter: featureFlags.includes("advancedFilter"),
     defaultPerPage: 10,
-    defaultSort: "app_publish_status.asc",
+    defaultSort: "created_at.desc",
   })
 
   // THIS IS FOR THE VIEW OPTIONS
