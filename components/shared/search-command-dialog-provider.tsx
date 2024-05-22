@@ -123,7 +123,7 @@ export function SearchCommandDialogProvider() {
           ).map((navItem) => (
             <CommandItem
               key={navItem.href}
-              value={Object.values(navItem).join("")}
+              value={navItem.href + Object.values(navItem).join("")}
               onSelect={() => {
                 runCommand(() => router.push(navItem.href as string))
               }}
@@ -145,7 +145,7 @@ export function SearchCommandDialogProvider() {
                 {navItem.items.map((item) => (
                   <CommandItem
                     key={item.href}
-                    value={Object.values(item).join("")}
+                    value={item.href + Object.values(item).join("")}
                     onSelect={() => {
                       runCommand(() => router.push(item.href as string))
                     }}
@@ -176,7 +176,7 @@ export function SearchCommandDialogProvider() {
                 {navItem.items.map((item) => (
                   <CommandItem
                     key={item.href}
-                    value={Object.values(item).join("")}
+                    value={item.href + Object.values(item).join("")}
                     onSelect={() => {
                       runCommand(() => router.push(item.href as string))
                     }}
