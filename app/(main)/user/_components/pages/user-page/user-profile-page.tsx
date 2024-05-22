@@ -2,9 +2,9 @@ import React from "react"
 
 import { UserProfileCard } from "./user-profile-card"
 
-type UserPageLayoutProps = {}
+type UserPage = {}
 
-export const UserPageLayout: React.FC<UserPageLayoutProps> = ({}) => {
+export const UserProfilePage: React.FC<UserPage> = ({}) => {
   return (
     <section className="flex w-full flex-col sm:gap-4 sm:py-4">
       {/* Main */}
