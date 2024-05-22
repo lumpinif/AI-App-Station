@@ -1,9 +1,10 @@
+import React from "react"
 import { Search } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import useSearchDialog from "@/hooks/use-search-dialog-store"
 
-import { Button } from "../ui/button"
+import { buttonVariants } from "../ui/button"
 import {
   Tooltip,
   TooltipContent,
@@ -12,24 +13,38 @@ import {
 } from "../ui/tooltip"
 
 export default function SearchDialogTrigger({
+  children,
   className,
+  iconClassName,
+  triggerClassName,
 }: {
+  children?: React.ReactNode
   className?: string
+  triggerClassName?: string
+  iconClassName?: string
 }) {
   const OpenSearchDialog = useSearchDialog((state) => state.OpenSearchDialog)
 
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild>
-          <Button
-            className={cn("hover:bg-foreground/10", className)}
-            onClick={OpenSearchDialog}
-            variant={"ghost"}
-            size={"icon"}
-          >
-            <Search />
-          </Button>
+        <TooltipTrigger onClick={OpenSearchDialog} className={triggerClassName}>
+          <>
+            {children ? (
+              children
+            ) : (
+              <span
+                className={cn(
+                  "hover:bg-foreground/10",
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  className
+                )}
+                onClick={OpenSearchDialog}
+              >
+                <Search className={iconClassName} />
+              </span>
+            )}
+          </>
         </TooltipTrigger>
         <TooltipContent
           side="right"
