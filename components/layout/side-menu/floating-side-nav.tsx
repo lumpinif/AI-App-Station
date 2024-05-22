@@ -165,7 +165,7 @@ export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
     return (
       <Tooltip delayDuration={0}>
         <div className={cn("relative flex items-center justify-start")}>
-          <SearchDialogTrigger className={buttonClass} />
+          <SearchDialogTrigger className={buttonClass} sideOffset={10} />
           <h1
             className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm opacity-100 duration-300 ${
               !isOpen && "scale-0"
