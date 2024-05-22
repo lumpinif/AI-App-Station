@@ -6,18 +6,8 @@ import { ImperativePanelHandle } from "react-resizable-panels"
 import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 import { ResizeableSideBarHandle } from "./resizeable-side-bar-handle"
 import { ResizeableSideNav } from "./resizeable-side-nav"
@@ -36,6 +26,7 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
   navCollapsedSize = 5,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed)
+
   const leftPanelRef = useRef<ImperativePanelHandle>(null)
   const { isTablet, isDesktop } = useMediaQuery()
   const mdMinSize = 25
@@ -107,8 +98,8 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
           }}
           className={cn(
-            "hover:border-border/70 peer hidden flex-col items-center justify-center border-r border-transparent transition-all duration-150 ease-in-out md:flex",
-            isCollapsed ? `min-w-[50px]` : "border-border/5"
+            "border-border/30 dark:border-border/10 peer hidden flex-col items-center justify-center border-r transition-all duration-150 ease-in-out md:flex",
+            isCollapsed ? `min-w-[50px]` : ""
           )}
         >
           {/* NAV */}

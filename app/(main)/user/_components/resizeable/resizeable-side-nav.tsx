@@ -117,7 +117,9 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
       <nav className="grid gap-4 group-[[data-collapsed=true]]:justify-center">
         {links.map((group, groupIndex) => (
           <React.Fragment key={groupIndex}>
-            {groupIndex > 0 && !isCollapsed && <Separator />}
+            {groupIndex > 0 && !isCollapsed && (
+              <Separator className="bg-border/50 h-[0.5px]" />
+            )}
             {group.items.map((link, itemIndex) =>
               isCollapsed ? (
                 <Tooltip key={itemIndex} delayDuration={0}>
