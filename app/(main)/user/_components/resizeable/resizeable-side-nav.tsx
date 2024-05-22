@@ -6,6 +6,7 @@ import { ArrowRightFromLine, LucideIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import PopoverMenu from "@/components/ui/popover-menu"
 import { Separator } from "@/components/ui/separator"
 import {
   Tooltip,
@@ -210,6 +211,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
           </React.Fragment>
         ))}
       </nav>
+      <PopoverMenu className="absolute bottom-10 left-5" />
     </div>
   )
 }

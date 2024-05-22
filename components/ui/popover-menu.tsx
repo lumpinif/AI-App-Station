@@ -81,10 +81,7 @@ export default function PopoverMenu({
 
   return (
     <div
-      className={cn(
-        "relative z-50 flex h-[55px] items-end justify-start",
-        className
-      )}
+      className={cn("z-50 flex h-[55px] items-end justify-start", className)}
     >
       <AnimatePresence>
         {isPopoverOpen && (
