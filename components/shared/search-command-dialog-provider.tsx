@@ -123,7 +123,7 @@ export function SearchCommandDialogProvider() {
           ).map((navItem) => (
             <CommandItem
               key={navItem.href}
-              value={navItem.title}
+              value={Object.values(navItem).join("")}
               onSelect={() => {
                 runCommand(() => router.push(navItem.href as string))
               }}
@@ -145,7 +145,7 @@ export function SearchCommandDialogProvider() {
                 {navItem.items.map((item) => (
                   <CommandItem
                     key={item.href}
-                    value={item.title}
+                    value={Object.values(item).join("")}
                     onSelect={() => {
                       runCommand(() => router.push(item.href as string))
                     }}
@@ -176,7 +176,7 @@ export function SearchCommandDialogProvider() {
                 {navItem.items.map((item) => (
                   <CommandItem
                     key={item.href}
-                    value={item.title}
+                    value={Object.values(item).join("")}
                     onSelect={() => {
                       runCommand(() => router.push(item.href as string))
                     }}
@@ -185,7 +185,7 @@ export function SearchCommandDialogProvider() {
                       <>
                         {item.title !== "GPTs" ? (
                           <item.icon className="mr-2 size-full stroke-[1.5]" />
-                        ) : (
+                        ) : (cre
                           <item.icon className="mr-2" size={26} />
                         )}
                       </>
