@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { SiteLogo } from "@/components/layout/site-header/site-header"
+import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
 
 export const UserPagesMobileNavSheet = () => {
   return (
@@ -37,17 +38,28 @@ export const UserPagesMobileNavSheet = () => {
           </Link>
           {userLayoutRoutes.map((group, groupIndex) => (
             <React.Fragment key={groupIndex}>
-              {groupIndex > 0 && <Separator />}
+              {groupIndex > 0 && <Separator className="h-[0.5px]" />}
+
               {group.items.map((item, itemIndex) => (
-                <Link
-                  key={itemIndex}
-                  href={item.href}
-                  className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
-                >
-                  <item.icon className="h-5 w-5 transition-all" />
-                  <span className="font-normal">{item.title}</span>
-                  <span className="sr-only">{item.title}</span>
-                </Link>
+                <React.Fragment key={itemIndex}>
+                  {item.title === "Search" ? (
+                    // if the item title is Search
+                    <SearchDialogTrigger triggerClassName="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal">
+                      <item.icon className="h-5 w-5 transition-all" />
+                      <span className="font-normal">{item.title}</span>
+                      <span className="sr-only">{item.title}</span>
+                    </SearchDialogTrigger>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
+                    >
+                      <item.icon className="h-5 w-5 transition-all" />
+                      <span className="font-normal">{item.title}</span>
+                      <span className="sr-only">{item.title}</span>
+                    </Link>
+                  )}
+                </React.Fragment>
               ))}
             </React.Fragment>
           ))}
