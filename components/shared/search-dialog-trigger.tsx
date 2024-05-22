@@ -17,11 +17,13 @@ export default function SearchDialogTrigger({
   className,
   iconClassName,
   triggerClassName,
+  withTooltip = true,
 }: {
   children?: React.ReactNode
   className?: string
   triggerClassName?: string
   iconClassName?: string
+  withTooltip?: boolean
 }) {
   const OpenSearchDialog = useSearchDialog((state) => state.OpenSearchDialog)
 
@@ -46,15 +48,17 @@ export default function SearchDialogTrigger({
             )}
           </>
         </TooltipTrigger>
-        <TooltipContent
-          side="right"
-          className="dark:bg-foreground dark:text-background flex items-center gap-2"
-        >
-          Search
-          <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-            <span className="text-xs">⌘</span>K
-          </kbd>
-        </TooltipContent>
+        {withTooltip && (
+          <TooltipContent
+            side="right"
+            className="dark:bg-foreground dark:text-background flex items-center gap-2"
+          >
+            Search
+            <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+              <span className="text-xs">⌘</span>K
+            </kbd>
+          </TooltipContent>
+        )}
       </Tooltip>
     </TooltipProvider>
   )

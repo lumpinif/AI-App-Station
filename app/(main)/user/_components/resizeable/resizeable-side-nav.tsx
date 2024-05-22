@@ -167,6 +167,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                         buttonVariants({ variant: "ghost", size: "sm" }),
                         "justify-start"
                       )}
+                      withTooltip={false}
                     >
                       <link.icon className="mr-2 stroke-[1.5px] md:size-6" />
                       <span className="font-normal">{link.title}</span>
