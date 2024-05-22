@@ -11,7 +11,7 @@ type SpinnerButtonProps = ButtonProps & {
   isLoading: boolean
   children?: React.ReactNode
   motionClassName?: string
-  buttonClassName?: string
+  className?: string
   buttonVariant?: ButtonProps["variant"]
 }
 
@@ -19,7 +19,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
   children,
   isLoading,
   motionClassName,
-  buttonClassName,
+  className,
   buttonVariant,
   ...props
 }) => {
@@ -33,7 +33,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
   return (
     <Button
       variant={buttonVariant}
-      className={cn("relative select-none overflow-hidden", buttonClassName)}
+      className={cn("relative select-none overflow-hidden", className)}
       disabled={isLoading}
       {...props}
     >

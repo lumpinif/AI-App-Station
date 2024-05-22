@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { LucideIcon as LucideIconType } from "lucide-react"
 
 import { NavItemProps, SIDENAVROUTESProps } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
@@ -112,7 +113,11 @@ const ItemContent: React.FC<ItemContentProps> = ({ item, isOpen }) => {
       <div className="flex items-center gap-2">
         {item.icon && (
           <div className="group-hover:text-foreground flex h-5 w-5 items-center">
-            {item.icon}
+            {item.title !== "GPTs" ? (
+              <item.icon className="size-full stroke-[1.5]" />
+            ) : (
+              <item.icon size={26} />
+            )}
           </div>
         )}
         {isOpen && <div>{item.title}</div>}
@@ -153,7 +158,7 @@ const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
             <CollapsibleTrigger asChild>
               <TooltipTrigger asChild>
                 <button className={buttonClassBase}>
-                  {item.icon}
+                  {item.icon && <item.icon className="size-6" />}
                   <span className="sr-only">{item.title}</span>
                 </button>
               </TooltipTrigger>

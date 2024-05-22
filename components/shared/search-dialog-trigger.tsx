@@ -2,7 +2,7 @@ import React from "react"
 import { Search } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import useSearchDialog from "@/hooks/use-search-dialog-store"
+import useSearchDialogStore from "@/hooks/use-search-dialog-store"
 
 import { buttonVariants } from "../ui/button"
 import {
@@ -27,7 +27,9 @@ export default function SearchDialogTrigger({
   withTooltip?: boolean
   sideOffset?: number
 }) {
-  const OpenSearchDialog = useSearchDialog((state) => state.OpenSearchDialog)
+  const OpenSearchDialog = useSearchDialogStore(
+    (state) => state.openSearchDialog
+  )
 
   return (
     <TooltipProvider>

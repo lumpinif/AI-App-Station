@@ -1,7 +1,8 @@
-import { SquarePen, Upload } from "lucide-react"
+import { Plus, Upload } from "lucide-react"
 
+import { usePopoverStore } from "@/hooks/use-popover-store"
 import { AppSubmitButton } from "@/components/submit/app-submit-button"
-import { NewStoryButton } from "@/app/(main)/story/_components/story/new-story-button"
+import { WriteNewStoryButton } from "@/app/(main)/story/_components/story/write-new-story-button"
 
 import { PopoverMenuItem } from "./popover-menu-item"
 
@@ -14,12 +15,14 @@ const submitAppItem = {
 }
 
 const newStoryItem = {
-  title: "Create a new post",
+  title: "Create a new story",
   text: "Share your brilliant mind",
-  icon: SquarePen,
+  icon: Plus,
 }
 
 export const PopoverMenuList: React.FC<PopoverMenuListProps> = () => {
+  const closePopover = usePopoverStore((state) => state.closePopover)
+
   return (
     <>
       <AppSubmitButton
@@ -29,13 +32,14 @@ export const PopoverMenuList: React.FC<PopoverMenuListProps> = () => {
       >
         <PopoverMenuItem item={submitAppItem} />
       </AppSubmitButton>
-      <NewStoryButton
+      <WriteNewStoryButton
         variant={"ghost"}
         size={"default"}
         spinnerButtonCN="hover:bg-background/80 bg-background w-full select-none rounded-b-[4px] rounded-t-[4px] transition-transform first:rounded-t-[12px] last:rounded-b-[12px] active:scale-[0.98] h-full"
+        onSuccess={closePopover}
       >
         <PopoverMenuItem item={newStoryItem} />
-      </NewStoryButton>
+      </WriteNewStoryButton>
     </>
   )
 }

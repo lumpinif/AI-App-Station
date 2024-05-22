@@ -43,7 +43,7 @@ const SignOutButton = () => {
       <SpinnerButton
         type="submit"
         isLoading={isPending}
-        buttonClassName="w-full"
+        className="w-full"
         buttonVariant={"destructive"}
       >
         Sign Out

@@ -36,7 +36,7 @@ const GithubLoginButton = () => {
     <SpinnerButton
       isLoading={isLoading}
       onClick={handleGithubLogin}
-      buttonClassName="w-full rounded-full"
+      className="w-full rounded-full"
     >
       Github
       <GithubIcon className="ml-2 h-5 w-5" />

@@ -39,23 +39,25 @@ const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
       {...props}
     >
       <div className="flex w-full items-start justify-between px-2 text-sm">
-        {routes.map((route) => (
-          <Link
-            href={`${route.href}`}
-            key={route.id}
-            className={cn({
-              "nav-link": true,
-              "!text-blue-500 rounded-full": currentPath.includes(
-                `${route.href}`
-              ),
-            })}
-          >
-            <div className="flex flex-col items-center justify-center">
-              {route.icon}
-              {route.title}
-            </div>
-          </Link>
-        ))}
+        {routes
+          .filter((route) => route.inMainNav)
+          .map((route) => (
+            <Link
+              href={`${route.href}`}
+              key={route.id}
+              className={cn({
+                "nav-link": true,
+                "!text-blue-500 rounded-full": currentPath.includes(
+                  `${route.href}`
+                ),
+              })}
+            >
+              <div className="flex flex-col items-center justify-center">
+                {route.icon && <route.icon className="size-4" />}
+                {route.title}
+              </div>
+            </Link>
+          ))}
       </div>
     </nav>
   )

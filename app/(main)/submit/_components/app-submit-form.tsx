@@ -142,7 +142,7 @@ const AppSubmitForm = () => {
         <div className="flex items-center justify-end gap-x-2">
           <SpinnerButton
             type="button"
-            buttonClassName="w-24"
+            className="w-24"
             isLoading={isLoading}
             disabled={!isValid || isSubmitting || isLoading}
             onClick={

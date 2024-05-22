@@ -60,7 +60,7 @@ export function NavigationMenuBar() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {MAINROUTES.map((route) => (
+        {MAINROUTES.filter((route) => route.inMainNav).map((route) => (
           <NavigationMenuItem
             key={route.id}
             className="cursor-pointer select-none"

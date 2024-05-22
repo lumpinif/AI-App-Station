@@ -110,7 +110,7 @@ export default function SignInForm() {
           <SpinnerButton
             type="submit"
             isLoading={isPending}
-            buttonClassName="w-full rounded-full"
+            className="w-full rounded-full"
           >
             Sign In
           </SpinnerButton>

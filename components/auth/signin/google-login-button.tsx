@@ -35,7 +35,7 @@ const GoogleLoginButton = () => {
     <SpinnerButton
       onClick={handleGoogleLogin}
       isLoading={isLoading}
-      buttonClassName="w-full rounded-full"
+      className="w-full rounded-full"
     >
       Google
       <FcGoogle className="ml-2 h-5 w-5" />

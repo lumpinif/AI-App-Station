@@ -186,7 +186,7 @@ export const DevDetailForm: React.FC<DeveloerpDetailFormProps> = ({
                   type="submit"
                   disabled={!isValid}
                   isLoading={isSubmitting}
-                  buttonClassName="w-full sm:w-52 mx-auto"
+                  className="mx-auto w-full sm:w-52"
                 >
                   Submit
                 </SpinnerButton>

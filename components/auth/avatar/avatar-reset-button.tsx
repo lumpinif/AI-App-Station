@@ -70,7 +70,7 @@ export const AvatarResetButton: React.FC<AvatarResetButtonProps> = ({
       variant={"outline"}
       onClick={handleOnClick}
       disabled={isDefaultAvatar}
-      buttonClassName="text-muted-foreground w-28 max-w-28 text-sm"
+      className="text-muted-foreground w-28 max-w-28 text-sm"
     >
       Reset Avatar
     </SpinnerButton>

@@ -1,16 +1,22 @@
 import {
   Briefcase,
   Hammer,
+  Home,
   Layers,
   LayoutTemplate,
   Library,
+  LucideIcon,
   Paintbrush2,
   PencilRuler,
   Search,
   Sparkles,
+  SquarePen,
   Tags,
+  Upload,
+  UserCog,
   Youtube,
 } from "lucide-react"
+import { IconType } from "react-icons/lib"
 import { RiOpenaiFill } from "react-icons/ri"
 
 export type NavItemProps = {
@@ -20,75 +26,108 @@ export type NavItemProps = {
   items?: NavItemProps[]
   label?: string
   disabled?: boolean
-  icon?: JSX.Element
+  icon?: LucideIcon | IconType
   shortcutNumber?: number
   discription?: string
+  inMainNav?: boolean
 }
 
 export type SIDENAVROUTESProps = {
   title: string
-  icon?: JSX.Element
+  icon?: LucideIcon | IconType
   href: string
   items: NavItemProps[]
 }[]
 
 export const MAINROUTES: NavItemProps[] = [
   {
+    id: "home",
+    href: "/",
+    title: "Home",
+    discription: "Home Page of AI App Station",
+    icon: Home,
+    shortcutNumber: 1,
+    inMainNav: false,
+  },
+  {
     id: "today",
     href: "/today",
     title: "Today",
     discription: "Everything you need to new about AI today",
-    icon: <LayoutTemplate width={18} />,
-    shortcutNumber: 1,
+    icon: LayoutTemplate,
+    shortcutNumber: 2,
+    inMainNav: true,
   },
   {
     id: "ai-apps",
     href: "/ai-apps",
     title: "AI Apps",
     discription: "Check out all the most powerful AI Apps by collections",
-    icon: <Layers width={18} />,
-    shortcutNumber: 2,
+    icon: Layers,
+    shortcutNumber: 3,
+    inMainNav: true,
   },
-  // {
-  //   id: "gpts",
-  //   href: "/gpts",
-  //   title: "GPTs",
-  //   discription: "",
-  //   icon: <RiOpenaiFill size={24} />,
-  // },
   {
     id: "discover",
     href: "/discover",
     title: "Discover",
     discription:
       "Check out all the most powerful AI Apps by scrolling reels just like TikTok",
-    icon: <Sparkles width={18} />,
-    shortcutNumber: 3,
+    icon: Sparkles,
+    shortcutNumber: 4,
+    inMainNav: true,
   },
   {
     id: "search",
     href: "/search",
     title: "Search",
     discription: "Search for the best AI apps for your needs",
-    icon: <Search width={18} />,
-    shortcutNumber: 4,
+    icon: Search,
+    shortcutNumber: 5,
+    inMainNav: true,
+  },
+  {
+    id: "create story",
+    href: "/story/new",
+    title: "Write Story",
+    discription: "Write brilliant stories for the whole world to see",
+    icon: SquarePen,
+    shortcutNumber: 6,
+    inMainNav: false,
+  },
+  {
+    id: "submit",
+    href: "/submit",
+    title: "Submit App",
+    discription: "Submit best AI apps for the whole world to see",
+    icon: Upload,
+    shortcutNumber: 7,
+    inMainNav: false,
+  },
+  {
+    id: "user",
+    href: "/user",
+    title: "Account",
+    discription: "Manage your account",
+    icon: UserCog,
+    shortcutNumber: 8,
+    inMainNav: false,
   },
 ]
 
 export const SIDENAVROUTES: SIDENAVROUTESProps = [
   // ***** IMPORTANT FOR UPDATING href AND shortcutNumber *****//
   // REMEMBER TO MANUELLY UPDATE THE FLOAITNG SIDE NAV COMPONENT CONFIG FOR THE ROUTES//
-
   {
     title: "Collections",
     href: "/ai-apps/collections",
-    icon: <Library />,
+    icon: Library,
     items: [
       {
         title: "Create",
         href: "/ai-apps/collections/create",
         items: [],
-        icon: <Paintbrush2 width={"20"} />,
+        icon: Paintbrush2,
         shortcutNumber: 1,
       },
       // {
@@ -103,28 +142,28 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         title: "Develop",
         href: "/ai-apps/collections/develop",
         items: [],
-        icon: <Hammer width={"20"} />,
+        icon: Hammer,
         shortcutNumber: 2,
       },
       {
         title: "Design",
         href: "/ai-apps/collections/design",
         items: [],
-        icon: <PencilRuler width={"18"} />,
+        icon: PencilRuler,
         shortcutNumber: 3,
       },
       {
         title: "GPTs",
         href: "/ai-apps/collections/gpts",
         items: [],
-        icon: <RiOpenaiFill size={"24"} />,
+        icon: RiOpenaiFill,
         shortcutNumber: 4,
       },
       {
         title: "Work",
         href: "/ai-apps/collections/work",
         items: [],
-        icon: <Briefcase width={"20"} />,
+        icon: Briefcase,
         shortcutNumber: 5,
       },
     ],
@@ -132,7 +171,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
   {
     title: "Categories",
     href: "/ai-apps/categories",
-    icon: <Tags />,
+    icon: Tags,
     items: [
       {
         title: "LLM",

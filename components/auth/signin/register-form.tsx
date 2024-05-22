@@ -143,7 +143,7 @@ export default function RegisterForm() {
         <SpinnerButton
           type="submit"
           isLoading={isPending}
-          buttonClassName="w-full rounded-md"
+          className="w-full rounded-md"
         >
           Register
         </SpinnerButton>

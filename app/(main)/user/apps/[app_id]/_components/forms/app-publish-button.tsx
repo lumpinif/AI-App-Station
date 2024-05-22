@@ -80,7 +80,7 @@ export const AppPublishButton: React.FC<AppApprovalSubmitProps> = ({
       <SpinnerButton
         isLoading={isSubmitting}
         onClick={handlePublishApp}
-        buttonClassName={cn("rounded-md", className)}
+        className={cn("rounded-md", className)}
         {...props}
       >
         {children || "Submit"}
