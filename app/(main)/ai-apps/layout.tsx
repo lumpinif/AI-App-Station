@@ -1,7 +1,4 @@
-import { getUserData } from "@/server/auth"
-
 import AiAppsPageWrapper from "@/components/layout/side-menu/ai-apps-page-wrapper"
-import { AppSubmitModal } from "@/components/submit/app-submit-modal"
 
 import FloatingSideNav from "../../../components/layout/side-menu/floating-side-nav"
 import { MobileCategoryNav } from "./_components/mobile-category-nav"
@@ -10,22 +7,11 @@ interface AiAppsLayoutProps {
   children: React.ReactNode
 }
 export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
-  const {
-    data: { user },
-    error: getUserError,
-  } = await getUserData()
-
-  if (getUserError) {
-    console.error(getUserError)
-  }
-
   return (
     <>
       {/* TODO: Continue building sticky floating header */}
       {/* <StickyFloatingHeader /> */}
       {/* Mobile scrolling nav */}
-
-      <AppSubmitModal user={user} />
 
       <div className="container mb-2">
         <MobileCategoryNav />

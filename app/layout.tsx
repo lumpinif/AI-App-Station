@@ -11,10 +11,9 @@ import { GeistSans } from "geist/font/sans"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
-import AccountModalProvider from "@/components/auth/auth-modal/account-modal-provider"
 import { SiteFooter } from "@/components/layout/site-footer/site-footer"
 import { SiteHeader } from "@/components/layout/site-header/site-header"
-import { SearchCommandDialogProvider } from "@/components/shared/search-command-dialog"
+import { SearchCommandDialogProvider } from "@/components/shared/search-command-dialog-provider"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {
@@ -92,14 +91,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
-            {/* <div vaul-drawer-wrapper=""> */}
             <main
               className="bg-background relative flex min-h-dvh flex-col"
               vaul-drawer-wrapper=""
             >
-              {/* TODO: MAYBE WRAP THE COMMANDDIAGLOG OR MOVE SOMEWHERE ELSE */}
               <SearchCommandDialogProvider />
-              <AccountModalProvider />
               <section className="min-h-dvh flex-1">
                 <section className="flex h-full flex-col">
                   <SiteHeader />
@@ -108,7 +104,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               </section>
               <SiteFooter />
             </main>
-            {/* </div> */}
             <TailwindIndicator />
             <SonnerToaster richColors position="bottom-left" closeButton />
           </ThemeProvider>
