@@ -13,10 +13,18 @@ export default async function UserLayout({
   children: React.ReactNode
 }) {
   // TODO: PROTECT ROUTE BEFORE PRODUCTION
-  // const { data, error } = await getUserData()
-  // if (error || !data?.user) {
-  //   redirect("/signin")
-  // }
+  const {
+    data: { user },
+    error: getUserError,
+  } = await getUserData()
+
+  if (getUserError) {
+    console.error(getUserError)
+  }
+
+  if (!user?.id) {
+    redirect("/signin")
+  }
 
   const layout = cookies().get("react-resizable-panels:layout")
   const collapsed = cookies().get("react-resizable-panels:collapsed")

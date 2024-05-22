@@ -21,21 +21,25 @@ type ResizeableSideBarProps = {
 
 export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
   children,
-  defaultLayout = [15, 85],
+  defaultLayout,
   defaultCollapsed = false,
   navCollapsedSize = 5,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed)
-
-  const leftPanelRef = useRef<ImperativePanelHandle>(null)
   const { isTablet, isDesktop } = useMediaQuery()
-  const mdMinSize = 25
-  const mdMaxSize = 30
-  const lgMinSize = 15
+  const leftPanelRef = useRef<ImperativePanelHandle>(null)
+
+  const mdMinSize = 20
+  const mdMaxSize = 26
+  const lgMinSize = 12
   const lgMaxSize = 20
 
   const minSize = isDesktop ? lgMinSize : isTablet ? mdMinSize : 15
-  const maxSize = isDesktop ? lgMaxSize : isTablet ? mdMaxSize : 25
+  const maxSize = isDesktop ? lgMaxSize : isTablet ? mdMaxSize : 26
+
+  if (!defaultLayout) {
+    defaultLayout = [minSize, 100 - minSize]
+  }
 
   const isLeftPanelCollapsed = leftPanelRef?.current?.isCollapsed()
 

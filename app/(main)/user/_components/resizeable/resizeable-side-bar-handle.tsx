@@ -14,7 +14,7 @@ export const ResizeableSideBarHandle: React.FC<
       id="resize-handle"
       withHandle
       onClick={handleResizeHandleClick}
-      hitAreaMargins={{ coarse: 20, fine: 10 }}
+      hitAreaMargins={{ coarse: 10, fine: 3 }}
       className={cn(
         "bg-border dark:bg-border/80 w-[0.5px] opacity-0 transition-all duration-200 ease-in-out focus-within:opacity-100 hover:opacity-100 focus:opacity-100 active:opacity-100 peer-hover:opacity-100 peer-active:opacity-100",
         className

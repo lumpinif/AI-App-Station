@@ -49,7 +49,7 @@ export function DataTableToolbar<TData>({
           searchableColumns.map(
             (column) =>
               table.getColumn(column.value ? String(column.value) : "") && (
-                <div className="relative">
+                <div className="relative" key={String(column.value)}>
                   <Input
                     key={String(column.value)}
                     placeholder={column.placeholder}
