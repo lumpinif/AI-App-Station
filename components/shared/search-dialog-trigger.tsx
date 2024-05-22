@@ -18,12 +18,14 @@ export default function SearchDialogTrigger({
   iconClassName,
   triggerClassName,
   withTooltip = true,
+  sideOffset,
 }: {
   children?: React.ReactNode
   className?: string
   triggerClassName?: string
   iconClassName?: string
   withTooltip?: boolean
+  sideOffset?: number
 }) {
   const OpenSearchDialog = useSearchDialog((state) => state.OpenSearchDialog)
 
@@ -50,6 +52,7 @@ export default function SearchDialogTrigger({
         </TooltipTrigger>
         {withTooltip && (
           <TooltipContent
+            sideOffset={sideOffset}
             side="right"
             className="dark:bg-foreground dark:text-background flex items-center gap-2"
           >
