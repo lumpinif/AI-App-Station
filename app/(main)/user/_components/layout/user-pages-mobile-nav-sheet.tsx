@@ -44,7 +44,10 @@ export const UserPagesMobileNavSheet = () => {
                 <React.Fragment key={itemIndex}>
                   {item.title === "Search" ? (
                     // if the item title is Search
-                    <SearchDialogTrigger triggerClassName="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal">
+                    <SearchDialogTrigger
+                      triggerClassName="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
+                      withTooltip={false}
+                    >
                       <item.icon className="h-5 w-5 transition-all" />
                       <span className="font-normal">{item.title}</span>
                       <span className="sr-only">{item.title}</span>
