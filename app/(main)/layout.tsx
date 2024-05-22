@@ -18,10 +18,10 @@ export default async function MainLayout({
   }
 
   return (
-    <main>
+    <>
       <AccountModal user={user} />
       <AppSubmitModal user={user} />
       {children}
-    </main>
+    </>
   )
 }
