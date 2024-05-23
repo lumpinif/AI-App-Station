@@ -26,7 +26,7 @@ export const UserPagesMobileNavSheet = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="w-5/6 border-none sm:hidden sm:max-w-sm"
+        className="w-5/6 border-none sm:max-w-sm md:hidden md:max-w-md"
       >
         <nav className="grid gap-6 text-base font-medium">
           <Link
