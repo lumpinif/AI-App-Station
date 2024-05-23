@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { SiteLogo } from "@/components/layout/site-header/site-header"
-import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
+import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 export const UserPagesMobileNavSheet = () => {
   return (

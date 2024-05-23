@@ -16,7 +16,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons/icons"
-import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
+import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 export function NavigationMenuBar() {
   const currentPath = usePathname()

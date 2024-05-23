@@ -12,7 +12,7 @@ import PopoverMenu from "@/components/ui/popover-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
-import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
+import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import {

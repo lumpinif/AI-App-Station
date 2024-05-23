@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import { SiteFooter } from "@/components/layout/site-footer/site-footer"
 import { SiteHeader } from "@/components/layout/site-header/site-header"
-import { SearchCommandDialogProvider } from "@/components/shared/search-command-dialog-provider"
+import { SearchCommandDialogProvider } from "@/components/search-command-dialog/search-command-dialog-provider"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {

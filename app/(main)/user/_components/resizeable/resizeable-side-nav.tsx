@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/tooltip"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { UserCard } from "@/components/auth/auth-modal/user-card"
-import SearchDialogTrigger from "@/components/shared/search-dialog-trigger"
+import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 type NavProps = {
   isCollapsed: boolean
