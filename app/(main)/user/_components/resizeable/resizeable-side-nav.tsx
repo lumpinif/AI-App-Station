@@ -211,7 +211,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
           </React.Fragment>
         ))}
       </nav>
-      <PopoverMenu className="absolute bottom-10 left-5" />
+      <PopoverMenu className="absolute bottom-12 left-5" />
     </div>
   )
 }
