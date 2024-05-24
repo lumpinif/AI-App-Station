@@ -113,7 +113,7 @@ export default function PopoverMenu({
         {isPopoverOpen && (
           <motion.div
             className={cn(
-              "absolute bottom-0 -left-2 flex w-fit flex-col items-center overflow-hidden p-1",
+              "absolute -left-2 bottom-0 flex w-fit flex-col items-center overflow-hidden p-1",
               openedClassName
             )}
             initial="closed"
