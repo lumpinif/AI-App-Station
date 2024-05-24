@@ -12,7 +12,7 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip"
 
-export default function SearchDialogTrigger({
+export default function SearchCommandDialogTrigger({
   children,
   className,
   iconClassName,

@@ -1,28 +1,23 @@
 "use client"
 
 import React, { useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { User } from "@supabase/supabase-js"
-import { ScrollText } from "lucide-react"
 
 import { AppWithCategoriesAndDevelopers, PostDetails } from "@/types/db_tables"
-import { getPostAuthorSlug } from "@/lib/utils"
 import useSearchDialogStore from "@/hooks/use-search-dialog-store"
-import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-icon"
-import { AppTitleWithDescription } from "@/app/(main)/ai-apps/_components/cards/_components/app-title-description"
 
 import { SignInTrigger } from "../auth/signin/sign-in-trigger"
 import SignOutButton from "../auth/signout/sign-out-button"
 import {
   CommandDialog,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
 } from "../ui/command"
 import { ScrollArea } from "../ui/scroll-area"
+import { AppsCommandGroup } from "./apps-command-group"
 import { SearchCommandGroups } from "./search-command-groups"
+import { StoriesCommandGroup } from "./stories-command-group"
 
 type SearchCommandDialogProps = {
   apps?: AppWithCategoriesAndDevelopers[] | null
@@ -35,7 +30,6 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
   apps: db_apps,
   posts: db_storys,
 }) => {
-  const router = useRouter()
   const [search, setSearch] = React.useState("")
 
   const isOpen = useSearchDialogStore((state) => state.isOpen)
@@ -97,78 +91,14 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
               <SearchCommandGroups runCommand={runCommand} />
 
               {search && db_apps && (
-                <CommandGroup heading="Apps">
-                  {db_apps?.map((app) => (
-                    <CommandItem
-                      key={app.app_id}
-                      keywords={[
-                        app.app_slug,
-                        app.description ?? "no description",
-                        app.categories
-                          ?.flatMap((c) => [
-                            c.category_name,
-                            c.category_description,
-                          ])
-                          .join(" ") ?? "",
-                        app.developers
-                          ?.flatMap((c) => [c.developer_name, c.developer_url])
-                          .join(" ") ?? "",
-                      ]}
-                      value={app.app_title}
-                      onSelect={() => {
-                        runCommand(() =>
-                          router.push(`/ai-apps/${app.app_slug}`)
-                        )
-                      }}
-                    >
-                      <div className="flex w-full items-center gap-x-2 md:gap-x-4">
-                        <AppIcon {...app} size={12} />
-                        <AppTitleWithDescription {...app} />
-                      </div>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+                <AppsCommandGroup db_apps={db_apps} runCommand={runCommand} />
               )}
 
               {search && db_storys && (
-                <CommandGroup heading="Stories">
-                  {db_storys?.map((story) => (
-                    <CommandItem
-                      key={story.post_id}
-                      keywords={[
-                        story.post_slug,
-                        story.labels
-                          ?.flatMap((l) => [l.label_name, l.label_description])
-                          .join(" ") ?? "",
-                        story.categories
-                          ?.flatMap((c) => [
-                            c.category_name,
-                            c.category_description,
-                          ])
-                          .join(" ") ?? "",
-                        story.categories
-                          ?.flatMap((c) => [
-                            c.category_name,
-                            c.category_description,
-                          ])
-                          .join(" ") ?? "",
-                      ]}
-                      value={story.post_title}
-                      onSelect={() => {
-                        runCommand(() =>
-                          router.push(
-                            `/story/${getPostAuthorSlug(story.profiles)}/${story.post_id}`
-                          )
-                        )
-                      }}
-                    >
-                      <div className="flex w-full items-center gap-x-2 md:gap-x-4">
-                        <ScrollText className="text-muted-foreground" />
-                        {story.post_title}
-                      </div>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
+                <StoriesCommandGroup
+                  db_storys={db_storys}
+                  runCommand={runCommand}
+                />
               )}
             </CommandList>
           </ScrollArea>

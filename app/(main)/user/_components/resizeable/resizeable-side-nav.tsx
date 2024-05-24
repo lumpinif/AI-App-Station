@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/tooltip"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { UserCard } from "@/components/auth/auth-modal/user-card"
-import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
+import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 type NavProps = {
   isCollapsed: boolean
@@ -127,7 +127,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                 // if link is search
                 <React.Fragment key={itemIndex}>
                   {link.title === "Search" ? (
-                    <SearchDialogTrigger iconClassName="stroke-[1.5px]" />
+                    <SearchCommandDialogTrigger iconClassName="stroke-[1.5px]" />
                   ) : (
                     <Tooltip key={itemIndex} delayDuration={0}>
                       <TooltipTrigger asChild>
@@ -162,7 +162,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                 // if link is Search
                 <React.Fragment key={itemIndex}>
                   {link.title === "Search" ? (
-                    <SearchDialogTrigger
+                    <SearchCommandDialogTrigger
                       triggerClassName={cn(
                         "text-muted-foreground mx-2 text-nowrap font-normal",
                         buttonVariants({ variant: "ghost", size: "sm" }),
@@ -181,7 +181,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                           {link.label}
                         </span>
                       )}
-                    </SearchDialogTrigger>
+                    </SearchCommandDialogTrigger>
                   ) : (
                     <Link
                       key={itemIndex}

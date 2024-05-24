@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { SiteLogo } from "@/components/layout/site-header/site-header"
-import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
+import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 export const UserPagesMobileNavSheet = () => {
   return (
@@ -44,14 +44,14 @@ export const UserPagesMobileNavSheet = () => {
                 <React.Fragment key={itemIndex}>
                   {item.title === "Search" ? (
                     // if the item title is Search
-                    <SearchDialogTrigger
+                    <SearchCommandDialogTrigger
                       triggerClassName="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
                       withTooltip={false}
                     >
                       <item.icon className="h-5 w-5 transition-all" />
                       <span className="font-normal">{item.title}</span>
                       <span className="sr-only">{item.title}</span>
-                    </SearchDialogTrigger>
+                    </SearchCommandDialogTrigger>
                   ) : (
                     <Link
                       href={item.href}

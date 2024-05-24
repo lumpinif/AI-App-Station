@@ -16,7 +16,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Icons } from "@/components/icons/icons"
-import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
+import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 export function NavigationMenuBar() {
   const currentPath = usePathname()
@@ -80,7 +80,7 @@ export function NavigationMenuBar() {
         ))}
 
         <NavigationMenuItem className="rounded-full">
-          <SearchDialogTrigger className="flex items-center justify-center rounded-full" />
+          <SearchCommandDialogTrigger className="flex items-center justify-center rounded-full" />
         </NavigationMenuItem>
 
         {/* <NavigationMenuItem className="rounded-full">

@@ -12,7 +12,7 @@ import PopoverMenu from "@/components/ui/popover-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
-import SearchDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
+import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import {
@@ -165,7 +165,7 @@ export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
     return (
       <Tooltip delayDuration={0}>
         <div className={cn("relative flex items-center justify-start")}>
-          <SearchDialogTrigger className={buttonClass} sideOffset={10} />
+          <SearchCommandDialogTrigger className={buttonClass} sideOffset={10} />
           <h1
             className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm opacity-100 duration-300 ${
               !isOpen && "scale-0"

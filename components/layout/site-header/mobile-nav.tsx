@@ -2,10 +2,12 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Search } from "lucide-react"
 
 import { MAINROUTES, NavItemProps } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
 import { useScroll } from "@/hooks/use-scroll"
+import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 const MobileNav = () => {
   const { scrolled, hideNavOnScroll } = useScroll(5)
@@ -40,7 +42,7 @@ const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
     >
       <div className="flex w-full items-start justify-between px-2 text-sm">
         {routes
-          .filter((route) => route.inMainNav)
+          .filter((route) => route.inMainNav && route.id !== "search")
           .map((route) => (
             <Link
               href={`${route.href}`}
@@ -58,6 +60,17 @@ const MobileNavBar = ({ routes, className, ...props }: MobileNavBarProps) => {
               </div>
             </Link>
           ))}
+        <SearchCommandDialogTrigger withTooltip={false}>
+          <div
+            className={cn("flex flex-col items-center justify-center", {
+              "nav-link": true,
+              "!text-blue-500 rounded-full": currentPath.includes(`/search`),
+            })}
+          >
+            <Search className="size-4" />
+            Search
+          </div>
+        </SearchCommandDialogTrigger>
       </div>
     </nav>
   )
