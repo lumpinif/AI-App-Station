@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
 import * as z from "zod"
 
+import { Profiles } from "@/types/db_tables"
 import { USER_WEBSITE_MAX_LENGTH } from "@/config/profile/profile-form-config"
 
 export function cn(...inputs: ClassValue[]) {
@@ -120,4 +121,14 @@ export function deepEqual(obj1: any, obj2: any) {
   }
 
   return true
+}
+
+export function getPostAuthorSlug(profile?: Profiles) {
+  if (!profile || profile === undefined) {
+    return "unknown-author"
+  }
+
+  const slug = nameToSlug(profile.full_name ?? profile.email)
+
+  return slug
 }

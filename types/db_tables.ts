@@ -54,26 +54,40 @@ export type AppWithCategoriesAndDevelopers = Apps &
   AppWithCategories &
   AppWithDevelopers
 
-export type AppDetails = Apps & {
-  categories?: Categories[]
-  developers?: Developers[]
-  profiles: Profiles
-  app_likes: App_likes[]
-  app_bookmarks: App_bookmarks[]
-}
+export type AppDetails = Apps &
+  AppWithCategoriesAndDevelopers & {
+    profiles: Profiles
+    app_likes: App_likes[]
+    app_bookmarks: App_bookmarks[]
+  }
 
 // Post details with categories and other related data
 export type PostWithProfile = Posts & {
   profiles: Profiles
 }
 
-export type PostDetails = Posts & {
-  labels?: Labels[]
+export type PostWithCategories = Posts & {
   categories?: Categories[]
-  profiles: Profiles
-  post_likes: Post_likes[]
-  post_bookmarks: Post_Bookmarks[]
 }
+
+export type PostWithLabels = Posts & {
+  labels?: Labels[]
+}
+
+export type PostWithLabelsAndCategories = Posts &
+  PostWithLabels &
+  PostWithCategories
+
+export type PostWithCategoriesAndProfiles = Posts &
+  PostWithCategories &
+  PostWithProfile
+
+export type PostDetails = Posts &
+  PostWithLabels &
+  PostWithCategoriesAndProfiles & {
+    post_likes: Post_likes[]
+    post_bookmarks: Post_Bookmarks[]
+  }
 
 // Comment related types
 

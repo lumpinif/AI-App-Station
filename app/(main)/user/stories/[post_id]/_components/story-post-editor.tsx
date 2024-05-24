@@ -23,9 +23,9 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
 import {
-  insertStoryContent,
-  removeEmptyStoryContent,
-  updateStoryTitle,
+  insertPostContent,
+  removeEmptyPostContent,
+  updatePostTitle,
 } from "../../../_server/stories"
 import { StoryEditorHeader } from "./story-editor-header"
 
@@ -64,7 +64,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     content: value,
     profiles: profiles,
     defaultTitle: post_title,
-    updateTitleService: updateStoryTitle,
+    updateTitleService: updatePostTitle,
     content_id: post_id,
   })
 
@@ -74,7 +74,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
       profiles: profiles,
       content: value,
       maxRetryAttempts: MAX_RETRY_ATTEMPTS,
-      insertContentService: insertStoryContent,
+      insertContentService: insertPostContent,
     })
 
   const { removeContent } = useRemoveContent<
@@ -85,7 +85,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     profiles: profiles,
     content_slug: post_slug,
     value,
-    removeContentService: removeEmptyStoryContent,
+    removeContentService: removeEmptyPostContent,
   })
 
   const handleEditorDebouncedSave = useDebouncedCallback(

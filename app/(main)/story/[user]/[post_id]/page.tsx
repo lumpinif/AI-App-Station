@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation"
-import { getPostByPostId } from "@/server/data/stories"
+import { getPostById } from "@/server/data/stories"
 import supabase from "@/utils/supabase/supabase"
 
 import { PostDetails } from "@/types/db_tables"
-import { nameToSlug } from "@/lib/utils"
+import { getPostAuthorSlug } from "@/lib/utils"
 
 import { Story } from "../../_components/story/story"
 
@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 
   if (allPosts)
     return allPosts.map((post) => ({
-      user: nameToSlug(post.profiles.full_name ?? post.profiles.email),
+      user: getPostAuthorSlug(post.profiles),
       post_id: post.post_id,
     }))
 
@@ -32,7 +32,7 @@ export default async function StoryPage({
 }: {
   params: { user: string; post_id: string }
 }) {
-  const { post, error: getPostError } = await getPostByPostId(params.post_id)
+  const { post, error: getPostError } = await getPostById(params.post_id)
 
   if (!post) {
     notFound()

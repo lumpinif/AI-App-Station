@@ -1,7 +1,6 @@
 import { Suspense } from "react"
-import dynamic from "next/dynamic"
 import { notFound } from "next/navigation"
-import { getAllApps, getAllHeroFeaturedPosts, getAllPosts } from "@/server/data"
+import { getAllPosts } from "@/server/data"
 import { getAppsWithCatWithOrderBy } from "@/server/data/supabase-actions"
 import { EmblaOptionsType } from "embla-carousel"
 
@@ -25,8 +24,7 @@ const OPTIONS_APPSCARDSCAROUSEL: EmblaOptionsType = {
 const AIAppsMainPage = async () => {
   try {
     // Fetch posts data
-    const { posts: heroPosts, error: heroPostsError } =
-      await getAllHeroFeaturedPosts()
+    const { posts: heroPosts, error: heroPostsError } = await getAllPosts(true)
     const { posts: allPosts, error: allPostsError } = await getAllPosts()
 
     // Fetch apps data
@@ -61,6 +59,7 @@ const AIAppsMainPage = async () => {
             isIndicator={true}
           />
         </Suspense>
+        {/* TODO: REBUILD THE CAROUSEL HERE WITH REFINED DATA SOURCE */}
         <Suspense fallback={<div>Loading...</div>}>
           <NewPostsCarousel posts={allPosts} className="md:basis-1/2" />
         </Suspense>

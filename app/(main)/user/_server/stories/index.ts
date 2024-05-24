@@ -5,21 +5,21 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { JSONContent } from "novel"
 
 import { Posts, Profiles } from "@/types/db_tables"
-import { nameToSlug } from "@/lib/utils"
+import { getPostAuthorSlug, nameToSlug } from "@/lib/utils"
 
-export async function getPostSlugById(post_id: Posts["post_id"]) {
-  const supabase = await createSupabaseServerClient()
+// export async function getPostSlugById(post_id: Posts["post_id"]) {
+//   const supabase = await createSupabaseServerClient()
 
-  let { data: post_slug, error } = await supabase
-    .from("posts")
-    .select("post_slug")
-    .match({ post_id })
-    .single()
+//   let { data: post_slug, error } = await supabase
+//     .from("posts")
+//     .select("post_slug")
+//     .match({ post_id })
+//     .single()
 
-  return { post_slug, error }
-}
+//   return { post_slug, error }
+// }
 
-export async function removeEmptyStoryContent(
+export async function removeEmptyPostContent(
   post_id: Posts["post_id"],
   post_slug: Posts["post_slug"],
   profiles?: Profiles
@@ -52,9 +52,9 @@ export async function removeEmptyStoryContent(
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION CONSIDER USE AUTHOR ID TO GET THE PROFILE NAME FOR THE ROUTE SEGEMENT
 
-    revalidatePath(
-      `/story/${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}/${post_id}`
-    )
+    // ${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}
+
+    revalidatePath(`/story/${getPostAuthorSlug(profiles)}/${post_id}`)
 
     revalidatePath(`/user/stories/${post_id}`)
 
@@ -65,7 +65,7 @@ export async function removeEmptyStoryContent(
   }
 }
 
-export async function insertStoryContent(
+export async function insertPostContent(
   post_id: Posts["post_id"],
   post_content: JSONContent,
   profiles?: Profiles
@@ -89,9 +89,7 @@ export async function insertStoryContent(
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
 
-    revalidatePath(
-      `/story/${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}/${post_id}`
-    )
+    revalidatePath(`/story/${getPostAuthorSlug(profiles)}/${post_id}`)
 
     revalidatePath(`/user/stories/${post_id}`)
 
@@ -103,7 +101,7 @@ export async function insertStoryContent(
   }
 }
 
-export async function updateStoryTitle(
+export async function updatePostTitle(
   post_id: Posts["post_id"],
   post_title: Posts["post_title"],
   profiles?: Profiles
@@ -128,9 +126,7 @@ export async function updateStoryTitle(
 
     // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
 
-    revalidatePath(
-      `/story/${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}/${post_id}`
-    )
+    revalidatePath(`/story/${getPostAuthorSlug(profiles)}/${post_id}`)
 
     revalidatePath(`/user/stories/${post_id}`)
 

@@ -11,9 +11,6 @@ import {
   Categories,
   CommentWithProfile,
   Developers,
-  PostDetails,
-  Posts,
-  PostWithProfile,
 } from "@/types/db_tables"
 import { capitalizeFirstLetter, nameToSlug, normalizeString } from "@/lib/utils"
 

@@ -3,7 +3,8 @@
 import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
 
-import { Apps, AppWithCategoriesAndDevelopers } from "@/types/db_tables"
+import { AppWithCategoriesAndDevelopers, PostDetails } from "@/types/db_tables"
+import { getPostAuthorSlug } from "@/lib/utils"
 import useSearchDialogStore from "@/hooks/use-search-dialog-store"
 
 import {
@@ -19,11 +20,13 @@ import { ScrollArea } from "../ui/scroll-area"
 import { SearchCommandGroups } from "./search-command-groups"
 
 type SearchCommandDialogProps = {
-  serverData?: AppWithCategoriesAndDevelopers[] | null
+  apps?: AppWithCategoriesAndDevelopers[] | null
+  posts?: PostDetails[] | null
 }
 
 export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
-  serverData,
+  apps: db_apps,
+  posts: db_storys,
 }) => {
   const router = useRouter()
   const [search, setSearch] = React.useState("")
@@ -88,9 +91,9 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
 
               <CommandSeparator />
 
-              {search && serverData && (
+              {search && db_apps && (
                 <CommandGroup heading="Apps">
-                  {serverData?.map((app) => (
+                  {db_apps?.map((app) => (
                     <CommandItem
                       key={app.app_id}
                       keywords={[
@@ -113,6 +116,44 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
                       }}
                     >
                       {app.app_title}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+
+              {search && db_storys && (
+                <CommandGroup heading="Stories">
+                  {db_storys?.map((story) => (
+                    <CommandItem
+                      key={story.post_id}
+                      keywords={[
+                        story.post_slug,
+                        story.labels
+                          ?.flatMap((l) => [l.label_name, l.label_description])
+                          .join(" ") ?? "",
+                        story.categories
+                          ?.flatMap((c) => [
+                            c.category_name,
+                            c.category_description,
+                          ])
+                          .join(" ") ?? "",
+                        story.categories
+                          ?.flatMap((c) => [
+                            c.category_name,
+                            c.category_description,
+                          ])
+                          .join(" ") ?? "",
+                      ]}
+                      value={story.post_title}
+                      onSelect={() => {
+                        runCommand(() =>
+                          router.push(
+                            `/story/${getPostAuthorSlug(story.profiles)}/${story.post_id}`
+                          )
+                        )
+                      }}
+                    >
+                      {story.post_title}
                     </CommandItem>
                   ))}
                 </CommandGroup>

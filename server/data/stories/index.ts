@@ -7,56 +7,29 @@ import { PostDetails, Posts, PostWithProfile } from "@/types/db_tables"
 import { getErrorMessage } from "@/lib/handle-error"
 
 // fetch Posts
-export async function getAllPosts(noHeroFeaturedPosts: boolean = false) {
+export async function getAllPosts(only_is_hero_featured: boolean = false) {
   const supabase = await createSupabaseServerClient()
 
-  let { data: posts, error } = await supabase
-    .from("posts")
-    .select("*,profiles(*)")
-    // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE
-    .eq("post_publish_status", "published")
-    .eq("is_hero_featured", noHeroFeaturedPosts)
-    .order("created_at", { ascending: false })
-    .returns<PostWithProfile[]>()
-
-  // error handling
-  if (error) return { posts: null, error: getErrorMessage(error) }
-
-  return { posts, error }
-}
-
-export async function getAllHeroFeaturedPosts() {
-  const supabase = await createSupabaseServerClient()
-
-  let { data: posts, error } = await supabase
-    .from("posts")
-    .select("*,profiles(*)")
-    .eq("is_hero_featured", true)
-    .match({ post_publish_status: "published" })
-    .order("created_at", { ascending: false })
-    .returns<PostWithProfile[]>()
-
-  // error handling
-  if (error) return { posts: null, error: getErrorMessage(error) }
-
-  return { posts, error }
-}
-
-export async function getPostByPostId(post_id: Posts["post_id"]) {
-  const supabase = await createSupabaseServerClient()
-
-  let { data: post, error } = await supabase
+  const query = supabase
     .from("posts")
     .select(
-      `*, categories(*), labels(*), profiles(*), post_likes(*), post_bookmarks(*)`
+      "*, categories(*), labels(*), profiles(*), post_likes(*), post_bookmarks(*)"
     )
-    .match({ post_publish_status: "published", post_id })
-    .single<PostDetails>()
+    // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE PRODUCTION
+    .match({ post_publish_status: "published" })
+    .order("created_at", { ascending: false })
+
+  if (only_is_hero_featured) {
+    query.eq("is_hero_featured", only_is_hero_featured)
+  }
+
+  // TODO: CHECK THE TYPES OF RETURNS IF IT IS TOO HEAVY AND NECESSARY
+  let { data: posts, error } = await query.returns<PostDetails[]>()
 
   // error handling
-  if (error) return { post: null, error: getErrorMessage(error) }
+  if (error) return { posts: null, error: getErrorMessage(error) }
 
-  return { post, error }
+  return { posts, error }
 }
 
 export async function getPostById(post_id: Posts["post_id"]) {
@@ -76,7 +49,7 @@ export async function getPostById(post_id: Posts["post_id"]) {
   return { post, error }
 }
 
-export async function createNewStory() {
+export async function createNewPost() {
   const supabase = await createSupabaseServerClient()
 
   const {

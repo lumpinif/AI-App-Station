@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createNewStory } from "@/server/data/stories"
+import { createNewPost } from "@/server/data/stories"
 import { Rocket } from "lucide-react"
 import { toast } from "sonner"
 
@@ -22,7 +22,7 @@ const useNewStory = (onSuccess?: () => void) => {
   const handleCreateNewStory = async () => {
     setIsLoading(true)
     const newStoryLaunchingToast = toast.promise(
-      createNewStory().then(({ newStory, error: createNewStoryError }) => {
+      createNewPost().then(({ newStory, error: createNewStoryError }) => {
         if (createNewStoryError) {
           throw new Error(createNewStoryError.message)
         }

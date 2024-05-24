@@ -1,14 +1,19 @@
-import { getAllApps } from "@/server/data"
-import { searchCommand } from "@/server/queries/supabase/search-command"
+import { getAllApps, getAllPosts } from "@/server/data"
 
 import { SearchCommandDialog } from "./search-command-dialog"
 
 export async function SearchCommandDialogProvider() {
-  const { apps, error } = await getAllApps()
+  const { apps: allApps, error: allAppsError } = await getAllApps()
+
+  const { posts: allPosts, error: allPostsError } = await getAllPosts()
+
+  if (allAppsError || allPostsError) {
+    console.error(allAppsError, allPostsError)
+  }
 
   return (
     <>
-      <SearchCommandDialog serverData={apps} />
+      <SearchCommandDialog apps={allApps} posts={allPosts} />
     </>
   )
 }
