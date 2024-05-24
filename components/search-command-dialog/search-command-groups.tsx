@@ -42,7 +42,7 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
           }}
           className="hover:cursor-pointer"
         >
-          <Upload className="mr-2 size-4 stroke-[1.5px]" />
+          <Upload className="text-muted-foreground mr-2 size-4 stroke-[1.5px] md:mr-4" />
           Submit New App
         </CommandItem>
 
@@ -62,7 +62,7 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
             className="h-11 w-full !px-2 hover:bg-transparent"
             motionClassName="justify-start space-x-0"
           >
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
             <span className="font-normal">Create New Story</span>
           </SpinnerButton>
         </CommandItem>
@@ -88,7 +88,7 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
               }}
             >
               {navItem.icon && (
-                <navItem.icon className="mr-2 size-4 stroke-[1.5px]" />
+                <navItem.icon className="text-muted-foreground mr-2 size-4 stroke-[1.5px] md:mr-4" />
               )}
               {navItem.title}
             </CommandItem>
@@ -103,7 +103,7 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
                 <CommandItem
                   key={item.href}
                   // keywords={[Object.values(item).join(" ")]}
-                  value={item.title}
+                  value={item.title + item.href}
                   onSelect={() => {
                     runCommand(() => router.push(item.href as string))
                   }}
@@ -111,9 +111,12 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
                   {item.icon && (
                     <>
                       {item.title !== "GPTs" ? (
-                        <item.icon className="mr-2 size-full stroke-[1.5]" />
+                        <item.icon className="text-muted-foreground mr-2 size-full stroke-[1.5] md:mr-4" />
                       ) : (
-                        <item.icon className="mr-2" size={26} />
+                        <item.icon
+                          className="text-muted-foreground mr-2 md:mr-4"
+                          size={26}
+                        />
                       )}
                     </>
                   )}
@@ -133,7 +136,7 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
                 <CommandItem
                   key={item.href}
                   keywords={[Object.values(item).join(" ")]}
-                  value={item.title}
+                  value={item.title + item.href}
                   onSelect={() => {
                     runCommand(() => router.push(item.href as string))
                   }}
@@ -158,15 +161,15 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
 
       <CommandGroup heading="Theme">
         <CommandItem onSelect={() => setTheme("light")}>
-          <SunIcon className="mr-2 h-4 w-4" />
+          <SunIcon className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
           Light
         </CommandItem>
         <CommandItem onSelect={() => setTheme("dark")}>
-          <MoonIcon className="mr-2 h-4 w-4" />
+          <MoonIcon className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
           Dark
         </CommandItem>
         <CommandItem onSelect={() => setTheme("system")}>
-          <LaptopIcon className="mr-2 h-4 w-4" />
+          <LaptopIcon className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
           System
         </CommandItem>
       </CommandGroup>

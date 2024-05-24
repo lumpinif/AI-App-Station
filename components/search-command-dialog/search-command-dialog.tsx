@@ -2,10 +2,13 @@
 
 import React, { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { ScrollText } from "lucide-react"
 
 import { AppWithCategoriesAndDevelopers, PostDetails } from "@/types/db_tables"
 import { getPostAuthorSlug } from "@/lib/utils"
 import useSearchDialogStore from "@/hooks/use-search-dialog-store"
+import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-icon"
+import { AppTitleWithDescription } from "@/app/(main)/ai-apps/_components/cards/_components/app-title-description"
 
 import {
   CommandDialog,
@@ -14,7 +17,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from "../ui/command"
 import { ScrollArea } from "../ui/scroll-area"
 import { SearchCommandGroups } from "./search-command-groups"
@@ -74,7 +76,7 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
         commandClassName="bg-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         className="data-[state=closed]:max-md:slide-out-to-bottom-5 data-[state=open]:max-md:!slide-in-from-bottom-5 h-[calc(100vh-3rem)] max-w-full rounded-2xl p-4 py-6 sm:max-w-lg sm:rounded-3xl md:top-1/3 md:h-[720px] md:max-w-xl lg:max-w-2xl xl:max-w-3xl"
       >
-        <div className="[&_[cmdk-input-wrapper]]:bg-muted mb-2 p-3 [&_[cmdk-input-wrapper]]:rounded-full [&_[cmdk-input-wrapper]]:border-none">
+        <div className="focus-within:[&_[cmdk-input-wrapper]]:bg-muted mb-2 border-b p-3 transition-all duration-150 ease-out [&_[cmdk-input-wrapper]]:rounded-full [&_[cmdk-input-wrapper]]:border-none">
           <CommandInput
             value={search}
             placeholder="Type a command or search..."
@@ -96,6 +98,7 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
                       key={app.app_id}
                       keywords={[
                         app.app_slug,
+                        app.description ?? "no description",
                         app.categories
                           ?.flatMap((c) => [
                             c.category_name,
@@ -113,7 +116,10 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
                         )
                       }}
                     >
-                      {app.app_title}
+                      <div className="flex w-full items-center gap-x-2 md:gap-x-4">
+                        <AppIcon {...app} size={12} />
+                        <AppTitleWithDescription {...app} />
+                      </div>
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -151,7 +157,10 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
                         )
                       }}
                     >
-                      {story.post_title}
+                      <div className="flex w-full items-center gap-x-2 md:gap-x-4">
+                        <ScrollText className="text-muted-foreground" />
+                        {story.post_title}
+                      </div>
                     </CommandItem>
                   ))}
                 </CommandGroup>
