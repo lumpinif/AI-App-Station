@@ -30,29 +30,23 @@ const AIAppsMainPage = async () => {
     const { posts: allPosts, error: allPostsError } = await getAllPosts()
 
     // Fetch apps data
-    const { apps: allApps, error: allAppsError } =
-      await getAllApps("comments_count")
+
     const { apps: appsWithCategories, error: appsWithCategoriesError } =
       await getAppsWithCatWithOrderBy("likes_count")
 
     // Handle errors and log them
-    if (
-      heroPostsError ||
-      allPostsError ||
-      allAppsError ||
-      appsWithCategoriesError
-    ) {
+    if (heroPostsError || allPostsError || appsWithCategoriesError) {
       console.error("Error fetching data:", {
         heroPostsError,
         allPostsError,
-        allAppsError,
+
         appsWithCategoriesError,
       })
       return notFound()
     }
 
     // Check if data exists
-    if (!allPosts || !heroPosts || !appsWithCategories || !allApps) {
+    if (!allPosts || !heroPosts || !appsWithCategories) {
       return notFound()
     }
 

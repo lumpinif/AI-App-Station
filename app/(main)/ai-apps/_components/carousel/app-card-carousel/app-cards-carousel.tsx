@@ -5,7 +5,7 @@ import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { AppCardContentWithCategories } from "@/types/db_tables"
+import { AppWithCategories } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -20,7 +20,7 @@ import AppCard from "../../cards/app-card"
 
 type AppCardsCarouselProps = {
   title: string
-  data: AppCardContentWithCategories[]
+  data: AppWithCategories[]
   className?: string
   isMarginRight?: boolean
   options?: EmblaOptionsType
@@ -33,7 +33,7 @@ const PLUGIN_AUTOPLAY = Autoplay({ playOnInit: true, delay: 4500 })
 const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
 // Utility function to chunk the data into groups of three
-const chunkDataIntoGroups = (data: AppCardContentWithCategories[]) => {
+const chunkDataIntoGroups = (data: AppWithCategories[]) => {
   const groups = []
   for (let i = 0; i < data.length; i += 3) {
     groups.push(data.slice(i, i + 3))

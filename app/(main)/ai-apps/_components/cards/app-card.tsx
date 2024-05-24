@@ -1,6 +1,6 @@
 import React from "react"
 
-import { AppCardContentWithCategories } from "@/types/db_tables"
+import { AppWithCategories } from "@/types/db_tables"
 import { Separator } from "@/components/ui/separator"
 
 import { AppCardActions } from "./_components/app-card-actions"
@@ -8,7 +8,7 @@ import { AppIcon } from "./_components/app-icon"
 import { AppTitleWithDescription } from "./_components/app-title-description"
 import { AppCommentsBadge } from "./app-comments-badge"
 
-type AppCardWithIndex = AppCardContentWithCategories & {
+type AppCardWithIndex = AppWithCategories & {
   index: number
 }
 

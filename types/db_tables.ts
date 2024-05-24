@@ -6,6 +6,8 @@ import { Dispatch, SetStateAction } from "react"
 import { Database, Enums, Tables } from "@/types/supabase"
 
 // Type definitions for database tables
+export type Column<T extends keyof Database["public"]["Tables"]> =
+  Database["public"]["Tables"][T]["Row"]
 
 // App related tables
 export type App_bookmarks = Tables<"app_bookmarks">
@@ -40,9 +42,17 @@ export type Pricing = Enums<"pricing">
 // Type definitions for combined types
 
 // App details with categories and other related data
-export type AppCardContentWithCategories = Apps & {
+export type AppWithCategories = Apps & {
   categories?: Categories[]
 }
+
+export type AppWithDevelopers = Apps & {
+  developers?: Developers[]
+}
+
+export type AppWithCategoriesAndDevelopers = Apps &
+  AppWithCategories &
+  AppWithDevelopers
 
 export type AppDetails = Apps & {
   categories?: Categories[]

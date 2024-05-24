@@ -1,9 +1,9 @@
 import Link from "next/link"
 
-import { AppCardContentWithCategories } from "@/types/db_tables"
+import { AppWithCategories } from "@/types/db_tables"
 
 type AppCardCatLabelProps = {
-  categories: AppCardContentWithCategories["categories"]
+  categories: AppWithCategories["categories"]
 }
 
 export const AppCardCatLabel: React.FC<AppCardCatLabelProps> = ({

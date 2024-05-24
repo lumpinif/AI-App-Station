@@ -1,12 +1,13 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
+import { revalidatePath, unstable_noStore } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import {
   App_Comments,
   AppDetails,
   Apps,
+  AppWithCategoriesAndDevelopers,
   Categories,
   CommentWithProfile,
   Developers,
@@ -323,12 +324,17 @@ export async function getAppBySlug(app_slug: string) {
   return { app: app[0], ratingData: ratingData[0], error }
 }
 
-export async function getAllApps(withTable?: string, orderBy?: keyof Apps) {
+export async function getAllApps(orderBy?: keyof Apps) {
+  unstable_noStore()
   const supabase = await createSupabaseServerClient()
 
-  let query = supabase.from("apps").select(`*, ${withTable}`).match({
-    app_publish_status: "published",
-  })
+  let query = supabase
+    .from("apps")
+    .select(`*,categories(*),developers(*)`)
+    .match({
+      app_publish_status: "published",
+    })
+    .returns<AppWithCategoriesAndDevelopers[]>()
 
   if (orderBy) {
     query = query.order(orderBy, { ascending: false })

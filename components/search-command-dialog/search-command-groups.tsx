@@ -1,5 +1,5 @@
 import React from "react"
-import router from "next/router"
+import { useRouter } from "next/navigation"
 import { LaptopIcon, MoonIcon, Plus, SunIcon, Upload } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -19,8 +19,8 @@ type SearchCommandGroupsProps = {
 export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
   runCommand,
 }) => {
+  const router = useRouter()
   const { setTheme } = useTheme()
-
   const openAccountModal = useAccountModal((state) => state.openModal)
 
   const toggleSearchDialog = useSearchDialogStore(
@@ -36,6 +36,7 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
       <CommandGroup heading="Projects">
         <CommandItem
           value="new app submit"
+          keywords={["submit new app", "submit app"]}
           onSelect={() => {
             runCommand(() => handleAppSubmitButtonClick())
           }}
@@ -48,6 +49,7 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
         <CommandItem
           className="!p-0"
           value="write new story"
+          keywords={["create new story", "write new story"]}
           onSelect={() => {
             runCommand(() => {
               isUserLogged ? handleCreateNewStory() : openAccountModal()
@@ -75,7 +77,8 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
         ).map((navItem) => (
           <CommandItem
             key={navItem.href}
-            value={navItem.href + Object.values(navItem).join("")}
+            keywords={[Object.values(navItem).join(" ")]}
+            value={navItem.title}
             onSelect={() => {
               runCommand(() => router.push(navItem.href as string))
             }}
@@ -97,7 +100,8 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
               {navItem.items.map((item) => (
                 <CommandItem
                   key={item.href}
-                  value={item.href + Object.values(item).join("")}
+                  // keywords={[Object.values(item).join(" ")]}
+                  value={item.title}
                   onSelect={() => {
                     runCommand(() => router.push(item.href as string))
                   }}
@@ -128,7 +132,8 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
               {navItem.items.map((item) => (
                 <CommandItem
                   key={item.href}
-                  value={item.href + Object.values(item).join("")}
+                  keywords={[Object.values(item).join(" ")]}
+                  value={item.title}
                   onSelect={() => {
                     runCommand(() => router.push(item.href as string))
                   }}
