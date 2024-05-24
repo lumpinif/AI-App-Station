@@ -5,6 +5,7 @@
 import React, { useState } from "react"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { AnimatePresence, motion } from "framer-motion"
+import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 import { useAppSubmitModalStore } from "@/hooks/use-app-submit-modal-store"
@@ -26,7 +27,7 @@ export default function PopoverMenu({
   openedClassName,
 }: PopoverMenuProps) {
   const refMenu = React.useRef<HTMLDivElement>(null)
-
+  const { theme } = useTheme()
   const isAppSubmitModalOpen = useAppSubmitModalStore(
     (state) => state.isAppSubmitModalOpen
   )
@@ -35,11 +36,16 @@ export default function PopoverMenu({
 
   const { isMobile } = useMediaQuery()
 
-  const duration = 0.2
+  const duration = 0.3
   const transition = { duration, ease: [0.32, 0.72, 0, 1] }
+
+  const backgroundColor =
+    theme === "dark" ? "rgb(10 10 10)" : "rgb(255 255 255)"
 
   const menuVariants = {
     open: {
+      filter: "blur(0px)",
+      backgroundColor: backgroundColor,
       opacity: 1,
       width: isMobile ? "100%" : "300px",
       height: 160,
@@ -48,6 +54,8 @@ export default function PopoverMenu({
       transition,
     },
     closed: {
+      filter: "blur(3px)",
+      backgroundColor: "hsl(var(--background))",
       bottom: 0,
       opacity: 1,
       width: "48px",
@@ -58,19 +66,37 @@ export default function PopoverMenu({
   }
 
   const contentVariants = {
-    open: { opacity: 1, scale: 1, transition },
-    closed: { opacity: 0, scale: 1, transition },
+    open: {
+      filter: "blur(0px)",
+      backgroundColor: backgroundColor,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: duration,
+      },
+    },
+    closed: {
+      filter: "blur(3px)",
+      backgroundColor: "hsl(var(--background))",
+      opacity: 0,
+      scale: 1,
+      transition: {
+        duration: duration / 3,
+      },
+    },
   }
 
   const buttonVariants = {
     open: {
       opacity: 0,
+      backgroundColor: "hsl(var(--transparent))",
       transition: {
         duration: duration / 2,
       },
     },
     closed: {
       opacity: 1,
+      backgroundColor: "hsl(var(--transparent))",
       transition: {
         duration: duration,
       },
@@ -87,10 +113,9 @@ export default function PopoverMenu({
         {isPopoverOpen && (
           <motion.div
             className={cn(
-              "bg-muted absolute bottom-0 left-4 flex flex-col items-center overflow-hidden p-1",
+              "absolute bottom-0 -left-2 flex w-fit flex-col items-center overflow-hidden p-1",
               openedClassName
             )}
-            layout
             initial="closed"
             animate="open"
             exit="closed"
@@ -109,7 +134,7 @@ export default function PopoverMenu({
       </AnimatePresence>
       <motion.button
         className={cn(
-          "bg-muted text-muted-foreground absolute bottom-0 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 outline-none",
+          "text-muted-foreground bg-background absolute bottom-0 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 outline-none",
           buttonClassName
         )}
         disabled={isPopoverOpen}

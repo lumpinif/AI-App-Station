@@ -21,9 +21,7 @@ export async function SiteHeader() {
 export const LogoAuthHeader = () => (
   <header className="container flex items-center justify-between space-x-4 py-4 sm:space-x-0 sm:py-6">
     <SiteLogo />
-    <div>
-      <AccountModalTrigger />
-    </div>
+    <AccountModalTrigger />
   </header>
 )
 

@@ -19,7 +19,7 @@ export const AvatarIcon: React.FC<AvatarIconProps> = ({
   return (
     <Avatar
       className={cn(
-        "flex items-center justify-center hover:cursor-pointer",
+        "flex items-center justify-center hover:cursor-pointer active:scale-[.98]",
         className
       )}
       onClick={onClick}
@@ -32,7 +32,7 @@ export const AvatarIcon: React.FC<AvatarIconProps> = ({
           avatarClassName
         )}
       />
-      <AvatarFallback>
+      <AvatarFallback className={cn("bg-transparent")}>
         <Icons.user
           className={cn(
             "h-[calc(75%)] w-[calc(75%)] rounded-full hover:cursor-pointer",

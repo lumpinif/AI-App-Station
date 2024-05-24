@@ -74,10 +74,10 @@ export const FloatingSideNavCollapsibleContent: React.FC<FloatingSideNavCollapsi
               href={item.href}
               key={index}
               className={cn(
-                "hover:text-foreground/80 dark:hover:bg-background/50 dark:hover:shadow-outline flex w-full items-center rounded-md px-2 py-1 hover:underline dark:hover:no-underline",
+                "hover:text-foreground/80 dark:hover:bg-background/50 dark:hover:shadow-outline flex w-full items-center rounded-md px-2 py-1 transition-all duration-150 ease-in-out hover:underline dark:hover:no-underline",
                 item.disabled && "cursor-not-allowed opacity-60",
                 pathname === item.href
-                  ? "text-foreground"
+                  ? "text-foreground dark:bg-background/50 dark:shadow-outline"
                   : "text-muted-foreground"
               )}
             >

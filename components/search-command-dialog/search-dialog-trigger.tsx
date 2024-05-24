@@ -34,7 +34,10 @@ export default function SearchCommandDialogTrigger({
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>
-        <TooltipTrigger onClick={OpenSearchDialog} className={triggerClassName}>
+        <TooltipTrigger
+          onClick={OpenSearchDialog}
+          className={cn("active:scale-[.98]", triggerClassName)}
+        >
           <>
             {children ? (
               children
