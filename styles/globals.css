@@ -199,6 +199,10 @@
 }
 
 @layer utilities {
+  .page-title-font {
+    @apply font-bold tracking-[-.016em] md:tracking-[-.024em];
+  }
+
   .nav-link {
     @apply text-foreground/80 hover:text-blue-500/60;
   }

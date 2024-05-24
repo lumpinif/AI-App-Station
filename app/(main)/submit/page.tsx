@@ -4,7 +4,7 @@ const AppSubmitPage = () => {
   return (
     <div className="mx-auto flex max-w-2xl items-center justify-center p-6">
       <div className="h-full w-full">
-        <h1 className="text-2xl font-bold tracking-[-.016em] md:text-3xl md:tracking-[-.024em]">
+        <h1 className="page-title-font text-2xl md:text-3xl">
           Submit the AI App
         </h1>
         <p className="text-muted-foreground mt-1 text-sm md:text-base">

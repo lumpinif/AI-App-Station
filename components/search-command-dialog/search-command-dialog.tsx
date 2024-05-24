@@ -89,8 +89,6 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
 
               <SearchCommandGroups runCommand={runCommand} />
 
-              <CommandSeparator />
-
               {search && db_apps && (
                 <CommandGroup heading="Apps">
                   {db_apps?.map((app) => (

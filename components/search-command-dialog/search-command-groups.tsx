@@ -10,7 +10,7 @@ import useSearchDialogStore from "@/hooks/use-search-dialog-store"
 import useSubmitApp from "@/hooks/use-submit-app"
 
 import { SpinnerButton } from "../shared/spinner-button"
-import { CommandGroup, CommandItem, CommandSeparator } from "../ui/command"
+import { CommandGroup, CommandItem } from "../ui/command"
 
 type SearchCommandGroupsProps = {
   runCommand: (callback: () => unknown, isToggleSearchDialog?: boolean) => void
@@ -95,8 +95,6 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
           ))}
       </CommandGroup>
 
-      <CommandSeparator />
-
       <CommandGroup heading="Collections">
         {SIDENAVROUTES.filter((route) => route.title === "Collections").map(
           (navItem) => (
@@ -126,8 +124,6 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
           )
         )}
       </CommandGroup>
-
-      <CommandSeparator />
 
       <CommandGroup heading="Categories">
         {SIDENAVROUTES.filter((route) => route.title === "Categories").map(
@@ -159,8 +155,6 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
           )
         )}
       </CommandGroup>
-
-      <CommandSeparator />
 
       <CommandGroup heading="Theme">
         <CommandItem onSelect={() => setTheme("light")}>

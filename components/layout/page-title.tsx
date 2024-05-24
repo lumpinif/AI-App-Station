@@ -36,9 +36,7 @@ export const PageTitle = ({
         {href ? (
           <Link href={href}>
             <div className="flex items-baseline gap-2">
-              <span className="font-bold tracking-[-.016em] md:tracking-[-.024em]">
-                {title}
-              </span>
+              <span className="page-title-font ">{title}</span>
               {subtitle && (
                 <span className="text-muted-foreground text-base font-semibold tracking-[-.016em] md:tracking-[-.024em]">
                   {subtitle}
@@ -53,9 +51,7 @@ export const PageTitle = ({
                 {subtitle}
               </span>
             )}
-            <span className="font-bold tracking-[-.016em] md:tracking-[-.024em]">
-              {title}
-            </span>
+            <span className="page-title-font">{title}</span>
           </div>
         )}
       </div>
