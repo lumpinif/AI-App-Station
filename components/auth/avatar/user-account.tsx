@@ -19,7 +19,7 @@ const UserAccount = () => {
       <Separator />
       <footer className="flex justify-between">
         <EditProfileButton />
-        <SignOutButton />
+        <SignOutButton variant={"destructive"} />
       </footer>
       <div className="flex justify-end">
         <ThemeToggle />

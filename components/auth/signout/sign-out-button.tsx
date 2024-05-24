@@ -6,10 +6,16 @@ import { signOut } from "@/server/auth"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
+import { cn } from "@/lib/utils"
 import useAccountModal from "@/hooks/use-account-modal-store"
+import { ButtonProps } from "@/components/ui/button"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
-const SignOutButton = () => {
+type SignOutButtonProps = ButtonProps & {
+  className?: string
+}
+
+const SignOutButton = ({ className, ...props }: SignOutButtonProps) => {
   const closeAccountModal = useAccountModal((state) => state.closeModal)
   const [isPending, startTransition] = useTransition()
   const queryClient = useQueryClient()
@@ -43,8 +49,8 @@ const SignOutButton = () => {
       <SpinnerButton
         type="submit"
         isLoading={isPending}
-        className="w-full"
-        buttonVariant={"destructive"}
+        className={cn("w-full active:scale-[0.98]", className)}
+        {...props}
       >
         Sign Out
       </SpinnerButton>
