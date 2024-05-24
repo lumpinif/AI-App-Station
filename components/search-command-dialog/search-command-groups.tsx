@@ -74,21 +74,25 @@ export const SearchCommandGroups: React.FC<SearchCommandGroupsProps> = ({
             route.id !== "search" &&
             route.id !== "create story" &&
             route.id !== "submit"
-        ).map((navItem) => (
-          <CommandItem
-            key={navItem.href}
-            keywords={[Object.values(navItem).join(" ")]}
-            value={navItem.title}
-            onSelect={() => {
-              runCommand(() => router.push(navItem.href as string))
-            }}
-          >
-            {navItem.icon && (
-              <navItem.icon className="mr-2 size-4 stroke-[1.5px]" />
-            )}
-            {navItem.title}
-          </CommandItem>
-        ))}
+        )
+          .sort((a, b) =>
+            String(a.shortcutNumber!).localeCompare(String(b.shortcutNumber!))
+          )
+          .map((navItem) => (
+            <CommandItem
+              key={navItem.href}
+              keywords={[Object.values(navItem).join(" ")]}
+              value={navItem.title}
+              onSelect={() => {
+                runCommand(() => router.push(navItem.href as string))
+              }}
+            >
+              {navItem.icon && (
+                <navItem.icon className="mr-2 size-4 stroke-[1.5px]" />
+              )}
+              {navItem.title}
+            </CommandItem>
+          ))}
       </CommandGroup>
 
       <CommandSeparator />
