@@ -6,8 +6,6 @@ import { User } from "@supabase/supabase-js"
 import { AppWithCategoriesAndDevelopers, PostDetails } from "@/types/db_tables"
 import useSearchDialogStore from "@/hooks/use-search-dialog-store"
 
-import { SignInTrigger } from "../auth/signin/sign-in-trigger"
-import SignOutButton from "../auth/signout/sign-out-button"
 import {
   CommandDialog,
   CommandEmpty,
@@ -16,6 +14,7 @@ import {
 } from "../ui/command"
 import { ScrollArea } from "../ui/scroll-area"
 import { AppsCommandGroup } from "./apps-command-group"
+import { FooterCommandDialog } from "./footer-command-dialog"
 import { SearchCommandGroups } from "./search-command-groups"
 import { StoriesCommandGroup } from "./stories-command-group"
 
@@ -68,56 +67,42 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
   )
 
   return (
-    <>
-      <CommandDialog
-        open={isOpen}
-        onOpenChange={toggleSearchDialog}
-        commandClassName="bg-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&_[cmdk-group-heading]]:text-primary dark:[&_[cmdk-group-heading]]:text-muted-foreground "
-        className="data-[state=closed]:max-md:slide-out-to-bottom-5 data-[state=open]:max-md:!slide-in-from-bottom-5 h-[calc(100vh-3rem)] max-w-full rounded-2xl p-4 sm:max-w-lg sm:rounded-3xl md:top-1/3 md:h-[720px] md:max-w-xl lg:max-w-2xl xl:max-w-3xl"
-      >
-        <div className="focus-within:[&_[cmdk-input-wrapper]]:bg-muted mb-2 border-b p-3 transition-all duration-150 ease-out [&_[cmdk-input-wrapper]]:rounded-full [&_[cmdk-input-wrapper]]:border-none">
-          <CommandInput
-            value={search}
-            placeholder="Type a command or search..."
-            onValueChange={setSearch}
-          />
-        </div>
+    <CommandDialog
+      open={isOpen}
+      onOpenChange={toggleSearchDialog}
+      commandClassName="bg-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&_[cmdk-group-heading]]:text-primary dark:[&_[cmdk-group-heading]]:text-muted-foreground "
+      className="data-[state=closed]:max-md:slide-out-to-bottom-5 data-[state=open]:max-md:!slide-in-from-bottom-5 h-[calc(100vh-3rem)] max-w-full rounded-2xl p-4 sm:max-w-lg sm:rounded-3xl md:top-1/3 md:h-[720px] md:max-w-xl lg:max-w-2xl xl:max-w-3xl"
+    >
+      <div className="focus-within:[&_[cmdk-input-wrapper]]:bg-muted mb-2 border-b p-3 transition-all duration-150 ease-out [&_[cmdk-input-wrapper]]:rounded-full [&_[cmdk-input-wrapper]]:border-none">
+        <CommandInput
+          value={search}
+          placeholder="Type a command or search..."
+          onValueChange={setSearch}
+        />
+      </div>
 
-        <section className="flex size-full overflow-hidden">
-          <ScrollArea className="w-full">
-            <CommandList className="relative size-full !max-h-none pr-2 md:px-4">
-              <CommandEmpty>No results found.</CommandEmpty>
+      <section className="flex size-full overflow-hidden">
+        <ScrollArea className="w-full">
+          <CommandList className="relative size-full !max-h-none pr-2 md:px-4">
+            <CommandEmpty>No results found.</CommandEmpty>
 
-              <SearchCommandGroups runCommand={runCommand} />
+            <SearchCommandGroups runCommand={runCommand} />
 
-              {search && db_apps && (
-                <AppsCommandGroup db_apps={db_apps} runCommand={runCommand} />
-              )}
-
-              {search && db_storys && (
-                <StoriesCommandGroup
-                  db_storys={db_storys}
-                  runCommand={runCommand}
-                />
-              )}
-            </CommandList>
-          </ScrollArea>
-        </section>
-
-        <footer className="text-muted-foreground border-t px-2 py-1.5 text-sm md:px-4">
-          <div className="flex items-center justify-between">
-            <span className="relative">
-              All systems normal
-              <span className="absolute -right-1.5 top-0 size-1 rounded-full bg-green-600 dark:bg-green-700" />
-            </span>
-            {user?.id ? (
-              <SignOutButton variant={"ghost"} size={"label"} />
-            ) : (
-              <SignInTrigger variant={"ghost"} size={"label"} />
+            {search && db_apps && (
+              <AppsCommandGroup db_apps={db_apps} runCommand={runCommand} />
             )}
-          </div>
-        </footer>
-      </CommandDialog>
-    </>
+
+            {search && db_storys && (
+              <StoriesCommandGroup
+                db_storys={db_storys}
+                runCommand={runCommand}
+              />
+            )}
+          </CommandList>
+        </ScrollArea>
+      </section>
+
+      <FooterCommandDialog user={user} />
+    </CommandDialog>
   )
 }
