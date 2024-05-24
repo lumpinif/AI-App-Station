@@ -1,5 +1,6 @@
 "use server"
 
+import { unstable_noStore as noStore } from "next/cache"
 import { getUserData } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
@@ -8,6 +9,7 @@ import { getErrorMessage } from "@/lib/handle-error"
 
 // fetch Posts
 export async function getAllPosts(only_is_hero_featured: boolean = false) {
+  // noStore()
   const supabase = await createSupabaseServerClient()
 
   const query = supabase
