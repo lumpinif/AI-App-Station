@@ -14,10 +14,21 @@ import {
   UpdatedImage,
 } from "novel/extensions"
 import { UploadImagesPlugin } from "novel/plugins"
+import AutoJoiner from "tiptap-extension-auto-joiner"
+import GlobalDragHandle from "tiptap-extension-global-drag-handle"
 
 import { TweetExtension } from "./tweet-extension"
 
 const aiHighlight = AIHighlight
+
+const globalDragHandle = GlobalDragHandle.configure({
+  dragHandleWidth: 25, // default
+  scrollTreshold: 100, // default
+})
+
+const autoJoiner = AutoJoiner.configure({
+  elementsToJoin: ["bulletList", "orderedList"], // default
+})
 
 const twitter = TweetExtension.configure({
   HTMLAttributes: {
@@ -25,7 +36,7 @@ const twitter = TweetExtension.configure({
   },
 })
 
-const CustomDocument = Document.extend({
+const customDocument = Document.extend({
   content: "heading block*",
 })
 
@@ -140,7 +151,9 @@ const starterKit = StarterKit.configure({
 })
 
 export const defaultExtensions = [
-  CustomDocument,
+  globalDragHandle,
+  autoJoiner,
+  customDocument,
   starterKit,
   placeholder,
   tiptapLink,
