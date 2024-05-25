@@ -4,7 +4,7 @@
 
 import React, { useState } from "react"
 import { PlusIcon } from "@radix-ui/react-icons"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, delay, motion } from "framer-motion"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
@@ -76,7 +76,7 @@ export default function PopoverMenu({
       },
     },
     closed: {
-      filter: "blur(3px)",
+      filter: "blur(4px)",
       backgroundColor: "hsl(var(--background))",
       opacity: 0,
       scale: 1,
@@ -98,7 +98,7 @@ export default function PopoverMenu({
       opacity: 1,
       backgroundColor: "hsl(var(--transparent))",
       transition: {
-        duration: duration,
+        duration: 2 * duration,
       },
     },
   }
