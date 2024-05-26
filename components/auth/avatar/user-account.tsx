@@ -2,6 +2,7 @@ import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
+import { UserPagesNavLinks } from "@/app/(main)/user/_components/layout/user-pages-nav-links"
 
 import { UserCard } from "../auth-modal/user-card"
 import SignOutButton from "../signout/sign-out-button"
@@ -16,6 +17,9 @@ const UserAccount = () => {
         profileNameCN="text-lg font-medium sm:text-xl"
         profileEmailCN="text-muted-foreground tracking-wide"
       />
+      <div className="border">
+        <UserPagesNavLinks withSeparator={false} />
+      </div>
       <Separator />
       <footer className="flex justify-between">
         <EditProfileButton />

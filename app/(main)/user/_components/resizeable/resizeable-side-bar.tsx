@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ImperativePanelHandle } from "react-resizable-panels"
 
-import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
@@ -109,7 +108,6 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
           {/* NAV */}
           <ResizeableSideNav
             isCollapsed={isCollapsed}
-            links={userLayoutRoutes}
             handleResizeHandleClick={handleResizeHandleClick}
           />
         </ResizablePanel>
