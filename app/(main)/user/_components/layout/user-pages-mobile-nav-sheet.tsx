@@ -45,7 +45,7 @@ export const UserPagesMobileNavSheet = () => {
                   {item.title === "Search" ? (
                     // if the item title is Search
                     <SearchCommandDialogTrigger
-                      triggerClassName="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
+                      triggerCN="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
                       withTooltip={false}
                     >
                       <item.icon className="h-5 w-5 transition-all" />

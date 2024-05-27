@@ -9,15 +9,17 @@ import {
   Settings,
 } from "lucide-react"
 
+export interface UserLayoutRouteItemProps {
+  title: string
+  label?: string
+  href: string
+  icon: LucideIcon
+  description?: string
+}
+
 export interface UserLayoutRouteProps {
   group: string
-  items: {
-    title: string
-    label?: string
-    href: string
-    icon: LucideIcon
-    description?: string
-  }[]
+  items: UserLayoutRouteItemProps[]
 }
 
 export const userLayoutRoutes: UserLayoutRouteProps[] = [

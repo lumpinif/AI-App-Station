@@ -16,19 +16,31 @@ export default function SearchCommandDialogTrigger({
   children,
   className,
   iconClassName,
-  triggerClassName,
-  withTooltip = true,
+  triggerCN,
   sideOffset,
+  withTooltip = true,
+  isCollapsed = true,
 }: {
   children?: React.ReactNode
   className?: string
-  triggerClassName?: string
+  triggerCN?: string
   iconClassName?: string
   withTooltip?: boolean
   sideOffset?: number
+  isCollapsed?: boolean
 }) {
   const OpenSearchDialog = useSearchDialogStore(
     (state) => state.openSearchDialog
+  )
+
+  const triggerNotCollapsedCN = cn(
+    triggerCN,
+    buttonVariants({
+      variant: "ghost",
+      size: "sm",
+      className:
+        "justify-start text-muted-foreground mx-2 text-nowrap font-normal",
+    })
   )
 
   return (
@@ -36,21 +48,28 @@ export default function SearchCommandDialogTrigger({
       <Tooltip delayDuration={0}>
         <TooltipTrigger
           onClick={OpenSearchDialog}
-          className={cn("active:scale-[.98]", triggerClassName)}
+          className={cn(
+            isCollapsed ? triggerCN : triggerNotCollapsedCN,
+            "transition-all duration-150 ease-out active:scale-[.98]"
+          )}
         >
           <>
             {children ? (
               children
+            ) : !isCollapsed ? (
+              <>
+                <Search className="mr-2 stroke-[1.5px] md:size-6" />
+                <span className="font-normal">Search</span>
+              </>
             ) : (
               <span
                 className={cn(
-                  "hover:bg-foreground/10",
                   buttonVariants({ variant: "ghost", size: "icon" }),
                   className
                 )}
                 onClick={OpenSearchDialog}
               >
-                <Search className={iconClassName} />
+                <Search className={cn("stroke-[1.5px]", iconClassName)} />
               </span>
             )}
           </>

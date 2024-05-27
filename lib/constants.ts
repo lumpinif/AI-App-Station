@@ -20,13 +20,13 @@ export const gridItemVariants = cva(
 )
 
 export const cardVariants = cva(
-  "flex w-full items-center justify-between select-none gap-x-2 overflow-hidden rounded-md",
+  "flex w-full items-center justify-between select-none overflow-hidden hover:bg-accent active:bg-accent bg-card cursor-pointer p-2 transition-all duration-150 ease-out px-4",
   {
     variants: {
       variant: {
         "user-card":
-          "hover:bg-card-hover active:bg-card-hover bg-card cursor-pointer p-2 px-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md active:scale-[0.98] sm:gap-x-4",
-        "side-nav-user-card": "border",
+          "gap-x-4 rounded-lg active:scale-[0.98] shadow-sm hover:shadow-md",
+        "nav-links-card": "mx-0 gap-x-2 justify-start rounded-none py-6",
       },
       size: {},
     },
