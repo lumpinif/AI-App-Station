@@ -4,11 +4,11 @@ import { Separator } from "@/components/ui/separator"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 import { UserPagesNavLinks } from "@/app/(main)/user/_components/layout/user-pages-nav-links"
 
-import { UserCard } from "../auth-modal/user-card"
+import EditProfileButton from "../avatar/edit-profile-button"
+import { UserCard } from "../profile/user-card"
 import SignOutButton from "../signout/sign-out-button"
-import EditProfileButton from "./edit-profile-button"
 
-const UserAccount = () => {
+const AccountModalContent = () => {
   return (
     <div className="flex flex-col justify-start space-y-6 p-8 md:space-y-8 xl:space-y-10">
       <UserCard
@@ -32,4 +32,4 @@ const UserAccount = () => {
   )
 }
 
-export default UserAccount
+export default AccountModalContent

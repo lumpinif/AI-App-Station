@@ -6,8 +6,8 @@ import useAccountModal from "@/hooks/use-account-modal-store"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
-import UserAccount from "../avatar/user-account"
 import LoginCard from "../signin/login-card"
+import AccountModalContent from "./account-modal-content"
 
 const AccountModal = ({ user }: { user: User | null }) => {
   const isOpen = useAccountModal((state) => state.isOpen)
@@ -27,7 +27,7 @@ const AccountModal = ({ user }: { user: User | null }) => {
       title="Account"
     >
       {user?.id ? (
-        <UserAccount />
+        <AccountModalContent />
       ) : (
         <LoginCard className="flex flex-col gap-10">
           <div className="mt-2 flex justify-end border-t sm:hidden">

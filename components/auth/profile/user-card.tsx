@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
-import AccountModalTrigger from "./account-modal-trigger"
+import AccountModalTrigger from "../auth-modal/account-modal-trigger"
 
 type NewUserCardProps = {
   className?: string

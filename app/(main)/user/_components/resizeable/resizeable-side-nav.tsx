@@ -13,7 +13,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
-import { UserCard } from "@/components/auth/auth-modal/user-card"
+import { UserCard } from "@/components/auth/profile/user-card"
 
 import { UserPagesNavLinks } from "../layout/user-pages-nav-links"
 

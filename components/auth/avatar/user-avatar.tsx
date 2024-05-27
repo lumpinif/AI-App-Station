@@ -6,7 +6,7 @@ import { Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useUserData } from "@/hooks/react-hooks/use-user"
 import { useAvatarUploader } from "@/hooks/use-avatar-uploader"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons/icons"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 

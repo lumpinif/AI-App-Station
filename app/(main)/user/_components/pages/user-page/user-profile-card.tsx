@@ -5,7 +5,7 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
-import { UserCard } from "@/components/auth/auth-modal/user-card"
+import { UserCard } from "@/components/auth/profile/user-card"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 import { UserBio } from "./user-bio"
