@@ -1,13 +1,14 @@
 import { useState } from "react"
 
+import { cardVariants } from "@/lib/constants"
+import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
-import { TooltipProvider } from "@/components/ui/tooltip"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 import { UserProfileEditForm } from "@/app/(main)/user/_components/pages/user-page/user-profile-edit/user-profile-edit-form"
 
-import { Button } from "../../ui/button"
+import { EditProfileButton } from "./edit-profile-button"
 
-const EditProfileButton = () => {
+const EditProfileModal = () => {
   const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false)
 
   const { data: profile } = useUserProfile()
@@ -31,21 +32,26 @@ const EditProfileButton = () => {
       >
         <UserProfileEditForm
           profile={profile}
-          className="p-6"
           onFormSubmitted={() => setIsProfileEditModalOpen(false)}
         />
       </ResponsiveContentModal>
 
-      <Button
-        className="rounded-full active:scale-[.98] max-sm:h-7 max-sm:px-2"
-        size={"sm"}
-        variant={"outline"}
+      <EditProfileButton
         onClick={() => setIsProfileEditModalOpen(true)}
+        size={"default"}
+        variant={"default"}
+        className={cn(
+          "text-primary",
+          cardVariants({
+            variant: "nav-links-card",
+            className: "rounded-lg justify-center",
+          })
+        )}
       >
-        Edit profile
-      </Button>
+        <span className="font-normal">Manage Your Account</span>
+      </EditProfileButton>
     </>
   )
 }
 
-export default EditProfileButton
+export default EditProfileModal

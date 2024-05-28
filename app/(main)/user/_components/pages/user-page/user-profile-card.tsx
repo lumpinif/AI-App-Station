@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
-import { Button } from "@/components/ui/button"
+import { EditProfileButton } from "@/components/auth/auth-modal/edit-profile-button"
 import { UserCard } from "@/components/auth/profile/user-card"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
@@ -53,14 +53,10 @@ export const UserProfileCard = ({ className }: { className?: string }) => {
                 accountModalTriggerCN="size-16 md:size-20 lg:size-24"
                 display="user_name"
               />
-              <Button
-                className="rounded-full max-sm:h-7 max-sm:px-2"
-                size={"sm"}
-                variant={"outline"}
+              <EditProfileButton
+                className="rounded-full active:scale-[.98] max-sm:h-7 max-sm:px-2"
                 onClick={() => setIsProfileEditModalOpen(true)}
-              >
-                Edit profile
-              </Button>
+              />
             </div>
           </div>
 

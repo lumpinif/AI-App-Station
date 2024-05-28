@@ -31,11 +31,7 @@ const AccountModal = ({ user }: { user: User | null }) => {
         <AccountModalContent />
       ) : (
         <LoginCard className="flex flex-col gap-10">
-          <div className="mt-2 flex justify-end border-t sm:hidden">
-            <div className="mt-2">
-              <ThemeToggle />
-            </div>
-          </div>
+          <ThemeToggle className="ml-auto" />
         </LoginCard>
       )}
     </ResponsiveContentModal>

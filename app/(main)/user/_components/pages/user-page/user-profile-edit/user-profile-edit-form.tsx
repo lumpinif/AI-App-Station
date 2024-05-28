@@ -17,7 +17,7 @@ export const UserProfileEditForm: React.FC<UserProfileEditFormProps> = ({
   return (
     <section
       className={cn(
-        "relative grid h-fit gap-4 p-4 sm:gap-6 sm:p-6 md:gap-8 md:p-8",
+        "relative grid h-fit gap-4 p-6 sm:gap-6 md:gap-8 md:p-8",
         className
       )}
     >

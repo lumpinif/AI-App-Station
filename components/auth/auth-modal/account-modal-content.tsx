@@ -1,21 +1,15 @@
-import React from "react"
-
-import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
 import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
-import useAccountModal from "@/hooks/use-account-modal-store"
 import { Separator } from "@/components/ui/separator"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
-import { UserPagesNavLinksCard } from "@/app/(main)/user/_components/layout/user-pages-nav-links-card"
 
-import EditProfileButton from "../avatar/edit-profile-button"
 import { UserCard } from "../profile/user-card"
 import SignOutButton from "../signout/sign-out-button"
+import { AccountModalNavLinks } from "./account-modal-nav-links"
+import EditProfileModal from "./edit-profile-modal"
 
 const AccountModalContent = () => {
-  const closeAccountModal = useAccountModal((state) => state.closeModal)
-
   return (
     <div className="flex flex-col justify-start space-y-8 p-6 transition-all duration-150 ease-out">
       <UserCard
@@ -30,45 +24,29 @@ const AccountModalContent = () => {
         isCollapsed={false}
         withTooltip={false}
         triggerCN={cn(
-          "!mx-0 shadow-sm hover:shadow-md",
-          cardVariants({ variant: "nav-links-card" })
+          cardVariants({
+            variant: "nav-links-card",
+            className: "!mx-0 !px-4 shadow-sm hover:shadow-md",
+          })
         )}
       />
 
-      <div className="bg-card rounded-lg shadow-sm hover:shadow-md">
-        {userLayoutRoutes
-          .filter((group) => group.group !== "Search")
-          .map((group, groupIndex) => (
-            <React.Fragment key={groupIndex}>
-              {group.items.map((link, itemIndex) => (
-                <React.Fragment key={itemIndex}>
-                  <UserPagesNavLinksCard
-                    link={link}
-                    itemIndex={itemIndex}
-                    className={cn(
-                      "active:!rounded-lg",
-                      cardVariants({ variant: "nav-links-card" }),
-                      "group first:rounded-t-lg last:rounded-b-lg",
-                      itemIndex !== group.items.length - 1 && "border-b"
-                    )}
-                    onClick={closeAccountModal}
-                  />
-                </React.Fragment>
-              ))}
-            </React.Fragment>
-          ))}
-      </div>
+      <AccountModalNavLinks />
 
-      <Separator />
+      <EditProfileModal />
 
-      <footer className="flex justify-between">
-        <EditProfileButton />
-        <SignOutButton variant={"destructive"} />
-      </footer>
+      <SignOutButton
+        className={cn(
+          cardVariants({
+            variant: "nav-links-card",
+            className: "rounded-lg text-primary font-normal",
+          })
+        )}
+      />
 
-      <div className="flex justify-end">
+      <footer className="flex justify-end">
         <ThemeToggle />
-      </div>
+      </footer>
     </div>
   )
 }
