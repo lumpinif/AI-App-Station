@@ -24,13 +24,13 @@ type CommentActionsProps = Pick<
 }
 
 export const CommentCardActions: React.FC<CommentActionsProps> = ({
-  commentsList,
-  parent_id,
   comment,
+  parent_id,
   isEditing,
   isReplied,
-  setIsEditing,
   isFetching,
+  commentsList,
+  setIsEditing,
   setOptimisitcComment,
 }) => {
   const [isReplying, setReplying] = React.useState<boolean>(false)
@@ -46,12 +46,12 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
           setOptimisticComment={setOptimisitcComment}
         />
         <CommentReplyButton
+          comment={comment}
           className="sm:gap-x-1"
-          replies={childItems}
           isReplied={isReplied}
+          isFetching={isFetching}
           repliesCount={repliesCount}
           toggleReplying={() => setReplying(!isReplying)}
-          isFetching={isFetching}
         />
       </div>
       {isReplying && (
@@ -64,7 +64,6 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
           parent_id={comment.comment_id}
           className="w-full md:max-w-xl"
           toggleReplying={() => setReplying(!isReplying)}
-          // setIsShowReplies={setIsShowReplies}
         />
       )}
       {isEditing && (

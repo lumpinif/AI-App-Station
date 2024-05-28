@@ -18,8 +18,8 @@ type CommentLIkeButtonProps = {
 }
 
 export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
-  className,
   comment,
+  className,
   setOptimisticComment,
 }) => {
   const supabase = createSupabaseBrowserClient()

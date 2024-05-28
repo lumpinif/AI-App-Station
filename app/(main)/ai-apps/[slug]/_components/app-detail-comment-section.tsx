@@ -30,7 +30,12 @@ const AppDetailCommentSection = async ({
 }: CommentListProps) => {
   const {
     data: { user },
+    error: getUserError,
   } = await getUserData()
+
+  if (getUserError) {
+    console.error("Error fetching user data: ", getUserError)
+  }
 
   // TODO: HANDLE NO COMMENTS AND ERROR
 
@@ -56,6 +61,13 @@ const AppDetailCommentSection = async ({
       likes_count: Array.isArray(comment.app_comment_likes)
         ? comment.app_comment_likes.length
         : 0,
+      user_has_commented_comment: Array.isArray(allComments)
+        ? !!allComments.find(
+            (reply) =>
+              reply.parent_id === comment.comment_id &&
+              reply.user_id === user?.id
+          )
+        : false,
     })) ?? []
 
   if (allComments && allComments.length > 0)

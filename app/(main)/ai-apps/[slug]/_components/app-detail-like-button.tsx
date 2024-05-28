@@ -3,20 +3,21 @@
 import { useOptimistic, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
+import { User } from "@supabase/supabase-js"
 import { Heart } from "lucide-react"
 import numeral from "numeral"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { App_likes, AppDetails, Profiles } from "@/types/db_tables"
+import { App_likes, AppDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type AppDetailLikeButtonProps = {
   app_id: AppDetails["app_id"]
   data: App_likes[]
   className?: string
+  user: User | null
 }
 
 type LikeState = {
@@ -25,19 +26,18 @@ type LikeState = {
 }
 
 export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
+  user,
+  app_id,
   className,
   data: app_likes,
-  app_id,
 }) => {
-  const { data: profile } = useUserProfile()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const openAccountModal = useAccountModal((state) => state.openModal)
   const supabase = createSupabaseBrowserClient()
 
-  const isUserLiked = app_likes.some(
-    (like) => like.user_id === profile?.user_id
-  )
+  const isUserLiked = app_likes.some((like) => like.user_id === user?.id)
+
   const appLikesCount = app_likes.length
 
   const [optimisticLikeState, setOptimisticLikeState] = useOptimistic(
@@ -46,11 +46,11 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   )
 
   const handleRemoveLikeDebounced = useDebouncedCallback(
-    async (profile: Profiles) => {
+    async (user: User) => {
       const { error: removeLikeError } = await supabase
         .from("app_likes")
         .delete()
-        .match({ app_id: app_id, user_id: profile.user_id })
+        .match({ app_id: app_id, user_id: user.id })
 
       if (removeLikeError) {
         toast.error("Failed to remove like. Please try again.")
@@ -61,10 +61,10 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   )
 
   const handleLikeDebounced = useDebouncedCallback(
-    async (profile: Profiles) => {
+    async (user: User) => {
       const { error: addLikeError } = await supabase.from("app_likes").insert({
         app_id: app_id,
-        user_id: profile.user_id,
+        user_id: user.id,
       })
       if (addLikeError) {
         toast.error("Failed to like. Please try again.")
@@ -75,20 +75,20 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   )
 
   const handleLikes = async () => {
-    if (!profile?.user_id) {
+    if (!user?.id) {
       toast.error("Please login to like a app.")
       openAccountModal()
       return
     }
 
     if (isUserLiked) {
-      handleRemoveLikeDebounced(profile)
+      handleRemoveLikeDebounced(user)
       setOptimisticLikeState({
         isUserLiked: !isUserLiked,
         appLikesCount: appLikesCount - 1,
       })
     } else {
-      handleLikeDebounced(profile)
+      handleLikeDebounced(user)
       setOptimisticLikeState({
         isUserLiked: !isUserLiked,
         appLikesCount: appLikesCount + 1,

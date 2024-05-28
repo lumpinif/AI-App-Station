@@ -3,19 +3,20 @@
 import { useOptimistic, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
+import { User } from "@supabase/supabase-js"
 import { Bookmark } from "lucide-react"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { App_bookmarks, AppDetails, Profiles } from "@/types/db_tables"
+import { App_bookmarks, AppDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type AppDetailBookmarkProps = {
   app_id: AppDetails["app_id"]
   data: App_bookmarks[]
   className?: string
+  user: User | null
 }
 
 type BookmarkState = {
@@ -24,18 +25,18 @@ type BookmarkState = {
 }
 
 export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
+  user,
+  app_id,
   className,
   data: app_bookmarks,
-  app_id,
 }) => {
-  const { data: profile } = useUserProfile()
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const openAccountModal = useAccountModal((state) => state.openModal)
   const supabase = createSupabaseBrowserClient()
 
   const isUserBookmarked = app_bookmarks.some(
-    (bookmark) => bookmark.user_id === profile?.user_id
+    (bookmark) => bookmark.user_id === user?.id
   )
   const bookmarksCount = app_bookmarks.length
 
@@ -45,11 +46,11 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   )
 
   const handleRemoveBookmarkDebounced = useDebouncedCallback(
-    async (profile: Profiles) => {
+    async (user: User) => {
       const { error: removeBookmarkError } = await supabase
         .from("app_bookmarks")
         .delete()
-        .match({ user_id: profile.user_id })
+        .match({ user_id: user.id })
 
       if (removeBookmarkError) {
         toast.error("Failed to remove bookmark. Please try again.")
@@ -60,12 +61,12 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   )
 
   const handleBookmarkDebounced = useDebouncedCallback(
-    async (profile: Profiles) => {
+    async (user: User) => {
       const { error: addBookmarkError } = await supabase
         .from("app_bookmarks")
         .insert({
           app_id: app_id,
-          user_id: profile.user_id,
+          user_id: user.id,
         })
       if (addBookmarkError) {
         toast.error("Failed to add bookmark. Please try again.")
@@ -76,20 +77,20 @@ export const AppDetailBookmark: React.FC<AppDetailBookmarkProps> = ({
   )
 
   const handleBookmarks = async () => {
-    if (!profile?.user_id) {
+    if (!user?.id) {
       toast.error("Please login to bookmark a app.")
       openAccountModal()
       return
     }
 
     if (isUserBookmarked) {
-      handleRemoveBookmarkDebounced(profile)
+      handleRemoveBookmarkDebounced(user)
       setOptimisticBookmarkState({
         isUserBookmarked: !isUserBookmarked,
         bookmarksCount: bookmarksCount - 1,
       })
     } else {
-      handleBookmarkDebounced(profile)
+      handleBookmarkDebounced(user)
       setOptimisticBookmarkState({
         isUserBookmarked: !isUserBookmarked,
         bookmarksCount: bookmarksCount + 1,

@@ -96,7 +96,7 @@ export type CommentWithProfile = App_Comments & {
   profiles: Profiles
   app_comment_likes: App_Comment_likes[]
   user_has_liked_comment?: boolean
-  user_has_commented?: boolean
+  user_has_commented_comment?: boolean
 }
 
 // Comment actions properties

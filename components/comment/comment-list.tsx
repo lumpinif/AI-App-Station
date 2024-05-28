@@ -73,14 +73,14 @@ export function CommentList({
                   <div className="w-full flex-1">
                     <CommentCard comment={comment!}>
                       <CommentCardActions
-                        commentsList={optimisticComments}
-                        parent_id={comment!.comment_id}
                         comment={comment}
                         isEditing={isEditing}
+                        parent_id={comment!.comment_id}
                         isReplied={getIsReplied(
                           optimisticComments,
                           comment.comment_id
                         )}
+                        commentsList={optimisticComments}
                         setIsEditing={() => setIsEditing(!isEditing)}
                         setOptimisitcComment={setOptimisitcComment}
                       />

@@ -10,20 +10,22 @@ type CommentReplyButtonProps = Pick<
   CommentActionsProp,
   "isReplied" | "repliesCount"
 > & {
+  comment: CommentWithProfile
   className?: string
   toggleReplying: () => void
   isFetching?: boolean
-  replies: CommentWithProfile[]
 }
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
+  comment,
+  className,
   isReplied,
   repliesCount,
-  replies,
-  className,
   toggleReplying,
 }) => {
   const { data: profile } = useUserProfile()
   const openAccountModal = useAccountModal((state) => state.openModal)
+  const isUserReplied = comment.user_has_commented_comment
+
   const handleClick = () => {
     if (!profile?.user_id) {
       openAccountModal()
@@ -32,10 +34,6 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
     toggleReplying()
     return
   }
-
-  const isUserReplied = replies?.find(
-    (reply) => reply.user_id === profile?.user_id
-  )
 
   return (
     <>

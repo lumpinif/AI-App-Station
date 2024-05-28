@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import { getUserData } from "@/server/auth"
 import { getAllComments, getAppBySlug } from "@/server/data"
 import {
   getScreenshotsFileNames,
@@ -55,6 +56,15 @@ export default async function AiAppsMainPage({
 }: AppPageProps) {
   const c_order = searchParams?.c_order as "asc" | "desc" | undefined
   const orderBy = searchParams?.orderBy as keyof App_Comments | undefined
+
+  const {
+    data: { user },
+    error: getUserError,
+  } = await getUserData()
+
+  if (getUserError) {
+    console.error(getUserError)
+  }
 
   // TODO: ERROR HANDLING
   const { app, ratingData, error } = await getAppBySlug(params.slug)
@@ -141,10 +151,12 @@ export default async function AiAppsMainPage({
                       comments_count={app.comments_count}
                     />
                     <AppDetailLikeButton
-                      data={app.app_likes}
+                      user={user}
                       app_id={app.app_id}
+                      data={app.app_likes}
                     />
                     <AppDetailBookmark
+                      user={user}
                       app_id={app.app_id}
                       data={app.app_bookmarks}
                     />
