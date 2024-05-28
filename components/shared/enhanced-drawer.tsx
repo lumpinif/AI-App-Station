@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
+import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
 
@@ -13,33 +14,44 @@ type DrawerProps = {
   drawerHeight?: string
   className?: string
   onOpenChange?: (open: boolean) => void
-  snapPoints?: (string | number)[]
   shouldScaleBackground?: boolean
   isContentOverflow?: boolean
+  nested?: boolean
 }
 
 type EnhancedDrawerProps = DrawerProps & {
   children?: React.ReactNode
 }
 
-export const EnhancedDrawer: React.FC<EnhancedDrawerProps> = ({
+export const EnhancedDrawer: React.FC<
+  EnhancedDrawerProps & React.ComponentProps<typeof DrawerPrimitive.Root>
+> = ({
   children,
   isOpen,
-  snapPoints,
   onOpenChange,
   shouldScaleBackground = true,
+  nested,
   ...props
 }) => {
   const [snap, setSnap] = useState<number | string | null>("500px")
 
+  if (nested) {
+    return (
+      <DrawerPrimitive.NestedRoot
+        open={isOpen}
+        onOpenChange={onOpenChange}
+        {...props}
+      >
+        {children}
+      </DrawerPrimitive.NestedRoot>
+    )
+  }
+
   return (
     <Drawer
-      shouldScaleBackground
       open={isOpen}
       onOpenChange={onOpenChange}
-      snapPoints={snapPoints}
-      activeSnapPoint={snap}
-      setActiveSnapPoint={setSnap}
+      shouldScaleBackground={shouldScaleBackground}
       {...props}
     >
       {children}
@@ -51,6 +63,7 @@ export const EnhancedDrawerTrigger: React.FC<EnhancedDrawerProps> = ({
   asChild,
   children,
   className,
+  nested,
   ...props
 }) => {
   return (

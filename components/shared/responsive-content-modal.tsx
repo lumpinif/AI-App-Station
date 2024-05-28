@@ -1,5 +1,7 @@
 "use client"
 
+import { Drawer as DrawerPrimitive } from "vaul"
+
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 
@@ -10,7 +12,7 @@ import {
   EnhancedDrawerContent,
 } from "./enhanced-drawer"
 
-type DrawerProps = {
+type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
   drawerHeight?: string
   drawerContentClassName?: string
 }
@@ -28,19 +30,40 @@ type ModalProps = DrawerProps &
   }
 
 export default function ResponsiveContentModal({
-  children,
-  isOpen,
   title,
+  isOpen,
+  nested,
+  children,
   onChange,
+  drawerHeight,
   drawerContentClassName,
   dialogContentClassName,
-  drawerHeight,
+  ...props
 }: ModalProps) {
   const { isMobile } = useMediaQuery()
 
-  if (isMobile) {
+  if (isMobile && !nested) {
     return (
-      <EnhancedDrawer isOpen={isOpen} onOpenChange={onChange}>
+      <EnhancedDrawer isOpen={isOpen} onOpenChange={onChange} {...props}>
+        <EnhancedDrawerContent
+          className={drawerContentClassName}
+          drawerHeight={drawerHeight}
+        >
+          <EnhancedDrawerClose title={title} />
+          {children}
+        </EnhancedDrawerContent>
+      </EnhancedDrawer>
+    )
+  }
+
+  if (isMobile && nested) {
+    return (
+      <EnhancedDrawer
+        isOpen={isOpen}
+        onOpenChange={onChange}
+        nested={nested}
+        {...props}
+      >
         <EnhancedDrawerContent
           className={drawerContentClassName}
           drawerHeight={drawerHeight}

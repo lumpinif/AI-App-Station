@@ -19,8 +19,8 @@ const AccountModalContent = () => {
   return (
     <div className="flex flex-col justify-start space-y-8 p-6 transition-all duration-150 ease-out">
       <UserCard
-        className={cn(cardVariants({ variant: "user-card" }))}
         accountModalTriggerCN="size-14"
+        className={cn(cardVariants({ variant: "user-card" }))}
         profileNameCN="text-lg font-normal sm:text-xl"
         profileEmailCN="text-muted-foreground font-light tracking-wide"
       />

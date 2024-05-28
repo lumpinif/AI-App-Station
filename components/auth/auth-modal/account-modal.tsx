@@ -19,12 +19,13 @@ const AccountModal = ({ user }: { user: User | null }) => {
 
   return (
     <ResponsiveContentModal
+      title="Account"
       isOpen={isOpen}
       onChange={onChange}
-      drawerContentClassName="outline-none rounded-t-3xl"
       drawerHeight="h-[90%]"
+      shouldScaleBackground={true}
+      drawerContentClassName="outline-none rounded-t-3xl"
       dialogContentClassName="max-w-xl rounded-2xl border-0 outline-none"
-      title="Account"
     >
       {user?.id ? (
         <AccountModalContent />
