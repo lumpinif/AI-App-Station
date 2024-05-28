@@ -40,9 +40,10 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
   const [isOpen, setIsOpen] = useState(false)
 
   const refCollapsible = useRef<HTMLDivElement>(null)
-  useClickOutside<HTMLDivElement>(refCollapsible, () => {
-    if (isOpen) setIsOpen(false)
-  })
+
+  // useClickOutside<HTMLDivElement>(refCollapsible, () => {
+  //   if (isOpen) setIsOpen(false)
+  // })
 
   const devInfo = developers?.map((dev) => ({
     name: dev.developer_name,
@@ -62,7 +63,10 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
       className="w-full space-y-2 xl:w-56"
     >
       <div className="flex items-center justify-between">
-        <h4 className="text-muted-foreground font-medium lg:text-sm">
+        <h4
+          className="text-muted-foreground font-medium hover:cursor-pointer lg:text-sm"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           More Info About this App
         </h4>
         <CollapsibleTrigger asChild className="outline-none">
