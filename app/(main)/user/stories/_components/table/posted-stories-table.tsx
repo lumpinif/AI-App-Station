@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 
 import { DataTableFilterField } from "@/types/data-table"
-import { Posts } from "@/types/db_tables"
+import { PostWithProfile } from "@/types/db_tables"
 import { getStatusIcon } from "@/lib/get-status-icon"
 import { useDataTable } from "@/hooks/data-table/use-data-table"
 import { DataTable } from "@/components/data-table/data-table"
@@ -14,7 +14,7 @@ import { StoriesTableFloatingBar } from "./posted-stories-floating-bar"
 import { StoriesTableToolbarActions } from "./posted-stories-table-toolbar-actions"
 
 interface PostedStoriesTableProps {
-  posts: Posts[]
+  posts: PostWithProfile[]
   pageCount: number
   totalPostsCount: number
 }
@@ -42,7 +42,7 @@ export function PostedStoriesTable({
    * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
    * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
    */
-  const filterFields: DataTableFilterField<Posts>[] = [
+  const filterFields: DataTableFilterField<PostWithProfile>[] = [
     {
       label: "Title",
       value: "post_title",

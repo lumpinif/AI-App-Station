@@ -6,7 +6,7 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { Row } from "@tanstack/react-table"
 import * as z from "zod"
 
-import { Posts } from "@/types/db_tables"
+import { Posts, PostWithProfile } from "@/types/db_tables"
 import { postsSearchParamsSchema } from "@/lib/validations"
 
 export async function getPostedStories(
@@ -53,7 +53,7 @@ export async function getPostedStories(
     // Build the filter query based on the search parameters
     const query = supabase
       .from("posts")
-      .select("*", { count: "exact" })
+      .select("*,profiles(*)", { count: "exact" })
       .match({ post_author_id: user.id })
       .order(column, { ascending: order === "asc" })
 
@@ -91,7 +91,11 @@ export async function getPostedStories(
     query.range(offset, offset + per_page - 1)
 
     // Execute the query and get the results
-    const { data: posts, error, count } = await query
+    const {
+      data: posts,
+      error,
+      count,
+    } = await query.returns<PostWithProfile[]>()
 
     if (error) {
       throw new Error(`Failed to fetch posted stories: ${error.message}`)

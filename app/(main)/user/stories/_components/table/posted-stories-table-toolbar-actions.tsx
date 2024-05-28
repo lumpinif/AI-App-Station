@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { DownloadIcon, ReloadIcon } from "@radix-ui/react-icons"
 import { type Table } from "@tanstack/react-table"
 
-import { Posts } from "@/types/db_tables"
+import { PostWithProfile } from "@/types/db_tables"
 import { exportTableToCSV } from "@/lib/export"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button"
 import { DeleteStoriesDialog } from "./posted-stories-actions-dialog"
 
 interface StoriesTableToolbarActionsProps {
-  table: Table<Posts>
+  table: Table<PostWithProfile>
 }
 
 export function StoriesTableToolbarActions({

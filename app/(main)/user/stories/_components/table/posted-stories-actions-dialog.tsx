@@ -2,7 +2,6 @@
 
 import { useTransition } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import {
   deleteStory,
   publishStory,
@@ -13,7 +12,7 @@ import { Row } from "@tanstack/react-table"
 import { SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
-import { Posts } from "@/types/db_tables"
+import { PostWithProfile } from "@/types/db_tables"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,7 +30,7 @@ export async function deleteStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<Posts>[]
+  rows: Row<PostWithProfile>[]
   onSuccess?: () => void
 }) {
   try {
@@ -60,7 +59,7 @@ export async function unpublishStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<Posts>[]
+  rows: Row<PostWithProfile>[]
   onSuccess?: () => void
 }) {
   try {
@@ -90,7 +89,7 @@ export async function publishStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<Posts>[]
+  rows: Row<PostWithProfile>[]
   onSuccess?: () => void
 }) {
   try {
@@ -118,7 +117,7 @@ export async function publishStories({
 
 interface StoryActionDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
-  posts: Row<Posts>[]
+  posts: Row<PostWithProfile>[]
   onSuccess?: () => void
   showTrigger?: boolean
   triggerClassName?: string

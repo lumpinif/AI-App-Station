@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { DotsHorizontalIcon, Pencil2Icon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
@@ -8,9 +9,14 @@ import { Delete, Heart } from "lucide-react"
 import moment from "moment"
 import numeral from "numeral"
 
-import { Posts, Publish_Status } from "@/types/db_tables"
+import {
+  Posts,
+  PostWithProfile,
+  Profiles,
+  Publish_Status,
+} from "@/types/db_tables"
 import { getStatusColor, getStatusIcon } from "@/lib/get-status-icon"
-import { cn } from "@/lib/utils"
+import { cn, getPostAuthorSlug } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -33,7 +39,7 @@ import {
   UnpublishStoriesDialog,
 } from "./posted-stories-actions-dialog"
 
-export function getPostedStoriesTableColumns(): ColumnDef<Posts>[] {
+export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
   return [
     {
       id: "select",
@@ -88,10 +94,21 @@ export function getPostedStoriesTableColumns(): ColumnDef<Posts>[] {
       cell: ({ row }) => {
         const post_title = row.original.post_title as Posts["post_title"]
 
+        const post_id = row.original.post_id as Posts["post_id"]
+        const post_author_slug = getPostAuthorSlug(
+          row.original.profiles as Profiles
+        )
+
         return (
           <div className="flex max-w-96">
-            {/* {post_title && <Badge variant="outline">{post_title}</Badge>} */}
-            <span className="w-full font-normal">{post_title}</span>
+            <Link
+              href={`/story/${post_author_slug}/${post_id}`}
+              className={cn(
+                "w-full font-normal underline-offset-2 hover:text-blue-500 hover:underline"
+              )}
+            >
+              {post_title}
+            </Link>
           </div>
         )
       },
