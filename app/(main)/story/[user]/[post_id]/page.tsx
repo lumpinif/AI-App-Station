@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { getPostById } from "@/server/data/stories"
+import { getPostById } from "@/server/queries/supabase/stories"
 import supabase from "@/utils/supabase/supabase"
 import { JSONContent } from "novel"
 

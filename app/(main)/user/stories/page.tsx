@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { getPostedStories } from "@/server/data/stories/table/post-table-services"
+import { getPostedStories } from "@/server/queries/supabase/stories/table/post-table-services"
 
 import { SearchParams } from "@/types/data-table"
 import { postsSearchParamsSchema } from "@/lib/validations"

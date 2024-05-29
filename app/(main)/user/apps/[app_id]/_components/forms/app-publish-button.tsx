@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { publishApp } from "@/server/data/apps/table/apps-table-services"
+import { publishApp } from "@/server/queries/supabase/table/apps-table-services"
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
 import { toast } from "sonner"
 

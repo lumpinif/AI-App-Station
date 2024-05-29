@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { getSubmittedApps } from "@/server/data/apps/table/apps-table-services"
+import { getSubmittedApps } from "@/server/queries/supabase/table/apps-table-services"
 
 import { SearchParams } from "@/types/data-table"
 import { appsSearchParamsSchema } from "@/lib/validations"

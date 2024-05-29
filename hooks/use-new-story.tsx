@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { createNewPost } from "@/server/data/stories"
+import { createNewPost } from "@/server/queries/supabase/stories"
 import { Rocket } from "lucide-react"
 import { toast } from "sonner"
 

@@ -6,7 +6,7 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Apps } from "@/types/db_tables"
 
-import { getSlugFromAppId } from "../supabase-actions"
+import { getSlugFromAppId } from "../../../data/supabase-actions"
 
 export async function uploadAndGetIntroductionImage(
   app_id: Apps["app_id"],

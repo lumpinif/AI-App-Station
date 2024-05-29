@@ -6,7 +6,7 @@ import {
   deleteApp,
   publishApp,
   unpublishApp,
-} from "@/server/data/apps/table/apps-table-services"
+} from "@/server/queries/supabase/table/apps-table-services"
 import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 import { RotateCw, SquarePen } from "lucide-react"

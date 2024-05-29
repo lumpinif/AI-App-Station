@@ -6,7 +6,7 @@ import {
   deleteStory,
   publishStory,
   unpublishStory,
-} from "@/server/data/stories/table/post-table-services"
+} from "@/server/queries/supabase/stories/table/post-table-services"
 import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 import { RotateCw, SquarePen } from "lucide-react"
