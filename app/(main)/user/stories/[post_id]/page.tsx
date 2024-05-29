@@ -3,7 +3,7 @@ import { getUserData } from "@/server/auth"
 import { getPostById } from "@/server/data/stories"
 import { JSONContent } from "novel"
 
-import StoryContentWrapper from "@/app/(main)/story/_components/story-content-wrapper"
+import StoryPageWrapper from "@/app/(main)/story/_components/story-page-wrapper"
 
 import { StoryPostEditor } from "./_components/story-post-editor"
 
@@ -37,11 +37,11 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
   }
 
   return (
-    <StoryContentWrapper>
+    <StoryPageWrapper>
       <StoryPostEditor
         {...post}
         post_content={post.post_content as JSONContent}
       />
-    </StoryContentWrapper>
+    </StoryPageWrapper>
   )
 }

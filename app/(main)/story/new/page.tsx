@@ -1,11 +1,11 @@
-import StoryContentWrapper from "../_components/story-content-wrapper"
+import StoryPageWrapper from "../_components/story-page-wrapper"
 
 export default function StoryPage() {
   return (
     <main>
-      <StoryContentWrapper>
+      <StoryPageWrapper>
         <div className="">Show the post submit button</div>
-      </StoryContentWrapper>
+      </StoryPageWrapper>
     </main>
   )
 }

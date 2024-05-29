@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import { getUserData } from "@/server/auth"
 import { getPostById } from "@/server/data/stories"
 import supabase from "@/utils/supabase/supabase"
 import { JSONContent } from "novel"
@@ -6,8 +7,9 @@ import { JSONContent } from "novel"
 import { PostDetails } from "@/types/db_tables"
 import { getPostAuthorSlug } from "@/lib/utils"
 
+import { StoryCommentSection } from "../../_components/story-comment-section"
+import StoryPageWrapper from "../../_components/story-page-wrapper"
 import { StoryEditorContent } from "../../_components/story/story-editor-content"
-import { StoryPageProvider } from "../../_components/story/story-page-provider"
 
 // Generate segments for both [user] and [post_id]
 export async function generateStaticParams() {
@@ -45,15 +47,24 @@ export default async function StoryPage({
     console.error(getPostError)
   }
 
-  //TODO: CONSIDER GET USER SESSION HERE
+  const {
+    data: { user },
+    error: getUserError,
+  } = await getUserData()
+
+  if (getUserError) {
+    console.error("Error fetching user data: ", getUserError)
+  }
 
   return (
-    <StoryPageProvider>
+    <StoryPageWrapper>
       <StoryEditorContent
         post_content={post.post_content as JSONContent}
         authorProfile={post.profiles}
         created_at={post.created_at}
       />
-    </StoryPageProvider>
+
+      <StoryCommentSection />
+    </StoryPageWrapper>
   )
 }
