@@ -67,7 +67,7 @@ export async function removeEmptyPostContent(
 
 export async function insertPostContent(
   post_id: Posts["post_id"],
-  post_content: JSONContent,
+  post_content: Record<string, any>,
   profiles?: Profiles
 ) {
   const supabase = await createSupabaseServerClient()

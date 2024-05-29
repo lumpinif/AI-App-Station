@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AddComment } from "@/server/data/supabase-actions"
+import { AddAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
@@ -80,9 +80,9 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
     const rating = withRating ? values.rating : null
 
-    const { comment, error } = await AddComment(
-      values.reply,
+    const { comment, error } = await AddAppComment(
       app_id,
+      values.reply,
       replyToCommentId,
       rating
     )

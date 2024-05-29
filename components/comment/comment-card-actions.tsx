@@ -4,36 +4,36 @@ import React from "react"
 
 import {
   App_Comments,
-  CommentActionsProp,
-  CommentWithProfile,
+  AppCommentActionsProp,
+  AppCommentWithProfile,
 } from "@/types/db_tables"
 
+import { CommentDropDownMenu } from "./comment-dropdown-menu"
 import CommentEditForm from "./comment-edit-form"
 import { CommentLIkeButton } from "./comment-like-button"
 import { CommentReplyButton } from "./comment-reply-button"
 import CommentReplyForm from "./comment-reply-form"
 
 type CommentActionsProps = Pick<
-  CommentActionsProp,
-  "isEditing" | "isReplied" | "comment" | "setIsEditing"
+  AppCommentActionsProp,
+  "isReplied" | "comment"
 > & {
-  commentsList: CommentWithProfile[]
+  commentsList: AppCommentWithProfile[]
   parent_id: App_Comments["parent_id"]
   isFetching?: boolean
-  setOptimisitcComment: (newComment: CommentWithProfile) => void
+  setOptimisitcComment: (newComment: AppCommentWithProfile) => void
 }
 
 export const CommentCardActions: React.FC<CommentActionsProps> = ({
   comment,
   parent_id,
-  isEditing,
   isReplied,
   isFetching,
   commentsList,
-  setIsEditing,
   setOptimisitcComment,
 }) => {
   const [isReplying, setReplying] = React.useState<boolean>(false)
+  const [isEditing, setIsEditing] = React.useState<boolean>(false)
 
   const childItems = commentsList.filter((i) => i.parent_id === parent_id)
   const repliesCount = childItems.length
@@ -52,6 +52,11 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
           isFetching={isFetching}
           repliesCount={repliesCount}
           toggleReplying={() => setReplying(!isReplying)}
+        />
+        <CommentDropDownMenu
+          comment={comment}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
         />
       </div>
       {isReplying && (

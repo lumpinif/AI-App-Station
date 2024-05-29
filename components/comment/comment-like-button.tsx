@@ -6,15 +6,15 @@ import numeral from "numeral"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { CommentWithProfile, Profiles } from "@/types/db_tables"
+import { AppCommentWithProfile, Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type CommentLIkeButtonProps = {
-  comment: CommentWithProfile
+  comment: AppCommentWithProfile
   className?: string
-  setOptimisticComment: (newComment: CommentWithProfile) => void
+  setOptimisticComment: (newComment: AppCommentWithProfile) => void
 }
 
 export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({

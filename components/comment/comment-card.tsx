@@ -3,14 +3,14 @@ import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
 import moment from "moment"
 
-import { CommentWithProfile } from "@/types/db_tables"
+import { AppCommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "../icons/icons"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 
 type CommentProps = {
-  comment: CommentWithProfile | null
+  comment: AppCommentWithProfile | null
   className?: string
   children?: React.ReactNode
 }

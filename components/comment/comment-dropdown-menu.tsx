@@ -1,15 +1,8 @@
 "use client"
 
-import {
-  Delete,
-  Ellipsis,
-  EllipsisVertical,
-  Flag,
-  Pencil,
-  Share2,
-} from "lucide-react"
+import { Delete, Ellipsis, Flag, Pencil, Share2 } from "lucide-react"
 
-import { CommentWithProfile } from "@/types/db_tables"
+import { AppCommentActionsProp, AppCommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 
@@ -33,11 +26,8 @@ import {
 import CommentDeleteButton from "./comment-delete-button"
 
 type CommentDropDownMenuProps = {
-  comment: CommentWithProfile
-} & {
-  isEditing: boolean
-  setIsEditing: (isEditing: boolean) => void
-}
+  comment: AppCommentWithProfile
+} & Pick<AppCommentActionsProp, "isEditing" | "setIsEditing">
 
 export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
   comment,

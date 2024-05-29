@@ -1,8 +1,8 @@
-import { CommentActionsProp } from "@/types/db_tables"
+import { AppCommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 type CommentShowRepliesProps = Pick<
-  CommentActionsProp,
+  AppCommentActionsProp,
   "repliesCount" | "isShowReplies" | "setIsShowReplies"
 > & {
   className?: string

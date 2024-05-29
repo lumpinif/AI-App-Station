@@ -46,9 +46,11 @@ export const AppIntroductionEditor: React.FC<AppIntroductionEditorProps> = ({
   const { insertContent, saveStatus, setSaveStatus, isRetrying, handleRetry } =
     useInsertContent<Apps["app_id"]>({
       content_id: app_id,
+      content_slug: app_slug,
       content: value,
       maxRetryAttempts: MAX_RETRY_ATTEMPTS,
-      insertContentService: insertIntroduction,
+      insertContentService: (content_id, content, profiles, content_slug) =>
+        insertIntroduction(app_id, content, app_slug),
     })
 
   const { removeContent } = useRemoveContent<Apps["app_id"], Apps["app_slug"]>({

@@ -1,6 +1,6 @@
 import { getUserData } from "@/server/auth"
 
-import { App_Comments, CommentWithProfile } from "@/types/db_tables"
+import { App_Comments, AppCommentWithProfile } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CommentCard } from "@/components/comment/comment-card"
 import { CommentForm } from "@/components/comment/comment-form"
@@ -16,8 +16,8 @@ import { ProgressiveBlur } from "@/components/shared/progressive-blur"
 import AppDetailCommentList from "./app-detail-commentList"
 
 type CommentListProps = {
-  allComments: CommentWithProfile[] | null
-  app_id: CommentWithProfile["app_id"]
+  allComments: AppCommentWithProfile[] | null
+  app_id: AppCommentWithProfile["app_id"]
   c_order?: "asc" | "desc"
   orderBy?: keyof App_Comments
 }

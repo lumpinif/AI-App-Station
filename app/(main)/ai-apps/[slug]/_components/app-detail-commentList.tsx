@@ -4,12 +4,12 @@ import { useEffect, useOptimistic } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 
-import { CommentWithProfile } from "@/types/db_tables"
+import { AppCommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { CommentList } from "@/components/comment/comment-list"
 
 type CommentListProps = {
-  commentsList: CommentWithProfile[]
+  commentsList: AppCommentWithProfile[]
 } & {
   className?: string
 }
@@ -19,8 +19,8 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
   commentsList,
 }) => {
   const [optimisticComments, setOptimisticComment] = useOptimistic<
-    CommentWithProfile[],
-    CommentWithProfile
+    AppCommentWithProfile[],
+    AppCommentWithProfile
   >(commentsList, (currentOptimisticComments, newComment) => {
     const newOptimisticComment = [...currentOptimisticComments]
 

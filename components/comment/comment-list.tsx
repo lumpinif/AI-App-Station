@@ -3,21 +3,20 @@
 import { useState } from "react"
 
 import {
+  AppCommentWithProfile,
   App_Comments as CommentType,
-  CommentWithProfile,
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { CommentCard } from "./comment-card"
 import { CommentCardActions } from "./comment-card-actions"
-import { CommentDropDownMenu } from "./comment-dropdown-menu"
 import { CommentShowReplies } from "./comment-show-replies"
 
 type CommentListProps = {
-  commentsList: CommentWithProfile[]
+  commentsList: AppCommentWithProfile[]
   idsToRender?: string[]
   indentLevel?: number
-  setOptimisitcComment: (newComment: CommentWithProfile) => void
+  setOptimisitcComment: (newComment: AppCommentWithProfile) => void
 }
 
 export function CommentList({
@@ -26,8 +25,6 @@ export function CommentList({
   indentLevel = 0,
   setOptimisitcComment,
 }: CommentListProps) {
-  const [isEditing, setIsEditing] = useState<boolean>(false)
-
   if (!idsToRender.length) {
     idsToRender = optimisticComments
       .filter((i) => !i.parent_id)
@@ -35,7 +32,7 @@ export function CommentList({
   }
 
   const getIsReplied = (
-    optimisticComments: CommentWithProfile[],
+    optimisticComments: AppCommentWithProfile[],
     parent_id: string
   ) => {
     const childItems = optimisticComments.filter(
@@ -74,23 +71,16 @@ export function CommentList({
                     <CommentCard comment={comment!}>
                       <CommentCardActions
                         comment={comment}
-                        isEditing={isEditing}
                         parent_id={comment!.comment_id}
                         isReplied={getIsReplied(
                           optimisticComments,
                           comment.comment_id
                         )}
                         commentsList={optimisticComments}
-                        setIsEditing={() => setIsEditing(!isEditing)}
                         setOptimisitcComment={setOptimisitcComment}
                       />
                     </CommentCard>
                   </div>
-                  <CommentDropDownMenu
-                    comment={comment}
-                    setIsEditing={setIsEditing}
-                    isEditing={isEditing}
-                  />
                 </div>
               </div>
             </div>

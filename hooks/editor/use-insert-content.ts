@@ -6,15 +6,17 @@ import { toast } from "sonner"
 import { Profiles } from "@/types/db_tables"
 import { insertContentServiceResult } from "@/types/shared"
 
-interface UseInsertContentProps<T> {
+type UseInsertContentProps<T> = {
   content_id: T
   content: JSONContent
   profiles?: Profiles
+  content_slug?: string
   maxRetryAttempts: number
   insertContentService: (
     content_id: T,
     content: JSONContent,
-    profiles?: Profiles
+    profiles?: Profiles,
+    content_slug?: string
   ) => Promise<insertContentServiceResult>
 }
 
@@ -22,6 +24,7 @@ const useInsertContent = <T>({
   content_id,
   content,
   profiles,
+  content_slug,
   maxRetryAttempts,
   insertContentService,
 }: UseInsertContentProps<T>) => {
@@ -44,7 +47,8 @@ const useInsertContent = <T>({
           error = await insertContentService(
             content_id,
             JSON.parse(JSON.stringify(value)),
-            profiles
+            profiles,
+            content_slug
           )
 
           if (!error?.error) {
@@ -68,7 +72,14 @@ const useInsertContent = <T>({
         }
       }
     },
-    [content, maxRetryAttempts, insertContentService, content_id, profiles]
+    [
+      content,
+      maxRetryAttempts,
+      insertContentService,
+      content_id,
+      profiles,
+      content_slug,
+    ]
   )
 
   const handleRetry = useCallback(() => {

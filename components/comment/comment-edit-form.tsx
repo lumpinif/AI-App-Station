@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { UpdateComment } from "@/server/data/supabase-actions"
+import { UpdateAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { useQueryClient } from "@tanstack/react-query"
@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App_Comments, CommentActionsProp } from "@/types/db_tables"
+import { App_Comments, AppCommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -35,7 +35,7 @@ const FormSchema = z.object({
 })
 
 type CommentEditFormProps = Pick<
-  CommentActionsProp,
+  AppCommentActionsProp,
   "comment" | "setIsEditing" | "className"
 > & {
   app_id: App_Comments["app_id"]
@@ -86,10 +86,10 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
       return
     }
 
-    const { updatedComment, error } = await UpdateComment(
+    const { updatedComment, error } = await UpdateAppComment(
+      app_id,
       values.edit,
       comment_id,
-      app_id,
       values.rating
     )
 

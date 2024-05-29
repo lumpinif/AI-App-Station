@@ -1,5 +1,5 @@
 import * as React from "react"
-import { DeleteComment } from "@/server/data/supabase-actions"
+import { DeleteAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { useQueryClient } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
@@ -27,7 +27,7 @@ const CommentDeleteButton: React.FC<CommentDeleteButtonProps> = ({
   const handleDelete = () => {
     startTransition(async () => {
       try {
-        const result = await DeleteComment(comment_id, app_id)
+        const result = await DeleteAppComment(app_id, comment_id)
         if (result !== null) {
           toast.success("Comment deleted")
           queryClient.invalidateQueries({ queryKey: queryKey })

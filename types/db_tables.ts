@@ -90,19 +90,24 @@ export type PostDetails = Posts &
   }
 
 // Comment related types
-
-// Comment with profile and additional properties
 export type CommentWithProfile = App_Comments & {
   profiles: Profiles
-  app_comment_likes: App_Comment_likes[]
   user_has_liked_comment?: boolean
   user_has_commented_comment?: boolean
+}
+
+// Comment with profile and additional properties
+export type AppCommentWithProfile = CommentWithProfile & {
+  app_comment_likes: App_Comment_likes[]
+}
+
+export type PostCommentWithProfile = CommentWithProfile & {
+  post_comment_likes: Post_Comment_likes[]
 }
 
 // Comment actions properties
 export type CommentActionsProp = {
   className?: string
-  comment: CommentWithProfile
   isShowReplies: boolean
   setIsShowReplies: Dispatch<SetStateAction<boolean>>
   isEditing: boolean
@@ -111,6 +116,14 @@ export type CommentActionsProp = {
   isReplied: boolean
   likes_count: App_Comments["likes_count"]
   views_count: App_Comments["views_count"]
+}
+
+export type AppCommentActionsProp = CommentActionsProp & {
+  comment: AppCommentWithProfile
+}
+
+export type PostCommentActionsProp = CommentActionsProp & {
+  comment: PostCommentWithProfile
 }
 
 // Screenshot related types

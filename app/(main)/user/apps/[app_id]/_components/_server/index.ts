@@ -1,7 +1,6 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { getSlugFromAppId } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Apps } from "@/types/db_tables"
@@ -9,10 +8,10 @@ import { Apps } from "@/types/db_tables"
 // Handle Introduction
 export async function insertIntroduction(
   app_id: Apps["app_id"],
-  introduction: Record<string, any>
+  introduction: Record<string, any>,
+  app_slug?: Apps["app_slug"]
 ) {
   const supabase = await createSupabaseServerClient()
-  const slug = await getSlugFromAppId(app_id)
 
   if (!app_id || !introduction) {
     return { error: null }
@@ -29,7 +28,7 @@ export async function insertIntroduction(
       return { error: error }
     }
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/ai-apps/${app_slug}`)
     revalidatePath(`/user/apps/${app_id}`)
 
     return { error }
@@ -45,7 +44,6 @@ export async function removeEmptyIntroduction(
   app_slug: Apps["app_slug"]
 ) {
   const supabase = await createSupabaseServerClient()
-  const slug = await getSlugFromAppId(app_id)
 
   if (!app_id && !app_slug) {
     return { error: null }
@@ -71,7 +69,7 @@ export async function removeEmptyIntroduction(
       return { error: updateError }
     }
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/ai-apps/${app_slug}`)
     revalidatePath(`/user/apps/${app_id}`)
 
     return { error: updateError }

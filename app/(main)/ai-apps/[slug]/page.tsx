@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { getAllComments, getAppBySlug } from "@/server/data"
+import { getAppBySlug } from "@/server/data"
 import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase-actions"
+import { getAppComments } from "@/server/queries/supabase/comments/app_comments"
 import supabase from "@/utils/supabase/supabase"
 
 import { SearchParams } from "@/types/data-table"
@@ -77,8 +78,8 @@ export default async function AiAppsMainPage({
     notFound()
   }
 
-  const { comments: allComments, error: getAllCommentsError } =
-    await getAllComments(app.app_id, c_order, orderBy)
+  const { comments: appComments, error: getAllCommentsError } =
+    await getAppComments(app.app_id, c_order, orderBy)
   // TODO: HANDLE NO COMMENTS AND ERROR
 
   if (getAllCommentsError) {
@@ -182,7 +183,7 @@ export default async function AiAppsMainPage({
             <AppDetailReviews {...ratingData} />
 
             <AppDetailCommentSection
-              allComments={allComments}
+              allComments={appComments}
               app_id={app.app_id}
               c_order={c_order}
               orderBy={orderBy}
