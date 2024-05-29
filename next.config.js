@@ -2,7 +2,7 @@
 const nextConfig = {
   // transpilePackages: ["lucide-react"],
   reactStrictMode: true,
-  // swcMinify: true,
+  swcMinify: true,
   images: {
     remotePatterns: [
       {
