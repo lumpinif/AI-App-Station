@@ -1,8 +1,5 @@
 "use client"
 
-import useMediaQuery from "@/hooks/use-media-query"
-import { UnderlayActionSheet } from "@/components/ui/underlay-action-sheet"
-
 import StoryContentWrapper from "../story-content-wrapper"
 
 type StoryProps = {
@@ -10,15 +7,16 @@ type StoryProps = {
 }
 
 export const StoryPageProvider: React.FC<StoryProps> = async ({ children }) => {
-  const { isMobile } = useMediaQuery()
+  // CHORE: TAKEN IT OFF FOR NOW
+  // const { isMobile } = useMediaQuery()
 
-  if (isMobile) {
-    return (
-      <UnderlayActionSheet>
-        <StoryContentWrapper>{children}</StoryContentWrapper>
-      </UnderlayActionSheet>
-    )
-  }
+  // if (isMobile) {
+  //   return (
+  //     <UnderlayActionSheet>
+  //       <StoryContentWrapper>{children}</StoryContentWrapper>
+  //     </UnderlayActionSheet>
+  //   )
+  // }
 
   return (
     <section className="flex w-full flex-col">

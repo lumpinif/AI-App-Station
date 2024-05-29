@@ -147,7 +147,7 @@ export const UnderlayActionSheet = ({ children }: UnderlayActionSheetProps) => {
               animate={contentAnimationControls}
             >
               <motion.div
-                className="flex h-full flex-col space-y-2 overflow-y-scroll pb-14"
+                className="flex h-full flex-col space-y-2 overflow-y-scroll px-2 pb-14"
                 style={{
                   // remove scrollbar for demo phone screen
                   scrollbarWidth: "none",
