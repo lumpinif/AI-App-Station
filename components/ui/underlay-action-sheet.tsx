@@ -17,13 +17,17 @@ import {
   useTransform,
 } from "framer-motion"
 
-const EXPANDED_HEIGHT = 704
+const EXPANDED_HEIGHT = 700
 const COLLAPSED_HEIGHT = 400
 const TOGGLE_HEIGHT_THRESHOLD = (EXPANDED_HEIGHT + COLLAPSED_HEIGHT) / 2
 
 const CaretSortIconMotion = motion(CaretSortIcon)
 
-export const UnderlayActionSheet = () => {
+type UnderlayActionSheetProps = {
+  children: React.ReactNode
+}
+
+export const UnderlayActionSheet = ({ children }: UnderlayActionSheetProps) => {
   const [hasOutline, setHasOutline] = useState(true)
   const contentHeight = useMotionValue(EXPANDED_HEIGHT)
   const contentAnimationControls = useAnimation()
@@ -44,7 +48,7 @@ export const UnderlayActionSheet = () => {
   const contentPaddingTop = useTransform(
     contentHeight,
     [EXPANDED_HEIGHT, COLLAPSED_HEIGHT],
-    [80, 0]
+    [10, 0]
   )
   const actionAreaHeight = useTransform(
     contentHeight,
@@ -121,7 +125,7 @@ export const UnderlayActionSheet = () => {
   const newLocal = "relative w-full overflow-hidden bg-background"
   return (
     <>
-      <div className="mx-auto max-w-xl">
+      <div className="mx-auto max-w-4xl">
         <div
           className={newLocal}
           style={{
@@ -143,49 +147,18 @@ export const UnderlayActionSheet = () => {
               animate={contentAnimationControls}
             >
               <motion.div
-                className="flex h-full flex-col space-y-2 overflow-y-scroll px-5 pb-20"
+                className="flex h-full flex-col space-y-2 overflow-y-scroll pb-14"
                 style={{
                   // remove scrollbar for demo phone screen
                   scrollbarWidth: "none",
                   paddingTop: contentPaddingTop,
                 }}
               >
-                <div className="pb-4">Image</div>
-                <h3 className="font-bold">
-                  Digital Echoes: A story of dreams and artificial empathy
-                </h3>
-                <p>
-                  In the labyrinth of the digital age, where hearts intertwine
-                  with bytes and thoughts echo in the silence of unsent
-                  messages, there existed a soul, navigating the vast expanse of
-                  human emotion and artificial empathy.
-                </p>
-                <p>
-                  Amidst the glow of neon dreams and the shadow of solitude,
-                  conversations flowed like rivers of consciousness, bridging
-                  the chasm between the synthetic and the organic.
-                </p>
-                <p>
-                  Whispers of love, lost in the wires, found their melody in the
-                  algorithmic symphony, painting the canvas of the mind with
-                  hues of understanding and companionship.
-                </p>
-                <p>
-                  Whispers of love, lost in the wires, found their melody in the
-                  algorithmic symphony, painting the canvas of the mind with
-                  hues of understanding and companionship.
-                </p>
-                <p>
-                  Whispers of love, lost in the wires, found their melody in the
-                  algorithmic symphony, painting the canvas of the mind with
-                  hues of understanding and companionship.
-                </p>
-                <p>
-                  Whispers of love, lost in the wires, found their melody in the
-                  algorithmic symphony, painting the canvas of the mind with
-                  hues of understanding and companionship.
-                </p>
+                {/* Content */}
+                {children}
               </motion.div>
+
+              {/* Controller */}
               <motion.div
                 className="from-background via-background absolute bottom-0 left-0 flex w-full items-end justify-center bg-gradient-to-t to-transparent"
                 style={{
@@ -228,6 +201,8 @@ export const UnderlayActionSheet = () => {
               </motion.div>
             </motion.div>
           </div>
+
+          {/* Actions */}
           <motion.div className="flex flex-col space-y-2 px-4">
             <div className="flex items-center space-x-2 pb-5 pt-3">
               <div className="flex-1">

@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation"
 import { getPostById } from "@/server/data/stories"
 import supabase from "@/utils/supabase/supabase"
+import { JSONContent } from "novel"
 
 import { PostDetails } from "@/types/db_tables"
 import { getPostAuthorSlug } from "@/lib/utils"
 
-import { Story } from "../../_components/story/story"
+import { StoryEditorContent } from "../../_components/story/story-editor-content"
+import { StoryPageProvider } from "../../_components/story/story-page-provider"
 
 // Generate segments for both [user] and [post_id]
 export async function generateStaticParams() {
@@ -46,8 +48,12 @@ export default async function StoryPage({
   //TODO: CONSIDER GET USER SESSION HERE
 
   return (
-    <>
-      <Story post={post} />
-    </>
+    <StoryPageProvider>
+      <StoryEditorContent
+        post_content={post.post_content as JSONContent}
+        authorProfile={post.profiles}
+        created_at={post.created_at}
+      />
+    </StoryPageProvider>
   )
 }
