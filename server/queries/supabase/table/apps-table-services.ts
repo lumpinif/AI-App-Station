@@ -2,7 +2,6 @@
 
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
-import { getSlugFromAppId } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
@@ -119,10 +118,12 @@ export async function getSubmittedApps(
   }
 }
 
-export async function deleteApp(app_id: Apps["app_id"]) {
+export async function deleteApp(
+  app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"]
+) {
   try {
     const supabase = await createSupabaseServerClient()
-    const slug = await getSlugFromAppId(app_id)
 
     const {
       data: { user },
@@ -135,7 +136,7 @@ export async function deleteApp(app_id: Apps["app_id"]) {
       submitted_by_user_id: user.id,
     })
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/ai-apps/${app_slug}`)
     revalidatePath(`/user/apps/${app_id}`)
 
     return { error: error ?? null } // Return { error: null } if no error occurs
@@ -146,10 +147,12 @@ export async function deleteApp(app_id: Apps["app_id"]) {
     return { error: "An error occurred while deleting the app." } // Return a generic error message
   }
 }
-export async function unpublishApp(app_id: Apps["app_id"]) {
+export async function unpublishApp(
+  app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"]
+) {
   try {
     const supabase = await createSupabaseServerClient()
-    const slug = await getSlugFromAppId(app_id)
 
     const {
       data: { user },
@@ -165,7 +168,7 @@ export async function unpublishApp(app_id: Apps["app_id"]) {
         submitted_by_user_id: user.id,
       })
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/ai-apps/${app_slug}`)
     revalidatePath(`/user/apps/${app_id}`)
 
     return { error: error ?? null } // Return { error: null } if no error occurs
@@ -177,10 +180,12 @@ export async function unpublishApp(app_id: Apps["app_id"]) {
   }
 }
 
-export async function publishApp(app_id: Apps["app_id"]) {
+export async function publishApp(
+  app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"]
+) {
   try {
     const supabase = await createSupabaseServerClient()
-    const slug = await getSlugFromAppId(app_id)
 
     const {
       data: { user },
@@ -196,7 +201,7 @@ export async function publishApp(app_id: Apps["app_id"]) {
         submitted_by_user_id: user.id,
       })
 
-    revalidatePath(`/ai-apps/${slug?.app_slug}`)
+    revalidatePath(`/ai-apps/${app_slug}`)
     revalidatePath(`/user/apps/${app_id}`)
 
     return { error: error ?? null } // Return { error: null } if no error occurs

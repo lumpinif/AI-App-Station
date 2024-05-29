@@ -36,7 +36,10 @@ export async function deleteApps({
   try {
     await Promise.all(
       rows.map(async (row) => {
-        const result = await deleteApp(row.original.app_id)
+        const result = await deleteApp(
+          row.original.app_id,
+          row.original.app_slug
+        )
 
         if (result && result.error) {
           if (typeof result.error === "string") {
@@ -67,7 +70,10 @@ export async function unpublishApps({
   try {
     await Promise.all(
       rows.map(async (row) => {
-        const result = await unpublishApp(row.original.app_id)
+        const result = await unpublishApp(
+          row.original.app_id,
+          row.original.app_slug
+        )
 
         if (result && result.error) {
           if (typeof result.error === "string") {
@@ -102,7 +108,10 @@ export async function publishApps({
   try {
     await Promise.all(
       rows.map(async (row) => {
-        const result = await publishApp(row.original.app_id)
+        const result = await publishApp(
+          row.original.app_id,
+          row.original.app_slug
+        )
 
         if (result && result.error) {
           if (typeof result.error === "string") {
