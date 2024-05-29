@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
+import { publishApp } from "@/server/data/apps/table/apps-table-services"
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
 import { toast } from "sonner"
 
@@ -9,8 +10,6 @@ import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { ButtonProps } from "@/components/ui/button"
 import { SpinnerButton } from "@/components/shared/spinner-button"
-
-import { publishApp } from "../../../_lib/db-queries"
 
 type TRunAnimationParams = {
   speed: number

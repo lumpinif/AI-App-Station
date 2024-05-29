@@ -1,12 +1,8 @@
-import { useEffect } from "react"
-
 import { AppDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import { PageTitle } from "@/components/layout/page-title"
 
 import { AppEditorPageTitle } from "./app-editor-page-title"
 import { AppPublishButton } from "./forms/app-publish-button"
-import { InfoPopover } from "./forms/info-popover"
 
 export type AppEditingPageWrapperProps = {
   app: AppDetails

@@ -78,7 +78,7 @@ export function StoriesTableFloatingBar({
         showTrigger={false}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
-      <div className="fixed inset-x-0 bottom-5 z-50 w-full px-4">
+      <div className="fixed inset-x-0 bottom-5 z-50 w-dvw px-4">
         <div className="w-full ">
           <div className="bg-card sm:glass-card-background dark:shadow-outline mx-auto flex w-fit items-center gap-2 rounded-full border p-2 px-4 py-4 shadow-2xl backdrop-blur-lg">
             <div className="dark:bg-accent border-primary flex h-7 items-center rounded-lg border border-dashed pl-2.5 pr-1">
@@ -123,7 +123,9 @@ export function StoriesTableFloatingBar({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p className={PublishStatusColor}>Publish Stories</p>
+                  <p
+                    className={PublishStatusColor}
+                  >{`Publish ${rows.length > 1 ? "Stories" : "Story"}`}</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -143,7 +145,9 @@ export function StoriesTableFloatingBar({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p className={UnpublishStatusColor}>Unpublish Stories</p>
+                  <p
+                    className={UnpublishStatusColor}
+                  >{`Unpublish ${rows.length > 1 ? "Stories" : "Story"}`}</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -167,7 +171,7 @@ export function StoriesTableFloatingBar({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p>Export Stoires</p>
+                  <p>{`Export ${rows.length > 1 ? "Stories" : "Story"}`}</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -187,7 +191,7 @@ export function StoriesTableFloatingBar({
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-background text-foreground border font-semibold">
-                  <p className="text-red-500">Delete Stories</p>
+                  <p className="text-red-500">{`Delete ${rows.length > 1 ? "Stories" : "Story"}`}</p>
                 </TooltipContent>
               </Tooltip>
             </div>

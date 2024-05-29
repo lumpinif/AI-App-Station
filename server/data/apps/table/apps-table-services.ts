@@ -4,7 +4,6 @@
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getSlugFromAppId } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
-import { Row } from "@tanstack/react-table"
 import * as z from "zod"
 
 import { Apps } from "@/types/db_tables"

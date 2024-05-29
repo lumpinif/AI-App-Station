@@ -2,10 +2,14 @@
 
 import { useTransition } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import {
+  deleteApp,
+  publishApp,
+  unpublishApp,
+} from "@/server/data/apps/table/apps-table-services"
 import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
-import { SquarePen } from "lucide-react"
+import { RotateCw, SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
 import { Apps } from "@/types/db_tables"
@@ -21,8 +25,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-
-import { deleteApp, publishApp, unpublishApp } from "../../_lib/db-queries"
 
 export async function deleteApps({
   rows,
@@ -46,11 +48,13 @@ export async function deleteApps({
       })
     )
 
-    toast.success("Apps deleted")
+    toast.success(`${rows.length > 1 ? "Apps" : "App"} Deleted`)
     onSuccess?.()
   } catch (error) {
-    console.error("Error deleting apps:", error)
-    toast.error("Failed to delete apps. Please try again.")
+    console.error(`Error deleting ${rows.length > 1 ? "Apps" : "App"}:`, error)
+    toast.error(
+      `Failed to delete ${rows.length > 1 ? "Apps" : "App"}. Please try again.`
+    )
   }
 }
 export async function unpublishApps({
@@ -75,11 +79,16 @@ export async function unpublishApps({
       })
     )
 
-    toast.success("Apps unpublished")
+    toast.success(`${rows.length > 1 ? "Apps" : "App"} Unpublished`)
     onSuccess?.()
   } catch (error) {
-    console.error("Error unpublishing apps:", error)
-    toast.error("Failed to unpublish apps. Please try again.")
+    console.error(
+      `Error unpublishing ${rows.length > 1 ? "Apps" : "App"}:`,
+      error
+    )
+    toast.error(
+      `Failed to unpublish ${rows.length > 1 ? "Apps" : "App"}. Please try again.`
+    )
   }
 }
 
@@ -105,11 +114,16 @@ export async function publishApps({
       })
     )
 
-    toast.success("Apps published")
+    toast.success(`${rows.length > 1 ? "Apps" : "App"} Published`)
     onSuccess?.()
   } catch (error) {
-    console.error("Error publishing apps:", error)
-    toast.error("Failed to publish apps. Please try again.")
+    console.error(
+      `Error publishing ${rows.length > 1 ? "Apps" : "App"}:`,
+      error
+    )
+    toast.error(
+      `Failed to publish ${rows.length > 1 ? "Apps" : "App"}. Please try again.`
+    )
   }
 }
 
@@ -134,9 +148,23 @@ export function DeleteAppsDialog({
     <AlertDialog {...props}>
       {showTrigger ? (
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="sm" className={triggerClassName}>
-            <TrashIcon className="mr-1 size-4" aria-hidden="true" />
-            Delete ({apps.length})
+          <Button
+            variant="destructive"
+            size="sm"
+            className={triggerClassName}
+            disabled={isDeletePending}
+          >
+            {isDeletePending ? (
+              <RotateCw
+                className="mr-1 size-4 animate-spin"
+                aria-hidden="true"
+              />
+            ) : (
+              <TrashIcon className="mr-1 size-4" aria-hidden="true" />
+            )}
+            {isDeletePending
+              ? `Deleting (${apps.length})`
+              : `Delete (${apps.length})`}
           </Button>
         </AlertDialogTrigger>
       ) : null}
@@ -194,6 +222,7 @@ export function UnpublishAppsDialog({
             variant="destructive"
             size="sm"
             className="outline-none focus:ring-0 focus:!ring-transparent"
+            disabled={isUnpublishPending}
           >
             <TrashIcon className="mr-1 size-4" aria-hidden="true" />
             Unpublish ({apps.length})
@@ -253,6 +282,7 @@ export function PublishAppsDialog({
           <Button
             size="sm"
             className="outline-none focus:ring-0 focus:!ring-transparent"
+            disabled={isPublishPending}
           >
             <RocketIcon className="mr-1 size-4" aria-hidden="true" />
             Publish ({apps.length})
@@ -302,8 +332,6 @@ export function EditAppsDialog({
   showTrigger = true,
   ...props
 }: AppActionDialogProps) {
-  const [isEditPending, startEditTransition] = useTransition()
-
   return (
     <AlertDialog {...props}>
       {showTrigger ? (

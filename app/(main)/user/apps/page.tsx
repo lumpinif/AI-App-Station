@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { getSubmittedApps } from "@/server/data/apps/table/apps-table-services"
 
 import { SearchParams } from "@/types/data-table"
 import { appsSearchParamsSchema } from "@/lib/validations"
@@ -6,7 +7,6 @@ import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/shared/date-range-picker"
 
 import { SubmittedAppsTable } from "./_components/table/submitted-apps-table"
-import { getSubmittedApps } from "./_lib/db-queries"
 
 type UserPageProps = {
   searchParams: SearchParams

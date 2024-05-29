@@ -9,7 +9,7 @@ import {
 } from "@/server/data/stories/table/post-table-services"
 import { RocketIcon, TrashIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
-import { SquarePen } from "lucide-react"
+import { RotateCw, SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
 import { PostWithProfile } from "@/types/db_tables"
@@ -48,11 +48,16 @@ export async function deleteStories({
       })
     )
 
-    toast.success("Stories deleted")
+    toast.success(`${rows.length > 1 ? "Stories" : "Story"} Deleted`)
     onSuccess?.()
   } catch (error) {
-    console.error("Error deleting stories:", error)
-    toast.error("Failed to delete stories. Please try again.")
+    console.error(
+      `Error deleting ${rows.length > 1 ? "Stories" : "Story"}:`,
+      error
+    )
+    toast.error(
+      `Failed to delete ${rows.length > 1 ? "Stories" : "Story"}. Please try again.`
+    )
   }
 }
 export async function unpublishStories({
@@ -77,11 +82,16 @@ export async function unpublishStories({
       })
     )
 
-    toast.success("Stories unpublished")
+    toast.success(`${rows.length > 1 ? "Stories" : "Story"} Unpublished`)
     onSuccess?.()
   } catch (error) {
-    console.error("Error unpublishing stories:", error)
-    toast.error("Failed to unpublish stories. Please try again.")
+    console.error(
+      `Error unpublishing ${rows.length > 1 ? "Stories" : "Story"}:`,
+      error
+    )
+    toast.error(
+      `Failed to unpublish ${rows.length > 1 ? "Stories" : "Story"}. Please try again.`
+    )
   }
 }
 
@@ -107,11 +117,16 @@ export async function publishStories({
       })
     )
 
-    toast.success("Stories published")
+    toast.success(`${rows.length > 1 ? "Stories" : "Story"} Published`)
     onSuccess?.()
   } catch (error) {
-    console.error("Error publishing stories:", error)
-    toast.error("Failed to publish stories. Please try again.")
+    console.error(
+      `Error publishing ${rows.length > 1 ? "Stories" : "Story"}:`,
+      error
+    )
+    toast.error(
+      `Failed to publish ${rows.length > 1 ? "Stories" : "Story"}. Please try again.`
+    )
   }
 }
 
@@ -136,9 +151,23 @@ export function DeleteStoriesDialog({
     <AlertDialog {...props}>
       {showTrigger ? (
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="sm" className={triggerClassName}>
-            <TrashIcon className="mr-1 size-4" aria-hidden="true" />
-            Delete ({posts.length})
+          <Button
+            variant="destructive"
+            size="sm"
+            className={triggerClassName}
+            disabled={isDeletePending}
+          >
+            {isDeletePending ? (
+              <RotateCw
+                className="mr-1 size-4 animate-spin"
+                aria-hidden="true"
+              />
+            ) : (
+              <TrashIcon className="mr-1 size-4" aria-hidden="true" />
+            )}
+            {isDeletePending
+              ? `Deleting (${posts.length})`
+              : `Delete (${posts.length})`}
           </Button>
         </AlertDialogTrigger>
       ) : null}
@@ -197,6 +226,7 @@ export function UnpublishStoriesDialog({
             variant="destructive"
             size="sm"
             className="outline-none focus:ring-0 focus:!ring-transparent"
+            disabled={isUnpublishPending}
           >
             <TrashIcon className="mr-1 size-4" aria-hidden="true" />
             Unpublish ({posts.length})
@@ -256,6 +286,7 @@ export function PublishStoriesDialog({
           <Button
             size="sm"
             className="outline-none focus:ring-0 focus:!ring-transparent"
+            disabled={isPublishPending}
           >
             <RocketIcon className="mr-1 size-4" aria-hidden="true" />
             Publish ({posts.length})
@@ -305,8 +336,6 @@ export function EditStoiesDialog({
   showTrigger = true,
   ...props
 }: StoryActionDialogProps) {
-  const [isEditPending, startEditTransition] = useTransition()
-
   return (
     <AlertDialog {...props}>
       {showTrigger ? (
