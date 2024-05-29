@@ -20,7 +20,7 @@ const StoryPageTitle = () => {
 
   return (
     <PageTitle title={pageTitle} href={pageHref}>
-      <WriteNewStoryButton />
+      <WriteNewStoryButton variant={"outline"} size={"label"} />
     </PageTitle>
   )
 }
