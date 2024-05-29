@@ -29,7 +29,7 @@ export const CommentDeleteDialog: React.FC<CommentDeleteDialogProps> = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange} {...props}>
-      <DialogContent className="dark:glass-card-background shadow-outline rounded-lg backdrop-blur-xl max-sm:max-w-sm">
+      <DialogContent className="shadow-outline rounded-lg backdrop-blur-xl max-sm:max-w-sm">
         <DialogHeader>
           <DialogTitle className="text-xl">
             Are you absolutely sure?

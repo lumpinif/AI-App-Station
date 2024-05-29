@@ -40,7 +40,7 @@ export const SocialShare: React.FC<SocialShareProps> = ({
   const pathname = usePathname()
   const WINDOW_W = 950
   const WINDOW_H = 650
-  const HASHTAG: string[] = ["AIAppStation", `${title}`]
+  const HASHTAG: string[] = ["AIAppStation", "AI", "Apps"]
   // TODO: DEFINE THIS LATER BEFORE PRODUCTION
   const VIA = ""
   const url =

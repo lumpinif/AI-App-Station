@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import {
+  Drawer,
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
@@ -32,10 +33,12 @@ interface BaseProps {
   children: React.ReactNode
 }
 
-interface RootResponsiveModalProps extends BaseProps {
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
-}
+export type RootResponsiveModalProps = BaseProps &
+  React.ComponentProps<typeof Dialog> &
+  React.ComponentProps<typeof Drawer> & {
+    open?: boolean
+    onOpenChange?: (open: boolean) => void
+  }
 
 interface ResponsiveModalProps extends BaseProps {
   className?: string

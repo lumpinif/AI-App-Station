@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import { CommentDeleteDialog } from "./comment-delete-dialog"
+import { CommentShareModal } from "./comment-share-modal"
 
 type CommentDropDownMenuProps = {
   comment: AppCommentWithProfile
@@ -26,6 +27,7 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
 }) => {
   const { data: profile } = useUserProfile()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
 
   return (
     <>
@@ -34,10 +36,16 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
       />
+      <CommentShareModal
+        nested={true}
+        comment={comment}
+        open={isShareDialogOpen}
+        onOpenChange={setIsShareDialogOpen}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="text-muted-foreground/70 ring-offset-background hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="text-muted-foreground/70 ring-offset-background hover:text-muted-foreground cursor-pointer focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           <Ellipsis size={16} />
         </DropdownMenuTrigger>
@@ -56,7 +64,10 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
           </DropdownMenuItem>
 
           <DropdownMenuItem>
-            <div className="flex w-full items-center justify-between px-1">
+            <div
+              className="flex w-full cursor-pointer items-center justify-between px-1"
+              onClick={() => setIsShareDialogOpen(true)}
+            >
               Share
               <Share2 size={12} />
             </div>

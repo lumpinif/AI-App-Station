@@ -1,18 +1,12 @@
-"use client"
-
-import { useState } from "react"
-
-import {
-  AppCommentWithProfile,
-  App_Comments as CommentType,
-} from "@/types/db_tables"
+import { AppCommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { CommentCard } from "./comment-card"
 import { CommentCardActions } from "./comment-card-actions"
-import { CommentShowReplies } from "./comment-show-replies"
+import { CommentChildReplies } from "./comment-child-replies"
+import { CommentListWrapper } from "./comment-list-wrapper"
 
-type CommentListProps = {
+export type CommentListProps = {
   commentsList: AppCommentWithProfile[]
   idsToRender?: string[]
   indentLevel?: number
@@ -61,10 +55,7 @@ export function CommentList({
         if (!comment) return null
         return (
           <div className="flex flex-col" key={comment.comment_id}>
-            <div
-              className="sm:hover:bg-muted sm:dark:hover:bg-muted/20 relative flex space-x-4 rounded-lg p-4 transition-all duration-100 ease-out"
-              id={comment.comment_id}
-            >
+            <CommentListWrapper comment={comment}>
               <div className="flex w-full flex-col space-y-4">
                 <div className="flex justify-between gap-1">
                   <div className="w-full flex-1">
@@ -83,8 +74,8 @@ export function CommentList({
                   </div>
                 </div>
               </div>
-            </div>
-            <ChildReplies
+            </CommentListWrapper>
+            <CommentChildReplies
               commentsList={optimisticComments}
               parent_id={comment!.comment_id}
               indentLevel={indentLevel + 1}
@@ -94,45 +85,5 @@ export function CommentList({
         )
       })}
     </div>
-  )
-}
-
-type ChildRepliesProps = CommentListProps & {
-  parent_id: CommentType["parent_id"]
-}
-function ChildReplies({
-  commentsList,
-  parent_id,
-  indentLevel = 0,
-  setOptimisitcComment,
-}: ChildRepliesProps) {
-  const [isShowReplies, setIsShowReplies] = useState<boolean>(false)
-  const childItems = commentsList.filter((i) => i.parent_id === parent_id)
-
-  const repliesCount = childItems.length
-  const isReplied = repliesCount > 0
-
-  return (
-    <>
-      {isReplied && (
-        <>
-          <span className="ml-16 py-2 md:pl-2">
-            <CommentShowReplies
-              setIsShowReplies={setIsShowReplies}
-              isShowReplies={isShowReplies}
-              repliesCount={repliesCount}
-            />
-          </span>
-          {isShowReplies && (
-            <CommentList
-              setOptimisitcComment={setOptimisitcComment}
-              commentsList={commentsList}
-              idsToRender={childItems.map((i) => i.comment_id)}
-              indentLevel={indentLevel + 1}
-            />
-          )}
-        </>
-      )}
-    </>
   )
 }

@@ -87,7 +87,7 @@ const AppDetailCommentSection = async ({
 
         <CommentForm app_id={app_id} />
 
-        <div className="sm:hidden">
+        <div className="sm:hidden" id="comments-section">
           <EnhancedDrawer>
             <EnhancedDrawerTrigger asChild>
               <div className="flex flex-col space-y-2">
