@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Delete, Ellipsis, Flag, Pencil, Share2 } from "lucide-react"
 
 import { AppCommentActionsProp, AppCommentWithProfile } from "@/types/db_tables"
@@ -7,23 +8,12 @@ import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "../ui/alert-dialog"
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
-import CommentDeleteButton from "./comment-delete-button"
+import { CommentDeleteDialog } from "./comment-delete-dialog"
 
 type CommentDropDownMenuProps = {
   comment: AppCommentWithProfile
@@ -35,27 +25,15 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
   isEditing,
 }) => {
   const { data: profile } = useUserProfile()
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+
   return (
-    <AlertDialog>
-      <AlertDialogContent className="dark:glass-card-background shadow-outline rounded-lg border-none backdrop-blur-xl max-sm:max-w-sm ">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            comment.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-destructive hover:bg-destructive/80 text-white">
-            <CommentDeleteButton
-              app_id={comment.app_id}
-              comment_id={comment.comment_id}
-              parent_id={comment.parent_id}
-            />
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
+    <>
+      <CommentDeleteDialog
+        comment={comment}
+        isOpen={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
@@ -83,24 +61,25 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
               <Share2 size={12} />
             </div>
           </DropdownMenuItem>
-          <AlertDialogTrigger asChild>
-            <DropdownMenuItem
-              className={cn(
-                "hover:!bg-destructive group cursor-pointer",
-                comment.profiles?.user_id === profile?.user_id ? "" : "hidden"
-              )}
-            >
-              <div className=" flex w-full items-center justify-between px-1">
-                <span className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500">
-                  Delete
-                </span>
-                <Delete
-                  size={12}
-                  className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500"
-                />
-              </div>
-            </DropdownMenuItem>
-          </AlertDialogTrigger>
+
+          <DropdownMenuItem
+            className={cn(
+              "hover:!bg-destructive group cursor-pointer",
+              comment.profiles?.user_id === profile?.user_id ? "" : "hidden"
+            )}
+            onClick={() => setIsDeleteDialogOpen(true)}
+          >
+            <div className=" flex w-full items-center justify-between px-1">
+              <span className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500">
+                Delete
+              </span>
+              <Delete
+                size={12}
+                className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500"
+              />
+            </div>
+          </DropdownMenuItem>
+
           <DropdownMenuItem
             className={cn(
               "cursor-pointer",
@@ -114,6 +93,6 @@ export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </AlertDialog>
+    </>
   )
 }

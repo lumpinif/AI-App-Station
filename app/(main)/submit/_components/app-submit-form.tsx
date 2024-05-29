@@ -75,7 +75,12 @@ const AppSubmitForm = () => {
     const newAppSubmittingToast = toast.promise(submitNewAppPromise(), {
       dismissible: false,
       duration: 100000,
-      loading: "Creating the new app...",
+      loading: (
+        <span className="flex items-center gap-x-2">
+          <LoadingSpinner size={16} />
+          Creating the new app...Please wait
+        </span>
+      ),
       success: (newApp) => {
         router.push(`/user/apps/${newApp.app_id}`)
         setToastId(newAppSubmittingToast)
@@ -85,10 +90,10 @@ const AppSubmitForm = () => {
           <div className="flex w-full items-center justify-between">
             <span className="flex items-center gap-x-2">
               <LoadingSpinner size={16} />
-              Redircting to the the app details page, please wait...
+              Redircting to the the app details page...Please wait
             </span>
             <Button
-              variant={"outline"}
+              variant={"secondary"}
               size={"sm"}
               className="shadow-outline text-primary dark:text-background flex h-8 w-fit shrink-0 flex-nowrap items-center gap-x-2 bg-white hover:bg-white/80 active:scale-[0.98] dark:border-0"
               onClick={() => router.push(`/user/apps/${newApp.app_id}`)}

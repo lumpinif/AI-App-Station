@@ -7,53 +7,67 @@ import { toast } from "sonner"
 import { App_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
-type CommentDeleteButtonProps = {
+import { LoadingSpinner } from "../shared/loading-spinner"
+import { SpinnerButton } from "../shared/spinner-button"
+import { ButtonProps } from "../ui/button"
+
+type CommentDeleteButtonProps = ButtonProps & {
   app_id: App_Comments["app_id"]
   comment_id: App_Comments["comment_id"]
   parent_id: App_Comments["parent_id"]
-  className?: string
+  onDeleted?: () => void
 }
 
 const CommentDeleteButton: React.FC<CommentDeleteButtonProps> = ({
-  className,
   app_id,
   comment_id,
   parent_id,
+  onDeleted,
+  ...props
 }) => {
   const [isPending, startTransition] = React.useTransition()
   const queryClient = useQueryClient()
   const queryKey = parent_id ? ["replies", parent_id] : ["replies", comment_id]
 
   const handleDelete = () => {
-    startTransition(async () => {
-      try {
-        const result = await DeleteAppComment(app_id, comment_id)
-        if (result !== null) {
-          toast.success("Comment deleted")
-          queryClient.invalidateQueries({ queryKey: queryKey })
-        } else {
-          toast.error("Something went wrong")
-        }
-      } catch (error) {
-        toast.error("Failed to delete comment")
+    const DeleteAppCommentPromise = async () => {
+      const { error: deleteAppCommentError } = await DeleteAppComment(
+        app_id,
+        comment_id
+      )
+
+      if (deleteAppCommentError) {
+        throw new Error(deleteAppCommentError)
       }
+    }
+
+    toast.promise(DeleteAppCommentPromise(), {
+      loading: (
+        <span className="flex items-center gap-x-2">
+          <LoadingSpinner size={16} /> Deleting the comment... Please wait
+        </span>
+      ),
+      success: () => {
+        queryClient.invalidateQueries({ queryKey: queryKey })
+        onDeleted && onDeleted()
+        return "Comment Deleted"
+      },
+      error: (error) => {
+        return error.message || "Failed to delete comment"
+      },
     })
   }
 
   return (
-    <span
-      className={cn(
-        "flex w-full cursor-pointer items-center justify-center",
-        className
-      )}
-      onClick={handleDelete}
+    <SpinnerButton
+      variant={"default"}
+      isLoading={isPending}
+      onClick={() => startTransition(handleDelete)}
       role="button"
+      {...props}
     >
-      <span className="flex w-fit items-center text-center">
-        {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Delete
-      </span>
-    </span>
+      <span className="flex w-fit items-center text-center">Delete</span>
+    </SpinnerButton>
   )
 }
 

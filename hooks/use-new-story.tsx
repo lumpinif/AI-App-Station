@@ -39,7 +39,11 @@ const useNewStory = (onSuccess?: () => void) => {
       {
         dismissible: false,
         duration: 100000,
-        loading: "Creating the new story...",
+        loading: (
+          <span className="flex items-center gap-x-2">
+            <LoadingSpinner size={16} /> Creating the new story... Please wait
+          </span>
+        ),
         success: (newStory) => {
           router.push(`/user/stories/${newStory.post_id}`)
           setIsLoading(false)
