@@ -30,6 +30,7 @@ type AppApprovalSubmitProps = ButtonProps & {
   children?: React.ReactNode
   className?: string
   app_id: Apps["app_id"]
+  app_slug: Apps["app_slug"]
 }
 
 export const AppPublishButton: React.FC<AppApprovalSubmitProps> = ({
@@ -37,6 +38,7 @@ export const AppPublishButton: React.FC<AppApprovalSubmitProps> = ({
   app_publish_status,
   children,
   app_id,
+  app_slug,
   className,
   ...props
 }) => {
@@ -51,7 +53,7 @@ export const AppPublishButton: React.FC<AppApprovalSubmitProps> = ({
 
     setIsSubmitting(true)
     try {
-      const res = await publishApp(app_id)
+      const res = await publishApp(app_id, app_slug)
       if (res?.error) {
         toast.error("An error occurred during submission.")
         setIsSubmitting(false)

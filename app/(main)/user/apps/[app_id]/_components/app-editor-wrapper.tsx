@@ -31,6 +31,7 @@ export const AppEditingPageWrapper: React.FC<AppEditingPageWrapperProps> = ({
             app_publish_status={app.app_publish_status}
             size={"sm"}
             app_id={app.app_id}
+            app_slug={app.app_slug}
             disabled={
               !isAllFormsComplete() || app.app_publish_status === "published"
             }
@@ -63,6 +64,7 @@ export const AppEditingPageWrapper: React.FC<AppEditingPageWrapperProps> = ({
           isAllFieldsComplete={isAllFormsComplete()}
           app_publish_status={app.app_publish_status}
           app_id={app.app_id}
+          app_slug={app.app_slug}
           disabled={
             !isAllFormsComplete() || app.app_publish_status === "published"
           }
