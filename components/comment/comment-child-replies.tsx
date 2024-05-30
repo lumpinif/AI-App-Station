@@ -2,21 +2,43 @@
 
 import { useState } from "react"
 
-import { TCommentParentId } from "@/types/db_tables"
+import {
+  CommentDeleteServiceType,
+  CommentEditServiceType,
+  CommentReplyServiceType,
+  TCommentParentId,
+  TCommentWithProfile,
+} from "@/types/db_tables"
 
 import { CommentList, CommentListProps } from "./comment-list"
 import { CommentShowReplies } from "./comment-show-replies"
 
-type CommentChildRepliesProps = CommentListProps & {
+type CommentChildRepliesProps<
+  T extends TCommentWithProfile,
+  U extends (...args: any) => any,
+  R extends (...args: any) => any,
+  V extends (...args: any) => any,
+> = CommentListProps<T, U, R, V> & {
   parent_id: TCommentParentId
+  commentReplyService: CommentReplyServiceType<U>
+  updateCommentService: CommentEditServiceType<R>
+  deleteCommentService: CommentDeleteServiceType<V>
 }
 
-export const CommentChildReplies: React.FC<CommentChildRepliesProps> = ({
+export const CommentChildReplies = <
+  T extends TCommentWithProfile,
+  U extends (...args: any) => any,
+  R extends (...args: any) => any,
+  V extends (...args: any) => any,
+>({
   commentsList,
   parent_id,
   indentLevel = 0,
   setOptimisitcComment,
-}) => {
+  commentReplyService,
+  updateCommentService,
+  deleteCommentService,
+}: CommentChildRepliesProps<T, U, R, V>) => {
   const [isShowReplies, setIsShowReplies] = useState<boolean>(false)
   const childItems = commentsList.filter((i) => i.parent_id === parent_id)
 
@@ -35,11 +57,14 @@ export const CommentChildReplies: React.FC<CommentChildRepliesProps> = ({
             />
           </span>
           {isShowReplies && (
-            <CommentList
+            <CommentList<T, U, R, V>
               setOptimisitcComment={setOptimisitcComment}
               commentsList={commentsList}
               idsToRender={childItems.map((i) => i.comment_id)}
               indentLevel={indentLevel + 1}
+              commentReplyService={commentReplyService}
+              updateCommentService={updateCommentService}
+              deleteCommentService={deleteCommentService}
             />
           )}
         </>

@@ -1,13 +1,16 @@
+import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getPostById } from "@/server/queries/supabase/stories"
 import supabase from "@/utils/supabase/supabase"
 import { JSONContent } from "novel"
 
-import { PostDetails } from "@/types/db_tables"
+import { SearchParams } from "@/types/data-table"
+import { Post_Comments, PostDetails } from "@/types/db_tables"
 import { getPostAuthorSlug } from "@/lib/utils"
+import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
-import { StoryCommentSection } from "../../_components/story-comment-section"
+import StoryCommentSection from "../../_components/comment/story-comment-section"
 import StoryPageWrapper from "../../_components/story-page-wrapper"
 import { StoryEditorContent } from "../../_components/story/story-editor-content"
 
@@ -33,9 +36,14 @@ export async function generateStaticParams() {
 
 export default async function StoryPage({
   params,
+  searchParams,
 }: {
   params: { user: string; post_id: string }
+  searchParams: SearchParams
 }) {
+  const c_order = searchParams?.c_order as "asc" | "desc" | undefined
+  const orderBy = searchParams?.orderBy as keyof Post_Comments | undefined
+
   const { post, error: getPostError } = await getPostById(params.post_id)
 
   if (!post) {
@@ -63,8 +71,14 @@ export default async function StoryPage({
         authorProfile={post.profiles}
         created_at={post.created_at}
       />
-
-      <StoryCommentSection />
+      <Suspense fallback={<LoadingSpinner />}>
+        <StoryCommentSection
+          user={user}
+          post_id={post.post_id}
+          c_order={c_order}
+          orderBy={orderBy}
+        />
+      </Suspense>
     </StoryPageWrapper>
   )
 }

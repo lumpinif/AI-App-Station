@@ -7,6 +7,11 @@ import {
   deleteAppComment,
   updateAppComment,
 } from "@/server/queries/supabase/comments/app_comments"
+import {
+  addPostComment,
+  deletePostComment,
+  updatePostComment,
+} from "@/server/queries/supabase/comments/post_comments"
 
 import { Database, Enums, Tables } from "@/types/supabase"
 
@@ -165,12 +170,14 @@ export type CommentDeleteServiceType<V extends (...args: any) => any> = (
   comment_id: TCommentId
 ) => Promise<Awaited<ReturnType<V>>>
 
-// TODO: ADD TYPEOF addPostComment before production
 export type addAppCommentReturnType = typeof addAppComment
-// TODO: ADD TYPEOF addPostComment before production
+export type addPostCommentReturnType = typeof addPostComment
+
 export type updateAppCommentReturnType = typeof updateAppComment
-// TODO: ADD TYPEOF addPostComment before production
+export type updatePostCommentReturnType = typeof updatePostComment
+
 export type deleteAppCommentReturnType = typeof deleteAppComment
+export type deletePostCommentReturnType = typeof deletePostComment
 
 // Screenshot related types
 

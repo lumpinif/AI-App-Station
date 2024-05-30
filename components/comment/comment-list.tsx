@@ -100,11 +100,14 @@ export function CommentList<
                 </div>
               </div>
             </CommentListWrapper>
-            <CommentChildReplies
+            <CommentChildReplies<T, U, R, V>
               commentsList={optimisticComments}
               parent_id={comment!.comment_id}
               indentLevel={indentLevel + 1}
               setOptimisitcComment={setOptimisitcComment}
+              commentReplyService={commentReplyService}
+              updateCommentService={updateCommentService}
+              deleteCommentService={deleteCommentService}
             />
           </div>
         )
