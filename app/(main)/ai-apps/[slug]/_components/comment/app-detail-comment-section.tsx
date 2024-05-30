@@ -5,6 +5,7 @@ import {
 import { User } from "@supabase/supabase-js"
 
 import { addAppCommentReturnType, App_Comments, Apps } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CommentFormButton } from "@/components/comment/comment-form-button"
 import { CommentListFilter } from "@/components/comment/comment-list-filter"
@@ -101,7 +102,12 @@ const AppDetailCommentSection = async ({
 
         {/* DESKTOP COMMENT LIST*/}
         <div className="hidden w-full flex-col space-y-4 sm:flex">
-          <ScrollArea className="relative h-[50rem]">
+          <ScrollArea
+            className={cn(
+              "relative h-fit pb-2",
+              commentsList.length >= 5 && "h-[50rem] pb-2"
+            )}
+          >
             <AppDetailCommentList
               commentsList={commentsList}
               className="mb-14"
