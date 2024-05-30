@@ -1,22 +1,23 @@
 "use client"
 
 import React from "react"
-import { addAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { MessageCircleMore } from "lucide-react"
 
-import { App_Comments, Post_Comments } from "@/types/db_tables"
+import { CommentReplyServiceType, TCommentRowId } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { Button } from "../ui/button"
 import CommentReplyForm from "./comment-reply-form"
 
-type CommentFormProps = {
-  db_row_id: App_Comments["app_id"] | Post_Comments["post_id"]
+type CommentFormProps<U extends (...args: any) => any> = {
+  db_row_id: TCommentRowId
+  commentReplyService: CommentReplyServiceType<U>
 }
 
-export const CommentFormButton: React.FC<CommentFormProps> = ({
+export const CommentFormButton = <U extends (...args: any) => any>({
   db_row_id,
-}) => {
+  commentReplyService,
+}: CommentFormProps<U>) => {
   const [isReplying, setIsReplying] = React.useState<boolean>(false)
 
   return (
@@ -37,7 +38,7 @@ export const CommentFormButton: React.FC<CommentFormProps> = ({
         </Button>
       ) : (
         <CommentReplyForm
-          commentReplyService={addAppComment}
+          commentReplyService={commentReplyService}
           withRating={true}
           db_row_id={db_row_id}
           toggleReplying={() => setIsReplying(false)}

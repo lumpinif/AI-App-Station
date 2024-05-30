@@ -1,8 +1,15 @@
 import { getAppComments } from "@/server/queries/supabase/comments/app_comments"
-import { getPostComments } from "@/server/queries/supabase/comments/post_comments"
+import {
+  addPostComment,
+  getPostComments,
+} from "@/server/queries/supabase/comments/post_comments"
 import { User } from "@supabase/supabase-js"
 
-import { Post_Comments, Posts } from "@/types/db_tables"
+import {
+  addPostCommentReturnType,
+  Post_Comments,
+  Posts,
+} from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CommentFormButton } from "@/components/comment/comment-form-button"
 import { CommentListFilter } from "@/components/comment/comment-list-filter"
@@ -41,7 +48,10 @@ const StoryCommentSection = async ({
             Be the first one to comment ...
           </p>
         </div>
-        <CommentFormButton db_row_id={post_id} />
+        <CommentFormButton<addPostCommentReturnType>
+          db_row_id={post_id}
+          commentReplyService={addPostComment}
+        />
       </section>
     )
 
@@ -79,7 +89,10 @@ const StoryCommentSection = async ({
           <CommentListFilter c_order={c_order} orderBy={orderBy} />
         </div>
 
-        <CommentFormButton db_row_id={post_id} />
+        <CommentFormButton<addPostCommentReturnType>
+          db_row_id={post_id}
+          commentReplyService={addPostComment}
+        />
 
         {/* MOBILE DRAWER */}
         <div className="sm:hidden" id="comments-section">

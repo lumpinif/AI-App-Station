@@ -88,7 +88,7 @@ export async function addPostComment(
     .eq("post_id", post_id)
     .select("*, profiles(*)")
 
-  if (!comment) return { comment: null, error: "Something went wrong" }
+  if (!comment) return { comment: null, error: "addPostComment went wrong" }
 
   // error handling
   if (error) return { comment: null, error: getErrorMessage(error) }
