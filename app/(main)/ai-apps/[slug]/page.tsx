@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAppBySlug } from "@/server/data"
@@ -5,19 +6,18 @@ import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase-actions"
-import { getAppComments } from "@/server/queries/supabase/comments/app_comments"
 import supabase from "@/utils/supabase/supabase"
 
 import { SearchParams } from "@/types/data-table"
 import { App_Comments, Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
 import { AppCommentsBadge } from "../_components/cards/app-comments-badge"
 import { AppDetailBookmark } from "./_components/app-detail-bookmark"
 import { AppDetailCarousel } from "./_components/app-detail-carousel"
-import AppDetailCommentSection from "./_components/app-detail-comment-section"
 import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailLikeButton } from "./_components/app-detail-like-button"
@@ -26,6 +26,7 @@ import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
 import { AppDetailShare } from "./_components/app-detail-share"
 import { AppDetailSubInfo } from "./_components/app-detail-sub-info"
 import { AppLaunchButton } from "./_components/app-launch-button"
+import AppDetailCommentSection from "./_components/comment/app-detail-comment-section"
 
 export type AppPageProps = {
   params: { slug: string }
@@ -76,14 +77,6 @@ export default async function AiAppsMainPage({
   //TODO: HANDLING APP NOT FOUND
   if (!app) {
     notFound()
-  }
-
-  const { comments: appComments, error: getAllCommentsError } =
-    await getAppComments(app.app_id, c_order, orderBy)
-  // TODO: HANDLE NO COMMENTS AND ERROR
-
-  if (getAllCommentsError) {
-    console.error(getAllCommentsError)
   }
 
   // TODO: ADD HERO FEATURED LOGIC PROP AND THE IMAGE
@@ -181,13 +174,14 @@ export default async function AiAppsMainPage({
             <AppDetailIntroduction introduction={app.introduction} />
 
             <AppDetailReviews {...ratingData} />
-
-            <AppDetailCommentSection
-              allComments={appComments}
-              app_id={app.app_id}
-              c_order={c_order}
-              orderBy={orderBy}
-            />
+            <Suspense fallback={<LoadingSpinner />}>
+              <AppDetailCommentSection
+                user={user}
+                app_id={app.app_id}
+                c_order={c_order}
+                orderBy={orderBy}
+              />
+            </Suspense>
           </div>
           <div className="mt-2 xl:mt-0">
             <AppDetailSubInfo {...app} {...app.profiles} {...app.developers} />

@@ -53,7 +53,7 @@ export async function getAppComments(
   return { comments, error }
 }
 
-export async function AddAppComment(
+export async function addAppComment(
   app_id: Apps["app_id"],
   comment_content: App_Comments["comment"],
   replyToCommentId?: App_Comments["parent_id"],
@@ -67,7 +67,7 @@ export async function AddAppComment(
 
   if (!user) {
     return {
-      newApp: null,
+      comment: null,
       error: "You need to login to reply",
     }
   }

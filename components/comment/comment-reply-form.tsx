@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { AddAppComment } from "@/server/queries/supabase/comments/app_comments"
+import { addAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App_Comments } from "@/types/db_tables"
+import { App_Comments, Post_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -32,22 +32,34 @@ const FormSchema = z.object({
   rating: z.number().min(0.5).max(5),
 })
 
+// TODO: ADD TYPEOF addPostComment before production
+type PrimiseReturnType = typeof addAppComment
+
+type addCommentServiceType = (
+  db_row_id: string,
+  comment_content: string,
+  replyToCommentId?: string | null,
+  rating?: number | null
+) => Promise<Awaited<ReturnType<PrimiseReturnType>>>
+
 type CommentReplyFormProps = {
-  app_id: App_Comments["app_id"]
-  parent_id?: App_Comments["comment_id"]
+  db_row_id: App_Comments["app_id"] | Post_Comments["post_id"]
+  parent_id?: App_Comments["comment_id"] | Post_Comments["comment_id"]
   className?: string
   parent_name?: string
   toggleReplying: () => void
+  addCommentService: addCommentServiceType
   setIsShowReplies?: React.Dispatch<React.SetStateAction<boolean>>
   withRating?: boolean
 }
 
 const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   className,
-  toggleReplying,
-  app_id,
+  db_row_id,
   parent_id: replyToCommentId,
   parent_name,
+  addCommentService,
+  toggleReplying,
   setIsShowReplies,
   withRating = false,
 }) => {
@@ -80,8 +92,8 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
     const rating = withRating ? values.rating : null
 
-    const { comment, error } = await AddAppComment(
-      app_id,
+    const { comment, error } = await addCommentService(
+      db_row_id,
       values.reply,
       replyToCommentId,
       rating

@@ -1,9 +1,11 @@
 import { getUserData } from "@/server/auth"
+import { getAppComments } from "@/server/queries/supabase/comments/app_comments"
+import { User } from "@supabase/supabase-js"
 
-import { App_Comments, AppCommentWithProfile } from "@/types/db_tables"
+import { App_Comments, Apps } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CommentCard } from "@/components/comment/comment-card"
-import { CommentForm } from "@/components/comment/comment-form"
+import { CommentFormButton } from "@/components/comment/comment-form-button"
 import { CommentListFilter } from "@/components/comment/comment-list-filter"
 import {
   EnhancedDrawer,
@@ -16,30 +18,27 @@ import { ProgressiveBlur } from "@/components/shared/progressive-blur"
 import AppDetailCommentList from "./app-detail-commentList"
 
 type CommentListProps = {
-  allComments: AppCommentWithProfile[] | null
-  app_id: AppCommentWithProfile["app_id"]
+  user: User | null
+  app_id: Apps["app_id"]
   c_order?: "asc" | "desc"
   orderBy?: keyof App_Comments
 }
 
 const AppDetailCommentSection = async ({
-  allComments,
+  user,
   app_id,
   c_order,
   orderBy,
 }: CommentListProps) => {
-  const {
-    data: { user },
-    error: getUserError,
-  } = await getUserData()
-
-  if (getUserError) {
-    console.error("Error fetching user data: ", getUserError)
-  }
+  const { comments: appComments, error: getAllCommentsError } =
+    await getAppComments(app_id, c_order, orderBy)
 
   // TODO: HANDLE NO COMMENTS AND ERROR
+  if (getAllCommentsError) {
+    console.error(getAllCommentsError)
+  }
 
-  if (!allComments || allComments.length === 0 || allComments === null)
+  if (!appComments || appComments.length === 0 || appComments === null)
     return (
       <section className="flex flex-col space-y-6 md:space-y-8">
         <div className="flex items-center space-x-4">
@@ -48,12 +47,12 @@ const AppDetailCommentSection = async ({
             Be the first one to comment ...
           </p>
         </div>
-        <CommentForm app_id={app_id} />
+        <CommentFormButton db_row_id={app_id} />
       </section>
     )
 
   const commentsList =
-    allComments?.map((comment) => ({
+    appComments?.map((comment) => ({
       ...comment,
       user_has_liked_comment: Array.isArray(comment.app_comment_likes)
         ? !!comment.app_comment_likes.find((like) => like.user_id === user?.id)
@@ -61,8 +60,8 @@ const AppDetailCommentSection = async ({
       likes_count: Array.isArray(comment.app_comment_likes)
         ? comment.app_comment_likes.length
         : 0,
-      user_has_commented_comment: Array.isArray(allComments)
-        ? !!allComments.find(
+      user_has_commented_comment: Array.isArray(appComments)
+        ? !!appComments.find(
             (reply) =>
               reply.parent_id === comment.comment_id &&
               reply.user_id === user?.id
@@ -70,22 +69,22 @@ const AppDetailCommentSection = async ({
         : false,
     })) ?? []
 
-  if (allComments && allComments.length > 0)
+  if (appComments && appComments.length > 0)
     return (
       <section
         className="flex w-full flex-col space-y-6 md:space-y-8"
         suppressHydrationWarning
       >
         <div className="flex w-full items-center space-x-4">
-          {allComments && allComments.length > 0 && (
+          {appComments && appComments.length > 0 && (
             <span className="font-medium tracking-wide">
-              {allComments.length} Comments
+              {appComments.length} Comments
             </span>
           )}
           <CommentListFilter c_order={c_order} orderBy={orderBy} />
         </div>
 
-        <CommentForm app_id={app_id} />
+        <CommentFormButton db_row_id={app_id} />
 
         <div className="sm:hidden" id="comments-section">
           <EnhancedDrawer>

@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { addAppComment } from "@/server/queries/supabase/comments/app_comments"
 
 import {
   App_Comments,
@@ -65,7 +66,8 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
             comment.profiles.user_name ||
             `User_${comment.profiles.user_id.slice(-5)}`
           }
-          app_id={comment.app_id}
+          addCommentService={addAppComment}
+          db_row_id={comment.app_id}
           parent_id={comment.comment_id}
           className="w-full md:max-w-xl"
           toggleReplying={() => setReplying(!isReplying)}
