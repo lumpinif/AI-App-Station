@@ -42,7 +42,7 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
   }
 
   return (
-    <>
+    <section className="mb-10 pb-10">
       <StoryContentTitle
         post_content={post_content}
         firstHeading={firstHeading}
@@ -51,12 +51,12 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
       {!isEmpty && restContent.content.length > 0 ? (
         <ContentRenderer content={restContent}></ContentRenderer>
       ) : (
-        <div className="relative w-full">
+        <div className="relative mt-10 w-full">
           <span className="text-muted-foreground italic">
             Story content is empty ...
           </span>
         </div>
       )}
-    </>
+    </section>
   )
 }

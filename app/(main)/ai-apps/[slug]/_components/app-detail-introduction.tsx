@@ -45,7 +45,7 @@ export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
         {showAll ? (
           <IntroductionEditorContent introduction={introduction} />
         ) : (
-          <ScrollArea className="relative h-[32rem] w-full p-2">
+          <ScrollArea className="relative h-[50rem] w-full p-2 pb-6">
             <IntroductionEditorContent introduction={introduction} />
             <ProgressiveBlur className="h-20" />
           </ScrollArea>

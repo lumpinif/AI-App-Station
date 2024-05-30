@@ -174,6 +174,7 @@ export default async function AiAppsMainPage({
             <AppDetailIntroduction introduction={app.introduction} />
 
             <AppDetailReviews {...ratingData} />
+
             <Suspense fallback={<LoadingSpinner />}>
               <AppDetailCommentSection
                 user={user}
