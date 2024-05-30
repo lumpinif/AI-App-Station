@@ -1,21 +1,14 @@
-import { getUserData } from "@/server/auth"
 import { getAppComments } from "@/server/queries/supabase/comments/app_comments"
 import { User } from "@supabase/supabase-js"
 
 import { App_Comments, Apps } from "@/types/db_tables"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { CommentCard } from "@/components/comment/comment-card"
 import { CommentFormButton } from "@/components/comment/comment-form-button"
 import { CommentListFilter } from "@/components/comment/comment-list-filter"
-import {
-  EnhancedDrawer,
-  EnhancedDrawerClose,
-  EnhancedDrawerContent,
-  EnhancedDrawerTrigger,
-} from "@/components/shared/enhanced-drawer"
+import { CommentMobileDrawer } from "@/components/comment/comment-mobile-drawer"
 import { ProgressiveBlur } from "@/components/shared/progressive-blur"
 
-import AppDetailCommentList from "./app-detail-commentList"
+import AppDetailCommentList from "./app-detail-comment-list"
 
 type CommentListProps = {
   user: User | null
@@ -75,6 +68,7 @@ const AppDetailCommentSection = async ({
         className="flex w-full flex-col space-y-6 md:space-y-8"
         suppressHydrationWarning
       >
+        {/* COMMENT SECTION HEADER */}
         <div className="flex w-full items-center space-x-4">
           {appComments && appComments.length > 0 && (
             <span className="font-medium tracking-wide">
@@ -86,29 +80,17 @@ const AppDetailCommentSection = async ({
 
         <CommentFormButton db_row_id={app_id} />
 
+        {/* MOBILE DRAWER */}
         <div className="sm:hidden" id="comments-section">
-          <EnhancedDrawer>
-            <EnhancedDrawerTrigger asChild>
-              <div className="flex flex-col space-y-2">
-                <CommentCard
-                  comment={commentsList[0]}
-                  className="bg-muted dark:bg-muted/20 w-full cursor-pointer rounded-lg p-4"
-                />
-                <span className="text-muted-foreground/60 ring-offset-background cursor-pointer text-end text-xs focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
-                  tap to check more
-                </span>
-              </div>
-            </EnhancedDrawerTrigger>
-            <EnhancedDrawerContent className="ring-offset-background h-4/5 max-h-[calc(100vh-2rem)] rounded-t-3xl focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
-              <EnhancedDrawerClose title="Ratings & Reviews" />
-              <AppDetailCommentList
-                commentsList={commentsList}
-                className="mb-6 w-full p-4"
-              />
-              <ProgressiveBlur className="h-24" />
-            </EnhancedDrawerContent>
-          </EnhancedDrawer>
+          <CommentMobileDrawer firstComment={commentsList[0]}>
+            <AppDetailCommentList
+              commentsList={commentsList}
+              className="mb-6 w-full p-4"
+            />
+          </CommentMobileDrawer>
         </div>
+
+        {/* DESKTOP COMMENT LIST*/}
         <div className="hidden w-full flex-col space-y-4 sm:flex">
           <ScrollArea className="relative h-[42rem]">
             <AppDetailCommentList
