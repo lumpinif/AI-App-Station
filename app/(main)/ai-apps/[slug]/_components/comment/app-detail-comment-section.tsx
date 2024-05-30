@@ -92,7 +92,7 @@ const AppDetailCommentSection = async ({
 
         {/* DESKTOP COMMENT LIST*/}
         <div className="hidden w-full flex-col space-y-4 sm:flex">
-          <ScrollArea className="relative h-[42rem]">
+          <ScrollArea className="relative h-[50rem]">
             <AppDetailCommentList
               commentsList={commentsList}
               className="mb-14"

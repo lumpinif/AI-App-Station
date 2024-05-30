@@ -95,7 +95,7 @@ export default async function AiAppsMainPage({
 
   return (
     <main
-      className="mb-4 mt-4 flex flex-col space-y-4 md:mt-6 lg:mt-8 xl:mt-12"
+      className="mb-8 mt-4 flex flex-col space-y-4 pb-8 md:mt-6 lg:mt-8 xl:mt-12"
       suppressHydrationWarning
     >
       {app.is_featured && (
