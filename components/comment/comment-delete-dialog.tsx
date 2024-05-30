@@ -1,6 +1,5 @@
-import { AppCommentWithProfile } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { TCommentWithProfile } from "@/types/db_tables"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -8,7 +7,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 
 import CommentDeleteButton from "./comment-delete-button"
@@ -16,14 +14,14 @@ import CommentDeleteButton from "./comment-delete-button"
 type CommentDeleteDialogProps = React.ComponentPropsWithoutRef<
   typeof Dialog
 > & {
-  comment: AppCommentWithProfile
   isOpen: boolean
+  comment: TCommentWithProfile
   onOpenChange: (open: boolean) => void
 }
 
 export const CommentDeleteDialog: React.FC<CommentDeleteDialogProps> = ({
-  comment,
   isOpen,
+  comment,
   onOpenChange,
   ...props
 }) => {

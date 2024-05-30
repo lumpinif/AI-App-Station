@@ -1,7 +1,4 @@
-import {
-  AppCommentWithProfile,
-  PostCommentWithProfile,
-} from "@/types/db_tables"
+import { TCommentWithProfile } from "@/types/db_tables"
 
 import {
   EnhancedDrawer,
@@ -14,7 +11,7 @@ import { CommentCard } from "./comment-card"
 
 type CommentMobileDrawerProps = {
   children: React.ReactNode
-  firstComment: AppCommentWithProfile | PostCommentWithProfile
+  firstComment: TCommentWithProfile
 }
 
 export const CommentMobileDrawer: React.FC<CommentMobileDrawerProps> = ({

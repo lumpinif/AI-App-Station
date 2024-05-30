@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { UpdateAppComment } from "@/server/queries/supabase/comments/app_comments"
+import { updateAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { useQueryClient } from "@tanstack/react-query"
@@ -10,7 +10,17 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App_Comments, AppCommentActionsProp } from "@/types/db_tables"
+import {
+  App_Comments,
+  AppCommentActionsProp,
+  CommentActionsProp,
+  CommentEditServiceType,
+  CommentReplyServiceType,
+  TCommentId,
+  TCommentParentId,
+  TCommentRowId,
+  TCommentWithProfile,
+} from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -34,22 +44,27 @@ const FormSchema = z.object({
   rating: z.number().min(0.5).max(5),
 })
 
+// TODO: ADD TYPEOF addPostComment before production
+export type updateAppCommentReturnType = typeof updateAppComment
+
 type CommentEditFormProps = Pick<
-  AppCommentActionsProp,
-  "comment" | "setIsEditing" | "className"
+  CommentActionsProp,
+  "setIsEditing" | "className"
 > & {
-  app_id: App_Comments["app_id"]
-  comment_id: App_Comments["comment_id"]
-  parent_id?: App_Comments["parent_id"]
+  comment: TCommentWithProfile
+  db_row_id: TCommentRowId
+  comment_id: TCommentId
+  parent_id?: TCommentParentId
+  updateCommentService: CommentEditServiceType<updateAppCommentReturnType>
 }
 
 const CommentEditForm: React.FC<CommentEditFormProps> = ({
-  className,
   comment,
-  setIsEditing,
-  app_id,
-  comment_id,
+  db_row_id,
   parent_id,
+  className,
+  comment_id,
+  setIsEditing,
 }) => {
   const queryClient = useQueryClient()
   const queryKey = ["replies", parent_id]
@@ -86,8 +101,8 @@ const CommentEditForm: React.FC<CommentEditFormProps> = ({
       return
     }
 
-    const { updatedComment, error } = await UpdateAppComment(
-      app_id,
+    const { updatedComment, error } = await updateAppComment(
+      db_row_id,
       values.edit,
       comment_id,
       values.rating

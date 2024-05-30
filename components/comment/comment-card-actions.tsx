@@ -1,12 +1,16 @@
 "use client"
 
 import React from "react"
-import { addAppComment } from "@/server/queries/supabase/comments/app_comments"
+import {
+  addAppComment,
+  updateAppComment,
+} from "@/server/queries/supabase/comments/app_comments"
 
 import {
-  App_Comments,
-  AppCommentActionsProp,
-  AppCommentWithProfile,
+  CommentActionsProp,
+  TCommentParentId,
+  TCommentWithProfile,
+  TSetOptimisticComment,
 } from "@/types/db_tables"
 
 import { CommentDropDownMenu } from "./comment-dropdown-menu"
@@ -15,14 +19,12 @@ import { CommentLIkeButton } from "./comment-like-button"
 import { CommentReplyButton } from "./comment-reply-button"
 import CommentReplyForm from "./comment-reply-form"
 
-type CommentActionsProps = Pick<
-  AppCommentActionsProp,
-  "isReplied" | "comment"
-> & {
-  commentsList: AppCommentWithProfile[]
-  parent_id: App_Comments["parent_id"]
+type CommentActionsProps = Pick<CommentActionsProp, "isReplied"> & {
+  comment: TCommentWithProfile
+  commentsList: TCommentWithProfile[]
+  parent_id: TCommentParentId
   isFetching?: boolean
-  setOptimisitcComment: (newComment: AppCommentWithProfile) => void
+  setOptimisitcComment: TSetOptimisticComment
 }
 
 export const CommentCardActions: React.FC<CommentActionsProps> = ({
@@ -66,21 +68,22 @@ export const CommentCardActions: React.FC<CommentActionsProps> = ({
             comment.profiles.user_name ||
             `User_${comment.profiles.user_id.slice(-5)}`
           }
-          addCommentService={addAppComment}
           db_row_id={comment.app_id}
           parent_id={comment.comment_id}
-          className="w-full md:max-w-xl"
+          CommentReplyService={addAppComment}
           toggleReplying={() => setReplying(!isReplying)}
+          className="w-full md:max-w-xl"
         />
       )}
       {isEditing && (
         <CommentEditForm
           comment={comment}
+          db_row_id={comment.app_id}
+          updateCommentService={updateAppComment}
+          setIsEditing={setIsEditing}
           parent_id={comment.parent_id}
           comment_id={comment.comment_id}
-          app_id={comment.app_id}
           className="w-full md:max-w-xl"
-          setIsEditing={setIsEditing}
         />
       )}
     </div>

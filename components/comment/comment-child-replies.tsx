@@ -2,13 +2,13 @@
 
 import { useState } from "react"
 
-import { App_Comments } from "@/types/db_tables"
+import { TCommentParentId } from "@/types/db_tables"
 
 import { CommentList, CommentListProps } from "./comment-list"
 import { CommentShowReplies } from "./comment-show-replies"
 
 type CommentChildRepliesProps = CommentListProps & {
-  parent_id: App_Comments["parent_id"]
+  parent_id: TCommentParentId
 }
 
 export const CommentChildReplies: React.FC<CommentChildRepliesProps> = ({

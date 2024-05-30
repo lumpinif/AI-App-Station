@@ -1,16 +1,16 @@
 import React from "react"
 import { MessageCircle } from "lucide-react"
 
-import { AppCommentActionsProp, AppCommentWithProfile } from "@/types/db_tables"
+import { CommentActionsProp, TCommentWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type CommentReplyButtonProps = Pick<
-  AppCommentActionsProp,
+  CommentActionsProp,
   "isReplied" | "repliesCount"
 > & {
-  comment: AppCommentWithProfile
+  comment: TCommentWithProfile
   className?: string
   toggleReplying: () => void
   isFetching?: boolean

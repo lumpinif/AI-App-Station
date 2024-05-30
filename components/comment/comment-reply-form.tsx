@@ -9,7 +9,11 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { App_Comments, Post_Comments } from "@/types/db_tables"
+import {
+  CommentReplyServiceType,
+  TCommentParentId,
+  TCommentRowId,
+} from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
 import {
@@ -33,22 +37,15 @@ const FormSchema = z.object({
 })
 
 // TODO: ADD TYPEOF addPostComment before production
-type PrimiseReturnType = typeof addAppComment
-
-type addCommentServiceType = (
-  db_row_id: string,
-  comment_content: string,
-  replyToCommentId?: string | null,
-  rating?: number | null
-) => Promise<Awaited<ReturnType<PrimiseReturnType>>>
+export type addAppCommentReturnType = typeof addAppComment
 
 type CommentReplyFormProps = {
-  db_row_id: App_Comments["app_id"] | Post_Comments["post_id"]
-  parent_id?: App_Comments["comment_id"] | Post_Comments["comment_id"]
+  db_row_id: TCommentRowId
+  parent_id?: TCommentParentId
   className?: string
   parent_name?: string
   toggleReplying: () => void
-  addCommentService: addCommentServiceType
+  CommentReplyService: CommentReplyServiceType<addAppCommentReturnType>
   setIsShowReplies?: React.Dispatch<React.SetStateAction<boolean>>
   withRating?: boolean
 }
@@ -58,7 +55,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
   db_row_id,
   parent_id: replyToCommentId,
   parent_name,
-  addCommentService,
+  CommentReplyService,
   toggleReplying,
   setIsShowReplies,
   withRating = false,
@@ -92,7 +89,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
     const rating = withRating ? values.rating : null
 
-    const { comment, error } = await addCommentService(
+    const { comment, error } = await CommentReplyService(
       db_row_id,
       values.reply,
       replyToCommentId,

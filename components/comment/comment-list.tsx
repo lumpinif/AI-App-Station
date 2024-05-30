@@ -1,4 +1,8 @@
-import { AppCommentWithProfile } from "@/types/db_tables"
+import {
+  AppCommentWithProfile,
+  TCommentWithProfile,
+  TSetOptimisticComment,
+} from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { CommentCard } from "./comment-card"
@@ -7,10 +11,10 @@ import { CommentChildReplies } from "./comment-child-replies"
 import { CommentListWrapper } from "./comment-list-wrapper"
 
 export type CommentListProps = {
-  commentsList: AppCommentWithProfile[]
+  commentsList: TCommentWithProfile[]
   idsToRender?: string[]
   indentLevel?: number
-  setOptimisitcComment: (newComment: AppCommentWithProfile) => void
+  setOptimisitcComment: TSetOptimisticComment
 }
 
 export function CommentList({
@@ -26,7 +30,7 @@ export function CommentList({
   }
 
   const getIsReplied = (
-    optimisticComments: AppCommentWithProfile[],
+    optimisticComments: TCommentWithProfile[],
     parent_id: string
   ) => {
     const childItems = optimisticComments.filter(

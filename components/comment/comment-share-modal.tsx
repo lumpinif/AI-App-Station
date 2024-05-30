@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation"
 
-import { AppCommentWithProfile } from "@/types/db_tables"
+import { TCommentWithProfile } from "@/types/db_tables"
 import { getSiteUrl } from "@/lib/utils"
 
 import { ShareModal } from "../shared/share-modal"
@@ -9,7 +9,7 @@ import { Drawer } from "../ui/drawer"
 
 type CommentShareModalProps = React.ComponentPropsWithoutRef<typeof Dialog> &
   React.ComponentPropsWithoutRef<typeof Drawer> & {
-    comment: AppCommentWithProfile
+    comment: TCommentWithProfile
   }
 
 export const CommentShareModal: React.FC<CommentShareModalProps> = ({

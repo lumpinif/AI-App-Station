@@ -4,14 +4,13 @@ import { useEffect, useOptimistic } from "react"
 import { useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 
-import { AppCommentWithProfile } from "@/types/db_tables"
+import { AppCommentWithProfile, TSetOptimisticComment } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { CommentList } from "@/components/comment/comment-list"
 
 type CommentListProps = {
-  commentsList: AppCommentWithProfile[]
-} & {
   className?: string
+  commentsList: AppCommentWithProfile[]
 }
 
 export const AppDetailCommentList: React.FC<CommentListProps> = ({
@@ -65,7 +64,7 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
     >
       <CommentList
         commentsList={optimisticComments}
-        setOptimisitcComment={setOptimisticComment}
+        setOptimisitcComment={setOptimisticComment as TSetOptimisticComment}
       />
       <span className="text-muted-foreground px-4 py-2 text-end text-xs max-sm:mb-6">
         No more comments

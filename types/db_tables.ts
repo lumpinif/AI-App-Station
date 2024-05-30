@@ -2,6 +2,10 @@
 
 // Import necessary types
 import { Dispatch, SetStateAction } from "react"
+import {
+  addAppComment,
+  updateAppComment,
+} from "@/server/queries/supabase/comments/app_comments"
 
 import { Database, Enums, Tables } from "@/types/supabase"
 
@@ -125,6 +129,35 @@ export type AppCommentActionsProp = CommentActionsProp & {
 export type PostCommentActionsProp = CommentActionsProp & {
   comment: PostCommentWithProfile
 }
+
+// Comment list properties
+export type TCommentWithProfile = AppCommentWithProfile | PostCommentWithProfile
+
+export type TSetOptimisticComment = (newComment: TCommentWithProfile) => void
+
+export type TCommentId =
+  | App_Comments["comment_id"]
+  | Post_Comments["comment_id"]
+
+export type TCommentParentId =
+  | App_Comments["parent_id"]
+  | Post_Comments["parent_id"]
+
+export type TCommentRowId = App_Comments["app_id"] | Post_Comments["post_id"]
+
+export type CommentReplyServiceType<T extends (...args: any) => any> = (
+  db_row_id: TCommentRowId,
+  comment_content: string,
+  replyToCommentId?: TCommentId | null,
+  rating?: number | null
+) => Promise<Awaited<ReturnType<T>>>
+
+export type CommentEditServiceType<T extends (...args: any) => any> = (
+  db_row_id: TCommentRowId,
+  comment_content: string,
+  comment_id: TCommentId,
+  rating?: number | null
+) => Promise<Awaited<ReturnType<T>>>
 
 // Screenshot related types
 

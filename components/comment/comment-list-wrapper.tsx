@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react"
 
-import { AppCommentWithProfile } from "@/types/db_tables"
+import { TCommentWithProfile } from "@/types/db_tables"
 import { cn, scrollToSection } from "@/lib/utils"
 import { useHash } from "@/hooks/use-hash"
 
 type CommentListWrapperProps = {
-  comment: AppCommentWithProfile
+  comment: TCommentWithProfile
   children?: React.ReactNode
 }
 

@@ -3,7 +3,12 @@
 import { useState } from "react"
 import { Delete, Ellipsis, Flag, Pencil, Share2 } from "lucide-react"
 
-import { AppCommentActionsProp, AppCommentWithProfile } from "@/types/db_tables"
+import {
+  AppCommentActionsProp,
+  AppCommentWithProfile,
+  CommentActionsProp,
+  TCommentWithProfile,
+} from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 
@@ -17,8 +22,8 @@ import { CommentDeleteDialog } from "./comment-delete-dialog"
 import { CommentShareModal } from "./comment-share-modal"
 
 type CommentDropDownMenuProps = {
-  comment: AppCommentWithProfile
-} & Pick<AppCommentActionsProp, "isEditing" | "setIsEditing">
+  comment: TCommentWithProfile
+} & Pick<CommentActionsProp, "isEditing" | "setIsEditing">
 
 export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
   comment,

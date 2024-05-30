@@ -94,7 +94,7 @@ export async function addAppComment(
   return { comment, error }
 }
 
-export async function UpdateAppComment(
+export async function updateAppComment(
   app_id: Apps["app_id"],
   comment_content: App_Comments["comment"],
   comment_id: App_Comments["comment_id"],
