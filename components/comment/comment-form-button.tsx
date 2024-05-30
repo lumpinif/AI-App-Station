@@ -37,7 +37,7 @@ export const CommentFormButton: React.FC<CommentFormProps> = ({
         </Button>
       ) : (
         <CommentReplyForm
-          CommentReplyService={addAppComment}
+          commentReplyService={addAppComment}
           withRating={true}
           db_row_id={db_row_id}
           toggleReplying={() => setIsReplying(false)}

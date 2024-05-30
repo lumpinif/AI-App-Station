@@ -1,5 +1,7 @@
 import {
-  AppCommentWithProfile,
+  CommentDeleteServiceType,
+  CommentEditServiceType,
+  CommentReplyServiceType,
   TCommentWithProfile,
   TSetOptimisticComment,
 } from "@/types/db_tables"
@@ -10,19 +12,35 @@ import { CommentCardActions } from "./comment-card-actions"
 import { CommentChildReplies } from "./comment-child-replies"
 import { CommentListWrapper } from "./comment-list-wrapper"
 
-export type CommentListProps = {
-  commentsList: TCommentWithProfile[]
+export type CommentListProps<
+  T extends TCommentWithProfile,
+  U extends (...args: any) => any,
+  R extends (...args: any) => any,
+  V extends (...args: any) => any,
+> = {
   idsToRender?: string[]
   indentLevel?: number
+  commentsList: T[]
   setOptimisitcComment: TSetOptimisticComment
+  commentReplyService: CommentReplyServiceType<U>
+  updateCommentService: CommentEditServiceType<R>
+  deleteCommentService: CommentDeleteServiceType<V>
 }
 
-export function CommentList({
-  commentsList: optimisticComments,
+export function CommentList<
+  T extends TCommentWithProfile,
+  U extends (...args: any) => any,
+  R extends (...args: any) => any,
+  V extends (...args: any) => any,
+>({
   idsToRender = [],
   indentLevel = 0,
+  commentsList: optimisticComments,
   setOptimisitcComment,
-}: CommentListProps) {
+  commentReplyService,
+  updateCommentService,
+  deleteCommentService,
+}: CommentListProps<T, U, R, V>) {
   if (!idsToRender.length) {
     idsToRender = optimisticComments
       .filter((i) => !i.parent_id)
@@ -64,7 +82,7 @@ export function CommentList({
                 <div className="flex justify-between gap-1">
                   <div className="w-full flex-1">
                     <CommentCard comment={comment!}>
-                      <CommentCardActions
+                      <CommentCardActions<U, R, V>
                         comment={comment}
                         parent_id={comment!.comment_id}
                         isReplied={getIsReplied(
@@ -73,6 +91,9 @@ export function CommentList({
                         )}
                         commentsList={optimisticComments}
                         setOptimisitcComment={setOptimisitcComment}
+                        commentReplyService={commentReplyService}
+                        updateCommentService={updateCommentService}
+                        deleteCommentService={deleteCommentService}
                       />
                     </CommentCard>
                   </div>

@@ -44,10 +44,7 @@ const FormSchema = z.object({
   rating: z.number().min(0.5).max(5),
 })
 
-// TODO: ADD TYPEOF addPostComment before production
-export type updateAppCommentReturnType = typeof updateAppComment
-
-type CommentEditFormProps = Pick<
+type CommentEditFormProps<R extends (...args: any) => any> = Pick<
   CommentActionsProp,
   "setIsEditing" | "className"
 > & {
@@ -55,17 +52,17 @@ type CommentEditFormProps = Pick<
   db_row_id: TCommentRowId
   comment_id: TCommentId
   parent_id?: TCommentParentId
-  updateCommentService: CommentEditServiceType<updateAppCommentReturnType>
+  updateCommentService: CommentEditServiceType<R>
 }
 
-const CommentEditForm: React.FC<CommentEditFormProps> = ({
+const CommentEditForm = <R extends (...args: any) => any>({
   comment,
   db_row_id,
   parent_id,
   className,
   comment_id,
   setIsEditing,
-}) => {
+}: CommentEditFormProps<R>) => {
   const queryClient = useQueryClient()
   const queryKey = ["replies", parent_id]
   const form = useForm<z.infer<typeof FormSchema>>({

@@ -2,9 +2,20 @@
 
 import { useEffect, useOptimistic } from "react"
 import { useRouter } from "next/navigation"
+import {
+  addAppComment,
+  deleteAppComment,
+  updateAppComment,
+} from "@/server/queries/supabase/comments/app_comments"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 
-import { AppCommentWithProfile, TSetOptimisticComment } from "@/types/db_tables"
+import {
+  addAppCommentReturnType,
+  AppCommentWithProfile,
+  deleteAppCommentReturnType,
+  TSetOptimisticComment,
+  updateAppCommentReturnType,
+} from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { CommentList } from "@/components/comment/comment-list"
 
@@ -62,8 +73,16 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
       className={cn("flex w-full flex-col", className)}
       suppressHydrationWarning
     >
-      <CommentList
+      <CommentList<
+        AppCommentWithProfile,
+        addAppCommentReturnType,
+        updateAppCommentReturnType,
+        deleteAppCommentReturnType
+      >
         commentsList={optimisticComments}
+        commentReplyService={addAppComment}
+        updateCommentService={updateAppComment}
+        deleteCommentService={deleteAppComment}
         setOptimisitcComment={setOptimisticComment as TSetOptimisticComment}
       />
       <span className="text-muted-foreground px-4 py-2 text-end text-xs max-sm:mb-6">

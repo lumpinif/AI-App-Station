@@ -1,38 +1,42 @@
 import * as React from "react"
-import { DeleteAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { useQueryClient } from "@tanstack/react-query"
-import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
-import { App_Comments } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import {
+  CommentDeleteServiceType,
+  TCommentId,
+  TCommentParentId,
+  TCommentRowId,
+} from "@/types/db_tables"
 
 import { LoadingSpinner } from "../shared/loading-spinner"
 import { SpinnerButton } from "../shared/spinner-button"
 import { ButtonProps } from "../ui/button"
 
-type CommentDeleteButtonProps = ButtonProps & {
-  app_id: App_Comments["app_id"]
-  comment_id: App_Comments["comment_id"]
-  parent_id: App_Comments["parent_id"]
+type CommentDeleteButtonProps<V extends (...args: any) => any> = ButtonProps & {
+  db_row_id: TCommentRowId
+  comment_id: TCommentId
+  parent_id: TCommentParentId
+  deleteCommentService: CommentDeleteServiceType<V>
   onDeleted?: () => void
 }
 
-const CommentDeleteButton: React.FC<CommentDeleteButtonProps> = ({
-  app_id,
+const CommentDeleteButton = <V extends (...args: any) => any>({
+  db_row_id,
   comment_id,
   parent_id,
   onDeleted,
+  deleteCommentService,
   ...props
-}) => {
+}: CommentDeleteButtonProps<V>) => {
   const [isPending, startTransition] = React.useTransition()
   const queryClient = useQueryClient()
   const queryKey = parent_id ? ["replies", parent_id] : ["replies", comment_id]
 
   const handleDelete = () => {
     const DeleteAppCommentPromise = async () => {
-      const { error: deleteAppCommentError } = await DeleteAppComment(
-        app_id,
+      const { error: deleteAppCommentError } = await deleteCommentService(
+        db_row_id,
         comment_id
       )
 

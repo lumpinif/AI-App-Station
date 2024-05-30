@@ -4,6 +4,7 @@
 import { Dispatch, SetStateAction } from "react"
 import {
   addAppComment,
+  deleteAppComment,
   updateAppComment,
 } from "@/server/queries/supabase/comments/app_comments"
 
@@ -145,19 +146,31 @@ export type TCommentParentId =
 
 export type TCommentRowId = App_Comments["app_id"] | Post_Comments["post_id"]
 
-export type CommentReplyServiceType<T extends (...args: any) => any> = (
+export type CommentReplyServiceType<U extends (...args: any) => any> = (
   db_row_id: TCommentRowId,
   comment_content: string,
   replyToCommentId?: TCommentId | null,
   rating?: number | null
-) => Promise<Awaited<ReturnType<T>>>
+) => Promise<Awaited<ReturnType<U>>>
 
-export type CommentEditServiceType<T extends (...args: any) => any> = (
+export type CommentEditServiceType<R extends (...args: any) => any> = (
   db_row_id: TCommentRowId,
   comment_content: string,
   comment_id: TCommentId,
   rating?: number | null
-) => Promise<Awaited<ReturnType<T>>>
+) => Promise<Awaited<ReturnType<R>>>
+
+export type CommentDeleteServiceType<V extends (...args: any) => any> = (
+  db_row_id: TCommentRowId,
+  comment_id: TCommentId
+) => Promise<Awaited<ReturnType<V>>>
+
+// TODO: ADD TYPEOF addPostComment before production
+export type addAppCommentReturnType = typeof addAppComment
+// TODO: ADD TYPEOF addPostComment before production
+export type updateAppCommentReturnType = typeof updateAppComment
+// TODO: ADD TYPEOF addPostComment before production
+export type deleteAppCommentReturnType = typeof deleteAppComment
 
 // Screenshot related types
 

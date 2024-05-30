@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { addAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
@@ -36,30 +35,27 @@ const FormSchema = z.object({
   rating: z.number().min(0.5).max(5),
 })
 
-// TODO: ADD TYPEOF addPostComment before production
-export type addAppCommentReturnType = typeof addAppComment
-
-type CommentReplyFormProps = {
+type CommentReplyFormProps<U extends (...args: any) => any> = {
   db_row_id: TCommentRowId
   parent_id?: TCommentParentId
   className?: string
   parent_name?: string
   toggleReplying: () => void
-  CommentReplyService: CommentReplyServiceType<addAppCommentReturnType>
+  commentReplyService: CommentReplyServiceType<U>
   setIsShowReplies?: React.Dispatch<React.SetStateAction<boolean>>
   withRating?: boolean
 }
 
-const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
+const CommentReplyForm = <U extends (...args: any) => any>({
   className,
   db_row_id,
   parent_id: replyToCommentId,
   parent_name,
-  CommentReplyService,
+  commentReplyService,
   toggleReplying,
   setIsShowReplies,
   withRating = false,
-}) => {
+}: CommentReplyFormProps<U>) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -89,7 +85,7 @@ const CommentReplyForm: React.FC<CommentReplyFormProps> = ({
 
     const rating = withRating ? values.rating : null
 
-    const { comment, error } = await CommentReplyService(
+    const { comment, error } = await commentReplyService(
       db_row_id,
       values.reply,
       replyToCommentId,

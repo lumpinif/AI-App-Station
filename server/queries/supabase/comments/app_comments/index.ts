@@ -53,6 +53,7 @@ export async function getAppComments(
   return { comments, error }
 }
 
+// THIS IS USED IN THE RETRUN TYPE BECARE FULL WITH MODIFICATIONS
 export async function addAppComment(
   app_id: Apps["app_id"],
   comment_content: App_Comments["comment"],
@@ -131,7 +132,7 @@ export async function updateAppComment(
   return { updatedComment, error }
 }
 
-export async function DeleteAppComment(
+export async function deleteAppComment(
   app_id: Apps["app_id"],
   comment_id: App_Comments["comment_id"]
 ) {

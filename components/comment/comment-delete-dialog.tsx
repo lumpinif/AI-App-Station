@@ -1,4 +1,7 @@
-import { TCommentWithProfile } from "@/types/db_tables"
+import {
+  CommentDeleteServiceType,
+  TCommentWithProfile,
+} from "@/types/db_tables"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -11,20 +14,21 @@ import {
 
 import CommentDeleteButton from "./comment-delete-button"
 
-type CommentDeleteDialogProps = React.ComponentPropsWithoutRef<
-  typeof Dialog
-> & {
-  isOpen: boolean
-  comment: TCommentWithProfile
-  onOpenChange: (open: boolean) => void
-}
+type CommentDeleteDialogProps<V extends (...args: any) => any> =
+  React.ComponentPropsWithoutRef<typeof Dialog> & {
+    isOpen: boolean
+    comment: TCommentWithProfile
+    onOpenChange: (open: boolean) => void
+    deleteCommentService: CommentDeleteServiceType<V>
+  }
 
-export const CommentDeleteDialog: React.FC<CommentDeleteDialogProps> = ({
+export const CommentDeleteDialog = <V extends (...args: any) => any>({
   isOpen,
   comment,
   onOpenChange,
+  deleteCommentService,
   ...props
-}) => {
+}: CommentDeleteDialogProps<V>) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange} {...props}>
       <DialogContent className="shadow-outline rounded-lg backdrop-blur-xl max-sm:max-w-sm">
@@ -41,13 +45,14 @@ export const CommentDeleteDialog: React.FC<CommentDeleteDialogProps> = ({
           <Button onClick={() => onOpenChange(false)} variant={"outline"}>
             Cancel
           </Button>
-          <CommentDeleteButton
-            app_id={comment.app_id}
+          <CommentDeleteButton<V>
+            db_row_id={comment.app_id}
             comment_id={comment.comment_id}
             parent_id={comment.parent_id}
             variant={"destructive"}
             className="w-full sm:w-20"
             onDeleted={() => onOpenChange(false)}
+            deleteCommentService={deleteCommentService}
           />
         </DialogFooter>
       </DialogContent>

@@ -4,9 +4,8 @@ import { useState } from "react"
 import { Delete, Ellipsis, Flag, Pencil, Share2 } from "lucide-react"
 
 import {
-  AppCommentActionsProp,
-  AppCommentWithProfile,
   CommentActionsProp,
+  CommentDeleteServiceType,
   TCommentWithProfile,
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -21,25 +20,31 @@ import {
 import { CommentDeleteDialog } from "./comment-delete-dialog"
 import { CommentShareModal } from "./comment-share-modal"
 
-type CommentDropDownMenuProps = {
+type CommentDropDownMenuProps<V extends (...args: any) => any> = Pick<
+  CommentActionsProp,
+  "isEditing" | "setIsEditing"
+> & {
   comment: TCommentWithProfile
-} & Pick<CommentActionsProp, "isEditing" | "setIsEditing">
+  deleteCommentService: CommentDeleteServiceType<V>
+}
 
-export const CommentDropDownMenu: React.FC<CommentDropDownMenuProps> = ({
+export const CommentDropDownMenu = <V extends (...args: any) => any>({
   comment,
-  setIsEditing,
   isEditing,
-}) => {
+  setIsEditing,
+  deleteCommentService,
+}: CommentDropDownMenuProps<V>) => {
   const { data: profile } = useUserProfile()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false)
 
   return (
     <>
-      <CommentDeleteDialog
+      <CommentDeleteDialog<V>
         comment={comment}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
+        deleteCommentService={deleteCommentService}
       />
       <CommentShareModal
         nested={true}
