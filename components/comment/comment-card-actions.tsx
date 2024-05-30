@@ -7,6 +7,7 @@ import {
   CommentDeleteServiceType,
   CommentEditServiceType,
   CommentReplyServiceType,
+  CommentsOfTable,
   TCommentParentId,
   TCommentWithProfile,
   TSetOptimisticComment,
@@ -24,6 +25,7 @@ type CommentActionsProps<
   V extends (...args: any) => any,
 > = Pick<CommentActionsProp, "isReplied"> & {
   comment: TCommentWithProfile
+  commentsOf: CommentsOfTable
   commentsList: TCommentWithProfile[]
   parent_id: TCommentParentId
   isFetching?: boolean
@@ -39,6 +41,7 @@ export const CommentCardActions = <
   V extends (...args: any) => any,
 >({
   comment,
+  commentsOf,
   parent_id,
   isReplied,
   isFetching,
@@ -54,11 +57,17 @@ export const CommentCardActions = <
   const childItems = commentsList.filter((i) => i.parent_id === parent_id)
   const repliesCount = childItems.length
 
+  const commentLikesTable =
+    commentsOf === "apps" ? "app_comment_likes" : "post_comment_likes"
+
+  const db_row_id = commentsOf === "apps" ? comment.app_id : comment.post_id
+
   return (
     <div className="flex w-full flex-col space-y-4">
       <div className="flex items-center gap-x-4">
         <CommentLIkeButton
           comment={comment}
+          commentLikesTable={commentLikesTable}
           setOptimisticComment={setOptimisitcComment}
         />
         <CommentReplyButton
@@ -71,6 +80,7 @@ export const CommentCardActions = <
         />
         <CommentDropDownMenu<V>
           comment={comment}
+          db_row_id={db_row_id}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           deleteCommentService={deleteCommentService}
@@ -82,7 +92,7 @@ export const CommentCardActions = <
             comment.profiles.user_name ||
             `User_${comment.profiles.user_id.slice(-5)}`
           }
-          db_row_id={comment.app_id}
+          db_row_id={db_row_id}
           parent_id={comment.comment_id}
           commentReplyService={commentReplyService}
           toggleReplying={() => setReplying(!isReplying)}
@@ -92,9 +102,8 @@ export const CommentCardActions = <
       {isEditing && (
         <CommentEditForm<R>
           comment={comment}
-          db_row_id={comment.app_id}
+          db_row_id={db_row_id}
           setIsEditing={setIsEditing}
-          parent_id={comment.parent_id}
           comment_id={comment.comment_id}
           updateCommentService={updateCommentService}
           className="w-full md:max-w-xl"

@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
 import {
+  CommentLikesTable,
   Profiles,
   TCommentWithProfile,
   TSetOptimisticComment,
@@ -16,19 +17,20 @@ import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type CommentLIkeButtonProps = {
-  comment: TCommentWithProfile
   className?: string
+  comment: TCommentWithProfile
+  commentLikesTable: CommentLikesTable
   setOptimisticComment: TSetOptimisticComment
 }
 
 export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   comment,
   className,
+  commentLikesTable = "app_comment_likes",
   setOptimisticComment,
 }) => {
   const supabase = createSupabaseBrowserClient()
   const [isPending, startTransition] = useTransition()
-
   const openAccountModal = useAccountModal((state) => state.openModal)
 
   const router = useRouter()
@@ -37,7 +39,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   const handleLikeDebounced = useDebouncedCallback(
     async (profile: Profiles) => {
       const { error: addLikeError } = await supabase
-        .from("app_comment_likes")
+        .from(commentLikesTable)
         .insert({
           comment_id: comment.comment_id,
           user_id: profile.user_id,
@@ -53,7 +55,7 @@ export const CommentLIkeButton: React.FC<CommentLIkeButtonProps> = ({
   const handleRemoveLikeDebounced = useDebouncedCallback(
     async (profile: Profiles) => {
       const { error: removeLikeError } = await supabase
-        .from("app_comment_likes")
+        .from(commentLikesTable)
         .delete()
         .match({ comment_id: comment.comment_id, user_id: profile.user_id })
 

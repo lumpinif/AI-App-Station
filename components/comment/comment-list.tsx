@@ -2,6 +2,7 @@ import {
   CommentDeleteServiceType,
   CommentEditServiceType,
   CommentReplyServiceType,
+  CommentsOfTable,
   TCommentWithProfile,
   TSetOptimisticComment,
 } from "@/types/db_tables"
@@ -18,9 +19,10 @@ export type CommentListProps<
   R extends (...args: any) => any,
   V extends (...args: any) => any,
 > = {
+  commentsList: T[]
+  commentsOf: CommentsOfTable
   idsToRender?: string[]
   indentLevel?: number
-  commentsList: T[]
   setOptimisitcComment: TSetOptimisticComment
   commentReplyService: CommentReplyServiceType<U>
   updateCommentService: CommentEditServiceType<R>
@@ -36,6 +38,7 @@ export function CommentList<
   idsToRender = [],
   indentLevel = 0,
   commentsList: optimisticComments,
+  commentsOf = "apps",
   setOptimisitcComment,
   commentReplyService,
   updateCommentService,
@@ -84,6 +87,7 @@ export function CommentList<
                     <CommentCard comment={comment!}>
                       <CommentCardActions<U, R, V>
                         comment={comment}
+                        commentsOf={commentsOf}
                         parent_id={comment!.comment_id}
                         isReplied={getIsReplied(
                           optimisticComments,
@@ -101,6 +105,7 @@ export function CommentList<
               </div>
             </CommentListWrapper>
             <CommentChildReplies<T, U, R, V>
+              commentsOf={commentsOf}
               commentsList={optimisticComments}
               parent_id={comment!.comment_id}
               indentLevel={indentLevel + 1}

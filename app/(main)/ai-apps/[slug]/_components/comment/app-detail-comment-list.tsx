@@ -79,6 +79,7 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
         updateAppCommentReturnType,
         deleteAppCommentReturnType
       >
+        commentsOf="apps"
         commentsList={optimisticComments}
         commentReplyService={addAppComment}
         updateCommentService={updateAppComment}

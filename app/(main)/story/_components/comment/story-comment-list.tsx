@@ -80,6 +80,7 @@ export const StoryCommentList: React.FC<CommentListProps> = ({
         deletePostCommentReturnType
       >
         commentsList={optimisticComments}
+        commentsOf="posts"
         commentReplyService={addPostComment}
         updateCommentService={updatePostComment}
         deleteCommentService={deletePostComment}

@@ -1,11 +1,9 @@
 import * as React from "react"
-import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 import {
   CommentDeleteServiceType,
   TCommentId,
-  TCommentParentId,
   TCommentRowId,
 } from "@/types/db_tables"
 
@@ -16,7 +14,6 @@ import { ButtonProps } from "../ui/button"
 type CommentDeleteButtonProps<V extends (...args: any) => any> = ButtonProps & {
   db_row_id: TCommentRowId
   comment_id: TCommentId
-  parent_id: TCommentParentId
   deleteCommentService: CommentDeleteServiceType<V>
   onDeleted?: () => void
 }
@@ -24,14 +21,11 @@ type CommentDeleteButtonProps<V extends (...args: any) => any> = ButtonProps & {
 const CommentDeleteButton = <V extends (...args: any) => any>({
   db_row_id,
   comment_id,
-  parent_id,
   onDeleted,
   deleteCommentService,
   ...props
 }: CommentDeleteButtonProps<V>) => {
   const [isPending, startTransition] = React.useTransition()
-  const queryClient = useQueryClient()
-  const queryKey = parent_id ? ["replies", parent_id] : ["replies", comment_id]
 
   const handleDelete = () => {
     const DeleteAppCommentPromise = async () => {
@@ -52,7 +46,6 @@ const CommentDeleteButton = <V extends (...args: any) => any>({
         </span>
       ),
       success: () => {
-        queryClient.invalidateQueries({ queryKey: queryKey })
         onDeleted && onDeleted()
         return "Comment Deleted"
       },

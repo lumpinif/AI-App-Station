@@ -6,6 +6,7 @@ import { Delete, Ellipsis, Flag, Pencil, Share2 } from "lucide-react"
 import {
   CommentActionsProp,
   CommentDeleteServiceType,
+  TCommentRowId,
   TCommentWithProfile,
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -25,11 +26,13 @@ type CommentDropDownMenuProps<V extends (...args: any) => any> = Pick<
   "isEditing" | "setIsEditing"
 > & {
   comment: TCommentWithProfile
+  db_row_id: TCommentRowId
   deleteCommentService: CommentDeleteServiceType<V>
 }
 
 export const CommentDropDownMenu = <V extends (...args: any) => any>({
   comment,
+  db_row_id,
   isEditing,
   setIsEditing,
   deleteCommentService,
@@ -42,6 +45,7 @@ export const CommentDropDownMenu = <V extends (...args: any) => any>({
     <>
       <CommentDeleteDialog<V>
         comment={comment}
+        db_row_id={db_row_id}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         deleteCommentService={deleteCommentService}

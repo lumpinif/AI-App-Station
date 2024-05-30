@@ -1,5 +1,6 @@
 import {
   CommentDeleteServiceType,
+  TCommentRowId,
   TCommentWithProfile,
 } from "@/types/db_tables"
 import { Button } from "@/components/ui/button"
@@ -17,6 +18,7 @@ import CommentDeleteButton from "./comment-delete-button"
 type CommentDeleteDialogProps<V extends (...args: any) => any> =
   React.ComponentPropsWithoutRef<typeof Dialog> & {
     isOpen: boolean
+    db_row_id: TCommentRowId
     comment: TCommentWithProfile
     onOpenChange: (open: boolean) => void
     deleteCommentService: CommentDeleteServiceType<V>
@@ -25,6 +27,7 @@ type CommentDeleteDialogProps<V extends (...args: any) => any> =
 export const CommentDeleteDialog = <V extends (...args: any) => any>({
   isOpen,
   comment,
+  db_row_id,
   onOpenChange,
   deleteCommentService,
   ...props
@@ -46,9 +49,8 @@ export const CommentDeleteDialog = <V extends (...args: any) => any>({
             Cancel
           </Button>
           <CommentDeleteButton<V>
-            db_row_id={comment.app_id}
+            db_row_id={db_row_id}
             comment_id={comment.comment_id}
-            parent_id={comment.parent_id}
             variant={"destructive"}
             className="w-full sm:w-20"
             onDeleted={() => onOpenChange(false)}

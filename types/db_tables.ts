@@ -100,16 +100,18 @@ export type PostDetails = Posts &
   }
 
 // Comment related types
-export type CommentWithProfile = App_Comments & {
-  profiles: Profiles
-  user_has_liked_comment?: boolean
-  user_has_commented_comment?: boolean
-}
+export type CommentWithProfile = App_Comments &
+  Post_Comments & {
+    profiles: Profiles
+    user_has_liked_comment?: boolean
+    user_has_commented_comment?: boolean
+  }
 
 // Comment with profile and additional properties
-export type AppCommentWithProfile = CommentWithProfile & {
-  app_comment_likes: App_Comment_likes[]
-}
+export type AppCommentWithProfile = App_Comments &
+  CommentWithProfile & {
+    app_comment_likes: App_Comment_likes[]
+  }
 
 export type PostCommentWithProfile = CommentWithProfile & {
   post_comment_likes: Post_Comment_likes[]
@@ -178,6 +180,9 @@ export type updatePostCommentReturnType = typeof updatePostComment
 
 export type deleteAppCommentReturnType = typeof deleteAppComment
 export type deletePostCommentReturnType = typeof deletePostComment
+
+export type CommentsOfTable = "apps" | "posts"
+export type CommentLikesTable = "app_comment_likes" | "post_comment_likes"
 
 // Screenshot related types
 

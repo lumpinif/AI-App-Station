@@ -4,20 +4,15 @@ import * as React from "react"
 import { updateAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
-import { useQueryClient } from "@tanstack/react-query"
 import { Star } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
 import {
-  App_Comments,
-  AppCommentActionsProp,
   CommentActionsProp,
   CommentEditServiceType,
-  CommentReplyServiceType,
   TCommentId,
-  TCommentParentId,
   TCommentRowId,
   TCommentWithProfile,
 } from "@/types/db_tables"
@@ -41,7 +36,7 @@ const FormSchema = z.object({
   edit: z.string().max(2000, {
     message: "Edit content must not be longer than 400 characters.",
   }),
-  rating: z.number().min(0.5).max(5),
+  rating: z.number().min(0.5).max(5).nullable(),
 })
 
 type CommentEditFormProps<R extends (...args: any) => any> = Pick<
@@ -51,25 +46,22 @@ type CommentEditFormProps<R extends (...args: any) => any> = Pick<
   comment: TCommentWithProfile
   db_row_id: TCommentRowId
   comment_id: TCommentId
-  parent_id?: TCommentParentId
   updateCommentService: CommentEditServiceType<R>
 }
 
 const CommentEditForm = <R extends (...args: any) => any>({
   comment,
   db_row_id,
-  parent_id,
   className,
   comment_id,
   setIsEditing,
+  updateCommentService,
 }: CommentEditFormProps<R>) => {
-  const queryClient = useQueryClient()
-  const queryKey = ["replies", parent_id]
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       edit: comment.comment,
-      rating: comment.rating || 4.5,
+      rating: comment.rating,
     },
   })
   const [loading, setLoading] = React.useState(false)
@@ -98,7 +90,7 @@ const CommentEditForm = <R extends (...args: any) => any>({
       return
     }
 
-    const { updatedComment, error } = await updateAppComment(
+    const { updatedComment, error } = await updateCommentService(
       db_row_id,
       values.edit,
       comment_id,
@@ -106,7 +98,6 @@ const CommentEditForm = <R extends (...args: any) => any>({
     )
 
     if (updatedComment) {
-      queryClient.invalidateQueries({ queryKey: queryKey })
       setLoading(false)
       setIsEditing(false)
       toast.success("Comment updated")
@@ -161,7 +152,7 @@ const CommentEditForm = <R extends (...args: any) => any>({
                     <div className="flex items-center space-x-2">
                       <Rating
                         {...field}
-                        value={field.value || 4.5}
+                        value={field.value}
                         size="small"
                         onChange={(event, newValue) => field.onChange(newValue)}
                         precision={0.5}

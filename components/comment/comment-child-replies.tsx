@@ -6,6 +6,7 @@ import {
   CommentDeleteServiceType,
   CommentEditServiceType,
   CommentReplyServiceType,
+  CommentsOfTable,
   TCommentParentId,
   TCommentWithProfile,
 } from "@/types/db_tables"
@@ -20,6 +21,7 @@ type CommentChildRepliesProps<
   V extends (...args: any) => any,
 > = CommentListProps<T, U, R, V> & {
   parent_id: TCommentParentId
+  commentsOf: CommentsOfTable
   commentReplyService: CommentReplyServiceType<U>
   updateCommentService: CommentEditServiceType<R>
   deleteCommentService: CommentDeleteServiceType<V>
@@ -32,6 +34,7 @@ export const CommentChildReplies = <
   V extends (...args: any) => any,
 >({
   commentsList,
+  commentsOf,
   parent_id,
   indentLevel = 0,
   setOptimisitcComment,
@@ -58,6 +61,7 @@ export const CommentChildReplies = <
           </span>
           {isShowReplies && (
             <CommentList<T, U, R, V>
+              commentsOf={commentsOf}
               setOptimisitcComment={setOptimisitcComment}
               commentsList={commentsList}
               idsToRender={childItems.map((i) => i.comment_id)}
