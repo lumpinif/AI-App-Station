@@ -2,27 +2,31 @@ import Link from "next/link"
 import { MessageCircle } from "lucide-react"
 import numeral from "numeral"
 
-import { Apps } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import { Posts, Profiles } from "@/types/db_tables"
+import { cn, getPostAuthorSlug } from "@/lib/utils"
 
-type AppCommentsBadgeProps = {
+type StoryCommentsBadgeProps = {
+  profile: Profiles
   className?: string
-  app_slug: Apps["app_slug"]
-  comments_count: Apps["comments_count"]
+  comments_count: number
+  post_id: Posts["post_id"]
 }
 
-export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
-  app_slug,
+export const StoryCommentsBadge: React.FC<StoryCommentsBadgeProps> = ({
+  profile,
+  post_id,
   className,
   comments_count,
 }) => {
   const commentsCount = comments_count > 0 ? comments_count : 0
   const formattedCommentsCount = numeral(commentsCount).format("0.[0]a")
 
+  const author_slug = getPostAuthorSlug(profile)
+
   return (
     <Link
-      href={`/ai-apps/${app_slug}/#ratings-and-reviews`}
       className={cn("group", className)}
+      href={`/story/${author_slug}/${post_id}/#story-comments-section`}
     >
       <div className="m-0 flex items-center gap-x-1 p-0">
         <MessageCircle

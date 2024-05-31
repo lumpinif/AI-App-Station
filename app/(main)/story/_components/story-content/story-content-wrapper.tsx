@@ -1,8 +1,10 @@
-type StoryPageWrapperProps = {
+type StoryContentWrapperProps = {
   children: React.ReactNode
 }
 
-const StoryPageWrapper: React.FC<StoryPageWrapperProps> = ({ children }) => {
+const StoryContentWrapper: React.FC<StoryContentWrapperProps> = ({
+  children,
+}) => {
   return (
     <main className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
       {children}
@@ -10,4 +12,4 @@ const StoryPageWrapper: React.FC<StoryPageWrapperProps> = ({ children }) => {
   )
 }
 
-export default StoryPageWrapper
+export default StoryContentWrapper

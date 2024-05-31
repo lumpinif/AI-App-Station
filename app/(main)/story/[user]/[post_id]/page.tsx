@@ -11,8 +11,7 @@ import { getPostAuthorSlug } from "@/lib/utils"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import StoryCommentSection from "../../_components/comment/story-comment-section"
-import StoryPageWrapper from "../../_components/story-page-wrapper"
-import { StoryEditorContent } from "../../_components/story/story-editor-content"
+import { StoryEditorContent } from "../../_components/story-content/story-editor-content"
 
 // Generate segments for both [user] and [post_id]
 export async function generateStaticParams() {
@@ -65,11 +64,12 @@ export default async function StoryPage({
   }
 
   return (
-    <StoryPageWrapper>
+    <main className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
       <StoryEditorContent
-        post_content={post.post_content as JSONContent}
+        {...post}
+        user={user}
         authorProfile={post.profiles}
-        created_at={post.created_at}
+        post_content={post.post_content as JSONContent}
       />
       <Suspense fallback={<LoadingSpinner />}>
         <StoryCommentSection
@@ -79,6 +79,6 @@ export default async function StoryPage({
           orderBy={orderBy}
         />
       </Suspense>
-    </StoryPageWrapper>
+    </main>
   )
 }

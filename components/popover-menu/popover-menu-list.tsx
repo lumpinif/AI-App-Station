@@ -2,7 +2,7 @@ import { Plus, Upload } from "lucide-react"
 
 import { usePopoverStore } from "@/hooks/use-popover-store"
 import { AppSubmitButton } from "@/components/submit/app-submit-button"
-import { WriteNewStoryButton } from "@/app/(main)/story/_components/story/write-new-story-button"
+import { WriteNewStoryButton } from "@/app/(main)/story/_components/story-content/write-new-story-button"
 
 import { PopoverMenuItem } from "./popover-menu-item"
 

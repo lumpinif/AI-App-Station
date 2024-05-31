@@ -16,7 +16,7 @@ import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
 import { AppCommentsBadge } from "../_components/cards/app-comments-badge"
-import { AppDetailBookmark } from "./_components/app-detail-bookmark"
+import { AppDetailBookmarkButton } from "./_components/app-detail-bookmark-button"
 import { AppDetailCarousel } from "./_components/app-detail-carousel"
 import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
@@ -149,7 +149,7 @@ export default async function AiAppsMainPage({
                       app_id={app.app_id}
                       data={app.app_likes}
                     />
-                    <AppDetailBookmark
+                    <AppDetailBookmarkButton
                       user={user}
                       app_id={app.app_id}
                       data={app.app_bookmarks}
