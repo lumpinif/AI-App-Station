@@ -31,29 +31,23 @@ export const useStoryLike = (
     (state, newState: LikeState) => ({ ...state, ...newState })
   )
 
-  const handleRemoveLikeDebounced = useDebouncedCallback(
-    async (user_id: User["id"]) => {
-      const { error: removeLikeError } = await supabase
-        .from("post_likes")
-        .delete()
-        .match({ post_id: post_id, user_id: user_id })
-
-      if (removeLikeError) {
-        toast.error("Failed to remove like. Please try again.")
-      }
-    },
-    1000,
-    { leading: true, trailing: true }
-  )
-
-  const handleLikeDebounced = useDebouncedCallback(
-    async (user_id: User["id"]) => {
-      const { error: addLikeError } = await supabase.from("post_likes").insert({
-        post_id: post_id,
-        user_id: user_id,
-      })
-      if (addLikeError) {
-        toast.error("Failed to like. Please try again.")
+  const handleLikeToggleDebounced = useDebouncedCallback(
+    async (user_id: User["id"], isLiked: boolean) => {
+      if (isLiked) {
+        const { error: removeLikeError } = await supabase
+          .from("post_likes")
+          .delete()
+          .match({ post_id: post_id, user_id: user_id })
+        if (removeLikeError) {
+          toast.error("Failed to remove like. Please try again.")
+        }
+      } else {
+        const { error: addLikeError } = await supabase
+          .from("post_likes")
+          .insert({ post_id: post_id, user_id: user_id })
+        if (addLikeError) {
+          toast.error("Failed to like. Please try again.")
+        }
       }
     },
     1000,
@@ -68,19 +62,12 @@ export const useStoryLike = (
         return
       }
 
-      if (isUserLiked) {
-        handleRemoveLikeDebounced(user_id)
-        setOptimisticLikeState({
-          isUserLiked: !isUserLiked,
-          postLikesCount: postLikesCount - 1,
-        })
-      } else {
-        handleLikeDebounced(user_id)
-        setOptimisticLikeState({
-          isUserLiked: !isUserLiked,
-          postLikesCount: postLikesCount + 1,
-        })
-      }
+      setOptimisticLikeState({
+        isUserLiked: !isUserLiked,
+        postLikesCount: isUserLiked ? postLikesCount - 1 : postLikesCount + 1,
+      })
+
+      handleLikeToggleDebounced(user_id, isUserLiked)
 
       router.refresh()
     })
