@@ -38,9 +38,9 @@ export const CommentFormButton = <U extends (...args: any) => any>({
         </Button>
       ) : (
         <CommentReplyForm
-          commentReplyService={commentReplyService}
           withRating={true}
           db_row_id={db_row_id}
+          commentReplyService={commentReplyService}
           toggleReplying={() => setIsReplying(false)}
         />
       )}

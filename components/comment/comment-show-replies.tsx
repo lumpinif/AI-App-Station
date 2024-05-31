@@ -1,8 +1,10 @@
-import { AppCommentActionsProp } from "@/types/db_tables"
+import { Dispatch, SetStateAction } from "react"
+
+import { CommentActionsProp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 type CommentShowRepliesProps = Pick<
-  AppCommentActionsProp,
+  CommentActionsProp,
   "repliesCount" | "isShowReplies" | "setIsShowReplies"
 > & {
   className?: string
@@ -10,13 +12,13 @@ type CommentShowRepliesProps = Pick<
 
 export const CommentShowReplies: React.FC<CommentShowRepliesProps> = ({
   className,
-  setIsShowReplies,
   repliesCount,
   isShowReplies,
+  setIsShowReplies,
 }) => {
   return (
     <div
-      onClick={() => setIsShowReplies(!isShowReplies)}
+      onClick={() => setIsShowReplies && setIsShowReplies(!isShowReplies)}
       className={cn(
         "text-muted-foreground hover:text-primary w-fit cursor-pointer select-none text-sm",
         isShowReplies ? "text-primary" : "",

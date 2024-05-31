@@ -121,21 +121,13 @@ export type PostCommentWithProfile = CommentWithProfile & {
 export type CommentActionsProp = {
   className?: string
   isShowReplies: boolean
-  setIsShowReplies: Dispatch<SetStateAction<boolean>>
   isEditing: boolean
-  setIsEditing: Dispatch<SetStateAction<boolean>>
   repliesCount: number
   isReplied: boolean
   likes_count: App_Comments["likes_count"]
   views_count: App_Comments["views_count"]
-}
-
-export type AppCommentActionsProp = CommentActionsProp & {
-  comment: AppCommentWithProfile
-}
-
-export type PostCommentActionsProp = CommentActionsProp & {
-  comment: PostCommentWithProfile
+  setIsEditing: Dispatch<SetStateAction<boolean>>
+  setIsShowReplies?: Dispatch<SetStateAction<boolean>>
 }
 
 // Comment list properties

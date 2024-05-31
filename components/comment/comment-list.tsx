@@ -1,4 +1,5 @@
 import {
+  CommentActionsProp,
   CommentDeleteServiceType,
   CommentEditServiceType,
   CommentReplyServiceType,
@@ -18,7 +19,7 @@ export type CommentListProps<
   U extends (...args: any) => any,
   R extends (...args: any) => any,
   V extends (...args: any) => any,
-> = {
+> = Pick<CommentActionsProp, "setIsShowReplies"> & {
   commentsList: T[]
   commentsOf: CommentsOfTable
   idsToRender?: string[]
@@ -39,6 +40,7 @@ export function CommentList<
   indentLevel = 0,
   commentsList: optimisticComments,
   commentsOf = "apps",
+  setIsShowReplies,
   setOptimisitcComment,
   commentReplyService,
   updateCommentService,
@@ -85,6 +87,7 @@ export function CommentList<
                         commentsOf={commentsOf}
                         parent_id={comment!.comment_id}
                         commentsList={optimisticComments}
+                        setIsShowReplies={setIsShowReplies}
                         setOptimisitcComment={setOptimisitcComment}
                         commentReplyService={commentReplyService}
                         updateCommentService={updateCommentService}

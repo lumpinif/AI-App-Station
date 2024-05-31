@@ -23,7 +23,7 @@ type CommentActionsProps<
   U extends (...args: any) => any,
   R extends (...args: any) => any,
   V extends (...args: any) => any,
-> = Pick<CommentActionsProp, "isReplied"> & {
+> = Pick<CommentActionsProp, "isReplied" | "setIsShowReplies"> & {
   parent_id: TCommentParentId
   commentsOf: CommentsOfTable
   comment: TCommentWithProfile
@@ -44,6 +44,7 @@ export const CommentCardActions = <
   parent_id,
   commentsOf,
   commentsList,
+  setIsShowReplies,
   commentReplyService,
   updateCommentService,
   deleteCommentService,
@@ -92,6 +93,7 @@ export const CommentCardActions = <
           }
           db_row_id={db_row_id}
           parent_id={comment.comment_id}
+          setIsShowReplies={setIsShowReplies}
           commentReplyService={commentReplyService}
           toggleReplying={() => setReplying(!isReplying)}
           className="w-full md:max-w-xl"

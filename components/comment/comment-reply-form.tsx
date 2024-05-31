@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
@@ -9,6 +11,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import {
+  CommentActionsProp,
   CommentReplyServiceType,
   TCommentParentId,
   TCommentRowId,
@@ -35,26 +38,28 @@ const FormSchema = z.object({
   rating: z.number().min(0.5).max(5),
 })
 
-type CommentReplyFormProps<U extends (...args: any) => any> = {
+type CommentReplyFormProps<U extends (...args: any) => any> = Pick<
+  CommentActionsProp,
+  "setIsShowReplies"
+> & {
   db_row_id: TCommentRowId
   parent_id?: TCommentParentId
   className?: string
   parent_name?: string
+  withRating?: boolean
   toggleReplying: () => void
   commentReplyService: CommentReplyServiceType<U>
-  setIsShowReplies?: React.Dispatch<React.SetStateAction<boolean>>
-  withRating?: boolean
 }
 
 const CommentReplyForm = <U extends (...args: any) => any>({
   className,
   db_row_id,
-  parent_id: replyToCommentId,
   parent_name,
-  commentReplyService,
   toggleReplying,
   setIsShowReplies,
   withRating = false,
+  commentReplyService,
+  parent_id: replyToCommentId,
 }: CommentReplyFormProps<U>) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -62,6 +67,7 @@ const CommentReplyForm = <U extends (...args: any) => any>({
       rating: 4.5,
     },
   })
+  const router = useRouter()
   const [loading, setLoading] = React.useState(false)
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
   const [triggerAutoSize, setTriggerAutoSize] = React.useState("")
@@ -94,17 +100,18 @@ const CommentReplyForm = <U extends (...args: any) => any>({
 
     if (comment) {
       setLoading(false)
-      if (setIsShowReplies) {
-        setIsShowReplies(true)
-      }
-      form.reset()
       toggleReplying()
+      form.reset()
+      if (setIsShowReplies) setIsShowReplies(true)
     }
 
     if (error) {
       setLoading(false)
       toast.error(error)
+      if (setIsShowReplies) setIsShowReplies(false)
     }
+
+    router.refresh()
   }
 
   const handleCancelClick = () => {

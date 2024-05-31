@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import {
   CommentDeleteServiceType,
@@ -47,6 +47,14 @@ export const CommentChildReplies = <
   const childComments = commentsList.filter((i) => i.parent_id === parent_id)
   const repliesCount = childComments.length
 
+  useEffect(() => {
+    if (repliesCount === 0) {
+      if (!isShowReplies) {
+        setIsShowReplies(true)
+      }
+    }
+  }, [isShowReplies, repliesCount])
+
   return (
     <>
       {repliesCount > 0 && (
@@ -63,6 +71,7 @@ export const CommentChildReplies = <
               commentsOf={commentsOf}
               commentsList={commentsList}
               indentLevel={indentLevel + 1}
+              setIsShowReplies={setIsShowReplies}
               commentReplyService={commentReplyService}
               setOptimisitcComment={setOptimisitcComment}
               updateCommentService={updateCommentService}
