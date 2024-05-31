@@ -28,3 +28,8 @@ export type removeContentServiceResult =
   | {
       error: PostgrestError
     }
+
+export type BookmarkState = {
+  isUserBookmarked?: boolean
+  bookmarksCount?: number
+}
