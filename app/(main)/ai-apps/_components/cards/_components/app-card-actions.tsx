@@ -1,10 +1,5 @@
-import {
-  Bookmark,
-  Ellipsis,
-  Heart,
-  LogIn,
-  SquareArrowOutUpRight,
-} from "lucide-react"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
+import { Bookmark, Heart, SquareArrowOutUpRight } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -32,7 +27,7 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
             variant={"outline"}
             className="group/action cursor-pointer border-0 font-normal outline-none hover:bg-blue-500"
           >
-            <Ellipsis className="text-primary dark:text-muted-foreground group-hover/action:text-background dark:group-hover/action:text-primary size-4" />
+            <DotsHorizontalIcon className="text-primary dark:text-muted-foreground group-hover/action:text-background dark:group-hover/action:text-primary size-4" />
           </Badge>
         </Button>
       </DropdownMenuTrigger>
@@ -58,7 +53,6 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
             <span>Like</span>
             <Button variant={"tag"} size={"xs"} className="m-0 p-0">
               <Heart className="fill-red-600 stroke-red-600" size={16} />
-              {/* <Heart size={16} /> */}
             </Button>
           </div>
         </DropdownMenuItem>

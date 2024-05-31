@@ -63,7 +63,7 @@ export const CommentDropDownMenu = <V extends (...args: any) => any>({
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="text-muted-foreground/70 ring-offset-background hover:text-muted-foreground cursor-pointer focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="data-[state=open]:text-primary text-muted-foreground/70 ring-offset-background hover:text-muted-foreground cursor-pointer transition-all duration-150 ease-in-out focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
           <Ellipsis size={16} />
         </DropdownMenuTrigger>

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { format, parseISO } from "date-fns"
+import { JSONContent } from "novel"
 import { twMerge } from "tailwind-merge"
 import * as z from "zod"
 
@@ -155,4 +156,41 @@ export const getIsReplied = (
 ) => {
   const childItems = optimisticComments.filter((i) => i.parent_id === parent_id)
   return { repliesCount: childItems.length, isReplied: childItems.length > 0 }
+}
+
+export const getPostContentPreview = (
+  content: JSONContent,
+  numberOfWords: number
+) => {
+  if (content === null) {
+    return ""
+  }
+
+  let previewContent: string[] = []
+
+  function extractTextFromParagraphs(content: JSONContent) {
+    content.forEach((node: JSONContent) => {
+      if (node.type === "paragraph" && node.content) {
+        node.content.forEach((paragraphNode: JSONContent) => {
+          if (paragraphNode.type === "text" && paragraphNode.text) {
+            previewContent.push(paragraphNode.text)
+          }
+        })
+      } else if (node.content) {
+        extractTextFromParagraphs(node.content)
+      }
+    })
+  }
+
+  if (content.type === "doc" && content.content) {
+    extractTextFromParagraphs(content.content)
+  }
+
+  // Join the text content into a single string
+  const fullText = previewContent.join(" ")
+
+  // Split the string into words and take the first numberOfWords
+  const firstFewWords = fullText.split(/\s+/).slice(0, numberOfWords).join(" ")
+
+  return firstFewWords
 }

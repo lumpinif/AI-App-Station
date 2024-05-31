@@ -1,8 +1,11 @@
+import { Suspense } from "react"
 import { getUserData } from "@/server/auth"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
-import { AppCardsGrid } from "../_components/bookmark-favorites/_components/app-cards-grid"
+import { AppCardsGrid } from "../_components/bookmark-favorites/_components/apps/app-cards-grid"
+import { StoryCardsGrid } from "../_components/bookmark-favorites/_components/stories/story-cards-grid"
 
 export const dynamic = "force-dynamic"
 
@@ -29,13 +32,17 @@ export default async function BookmarksPage() {
           value="apps"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          <AppCardsGrid user_id={user.id} collectionType="bookmark" />
+          <Suspense fallback={<LoadingSpinner />}>
+            <AppCardsGrid user_id={user.id} collectionType="bookmark" />
+          </Suspense>
         </TabsContent>
         <TabsContent
           value="stories"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          Story cards grid here
+          <Suspense fallback={<LoadingSpinner />}>
+            <StoryCardsGrid user_id={user.id} collectionType="bookmark" />
+          </Suspense>
         </TabsContent>
       </Tabs>
     </div>

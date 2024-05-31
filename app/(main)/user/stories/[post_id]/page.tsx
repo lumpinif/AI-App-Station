@@ -3,7 +3,7 @@ import { getUserData } from "@/server/auth"
 import { getPostById } from "@/server/queries/supabase/stories"
 import { JSONContent } from "novel"
 
-import StoryContentWrapper from "@/app/(main)/story/_components/story-content-wrapper"
+import StoryContentWrapper from "@/app/(main)/story/_components/story-content/story-content-wrapper"
 
 import { StoryPostEditor } from "./_components/story-post-editor"
 

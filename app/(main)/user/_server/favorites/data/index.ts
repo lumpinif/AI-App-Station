@@ -1,10 +1,16 @@
 "use server"
 
-import { unstable_noStore as noStore, revalidatePath } from "next/cache"
+import { unstable_noStore as noStore } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { PostgrestError } from "@supabase/supabase-js"
 
-import { AppDetails, Apps, Profiles } from "@/types/db_tables"
+import {
+  AppDetails,
+  Apps,
+  PostDetails,
+  Posts,
+  Profiles,
+} from "@/types/db_tables"
 
 interface AppErrorDetails {
   message: string
@@ -16,6 +22,7 @@ interface AppError {
   error: AppErrorDetails | PostgrestError
 }
 
+// APPS
 export async function getAppsByAppId(app_id: Apps["app_id"]) {
   noStore()
   const supabase = await createSupabaseServerClient()
@@ -107,6 +114,103 @@ export async function getFavoriteApps(
     console.error("Error in getting favorite apps:", error)
     return {
       favoriteApps: [],
+      error: `An unexpected error occurred: ${error}`,
+    }
+  }
+}
+
+// POSTS
+export async function getPostsByPostId(post_id: Posts["post_id"]) {
+  noStore()
+  const supabase = await createSupabaseServerClient()
+
+  try {
+    const { data: posts, error: getPostsError } = await supabase
+      .from("posts")
+      .select(
+        `*, categories(*), labels(*), profiles(*), post_likes(*), post_bookmarks(*)`
+      )
+      .match({ post_id })
+      .returns<PostDetails[]>()
+
+    if (getPostsError) {
+      console.error("Error getting posts:", getPostsError)
+      return {
+        error: {
+          message: "An error occurred while getting posts.",
+          details: getPostsError,
+        },
+      }
+    }
+
+    return { posts, error: getPostsError }
+  } catch (error) {
+    console.error("Error in getting posts:", error)
+    return {
+      error: {
+        message: "An unexpected error occurred.",
+        details: "Please try again later.",
+      },
+    }
+  }
+}
+
+export async function getFavoritePosts(
+  user_id: Profiles["user_id"],
+  collectionType?: "favorite" | "bookmark"
+) {
+  noStore()
+  const supabase = await createSupabaseServerClient()
+  const collection =
+    collectionType === "bookmark" ? "post_bookmarks" : "post_likes"
+
+  try {
+    const { data: favoritePostIds, error: getFavoritePostIdsError } =
+      await supabase
+        .from(collection)
+        .select("post_id")
+        .match({ user_id })
+        .order("created_at", { ascending: false })
+
+    if (getFavoritePostIdsError) {
+      console.error("Error getting favorite post ids:", getFavoritePostIdsError)
+      return {
+        error: `An error occurred while getting favorite post ids: ${getFavoritePostIdsError.message}`,
+      }
+    }
+
+    if (!favoritePostIds || favoritePostIds.length === 0) {
+      return { favoritePosts: [], error: null }
+    }
+
+    // Initialize an array to store errors
+    const errors: string[] = []
+
+    // Fetch post details for each favorite post ID
+    const favoritePosts = await Promise.all(
+      favoritePostIds.map(async (favoritePostId, index) => {
+        const { posts, error: getPostsError } = await getPostsByPostId(
+          favoritePostId.post_id
+        )
+        if (getPostsError) {
+          console.error(`Error getting post with post ID:`, getPostsError)
+          errors.push(`Error-${index}: ${getPostsError.message}`)
+          return null
+        }
+        return posts[0] // Assuming `getPostsByPostId` returns an array with one item
+      })
+    )
+
+    // Filter out any null results due to errors in fetching individual posts
+    const validFavoritePosts = favoritePosts.filter((post) => post !== null)
+    return {
+      favoritePosts: validFavoritePosts,
+      error: errors.length > 0 ? errors.join(" --- ") : null,
+    }
+  } catch (error) {
+    console.error("Error in getting favorite posts:", error)
+    return {
+      favoritePosts: [],
       error: `An unexpected error occurred: ${error}`,
     }
   }

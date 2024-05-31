@@ -1,7 +1,4 @@
-import { Scrollbar } from "@radix-ui/react-scroll-area"
-
-import { AppDetails, Apps } from "@/types/db_tables"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { AppDetails } from "@/types/db_tables"
 import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "@/app/(main)/ai-apps/_components/cards/_components/app-title-description"
 

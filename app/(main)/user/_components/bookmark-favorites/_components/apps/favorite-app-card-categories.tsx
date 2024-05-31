@@ -20,12 +20,12 @@ export const FavoriteAppCardCategories: React.FC<
             className="border-border/40 hover:shadow-outline hover:bg-card hover:border-border/0"
           >
             <Category
-              className="flex items-center gap-x-2 font-light hover:no-underline"
-              category_icon_cn="size-4 md:size-4 md:stroke-1"
               key={category.category_id}
-              category_icon_name={category.category_icon_name}
               category_slug={category.category_slug}
               category_name={category.category_name}
+              category_icon_name={category.category_icon_name}
+              category_icon_cn="size-4 md:size-4 md:stroke-1"
+              className="flex items-center gap-x-2 font-light hover:no-underline"
             />
           </Badge>
         ))

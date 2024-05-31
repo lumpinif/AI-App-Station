@@ -1,0 +1,92 @@
+import Image from "next/image"
+import Link from "next/link"
+import { User } from "@supabase/supabase-js"
+import { JSONContent } from "novel"
+
+import { PostDetails } from "@/types/db_tables"
+import { cn, getPostAuthorSlug, getPostContentPreview } from "@/lib/utils"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Badge } from "@/components/ui/badge"
+import { AuthorCard } from "@/app/(main)/story/_components/story-content/story-author-card"
+
+import { FavoriteStoryCardDropdown } from "./favorite-story-card-dropdown"
+
+type FavoriteStoryCardProps = {
+  user_id: User["id"]
+  favoritePost: PostDetails
+}
+
+export const FavoriteStoryCard: React.FC<FavoriteStoryCardProps> = ({
+  user_id,
+  favoritePost,
+}) => {
+  const { ...post } = favoritePost
+
+  const contentPreview = getPostContentPreview(
+    post.post_content as JSONContent,
+    40
+  )
+
+  const authorSlug = getPostAuthorSlug(post.profiles)
+  const postRoute = `/story/${authorSlug}/${post.post_id}`
+
+  return (
+    <div className="border-border/50 col-span-1 flex w-full flex-col gap-y-6 rounded-xl border p-2 py-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md md:p-4 dark:shadow-none hover:dark:shadow-none">
+      <Link href={postRoute}>
+        <AspectRatio ratio={16 / 9} className="rounded-lg shadow-md">
+          <Image
+            fill
+            alt={"Feature Image"}
+            src={"/images/Feature-thumbnail.png"}
+            className={cn("rounded-lg object-cover object-center")}
+          />
+        </AspectRatio>
+      </Link>
+
+      <div className="flex h-full flex-col justify-between gap-y-4">
+        <span className="flex flex-col gap-y-4">
+          {/* Authro Info */}
+          <AuthorCard
+            avatarCN="size-6"
+            author={post.profiles}
+            post_created_at={post.created_at}
+            authorNameCN="font-normal"
+            InfoCN="flex-row items-center w-full justify-between"
+          />
+
+          {/* Preview */}
+          <Link href={postRoute} className="flex flex-col gap-y-2">
+            <h3 className="line-clamp-2 text-xl font-semibold">
+              {post.post_title}
+            </h3>
+            <p className="line-clamp-3 text-sm">{contentPreview}</p>
+          </Link>
+        </span>
+
+        {/* Labels and Actions */}
+        <span className="flex w-full items-center justify-between">
+          {!post.labels?.length ? (
+            <div className=""></div>
+          ) : (
+            post.labels?.slice(0, 3).map((label, index) => (
+              <Badge
+                key={post.post_id + index}
+                variant={"outline"}
+                className="border-border/40 hover:shadow-outline hover:bg-card hover:border-border/0"
+              >
+                {label.label_name}
+              </Badge>
+            ))
+          )}
+
+          <FavoriteStoryCardDropdown
+            user_id={user_id}
+            post_id={post.post_id}
+            post_likes={post.post_likes}
+            authorProfile={post.profiles}
+          />
+        </span>
+      </div>
+    </div>
+  )
+}

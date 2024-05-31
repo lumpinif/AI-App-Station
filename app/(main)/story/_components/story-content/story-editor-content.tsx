@@ -16,7 +16,7 @@ import {
 } from "@/config/editor/editor-config"
 import { ContentRenderer } from "@/components/editor/content-renderer"
 
-import { AuthorCard } from "./story-auth-card"
+import { AuthorCard } from "./story-author-card"
 import { StoryBookmarkButton } from "./story-bookmark-button"
 import { StoryCommentsBadge } from "./story-comments-badge"
 import { StoryContentHeader } from "./story-content-header"

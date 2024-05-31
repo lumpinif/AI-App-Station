@@ -1,6 +1,6 @@
 import { User } from "@supabase/supabase-js"
 
-import { getFavoriteApps } from "../../../_server/favorites/data"
+import { getFavoriteApps } from "../../../../_server/favorites/data"
 import { FavoriteAppCard } from "./favorite-app-card"
 
 type AppCardGridProps = {
@@ -26,7 +26,11 @@ export const AppCardsGrid: React.FC<AppCardGridProps> = async ({
   }
 
   if (!favoriteApps || favoriteApps.length === 0) {
-    return <div>Add some apps to your favorite...</div>
+    return (
+      <div className="text-muted-foreground mt-6">
+        Add some apps to your favorite...
+      </div>
+    )
   }
 
   return (

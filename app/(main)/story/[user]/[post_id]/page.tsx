@@ -74,9 +74,9 @@ export default async function StoryPage({
       <Suspense fallback={<LoadingSpinner />}>
         <StoryCommentSection
           user={user}
-          post_id={post.post_id}
           c_order={c_order}
           orderBy={orderBy}
+          post_id={post.post_id}
         />
       </Suspense>
     </main>
