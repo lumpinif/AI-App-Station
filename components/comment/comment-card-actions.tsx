@@ -106,6 +106,7 @@ export const CommentCardActions = <
           setIsEditing={setIsEditing}
           comment_id={comment.comment_id}
           updateCommentService={updateCommentService}
+          setOptimisticComment={setOptimisitcComment}
           className="w-full md:max-w-xl"
         />
       )}

@@ -15,6 +15,7 @@ import {
   TCommentId,
   TCommentRowId,
   TCommentWithProfile,
+  TSetOptimisticComment,
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useAutosizeTextArea } from "@/components/ui/autosize-textarea"
@@ -47,6 +48,7 @@ type CommentEditFormProps<R extends (...args: any) => any> = Pick<
   db_row_id: TCommentRowId
   comment_id: TCommentId
   updateCommentService: CommentEditServiceType<R>
+  setOptimisticComment?: TSetOptimisticComment
 }
 
 const CommentEditForm = <R extends (...args: any) => any>({
@@ -56,6 +58,7 @@ const CommentEditForm = <R extends (...args: any) => any>({
   comment_id,
   setIsEditing,
   updateCommentService,
+  setOptimisticComment,
 }: CommentEditFormProps<R>) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -89,6 +92,13 @@ const CommentEditForm = <R extends (...args: any) => any>({
       setIsEditing(false)
       return
     }
+
+    setOptimisticComment &&
+      setOptimisticComment({
+        ...comment,
+        comment: values.edit,
+        rating: values.rating,
+      })
 
     const { updatedComment, error } = await updateCommentService(
       db_row_id,
