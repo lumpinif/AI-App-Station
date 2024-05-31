@@ -2,6 +2,7 @@ import {
   CommentDeleteServiceType,
   TCommentRowId,
   TCommentWithProfile,
+  TSetOptimisticComment,
 } from "@/types/db_tables"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,6 +22,7 @@ type CommentDeleteDialogProps<V extends (...args: any) => any> =
     db_row_id: TCommentRowId
     comment: TCommentWithProfile
     onOpenChange: (open: boolean) => void
+    setOptimisitcComment: TSetOptimisticComment
     deleteCommentService: CommentDeleteServiceType<V>
   }
 
@@ -29,6 +31,7 @@ export const CommentDeleteDialog = <V extends (...args: any) => any>({
   comment,
   db_row_id,
   onOpenChange,
+  setOptimisitcComment,
   deleteCommentService,
   ...props
 }: CommentDeleteDialogProps<V>) => {
@@ -45,15 +48,16 @@ export const CommentDeleteDialog = <V extends (...args: any) => any>({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex flex-col gap-y-2 sm:flex-row sm:gap-y-0">
-          <Button onClick={() => onOpenChange(false)} variant={"outline"}>
+          <Button onClick={() => onOpenChange(false)} variant="outline">
             Cancel
           </Button>
           <CommentDeleteButton<V>
             db_row_id={db_row_id}
             comment_id={comment.comment_id}
-            variant={"destructive"}
+            variant="destructive"
             className="w-full sm:w-20"
             onDeleted={() => onOpenChange(false)}
+            setOptimisitcComment={setOptimisitcComment}
             deleteCommentService={deleteCommentService}
           />
         </DialogFooter>

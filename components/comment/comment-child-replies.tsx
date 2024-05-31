@@ -33,9 +33,9 @@ export const CommentChildReplies = <
   R extends (...args: any) => any,
   V extends (...args: any) => any,
 >({
-  commentsList,
-  commentsOf,
   parent_id,
+  commentsOf,
+  commentsList,
   indentLevel = 0,
   setOptimisitcComment,
   commentReplyService,
@@ -43,32 +43,31 @@ export const CommentChildReplies = <
   deleteCommentService,
 }: CommentChildRepliesProps<T, U, R, V>) => {
   const [isShowReplies, setIsShowReplies] = useState<boolean>(false)
-  const childItems = commentsList.filter((i) => i.parent_id === parent_id)
 
-  const repliesCount = childItems.length
-  const isReplied = repliesCount > 0
+  const childComments = commentsList.filter((i) => i.parent_id === parent_id)
+  const repliesCount = childComments.length
 
   return (
     <>
-      {isReplied && (
+      {repliesCount > 0 && (
         <>
           <span className="ml-16 py-2 md:pl-2">
             <CommentShowReplies
-              setIsShowReplies={setIsShowReplies}
-              isShowReplies={isShowReplies}
               repliesCount={repliesCount}
+              isShowReplies={isShowReplies}
+              setIsShowReplies={setIsShowReplies}
             />
           </span>
           {isShowReplies && (
             <CommentList<T, U, R, V>
               commentsOf={commentsOf}
-              setOptimisitcComment={setOptimisitcComment}
               commentsList={commentsList}
-              idsToRender={childItems.map((i) => i.comment_id)}
               indentLevel={indentLevel + 1}
               commentReplyService={commentReplyService}
+              setOptimisitcComment={setOptimisitcComment}
               updateCommentService={updateCommentService}
               deleteCommentService={deleteCommentService}
+              idsToRender={childComments.map((i) => i.comment_id)}
             />
           )}
         </>

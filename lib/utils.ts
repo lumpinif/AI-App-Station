@@ -3,7 +3,11 @@ import { format, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
 import * as z from "zod"
 
-import { Profiles } from "@/types/db_tables"
+import {
+  Profiles,
+  TCommentParentId,
+  TCommentWithProfile,
+} from "@/types/db_tables"
 import { USER_WEBSITE_MAX_LENGTH } from "@/config/profile/profile-form-config"
 
 export function cn(...inputs: ClassValue[]) {
@@ -142,4 +146,13 @@ export const scrollToSection = (id: string) => {
     })
     window.location.hash = `#${id}`
   }
+}
+
+// Utility function to get replies and their count
+export const getIsReplied = (
+  optimisticComments: TCommentWithProfile[],
+  parent_id: TCommentParentId
+) => {
+  const childItems = optimisticComments.filter((i) => i.parent_id === parent_id)
+  return { repliesCount: childItems.length, isReplied: childItems.length > 0 }
 }

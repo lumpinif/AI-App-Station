@@ -11,9 +11,9 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 
 import {
   addPostCommentReturnType,
+  CommentOptimisticAction,
   deletePostCommentReturnType,
   PostCommentWithProfile,
-  TSetOptimisticComment,
   updatePostCommentReturnType,
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -30,23 +30,43 @@ export const StoryCommentList: React.FC<CommentListProps> = ({
 }) => {
   const [optimisticComments, setOptimisticComment] = useOptimistic<
     PostCommentWithProfile[],
-    PostCommentWithProfile
-  >(commentsList, (currentOptimisticComments, newComment) => {
-    const newOptimisticComment = [...currentOptimisticComments]
+    CommentOptimisticAction
+  >(commentsList, (currentOptimisticComments, action) => {
+    switch (action.type) {
+      case "update":
+        if ("post_comment_likes" in action.comment) {
+          // Ensure it's PostCommentWithProfile
+          const index = currentOptimisticComments.findIndex(
+            (comment) => comment.comment_id === action.comment.comment_id
+          )
 
-    const index = newOptimisticComment.findIndex(
-      (comment) => comment.comment_id === newComment.comment_id
-    )
+          if (index !== -1) {
+            const updatedComments = [...currentOptimisticComments]
+            updatedComments[index] = action.comment as PostCommentWithProfile
+            return updatedComments
+          }
 
-    newOptimisticComment[index] = newComment
-    return newOptimisticComment
+          return [
+            ...currentOptimisticComments,
+            action.comment as PostCommentWithProfile,
+          ]
+        }
+        return currentOptimisticComments
+
+      case "delete":
+        return currentOptimisticComments.filter(
+          (comment) => comment.comment_id !== action.comment_id
+        )
+
+      default:
+        return currentOptimisticComments
+    }
   })
 
   const router = useRouter()
   const supabase = createSupabaseBrowserClient()
 
   //Real-time subscribtion to initial comments
-
   useEffect(() => {
     const channel = supabase
       .channel("realtime initial comments")
@@ -79,12 +99,12 @@ export const StoryCommentList: React.FC<CommentListProps> = ({
         updatePostCommentReturnType,
         deletePostCommentReturnType
       >
-        commentsList={optimisticComments}
         commentsOf="posts"
+        commentsList={optimisticComments}
         commentReplyService={addPostComment}
         updateCommentService={updatePostComment}
         deleteCommentService={deletePostComment}
-        setOptimisitcComment={setOptimisticComment as TSetOptimisticComment}
+        setOptimisitcComment={setOptimisticComment}
       />
       <span className="text-muted-foreground px-4 py-2 text-end text-xs max-sm:mb-6">
         No more comments

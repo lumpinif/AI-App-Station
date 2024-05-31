@@ -1,12 +1,12 @@
 "use client"
 
 import * as React from "react"
-import { updateAppComment } from "@/server/queries/supabase/comments/app_comments"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { useDebouncedCallback } from "use-debounce"
 import * as z from "zod"
 
 import {
@@ -85,6 +85,29 @@ const CommentEditForm = <R extends (...args: any) => any>({
     }
   }, [edit])
 
+  const debouncedUpdateCommentService = useDebouncedCallback(
+    async (values: z.infer<typeof FormSchema>) => {
+      const { updatedComment, error } = await updateCommentService(
+        db_row_id,
+        values.edit,
+        comment_id,
+        values.rating
+      )
+
+      if (updatedComment) {
+        setLoading(false)
+        setIsEditing(false)
+        toast.success("Comment updated")
+      }
+
+      if (error) {
+        toast.error(`${error} - Please try again later`)
+      }
+    },
+    1000, // Adjust the debounce delay as needed
+    { leading: true, trailing: true }
+  )
+
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
     setLoading(true)
     if (values.edit === comment.comment && values.rating === comment.rating) {
@@ -95,27 +118,15 @@ const CommentEditForm = <R extends (...args: any) => any>({
 
     setOptimisticComment &&
       setOptimisticComment({
-        ...comment,
-        comment: values.edit,
-        rating: values.rating,
+        type: "update",
+        comment: {
+          ...comment,
+          comment: values.edit,
+          rating: values.rating,
+        },
       })
 
-    const { updatedComment, error } = await updateCommentService(
-      db_row_id,
-      values.edit,
-      comment_id,
-      values.rating
-    )
-
-    if (updatedComment) {
-      setLoading(false)
-      setIsEditing(false)
-      toast.success("Comment updated")
-    }
-
-    if (error) {
-      toast.error(`${error} - Please try again later`)
-    }
+    debouncedUpdateCommentService(values)
   }
 
   const handleCancelClick = () => {

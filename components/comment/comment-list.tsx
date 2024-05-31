@@ -6,7 +6,7 @@ import {
   TCommentWithProfile,
   TSetOptimisticComment,
 } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import { cn, getIsReplied } from "@/lib/utils"
 
 import { CommentCard } from "./comment-card"
 import { CommentCardActions } from "./comment-card-actions"
@@ -44,23 +44,11 @@ export function CommentList<
   updateCommentService,
   deleteCommentService,
 }: CommentListProps<T, U, R, V>) {
-  if (!idsToRender.length) {
+  // Default to rendering top-level comments if no specific IDs are provided
+  if (!idsToRender || !idsToRender.length) {
     idsToRender = optimisticComments
       .filter((i) => !i.parent_id)
       .map((i) => i.comment_id)
-  }
-
-  const getIsReplied = (
-    optimisticComments: TCommentWithProfile[],
-    parent_id: string
-  ) => {
-    const childItems = optimisticComments.filter(
-      (i) => i.parent_id === parent_id
-    )
-
-    const repliesCount = childItems.length
-    const isReplied = repliesCount > 0
-    return isReplied
   }
 
   return (
@@ -78,6 +66,12 @@ export function CommentList<
 
         //TODO: HANDLE NO COMMENTS
         if (!comment) return null
+
+        const { isReplied } = getIsReplied(
+          optimisticComments,
+          comment.comment_id
+        )
+
         return (
           <div className="flex flex-col" key={comment.comment_id}>
             <CommentListWrapper comment={comment}>
@@ -87,12 +81,9 @@ export function CommentList<
                     <CommentCard comment={comment!}>
                       <CommentCardActions<U, R, V>
                         comment={comment}
+                        isReplied={isReplied}
                         commentsOf={commentsOf}
                         parent_id={comment!.comment_id}
-                        isReplied={getIsReplied(
-                          optimisticComments,
-                          comment.comment_id
-                        )}
                         commentsList={optimisticComments}
                         setOptimisitcComment={setOptimisitcComment}
                         commentReplyService={commentReplyService}
@@ -106,9 +97,9 @@ export function CommentList<
             </CommentListWrapper>
             <CommentChildReplies<T, U, R, V>
               commentsOf={commentsOf}
-              commentsList={optimisticComments}
-              parent_id={comment!.comment_id}
               indentLevel={indentLevel + 1}
+              parent_id={comment!.comment_id}
+              commentsList={optimisticComments}
               setOptimisitcComment={setOptimisitcComment}
               commentReplyService={commentReplyService}
               updateCommentService={updateCommentService}

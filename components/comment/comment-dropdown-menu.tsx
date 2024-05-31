@@ -8,6 +8,7 @@ import {
   CommentDeleteServiceType,
   TCommentRowId,
   TCommentWithProfile,
+  TSetOptimisticComment,
 } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
@@ -27,6 +28,7 @@ type CommentDropDownMenuProps<V extends (...args: any) => any> = Pick<
 > & {
   comment: TCommentWithProfile
   db_row_id: TCommentRowId
+  setOptimisitcComment: TSetOptimisticComment
   deleteCommentService: CommentDeleteServiceType<V>
 }
 
@@ -36,6 +38,7 @@ export const CommentDropDownMenu = <V extends (...args: any) => any>({
   isEditing,
   setIsEditing,
   deleteCommentService,
+  setOptimisitcComment,
 }: CommentDropDownMenuProps<V>) => {
   const { data: profile } = useUserProfile()
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -48,6 +51,7 @@ export const CommentDropDownMenu = <V extends (...args: any) => any>({
         db_row_id={db_row_id}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
+        setOptimisitcComment={setOptimisitcComment}
         deleteCommentService={deleteCommentService}
       />
       <CommentShareModal

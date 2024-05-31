@@ -1,4 +1,3 @@
-import { getAppComments } from "@/server/queries/supabase/comments/app_comments"
 import {
   addPostComment,
   getPostComments,
@@ -38,9 +37,23 @@ const StoryCommentSection = async ({
   // TODO: HANDLE NO COMMENTS AND ERROR
   if (getAllCommentsError) {
     console.error(getAllCommentsError)
+    // return (
+    //   <section className="flex flex-col space-y-6 md:space-y-8">
+    //     <div className="flex items-center space-x-4">
+    //       <span className="font-medium tracking-wide">Error loading comments</span>
+    //       <p className="text-muted-foreground">
+    //         Please try again later.
+    //       </p>
+    //     </div>
+    //     <CommentFormButton<addPostCommentReturnType>
+    //       db_row_id={post_id}
+    //       commentReplyService={addPostComment}
+    //     />
+    //   </section>
+    // )
   }
 
-  if (!postComments || postComments.length === 0 || postComments === null)
+  if (!postComments || postComments.length === 0)
     return (
       <section className="flex flex-col space-y-6 md:space-y-8">
         <div className="flex items-center space-x-4">
@@ -74,51 +87,49 @@ const StoryCommentSection = async ({
         : false,
     })) ?? []
 
-  if (postComments && postComments.length > 0)
-    return (
-      <section
-        className="flex w-full flex-col space-y-6 md:space-y-8"
-        suppressHydrationWarning
-      >
-        {/* COMMENT SECTION HEADER */}
-        <div className="flex w-full items-center space-x-4">
-          {postComments && postComments.length > 0 && (
-            <span className="font-medium tracking-wide">
-              {postComments.length} Comments
-            </span>
+  return (
+    <section
+      className="flex w-full flex-col space-y-6 md:space-y-8"
+      suppressHydrationWarning
+    >
+      {/* COMMENT SECTION HEADER */}
+      <div className="flex w-full items-center space-x-4">
+        <span className="font-medium tracking-wide">
+          {postComments.length} Comments
+        </span>
+
+        <CommentListFilter c_order={c_order} orderBy={orderBy} />
+      </div>
+
+      <CommentFormButton<addPostCommentReturnType>
+        db_row_id={post_id}
+        commentReplyService={addPostComment}
+      />
+
+      {/* MOBILE DRAWER */}
+      <div className="sm:hidden" id="comments-section">
+        <CommentMobileDrawer firstComment={commentsList[0]}>
+          <StoryCommentList
+            commentsList={commentsList}
+            className="mb-6 w-full p-4"
+          />
+        </CommentMobileDrawer>
+      </div>
+
+      {/* DESKTOP COMMENT LIST*/}
+      <div className="hidden w-full flex-col space-y-4 sm:flex">
+        <ScrollArea
+          className={cn(
+            "relative h-fit pb-2",
+            commentsList.length >= 5 && "h-[50rem] pb-2"
           )}
-          <CommentListFilter c_order={c_order} orderBy={orderBy} />
-        </div>
-
-        <CommentFormButton<addPostCommentReturnType>
-          db_row_id={post_id}
-          commentReplyService={addPostComment}
-        />
-
-        {/* MOBILE DRAWER */}
-        <div className="sm:hidden" id="comments-section">
-          <CommentMobileDrawer firstComment={commentsList[0]}>
-            <StoryCommentList
-              commentsList={commentsList}
-              className="mb-6 w-full p-4"
-            />
-          </CommentMobileDrawer>
-        </div>
-
-        {/* DESKTOP COMMENT LIST*/}
-        <div className="hidden w-full flex-col space-y-4 sm:flex">
-          <ScrollArea
-            className={cn(
-              "relative h-fit pb-2",
-              commentsList.length >= 5 && "h-[50rem] pb-2"
-            )}
-          >
-            <StoryCommentList commentsList={commentsList} className="mb-14" />
-            <ProgressiveBlur className="h-24" />
-          </ScrollArea>
-        </div>
-      </section>
-    )
+        >
+          <StoryCommentList commentsList={commentsList} className="mb-14" />
+          <ProgressiveBlur className="h-24" />
+        </ScrollArea>
+      </div>
+    </section>
+  )
 }
 
 export default StoryCommentSection

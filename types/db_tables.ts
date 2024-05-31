@@ -141,7 +141,13 @@ export type PostCommentActionsProp = CommentActionsProp & {
 // Comment list properties
 export type TCommentWithProfile = AppCommentWithProfile | PostCommentWithProfile
 
-export type TSetOptimisticComment = (newComment: TCommentWithProfile) => void
+export type CommentOptimisticAction =
+  | { type: "update"; comment: TCommentWithProfile }
+  | { type: "delete"; comment_id: string }
+
+// export type TSetOptimisticComment = (newComment: TCommentWithProfile) => void
+
+export type TSetOptimisticComment = (action: CommentOptimisticAction) => void
 
 export type TCommentId =
   | App_Comments["comment_id"]

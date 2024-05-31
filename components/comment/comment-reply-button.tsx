@@ -13,7 +13,6 @@ type CommentReplyButtonProps = Pick<
   comment: TCommentWithProfile
   className?: string
   toggleReplying: () => void
-  isFetching?: boolean
 }
 export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   comment,
@@ -29,10 +28,8 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
   const handleClick = () => {
     if (!profile?.user_id) {
       openAccountModal()
-      return
     }
     toggleReplying()
-    return
   }
 
   return (

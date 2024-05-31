@@ -33,9 +33,23 @@ const AppDetailCommentSection = async ({
   // TODO: HANDLE NO COMMENTS AND ERROR
   if (getAllCommentsError) {
     console.error(getAllCommentsError)
+    // return (
+    //   <section className="flex flex-col space-y-6 md:space-y-8">
+    //     <div className="flex items-center space-x-4">
+    //       <span className="font-medium tracking-wide">Error loading comments</span>
+    //       <p className="text-muted-foreground">
+    //         Please try again later.
+    //       </p>
+    //     </div>
+    //     <CommentFormButton<addPostCommentReturnType>
+    //       db_row_id={post_id}
+    //       commentReplyService={addPostComment}
+    //     />
+    //   </section>
+    // )
   }
 
-  if (!appComments || appComments.length === 0 || appComments === null)
+  if (!appComments || appComments.length === 0)
     return (
       <section className="flex flex-col space-y-6 md:space-y-8">
         <div className="flex items-center space-x-4">
@@ -69,54 +83,49 @@ const AppDetailCommentSection = async ({
         : false,
     })) ?? []
 
-  if (appComments && appComments.length > 0)
-    return (
-      <section
-        className="flex w-full flex-col space-y-6 md:space-y-8"
-        suppressHydrationWarning
-      >
-        {/* COMMENT SECTION HEADER */}
-        <div className="flex w-full items-center space-x-4">
-          {appComments && appComments.length > 0 && (
-            <span className="font-medium tracking-wide">
-              {appComments.length} Comments
-            </span>
+  return (
+    <section
+      className="flex w-full flex-col space-y-6 md:space-y-8"
+      suppressHydrationWarning
+    >
+      {/* COMMENT SECTION HEADER */}
+      <div className="flex w-full items-center space-x-4">
+        <span className="font-medium tracking-wide">
+          {appComments.length} Comments
+        </span>
+
+        <CommentListFilter c_order={c_order} orderBy={orderBy} />
+      </div>
+
+      <CommentFormButton<addAppCommentReturnType>
+        db_row_id={app_id}
+        commentReplyService={addAppComment}
+      />
+
+      {/* MOBILE DRAWER */}
+      <div className="sm:hidden" id="comments-section">
+        <CommentMobileDrawer firstComment={commentsList[0]}>
+          <AppDetailCommentList
+            commentsList={commentsList}
+            className="mb-6 w-full p-4"
+          />
+        </CommentMobileDrawer>
+      </div>
+
+      {/* DESKTOP COMMENT LIST*/}
+      <div className="hidden w-full flex-col space-y-4 sm:flex">
+        <ScrollArea
+          className={cn(
+            "relative h-fit pb-2",
+            commentsList.length >= 5 && "h-[50rem] pb-2"
           )}
-          <CommentListFilter c_order={c_order} orderBy={orderBy} />
-        </div>
-
-        <CommentFormButton<addAppCommentReturnType>
-          db_row_id={app_id}
-          commentReplyService={addAppComment}
-        />
-
-        {/* MOBILE DRAWER */}
-        <div className="sm:hidden" id="comments-section">
-          <CommentMobileDrawer firstComment={commentsList[0]}>
-            <AppDetailCommentList
-              commentsList={commentsList}
-              className="mb-6 w-full p-4"
-            />
-          </CommentMobileDrawer>
-        </div>
-
-        {/* DESKTOP COMMENT LIST*/}
-        <div className="hidden w-full flex-col space-y-4 sm:flex">
-          <ScrollArea
-            className={cn(
-              "relative h-fit pb-2",
-              commentsList.length >= 5 && "h-[50rem] pb-2"
-            )}
-          >
-            <AppDetailCommentList
-              commentsList={commentsList}
-              className="mb-14"
-            />
-            <ProgressiveBlur className="h-24" />
-          </ScrollArea>
-        </div>
-      </section>
-    )
+        >
+          <AppDetailCommentList commentsList={commentsList} className="mb-14" />
+          <ProgressiveBlur className="h-24" />
+        </ScrollArea>
+      </div>
+    </section>
+  )
 }
 
 export default AppDetailCommentSection

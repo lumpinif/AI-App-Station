@@ -24,11 +24,10 @@ type CommentActionsProps<
   R extends (...args: any) => any,
   V extends (...args: any) => any,
 > = Pick<CommentActionsProp, "isReplied"> & {
-  comment: TCommentWithProfile
-  commentsOf: CommentsOfTable
-  commentsList: TCommentWithProfile[]
   parent_id: TCommentParentId
-  isFetching?: boolean
+  commentsOf: CommentsOfTable
+  comment: TCommentWithProfile
+  commentsList: TCommentWithProfile[]
   setOptimisitcComment: TSetOptimisticComment
   commentReplyService: CommentReplyServiceType<U>
   updateCommentService: CommentEditServiceType<R>
@@ -41,21 +40,20 @@ export const CommentCardActions = <
   V extends (...args: any) => any,
 >({
   comment,
-  commentsOf,
-  parent_id,
   isReplied,
-  isFetching,
+  parent_id,
+  commentsOf,
   commentsList,
-  setOptimisitcComment,
   commentReplyService,
   updateCommentService,
   deleteCommentService,
+  setOptimisitcComment,
 }: CommentActionsProps<U, R, V>) => {
   const [isReplying, setReplying] = React.useState<boolean>(false)
   const [isEditing, setIsEditing] = React.useState<boolean>(false)
 
-  const childItems = commentsList.filter((i) => i.parent_id === parent_id)
-  const repliesCount = childItems.length
+  const childComments = commentsList.filter((i) => i.parent_id === parent_id)
+  const repliesCount = childComments.length
 
   const commentLikesTable =
     commentsOf === "apps" ? "app_comment_likes" : "post_comment_likes"
@@ -74,7 +72,6 @@ export const CommentCardActions = <
           comment={comment}
           className="sm:gap-x-1"
           isReplied={isReplied}
-          isFetching={isFetching}
           repliesCount={repliesCount}
           toggleReplying={() => setReplying(!isReplying)}
         />
@@ -84,6 +81,7 @@ export const CommentCardActions = <
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           deleteCommentService={deleteCommentService}
+          setOptimisitcComment={setOptimisitcComment}
         />
       </div>
       {isReplying && (
