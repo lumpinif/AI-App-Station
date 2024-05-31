@@ -1,28 +1,17 @@
 "use client"
 
-import { useOptimistic, useTransition } from "react"
-import { useRouter } from "next/navigation"
-import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { User } from "@supabase/supabase-js"
 import { Bookmark } from "lucide-react"
-import { toast } from "sonner"
-import { useDebouncedCallback } from "use-debounce"
 
 import { Post_Bookmarks, Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useStoryBookmark } from "@/hooks/story/use-story-bookmark"
-import useAccountModal from "@/hooks/use-account-modal-store"
 
 type StoryBookmarkProps = {
   post_id: Posts["post_id"]
   data: Post_Bookmarks[]
   className?: string
   user: User | null
-}
-
-type BookmarkState = {
-  isUserBookmarked?: boolean
-  bookmarksCount?: number
 }
 
 export const StoryBookmarkButton: React.FC<StoryBookmarkProps> = ({
