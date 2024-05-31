@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import {
@@ -29,39 +30,44 @@ const CommentDeleteButton = <V extends (...args: any) => any>({
   deleteCommentService,
   ...props
 }: CommentDeleteButtonProps<V>) => {
+  const router = useRouter()
   const [isPending, startTransition] = React.useTransition()
 
   const handleDelete = () => {
-    const deleteAppCommentPromise = async () => {
-      const { error: deleteAppCommentError } = await deleteCommentService(
-        db_row_id,
-        comment_id
-      )
+    startTransition(() => {
+      const deleteAppCommentPromise = async () => {
+        const { error: deleteAppCommentError } = await deleteCommentService(
+          db_row_id,
+          comment_id
+        )
 
-      if (deleteAppCommentError) {
-        throw new Error(deleteAppCommentError)
+        if (deleteAppCommentError) {
+          throw new Error(deleteAppCommentError)
+        }
       }
-    }
 
-    // Optimistically update the state to remove the comment
-    setOptimisitcComment({
-      type: "delete",
-      comment_id,
-    })
+      // Optimistically update the state to remove the comment
+      setOptimisitcComment({
+        type: "delete",
+        comment_id,
+      })
 
-    toast.promise(deleteAppCommentPromise(), {
-      loading: (
-        <span className="flex items-center gap-x-2">
-          <LoadingSpinner size={16} /> Deleting the comment... Please wait
-        </span>
-      ),
-      success: () => {
-        if (onDeleted) onDeleted()
-        return "Comment Deleted"
-      },
-      error: (error) => {
-        return error.message || "Failed to delete comment"
-      },
+      router.refresh()
+
+      toast.promise(deleteAppCommentPromise(), {
+        loading: (
+          <span className="flex items-center gap-x-2">
+            <LoadingSpinner size={16} /> Deleting the comment... Please wait
+          </span>
+        ),
+        success: () => {
+          if (onDeleted) onDeleted()
+          return "Comment Deleted"
+        },
+        error: (error) => {
+          return error.message || "Failed to delete comment"
+        },
+      })
     })
   }
 
@@ -69,7 +75,7 @@ const CommentDeleteButton = <V extends (...args: any) => any>({
     <SpinnerButton
       variant="default"
       isLoading={isPending}
-      onClick={() => startTransition(handleDelete)}
+      onClick={handleDelete}
       role="button"
       {...props}
     >

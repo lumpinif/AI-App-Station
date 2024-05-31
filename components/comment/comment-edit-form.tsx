@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rating } from "@mui/material"
 import { Star } from "lucide-react"
@@ -67,7 +69,9 @@ const CommentEditForm = <R extends (...args: any) => any>({
       rating: comment.rating,
     },
   })
+  const router = useRouter()
   const [loading, setLoading] = React.useState(false)
+  const [isPending, startTransition] = useTransition()
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
   const [triggerAutoSize, setTriggerAutoSize] = React.useState("")
   useAutosizeTextArea({
@@ -109,24 +113,28 @@ const CommentEditForm = <R extends (...args: any) => any>({
   )
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    setLoading(true)
-    if (values.edit === comment.comment && values.rating === comment.rating) {
-      setLoading(false)
-      setIsEditing(false)
-      return
-    }
+    startTransition(() => {
+      setLoading(true)
+      if (values.edit === comment.comment && values.rating === comment.rating) {
+        setLoading(false)
+        setIsEditing(false)
+        return
+      }
 
-    setOptimisticComment &&
-      setOptimisticComment({
-        type: "update",
-        comment: {
-          ...comment,
-          comment: values.edit,
-          rating: values.rating,
-        },
-      })
+      setOptimisticComment &&
+        setOptimisticComment({
+          type: "update",
+          comment: {
+            ...comment,
+            comment: values.edit,
+            rating: values.rating,
+          },
+        })
 
-    debouncedUpdateCommentService(values)
+      debouncedUpdateCommentService(values)
+
+      router.refresh()
+    })
   }
 
   const handleCancelClick = () => {
