@@ -207,7 +207,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
               <h3>Selector Actions</h3>
               <Separator />
 
-              <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
+              <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
                 <li className="flex items-center space-x-4">
                   <Plus className="size-4" />
                   <span className="w-full">
@@ -233,17 +233,17 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                 <span>Key Info</span>
               </h3>
               <Separator />
-              <ul className="text-muted-foreground mt-2">
+              <ul className="mt-2 text-muted-foreground">
                 <li>
                   {" "}
-                  - Max <span className="text-primary font-medium">5</span>{" "}
+                  - Max <span className="font-medium text-primary">5</span>{" "}
                   categories can be selected
                 </li>
                 <li>
                   -{" "}
-                  <span className="text-primary font-medium">Not allowed</span>{" "}
+                  <span className="font-medium text-primary">Not allowed</span>{" "}
                   to create{" "}
-                  <span className="text-primary font-medium">duplicate</span>{" "}
+                  <span className="font-medium text-primary">duplicate</span>{" "}
                   categories
                 </li>
                 <li> - Press ✓ to save the selection</li>
@@ -272,13 +272,13 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                     {cat.category_icon_name && (
                       <LucideIcon
                         name={cat.category_icon_name as dynamicLucidIconProps}
-                        className="text-background/50 ml-1 size-3"
+                        className="ml-1 size-3 text-background/50"
                       />
                     )}
                   </Badge>
                 ))
               ) : (
-                <span className="text-muted-foreground text-xs">
+                <span className="text-xs text-muted-foreground">
                   Select or Create cateories
                 </span>
               )}
@@ -286,11 +286,11 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button onClick={toggleEdit} variant="ghost" size={"xs"}>
-                  <Plus className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+                  <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent
-                className="dark:bg-foreground dark:text-background flex items-center text-xs"
+                className="flex items-center text-xs dark:bg-foreground dark:text-background"
                 align="center"
                 side="right"
               >
@@ -302,7 +302,7 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="border-muted-foreground dark:border-border w-full rounded-md border border-dashed p-2 transition-all duration-200 ease-out"
+              className="w-full rounded-md border border-dashed border-muted-foreground p-2 transition-all duration-200 ease-out dark:border-border"
             >
               <div
                 className="flex w-fit items-center space-x-1"
@@ -333,14 +333,14 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                           }}
                           placeholder="Select or Create categories..."
                           emptyIndicator={
-                            <p className="text-muted-foreground text-center text-xs">
+                            <p className="text-center text-xs text-muted-foreground">
                               Try to search for some categories
                             </p>
                           }
                           creatable
                           preventDuplicateCreation
                           loadingIndicator={
-                            <span className="text-muted-foreground flex w-full items-center justify-center space-x-2 py-5">
+                            <span className="flex w-full items-center justify-center space-x-2 py-5 text-muted-foreground">
                               <p className="text-center text-xs ">searching</p>
                               <Loader2 className="h-2 w-2 animate-spin" />
                             </span>

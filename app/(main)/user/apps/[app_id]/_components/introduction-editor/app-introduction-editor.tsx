@@ -104,7 +104,7 @@ export const AppIntroductionEditor: React.FC<AppIntroductionEditorProps> = ({
         setSaveStatus={setSaveStatus}
         setCharsCount={setCharsCount}
         saveStatus={saveStatus}
-        className="border-muted-foreground dark:border-border border border-dashed md:p-8 md:py-4 lg:p-12 lg:py-6"
+        className="border border-dashed border-muted-foreground dark:border-border md:p-8 md:py-4 lg:p-12 lg:py-6"
       />
     ),
     [
@@ -128,7 +128,7 @@ export const AppIntroductionEditor: React.FC<AppIntroductionEditorProps> = ({
         />
         {memoizedNovelEditor}
         {isEmpty && (
-          <div className="text-muted-foreground mt-4 text-center">
+          <div className="mt-4 text-center text-muted-foreground">
             The editor is empty. Start typing to add content.
           </div>
         )}

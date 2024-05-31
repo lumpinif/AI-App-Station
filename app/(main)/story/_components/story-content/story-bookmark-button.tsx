@@ -28,7 +28,7 @@ export const StoryBookmarkButton: React.FC<StoryBookmarkProps> = ({
       <button className={cn("group rounded-full")} onClick={handleBookmarks}>
         <Bookmark
           className={cn(
-            "transition-color text-muted-foreground size-4 stroke-current stroke-[1.5] outline-none duration-200 ease-out sm:group-hover:fill-amber-500 sm:group-hover:text-amber-500",
+            "transition-color size-4 stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-amber-500 sm:group-hover:text-amber-500",
             optimisticBookmarkState.isUserBookmarked &&
               "fill-current text-amber-500",
             className
@@ -36,7 +36,7 @@ export const StoryBookmarkButton: React.FC<StoryBookmarkProps> = ({
         />
       </button>
       {optimisticBookmarkState.bookmarksCount > 0 && (
-        <span className="text-muted-foreground text-sm font-medium">
+        <span className="text-sm font-medium text-muted-foreground">
           {optimisticBookmarkState.bookmarksCount}
         </span>
       )}

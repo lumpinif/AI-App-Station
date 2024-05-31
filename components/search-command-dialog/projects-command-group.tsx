@@ -33,7 +33,7 @@ export const ProjectsCommandGroup: React.FC<ProjectsCommandGroupProps> = ({
         }}
         className="hover:cursor-pointer"
       >
-        <Upload className="text-muted-foreground mr-2 size-4 stroke-[1.5px] md:mr-4" />
+        <Upload className="mr-2 size-4 stroke-[1.5px] text-muted-foreground md:mr-4" />
         Submit New App
       </CommandItem>
 
@@ -53,7 +53,7 @@ export const ProjectsCommandGroup: React.FC<ProjectsCommandGroupProps> = ({
           className="h-11 w-full !px-2 hover:bg-transparent"
           motionClassName="justify-start space-x-0"
         >
-          <Plus className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
+          <Plus className="mr-2 h-4 w-4 text-muted-foreground md:mr-4" />
           <span className="font-normal">Create New Story</span>
         </SpinnerButton>
       </CommandItem>

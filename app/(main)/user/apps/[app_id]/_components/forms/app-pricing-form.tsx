@@ -107,7 +107,7 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
           <div className="px-2">
             <h3>Pricing (Required) </h3>
             <Separator />
-            <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
+            <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
               <li className="flex items-center space-x-4">
                 <span className="w-full">
                   Select the pricing model for the app
@@ -125,7 +125,7 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
               <span>Key Info</span>
             </h3>
             <Separator />
-            <ul className="text-muted-foreground mt-2">
+            <ul className="mt-2 text-muted-foreground">
               <li> - Press ✓ to save the selection</li>
               <li> - Avoid selecting unrelated pricing model</li>
               <li> - Please be responsible for your submission</li>
@@ -172,7 +172,7 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
                               />
                             </TooltipTrigger>
                             <TooltipContent
-                              className="dark:bg-foreground dark:text-background flex items-center text-xs"
+                              className="flex items-center text-xs dark:bg-foreground dark:text-background"
                               align="center"
                               side="right"
                             >
@@ -204,7 +204,7 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
                                 {pricing.label}
                                 <Check
                                   className={cn(
-                                    "text-muted-foreground ml-auto size-4 transition-opacity duration-150 ease-out",
+                                    "ml-auto size-4 text-muted-foreground transition-opacity duration-150 ease-out",
                                     pricing.value === field.value
                                       ? "opacity-100"
                                       : "opacity-0"

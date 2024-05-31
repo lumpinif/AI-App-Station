@@ -11,7 +11,7 @@ export function NotFound() {
             WithAccountModalTrigger={false}
           />
         </div>
-        <p className="text-muted-foreground mt-2">
+        <p className="mt-2 text-muted-foreground">
           This link might be broken, deleted, or moved. Nevertheless, there’s
           nothing to see here...
         </p>

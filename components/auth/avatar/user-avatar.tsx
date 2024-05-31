@@ -69,7 +69,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
                       avatarClassName
                     )}
                   />
-                  <span className="bg-background/20 absolute rounded-full p-2 backdrop-blur-[1px]">
+                  <span className="absolute rounded-full bg-background/20 p-2 backdrop-blur-[1px]">
                     <Camera className="size-6" />
                   </span>
 
@@ -86,11 +86,11 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
                     src={`${profile.avatar_url}`}
                     alt={`${profile.full_name || profile.user_name || "User"}`}
                     className={cn(
-                      "animate-fade h-full w-full rounded-full object-cover",
+                      "h-full w-full animate-fade rounded-full object-cover",
                       avatarClassName
                     )}
                   />
-                  <span className="bg-background/20 absolute rounded-full p-2 backdrop-blur-[1px]">
+                  <span className="absolute rounded-full bg-background/20 p-2 backdrop-blur-[1px]">
                     <Camera className="size-6" />
                   </span>
 

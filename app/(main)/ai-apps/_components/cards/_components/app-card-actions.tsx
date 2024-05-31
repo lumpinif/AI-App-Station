@@ -27,17 +27,17 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
             variant={"outline"}
             className="group/action cursor-pointer border-0 font-normal outline-none hover:bg-blue-500"
           >
-            <DotsHorizontalIcon className="text-primary dark:text-muted-foreground group-hover/action:text-background dark:group-hover/action:text-primary size-4" />
+            <DotsHorizontalIcon className="size-4 text-primary group-hover/action:text-background dark:text-muted-foreground dark:group-hover/action:text-primary" />
           </Badge>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="glass-card-background sm:shadow-outline border backdrop-blur-md dark:border-none"
+        className="glass-card-background border backdrop-blur-md dark:border-none sm:shadow-outline"
         sideOffset={5}
         align="end"
       >
         <DropdownMenuItem>
-          <div className="text-muted-foreground hover:text-popover-foreground flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm">
+          <div className="flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm text-muted-foreground hover:text-popover-foreground">
             <span>Add to Collection</span>
             <Button variant={"tag"} size={"xs"} className="m-0 p-0">
               {/* <Bookmark
@@ -49,7 +49,7 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <div className="text-muted-foreground hover:text-popover-foreground flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm">
+          <div className="flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm text-muted-foreground hover:text-popover-foreground">
             <span>Like</span>
             <Button variant={"tag"} size={"xs"} className="m-0 p-0">
               <Heart className="fill-red-600 stroke-red-600" size={16} />
@@ -57,7 +57,7 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({}) => {
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <div className="text-muted-foreground hover:text-popover-foreground flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm">
+          <div className="flex w-full cursor-pointer items-center justify-between gap-x-4 text-sm text-muted-foreground hover:text-popover-foreground">
             <span>Share it with</span>
             <Button variant={"tag"} size={"xs"} className="m-0 p-0">
               <SquareArrowOutUpRight size={16} />

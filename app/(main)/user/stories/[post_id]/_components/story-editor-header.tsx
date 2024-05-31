@@ -25,7 +25,7 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
     <div className={cn("flex-col space-y-2", className)}>
       <div className="flex items-center justify-end gap-x-2">
         <div className="flex items-center gap-x-2">
-          <div className="bg-accent text-muted-foreground flex h-fit select-none rounded-lg px-2 py-1 text-xs">
+          <div className="flex h-fit select-none rounded-lg bg-accent px-2 py-1 text-xs text-muted-foreground">
             <span>
               {charsCount}/{CHARS_LIMIT}
             </span>
@@ -49,7 +49,7 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
           )}
           <div
             className={cn(
-              "bg-accent text-muted-foreground flex select-none rounded-lg px-2 py-1 text-xs",
+              "flex select-none rounded-lg bg-accent px-2 py-1 text-xs text-muted-foreground",
               saveStatus === "Failed to save" && "bg-destructive"
             )}
           >
@@ -81,7 +81,7 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
         </div>
       </div>
 
-      <span className="text-muted-foreground/80 flex cursor-default select-none justify-end text-xs">
+      <span className="flex cursor-default select-none justify-end text-xs text-muted-foreground/80">
         Select text to edit or Press &apos;/&apos; for commands
       </span>
     </div>

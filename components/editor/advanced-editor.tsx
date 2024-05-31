@@ -121,8 +121,8 @@ const NovelEditor = ({
           }}
           slotAfter={<ImageResizer />}
         >
-          <EditorCommand className="border-muted bg-background relative z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border px-1 py-2 shadow-md transition-all">
-            <EditorCommandEmpty className="text-muted-foreground px-2">
+          <EditorCommand className="relative z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
+            <EditorCommandEmpty className="px-2 text-muted-foreground">
               No results
             </EditorCommandEmpty>
             <EditorCommandList>
@@ -136,17 +136,17 @@ const NovelEditor = ({
                   value={item.title}
                   onCommand={(val) => item.command?.(val)}
                   className={cn(
-                    "hover:bg-accent aria-selected:bg-accent flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:cursor-pointer"
+                    "flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:cursor-pointer hover:bg-accent aria-selected:bg-accent"
                   )}
                   key={item.title}
                   ref={item.title === "Youtube" ? youtubeTriggerRef : null}
                 >
-                  <div className="border-muted bg-background flex h-10 w-10 items-center justify-center rounded-md border">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">
                     {item.icon}
                   </div>
                   <div>
                     <p className="font-medium">{item.title}</p>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-xs text-muted-foreground">
                       {item.description}
                     </p>
                   </div>
@@ -159,7 +159,7 @@ const NovelEditor = ({
             tippyOptions={{
               placement: "top",
             }}
-            className="border-muted bg-background flex w-fit max-w-[90vw] overflow-hidden rounded-md border shadow-xl"
+            className="flex w-fit max-w-[90vw] overflow-hidden rounded-md border border-muted bg-background shadow-xl"
           >
             <Separator orientation="vertical" className="h-full w-px" />
             <NodeSelector open={openNode} onOpenChange={setOpenNode} />

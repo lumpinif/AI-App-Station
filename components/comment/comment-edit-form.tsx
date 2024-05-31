@@ -159,7 +159,7 @@ const CommentEditForm = <R extends (...args: any) => any>({
               <FormControl>
                 <Textarea
                   defaultValue={comment.comment}
-                  className="no-scrollbar ring-offset-background rounded-none border-l-0 border-r-0 border-t-0 bg-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="no-scrollbar rounded-none border-l-0 border-r-0 border-t-0 bg-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Edit the comment ..."
                   {...field}
                   ref={textAreaRef}
@@ -189,12 +189,12 @@ const CommentEditForm = <R extends (...args: any) => any>({
                           <Star className=" fill-muted stroke-0" size={18} />
                         }
                       />
-                      <span className="text-muted-foreground dark:text-muted text-sm font-medium">
+                      <span className="text-sm font-medium text-muted-foreground dark:text-muted">
                         {field.value || 5} stars
                       </span>
                     </div>
                   </FormControl>
-                  <FormDescription className="text-muted-foreground dark:text-muted text-sm">
+                  <FormDescription className="text-sm text-muted-foreground dark:text-muted">
                     Tap a Star to Update
                   </FormDescription>
                 </FormItem>

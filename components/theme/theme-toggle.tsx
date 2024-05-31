@@ -36,7 +36,7 @@ export function ThemeToggle({
         size="icon"
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         className={cn(
-          "dark:hover:bg-foreground/10 rounded-full active:scale-[.98]",
+          "rounded-full active:scale-[.98] dark:hover:bg-foreground/10",
           className
         )}
       >
@@ -82,7 +82,7 @@ export function ThemeToggle({
   return (
     <div
       className={cn(
-        "dark:glass-card-background text-muted-foreground dark:shadow-outline flex w-fit flex-row items-center space-x-4 rounded-full p-2 transition-all duration-150 ease-out",
+        "dark:glass-card-background flex w-fit flex-row items-center space-x-4 rounded-full p-2 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline",
         className
       )}
     >

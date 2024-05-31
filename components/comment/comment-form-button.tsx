@@ -27,12 +27,12 @@ export const CommentFormButton = <U extends (...args: any) => any>({
           onClick={() => setIsReplying(true)}
           variant={"ghost"}
           className={cn(
-            "dark:shadow-outline animate-in flex w-full items-center space-x-2 border dark:border-none"
+            "flex w-full items-center space-x-2 border animate-in dark:border-none dark:shadow-outline"
           )}
           size="default"
         >
-          <MessageCircleMore className="text-muted-foreground size-3" />
-          <span className="text-muted-foreground select-none text-xs">
+          <MessageCircleMore className="size-3 text-muted-foreground" />
+          <span className="select-none text-xs text-muted-foreground">
             Leave a Comment
           </span>
         </Button>

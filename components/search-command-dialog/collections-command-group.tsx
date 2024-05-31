@@ -30,10 +30,10 @@ export const CollectionsCommandGroup: React.FC<
                 {item.icon && (
                   <>
                     {item.title !== "GPTs" ? (
-                      <item.icon className="text-muted-foreground mr-2 size-full stroke-[1.5] md:mr-4" />
+                      <item.icon className="mr-2 size-full stroke-[1.5] text-muted-foreground md:mr-4" />
                     ) : (
                       <item.icon
-                        className="text-muted-foreground mr-2 md:mr-4"
+                        className="mr-2 text-muted-foreground md:mr-4"
                         size={26}
                       />
                     )}

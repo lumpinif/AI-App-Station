@@ -43,7 +43,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
       {isLink ? (
         <Link
           className={cn(
-            "dark:bg-primary dark:hover:shadow-outline flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-sm transition-all duration-200 ease-out hover:shadow-lg",
+            "flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-sm transition-all duration-200 ease-out hover:shadow-lg dark:bg-primary dark:hover:shadow-outline",
             size ? `h-${size} w-${size}` : "h-14 w-14",
             app_icon_src ? "p-1" : "",
             className
@@ -58,7 +58,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
           {!externalLink ? (
             <div
               className={cn(
-                "dark:bg-primary flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out",
+                "flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out dark:bg-primary",
                 app_icon_src ? "p-1" : ""
               )}
             >
@@ -68,7 +68,7 @@ export const AppIcon: React.FC<AppIconProps> = ({
             <a href={`${externalLink}`} target="_blank">
               <div
                 className={cn(
-                  "cursor-potiner dark:bg-primary flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out",
+                  "cursor-potiner flex flex-none items-center justify-center overflow-hidden rounded-xl shadow-md transition-all duration-200 ease-out dark:bg-primary",
                   app_icon_src ? "p-1" : ""
                 )}
               >

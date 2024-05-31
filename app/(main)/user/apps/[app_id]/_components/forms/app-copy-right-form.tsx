@@ -89,7 +89,7 @@ export const AppCopyRightForm: React.FC<AppCopyRightFormProps> = ({
           <div className="px-2">
             <h3>Add Copy Right (optional)</h3>
             <Separator />
-            <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
+            <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
               <li className="flex items-center space-x-4">
                 <span className="w-full">
                   Type in the copy right for the app
@@ -108,7 +108,7 @@ export const AppCopyRightForm: React.FC<AppCopyRightFormProps> = ({
               <span>Key Info</span>
             </h3>
             <Separator />
-            <ul className="text-muted-foreground mt-2">
+            <ul className="mt-2 text-muted-foreground">
               <li> - Press ✓ to save the input value</li>
               <li> - Avoid typing unrelated copy right</li>
               <li> - Please be responsible for your submission</li>
@@ -126,7 +126,7 @@ export const AppCopyRightForm: React.FC<AppCopyRightFormProps> = ({
           <span
             className={cn(
               "text-sm hover:cursor-pointer",
-              !copy_right && "text-muted-foreground text-xs"
+              !copy_right && "text-xs text-muted-foreground"
             )}
             onClick={() => setIsEditing(true)}
           >
@@ -138,7 +138,7 @@ export const AppCopyRightForm: React.FC<AppCopyRightFormProps> = ({
             className="group"
             size={"xs"}
           >
-            <SquarePen className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+            <SquarePen className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
           </Button>
         </div>
       ) : (
@@ -157,7 +157,7 @@ export const AppCopyRightForm: React.FC<AppCopyRightFormProps> = ({
                         placeholder="copy right..."
                         {...field}
                         value={field.value || ""} // Add this line to handle null value
-                        className="ring-offset-background h-fit w-full max-w-36 text-nowrap border-0 bg-transparent p-0 text-base font-normal outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="h-fit w-full max-w-36 text-nowrap border-0 bg-transparent p-0 text-base font-normal outline-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       />
                     </FormControl>
                     <FormMessage />

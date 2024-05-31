@@ -24,7 +24,7 @@ const Mentor = ({ item }: { item: GridItemInterface }) => {
           </div>
         </div>
         {/* Bottom Container */}
-        <div className="@lg:text-base text-primary text-sm font-bold">
+        <div className="@lg:text-base text-sm font-bold text-primary">
           {item.promotion}
         </div>
       </div>

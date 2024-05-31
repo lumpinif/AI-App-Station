@@ -39,7 +39,7 @@ export const UserProfileCard = ({ className }: { className?: string }) => {
           onFormSubmitted={() => setIsProfileEditModalOpen(false)}
         />
       </ResponsiveContentModal>
-      <div className={cn("bg-background relative", className)}>
+      <div className={cn("relative bg-background", className)}>
         <div className="flex flex-col space-y-4 sm:space-y-6">
           {/* User card and edit button */}
           <div className="flex items-center gap-x-4 md:flex-col">

@@ -63,7 +63,7 @@ export const CommentDropDownMenu = <V extends (...args: any) => any>({
       <DropdownMenu>
         <DropdownMenuTrigger
           asChild
-          className="data-[state=open]:text-primary text-muted-foreground/70 ring-offset-background hover:text-muted-foreground cursor-pointer transition-all duration-150 ease-in-out focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="cursor-pointer text-muted-foreground/70 ring-offset-background transition-all duration-150 ease-in-out hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 data-[state=open]:text-primary"
         >
           <Ellipsis size={16} />
         </DropdownMenuTrigger>
@@ -93,18 +93,18 @@ export const CommentDropDownMenu = <V extends (...args: any) => any>({
 
           <DropdownMenuItem
             className={cn(
-              "hover:!bg-destructive group cursor-pointer",
+              "group cursor-pointer hover:!bg-destructive",
               comment.profiles?.user_id === profile?.user_id ? "" : "hidden"
             )}
             onClick={() => setIsDeleteDialogOpen(true)}
           >
             <div className=" flex w-full items-center justify-between px-1">
-              <span className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500">
+              <span className="text-destructive group-hover:text-background dark:text-red-500 group-hover:dark:text-primary">
                 Delete
               </span>
               <Delete
                 size={12}
-                className="text-destructive group-hover:text-background group-hover:dark:text-primary dark:text-red-500"
+                className="text-destructive group-hover:text-background dark:text-red-500 group-hover:dark:text-primary"
               />
             </div>
           </DropdownMenuItem>

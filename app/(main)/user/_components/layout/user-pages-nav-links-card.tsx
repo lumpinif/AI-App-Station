@@ -27,7 +27,7 @@ export const UserPagesNavLinksCard: React.FC<UserPagesNavLinksCardProps> = ({
       href={link.href}
       className={cn(
         buttonVariants({ variant: "ghost", size: "sm" }),
-        "text-muted-foreground mx-2 justify-start text-nowrap text-start font-normal transition-all duration-150 ease-out active:scale-[.98]",
+        "mx-2 justify-start text-nowrap text-start font-normal text-muted-foreground transition-all duration-150 ease-out active:scale-[.98]",
         className
       )}
       onClick={onClick}
@@ -37,7 +37,7 @@ export const UserPagesNavLinksCard: React.FC<UserPagesNavLinksCardProps> = ({
       />
       <span className={cn("font-normal", titleClassName)}>{link.title}</span>
       {link.label && (
-        <span className={cn("text-muted-foreground ml-auto font-normal")}>
+        <span className={cn("ml-auto font-normal text-muted-foreground")}>
           {link.label}
         </span>
       )}

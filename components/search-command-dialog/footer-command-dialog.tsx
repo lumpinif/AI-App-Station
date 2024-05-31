@@ -17,7 +17,7 @@ export const FooterCommandDialog: React.FC<FooterCommandDialogProps> = ({
   return (
     <footer
       className={cn(
-        "text-muted-foreground border-t px-2 py-1.5 text-sm md:px-4",
+        "border-t px-2 py-1.5 text-sm text-muted-foreground md:px-4",
         className
       )}
     >

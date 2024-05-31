@@ -13,9 +13,9 @@ export const FavoriteAppCard: React.FC<FavoriteAppCardProps> = ({
 }) => {
   const { ...app } = favoriteApp
   return (
-    <div className="border-border/50 col-span-1 flex w-full flex-col gap-y-4 rounded-xl border p-2 py-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md md:p-4 dark:shadow-none hover:dark:shadow-none">
+    <div className="col-span-1 flex w-full flex-col gap-y-4 rounded-xl border border-border/50 p-2 py-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md dark:shadow-none hover:dark:shadow-none md:p-4">
       {/* TODO: CHECK IF WE CAN MAKE BG-CARD/50 AS BG-CARD COLOR */}
-      <div className="dark:bg-card/50 flex items-center gap-x-2 rounded-xl p-2 md:gap-x-4">
+      <div className="flex items-center gap-x-2 rounded-xl p-2 dark:bg-card/50 md:gap-x-4">
         <AppIcon
           app_slug={app.app_slug}
           app_title={app.app_title}

@@ -28,7 +28,7 @@ const FloatingSideNavAppSubmitButton = ({
         </TooltipTrigger>
         <TooltipContent
           side="right"
-          className="dark:bg-foreground dark:text-background flex items-center gap-2"
+          className="flex items-center gap-2 dark:bg-foreground dark:text-background"
         >
           Submit Apps
         </TooltipContent>

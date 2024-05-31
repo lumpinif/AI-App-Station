@@ -144,11 +144,11 @@ const CommentReplyForm = <U extends (...args: any) => any>({
                           precision={0.5}
                           emptyIcon={<Star className=" fill-muted stroke-0" />}
                         />
-                        <span className="text-muted-foreground dark:text-muted text-xs font-medium">
+                        <span className="text-xs font-medium text-muted-foreground dark:text-muted">
                           giving {field.value || 5} stars
                         </span>
                       </div>
-                      <span className="text-muted-foreground dark:text-muted text-xs">
+                      <span className="text-xs text-muted-foreground dark:text-muted">
                         Tap a Star to Rate
                       </span>
                     </div>
@@ -169,7 +169,7 @@ const CommentReplyForm = <U extends (...args: any) => any>({
               </FormLabel>
               <FormControl>
                 <Textarea
-                  className="no-scrollbar ring-offset-background rounded-none border-l-0 border-r-0 border-t-0 bg-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="no-scrollbar rounded-none border-l-0 border-r-0 border-t-0 bg-transparent ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder="Add a comment here ..."
                   {...field}
                   ref={textAreaRef}

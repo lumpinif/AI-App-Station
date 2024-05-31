@@ -27,7 +27,7 @@ export const AppCardsGrid: React.FC<AppCardGridProps> = async ({
 
   if (!favoriteApps || favoriteApps.length === 0) {
     return (
-      <div className="text-muted-foreground mt-6">
+      <div className="mt-6 text-muted-foreground">
         Add some apps to your favorite...
       </div>
     )

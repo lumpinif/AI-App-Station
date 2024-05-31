@@ -21,7 +21,7 @@ export const StoryEditorInfoPopover: React.FC<
         <h3>Editor Actions</h3>
         <Separator />
 
-        <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
+        <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
           <li className="flex items-center space-x-4">
             <Type className="size-4" />
             <span className="w-full">Start typing to add your content</span>
@@ -41,7 +41,7 @@ export const StoryEditorInfoPopover: React.FC<
             <span className="w-full">Select text to customize it</span>
           </li>
           <li className="flex items-center space-x-4">
-            <kbd className="bg-muted rounded p-1">/</kbd>
+            <kbd className="rounded bg-muted p-1">/</kbd>
             <span className="w-full">Press / to open the command menu</span>
           </li>
           <li className="flex items-center space-x-4">
@@ -56,7 +56,7 @@ export const StoryEditorInfoPopover: React.FC<
 
         <h3>Editor Features</h3>
         <Separator />
-        <ul className="text-muted-foreground mt-2">
+        <ul className="mt-2 text-muted-foreground">
           <li> - Rich text editing</li>
           <li> - Capture Quote</li>
           <li> - To-do List</li>

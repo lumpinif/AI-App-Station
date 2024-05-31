@@ -45,15 +45,15 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                 )}
                 onClick={handleResizeHandleClick}
               >
-                <ArrowRightFromLine className="text-muted-foreground  stroke-[1.5px]" />
+                <ArrowRightFromLine className="stroke-[1.5px]  text-muted-foreground" />
               </div>
             </TooltipTrigger>
             <TooltipContent
               side="right"
-              className="dark:bg-foreground dark:text-background flex items-center gap-2 text-xs"
+              className="flex items-center gap-2 text-xs dark:bg-foreground dark:text-background"
             >
               Toggle Sidebar
-              <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono  text-[10px] opacity-100 sm:flex">
+              <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
                 <span className="text-xs">⌘</span>space
               </kbd>
             </TooltipContent>
@@ -85,7 +85,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
             </TooltipTrigger>
             <TooltipContent
               side="right"
-              className="dark:bg-foreground dark:text-background flex items-center gap-2 text-xs"
+              className="flex items-center gap-2 text-xs dark:bg-foreground dark:text-background"
             >
               User Page
             </TooltipContent>

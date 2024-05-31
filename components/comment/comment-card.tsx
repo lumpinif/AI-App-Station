@@ -32,10 +32,10 @@ export const CommentCard: React.FC<CommentProps> = ({
             className="animate-fade select-none rounded-full"
           />
           <AvatarFallback>
-            <span className="bg-muted flex h-full w-full items-center justify-center">
+            <span className="flex h-full w-full items-center justify-center bg-muted">
               <Icons.user
                 className={cn(
-                  "animate-fade text-muted-foreground h-[calc(75%)] w-[calc(75%)] rounded-full"
+                  "h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full text-muted-foreground"
                 )}
               />
             </span>
@@ -63,7 +63,7 @@ export const CommentCard: React.FC<CommentProps> = ({
                       : `user_${comment.profiles.user_id.slice(-5)}`}
                   </h4>
                   <div className="min-w-0 max-w-36 overflow-hidden text-ellipsis md:max-w-60">
-                    <span className="text-muted-foreground whitespace-nowrap text-xs md:text-sm">
+                    <span className="whitespace-nowrap text-xs text-muted-foreground md:text-sm">
                       <Link
                         href={""}
                         className="underline-offset-2 hover:underline"
@@ -76,13 +76,13 @@ export const CommentCard: React.FC<CommentProps> = ({
                     </span>
                   </div>
                   <div className="flex flex-none items-center space-x-2 text-nowrap text-xs md:text-sm">
-                    <span className="bg-muted-foreground h-1 w-1 rounded-full " />
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground " />
                     {comment.updated_at &&
                     moment().diff(moment(comment.updated_at), "minute", true) <
                       30 &&
                     comment.updated_at !== comment.created_at ? (
                       <div className="flex items-center gap-x-2">
-                        <span className="text-muted-foreground/60 relative">
+                        <span className="relative text-muted-foreground/60">
                           Just Updated
                           <span className="absolute -right-2 top-1 h-1 w-1 rounded-full bg-green-600 " />
                         </span>
@@ -95,14 +95,14 @@ export const CommentCard: React.FC<CommentProps> = ({
                           true
                         ) < 30 ? (
                           <div className="flex items-center gap-x-2">
-                            <span className="text-muted-foreground/60 relative">
+                            <span className="relative text-muted-foreground/60">
                               {moment(comment.created_at).fromNow()}
                               <span className="absolute -right-2 top-1 h-1 w-1 animate-pulse rounded-full bg-green-600" />
                             </span>
                           </div>
                         ) : (
                           <div className="flex items-center gap-x-2">
-                            <span className="text-muted-foreground/60 relative">
+                            <span className="relative text-muted-foreground/60">
                               {moment().diff(
                                 moment(comment.created_at),
                                 "day",
@@ -121,7 +121,7 @@ export const CommentCard: React.FC<CommentProps> = ({
                     )}
                   </div>
                 </div>
-                <div className="prose text-primary text-start font-light leading-6 tracking-wide">
+                <div className="prose text-start font-light leading-6 tracking-wide text-primary">
                   {comment.comment}
                   {/* TODO: CONSIDER MAKING EDIT FORM REPLACE COMMENT WHEN IT IS IN EDITING MODE FROM THE SERVER BY ADDIGN EDITING STATE TO URL */}
                   {/* <CommentEditForm app_id={comment.app_id} comment={comment} /> */}

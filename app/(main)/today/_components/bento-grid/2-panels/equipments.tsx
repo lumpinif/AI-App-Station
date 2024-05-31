@@ -24,7 +24,7 @@ const Equipments = ({ item }: { item: GridItemInterface }) => {
             <div className="flex flex-wrap items-center gap-3">
               {item.equipments?.map((equipment, index) => (
                 <Link
-                  className="bg-card rounded-lg px-2 py-1 text-sm font-medium"
+                  className="rounded-lg bg-card px-2 py-1 text-sm font-medium"
                   key={equipment.link + index}
                   href={equipment.link}
                 >
@@ -35,7 +35,7 @@ const Equipments = ({ item }: { item: GridItemInterface }) => {
           </div>
         </div>
         {/* Overlay */}
-        <span className="from-card absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-t from-25% to-transparent"></span>
+        <span className="absolute inset-x-0 bottom-0 z-10 h-full w-full bg-gradient-to-t from-card from-25% to-transparent"></span>
 
         {/* Gradient Blur Overlay */}
         {/* <div className={styles.gradientBlur}>

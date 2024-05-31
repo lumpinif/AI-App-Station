@@ -56,13 +56,13 @@ const AccountModalTrigger = ({
     return (
       <Avatar
         className={cn(
-          "hover:bg-foreground/10 flex animate-pulse items-center justify-center",
+          "flex animate-pulse items-center justify-center hover:bg-foreground/10",
           className
         )}
       >
         <Icons.user
           className={cn(
-            "animate-fade h-[calc(75%)] w-[calc(75%)] rounded-full",
+            "h-[calc(75%)] w-[calc(75%)] animate-fade rounded-full",
             avatarClassName
           )}
         />

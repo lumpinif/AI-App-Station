@@ -78,8 +78,8 @@ export function SubmittedAppsTableFloatingBar({
       />
       <div className="fixed inset-x-0 bottom-5 z-50 w-dvw px-4">
         <div className="w-full ">
-          <div className="bg-card sm:glass-card-background dark:shadow-outline mx-auto flex w-fit items-center gap-2 rounded-full border p-2 px-4 py-4 shadow-2xl backdrop-blur-lg">
-            <div className="dark:bg-accent border-primary flex h-7 items-center rounded-lg border border-dashed pl-2.5 pr-1">
+          <div className="sm:glass-card-background mx-auto flex w-fit items-center gap-2 rounded-full border bg-card p-2 px-4 py-4 shadow-2xl backdrop-blur-lg dark:shadow-outline">
+            <div className="flex h-7 items-center rounded-lg border border-dashed border-primary pl-2.5 pr-1 dark:bg-accent">
               <span className="whitespace-nowrap text-xs">
                 {rows.length} selected
               </span>
@@ -98,7 +98,7 @@ export function SubmittedAppsTableFloatingBar({
                     />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-background text-foreground flex items-center border font-semibold">
+                <TooltipContent className="flex items-center border bg-background font-semibold text-foreground">
                   <p className="mr-2">Clear selection</p>
                   <Kbd abbrTitle="Escape" variant="outline">
                     Esc
@@ -120,7 +120,7 @@ export function SubmittedAppsTableFloatingBar({
                     <PublishIcon className={cn("size-4")} aria-hidden="true" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-background text-foreground border font-semibold">
+                <TooltipContent className="border bg-background font-semibold text-foreground">
                   <p
                     className={PublishStatusColor}
                   >{`Publish ${rows.length > 1 ? "Apps" : "App"}`}</p>
@@ -142,7 +142,7 @@ export function SubmittedAppsTableFloatingBar({
                     />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-background text-foreground border font-semibold">
+                <TooltipContent className="border bg-background font-semibold text-foreground">
                   <p
                     className={UnpublishStatusColor}
                   >{`Unpublish ${rows.length > 1 ? "Apps" : "App"}`}</p>
@@ -168,7 +168,7 @@ export function SubmittedAppsTableFloatingBar({
                     <DownloadIcon className="size-4" aria-hidden="true" />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-background text-foreground border font-semibold">
+                <TooltipContent className="border bg-background font-semibold text-foreground">
                   <p>{`Export ${rows.length > 1 ? "Apps" : "App"}`}</p>
                 </TooltipContent>
               </Tooltip>
@@ -188,7 +188,7 @@ export function SubmittedAppsTableFloatingBar({
                     />
                   </Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-background text-foreground border font-semibold">
+                <TooltipContent className="border bg-background font-semibold text-foreground">
                   <p className="text-red-500">{`Delete ${rows.length > 1 ? "Apps" : "App"}`}</p>
                 </TooltipContent>
               </Tooltip>

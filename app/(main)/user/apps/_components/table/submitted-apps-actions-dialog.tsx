@@ -192,7 +192,7 @@ export function DeleteAppsDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             asChild
-            className="bg-destructive hover:bg-destructive/80 text-white"
+            className="bg-destructive text-white hover:bg-destructive/80"
           >
             <Button
               aria-label="Delete selected rows"
@@ -253,7 +253,7 @@ export function UnpublishAppsDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             asChild
-            className="bg-destructive hover:bg-destructive/80 text-white"
+            className="bg-destructive text-white hover:bg-destructive/80"
           >
             <Button
               aria-label="unpublish selected rows"

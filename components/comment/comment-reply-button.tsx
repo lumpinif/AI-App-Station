@@ -39,7 +39,7 @@ export const CommentReplyButton: React.FC<CommentReplyButtonProps> = ({
           <div onClick={handleClick}>
             <MessageCircle
               className={cn(
-                "text-muted-foreground cursor-pointer stroke-current stroke-[1.5] hover:fill-blue-500 group-hover:stroke-blue-500",
+                "cursor-pointer stroke-current stroke-[1.5] text-muted-foreground hover:fill-blue-500 group-hover:stroke-blue-500",
                 isUserReplied && "fill-blue-500 stroke-blue-500"
               )}
               size={18}

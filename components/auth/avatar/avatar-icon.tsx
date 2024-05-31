@@ -28,7 +28,7 @@ export const AvatarIcon: React.FC<AvatarIconProps> = ({
         src={`${profile.avatar_url}`}
         alt={`${profile.full_name || profile.user_name || "User"}`}
         className={cn(
-          "animate-fade h-full w-full rounded-full object-cover",
+          "h-full w-full animate-fade rounded-full object-cover",
           avatarClassName
         )}
       />

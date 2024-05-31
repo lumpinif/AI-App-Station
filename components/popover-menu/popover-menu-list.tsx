@@ -28,7 +28,7 @@ export const PopoverMenuList: React.FC<PopoverMenuListProps> = () => {
       <AppSubmitButton
         variant={"ghost"}
         size={"default"}
-        className="hover:bg-background/80 bg-background h-full w-full select-none rounded-b-[4px] rounded-t-[4px] transition-transform first:rounded-t-[12px] last:rounded-b-[12px] active:scale-[0.98]"
+        className="h-full w-full select-none rounded-b-[4px] rounded-t-[4px] bg-background transition-transform first:rounded-t-[12px] last:rounded-b-[12px] hover:bg-background/80 active:scale-[0.98]"
       >
         <PopoverMenuItem item={submitAppItem} />
       </AppSubmitButton>

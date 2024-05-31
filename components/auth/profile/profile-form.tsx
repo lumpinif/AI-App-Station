@@ -141,7 +141,7 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
           name="full_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-muted-foreground flex items-center justify-between">
+              <FormLabel className="flex items-center justify-between text-muted-foreground">
                 Name{" "}
                 <TypeCount
                   formName="full_name"
@@ -167,7 +167,7 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
           name="user_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-muted-foreground flex items-center justify-between">
+              <FormLabel className="flex items-center justify-between text-muted-foreground">
                 Username
                 <TypeCount
                   formName="user_name"
@@ -193,7 +193,7 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
           name="user_bio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-muted-foreground flex items-center justify-between">
+              <FormLabel className="flex items-center justify-between text-muted-foreground">
                 Bio
                 <TypeCount
                   formName="user_bio"
@@ -219,7 +219,7 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
           name="user_location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-muted-foreground flex items-center justify-between">
+              <FormLabel className="flex items-center justify-between text-muted-foreground">
                 Location
                 <TypeCount
                   formName="user_location"
@@ -244,7 +244,7 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
           name="user_website"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-muted-foreground flex items-center justify-between">
+              <FormLabel className="flex items-center justify-between text-muted-foreground">
                 Website
                 <TypeCount
                   formName="user_website"

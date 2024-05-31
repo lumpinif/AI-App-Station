@@ -22,7 +22,7 @@ export const AppLaunchButton: React.FC<AppLaunchButtonProps> = ({
         className={cn(
           "group relative h-10 rounded-md border px-6",
           className,
-          isAppUrl ? "" : "bg-muted hover:bg-muted cursor-not-allowed"
+          isAppUrl ? "" : "cursor-not-allowed bg-muted hover:bg-muted"
         )}
         asChild
         variant={"ghost"}

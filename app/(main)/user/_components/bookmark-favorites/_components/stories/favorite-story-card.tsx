@@ -31,7 +31,7 @@ export const FavoriteStoryCard: React.FC<FavoriteStoryCardProps> = ({
   const postRoute = `/story/${authorSlug}/${post.post_id}`
 
   return (
-    <div className="border-border/50 col-span-1 flex w-full flex-col gap-y-6 rounded-xl border p-2 py-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md md:p-4 dark:shadow-none hover:dark:shadow-none">
+    <div className="col-span-1 flex w-full flex-col gap-y-6 rounded-xl border border-border/50 p-2 py-4 shadow-sm transition-all duration-150 ease-out hover:shadow-md dark:shadow-none hover:dark:shadow-none md:p-4">
       <Link href={postRoute}>
         <AspectRatio ratio={16 / 9} className="rounded-lg shadow-md">
           <Image
@@ -72,7 +72,7 @@ export const FavoriteStoryCard: React.FC<FavoriteStoryCardProps> = ({
               <Badge
                 key={post.post_id + index}
                 variant={"outline"}
-                className="border-border/40 hover:shadow-outline hover:bg-card hover:border-border/0"
+                className="border-border/40 hover:border-border/0 hover:bg-card hover:shadow-outline"
               >
                 {label.label_name}
               </Badge>

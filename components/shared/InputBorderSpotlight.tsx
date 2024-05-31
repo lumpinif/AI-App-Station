@@ -55,7 +55,7 @@ export const InputBorderSpotlight = forwardRef<HTMLInputElement, InputProps>(
             placeholder={placeholder}
             type={type}
             name={name}
-            className="bg-background h-10 w-full cursor-default rounded-md border p-3.5 transition-colors  duration-500 placeholder:select-none focus:border-[rgb(59_130_246)] focus:outline-none"
+            className="h-10 w-full cursor-default rounded-md border bg-background p-3.5 transition-colors  duration-500 placeholder:select-none focus:border-[rgb(59_130_246)] focus:outline-none"
             onChange={onChange}
             defaultValue={defaultValue}
           />

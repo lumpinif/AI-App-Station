@@ -17,18 +17,18 @@ const LoginCard = ({ children, className }: LoginCardProps) => {
     <div className={cn("w-full p-8", className)}>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6">
         <AuthForm />
-        <p className="text-muted-foreground text-balance text-center text-xs">
+        <p className="text-balance text-center text-xs text-muted-foreground">
           By clicking, you agree to our{" "}
           <Link
             href="/"
-            className="hover:text-primary underline underline-offset-4"
+            className="underline underline-offset-4 hover:text-primary"
           >
             Terms of Service
           </Link>{" "}
           and{" "}
           <Link
             href="/privacy"
-            className="hover:text-primary underline underline-offset-4"
+            className="underline underline-offset-4 hover:text-primary"
           >
             Privacy Policy
           </Link>
@@ -49,7 +49,7 @@ export function AuthForm() {
         Sign in to Continue
       </h1>
       <Tabs defaultValue="signin" className="w-full">
-        <TabsList className="bg-card mb-4 grid w-full grid-cols-2">
+        <TabsList className="mb-4 grid w-full grid-cols-2 bg-card">
           <TabsTrigger value="signin">Sign In</TabsTrigger>
           <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
@@ -65,7 +65,7 @@ export function AuthForm() {
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background text-muted-foreground px-2">
+          <span className="bg-background px-2 text-muted-foreground">
             Or continue with
           </span>
         </div>

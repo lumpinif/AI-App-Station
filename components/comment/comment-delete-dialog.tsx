@@ -37,7 +37,7 @@ export const CommentDeleteDialog = <V extends (...args: any) => any>({
 }: CommentDeleteDialogProps<V>) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange} {...props}>
-      <DialogContent className="shadow-outline rounded-lg backdrop-blur-xl max-sm:max-w-sm">
+      <DialogContent className="rounded-lg shadow-outline backdrop-blur-xl max-sm:max-w-sm">
         <DialogHeader>
           <DialogTitle className="text-xl">
             Are you absolutely sure?

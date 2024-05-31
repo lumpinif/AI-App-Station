@@ -125,7 +125,7 @@ export const IntroductionFormTextarea: React.FC<
                 <FormItem className="min-h-0 w-full">
                   <FormControl>
                     <Textarea
-                      className="no-scrollbar text-muted-foreground ring-offset-background w-full rounded-none border-l-0 border-r-0 border-t-0 bg-transparent p-0 text-sm focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 md:text-base"
+                      className="no-scrollbar w-full rounded-none border-l-0 border-r-0 border-t-0 bg-transparent p-0 text-sm text-muted-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 md:text-base"
                       disabled={isSubmitting}
                       placeholder="e.g. 'This App is about...'"
                       {...field}

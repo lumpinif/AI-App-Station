@@ -28,7 +28,7 @@ export const StoryCardsGrid: React.FC<StoryCardsGridProps> = async ({
 
   if (!favoritePosts || favoritePosts.length === 0) {
     return (
-      <div className="text-muted-foreground mt-6">
+      <div className="mt-6 text-muted-foreground">
         Add some stories to your favorite...
       </div>
     )

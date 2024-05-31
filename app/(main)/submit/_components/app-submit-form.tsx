@@ -95,7 +95,7 @@ const AppSubmitForm = () => {
             <Button
               variant={"secondary"}
               size={"sm"}
-              className="shadow-outline text-primary dark:text-background flex h-8 w-fit shrink-0 flex-nowrap items-center gap-x-2 bg-white hover:bg-white/80 active:scale-[0.98] dark:border-0"
+              className="flex h-8 w-fit shrink-0 flex-nowrap items-center gap-x-2 bg-white text-primary shadow-outline hover:bg-white/80 active:scale-[0.98] dark:border-0 dark:text-background"
               onClick={() => router.push(`/user/apps/${newApp.app_id}`)}
             >
               <Rocket className="size-4 stroke-1" />

@@ -162,7 +162,7 @@ export default async function AiAppsMainPage({
           <AppDetailCarousel data={app} {...ratingData} className="py-4" />
           <AppLaunchButton
             app_url={app.app_url}
-            className="dark:shadow-outline mx-auto w-full max-w-xl border sm:hidden dark:border-0 dark:outline-none"
+            className="mx-auto w-full max-w-xl border dark:border-0 dark:shadow-outline dark:outline-none sm:hidden"
           />
         </div>
         <div className="flex w-full flex-col xl:flex-row xl:space-x-4">

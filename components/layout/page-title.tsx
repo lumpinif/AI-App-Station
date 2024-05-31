@@ -38,7 +38,7 @@ export const PageTitle = ({
             <div className="flex items-baseline gap-2">
               <span className="page-title-font ">{title}</span>
               {subtitle && (
-                <span className="text-muted-foreground text-base font-semibold tracking-[-.016em] md:tracking-[-.024em]">
+                <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
                   {subtitle}
                 </span>
               )}
@@ -47,7 +47,7 @@ export const PageTitle = ({
         ) : (
           <div className="flex flex-col">
             {subtitle && (
-              <span className="text-muted-foreground mt-2 text-sm font-medium">
+              <span className="mt-2 text-sm font-medium text-muted-foreground">
                 {subtitle}
               </span>
             )}

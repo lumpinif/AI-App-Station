@@ -17,7 +17,7 @@ export const AccountModalNavLinks: React.FC<AccountModalNavLinksProps> = ({
 
   return (
     <div
-      className={cn("bg-card rounded-lg shadow-sm hover:shadow-md", ClassName)}
+      className={cn("rounded-lg bg-card shadow-sm hover:shadow-md", ClassName)}
     >
       {userLayoutRoutes
         .filter((group) => group.group !== "Search")

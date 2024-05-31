@@ -129,7 +129,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
         return (
           <div className={cn("flex w-fit items-center bg-transparent")}>
             <Icon
-              className={cn("text-muted-foreground mr-2 size-4", statusColor)}
+              className={cn("mr-2 size-4 text-muted-foreground", statusColor)}
               aria-hidden="true"
             />
             <span className={cn("font-normal capitalize", statusColor)}>
@@ -158,7 +158,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
         const likes_count = row.original.likes_count as Posts["likes_count"]
         const formattedLikesCount = numeral(likes_count).format("0.[0]a")
         return (
-          <div className="text-muted-foreground flex items-center gap-x-2">
+          <div className="flex items-center gap-x-2 text-muted-foreground">
             <Heart className="size-4" />
             <span className="w-full truncate font-normal">
               {formattedLikesCount}
@@ -176,7 +176,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
         const views_count = row.original.views_count as Posts["views_count"]
         const formattedViewsCount = numeral(views_count).format("0.[0]a")
         return (
-          <span className="text-muted-foreground w-full truncate font-normal">
+          <span className="w-full truncate font-normal text-muted-foreground">
             {formattedViewsCount}
           </span>
         )
@@ -231,7 +231,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
                 <Button
                   aria-label="Open menu"
                   variant="ghost"
-                  className="data-[state=open]:bg-muted flex size-8 p-0"
+                  className="flex size-8 p-0 data-[state=open]:bg-muted"
                 >
                   <DotsHorizontalIcon className="size-4" aria-hidden="true" />
                 </Button>

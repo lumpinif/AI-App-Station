@@ -49,7 +49,7 @@ export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
     <div className="group relative w-full max-w-full">
       {hasOverflow && (
         <div className="absolute bottom-0 right-0">
-          <span className="text-muted-foreground/50 flex items-center space-x-2  text-xs">
+          <span className="flex items-center space-x-2 text-xs  text-muted-foreground/50">
             <p className="opacity-100 transition-all duration-200 ease-out group-focus-within:opacity-100 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 sm:opacity-0">
               scroll for more
             </p>
@@ -102,7 +102,7 @@ export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
             <>
               <InfoBox>
                 <InfoBoxTitle>Category</InfoBoxTitle>
-                <span className="text-muted-foreground flex h-full items-center justify-center text-center text-xs">
+                <span className="flex h-full items-center justify-center text-center text-xs text-muted-foreground">
                   No Categories yet
                 </span>
               </InfoBox>
@@ -114,7 +114,7 @@ export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
             <InfoBoxTitle>Pricing</InfoBoxTitle>
             <Pricing
               data={app}
-              className="text-muted-foreground flex h-full cursor-default flex-col items-center justify-center overflow-hidden text-center"
+              className="flex h-full cursor-default flex-col items-center justify-center overflow-hidden text-center text-muted-foreground"
             />
           </InfoBox>
         </div>
@@ -127,7 +127,7 @@ const InfoBoxSeperator = ({ className }: { className?: string }) => {
   return (
     <Separator
       orientation="vertical"
-      className={cn("dark:border-muted/60 h-2/3", className)}
+      className={cn("h-2/3 dark:border-muted/60", className)}
     />
   )
 }
@@ -154,7 +154,7 @@ const InfoBoxTitle = ({ children, className }: InfoBoxProps) => {
   return (
     <span
       className={cn(
-        "text-muted-foreground text-nowrap text-xs uppercase ",
+        "text-nowrap text-xs uppercase text-muted-foreground ",
         className
       )}
     >
@@ -183,7 +183,7 @@ const RatingsAndReviews = ({
   return (
     <section
       className={cn(
-        "text-muted-foreground flex h-full flex-col items-center justify-center space-y-1",
+        "flex h-full flex-col items-center justify-center space-y-1 text-muted-foreground",
         className
       )}
     >
@@ -218,7 +218,7 @@ export const Category = ({
     <Link
       href={`/ai-apps/categories/${category_slug}`}
       className={cn(
-        "text-muted-foreground hover:text-primary  text-center underline-offset-4 hover:underline",
+        "text-center text-muted-foreground  underline-offset-4 hover:text-primary hover:underline",
         className
       )}
     >
@@ -246,7 +246,7 @@ const Developers = ({
   return (
     <div
       className={cn(
-        "text-muted-foreground group relative flex h-full w-full flex-col items-center justify-start",
+        "group relative flex h-full w-full flex-col items-center justify-start text-muted-foreground",
         className
       )}
     >
@@ -267,7 +267,7 @@ const Developers = ({
               {dev.developer_slug ? (
                 <Link
                   href={dev.developer_slug}
-                  className="hover:text-primary select-none font-medium underline-offset-4 hover:cursor-pointer hover:underline"
+                  className="select-none font-medium underline-offset-4 hover:cursor-pointer hover:text-primary hover:underline"
                 >
                   {dev.developer_name}
                 </Link>
@@ -284,7 +284,7 @@ const Developers = ({
       </div>
       {developers && developers.length > 4 && (
         <div className="absolute right-px top-[-22px] opacity-0 transition-all duration-200 ease-out group-hover:opacity-80 group-focus:opacity-80 group-active:opacity-80 md:right-4">
-          <span className="text-muted-foreground select-none text-xs">▼</span>
+          <span className="select-none text-xs text-muted-foreground">▼</span>
         </div>
       )}
     </div>

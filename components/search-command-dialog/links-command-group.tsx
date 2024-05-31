@@ -33,7 +33,7 @@ export const LinksCommandGroup: React.FC<LinksCommandGroupProps> = ({
             }}
           >
             {navItem.icon && (
-              <navItem.icon className="text-muted-foreground mr-2 size-4 stroke-[1.5px] md:mr-4" />
+              <navItem.icon className="mr-2 size-4 stroke-[1.5px] text-muted-foreground md:mr-4" />
             )}
             {navItem.title}
           </CommandItem>

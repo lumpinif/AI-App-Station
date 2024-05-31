@@ -200,7 +200,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
               <h3>Selector Actions</h3>
               <Separator />
 
-              <ul className="text-muted-foreground my-2 flex w-full flex-col space-y-2">
+              <ul className="my-2 flex w-full flex-col space-y-2 text-muted-foreground">
                 <li className="flex items-center space-x-4">
                   <Plus className="size-4" />
                   <span className="w-full">
@@ -233,17 +233,17 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                 <span>Key Info</span>
               </h3>
               <Separator />
-              <ul className="text-muted-foreground mt-2">
+              <ul className="mt-2 text-muted-foreground">
                 <li>
                   {" "}
-                  - Max <span className="text-primary font-medium">5</span>{" "}
+                  - Max <span className="font-medium text-primary">5</span>{" "}
                   developers can be selected
                 </li>
                 <li>
                   -{" "}
-                  <span className="text-primary font-medium">Not allowed</span>{" "}
+                  <span className="font-medium text-primary">Not allowed</span>{" "}
                   to create{" "}
-                  <span className="text-primary font-medium">duplicate</span>{" "}
+                  <span className="font-medium text-primary">duplicate</span>{" "}
                   developers
                 </li>
                 <li> - Press ✓ to save the selection</li>
@@ -272,13 +272,13 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                     <DevDetailForm app_id={app_id} {...dev}>
                       <Tooltip delayDuration={0}>
                         <TooltipTrigger asChild>
-                          <Settings2 className="group-hover/badge:text-background text-background/50 ml-2 size-3 transition-all duration-150 ease-out" />
+                          <Settings2 className="ml-2 size-3 text-background/50 transition-all duration-150 ease-out group-hover/badge:text-background" />
                         </TooltipTrigger>
                         <TooltipContent
                           align="start"
                           side="bottom"
                           sideOffset={10}
-                          className="dark:bg-foreground dark:text-background flex items-center gap-2"
+                          className="flex items-center gap-2 dark:bg-foreground dark:text-background"
                         >
                           <span className="text-xs">
                             Edit {dev.developer_name} Details
@@ -289,7 +289,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                   </Badge>
                 ))
               ) : (
-                <span className="text-muted-foreground text-xs">
+                <span className="text-xs text-muted-foreground">
                   Search or Create developers
                 </span>
               )}
@@ -297,11 +297,11 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Button onClick={toggleEdit} variant="ghost" size={"xs"}>
-                  <Plus className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+                  <Plus className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent
-                className="dark:bg-foreground dark:text-background flex items-center text-xs"
+                className="flex items-center text-xs dark:bg-foreground dark:text-background"
                 align="center"
                 side="right"
               >
@@ -313,7 +313,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="border-muted-foreground dark:border-border w-full rounded-md border border-dashed p-2 transition-all duration-200 ease-out"
+              className="w-full rounded-md border border-dashed border-muted-foreground p-2 transition-all duration-200 ease-out dark:border-border"
             >
               <div
                 className="flex w-fit items-center space-x-1"
@@ -344,14 +344,14 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                           }}
                           placeholder="Search or Create developers..."
                           emptyIndicator={
-                            <p className="text-muted-foreground text-center text-xs">
+                            <p className="text-center text-xs text-muted-foreground">
                               Try to create or search for some developers
                             </p>
                           }
                           creatable
                           preventDuplicateCreation
                           loadingIndicator={
-                            <span className="text-muted-foreground flex w-full items-center justify-center space-x-2 py-5">
+                            <span className="flex w-full items-center justify-center space-x-2 py-5 text-muted-foreground">
                               <p className="text-center text-xs ">searching</p>
                               <Loader2 className="h-2 w-2 animate-spin" />
                             </span>

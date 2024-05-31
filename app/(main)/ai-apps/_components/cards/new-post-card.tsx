@@ -35,7 +35,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           className="bottom-6"
         />
 
-        <div className="from-background/90 via-background/60 absolute inset-x-0 bottom-0 h-4/6 w-full bg-gradient-to-t via-60% to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-4/6 w-full bg-gradient-to-t from-background/90 via-background/60 via-60% to-transparent" />
         {/* <BottomBlur
           className="bottom-1 h-3/5 rounded-2xl lg:hidden 2xl:block"
           isLastBackground={false}
@@ -81,14 +81,14 @@ const ImageText = ({
       )}
     >
       <span className="flex flex-col space-y-2">
-        <span className="text-primary text-xs font-medium uppercase leading-none tracking-wide mix-blend-difference md:text-sm">
+        <span className="text-xs font-medium uppercase leading-none tracking-wide text-primary mix-blend-difference md:text-sm">
           {post_label} what to watch
         </span>
         <span className="w-full text-wrap text-2xl font-semibold leading-none 2xl:text-3xl">
           {post_title}
         </span>
       </span>
-      <span className="text-primary/80 text-xs tracking-wide mix-blend-difference md:text-sm">
+      <span className="text-xs tracking-wide text-primary/80 mix-blend-difference md:text-sm">
         {post_description}
       </span>
     </div>

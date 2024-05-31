@@ -12,7 +12,7 @@ export const IntroductionEditorContent: React.FC<
     return (
       <section className="flex flex-col space-y-4">
         <div className="relative w-full">
-          <span className="text-muted-foreground italic">
+          <span className="italic text-muted-foreground">
             Introduction content is empty ...
           </span>
         </div>

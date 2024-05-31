@@ -95,7 +95,7 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
         <ContentRenderer content={restContent}></ContentRenderer>
       ) : (
         <div className="relative mt-10 w-full">
-          <span className="text-muted-foreground italic">
+          <span className="italic text-muted-foreground">
             Story content is empty ...
           </span>
         </div>

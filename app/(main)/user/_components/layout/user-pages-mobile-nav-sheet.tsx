@@ -20,7 +20,7 @@ export const UserPagesMobileNavSheet = () => {
           variant="outline"
           className="size-8 shrink-0 md:hidden"
         >
-          <PanelLeft className="text-muted-foreground size-4" />
+          <PanelLeft className="size-4 text-muted-foreground" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
@@ -55,7 +55,7 @@ export const UserPagesMobileNavSheet = () => {
                   ) : (
                     <Link
                       href={item.href}
-                      className="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
+                      className="flex items-center gap-4 px-2.5 font-normal text-muted-foreground hover:text-foreground"
                     >
                       <item.icon className="h-5 w-5 transition-all" />
                       <span className="font-normal">{item.title}</span>

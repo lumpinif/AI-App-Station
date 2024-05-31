@@ -37,7 +37,7 @@ export const StoryLikeButton: React.FC<StoryLikeButtonProps> = ({
         />
       </button>
       {optimisticLikeState.postLikesCount > 0 && (
-        <span className="text-muted-foreground text-sm font-medium">
+        <span className="text-sm font-medium text-muted-foreground">
           {numeral(optimisticLikeState.postLikesCount).format("0.[0]a")}
         </span>
       )}

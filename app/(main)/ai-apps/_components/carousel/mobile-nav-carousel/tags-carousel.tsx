@@ -120,12 +120,12 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
           <CarouselPrevious
             hiddenOnCanNotScroll
             variant="ghost"
-            className={cn("bg-background/20 ml-12 size-8 backdrop-blur-[1px]")}
+            className={cn("ml-12 size-8 bg-background/20 backdrop-blur-[1px]")}
           />
           <CarouselNext
             hiddenOnCanNotScroll
             variant="ghost"
-            className={cn("bg-background/20 mr-12 size-8 backdrop-blur-[1px]")}
+            className={cn("mr-12 size-8 bg-background/20 backdrop-blur-[1px]")}
           />
         </Carousel>
       </div>

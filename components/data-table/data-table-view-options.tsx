@@ -37,7 +37,7 @@ export function DataTableViewOptions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="bg-background/80 w-40 backdrop-blur-sm"
+        className="w-40 bg-background/80 backdrop-blur-sm"
         sideOffset={10}
         alignOffset={-10}
       >

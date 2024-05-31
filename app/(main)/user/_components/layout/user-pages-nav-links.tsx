@@ -26,14 +26,14 @@ export const UserPagesNavLinks: React.FC<UserPagesNavLinksProps> = ({
   return (
     <nav
       className={cn(
-        "text-muted-foreground grid gap-4 group-[[data-collapsed=true]]:justify-center",
+        "grid gap-4 text-muted-foreground group-[[data-collapsed=true]]:justify-center",
         className
       )}
     >
       {userLayoutRoutes.map((group, groupIndex) => (
         <React.Fragment key={groupIndex}>
           {groupIndex > 0 && !isCollapsed && withSeparator && (
-            <Separator className="bg-border/50 h-[0.5px]" />
+            <Separator className="h-[0.5px] bg-border/50" />
           )}
           {group.items.map((link, itemIndex) =>
             isCollapsed ? ( // if collapsed

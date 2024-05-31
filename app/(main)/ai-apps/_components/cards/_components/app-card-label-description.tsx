@@ -12,7 +12,7 @@ export const AppCardCatLabel: React.FC<AppCardCatLabelProps> = ({
   return (
     // TODO: REFACTOR THIS CONSIDER MAKING IT TO A POPOVER
 
-    <div className="text-muted-foreground flex w-full justify-end  gap-x-1 text-nowrap text-[10px]">
+    <div className="flex w-full justify-end gap-x-1  text-nowrap text-[10px] text-muted-foreground">
       {/* Category */}
       {categories && categories.length > 0
         ? categories

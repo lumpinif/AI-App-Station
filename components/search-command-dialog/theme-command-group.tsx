@@ -10,15 +10,15 @@ export const ThemeCommandGroup: React.FC<ThemeCommandGroupProps> = ({}) => {
   return (
     <CommandGroup heading="Theme">
       <CommandItem onSelect={() => setTheme("light")}>
-        <SunIcon className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
+        <SunIcon className="mr-2 h-4 w-4 text-muted-foreground md:mr-4" />
         Light
       </CommandItem>
       <CommandItem onSelect={() => setTheme("dark")}>
-        <MoonIcon className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
+        <MoonIcon className="mr-2 h-4 w-4 text-muted-foreground md:mr-4" />
         Dark
       </CommandItem>
       <CommandItem onSelect={() => setTheme("system")}>
-        <LaptopIcon className="text-muted-foreground mr-2 h-4 w-4 md:mr-4" />
+        <LaptopIcon className="mr-2 h-4 w-4 text-muted-foreground md:mr-4" />
         System
       </CommandItem>
     </CommandGroup>

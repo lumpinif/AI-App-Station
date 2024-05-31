@@ -43,7 +43,7 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
                     key={index}
                     className="bg-transparent md:basis-1/2 lg:basis-1/3"
                   >
-                    <div className="bg-card relative flex size-full items-center justify-center overflow-hidden rounded-2xl">
+                    <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
                       <AppDetailScreenshotsDialog
                         index={index}
                         screenshotsPublicUrls={screenshotsPublicUrls}
@@ -60,8 +60,8 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
                     className="bg-transparent md:basis-1/2 lg:basis-1/3"
                   >
                     <AspectRatio ratio={16 / 9}>
-                      <div className="bg-card relative flex size-full items-center justify-center overflow-hidden rounded-2xl">
-                        <ImageIcon className="stroke-muted size-3/4 stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
+                      <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                        <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100 " />
                       </div>
                     </AspectRatio>
                   </CarouselItem>
@@ -71,7 +71,7 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
             hiddenOnCanNotScroll
             variant={"tag"}
             className={cn(
-              "from-background/80 left-0 size-10 h-full rounded-none to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
+              "left-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
               isHovered ? "" : "hidden"
             )}
           />
@@ -79,7 +79,7 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
             hiddenOnCanNotScroll
             variant={"tag"}
             className={cn(
-              "from-background/80 right-0 size-10 h-full rounded-none to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
+              "right-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
               isHovered ? "" : "hidden"
             )}
           />

@@ -40,11 +40,11 @@ export const UserPagesNavLinksIcon: React.FC<UserPagesNavLinksIconProps> = ({
       </TooltipTrigger>
       <TooltipContent
         side="right"
-        className="dark:bg-foreground dark:text-background flex items-center gap-2 text-xs"
+        className="flex items-center gap-2 text-xs dark:bg-foreground dark:text-background"
       >
         {link.title}
         {link.label && (
-          <span className="text-muted-foreground ml-auto">{link.label}</span>
+          <span className="ml-auto text-muted-foreground">{link.label}</span>
         )}
       </TooltipContent>
     </Tooltip>

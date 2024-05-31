@@ -56,14 +56,14 @@ export const FavoriteStoryCardDropdown: React.FC<
               <Button
                 variant="ghost"
                 aria-label="Open menu"
-                className="data-[state=open]:bg-muted flex size-8 p-0"
+                className="flex size-8 p-0 data-[state=open]:bg-muted"
               >
                 <DotsHorizontalIcon className="size-4" aria-hidden="true" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="dark:shadow-outline w-40 border dark:border-0"
+              className="w-40 border dark:border-0 dark:shadow-outline"
             >
               <TooltipTrigger asChild>
                 <DropdownMenuItem
@@ -79,7 +79,7 @@ export const FavoriteStoryCardDropdown: React.FC<
               <TooltipContent
                 side="right"
                 sideOffset={10}
-                className="dark:bg-foreground dark:text-background flex items-center gap-2"
+                className="flex items-center gap-2 dark:bg-foreground dark:text-background"
               >
                 <span>Toggle like</span>
               </TooltipContent>

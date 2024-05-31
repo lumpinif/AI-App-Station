@@ -80,7 +80,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "bg-background min-h-dvh font-sans antialiased",
+          "min-h-dvh bg-background font-sans antialiased",
           GeistSans.variable
         )}
       >
@@ -92,7 +92,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <main
-              className="bg-background relative flex min-h-dvh flex-col"
+              className="relative flex min-h-dvh flex-col bg-background"
               vaul-drawer-wrapper=""
             >
               <SearchCommandDialogProvider />

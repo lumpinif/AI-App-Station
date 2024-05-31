@@ -420,13 +420,13 @@ const MultipleSelector = React.forwardRef<
                     {option.icon && (
                       <LucideIcon
                         name={option.icon}
-                        className="text-background/50 ml-1 size-3"
+                        className="ml-1 size-3 text-background/50"
                       />
                     )}
                   </span>
                   <button
                     className={cn(
-                      "ring-offset-background focus:ring-ring ml-1 rounded-full outline-none focus:ring-2 focus:ring-offset-2",
+                      "ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2",
                       (disabled || option.fixed) && "hidden"
                     )}
                     onKeyDown={(e) => {
@@ -440,7 +440,7 @@ const MultipleSelector = React.forwardRef<
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <X className="text-muted-foreground hover:text-foreground h-3 w-3" />
+                    <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                   </button>
                 </Badge>
               )
@@ -470,7 +470,7 @@ const MultipleSelector = React.forwardRef<
                   : placeholder
               }
               className={cn(
-                "placeholder:text-muted-foreground ml-1 flex-1 bg-transparent outline-none placeholder:text-xs",
+                "ml-1 flex-1 bg-transparent outline-none placeholder:text-xs placeholder:text-muted-foreground",
                 inputProps?.className
               )}
             />
@@ -478,7 +478,7 @@ const MultipleSelector = React.forwardRef<
         </div>
         <div className="relative">
           {open && (
-            <CommandList className="bg-background animate-in absolute top-0 z-10 w-full max-w-sm rounded-md border shadow-lg outline-none">
+            <CommandList className="absolute top-0 z-10 w-full max-w-sm rounded-md border bg-background shadow-lg outline-none animate-in">
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (
@@ -518,13 +518,13 @@ const MultipleSelector = React.forwardRef<
                               className={cn(
                                 "group/commandItem cursor-pointer",
                                 option.disable &&
-                                  "text-muted-foreground cursor-default "
+                                  "cursor-default text-muted-foreground "
                               )}
                             >
                               {option.icon && (
                                 <LucideIcon
                                   name={option.icon}
-                                  className="group-hover/commandItem:text-primary text-muted-foreground mr-2 size-4 transition-all duration-150 ease-out md:mr-3"
+                                  className="mr-2 size-4 text-muted-foreground transition-all duration-150 ease-out group-hover/commandItem:text-primary md:mr-3"
                                 />
                               )}
                               {option.label}

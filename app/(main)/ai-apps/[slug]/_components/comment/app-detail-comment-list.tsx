@@ -108,7 +108,7 @@ export const AppDetailCommentList: React.FC<CommentListProps> = ({
         deleteCommentService={deleteAppComment}
         setOptimisitcComment={setOptimisticComment as TSetOptimisticComment}
       />
-      <span className="text-muted-foreground px-4 py-2 text-end text-xs max-sm:mb-6">
+      <span className="px-4 py-2 text-end text-xs text-muted-foreground max-sm:mb-6">
         No more comments
       </span>
     </div>

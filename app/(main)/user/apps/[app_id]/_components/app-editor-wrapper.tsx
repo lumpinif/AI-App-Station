@@ -16,16 +16,16 @@ export const AppEditingPageWrapper: React.FC<AppEditingPageWrapperProps> = ({
   children,
 }) => {
   return (
-    <section className="dark:bg-dot-white/[0.2] bg-dot-black/[0.2] bg-background relative mb-4 w-full space-y-6">
+    <section className="relative mb-4 w-full space-y-6 bg-background bg-dot-black/[0.2] dark:bg-dot-white/[0.2]">
       {/* Radial gradient for the container to give a faded look */}
-      <div className="bg-background pointer-events-none absolute inset-0 flex items-center justify-center [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]" />
 
       {/* Header */}
-      <div className="bg-background sticky top-0 z-30 flex items-center justify-between pb-4">
+      <div className="sticky top-0 z-30 flex items-center justify-between bg-background pb-4">
         <AppEditorPageTitle app_title={app.app_title} />
 
         {/* Submit button */}
-        <div className="text-muted-foreground flex items-center justify-end gap-x-2 text-xs">
+        <div className="flex items-center justify-end gap-x-2 text-xs text-muted-foreground">
           <AppPublishButton
             isAllFieldsComplete={isAllFormsComplete()}
             app_publish_status={app.app_publish_status}

@@ -66,7 +66,7 @@ export function DataTableToolbar<TData>({
                     className="relative h-8 w-40 pl-9 lg:w-64"
                   />
 
-                  <MagnifyingGlassIcon className="text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
+                  <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                 </div>
               )
           )}

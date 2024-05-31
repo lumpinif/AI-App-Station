@@ -44,7 +44,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
             <div className="flex flex-1 flex-col space-y-2">
               <span className="h-full">
                 <h4 className="text-sm font-semibold">{profile.full_name}</h4>
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm text-muted-foreground">
                   {profile.user_bio}
                 </span>
               </span>
@@ -52,7 +52,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
           </div>
           <div className="flex items-center pt-2">
             <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
-            <span className="text-muted-foreground text-xs">
+            <span className="text-xs text-muted-foreground">
               Joined {joinedTime}
             </span>
           </div>

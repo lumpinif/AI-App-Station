@@ -43,7 +43,7 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
             {author.full_name}
           </div>
         </UserHoverCard>
-        <div className="text-muted-foreground flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2 text-muted-foreground">
           {/* TODO: IMPLEMENT VIEWS_COUNT FOR THE POST SOMEWHERE ELSE */}
           {/* {views_count && <span>{views_count}</span>} */}
           {/* TODO:IMPLEMENT READ TIME SOMEWHERE ELSE*/}

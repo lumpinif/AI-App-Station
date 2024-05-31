@@ -104,7 +104,7 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
             className="group"
             size={"xs"}
           >
-            <SquarePen className="text-muted-foreground group-hover:text-foreground h-4 w-4 opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+            <SquarePen className="h-4 w-4 text-muted-foreground opacity-50 transition-opacity duration-300 ease-out group-hover:text-foreground group-hover:opacity-100" />
           </Button>
         </div>
       ) : (
@@ -122,7 +122,7 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
                         disabled={isSubmitting}
                         placeholder="https://example.com"
                         {...field}
-                        className="ring-offset-background h-fit w-fit text-nowrap border-0 bg-transparent p-0 text-base font-medium outline-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="h-fit w-fit text-nowrap border-0 bg-transparent p-0 text-base font-medium outline-none ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       />
                     </FormControl>
                     <FormMessage />

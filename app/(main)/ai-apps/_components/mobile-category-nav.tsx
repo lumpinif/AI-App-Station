@@ -39,10 +39,10 @@ export function MobileCategoryNav() {
                   handleTabSelection(`${route.href}`)
                 }}
                 className={cn(
-                  "focus-visible:ring-ring relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4",
+                  "relative flex cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
                   pathname.includes(`${route.href}`)
                     ? "border-primary text-primary"
-                    : "text-muted-foreground hover:text-primary border-transparent"
+                    : "border-transparent text-muted-foreground hover:text-primary"
                 )}
                 style={{
                   WebkitTapHighlightColor: "transparent",
@@ -53,7 +53,7 @@ export function MobileCategoryNav() {
                   <>
                     <motion.span
                       layoutId="bubble_underline"
-                      className="border-primary absolute inset-0 z-10 border-b-2 pb-1"
+                      className="absolute inset-0 z-10 border-b-2 border-primary pb-1"
                       transition={{
                         type: "tween",
                         duration: 0.35,
@@ -96,7 +96,7 @@ const AllAppsTab = ({
   return (
     <div
       className={cn(
-        "focus-visible:ring-ring relative flex w-fit cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4",
+        "relative flex w-fit cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
         className,
         pathname === `/ai-apps`
           ? "border-primary text-primary"

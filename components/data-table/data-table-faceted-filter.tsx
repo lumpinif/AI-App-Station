@@ -101,7 +101,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                   >
                     <div
                       className={cn(
-                        "border-primary mr-2 flex size-4 items-center justify-center rounded-sm border",
+                        "mr-2 flex size-4 items-center justify-center rounded-sm border border-primary",
                         isSelected
                           ? "bg-primary text-primary-foreground"
                           : "opacity-50 [&_svg]:invisible"
@@ -111,7 +111,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     </div>
                     {option.icon && (
                       <option.icon
-                        className="text-muted-foreground mr-2 size-4"
+                        className="mr-2 size-4 text-muted-foreground"
                         aria-hidden="true"
                       />
                     )}

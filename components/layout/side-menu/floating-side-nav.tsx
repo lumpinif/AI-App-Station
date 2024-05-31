@@ -64,8 +64,8 @@ const FloatingSideNav: React.FC = () => {
   const sideNavClass = cn(
     "cubic-bezier(0.32, 0.72, 0, 1) inline-flex flex-col gap-2.5 p-2.5 transition-all duration-500",
     !isOpen
-      ? "dark:bg-background w-20 rounded-[2.5rem]"
-      : "dark:glass-card-background bg-muted dark:shadow-outline w-48 rounded-3xl"
+      ? "w-20 rounded-[2.5rem] dark:bg-background"
+      : "dark:glass-card-background w-48 rounded-3xl bg-muted dark:shadow-outline"
   )
 
   return (
@@ -134,20 +134,20 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
         {!isOpen && (
           <TooltipContent
             side="right"
-            className="dark:bg-foreground dark:text-background flex items-center gap-2"
+            className="flex items-center gap-2 dark:bg-foreground dark:text-background"
           >
             Open
-            <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono  text-[10px] opacity-100 sm:flex">
+            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
               <span className="text-xs">⌘</span>space
             </kbd>
           </TooltipContent>
         )}
         <h1
-          className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap  text-sm opacity-100 duration-300 ${
+          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm  text-foreground opacity-100 duration-300 ${
             !isOpen && "scale-0"
           }`}
         >
-          <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono  text-[10px] opacity-100 sm:flex">
+          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
             <span className="text-xs">⌘</span>space
           </kbd>
         </h1>
@@ -167,11 +167,11 @@ export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
         <div className={cn("relative flex items-center justify-start")}>
           <SearchCommandDialogTrigger className={buttonClass} sideOffset={10} />
           <h1
-            className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm opacity-100 duration-300 ${
+            className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
               !isOpen && "scale-0"
             }`}
           >
-            <kbd className="bg-muted dark:bg-muted-foreground/60 pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono  text-[10px] opacity-100 sm:flex">
+            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
               <span className="text-xs">⌘</span>K
             </kbd>
           </h1>
@@ -191,7 +191,7 @@ export const SideMenuAuthTrigger: React.FC<SideNavToggleProps> = React.memo(
       <div className={cn("relative flex items-center justify-start")}>
         <AccountModalTrigger className={buttonClass} />
         <h1
-          className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap  text-sm opacity-100 duration-300 ${
+          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm  text-foreground opacity-100 duration-300 ${
             !isOpen && "scale-0"
           }`}
         >
@@ -212,7 +212,7 @@ export const SideNavThemeToggle: React.FC<SideNavToggleProps> = React.memo(
       <div className={cn("relative flex items-center justify-start")}>
         <ThemeToggle isDirect className={buttonClass} />
         <h1
-          className={`text-foreground pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm opacity-100 duration-300 ${
+          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
             !isOpen && "scale-0"
           }`}
         >

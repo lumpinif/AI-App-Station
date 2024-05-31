@@ -56,7 +56,7 @@ const useNewStory = (onSuccess?: () => void) => {
               <Button
                 variant={"outline"}
                 size={"sm"}
-                className="shadow-outline text-primary dark:text-background flex h-8 flex-none items-center gap-x-2 text-nowrap bg-white hover:bg-white/80 active:scale-[0.98] dark:border-0"
+                className="flex h-8 flex-none items-center gap-x-2 text-nowrap bg-white text-primary shadow-outline hover:bg-white/80 active:scale-[0.98] dark:border-0 dark:text-background"
                 onClick={() => router.push(`/user/stories/${newStory.post_id}`)}
               >
                 <Rocket className="size-4 flex-none whitespace-nowrap text-nowrap stroke-1" />

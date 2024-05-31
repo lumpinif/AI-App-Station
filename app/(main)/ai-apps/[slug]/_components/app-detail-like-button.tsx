@@ -106,14 +106,14 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
       >
         <Heart
           className={cn(
-            "transition-color text-muted-foreground size-4 stroke-current stroke-[1.5] outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
+            "transition-color size-4 stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
             optimisticLikeState.isUserLiked && "fill-current text-rose-500",
             className
           )}
         />
       </button>
       {appLikesCount > 0 && (
-        <span className="text-muted-foreground text-sm font-medium">
+        <span className="text-sm font-medium text-muted-foreground">
           {numeral(optimisticLikeState.appLikesCount).format("0.[0]a")}
         </span>
       )}

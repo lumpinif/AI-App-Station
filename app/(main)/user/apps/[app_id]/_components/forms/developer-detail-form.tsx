@@ -140,7 +140,7 @@ export const DevDetailForm: React.FC<DeveloerpDetailFormProps> = ({
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <Card className="bg-background w-full border-0 p-2 py-6 sm:p-6">
+            <Card className="w-full border-0 bg-background p-2 py-6 sm:p-6">
               <CardHeader className="hidden text-center sm:block">
                 <CardTitle>Enter {developer_name} Details</CardTitle>
                 <CardDescription>
@@ -155,7 +155,7 @@ export const DevDetailForm: React.FC<DeveloerpDetailFormProps> = ({
                     <FormItem className="w-full">
                       <FormControl>
                         <Input
-                          className="bg-card/10 focus-within:bg-card border-0 outline-none focus:ring-0 focus:!ring-transparent"
+                          className="border-0 bg-card/10 outline-none focus-within:bg-card focus:ring-0 focus:!ring-transparent"
                           placeholder="https://example.com"
                           {...field}
                         />
@@ -171,7 +171,7 @@ export const DevDetailForm: React.FC<DeveloerpDetailFormProps> = ({
                     <FormItem className="w-full">
                       <FormControl>
                         <Input
-                          className="bg-card/10 focus-within:bg-card border-0 outline-none focus:ring-0 focus:!ring-transparent"
+                          className="border-0 bg-card/10 outline-none focus-within:bg-card focus:ring-0 focus:!ring-transparent"
                           placeholder="(optional) support email of the developer"
                           {...field}
                         />

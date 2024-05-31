@@ -134,7 +134,7 @@ export default function PopoverMenu({
       </AnimatePresence>
       <motion.button
         className={cn(
-          "text-muted-foreground hover:!bg-foreground/10  hover:text-foreground absolute bottom-0 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 outline-none",
+          "absolute bottom-0  left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 text-muted-foreground outline-none hover:!bg-foreground/10 hover:text-foreground",
           buttonClassName
         )}
         disabled={isPopoverOpen}

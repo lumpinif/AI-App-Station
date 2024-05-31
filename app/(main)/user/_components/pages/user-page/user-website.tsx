@@ -9,7 +9,7 @@ type UserWebsiteProps = {
 export const UserWebsite: React.FC<UserWebsiteProps> = ({ user_website }) => {
   if (user_website)
     return (
-      <div className="text-muted-foreground flex items-center gap-x-1 font-light sm:gap-x-2">
+      <div className="flex items-center gap-x-1 font-light text-muted-foreground sm:gap-x-2">
         <Link2 className="size-4 rotate-45" />
         <UserWebsiteLink user_website={user_website} />
       </div>

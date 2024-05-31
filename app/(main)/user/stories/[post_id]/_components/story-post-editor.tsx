@@ -168,7 +168,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     <TooltipProvider>
       <section className="relative w-full flex-col">
         <StoryEditorHeader
-          className="bg-background/60 sticky top-0 z-40 w-full justify-end py-2 backdrop-blur-sm"
+          className="sticky top-0 z-40 w-full justify-end bg-background/60 py-2 backdrop-blur-sm"
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}
@@ -176,7 +176,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
         />
         {memoizedNovelEditor}
         {isEmpty && (
-          <div className="text-muted-foreground mt-4 text-center">
+          <div className="mt-4 text-center text-muted-foreground">
             The editor is empty. Start typing to add content.
           </div>
         )}

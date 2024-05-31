@@ -6,7 +6,7 @@
     "prettier",
     "plugin:tailwindcss/recommended"
   ],
-  "plugins": ["tailwindcss"],
+  "plugins": ["tailwindcss", "@typescript-eslint"],
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
     "react/jsx-key": "off",
@@ -16,7 +16,7 @@
   "settings": {
     "tailwindcss": {
       "callees": ["cn"],
-      "config": "tailwind.config.js"
+      "config": "tailwind.config.ts"
     },
     "next": {
       "rootDir": ["./"]
@@ -25,7 +25,27 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
-      "parser": "@typescript-eslint/parser"
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      }
     }
-  ]
+  ],
+  "ignorePatterns": ["node_modules/", ".next/", "next.config.js"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["next/babel"]
+    }
+  }
 }
