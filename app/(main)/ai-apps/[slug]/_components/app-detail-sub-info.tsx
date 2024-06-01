@@ -63,12 +63,12 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
       className="w-full space-y-2 xl:w-56"
     >
       <div className="flex items-center justify-between">
-        <h4
-          className="font-medium text-muted-foreground hover:cursor-pointer lg:text-sm"
+        <h2
+          className="page-title-font text-2xl hover:cursor-pointer lg:text-base"
           onClick={() => setIsOpen(!isOpen)}
         >
-          More Info About this App
-        </h4>
+          More About this App
+        </h2>
         <CollapsibleTrigger asChild className="outline-none">
           <Button
             variant="ghost"

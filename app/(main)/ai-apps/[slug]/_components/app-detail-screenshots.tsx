@@ -24,7 +24,7 @@ export const AppDetailScreenshots: React.FC<AppDetailScreenShotsProps> = ({
 
   return (
     <div className="flex flex-col space-y-4 sm:space-y-6">
-      <h1 className="text-2xl font-semibold tracking-wide">Screenshots</h1>
+      <h1 className="page-title-font text-2xl">Screenshots</h1>
       <div className="relative mx-auto h-full w-full max-w-full">
         <Carousel
           opts={{

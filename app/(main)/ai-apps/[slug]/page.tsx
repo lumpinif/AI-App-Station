@@ -184,7 +184,7 @@ export default async function AiAppsMainPage({
               />
             </Suspense>
           </div>
-          <div className="mt-2 xl:mt-0">
+          <div className="mt-6 xl:mt-0">
             <AppDetailSubInfo {...app} {...app.profiles} {...app.developers} />
           </div>
         </div>
