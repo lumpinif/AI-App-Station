@@ -33,4 +33,16 @@ export const cardVariants = cva(
   }
 )
 
+export const inputVariants = cva(
+  "border-0 outline-none focus:ring-0 focus:!ring-transparent bg-background transition-all duration-150 ease-out",
+  {
+    variants: {
+      variant: {
+        "border-b": "border-b border-boder",
+        minimal: "bg-card/10 focus-within:bg-card",
+      },
+    },
+  }
+)
+
 // TODO: REMOVE THIS BEFORE PRODUCTION

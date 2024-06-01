@@ -1,10 +1,10 @@
-import { Loader2, RotateCw } from "lucide-react"
-
-import { CHARS_LIMIT } from "@/config/editor/editor-config"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 import { StoryEditorInfoPopover } from "./story-editor-info-popover"
+import { StoryEditorStatus } from "./story-editor-status"
+import { StoryEditorWordsCount } from "./story-editor-words-count"
+import { StoryPublishModal } from "./story-publish-modal"
 
 type StoryEditorHeaderProps = {
   className?: string
@@ -23,67 +23,26 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
 }) => {
   return (
     <div className={cn("flex-col space-y-2", className)}>
-      <div className="flex items-center justify-end gap-x-2">
-        <div className="flex items-center gap-x-2">
-          <div className="flex h-fit select-none rounded-lg bg-accent px-2 py-1 text-xs text-muted-foreground">
-            <span>
-              {charsCount}/{CHARS_LIMIT}
-            </span>
-          </div>
+      <div className="flex items-center justify-between gap-x-2">
+        <span className="flex flex-col gap-y-2">
+          <span className="flex items-center gap-x-2">
+            <StoryEditorWordsCount charsCount={charsCount} />
 
-          {saveStatus === "Failed to save" && (
-            <Button
-              size={"sm"}
-              className="h-fit rounded-lg px-2 py-1 text-xs"
-              variant={"default"}
-              onClick={handleRetry}
-              disabled={isRetrying}
-            >
-              <span className="flex items-center space-x-2">
-                <RotateCw
-                  className={cn("size-4", isRetrying && "animate-spin")}
-                />
-                <span className="flex">Retry</span>
-              </span>
-            </Button>
-          )}
-          <div
-            className={cn(
-              "flex select-none rounded-lg bg-accent px-2 py-1 text-xs text-muted-foreground",
-              saveStatus === "Failed to save" && "bg-destructive"
-            )}
-          >
-            {saveStatus === "saving" ? (
-              <span className="flex items-center space-x-2">
-                <span>{saveStatus}</span>
-                <Loader2 className="size-4 animate-spin" />
-              </span>
-            ) : (
-              <>
-                {saveStatus === "Failed to save" ? (
-                  <div className="flex items-center space-x-2">
-                    <span className="text-background dark:text-primary">
-                      {saveStatus}
-                    </span>
-                  </div>
-                ) : (
-                  saveStatus
-                )}
-              </>
-            )}
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <span className="flex items-center space-x-2">
+            <StoryEditorStatus
+              saveStatus={saveStatus}
+              isRetrying={isRetrying}
+              handleRetry={handleRetry}
+            />
             <StoryEditorInfoPopover />
           </span>
-        </div>
-      </div>
+          <span className="flex cursor-default select-none justify-end text-xs text-muted-foreground/80">
+            Select text to edit or Press &apos;/&apos; for commands
+          </span>
+        </span>
 
-      <span className="flex cursor-default select-none justify-end text-xs text-muted-foreground/80">
-        Select text to edit or Press &apos;/&apos; for commands
-      </span>
+        {/* Publish Modal */}
+        <StoryPublishModal />
+      </div>
     </div>
   )
 }

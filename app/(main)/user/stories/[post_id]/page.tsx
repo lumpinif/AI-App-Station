@@ -36,12 +36,11 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     notFound()
   }
 
+  const plainPostContent = JSON.parse(JSON.stringify(post.post_content))
+
   return (
     <StoryContentWrapper>
-      <StoryPostEditor
-        {...post}
-        post_content={post.post_content as JSONContent}
-      />
+      <StoryPostEditor {...post} post_content={plainPostContent} />
     </StoryContentWrapper>
   )
 }

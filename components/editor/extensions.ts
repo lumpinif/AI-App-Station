@@ -43,7 +43,7 @@ const customDocument = Document.extend({
 const placeholder = Placeholder.configure({
   placeholder: ({ node }) => {
     if (node.type.name === "heading") {
-      return "What’s the title?"
+      return "What’s this story about?"
     }
     return "Press '/' for commands"
   },

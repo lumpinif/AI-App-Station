@@ -40,11 +40,11 @@ type StoryPostEditorProps = {
 
 export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_id,
+  profiles,
   post_slug,
   post_title,
-  post_author_id,
   post_content,
-  profiles,
+  post_author_id,
 }) => {
   const toastId = useNewStoryToastStore((state) => state.toastId)
   const setToastId = useNewStoryToastStore((state) => state.setToastId)
@@ -151,7 +151,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
         setSaveStatus={setSaveStatus}
         setCharsCount={setCharsCount}
         saveStatus={saveStatus}
-        className="rounded-xl py-3 sm:py-0"
+        className="rounded-xl py-8 sm:py-10"
       />
     ),
     [
@@ -168,11 +168,11 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     <TooltipProvider>
       <section className="relative w-full flex-col">
         <StoryEditorHeader
-          className="sticky top-0 z-40 w-full justify-end bg-background/60 py-2 backdrop-blur-sm"
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}
           handleRetry={handleRetry}
+          className="sticky top-0 z-40 w-full bg-background/60 py-2 backdrop-blur-sm"
         />
         {memoizedNovelEditor}
         {isEmpty && (

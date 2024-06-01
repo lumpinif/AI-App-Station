@@ -23,9 +23,10 @@ type DialogProps = {
 
 type ModalProps = DrawerProps &
   DialogProps & {
-    children: React.ReactNode
-    isOpen: boolean
     title?: string
+    isOpen: boolean
+    children: React.ReactNode
+    withDefaultDialogClose?: boolean
     onChange: (open: boolean) => void
   }
 
@@ -36,6 +37,7 @@ export default function ResponsiveContentModal({
   children,
   onChange,
   drawerHeight,
+  withDefaultDialogClose,
   drawerContentClassName,
   dialogContentClassName,
   ...props
@@ -78,8 +80,8 @@ export default function ResponsiveContentModal({
   return (
     <Dialog open={isOpen} onOpenChange={onChange} defaultOpen={isOpen}>
       <DialogContent
+        withDefaultClose={withDefaultDialogClose}
         onOpenAutoFocus={(e) => e.preventDefault()}
-        // onCloseAutoFocus={(e) => e.preventDefault()}
         className={cn(dialogContentClassName)}
       >
         {children}
