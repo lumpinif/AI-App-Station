@@ -7,11 +7,13 @@ import { StoryEditorWordsCount } from "./story-editor-words-count"
 import { StoryPublishModal } from "./story-publish/story-publish-modal"
 
 type StoryEditorHeaderProps = {
+  isEmpty?: boolean
   className?: string
   topics?: Topics[]
   postTitle: string
   charsCount: number
   saveStatus: string
+  isEdited?: boolean
   handleRetry: () => void
   isRetrying: boolean
   post_id: Posts["post_id"]
@@ -21,12 +23,14 @@ type StoryEditorHeaderProps = {
 export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
   topics,
   post_id,
+  isEmpty,
   className,
   postTitle,
   charsCount,
   saveStatus,
   isRetrying,
   handleRetry,
+  isEdited = false,
   post_description,
 }) => {
   return (
@@ -49,12 +53,17 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
         </span>
 
         {/* Publish Modal */}
-        <StoryPublishModal
-          topics={topics}
-          post_id={post_id}
-          postTitle={postTitle}
-          post_description={post_description}
-        />
+        {isEmpty ? null : (
+          <StoryPublishModal
+            topics={topics}
+            post_id={post_id}
+            postTitle={postTitle}
+            disabled={
+              saveStatus === "saving" || isRetrying || isEmpty || !isEdited
+            }
+            post_description={post_description}
+          />
+        )}
       </div>
     </div>
   )

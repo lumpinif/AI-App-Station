@@ -60,9 +60,14 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
 
   const isContentEmpty = _.isEqual(initialContent, EMPTY_CONTENT_STRING)
 
-  const [value, setValue] = useState<JSONContent>(initialContent)
   const [charsCount, setCharsCount] = useState(0)
   const [isEmpty, setIsEmpty] = useState(isContentEmpty)
+  const [value, setValue] = useState<JSONContent>(initialContent)
+  const [isEdited, setIsEdited] = useState<boolean>(false)
+
+  const isContentDefault =
+    _.isEqual(value, defaultEditorContent) ||
+    _.isEqual(value, defaultEditorContentWithoutHeading)
 
   const { currentTitle: postTitle } = useUpdateContentHeading({
     content: value,
@@ -105,20 +110,18 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
 
       if (!_.isEqual(post_content, newValue)) {
         insertContent(newValue)
+        setIsEdited(true)
       }
 
       if (isContentDefault || newValue === null || isValueEmpty) {
         removeContent()
+        setIsEdited(false)
       }
     },
     1000
   )
 
   useEffect(() => {
-    const isContentDefault =
-      _.isEqual(value, defaultEditorContent) ||
-      _.isEqual(value, defaultEditorContentWithoutHeading)
-
     if (
       value === null ||
       isContentDefault ||
@@ -126,7 +129,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     ) {
       removeContent()
     }
-  }, [value, removeContent])
+  }, [isContentDefault, removeContent, value])
 
   useEffect(() => {
     if (toastId) {
@@ -173,12 +176,14 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
       <section className="relative w-full flex-col">
         <StoryEditorHeader
           topics={topics}
+          isEmpty={isEmpty}
           post_id={post_id}
           postTitle={postTitle}
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}
           handleRetry={handleRetry}
+          isEdited={isEdited && postTitle !== "Untitled"}
           post_description={post_description}
           className="sticky top-0 z-40 w-full bg-background/60 py-2 backdrop-blur-sm"
         />

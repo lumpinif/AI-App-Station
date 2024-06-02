@@ -4,7 +4,7 @@ import { useState } from "react"
 import { X } from "lucide-react"
 
 import { Posts, Topics } from "@/types/db_tables"
-import { Button } from "@/components/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
 import { ResponsiveModalClose } from "@/components/ui/responsive-modal"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
@@ -12,7 +12,7 @@ import { StoryPublishDetailsForm } from "./story-publish-details-form"
 import { StoryPublishHeader } from "./story-publish-header"
 import { StoryPublishPreview } from "./story-publish-preview"
 
-type StoryPublishModalProps = {
+type StoryPublishModalProps = ButtonProps & {
   topics?: Topics[]
   postTitle: string
   post_id: Posts["post_id"]
@@ -24,6 +24,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
   post_id,
   postTitle,
   post_description,
+  ...props
 }) => {
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
 
@@ -79,6 +80,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
         variant={"ghost"}
         onClick={() => setIsPublishModalOpen(true)}
         className="rounded-full border px-4 active:scale-[.98] dark:border-0 dark:shadow-outline"
+        {...props}
       >
         Publish
       </Button>
