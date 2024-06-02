@@ -128,7 +128,7 @@ export async function getPostsByPostId(post_id: Posts["post_id"]) {
     const { data: posts, error: getPostsError } = await supabase
       .from("posts")
       .select(
-        `*, categories(*), labels(*), profiles(*), post_likes(*), post_bookmarks(*)`
+        `*, categories(*), topics(*), profiles(*), post_likes(*), post_bookmarks(*)`
       )
       .match({ post_id })
       .returns<PostDetails[]>()

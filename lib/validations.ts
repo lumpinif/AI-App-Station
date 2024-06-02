@@ -21,3 +21,10 @@ export const postsSearchParamsSchema = z.object({
   to: z.string().optional(),
   operator: z.enum(["and", "or"]).optional(),
 })
+
+export const mutiSelectorOptionSchema = z.object({
+  label: z.string().max(25, { message: "Label is 25 Chars Max." }),
+  value: z.string().max(25, { message: "Value is 25 Chars Max." }),
+  id: z.string().optional(),
+  // disable: z.boolean().optional(),
+})

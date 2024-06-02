@@ -33,3 +33,9 @@ export type BookmarkState = {
   isUserBookmarked?: boolean
   bookmarksCount?: number
 }
+
+export type SpinnerButtonCopyType = {
+  idle: React.ReactNode
+  loading: React.ReactNode
+  success: React.ReactNode
+}

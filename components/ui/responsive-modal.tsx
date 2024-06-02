@@ -76,8 +76,8 @@ const ResponsiveModalClose = ({
   children,
   ...props
 }: ResponsiveModalProps) => {
-  const { isDesktop } = useMediaQuery()
-  const ResponsiveModalClose = isDesktop ? DialogClose : EnhancedDrawerClose
+  const { isDesktop, isMobile } = useMediaQuery()
+  const ResponsiveModalClose = !isMobile ? DialogClose : EnhancedDrawerClose
 
   return (
     <ResponsiveModalClose className={className} {...props}>

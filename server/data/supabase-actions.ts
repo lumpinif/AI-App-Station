@@ -552,6 +552,7 @@ export async function insertDevelopers(
 
   return data
 }
+
 export async function insertCategories(
   categories: { label: string; value: string }[]
 ) {

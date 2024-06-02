@@ -63,18 +63,18 @@ export const FavoriteStoryCard: React.FC<FavoriteStoryCardProps> = ({
           </Link>
         </span>
 
-        {/* Labels and Actions */}
+        {/* Topics and Actions */}
         <span className="flex w-full items-center justify-between">
-          {!post.labels?.length ? (
+          {!post.topics?.length ? (
             <div className=""></div>
           ) : (
-            post.labels?.slice(0, 3).map((label, index) => (
+            post.topics?.slice(0, 3).map((topic, index) => (
               <Badge
                 key={post.post_id + index}
                 variant={"outline"}
                 className="border-border/40 hover:border-border/0 hover:bg-card hover:shadow-outline"
               >
-                {label.label_name}
+                {topic.topic_name}
               </Badge>
             ))
           )}

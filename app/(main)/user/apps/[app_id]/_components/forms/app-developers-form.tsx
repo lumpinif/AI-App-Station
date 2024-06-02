@@ -25,6 +25,7 @@ import * as z from "zod"
 
 import { Apps, Developers } from "@/types/db_tables"
 import { cn, nameToSlug } from "@/lib/utils"
+import { mutiSelectorOptionSchema } from "@/lib/validations"
 import useClickOutside from "@/hooks/use-click-out-side"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -48,15 +49,8 @@ import {
 import { DevDetailForm } from "./developer-detail-form"
 import { InfoPopover } from "./info-popover"
 
-const optionSchema = z.object({
-  label: z.string(),
-  value: z.string(),
-  id: z.string().optional(),
-  // disable: z.boolean().optional(),
-})
-
 const formSchema = z.object({
-  developers: z.array(optionSchema).min(1),
+  developers: z.array(mutiSelectorOptionSchema).min(1),
 })
 
 type AppDevelopersFormProps = {
@@ -326,7 +320,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                     <FormItem>
                       <FormControl>
                         <MultipleSelector
-                          inputProps={{ autoFocus: isEditing }}
+                          inputProps={{ autoFocus: isEditing, maxLength: 25 }}
                           // hidePlaceholderWhenSelected
                           onSearch={async (value) => {
                             const res = await searchAllDevelopers(value)
@@ -352,7 +346,7 @@ export const AppDevelopersForm: React.FC<AppDevelopersFormProps> = ({
                           preventDuplicateCreation
                           loadingIndicator={
                             <span className="flex w-full items-center justify-center space-x-2 py-5 text-muted-foreground">
-                              <p className="text-center text-xs ">searching</p>
+                              <p className="text-center text-xs">searching</p>
                               <Loader2 className="h-2 w-2 animate-spin" />
                             </span>
                           }

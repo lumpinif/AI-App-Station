@@ -23,8 +23,8 @@ export const StoriesCommandGroup: React.FC<StoriesCommandGroupProps> = ({
           key={story.post_id}
           keywords={[
             story.post_slug,
-            story.labels
-              ?.flatMap((l) => [l.label_name, l.label_description])
+            story.topics
+              ?.flatMap((t) => [t.topic_name, t.topic_description])
               .join(" ") ?? "",
             story.categories
               ?.flatMap((c) => [c.category_name, c.category_description])

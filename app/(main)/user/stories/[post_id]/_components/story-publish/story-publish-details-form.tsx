@@ -1,0 +1,171 @@
+"use client"
+
+import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { Posts, Topics } from "@/types/db_tables"
+import { SpinnerButtonCopyType } from "@/types/shared"
+import { cn } from "@/lib/utils"
+import { mutiSelectorOptionSchema } from "@/lib/validations"
+import useUserProfile from "@/hooks/react-hooks/use-user"
+import { useStorySaveAndPublish } from "@/hooks/story/use-story-publish"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Option } from "@/components/ui/multiple-selector"
+
+import { StoryDescriptionFormTextarea } from "./story-description-form-textarea"
+import { StoryPublishActions } from "./story-publish-actions"
+import { StoryTopicsMultiSelector } from "./story-topics-multi-selector"
+
+type StoryPublishDetailsFormProps = {
+  topics?: Topics[]
+  post_id: Posts["post_id"]
+  post_description: Posts["post_description"]
+}
+
+const formSchema = z.object({
+  post_description: z
+    .string()
+    .max(140, { message: "Description is too long. 140 Chars Max." })
+    .nullable(),
+  topics: z.array(mutiSelectorOptionSchema).optional(),
+})
+
+export const StoryPublishDetailsForm: React.FC<
+  StoryPublishDetailsFormProps
+> = ({ topics, post_id, post_description }) => {
+  const [publishButtonState, setPublishButtonState] =
+    useState<keyof SpinnerButtonCopyType>("idle")
+  const [saveButtonState, setSaveButtonState] =
+    useState<keyof SpinnerButtonCopyType>("idle")
+  const { data: profile } = useUserProfile()
+
+  const defaultTopics: Option[] =
+    topics?.map((topic) => ({
+      label: topic.topic_name,
+      value: topic.topic_slug,
+      id: topic.topic_id,
+    })) || []
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    mode: "onChange",
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      post_description: post_description,
+      topics: defaultTopics,
+    },
+  })
+
+  const { handleSave, handlePublish, searchAllTopics } = useStorySaveAndPublish(
+    {
+      defaultTopics,
+      setSaveButtonState,
+      setPublishButtonState,
+      defaultDescription: post_description,
+    }
+  )
+
+  const descriptionWatch = form.watch("post_description")
+
+  const { isSubmitting } = form.formState
+
+  function onPublish(values: z.infer<typeof formSchema>) {
+    handlePublish(post_id, values.post_description, values.topics, profile)
+  }
+
+  function onSave(values: z.infer<typeof formSchema>) {
+    handleSave(post_id, values.post_description, values.topics, profile)
+  }
+
+  return (
+    <Form {...form}>
+      <form
+        // onSubmit={form.handleSubmit(onPublish)}
+        className="flex h-full flex-1 flex-col justify-between space-y-8 transition-all duration-150 ease-in-out"
+      >
+        <div className="flex flex-col space-y-8">
+          <FormField
+            control={form.control}
+            name="post_description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="mb-2 text-base">
+                  Story Description
+                </FormLabel>
+                <FormControl>
+                  <StoryDescriptionFormTextarea
+                    {...field}
+                    maxLength={140}
+                    defaultValue={post_description ?? ""}
+                    value={field.value ?? ""}
+                    isSubmitting={isSubmitting}
+                    descriptionWatch={descriptionWatch}
+                    disabled={
+                      isSubmitting ||
+                      saveButtonState === "loading" ||
+                      publishButtonState === "loading"
+                    }
+                  />
+                </FormControl>
+                {descriptionWatch && descriptionWatch.length > 100 && (
+                  <span
+                    className={cn(
+                      "flex w-full items-center justify-end text-sm text-muted-foreground",
+                      descriptionWatch.length === 140 ? "text-destructive" : ""
+                    )}
+                  >
+                    <span>{descriptionWatch.length}</span>
+                    /140
+                  </span>
+                )}
+                <FormMessage className="text-xs sm:text-sm" />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="topics"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="mb-2 text-base">Story Topics </FormLabel>
+                <FormLabel className="mb-2 text-sm font-normal text-muted-foreground">
+                  Add or change topics (up to 5) so readers know what your story
+                  is about
+                </FormLabel>
+                <FormControl>
+                  <StoryTopicsMultiSelector
+                    {...field}
+                    disabled={
+                      isSubmitting ||
+                      saveButtonState === "loading" ||
+                      publishButtonState === "loading"
+                    }
+                    defaultOptions={defaultTopics}
+                    searchAllTopics={searchAllTopics}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <StoryPublishActions
+          saveButtonState={saveButtonState}
+          handleSave={form.handleSubmit(onSave)}
+          publishButtonState={publishButtonState}
+          handlePublish={form.handleSubmit(onPublish)}
+        />
+      </form>
+    </Form>
+  )
+}

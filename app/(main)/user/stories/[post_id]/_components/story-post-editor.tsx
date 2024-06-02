@@ -6,7 +6,7 @@ import { JSONContent } from "novel"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { PostDetails, Posts } from "@/types/db_tables"
+import { PostDetails, Posts, Topics } from "@/types/db_tables"
 import {
   defaultEditorContent,
   defaultEditorContentWithoutHeading,
@@ -30,21 +30,25 @@ import {
 import { StoryEditorHeader } from "./story-editor-header"
 
 type StoryPostEditorProps = {
+  topics?: Topics[]
   post_id: Posts["post_id"]
   post_title: Posts["post_title"]
   post_slug: Posts["post_slug"]
   post_author_id: Posts["post_author_id"]
   post_content: JSONContent
   profiles: PostDetails["profiles"]
+  post_description: Posts["post_description"]
 }
 
 export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
+  topics,
   post_id,
   profiles,
   post_slug,
   post_title,
   post_content,
   post_author_id,
+  post_description,
 }) => {
   const toastId = useNewStoryToastStore((state) => state.toastId)
   const setToastId = useNewStoryToastStore((state) => state.setToastId)
@@ -145,12 +149,12 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
         uploadTo="story"
         bucketName={"posts"}
         content_id={post_id}
-        user_id={post_author_id}
         initialValue={value}
-        onChange={handleEditorDebouncedSave}
+        saveStatus={saveStatus}
+        user_id={post_author_id}
         setSaveStatus={setSaveStatus}
         setCharsCount={setCharsCount}
-        saveStatus={saveStatus}
+        onChange={handleEditorDebouncedSave}
         className="rounded-xl py-8 sm:py-10"
       />
     ),
@@ -168,10 +172,14 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     <TooltipProvider>
       <section className="relative w-full flex-col">
         <StoryEditorHeader
+          topics={topics}
+          post_id={post_id}
+          postTitle={postTitle}
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}
           handleRetry={handleRetry}
+          post_description={post_description}
           className="sticky top-0 z-40 w-full bg-background/60 py-2 backdrop-blur-sm"
         />
         {memoizedNovelEditor}

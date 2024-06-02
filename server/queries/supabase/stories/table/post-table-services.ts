@@ -193,7 +193,9 @@ export async function publishStory(post_id: Posts["post_id"]) {
       data: { user },
     } = await supabase.auth.getUser()
 
-    if (!user?.id) return { error: "User not found" }
+    if (!user?.id) {
+      throw new Error("Unauthorized!")
+    }
 
     const { error } = await supabase
       .from("posts")
@@ -211,6 +213,6 @@ export async function publishStory(post_id: Posts["post_id"]) {
     if (error) {
       console.log(error)
     }
-    return { error: "An error occurred while publishing the story." } // Return a generic error message
+    return { error: "Failed to publish story, please try again later." } // Return a generic error message
   }
 }

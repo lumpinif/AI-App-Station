@@ -62,6 +62,7 @@ interface MultipleSelectorProps {
   groupBy?: string
   className?: string
   badgeClassName?: string
+  CommandListCN?: string
   /**
    * First item selected is a default behavior by cmdk. That is why the default is true.
    * This is a workaround solution by add a dummy item.
@@ -193,6 +194,7 @@ const MultipleSelector = React.forwardRef<
       groupBy,
       className,
       badgeClassName,
+      CommandListCN,
       selectFirstItem = true,
       creatable = false,
       preventDuplicateCreation = false,
@@ -408,8 +410,10 @@ const MultipleSelector = React.forwardRef<
                 <Badge
                   key={option.value}
                   className={cn(
-                    "data-[disabled]:bg-muted-foreground data-[disabled]:text-muted data-[disabled]:hover:bg-muted-foreground",
                     "data-[fixed]:bg-muted-foreground data-[fixed]:text-muted data-[fixed]:hover:bg-muted-foreground",
+                    disabled
+                      ? "bg-muted-foreground text-muted hover:bg-muted-foreground"
+                      : "",
                     badgeClassName
                   )}
                   data-fixed={option.fixed}
@@ -470,7 +474,7 @@ const MultipleSelector = React.forwardRef<
                   : placeholder
               }
               className={cn(
-                "ml-1 flex-1 bg-transparent outline-none placeholder:text-xs placeholder:text-muted-foreground",
+                "placeholder:text-normal ml-1 flex-1 bg-transparent outline-none placeholder:text-muted-foreground",
                 inputProps?.className
               )}
             />
@@ -478,7 +482,12 @@ const MultipleSelector = React.forwardRef<
         </div>
         <div className="relative">
           {open && (
-            <CommandList className="absolute top-0 z-10 w-full max-w-sm rounded-md border bg-background shadow-lg outline-none animate-in">
+            <CommandList
+              className={cn(
+                "absolute top-0 z-10 w-full max-w-sm rounded-md border bg-background shadow-lg outline-none animate-in",
+                CommandListCN
+              )}
+            >
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (
@@ -518,7 +527,7 @@ const MultipleSelector = React.forwardRef<
                               className={cn(
                                 "group/commandItem cursor-pointer",
                                 option.disable &&
-                                  "cursor-default text-muted-foreground "
+                                  "cursor-default text-muted-foreground"
                               )}
                             >
                               {option.icon && (

@@ -1,21 +1,22 @@
 "use server"
 
-import { unstable_noStore as noStore } from "next/cache"
-import { getUserData } from "@/server/auth"
+import { unstable_noStore as noStore, revalidatePath } from "next/cache"
+import { getUserData, getUserProfile } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { PostDetails, Posts, PostWithProfile } from "@/types/db_tables"
 import { getErrorMessage } from "@/lib/handle-error"
+import { getPostAuthorSlug } from "@/lib/utils"
 
 // fetch Posts
 export async function getAllPosts(only_is_hero_featured: boolean = false) {
-  // noStore()
+  noStore()
   const supabase = await createSupabaseServerClient()
 
   const query = supabase
     .from("posts")
     .select(
-      "*, categories(*), labels(*), profiles(*), post_likes(*), post_bookmarks(*)"
+      "*, categories(*), topics(*), profiles(*), post_likes(*), post_bookmarks(*)"
     )
     // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE PRODUCTION
     .match({ post_publish_status: "published" })
@@ -40,7 +41,7 @@ export async function getPostById(post_id: Posts["post_id"]) {
   let { data: post, error } = await supabase
     .from("posts")
     .select(
-      `*, categories(*), labels(*), profiles(*), post_likes(*), post_bookmarks(*)`
+      `*, categories(*), topics(*), profiles(*), post_likes(*), post_bookmarks(*)`
     )
     .match({ post_id })
     .single<PostDetails>()

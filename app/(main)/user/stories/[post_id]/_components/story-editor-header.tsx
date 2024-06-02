@@ -1,25 +1,33 @@
+import { Posts, Topics } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 
 import { StoryEditorInfoPopover } from "./story-editor-info-popover"
 import { StoryEditorStatus } from "./story-editor-status"
 import { StoryEditorWordsCount } from "./story-editor-words-count"
-import { StoryPublishModal } from "./story-publish-modal"
+import { StoryPublishModal } from "./story-publish/story-publish-modal"
 
 type StoryEditorHeaderProps = {
   className?: string
+  topics?: Topics[]
+  postTitle: string
   charsCount: number
   saveStatus: string
   handleRetry: () => void
   isRetrying: boolean
+  post_id: Posts["post_id"]
+  post_description: Posts["post_description"]
 }
 
 export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
+  topics,
+  post_id,
+  className,
+  postTitle,
   charsCount,
   saveStatus,
   isRetrying,
   handleRetry,
-  className,
+  post_description,
 }) => {
   return (
     <div className={cn("flex-col space-y-2", className)}>
@@ -41,7 +49,12 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
         </span>
 
         {/* Publish Modal */}
-        <StoryPublishModal />
+        <StoryPublishModal
+          topics={topics}
+          post_id={post_id}
+          postTitle={postTitle}
+          post_description={post_description}
+        />
       </div>
     </div>
   )
