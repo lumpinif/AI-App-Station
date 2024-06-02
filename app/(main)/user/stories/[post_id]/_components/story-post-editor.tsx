@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { draftStory } from "@/server/queries/supabase/stories/table/post-table-services"
 import _ from "lodash"
 import { JSONContent } from "novel"
 import { toast } from "sonner"
@@ -115,6 +116,23 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
 
       if (isContentDefault || newValue === null || isValueEmpty) {
         removeContent()
+
+        const draftProcess = async () => {
+          const { error: draftStoryError } = await draftStory(post_id)
+          if (draftStoryError) {
+            console.error("Failed to draft story:", draftStoryError)
+          }
+        }
+
+        toast.promise(draftProcess, {
+          loading: "Drafting story automatically",
+          success: "Story drafted!",
+          error: "Failed to draft story",
+          description: "You can still continue editing the story",
+          closeButton: false,
+          position: "bottom-center",
+        })
+
         setIsEdited(false)
       }
     },
