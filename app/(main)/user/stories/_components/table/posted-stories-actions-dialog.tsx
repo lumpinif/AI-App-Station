@@ -4,6 +4,7 @@ import { useTransition } from "react"
 import Link from "next/link"
 import {
   deleteStory,
+  draftStory,
   publishStory,
   unpublishStory,
 } from "@/server/queries/supabase/stories/table/post-table-services"
@@ -126,6 +127,41 @@ export async function publishStories({
     )
     toast.error(
       `Failed to publish ${rows.length > 1 ? "Stories" : "Story"}. Please try again.`
+    )
+  }
+}
+
+export async function draftStories({
+  rows,
+  onSuccess,
+}: {
+  rows: Row<PostWithProfile>[]
+  onSuccess?: () => void
+}) {
+  try {
+    await Promise.all(
+      rows.map(async (row) => {
+        const result = await draftStory(row.original.post_id)
+
+        if (result && result.error) {
+          if (typeof result.error === "string") {
+            throw new Error(result.error)
+          } else {
+            throw result.error
+          }
+        }
+      })
+    )
+
+    toast.success(`${rows.length > 1 ? "Stories" : "Story"} Drafted`)
+    onSuccess?.()
+  } catch (error) {
+    console.error(
+      `Error drafting ${rows.length > 1 ? "Stories" : "Story"}:`,
+      error
+    )
+    toast.error(
+      `Failed to draft ${rows.length > 1 ? "Stories" : "Story"}. Please try again.`
     )
   }
 }
@@ -271,6 +307,7 @@ export function UnpublishStoriesDialog({
     </AlertDialog>
   )
 }
+
 export function PublishStoriesDialog({
   posts,
   onSuccess,
@@ -330,6 +367,67 @@ export function PublishStoriesDialog({
     </AlertDialog>
   )
 }
+
+export function DraftStoriesDialog({
+  posts,
+  onSuccess,
+  showTrigger = true,
+  ...props
+}: StoryActionDialogProps) {
+  const [isDraftPending, startDraftTransition] = useTransition()
+
+  return (
+    <AlertDialog {...props}>
+      {showTrigger ? (
+        <AlertDialogTrigger asChild>
+          <Button
+            size="sm"
+            className="outline-none focus:ring-0 focus:!ring-transparent"
+            disabled={isDraftPending}
+          >
+            <RocketIcon className="mr-1 size-4" aria-hidden="true" />
+            Draft ({posts.length})
+          </Button>
+        </AlertDialogTrigger>
+      ) : null}
+      <AlertDialogContent className="max-w-sm rounded-sm md:max-w-md lg:max-w-lg">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This will immediately draft your{" "}
+            <span className="font-medium">{posts.length}</span>
+            {posts.length === 1 ? " story" : " stories"} from the server.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="gap-2 sm:space-x-0">
+          <AlertDialogCancel asChild>
+            <Button variant="outline">Cancel</Button>
+          </AlertDialogCancel>
+          <AlertDialogAction
+            asChild
+            className="bg-green-500 text-white hover:bg-green-600"
+          >
+            <Button
+              aria-label="draft selected rows"
+              onClick={() => {
+                startDraftTransition(() => {
+                  draftStories({
+                    rows: posts,
+                    onSuccess,
+                  })
+                })
+              }}
+              disabled={isDraftPending}
+            >
+              Draft
+            </Button>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
 export function EditStoiesDialog({
   posts,
   onSuccess,

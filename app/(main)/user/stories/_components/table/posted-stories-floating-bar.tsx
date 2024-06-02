@@ -17,6 +17,7 @@ import { Kbd } from "@/components/shared/kbd"
 
 import {
   DeleteStoriesDialog,
+  DraftStoriesDialog,
   PublishStoriesDialog,
   UnpublishStoriesDialog,
 } from "./posted-stories-actions-dialog"
@@ -37,11 +38,14 @@ export function StoriesTableFloatingBar({
     React.useState(false)
   const [showPublishStoryDialog, setShowPublishStoryDialog] =
     React.useState(false)
+  const [showDraftStoryDialog, setShowDraftStoryDialog] = React.useState(false)
 
   const UnpublishIcon = getStatusIcon("unpublished")
   const UnpublishStatusColor = getStatusColor("unpublished")
   const PublishIcon = getStatusIcon("published")
   const PublishStatusColor = getStatusColor("published")
+  const DraftIcon = getStatusIcon("draft")
+  const DraftStatusColor = getStatusColor("draft")
 
   // Clear selection on Escape key press
   React.useEffect(() => {
@@ -78,8 +82,14 @@ export function StoriesTableFloatingBar({
         showTrigger={false}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
+      <DraftStoriesDialog
+        open={showDraftStoryDialog}
+        onOpenChange={setShowDraftStoryDialog}
+        posts={rows}
+        showTrigger={false}
+      />
       <div className="fixed inset-x-0 bottom-5 z-50 w-dvw px-4">
-        <div className="w-full ">
+        <div className="w-full">
           <div className="sm:glass-card-background mx-auto flex w-fit items-center gap-2 rounded-full border bg-card p-2 px-4 py-4 shadow-2xl backdrop-blur-lg dark:shadow-outline">
             <div className="flex h-7 items-center rounded-lg border border-dashed border-primary pl-2.5 pr-1 dark:bg-accent">
               <span className="whitespace-nowrap text-xs">
@@ -126,6 +136,25 @@ export function StoriesTableFloatingBar({
                   <p
                     className={PublishStatusColor}
                   >{`Publish ${rows.length > 1 ? "Stories" : "Story"}`}</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="size-7 border"
+                    onClick={() => setShowDraftStoryDialog(true)}
+                    disabled={isPending}
+                  >
+                    <DraftIcon className={cn("size-4")} aria-hidden="true" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="border bg-background font-semibold text-foreground">
+                  <p
+                    className={DraftStatusColor}
+                  >{`Draft ${rows.length > 1 ? "Stories" : "Story"}`}</p>
                 </TooltipContent>
               </Tooltip>
 

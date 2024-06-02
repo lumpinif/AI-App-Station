@@ -35,8 +35,8 @@ export function getStatusColor(status: Apps["app_publish_status"]) {
   const statusColor = {
     draft: "text-muted-foreground",
     pending: "text-yellow-500",
-    published: "text-green-500",
-    unpublished: "text-red-500",
+    published: "text-green-700",
+    unpublished: "text-red-600",
   }
   return statusColor[status] || "text-muted-foreground"
 }

@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { DotsHorizontalIcon, Pencil2Icon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { Delete, Heart } from "lucide-react"
@@ -34,6 +33,7 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 
 import {
   DeleteStoriesDialog,
+  DraftStoriesDialog,
   EditStoiesDialog,
   PublishStoriesDialog,
   UnpublishStoriesDialog,
@@ -129,12 +129,10 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
         return (
           <div className={cn("flex w-fit items-center bg-transparent")}>
             <Icon
-              className={cn("mr-2 size-4 text-muted-foreground", statusColor)}
+              className={cn("mr-2 size-4", `${statusColor}`)}
               aria-hidden="true"
             />
-            <span className={cn("font-normal capitalize", statusColor)}>
-              {status}
-            </span>
+            <span className={cn("font-normal capitalize")}>{status}</span>
           </div>
         )
       },
@@ -191,14 +189,15 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
           useState(false)
         const [showPublishStoryDialog, setShowPublishStoryDialog] =
           useState(false)
+        const [showDraftStoryDialog, setShowDraftStoryDialog] = useState(false)
         const [showEditStoryDialog, setShowEditStoryDialog] = useState(false)
-
-        const router = useRouter()
 
         const UnpublishIcon = getStatusIcon("unpublished")
         const UnpublishStatusColor = getStatusColor("unpublished")
         const PublishIcon = getStatusIcon("published")
         const PublishStatusColor = getStatusColor("published")
+        const DraftIcon = getStatusIcon("draft")
+        const DraftStatusColor = getStatusColor("draft")
 
         return (
           <>
@@ -217,6 +216,12 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
             <PublishStoriesDialog
               open={showPublishStoryDialog}
               onOpenChange={setShowPublishStoryDialog}
+              posts={[row]}
+              showTrigger={false}
+            />
+            <DraftStoriesDialog
+              open={showDraftStoryDialog}
+              onOpenChange={setShowDraftStoryDialog}
               posts={[row]}
               showTrigger={false}
             />
@@ -251,16 +256,25 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
+                        onSelect={() => setShowDraftStoryDialog(true)}
+                        className="active:scale-[0.98]"
+                      >
+                        <DraftIcon
+                          className={cn("mr-2 size-4", DraftStatusColor)}
+                        />
+                        <span>Draft the story</span>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem
                         onSelect={() => setShowPublishStoryDialog(true)}
                         className="active:scale-[0.98]"
                       >
                         <PublishIcon
                           className={cn("mr-2 size-4", PublishStatusColor)}
                         />
-                        <span className={PublishStatusColor}>
-                          Publish the story
-                        </span>
+                        <span>Publish the story</span>
                       </DropdownMenuItem>
+
                       <DropdownMenuItem
                         onSelect={() => setShowUnpublishStoryDialog(true)}
                         className="active:scale-[0.98]"
@@ -268,9 +282,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
                         <UnpublishIcon
                           className={cn("mr-2 size-4", UnpublishStatusColor)}
                         />
-                        <span className={UnpublishStatusColor}>
-                          Unpublish the story
-                        </span>
+                        <span>Unpublish the story</span>
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>

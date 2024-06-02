@@ -216,3 +216,35 @@ export async function publishStory(post_id: Posts["post_id"]) {
     return { error: "Failed to publish story, please try again later." } // Return a generic error message
   }
 }
+
+export async function draftStory(post_id: Posts["post_id"]) {
+  try {
+    const supabase = await createSupabaseServerClient()
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user?.id) {
+      throw new Error("Unauthorized!")
+    }
+
+    const { error } = await supabase
+      .from("posts")
+      .update({ post_publish_status: "draft" })
+      .match({
+        post_id,
+        post_author_id: user.id,
+      })
+
+    revalidatePath(`/`)
+    revalidatePath(`/user/stories/${post_id}`)
+
+    return { error: error ?? null } // Return { error: null } if no error occurs
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
+    return { error: "Failed to draft story, please try again later." } // Return a generic error message
+  }
+}

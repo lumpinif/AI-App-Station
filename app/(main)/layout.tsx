@@ -20,7 +20,7 @@ export default async function MainLayout({
 
   return (
     <>
-      <SearchCommandDialogProvider />
+      {/* <SearchCommandDialogProvider /> */}
       <AccountModal user={user} />
       <AppSubmitModal user={user} />
       {children}
