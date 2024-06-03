@@ -11,7 +11,8 @@ import {
   insertTopics,
   removePostCategories,
   removePostTopics,
-  updateStoryDescription,
+  updatePostDescription,
+  updatePostImageSrc,
 } from "@/server/queries/supabase/editor/publish/stories"
 import { publishStory } from "@/server/queries/supabase/stories/table/post-table-services"
 import _ from "lodash"
@@ -33,6 +34,7 @@ type TopicsMutiSelectorProps = {
   setSaveButtonState?: React.Dispatch<
     React.SetStateAction<"idle" | "loading" | "success">
   >
+  defaultImageSrc?: Posts["post_image_src"]
 }
 
 export const searchAllTopics = async (value: string): Promise<Option[]> => {
@@ -61,6 +63,7 @@ export const useStorySaveAndPublish = ({
   topics,
   allCategories,
   postCategories,
+  defaultImageSrc,
   defaultDescription,
   setSaveButtonState,
   setPublishButtonState,
@@ -80,6 +83,13 @@ export const useStorySaveAndPublish = ({
       value: category.category_slug,
       id: category.category_id,
       icon: category.category_icon_name as dynamicLucidIconProps,
+    })) || []
+
+  const defaultPostCategoriesWithoutIcon: Option[] =
+    postCategories?.map((category) => ({
+      label: category.category_name,
+      value: category.category_slug,
+      id: category.category_id,
     })) || []
 
   const allCategoriesOptions: Option[] =
@@ -228,6 +238,7 @@ export const useStorySaveAndPublish = ({
 
   const handlePublish = async (
     post_id: Posts["post_id"],
+    post_image_src: Posts["post_image_src"],
     post_description: Posts["post_description"],
     topics?: Option[],
     profile?: Profiles,
@@ -241,8 +252,7 @@ export const useStorySaveAndPublish = ({
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
-      promises.push(updateStoryDescription(post_id, post_description))
-      // await updateStoryDescription(post_id, post_description)
+      promises.push(updatePostDescription(post_id, post_description))
     }
 
     if (
@@ -254,19 +264,24 @@ export const useStorySaveAndPublish = ({
         setPublishButtonState("loading")
       }
       promises.push(handleUpdateTopics(topics, post_id))
-      // await handleUpdateTopics(topics, post_id)
     }
 
     if (
       postCategories &&
-      postCategories !== defaultPostCategories &&
-      _.isEqual(postCategories, defaultPostCategories) === false
+      postCategories !== defaultPostCategoriesWithoutIcon &&
+      _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
     ) {
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
       promises.push(handleUpdatePostCategories(postCategories, post_id))
-      // await handleUpdateTopics(topics, post_id)
+    }
+
+    if (post_image_src !== defaultImageSrc) {
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
+      }
+      promises.push(updatePostImageSrc(post_id, post_image_src))
     }
 
     if (promises.length > 0) {
@@ -295,8 +310,11 @@ export const useStorySaveAndPublish = ({
     }
   }
 
+  // TODO: CONSIDER COMBINE TWO HANDLE FUNCTIONS INTO ONE
+
   const handleSave = async (
     post_id: Posts["post_id"],
+    post_image_src: Posts["post_image_src"],
     post_description: Posts["post_description"],
     topics?: Option[],
     profile?: Profiles,
@@ -308,7 +326,7 @@ export const useStorySaveAndPublish = ({
       if (setSaveButtonState) {
         setSaveButtonState("loading")
       }
-      promises.push(updateStoryDescription(post_id, post_description))
+      promises.push(updatePostDescription(post_id, post_description))
     }
 
     if (
@@ -324,14 +342,20 @@ export const useStorySaveAndPublish = ({
 
     if (
       postCategories &&
-      postCategories !== defaultPostCategories &&
-      _.isEqual(postCategories, defaultPostCategories) === false
+      postCategories !== defaultPostCategoriesWithoutIcon &&
+      _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
     ) {
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
       promises.push(handleUpdatePostCategories(postCategories, post_id))
-      // await handleUpdateTopics(topics, post_id)
+    }
+
+    if (post_image_src !== defaultImageSrc) {
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
+      }
+      promises.push(updatePostImageSrc(post_id, post_image_src))
     }
 
     if (promises.length > 0) {

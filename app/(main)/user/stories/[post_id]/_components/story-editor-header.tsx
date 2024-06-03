@@ -18,8 +18,9 @@ type StoryEditorHeaderProps = {
   handleRetry: () => void
   post_id: Posts["post_id"]
   postCategories?: Categories[]
-  postImagesPublicUrls?: string[]
+  postImagesPublicUrls: string[]
   allCategories?: Categories[] | null
+  post_image_src: Posts["post_image_src"]
   post_author_id: Posts["post_author_id"]
   post_description: Posts["post_description"]
 }
@@ -37,6 +38,7 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
   allCategories,
   post_author_id,
   postCategories,
+  post_image_src,
   isEdited = false,
   post_description,
   postImagesPublicUrls,
@@ -67,9 +69,10 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
             post_id={post_id}
             postTitle={postTitle}
             allCategories={allCategories}
+            post_image_src={post_image_src}
             postCategories={postCategories}
-            post_description={post_description}
             post_author_id={post_author_id}
+            post_description={post_description}
             postImagesPublicUrls={postImagesPublicUrls}
             disabled={
               saveStatus === "saving" || isRetrying || isEmpty || !isEdited

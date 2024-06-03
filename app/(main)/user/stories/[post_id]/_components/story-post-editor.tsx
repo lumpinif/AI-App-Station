@@ -36,11 +36,12 @@ type StoryPostEditorProps = {
   post_id: Posts["post_id"]
   postCategories?: Categories[]
   post_slug: Posts["post_slug"]
-  postImagesPublicUrls?: string[]
+  postImagesPublicUrls: string[]
   post_title: Posts["post_title"]
   profiles: PostDetails["profiles"]
   allCategories?: Categories[] | null
   post_author_id: Posts["post_author_id"]
+  post_image_src: Posts["post_image_src"]
   post_description: Posts["post_description"]
 }
 
@@ -54,6 +55,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   allCategories,
   postCategories,
   post_author_id,
+  post_image_src,
   post_description,
   postImagesPublicUrls,
 }) => {
@@ -210,6 +212,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
           allCategories={allCategories}
           post_author_id={post_author_id}
           postCategories={postCategories}
+          post_image_src={post_image_src}
           post_description={post_description}
           postImagesPublicUrls={postImagesPublicUrls}
           isEdited={isEdited && postTitle !== "Untitled"}

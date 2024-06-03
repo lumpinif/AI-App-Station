@@ -1,14 +1,17 @@
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Image from "next/image"
-import { Check } from "lucide-react"
+import { Check, X } from "lucide-react"
 
+import { Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 type StoryPublishPreviewProps = {
-  postImagesWithUrls?: string[]
+  postImagesWithUrls: string[]
+  onChange?: (value: string) => void
+  post_image_src: Posts["post_image_src"]
 }
 
 const previewImageContainer = cn(
@@ -16,17 +19,23 @@ const previewImageContainer = cn(
 )
 
 export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
+  onChange,
+  post_image_src,
   postImagesWithUrls,
 }) => {
-  const [previewImage, setPreviewImage] = useState<string>(
-    postImagesWithUrls?.[0] ?? ""
-  )
+  const defaultImage = post_image_src ?? postImagesWithUrls[0] ?? ""
+  const [previewImage, setPreviewImage] = useState<string>(defaultImage)
+
   const [isShowSelector, setIsShowSelector] = useState(false)
 
+  useEffect(() => {
+    if (defaultImage !== "") {
+      onChange?.(defaultImage)
+    }
+  }, [defaultImage, onChange])
+
   const noImage =
-    !PostImageSelector ||
-    PostImageSelector.length === 0 ||
-    PostImageSelector === undefined
+    !previewImage || defaultImage === "" || postImagesWithUrls.length === 0
 
   const promptForUser = (
     <div
@@ -36,7 +45,7 @@ export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
       )}
     >
       <p>
-        Include a high-quality image in your story to make it more inviting to
+        Include high-quality images in your story to make it more inviting to
         readers.
       </p>
     </div>
@@ -57,7 +66,9 @@ export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
               />
             ) : (
               <PostImageSelector
+                onChange={onChange}
                 setPreviewImage={setPreviewImage}
+                currentPreviewImage={previewImage}
                 setIsShowSelector={setIsShowSelector}
                 postImagesWithUrls={postImagesWithUrls}
               />
@@ -74,7 +85,7 @@ export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
   )
 }
 
-type PostPreviewImageProps = StoryPublishPreviewProps & {
+type PostPreviewImageProps = {
   previewImage: string
   setIsShowSelector: (value: boolean) => void
 }
@@ -82,16 +93,17 @@ const PostPreviewImage: React.FC<PostPreviewImageProps> = ({
   previewImage,
   setIsShowSelector,
 }) => {
-  const handleButtonClick = () => {
+  const handleChangeClick = () => {
     setIsShowSelector(true)
   }
 
   return (
     <AspectRatio ratio={16 / 9} className="relative">
       <Image
-        src={previewImage}
-        layout="fill"
+        fill
+        sizes="100%"
         alt="Story image"
+        src={previewImage}
         className={cn(
           "relative rounded-2xl object-cover shadow-sm transition-all duration-150 ease-out hover:cursor-pointer hover:shadow-md"
         )}
@@ -100,7 +112,7 @@ const PostPreviewImage: React.FC<PostPreviewImageProps> = ({
         <Button
           size={"label"}
           variant={"ghost"}
-          onClick={handleButtonClick}
+          onClick={handleChangeClick}
           className={cn(
             "dark:glass-card-background font-page-title z-40 w-fit rounded-full border-0 bg-background/70 px-4 shadow-lg drop-shadow-lg backdrop-blur-xl transition-all duration-150 ease-out hover:shadow-xl active:scale-[.98] dark:shadow-outline dark:hover:-translate-y-px dark:hover:scale-[.99]"
           )}
@@ -112,15 +124,20 @@ const PostPreviewImage: React.FC<PostPreviewImageProps> = ({
   )
 }
 
-type PostImageSelectorProps = StoryPublishPreviewProps & {
+type PostImageSelectorProps = {
+  postImagesWithUrls: string[]
+  currentPreviewImage: string
+  onChange?: (value: string) => void
   setPreviewImage: (imageUrl: string) => void
   setIsShowSelector: (value: boolean) => void
 }
 
 const PostImageSelector: React.FC<PostImageSelectorProps> = ({
+  onChange,
   setPreviewImage,
   setIsShowSelector,
   postImagesWithUrls,
+  currentPreviewImage,
 }) => {
   const [selectedImage, setSelectedImage] = useState("")
 
@@ -128,14 +145,19 @@ const PostImageSelector: React.FC<PostImageSelectorProps> = ({
     setSelectedImage(imageUrl)
   }
 
-  const handleCheckClick = () => {
+  const handleCheckClick = useCallback(() => {
     setPreviewImage(selectedImage)
+    onChange?.(selectedImage)
     setIsShowSelector(false)
-  }
+  }, [setPreviewImage, selectedImage, onChange, setIsShowSelector])
+
+  const handleCancleClick = useCallback(() => {
+    setIsShowSelector(false)
+  }, [setIsShowSelector])
 
   return (
     <ScrollArea className={cn("relative", previewImageContainer)}>
-      <span className="flex w-full items-center justify-between px-4 pt-4">
+      <div className="flex w-full items-center justify-between px-4 pt-4">
         <span
           className={cn(
             selectedImage ? "text-blue-600" : "text-muted-foreground"
@@ -143,27 +165,38 @@ const PostImageSelector: React.FC<PostImageSelectorProps> = ({
         >
           Choose the preview
         </span>
-        <button
-          type="button"
-          disabled={!selectedImage}
-          onClick={handleCheckClick}
-          className="active:scale-[.98]"
-        >
-          <Check
-            className={cn(
-              "size-4",
-              selectedImage ? "text-blue-600" : "text-muted-foreground"
-            )}
-          />
-        </button>
-      </span>
+        <span className="flex items-center gap-x-2">
+          <button
+            type="button"
+            onClick={handleCancleClick}
+            className="active:scale-[.98]"
+          >
+            <X className={cn("size-4", "text-muted-foreground")} />
+          </button>
+
+          <button
+            type="button"
+            disabled={!selectedImage}
+            onClick={handleCheckClick}
+            className="active:scale-[.98]"
+          >
+            <Check
+              className={cn(
+                "size-4",
+                selectedImage ? "text-blue-600" : "text-muted-foreground"
+              )}
+            />
+          </button>
+        </span>
+      </div>
       <ul className={cn("grid grid-cols-3 gap-4 p-4 sm:gap-4")}>
         {postImagesWithUrls?.map((imageUrl, index) => (
           <li key={index}>
             <AspectRatio ratio={9 / 9}>
               <Image
+                fill
+                sizes="100%"
                 src={imageUrl}
-                layout="fill"
                 alt="Story image"
                 onClick={() => handleImageClick(imageUrl)}
                 className={cn(

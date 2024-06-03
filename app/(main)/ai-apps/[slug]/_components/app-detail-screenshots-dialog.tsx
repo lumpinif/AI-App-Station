@@ -43,11 +43,12 @@ export const AppDetailScreenshotsDialog: React.FC<
       >
         <AspectRatio ratio={16 / 9}>
           <Image
+            // TODO: Add alt text
+            alt=""
+            fill
             src={
               screenshot_url ? screenshot_url : `/images/image-not-found.png`
             }
-            fill
-            alt=""
             className="rounded-md object-cover"
           />
         </AspectRatio>
@@ -83,7 +84,7 @@ export const AppDetailScreenshotsDialog: React.FC<
             }}
             className="h-full"
           >
-            <CarouselPrevious className="left-2 top-1/3  size-8 border-0 bg-background/30 outline-none md:left-2 md:top-1/2 md:size-12" />
+            <CarouselPrevious className="left-2 top-1/3 size-8 border-0 bg-background/30 outline-none md:left-2 md:top-1/2 md:size-12" />
             <CarouselNext className="right-2 top-1/3 size-8 border-0 bg-background/30 outline-none md:right-2 md:top-1/2 md:size-12" />
 
             <CarouselMainContainer className={cn("relative")}>
@@ -126,6 +127,7 @@ export const AppDetailScreenshotsDialog: React.FC<
                               : `/images/image-not-found.png`
                           }
                           fill
+                          // TODO: Add alt text
                           alt={screenshot_url}
                           className="rounded-md object-cover"
                           data-vaul-no-drag

@@ -188,7 +188,7 @@ export async function removePostTopics(
   }
 }
 
-export async function updateStoryDescription(
+export async function updatePostDescription(
   post_id: Posts["post_id"],
   post_description: Posts["post_description"]
 ) {
@@ -421,4 +421,34 @@ export async function getPostImagesWithUrls(
   )
 
   return { postImagesFileNames, postImagesPublicUrls }
+}
+
+export async function updatePostImageSrc(
+  post_id: Posts["post_id"],
+  post_image_src: Posts["post_image_src"]
+) {
+  const supabase = await createSupabaseServerClient()
+  const { profile } = await getUserProfile()
+
+  if (!profile?.user_id) {
+    throw new Error("User session not found")
+  }
+  const author_slug = getPostAuthorSlug(profile)
+
+  const { data: updatedImageSrc, error } = await supabase
+    .from("posts")
+    .update({
+      post_image_src: post_image_src,
+    })
+    .match({ post_id: post_id, post_author_id: profile.user_id })
+    .select()
+
+  revalidatePath("/")
+  revalidatePath(`/story/${author_slug}/${post_id}`)
+
+  if (error) {
+    throw new Error("Failed to update post image src")
+  }
+
+  return { updatedImageSrc }
 }

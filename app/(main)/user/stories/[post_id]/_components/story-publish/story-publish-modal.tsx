@@ -9,16 +9,15 @@ import { ResponsiveModalClose } from "@/components/ui/responsive-modal"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 import { StoryPublishDetailsForm } from "./story-publish-details-form"
-import { StoryPublishHeader } from "./story-publish-header"
-import { PostPublishPreview } from "./story-publish-preview"
 
 type StoryPublishModalProps = ButtonProps & {
   topics?: Topics[]
   postTitle: string
   post_id: Posts["post_id"]
   postCategories?: Categories[]
-  postImagesPublicUrls?: string[]
+  postImagesPublicUrls: string[]
   allCategories?: Categories[] | null
+  post_image_src: Posts["post_image_src"]
   post_author_id: Posts["post_author_id"]
   post_description: Posts["post_description"]
 }
@@ -30,6 +29,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
   allCategories,
   postCategories,
   post_author_id,
+  post_image_src,
   post_description,
   postImagesPublicUrls,
   ...props
@@ -41,7 +41,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
       <ResponsiveContentModal
         title="Account"
         drawerHeight="h-[98%]"
-        isOpen={isPublishModalOpen}
+        isOpen={true}
         shouldScaleBackground={true}
         withDefaultDialogClose={false}
         onChange={setIsPublishModalOpen}
@@ -56,32 +56,21 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
             </ResponsiveModalClose>
           </div>
 
-          <section className="grid gap-6 p-2 sm:grid-cols-2 sm:gap-10">
-            {/* Left side */}
-            <div className="flex flex-col gap-y-6">
-              <PostPublishPreview postImagesWithUrls={postImagesPublicUrls} />
-            </div>
+          <StoryPublishDetailsForm
+            topics={topics}
+            post_id={post_id}
+            postTitle={postTitle}
+            allCategories={allCategories}
+            post_image_src={post_image_src}
+            postCategories={postCategories}
+            post_description={post_description}
+            postImagesPublicUrls={postImagesPublicUrls}
+          />
 
-            {/* Right side */}
-            <div className="flex flex-col justify-between">
-              <div className="flex h-full flex-col justify-between gap-y-4">
-                <StoryPublishHeader postTitle={postTitle} />
-
-                <StoryPublishDetailsForm
-                  topics={topics}
-                  post_id={post_id}
-                  allCategories={allCategories}
-                  postCategories={postCategories}
-                  post_description={post_description}
-                />
-              </div>
-
-              {/* TODO: CONSIDER ADD LEARN MORE ABOUT THE STORY USER IS PUBLISHING OR SOME LEGAL STATEMENTS HERE */}
-              {/* <div>
+          {/* TODO: CONSIDER ADD LEARN MORE ABOUT THE STORY USER IS PUBLISHING OR SOME LEGAL STATEMENTS HERE */}
+          {/* <div>
                 Learn more about what happens to your post when you publish.
               </div> */}
-            </div>
-          </section>
         </div>
       </ResponsiveContentModal>
 
