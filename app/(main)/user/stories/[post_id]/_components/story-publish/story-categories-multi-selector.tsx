@@ -1,18 +1,18 @@
 import { toast } from "sonner"
 
-import { searchAllTopics } from "@/hooks/story/use-story-publish"
 import MultipleSelector, { Option } from "@/components/ui/multiple-selector"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import { searchAllCategories } from "@/app/(main)/user/apps/[app_id]/_components/forms/app-categories-form"
 
-type StoryTopicsMultiSelectorProps = {
+type StoryCategoriesMultiSelectorProps = {
   value?: Option[]
   disabled?: boolean
   defaultOptions: Option[]
   onChange?: (options: Option[]) => void
 }
 
-export const StoryTopicsMultiSelector: React.FC<
-  StoryTopicsMultiSelectorProps
+export const StoryCategoriesMultiSelector: React.FC<
+  StoryCategoriesMultiSelectorProps
 > = ({ value, disabled, onChange, defaultOptions }) => {
   return (
     <MultipleSelector
@@ -26,10 +26,10 @@ export const StoryTopicsMultiSelector: React.FC<
       defaultOptions={defaultOptions}
       className="rounded-none border-b py-1"
       commandProps={{ className: "space-y-2" }}
-      placeholder="Select or Create topics..."
+      placeholder="Select or Create categories..."
       CommandListCN="dark:border-0 dark:shadow-outline max-w-60"
       onSearch={async (value) => {
-        const res = await searchAllTopics(value)
+        const res = await searchAllCategories(value)
         return res
       }}
       inputProps={{
@@ -39,13 +39,13 @@ export const StoryTopicsMultiSelector: React.FC<
       }}
       onMaxSelected={(maxLimit) => {
         toast(
-          `You have reached max selected ${maxLimit} topics limit. Please remove some topics to add more.`,
+          `You have reached max selected ${maxLimit} categories limit. Please remove some categories to add more.`,
           { position: "top-center", closeButton: false }
         )
       }}
       emptyIndicator={
         <p className="text-center text-xs text-muted-foreground">
-          Try to search for some topics to add
+          Try to search for some categories to add
         </p>
       }
       loadingIndicator={

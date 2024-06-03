@@ -45,7 +45,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   if (error) console.error(error)
 
   const { categories, error: getAllCatError } = await getAllCategories()
-  if (getAllCatError) console.error(error)
+  if (getAllCatError) console.error(getAllCatError)
 
   const appIconFileName = await getAppIconFileName(
     app.app_id,

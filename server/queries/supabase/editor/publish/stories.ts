@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { getUserProfile } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { Posts, Topics } from "@/types/db_tables"
+import { Categories, Posts, Topics } from "@/types/db_tables"
 import { getErrorMessage } from "@/lib/handle-error"
 import {
   capitalizeFirstLetter,
@@ -76,7 +76,7 @@ export async function insertTopics(topics: { label: string; value: string }[]) {
   return data
 }
 
-export async function insertStoryTopics(
+export async function insertPostTopics(
   post_id: Posts["post_id"],
   topic_ids: Topics["topic_id"][]
 ) {
@@ -135,7 +135,7 @@ export async function insertStoryTopics(
   }
 }
 
-export async function removeStoryTopics(
+export async function removePostTopics(
   post_id: Posts["post_id"],
   topic_ids: Topics["topic_id"][]
 ) {
@@ -216,4 +216,119 @@ export async function updateStoryDescription(
   }
 
   return { updatedDescription }
+}
+
+export async function insertPostCategories(
+  post_id: Posts["post_id"],
+  category_ids: Categories["category_id"][]
+) {
+  try {
+    const supabase = await createSupabaseServerClient()
+    const { profile } = await getUserProfile()
+
+    if (!profile?.user_id) {
+      throw new Error("User session not found")
+    }
+    const author_slug = getPostAuthorSlug(profile)
+
+    // Check if the post_id is associated with the current user_id
+    const { count, error: countError } = await supabase
+      .from("posts")
+      .select("*", { count: "exact", head: true })
+      .eq("post_id", post_id)
+      .eq("post_author_id", profile.user_id)
+
+    if (countError) {
+      console.error(
+        "Error checking post_id and user_id association:",
+        countError
+      )
+      throw new Error("Failed to check post_id and user_id association")
+    }
+
+    if (count === 0) {
+      throw new Error(
+        "Unauthorized: post_id is not associated with the current user"
+      )
+    }
+
+    const { data, error } = await supabase.from("posts_categories").insert(
+      category_ids.map((category_id) => ({
+        post_id: post_id,
+        category_id: category_id,
+        submitted_by_user_id: profile.user_id,
+      }))
+    )
+
+    revalidatePath("/")
+    revalidatePath(`/story/${author_slug}/${post_id}`)
+
+    if (error) {
+      console.error(
+        "Error inserting posts_categories associations:",
+        error.message
+      )
+      throw new Error("Failed to insert posts_categories associations")
+    }
+
+    return data
+  } catch (error) {
+    console.error("Error in insertStoryCategories:", error)
+    throw new Error(
+      "An error occurred while inserting posts_categories associations"
+    )
+  }
+}
+
+export async function removePostCategories(
+  post_id: Posts["post_id"],
+  category_ids: Categories["category_id"][]
+) {
+  try {
+    const supabase = await createSupabaseServerClient()
+    const { profile } = await getUserProfile()
+
+    if (!profile?.user_id) {
+      throw new Error("User session not found")
+    }
+    const author_slug = getPostAuthorSlug(profile)
+
+    // Check if the post_id is associated with the current user_id
+    const { count, error: countError } = await supabase
+      .from("posts")
+      .select("*", { count: "exact", head: true })
+      .eq("post_id", post_id)
+      .eq("post_author_id", profile.user_id)
+
+    if (countError) {
+      console.error(
+        "Error checking post_id and user_id association:",
+        countError
+      )
+      throw new Error("Failed to check post_id and user_id association")
+    }
+
+    if (count === 0) {
+      throw new Error(
+        "Unauthorized: post_id is not associated with the current user"
+      )
+    }
+
+    const { error } = await supabase
+      .from("posts_categories")
+      .delete()
+      .match({ post_id: post_id })
+      .in("category_id", category_ids)
+
+    revalidatePath("/")
+    revalidatePath(`/story/${author_slug}/${post_id}`)
+
+    if (error) {
+      console.error("Error removing posts_categories associations:", error)
+      throw error
+    }
+  } catch (error) {
+    console.error("Error in removeStoryCategories:", error)
+    throw error
+  }
 }

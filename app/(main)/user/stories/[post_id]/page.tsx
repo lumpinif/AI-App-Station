@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
+import { getAllCategories } from "@/server/data/supabase-actions"
 import { getPostById } from "@/server/queries/supabase/stories"
 import { JSONContent } from "novel"
 
@@ -32,6 +33,9 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     console.error(getPostError)
   }
 
+  const { categories, error: getAllCatError } = await getAllCategories()
+  if (getAllCatError) console.error(getAllCatError)
+
   if (!post) {
     notFound()
   }
@@ -40,7 +44,12 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
 
   return (
     <StoryContentWrapper>
-      <StoryPostEditor {...post} post_content={plainPostContent} />
+      <StoryPostEditor
+        {...post}
+        allCategories={categories}
+        post_content={plainPostContent}
+        postCategories={post.categories}
+      />
     </StoryContentWrapper>
   )
 }

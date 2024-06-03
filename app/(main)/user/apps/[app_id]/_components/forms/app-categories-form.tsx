@@ -53,7 +53,7 @@ type AppCategoriesFormProps = {
   className?: string
 }
 
-const searchAllCategories = async (value: string): Promise<Option[]> => {
+export const searchAllCategories = async (value: string): Promise<Option[]> => {
   const { categories, error } = await getAllCategories()
 
   if (error) {

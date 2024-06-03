@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { X } from "lucide-react"
 
-import { Posts, Topics } from "@/types/db_tables"
+import { Categories, Posts, Topics } from "@/types/db_tables"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { ResponsiveModalClose } from "@/components/ui/responsive-modal"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
@@ -17,12 +17,16 @@ type StoryPublishModalProps = ButtonProps & {
   postTitle: string
   post_id: Posts["post_id"]
   post_description: Posts["post_description"]
+  postCategories?: Categories[]
+  allCategories?: Categories[] | null
 }
 
 export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
   topics,
   post_id,
   postTitle,
+  allCategories,
+  postCategories,
   post_description,
   ...props
 }) => {
@@ -62,6 +66,8 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
                 <StoryPublishDetailsForm
                   topics={topics}
                   post_id={post_id}
+                  allCategories={allCategories}
+                  postCategories={postCategories}
                   post_description={post_description}
                 />
               </div>

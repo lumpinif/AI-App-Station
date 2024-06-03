@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Posts, Topics } from "@/types/db_tables"
+import { Categories, Posts, Topics } from "@/types/db_tables"
 import { SpinnerButtonCopyType } from "@/types/shared"
 import { cn } from "@/lib/utils"
 import { mutiSelectorOptionSchema } from "@/lib/validations"
@@ -19,8 +19,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Option } from "@/components/ui/multiple-selector"
 
+import { StoryCategoriesMultiSelector } from "./story-categories-multi-selector"
 import { StoryDescriptionFormTextarea } from "./story-description-form-textarea"
 import { StoryPublishActions } from "./story-publish-actions"
 import { StoryTopicsMultiSelector } from "./story-topics-multi-selector"
@@ -28,6 +28,8 @@ import { StoryTopicsMultiSelector } from "./story-topics-multi-selector"
 type StoryPublishDetailsFormProps = {
   topics?: Topics[]
   post_id: Posts["post_id"]
+  postCategories?: Categories[]
+  allCategories?: Categories[] | null
   post_description: Posts["post_description"]
 }
 
@@ -37,23 +39,32 @@ const formSchema = z.object({
     .max(140, { message: "Description is too long. 140 Chars Max." })
     .nullable(),
   topics: z.array(mutiSelectorOptionSchema).optional(),
+  postCategories: z.array(mutiSelectorOptionSchema).optional(),
 })
 
 export const StoryPublishDetailsForm: React.FC<
   StoryPublishDetailsFormProps
-> = ({ topics, post_id, post_description }) => {
+> = ({ topics, post_id, postCategories, allCategories, post_description }) => {
   const [publishButtonState, setPublishButtonState] =
     useState<keyof SpinnerButtonCopyType>("idle")
   const [saveButtonState, setSaveButtonState] =
     useState<keyof SpinnerButtonCopyType>("idle")
   const { data: profile } = useUserProfile()
 
-  const defaultTopics: Option[] =
-    topics?.map((topic) => ({
-      label: topic.topic_name,
-      value: topic.topic_slug,
-      id: topic.topic_id,
-    })) || []
+  const {
+    handleSave,
+    handlePublish,
+    defaultTopics,
+    allCategoriesOptions,
+    defaultPostCategories,
+  } = useStorySaveAndPublish({
+    topics,
+    allCategories,
+    postCategories,
+    setSaveButtonState,
+    setPublishButtonState,
+    defaultDescription: post_description,
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     mode: "onChange",
@@ -61,28 +72,32 @@ export const StoryPublishDetailsForm: React.FC<
     defaultValues: {
       post_description: post_description,
       topics: defaultTopics,
+      postCategories: defaultPostCategories,
     },
   })
-
-  const { handleSave, handlePublish, searchAllTopics } = useStorySaveAndPublish(
-    {
-      defaultTopics,
-      setSaveButtonState,
-      setPublishButtonState,
-      defaultDescription: post_description,
-    }
-  )
 
   const descriptionWatch = form.watch("post_description")
 
   const { isSubmitting } = form.formState
 
   function onPublish(values: z.infer<typeof formSchema>) {
-    handlePublish(post_id, values.post_description, values.topics, profile)
+    handlePublish(
+      post_id,
+      values.post_description,
+      values.topics,
+      profile,
+      values.postCategories
+    )
   }
 
   function onSave(values: z.infer<typeof formSchema>) {
-    handleSave(post_id, values.post_description, values.topics, profile)
+    handleSave(
+      post_id,
+      values.post_description,
+      values.topics,
+      profile,
+      values.postCategories
+    )
   }
 
   return (
@@ -150,7 +165,34 @@ export const StoryPublishDetailsForm: React.FC<
                       publishButtonState === "loading"
                     }
                     defaultOptions={defaultTopics}
-                    searchAllTopics={searchAllTopics}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="postCategories"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="mb-2 text-base">
+                  Story Categories{" "}
+                </FormLabel>
+                <FormLabel className="mb-2 text-sm font-normal text-muted-foreground">
+                  Add or change categories (up to 5) so readers know what your
+                  story is about
+                </FormLabel>
+                <FormControl>
+                  <StoryCategoriesMultiSelector
+                    {...field}
+                    disabled={
+                      isSubmitting ||
+                      saveButtonState === "loading" ||
+                      publishButtonState === "loading"
+                    }
+                    defaultOptions={allCategoriesOptions}
                   />
                 </FormControl>
                 <FormMessage />

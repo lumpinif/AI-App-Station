@@ -1,3 +1,4 @@
+import { memo } from "react"
 import dynamic from "next/dynamic"
 import { LucideProps } from "lucide-react"
 import dynamicIconImports from "lucide-react/dynamicIconImports"
@@ -9,11 +10,21 @@ interface IconProps extends LucideProps {
 }
 
 const LucideIcon = ({ name, className, ...props }: IconProps) => {
-  const LucideIcon = dynamic(dynamicIconImports[name], {
+  console.log("Rendering LucideIcon with name:", name)
+
+  // Check if the name exists in dynamicIconImports
+  if (!dynamicIconImports[name]) {
+    console.error(
+      `Icon with name "${name}" does not exist in dynamicIconImports`
+    )
+    return null
+  }
+
+  const DynamicLucideIcon = dynamic(dynamicIconImports[name], {
     loading: () => <div className={className} />,
   })
 
-  return <LucideIcon className={className} {...props} />
+  return <DynamicLucideIcon className={className} {...props} />
 }
 
-export default LucideIcon
+export default memo(LucideIcon)

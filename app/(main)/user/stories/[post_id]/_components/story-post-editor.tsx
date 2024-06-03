@@ -7,7 +7,7 @@ import { JSONContent } from "novel"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { PostDetails, Posts, Topics } from "@/types/db_tables"
+import { Categories, PostDetails, Posts, Topics } from "@/types/db_tables"
 import {
   defaultEditorContent,
   defaultEditorContentWithoutHeading,
@@ -32,12 +32,14 @@ import { StoryEditorHeader } from "./story-editor-header"
 
 type StoryPostEditorProps = {
   topics?: Topics[]
-  post_id: Posts["post_id"]
-  post_title: Posts["post_title"]
-  post_slug: Posts["post_slug"]
-  post_author_id: Posts["post_author_id"]
   post_content: JSONContent
+  post_id: Posts["post_id"]
+  postCategories?: Categories[]
+  post_slug: Posts["post_slug"]
+  post_title: Posts["post_title"]
   profiles: PostDetails["profiles"]
+  allCategories?: Categories[] | null
+  post_author_id: Posts["post_author_id"]
   post_description: Posts["post_description"]
 }
 
@@ -48,6 +50,8 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_slug,
   post_title,
   post_content,
+  allCategories,
+  postCategories,
   post_author_id,
   post_description,
 }) => {
@@ -201,6 +205,8 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
           saveStatus={saveStatus}
           charsCount={charsCount}
           handleRetry={handleRetry}
+          allCategories={allCategories}
+          postCategories={postCategories}
           isEdited={isEdited && postTitle !== "Untitled"}
           post_description={post_description}
           className="sticky top-0 z-40 w-full bg-background/60 py-2 backdrop-blur-sm"

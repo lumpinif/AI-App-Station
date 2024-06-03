@@ -1,4 +1,4 @@
-import { Posts, Topics } from "@/types/db_tables"
+import { Categories, Posts, Topics } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 import { StoryEditorInfoPopover } from "./story-editor-info-popover"
@@ -14,9 +14,11 @@ type StoryEditorHeaderProps = {
   charsCount: number
   saveStatus: string
   isEdited?: boolean
-  handleRetry: () => void
   isRetrying: boolean
+  handleRetry: () => void
   post_id: Posts["post_id"]
+  postCategories?: Categories[]
+  allCategories?: Categories[] | null
   post_description: Posts["post_description"]
 }
 
@@ -30,6 +32,8 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
   saveStatus,
   isRetrying,
   handleRetry,
+  allCategories,
+  postCategories,
   isEdited = false,
   post_description,
 }) => {
@@ -58,10 +62,12 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
             topics={topics}
             post_id={post_id}
             postTitle={postTitle}
+            allCategories={allCategories}
+            postCategories={postCategories}
+            post_description={post_description}
             disabled={
               saveStatus === "saving" || isRetrying || isEmpty || !isEdited
             }
-            post_description={post_description}
           />
         )}
       </div>

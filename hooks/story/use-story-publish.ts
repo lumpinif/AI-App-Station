@@ -1,22 +1,31 @@
 import { useRouter } from "next/navigation"
 import {
+  checkExistingCategories,
+  insertCategories,
+} from "@/server/data/supabase-actions"
+import {
   checkExistingTopics,
   getAllTopics,
-  insertStoryTopics,
+  insertPostCategories,
+  insertPostTopics,
   insertTopics,
-  removeStoryTopics,
+  removePostCategories,
+  removePostTopics,
   updateStoryDescription,
 } from "@/server/queries/supabase/editor/publish/stories"
 import { publishStory } from "@/server/queries/supabase/stories/table/post-table-services"
 import _ from "lodash"
 import { toast } from "sonner"
 
-import { Posts, Profiles } from "@/types/db_tables"
+import { Categories, Posts, Profiles, Topics } from "@/types/db_tables"
 import { getPostAuthorSlug, nameToSlug } from "@/lib/utils"
 import { Option } from "@/components/ui/multiple-selector"
+import { dynamicLucidIconProps } from "@/components/icons/lucide-icon"
 
 type TopicsMutiSelectorProps = {
-  defaultTopics: Option[]
+  topics?: Topics[]
+  postCategories?: Categories[]
+  allCategories?: Categories[] | null
   defaultDescription?: Posts["post_description"]
   setPublishButtonState?: React.Dispatch<
     React.SetStateAction<"idle" | "loading" | "success">
@@ -26,34 +35,60 @@ type TopicsMutiSelectorProps = {
   >
 }
 
+export const searchAllTopics = async (value: string): Promise<Option[]> => {
+  const { topics, error } = await getAllTopics()
+
+  if (error) {
+    toast.error(error)
+    return []
+  }
+
+  const allTopics: Option[] =
+    topics?.map((topic) => ({
+      label: topic.topic_name,
+      value: topic.topic_slug,
+      id: topic.topic_id,
+    })) || []
+
+  const res = allTopics.filter((option) =>
+    option.value.includes(nameToSlug(value))
+  )
+
+  return res
+}
+
 export const useStorySaveAndPublish = ({
-  defaultTopics,
+  topics,
+  allCategories,
+  postCategories,
   defaultDescription,
   setSaveButtonState,
   setPublishButtonState,
 }: TopicsMutiSelectorProps) => {
   const router = useRouter()
-  const searchAllTopics = async (value: string): Promise<Option[]> => {
-    const { topics, error } = await getAllTopics()
 
-    if (error) {
-      toast.error(error)
-      return []
-    }
+  const defaultTopics: Option[] =
+    topics?.map((topic) => ({
+      label: topic.topic_name,
+      value: topic.topic_slug,
+      id: topic.topic_id,
+    })) || []
 
-    const allTopics: Option[] =
-      topics?.map((topic) => ({
-        label: topic.topic_name,
-        value: topic.topic_slug,
-        id: topic.topic_id,
-      })) || []
+  const defaultPostCategories: Option[] =
+    postCategories?.map((category) => ({
+      label: category.category_name,
+      value: category.category_slug,
+      id: category.category_id,
+      icon: category.category_icon_name as dynamicLucidIconProps,
+    })) || []
 
-    const res = allTopics.filter((option) =>
-      option.value.includes(nameToSlug(value))
-    )
-
-    return res
-  }
+  const allCategoriesOptions: Option[] =
+    allCategories?.map((category) => ({
+      label: category.category_name,
+      value: category.category_slug,
+      id: category.category_id,
+      icon: category.category_icon_name as dynamicLucidIconProps,
+    })) || []
 
   const handleUpdateTopics = async (
     topics: Option[],
@@ -102,13 +137,13 @@ export const useStorySaveAndPublish = ({
       ]
 
       if (newStoryTopicIds.length > 0) {
-        await insertStoryTopics(post_id, newStoryTopicIds)
+        await insertPostTopics(post_id, newStoryTopicIds)
       }
 
       if (topicsToRemove.length > 0) {
         const topicIdsToRemove = topicsToRemove.map((d) => d.id as string)
 
-        await removeStoryTopics(post_id, topicIdsToRemove)
+        await removePostTopics(post_id, topicIdsToRemove)
       }
 
       // toast.success("Topics updated")
@@ -118,11 +153,85 @@ export const useStorySaveAndPublish = ({
     }
   }
 
+  const handleUpdatePostCategories = async (
+    categories: Option[],
+    post_id: Posts["post_id"]
+  ) => {
+    const normalizedCategories = categories.map((c) => ({
+      ...c,
+      value: nameToSlug(c.label),
+    }))
+
+    const submittedCategorySlugs = new Set(
+      normalizedCategories.map((c) => c.value)
+    )
+
+    const initialCategoriessMap = new Map(
+      defaultPostCategories.map((c) => [c.value, c])
+    )
+
+    const categoriesToAdd = normalizedCategories.filter(
+      (d) => !initialCategoriessMap.has(d.value)
+    )
+
+    const categoriesToRemove = defaultPostCategories.filter(
+      (d) => !submittedCategorySlugs.has(d.value)
+    )
+
+    if (categoriesToAdd.length === 0 && categoriesToRemove.length === 0) {
+      return
+    }
+
+    try {
+      const existingCategories = await checkExistingCategories(categoriesToAdd)
+
+      const newCategories = categoriesToAdd.filter(
+        (c) =>
+          !existingCategories.some(
+            (existingCat) => existingCat.category_slug === c.value
+          )
+      )
+
+      const insertedCategories =
+        newCategories.length > 0 ? await insertCategories(newCategories) : []
+
+      const newAppCategoryIds = [
+        ...insertedCategories.map((cat) => cat.category_id),
+        ...existingCategories
+          .filter(
+            (cat) =>
+              !defaultPostCategories.some(
+                (d) => d.id === cat.category_id.toString()
+              )
+          )
+          .map((cat) => cat.category_id),
+      ]
+
+      if (newAppCategoryIds.length > 0) {
+        await insertPostCategories(post_id, newAppCategoryIds)
+      }
+
+      if (categoriesToRemove.length > 0) {
+        const categoryIdsToRemove = categoriesToRemove.map(
+          (c) => c.id as string
+        )
+
+        await removePostCategories(post_id, categoryIdsToRemove)
+      }
+
+      // toast.success("Categories updated")
+    } catch (error) {
+      console.error("Error updating story categories:", error)
+      toast.error("Failed updating story categories, please try again")
+    }
+  }
+
   const handlePublish = async (
     post_id: Posts["post_id"],
     post_description: Posts["post_description"],
     topics?: Option[],
-    profile?: Profiles
+    profile?: Profiles,
+    postCategories?: Option[]
   ) => {
     const author_slug = getPostAuthorSlug(profile)
 
@@ -145,6 +254,18 @@ export const useStorySaveAndPublish = ({
         setPublishButtonState("loading")
       }
       promises.push(handleUpdateTopics(topics, post_id))
+      // await handleUpdateTopics(topics, post_id)
+    }
+
+    if (
+      postCategories &&
+      postCategories !== defaultPostCategories &&
+      _.isEqual(postCategories, defaultPostCategories) === false
+    ) {
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
+      }
+      promises.push(handleUpdatePostCategories(postCategories, post_id))
       // await handleUpdateTopics(topics, post_id)
     }
 
@@ -178,7 +299,8 @@ export const useStorySaveAndPublish = ({
     post_id: Posts["post_id"],
     post_description: Posts["post_description"],
     topics?: Option[],
-    profile?: Profiles
+    profile?: Profiles,
+    postCategories?: Option[]
   ) => {
     const promises = []
 
@@ -198,6 +320,18 @@ export const useStorySaveAndPublish = ({
         setSaveButtonState("loading")
       }
       promises.push(handleUpdateTopics(topics, post_id))
+    }
+
+    if (
+      postCategories &&
+      postCategories !== defaultPostCategories &&
+      _.isEqual(postCategories, defaultPostCategories) === false
+    ) {
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
+      }
+      promises.push(handleUpdatePostCategories(postCategories, post_id))
+      // await handleUpdateTopics(topics, post_id)
     }
 
     if (promises.length > 0) {
@@ -221,6 +355,8 @@ export const useStorySaveAndPublish = ({
   return {
     handleSave,
     handlePublish,
-    searchAllTopics,
+    defaultTopics,
+    allCategoriesOptions,
+    defaultPostCategories,
   }
 }
