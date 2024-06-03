@@ -202,34 +202,34 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
         return (
           <>
             <DeleteStoriesDialog
+              posts={[row]}
+              showTrigger={false}
               open={showDeleteStoryDialog}
               onOpenChange={setShowDeleteStoryDialog}
-              posts={[row]}
-              showTrigger={false}
             />
             <UnpublishStoriesDialog
+              posts={[row]}
+              showTrigger={false}
               open={showUnpublishStoryDialog}
               onOpenChange={setShowUnpublishStoryDialog}
-              posts={[row]}
-              showTrigger={false}
             />
             <PublishStoriesDialog
+              posts={[row]}
+              showTrigger={false}
               open={showPublishStoryDialog}
               onOpenChange={setShowPublishStoryDialog}
-              posts={[row]}
-              showTrigger={false}
             />
             <DraftStoriesDialog
+              posts={[row]}
+              showTrigger={false}
               open={showDraftStoryDialog}
               onOpenChange={setShowDraftStoryDialog}
-              posts={[row]}
-              showTrigger={false}
             />
             <EditStoiesDialog
-              open={showEditStoryDialog}
-              onOpenChange={setShowEditStoryDialog}
               posts={[row]}
               showTrigger={false}
+              open={showEditStoryDialog}
+              onOpenChange={setShowEditStoryDialog}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -256,8 +256,9 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
-                        onSelect={() => setShowDraftStoryDialog(true)}
                         className="active:scale-[0.98]"
+                        onSelect={() => setShowDraftStoryDialog(true)}
+                        disabled={row.original.post_publish_status === "draft"}
                       >
                         <DraftIcon
                           className={cn("mr-2 size-4", DraftStatusColor)}
@@ -266,8 +267,11 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
                       </DropdownMenuItem>
 
                       <DropdownMenuItem
-                        onSelect={() => setShowPublishStoryDialog(true)}
                         className="active:scale-[0.98]"
+                        onSelect={() => setShowPublishStoryDialog(true)}
+                        disabled={
+                          row.original.post_publish_status === "published"
+                        }
                       >
                         <PublishIcon
                           className={cn("mr-2 size-4", PublishStatusColor)}
@@ -276,8 +280,11 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
                       </DropdownMenuItem>
 
                       <DropdownMenuItem
-                        onSelect={() => setShowUnpublishStoryDialog(true)}
                         className="active:scale-[0.98]"
+                        onSelect={() => setShowUnpublishStoryDialog(true)}
+                        disabled={
+                          row.original.post_publish_status === "unpublished"
+                        }
                       >
                         <UnpublishIcon
                           className={cn("mr-2 size-4", UnpublishStatusColor)}

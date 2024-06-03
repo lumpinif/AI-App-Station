@@ -185,34 +185,34 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
         return (
           <>
             <DeleteAppsDialog
+              apps={[row]}
+              showTrigger={false}
               open={showDeleteAppDialog}
               onOpenChange={setShowDeleteAppDialog}
-              apps={[row]}
-              showTrigger={false}
             />
             <UnpublishAppsDialog
+              apps={[row]}
+              showTrigger={false}
               open={showUnpublishAppDialog}
               onOpenChange={setShowUnpublishAppDialog}
-              apps={[row]}
-              showTrigger={false}
             />
             <PublishAppsDialog
+              apps={[row]}
+              showTrigger={false}
               open={showPublishAppDialog}
               onOpenChange={setShowPublishAppDialog}
-              apps={[row]}
-              showTrigger={false}
             />
             <DraftAppsDialog
+              apps={[row]}
+              showTrigger={false}
               open={showDraftAppDialog}
               onOpenChange={setShowDraftAppDialog}
-              apps={[row]}
-              showTrigger={false}
             />
             <EditAppsDialog
-              open={showEditAppDialog}
-              onOpenChange={setShowEditAppDialog}
               apps={[row]}
               showTrigger={false}
+              open={showEditAppDialog}
+              onOpenChange={setShowEditAppDialog}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -239,8 +239,11 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
-                        onSelect={() => setShowPublishAppDialog(true)}
                         className="active:scale-[0.98]"
+                        onSelect={() => setShowPublishAppDialog(true)}
+                        disabled={
+                          row.original.app_publish_status === "published"
+                        }
                       >
                         <PublishIcon
                           className={cn("mr-2 size-4", PublishStatusColor)}
@@ -249,8 +252,9 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                       </DropdownMenuItem>
 
                       <DropdownMenuItem
-                        onSelect={() => setShowDraftAppDialog(true)}
                         className="active:scale-[0.98]"
+                        onSelect={() => setShowDraftAppDialog(true)}
+                        disabled={row.original.app_publish_status === "draft"}
                       >
                         <DraftIcon
                           className={cn("mr-2 size-4", DraftStatusColor)}
@@ -259,8 +263,11 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                       </DropdownMenuItem>
 
                       <DropdownMenuItem
-                        onSelect={() => setShowUnpublishAppDialog(true)}
                         className="active:scale-[0.98]"
+                        onSelect={() => setShowUnpublishAppDialog(true)}
+                        disabled={
+                          row.original.app_publish_status === "unpublished"
+                        }
                       >
                         <UnpublishIcon
                           className={cn("mr-2 size-4", UnpublishStatusColor)}
@@ -272,8 +279,8 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                 </DropdownMenuSub>
                 {/* <DropdownMenuSeparator /> */}
                 <DropdownMenuItem
-                  onSelect={() => setShowDeleteAppDialog(true)}
                   className="active:scale-[0.98]"
+                  onSelect={() => setShowDeleteAppDialog(true)}
                 >
                   <span className={cn("text-red-600", UnpublishStatusColor)}>
                     Delete

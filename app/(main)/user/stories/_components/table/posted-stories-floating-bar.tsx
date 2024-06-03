@@ -62,31 +62,31 @@ export function StoriesTableFloatingBar({
   return (
     <>
       <DeleteStoriesDialog
-        open={showDeleteStoryDialog}
-        onOpenChange={setShowDeleteStoryDialog}
         posts={rows}
         showTrigger={false}
+        open={showDeleteStoryDialog}
+        onOpenChange={setShowDeleteStoryDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <UnpublishStoriesDialog
-        open={showUnpublishStoryDialog}
-        onOpenChange={setShowUnpublishStoryDialog}
         posts={rows}
         showTrigger={false}
+        open={showUnpublishStoryDialog}
+        onOpenChange={setShowUnpublishStoryDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <PublishStoriesDialog
-        open={showPublishStoryDialog}
-        onOpenChange={setShowPublishStoryDialog}
         posts={rows}
         showTrigger={false}
+        open={showPublishStoryDialog}
+        onOpenChange={setShowPublishStoryDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <DraftStoriesDialog
-        open={showDraftStoryDialog}
-        onOpenChange={setShowDraftStoryDialog}
         posts={rows}
         showTrigger={false}
+        open={showDraftStoryDialog}
+        onOpenChange={setShowDraftStoryDialog}
       />
       <div className="fixed inset-x-0 bottom-5 z-50 w-dvw px-4">
         <div className="w-full">

@@ -2,6 +2,7 @@ import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons"
 import type { Column } from "@tanstack/react-table"
 
 import { Option } from "@/types/data-table"
+import { getStatusColor } from "@/lib/get-status-icon"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -111,7 +112,16 @@ export function DataTableFacetedFilter<TData, TValue>({
                     </div>
                     {option.icon && (
                       <option.icon
-                        className="mr-2 size-4 text-muted-foreground"
+                        className={cn(
+                          "mr-2 size-4 text-muted-foreground",
+                          getStatusColor(
+                            option.value as
+                              | "pending"
+                              | "published"
+                              | "draft"
+                              | "unpublished"
+                          )
+                        )}
                         aria-hidden="true"
                       />
                     )}

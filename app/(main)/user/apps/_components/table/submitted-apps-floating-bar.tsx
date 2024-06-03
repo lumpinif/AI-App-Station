@@ -60,31 +60,31 @@ export function SubmittedAppsTableFloatingBar({
   return (
     <>
       <DeleteAppsDialog
-        open={showDeleteAppDialog}
-        onOpenChange={setShowDeleteAppDialog}
         apps={rows}
         showTrigger={false}
+        open={showDeleteAppDialog}
+        onOpenChange={setShowDeleteAppDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <UnpublishAppsDialog
-        open={showUnpublishAppDialog}
-        onOpenChange={setShowUnpublishAppDialog}
         apps={rows}
         showTrigger={false}
+        open={showUnpublishAppDialog}
+        onOpenChange={setShowUnpublishAppDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <PublishAppsDialog
-        open={showPublishAppDialog}
-        onOpenChange={setShowPublishAppDialog}
         apps={rows}
         showTrigger={false}
+        open={showPublishAppDialog}
+        onOpenChange={setShowPublishAppDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <DraftAppsDialog
-        open={showDraftAppDialog}
-        onOpenChange={setShowDraftAppDialog}
         apps={rows}
         showTrigger={false}
+        open={showDraftAppDialog}
+        onOpenChange={setShowDraftAppDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <div className="fixed inset-x-0 bottom-5 z-50 w-dvw px-4">
