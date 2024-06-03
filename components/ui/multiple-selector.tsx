@@ -3,7 +3,7 @@
 import * as React from "react"
 import { forwardRef, useEffect } from "react"
 import { Command as CommandPrimitive, useCommandState } from "cmdk"
-import { X } from "lucide-react"
+import { LucideProps, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -14,7 +14,10 @@ import {
   CommandList,
 } from "@/components/ui/command"
 
-import LucideIcon, { dynamicLucidIconProps } from "../icons/lucide-icon"
+import LucideIcon, {
+  dynamicLucidIconProps,
+  LucideIconProps,
+} from "../icons/lucide-icon"
 
 export interface Option {
   value: string
