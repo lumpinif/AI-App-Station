@@ -129,7 +129,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
         return (
           <div className={cn("flex w-fit items-center bg-transparent")}>
             <Icon
-              className={cn("mr-2 size-4", `${statusColor}`)}
+              className={cn("mr-2 size-4", statusColor)}
               aria-hidden="true"
             />
             <span className={cn("font-normal capitalize")}>{status}</span>

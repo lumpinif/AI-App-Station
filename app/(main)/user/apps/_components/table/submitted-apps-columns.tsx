@@ -116,9 +116,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
               className={cn("mr-2 size-4 text-muted-foreground", statusColor)}
               aria-hidden="true"
             />
-            <span className={cn("font-normal capitalize", statusColor)}>
-              {status}
-            </span>
+            <span className={cn("font-normal capitalize")}>{status}</span>
           </div>
         )
       },
@@ -174,8 +172,6 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
           useState(false)
         const [showPublishAppDialog, setShowPublishAppDialog] = useState(false)
         const [showEditAppDialog, setShowEditAppDialog] = useState(false)
-
-        const router = useRouter()
 
         const UnpublishIcon = getStatusIcon("unpublished")
         const UnpublishStatusColor = getStatusColor("unpublished")
@@ -239,9 +235,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                         <PublishIcon
                           className={cn("mr-2 size-4", PublishStatusColor)}
                         />
-                        <span className={PublishStatusColor}>
-                          Publish the app
-                        </span>
+                        <span>Publish the app</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         onSelect={() => setShowUnpublishAppDialog(true)}
@@ -250,9 +244,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                         <UnpublishIcon
                           className={cn("mr-2 size-4", UnpublishStatusColor)}
                         />
-                        <span className={UnpublishStatusColor}>
-                          Unpublish the app
-                        </span>
+                        <span>Unpublish the app</span>
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
@@ -262,9 +254,16 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                   onSelect={() => setShowDeleteAppDialog(true)}
                   className="active:scale-[0.98]"
                 >
-                  <span className={cn(UnpublishStatusColor)}>Delete</span>
+                  <span className={cn("text-red-600", UnpublishStatusColor)}>
+                    Delete
+                  </span>
                   <DropdownMenuShortcut>
-                    <Delete className={cn("size-4", UnpublishStatusColor)} />
+                    <Delete
+                      className={cn(
+                        "size-4 text-red-600",
+                        UnpublishStatusColor
+                      )}
+                    />
                   </DropdownMenuShortcut>
                 </DropdownMenuItem>
               </DropdownMenuContent>

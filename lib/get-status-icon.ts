@@ -1,16 +1,10 @@
 import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-  CheckCircledIcon,
   CircleIcon,
-  CrossCircledIcon,
   EyeClosedIcon,
   FileTextIcon,
   LapTimerIcon,
-  QuestionMarkCircledIcon,
 } from "@radix-ui/react-icons"
-import { Rocket } from "lucide-react"
+import { EyeOff, FileClock, FileText, Rocket } from "lucide-react"
 
 import { Apps } from "@/types/db_tables"
 
@@ -22,10 +16,10 @@ import { Apps } from "@/types/db_tables"
 
 export function getStatusIcon(status: Apps["app_publish_status"]) {
   const statusIcons = {
-    pending: LapTimerIcon,
+    pending: FileClock,
     published: Rocket,
-    draft: FileTextIcon,
-    unpublished: EyeClosedIcon,
+    draft: FileText,
+    unpublished: EyeOff,
   }
 
   return statusIcons[status] || CircleIcon
@@ -35,8 +29,8 @@ export function getStatusColor(status: Apps["app_publish_status"]) {
   const statusColor = {
     draft: "text-muted-foreground",
     pending: "text-yellow-500",
-    published: "text-green-700",
+    published: "text-green-600",
     unpublished: "text-red-600",
   }
-  return statusColor[status] || "text-muted-foreground"
+  return statusColor[status]
 }

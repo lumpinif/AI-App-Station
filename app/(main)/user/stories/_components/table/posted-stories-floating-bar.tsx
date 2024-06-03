@@ -129,7 +129,10 @@ export function StoriesTableFloatingBar({
                     onClick={() => setShowPublishStoryDialog(true)}
                     disabled={isPending}
                   >
-                    <PublishIcon className={cn("size-4")} aria-hidden="true" />
+                    <PublishIcon
+                      className={cn("size-4", PublishStatusColor)}
+                      aria-hidden="true"
+                    />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="border bg-background font-semibold text-foreground">
@@ -148,7 +151,10 @@ export function StoriesTableFloatingBar({
                     onClick={() => setShowDraftStoryDialog(true)}
                     disabled={isPending}
                   >
-                    <DraftIcon className={cn("size-4")} aria-hidden="true" />
+                    <DraftIcon
+                      className={cn("size-4", DraftStatusColor)}
+                      aria-hidden="true"
+                    />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="border bg-background font-semibold text-foreground">
@@ -168,7 +174,7 @@ export function StoriesTableFloatingBar({
                     disabled={isPending}
                   >
                     <UnpublishIcon
-                      className={cn("size-4")}
+                      className={cn("size-4", UnpublishStatusColor)}
                       aria-hidden="true"
                     />
                   </Button>
@@ -214,7 +220,7 @@ export function StoriesTableFloatingBar({
                     disabled={isPending}
                   >
                     <TrashIcon
-                      className="size-4 text-red-500"
+                      className={cn("size-4", UnpublishStatusColor)}
                       aria-hidden="true"
                     />
                   </Button>

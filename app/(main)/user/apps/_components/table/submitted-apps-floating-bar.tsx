@@ -77,7 +77,7 @@ export function SubmittedAppsTableFloatingBar({
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
       <div className="fixed inset-x-0 bottom-5 z-50 w-dvw px-4">
-        <div className="w-full ">
+        <div className="w-full">
           <div className="sm:glass-card-background mx-auto flex w-fit items-center gap-2 rounded-full border bg-card p-2 px-4 py-4 shadow-2xl backdrop-blur-lg dark:shadow-outline">
             <div className="flex h-7 items-center rounded-lg border border-dashed border-primary pl-2.5 pr-1 dark:bg-accent">
               <span className="whitespace-nowrap text-xs">
@@ -117,7 +117,10 @@ export function SubmittedAppsTableFloatingBar({
                     onClick={() => setShowPublishAppDialog(true)}
                     disabled={isPending}
                   >
-                    <PublishIcon className={cn("size-4")} aria-hidden="true" />
+                    <PublishIcon
+                      className={cn("size-4", PublishStatusColor)}
+                      aria-hidden="true"
+                    />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="border bg-background font-semibold text-foreground">
@@ -137,7 +140,7 @@ export function SubmittedAppsTableFloatingBar({
                     disabled={isPending}
                   >
                     <UnpublishIcon
-                      className={cn("size-4")}
+                      className={cn("size-4", UnpublishStatusColor)}
                       aria-hidden="true"
                     />
                   </Button>
@@ -183,13 +186,18 @@ export function SubmittedAppsTableFloatingBar({
                     disabled={isPending}
                   >
                     <TrashIcon
-                      className="size-4 text-red-500"
+                      className={cn(
+                        "size-4 text-red-600",
+                        UnpublishStatusColor
+                      )}
                       aria-hidden="true"
                     />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="border bg-background font-semibold text-foreground">
-                  <p className="text-red-500">{`Delete ${rows.length > 1 ? "Apps" : "App"}`}</p>
+                  <p
+                    className={cn("text-red-600", UnpublishStatusColor)}
+                  >{`Delete ${rows.length > 1 ? "Apps" : "App"}`}</p>
                 </TooltipContent>
               </Tooltip>
             </div>
