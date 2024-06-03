@@ -321,8 +321,9 @@ export const AppCategoriesForm: React.FC<AppCategoriesFormProps> = ({
                           defaultOptions={allCategoriesOptions}
                           maxSelected={5}
                           onMaxSelected={(maxLimit) => {
-                            toast.warning(
-                              `You have reached max selected ${maxLimit} categories limit. Please remove some categories to add more.`
+                            toast(
+                              `You have reached max selected ${maxLimit} categories limit. Please remove some categories to add more.`,
+                              { position: "bottom-right", closeButton: false }
                             )
                           }}
                           placeholder="Select or Create categories..."
