@@ -41,7 +41,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
       <ResponsiveContentModal
         title="Account"
         drawerHeight="h-[98%]"
-        isOpen={true}
+        isOpen={isPublishModalOpen}
         shouldScaleBackground={true}
         withDefaultDialogClose={false}
         onChange={setIsPublishModalOpen}
