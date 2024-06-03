@@ -212,3 +212,36 @@ export async function publishApp(
     return { error: "An error occurred while publishing the app." } // Return a generic error message
   }
 }
+
+export async function draftApp(
+  app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"]
+) {
+  try {
+    const supabase = await createSupabaseServerClient()
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (!user?.id) return { error: "User not found" }
+
+    const { error } = await supabase
+      .from("apps")
+      .update({ app_publish_status: "draft" })
+      .match({
+        app_id,
+        submitted_by_user_id: user.id,
+      })
+
+    revalidatePath(`/ai-apps/${app_slug}`)
+    revalidatePath(`/user/apps/${app_id}`)
+
+    return { error: error ?? null } // Return { error: null } if no error occurs
+  } catch (error) {
+    if (error) {
+      console.log(error)
+    }
+    return { error: "An error occurred while drafting the app." } // Return a generic error message
+  }
+}

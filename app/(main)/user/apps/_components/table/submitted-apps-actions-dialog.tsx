@@ -4,6 +4,7 @@ import { useTransition } from "react"
 import Link from "next/link"
 import {
   deleteApp,
+  draftApp,
   publishApp,
   unpublishApp,
 } from "@/server/queries/supabase/table/apps-table-services"
@@ -136,6 +137,41 @@ export async function publishApps({
   }
 }
 
+export async function draftApps({
+  rows,
+  onSuccess,
+}: {
+  rows: Row<Apps>[]
+  onSuccess?: () => void
+}) {
+  try {
+    await Promise.all(
+      rows.map(async (row) => {
+        const result = await draftApp(
+          row.original.app_id,
+          row.original.app_slug
+        )
+
+        if (result && result.error) {
+          if (typeof result.error === "string") {
+            throw new Error(result.error)
+          } else {
+            throw result.error
+          }
+        }
+      })
+    )
+
+    toast.success(`${rows.length > 1 ? "Apps" : "App"} Drafted`)
+    onSuccess?.()
+  } catch (error) {
+    console.error(`Error drafting ${rows.length > 1 ? "Apps" : "App"}:`, error)
+    toast.error(
+      `Failed to draft ${rows.length > 1 ? "Apps" : "App"}. Please try again.`
+    )
+  }
+}
+
 interface AppActionDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
   apps: Row<Apps>[]
@@ -215,6 +251,7 @@ export function DeleteAppsDialog({
     </AlertDialog>
   )
 }
+
 export function UnpublishAppsDialog({
   apps,
   onSuccess,
@@ -276,6 +313,7 @@ export function UnpublishAppsDialog({
     </AlertDialog>
   )
 }
+
 export function PublishAppsDialog({
   apps,
   onSuccess,
@@ -335,6 +373,67 @@ export function PublishAppsDialog({
     </AlertDialog>
   )
 }
+
+export function DraftAppsDialog({
+  apps,
+  onSuccess,
+  showTrigger = true,
+  ...props
+}: AppActionDialogProps) {
+  const [isDraftPending, startDraftTransition] = useTransition()
+
+  return (
+    <AlertDialog {...props}>
+      {showTrigger ? (
+        <AlertDialogTrigger asChild>
+          <Button
+            size="sm"
+            className="outline-none focus:ring-0 focus:!ring-transparent"
+            disabled={isDraftPending}
+          >
+            <RocketIcon className="mr-1 size-4" aria-hidden="true" />
+            Draft ({apps.length})
+          </Button>
+        </AlertDialogTrigger>
+      ) : null}
+      <AlertDialogContent className="max-w-sm rounded-sm md:max-w-md lg:max-w-lg">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This will immediately draft your{" "}
+            <span className="font-medium">{apps.length}</span>
+            {apps.length === 1 ? " app" : " apps"} from the server.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter className="gap-2 sm:space-x-0">
+          <AlertDialogCancel asChild>
+            <Button variant="outline">Cancel</Button>
+          </AlertDialogCancel>
+          <AlertDialogAction
+            asChild
+            className="bg-green-500 text-white hover:bg-green-600"
+          >
+            <Button
+              aria-label="draft selected rows"
+              onClick={() => {
+                startDraftTransition(() => {
+                  draftApps({
+                    rows: apps,
+                    onSuccess,
+                  })
+                })
+              }}
+              disabled={isDraftPending}
+            >
+              Draft
+            </Button>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
 export function EditAppsDialog({
   apps,
   onSuccess,

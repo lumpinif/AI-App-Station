@@ -29,6 +29,7 @@ import { AppIcon } from "@/app/(main)/ai-apps/_components/cards/_components/app-
 
 import {
   DeleteAppsDialog,
+  DraftAppsDialog,
   EditAppsDialog,
   PublishAppsDialog,
   UnpublishAppsDialog,
@@ -171,12 +172,15 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
         const [showUnpublishAppDialog, setShowUnpublishAppDialog] =
           useState(false)
         const [showPublishAppDialog, setShowPublishAppDialog] = useState(false)
+        const [showDraftAppDialog, setShowDraftAppDialog] = useState(false)
         const [showEditAppDialog, setShowEditAppDialog] = useState(false)
 
         const UnpublishIcon = getStatusIcon("unpublished")
         const UnpublishStatusColor = getStatusColor("unpublished")
         const PublishIcon = getStatusIcon("published")
         const PublishStatusColor = getStatusColor("published")
+        const DraftIcon = getStatusIcon("draft")
+        const DraftStatusColor = getStatusColor("draft")
 
         return (
           <>
@@ -195,6 +199,12 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
             <PublishAppsDialog
               open={showPublishAppDialog}
               onOpenChange={setShowPublishAppDialog}
+              apps={[row]}
+              showTrigger={false}
+            />
+            <DraftAppsDialog
+              open={showDraftAppDialog}
+              onOpenChange={setShowDraftAppDialog}
               apps={[row]}
               showTrigger={false}
             />
@@ -237,6 +247,17 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                         />
                         <span>Publish the app</span>
                       </DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        onSelect={() => setShowDraftAppDialog(true)}
+                        className="active:scale-[0.98]"
+                      >
+                        <DraftIcon
+                          className={cn("mr-2 size-4", DraftStatusColor)}
+                        />
+                        <span>Draft the app</span>
+                      </DropdownMenuItem>
+
                       <DropdownMenuItem
                         onSelect={() => setShowUnpublishAppDialog(true)}
                         className="active:scale-[0.98]"

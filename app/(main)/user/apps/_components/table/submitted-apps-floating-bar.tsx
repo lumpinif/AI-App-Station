@@ -17,6 +17,7 @@ import { Kbd } from "@/components/shared/kbd"
 
 import {
   DeleteAppsDialog,
+  DraftAppsDialog,
   PublishAppsDialog,
   UnpublishAppsDialog,
 } from "./submitted-apps-actions-dialog"
@@ -35,11 +36,14 @@ export function SubmittedAppsTableFloatingBar({
   const [showUnpublishAppDialog, setShowUnpublishAppDialog] =
     React.useState(false)
   const [showPublishAppDialog, setShowPublishAppDialog] = React.useState(false)
+  const [showDraftAppDialog, setShowDraftAppDialog] = React.useState(false)
 
   const UnpublishIcon = getStatusIcon("unpublished")
   const UnpublishStatusColor = getStatusColor("unpublished")
   const PublishIcon = getStatusIcon("published")
   const PublishStatusColor = getStatusColor("published")
+  const DraftIcon = getStatusIcon("draft")
+  const DraftStatusColor = getStatusColor("draft")
 
   // Clear selection on Escape key press
   React.useEffect(() => {
@@ -72,6 +76,13 @@ export function SubmittedAppsTableFloatingBar({
       <PublishAppsDialog
         open={showPublishAppDialog}
         onOpenChange={setShowPublishAppDialog}
+        apps={rows}
+        showTrigger={false}
+        onSuccess={() => table.toggleAllRowsSelected(false)}
+      />
+      <DraftAppsDialog
+        open={showDraftAppDialog}
+        onOpenChange={setShowDraftAppDialog}
         apps={rows}
         showTrigger={false}
         onSuccess={() => table.toggleAllRowsSelected(false)}
@@ -127,6 +138,28 @@ export function SubmittedAppsTableFloatingBar({
                   <p
                     className={PublishStatusColor}
                   >{`Publish ${rows.length > 1 ? "Apps" : "App"}`}</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="size-7 border"
+                    onClick={() => setShowDraftAppDialog(true)}
+                    disabled={isPending}
+                  >
+                    <DraftIcon
+                      className={cn("size-4", DraftStatusColor)}
+                      aria-hidden="true"
+                    />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="border bg-background font-semibold text-foreground">
+                  <p
+                    className={DraftStatusColor}
+                  >{`Draft ${rows.length > 1 ? "Apps" : "App"}`}</p>
                 </TooltipContent>
               </Tooltip>
 
