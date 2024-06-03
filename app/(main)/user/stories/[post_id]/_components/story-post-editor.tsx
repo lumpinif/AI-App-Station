@@ -36,6 +36,7 @@ type StoryPostEditorProps = {
   post_id: Posts["post_id"]
   postCategories?: Categories[]
   post_slug: Posts["post_slug"]
+  postImagesPublicUrls?: string[]
   post_title: Posts["post_title"]
   profiles: PostDetails["profiles"]
   allCategories?: Categories[] | null
@@ -54,6 +55,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   postCategories,
   post_author_id,
   post_description,
+  postImagesPublicUrls,
 }) => {
   const toastId = useNewStoryToastStore((state) => state.toastId)
   const setToastId = useNewStoryToastStore((state) => state.setToastId)
@@ -206,9 +208,11 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
           charsCount={charsCount}
           handleRetry={handleRetry}
           allCategories={allCategories}
+          post_author_id={post_author_id}
           postCategories={postCategories}
-          isEdited={isEdited && postTitle !== "Untitled"}
           post_description={post_description}
+          postImagesPublicUrls={postImagesPublicUrls}
+          isEdited={isEdited && postTitle !== "Untitled"}
           className="sticky top-0 z-40 w-full bg-background/60 py-2 backdrop-blur-sm"
         />
         {memoizedNovelEditor}

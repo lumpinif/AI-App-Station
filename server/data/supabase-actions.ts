@@ -812,6 +812,21 @@ export async function getScreenshotsPublicUrls(
     if (data) screenshotsPublicUrls.push(data.publicUrl)
   })
 
+  // TODO: TEST ANOTHER APPROACH BEFORE PRODUCTION CHECK OUT GET POST IMAGES FUNCTIONS
+  // const screenshotsPublicUrls = await Promise.all(
+  //   fileNames.map(async (fileName) => {
+  //     const { data } = await supabase.storage
+  //       .from(bucketName)
+  //       .getPublicUrl(
+  //         `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
+  //       )
+  // if (!data) {
+  //   throw new Error(`Failed to get public URL for ${data}`)
+  // }
+  //     return data.publicUrl
+  //   })
+  // )
+
   return screenshotsPublicUrls
 }
 

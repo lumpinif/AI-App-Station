@@ -1,15 +1,33 @@
 import { notFound, redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAllCategories } from "@/server/data/supabase-actions"
+import { getPostImagesWithUrls } from "@/server/queries/supabase/editor/publish/stories"
 import { getPostById } from "@/server/queries/supabase/stories"
 import { JSONContent } from "novel"
 
+import { Posts } from "@/types/db_tables"
 import StoryContentWrapper from "@/app/(main)/story/_components/story-content/story-content-wrapper"
 
 import { StoryPostEditor } from "./_components/story-post-editor"
 
 type PostEditPageProps = {
   params: { post_id: string }
+}
+
+// TODO: CONSIDER IMPLMENTING THIS AS A BETTER APPROACH FOR FETCHING DATA IN PAGE.TSX FILES BEFORE PRODUCTION
+export async function fetchPostImages(
+  post_id: Posts["post_id"],
+  post_author_id: Posts["post_author_id"]
+) {
+  try {
+    const { postImagesFileNames, postImagesPublicUrls } =
+      await getPostImagesWithUrls(post_id, post_author_id)
+    return { postImagesFileNames, postImagesPublicUrls }
+  } catch (error) {
+    console.error("Error fetching post images and URLs:", error)
+    // Return some fallback data or handle the error appropriately
+    return { postImagesFileNames: [], postImagesPublicUrls: [] } // Or handle it based on your requirements
+  }
 }
 
 export default async function PostEditPage({ params }: PostEditPageProps) {
@@ -40,6 +58,16 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     notFound()
   }
 
+  const { postImagesFileNames, postImagesPublicUrls } = await fetchPostImages(
+    post.post_id,
+    post.post_author_id
+  )
+
+  // TODO: HANDLE ERROR LOADING POST IMAGES IN A BETTER WAY
+  // if (postImagesPublicUrls.length === 0) {
+  //   return <div>Error loading post images.</div>
+  // }
+
   const plainPostContent = JSON.parse(JSON.stringify(post.post_content))
 
   return (
@@ -49,6 +77,7 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
         allCategories={categories}
         post_content={plainPostContent}
         postCategories={post.categories}
+        postImagesPublicUrls={postImagesPublicUrls}
       />
     </StoryContentWrapper>
   )

@@ -45,11 +45,11 @@ const formSchema = z.object({
 export const StoryPublishDetailsForm: React.FC<
   StoryPublishDetailsFormProps
 > = ({ topics, post_id, postCategories, allCategories, post_description }) => {
+  const { data: profile } = useUserProfile()
   const [publishButtonState, setPublishButtonState] =
     useState<keyof SpinnerButtonCopyType>("idle")
   const [saveButtonState, setSaveButtonState] =
     useState<keyof SpinnerButtonCopyType>("idle")
-  const { data: profile } = useUserProfile()
 
   const {
     handleSave,

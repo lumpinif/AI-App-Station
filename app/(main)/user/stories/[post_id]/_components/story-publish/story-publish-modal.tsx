@@ -10,15 +10,17 @@ import ResponsiveContentModal from "@/components/shared/responsive-content-modal
 
 import { StoryPublishDetailsForm } from "./story-publish-details-form"
 import { StoryPublishHeader } from "./story-publish-header"
-import { StoryPublishPreview } from "./story-publish-preview"
+import { PostPublishPreview } from "./story-publish-preview"
 
 type StoryPublishModalProps = ButtonProps & {
   topics?: Topics[]
   postTitle: string
   post_id: Posts["post_id"]
-  post_description: Posts["post_description"]
   postCategories?: Categories[]
+  postImagesPublicUrls?: string[]
   allCategories?: Categories[] | null
+  post_author_id: Posts["post_author_id"]
+  post_description: Posts["post_description"]
 }
 
 export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
@@ -27,7 +29,9 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
   postTitle,
   allCategories,
   postCategories,
+  post_author_id,
   post_description,
+  postImagesPublicUrls,
   ...props
 }) => {
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
@@ -55,7 +59,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
           <section className="grid gap-6 p-2 sm:grid-cols-2 sm:gap-10">
             {/* Left side */}
             <div className="flex flex-col gap-y-6">
-              <StoryPublishPreview />
+              <PostPublishPreview postImagesWithUrls={postImagesPublicUrls} />
             </div>
 
             {/* Right side */}

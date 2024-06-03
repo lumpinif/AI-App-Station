@@ -18,7 +18,9 @@ type StoryEditorHeaderProps = {
   handleRetry: () => void
   post_id: Posts["post_id"]
   postCategories?: Categories[]
+  postImagesPublicUrls?: string[]
   allCategories?: Categories[] | null
+  post_author_id: Posts["post_author_id"]
   post_description: Posts["post_description"]
 }
 
@@ -33,9 +35,11 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
   isRetrying,
   handleRetry,
   allCategories,
+  post_author_id,
   postCategories,
   isEdited = false,
   post_description,
+  postImagesPublicUrls,
 }) => {
   return (
     <div className={cn("flex-col space-y-2", className)}>
@@ -65,6 +69,8 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
             allCategories={allCategories}
             postCategories={postCategories}
             post_description={post_description}
+            post_author_id={post_author_id}
+            postImagesPublicUrls={postImagesPublicUrls}
             disabled={
               saveStatus === "saving" || isRetrying || isEmpty || !isEdited
             }
