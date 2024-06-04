@@ -74,6 +74,9 @@ export default async function StoryPage({
           authorProfile={post.profiles}
           post_content={post.post_content as JSONContent}
         />
+        <div className="flex w-full items-center justify-center text-sm text-border">
+          - end of story -
+        </div>
         <Suspense fallback={<LoadingSpinner />}>
           <StoryCommentSection
             user={user}
