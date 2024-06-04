@@ -27,6 +27,74 @@ export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
   rating_count,
 }) => {
   const formattedRatingCount = numeral(rating_count).format("0.[0]a")
+
+  return (
+    <DetailCarousel className={className}>
+      <InfoBox>
+        <InfoBoxTitle>{formattedRatingCount} Ratings</InfoBoxTitle>
+        <RatingsAndReviews rating_score={rating_score} />
+      </InfoBox>
+      <InfoBoxSeperator />
+
+      <InfoBox>
+        <InfoBoxTitle>
+          {app.developers && app.developers.length > 1 ? (
+            <span>Developers</span>
+          ) : (
+            <span>Developer</span>
+          )}
+        </InfoBoxTitle>
+        <Developers developers={app.developers} />
+      </InfoBox>
+      <InfoBoxSeperator />
+
+      {app.categories && app.categories.length > 0 ? (
+        app.categories?.map((category, index) => (
+          <Fragment key={category.category_id + index}>
+            <InfoBox>
+              <InfoBoxTitle>Category</InfoBoxTitle>
+              <Category
+                className="flex h-full flex-col items-center justify-center space-y-2 overflow-hidden text-center md:space-y-1"
+                category_icon_name={category.category_icon_name}
+                category_slug={category.category_slug}
+                category_name={category.category_name}
+              />
+            </InfoBox>
+            <InfoBoxSeperator />
+          </Fragment>
+        ))
+      ) : (
+        <>
+          <InfoBox>
+            <InfoBoxTitle>Category</InfoBoxTitle>
+            <span className="flex h-full items-center justify-center text-center text-xs text-muted-foreground">
+              No Categories yet
+            </span>
+          </InfoBox>
+          <InfoBoxSeperator />
+        </>
+      )}
+
+      <InfoBox>
+        <InfoBoxTitle>Pricing</InfoBoxTitle>
+        <Pricing
+          data={app}
+          className="flex h-full cursor-default flex-col items-center justify-center overflow-hidden text-center text-muted-foreground"
+        />
+      </InfoBox>
+    </DetailCarousel>
+  )
+}
+
+export const DetailCarousel = ({
+  children,
+  className,
+  containerCN,
+}: {
+  className?: string
+  containerCN?: string
+  children?: React.ReactNode
+}) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
 
@@ -43,13 +111,13 @@ export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
     return () => {
       window.removeEventListener("resize", checkOverflow)
     }
-  }, [rating_count, rating_score])
+  }, [])
 
   return (
     <div className="group relative w-full max-w-full">
       {hasOverflow && (
         <div className="absolute bottom-0 right-0">
-          <span className="flex items-center space-x-2 text-xs  text-muted-foreground/50">
+          <span className="flex items-center space-x-2 text-xs text-muted-foreground/50">
             <p className="opacity-100 transition-all duration-200 ease-out group-focus-within:opacity-100 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 sm:opacity-0">
               scroll for more
             </p>
@@ -64,66 +132,20 @@ export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
           className
         )}
       >
-        <div className="flex h-20 w-full min-w-max shrink-0 flex-row items-center max-sm:justify-between">
-          <InfoBox>
-            <InfoBoxTitle>{formattedRatingCount} Ratings</InfoBoxTitle>
-            <RatingsAndReviews rating_score={rating_score} />
-          </InfoBox>
-          <InfoBoxSeperator />
-
-          <InfoBox>
-            <InfoBoxTitle>
-              {app.developers && app.developers.length > 1 ? (
-                <span>Developers</span>
-              ) : (
-                <span>Developer</span>
-              )}
-            </InfoBoxTitle>
-            <Developers developers={app.developers} />
-          </InfoBox>
-          <InfoBoxSeperator />
-
-          {app.categories && app.categories.length > 0 ? (
-            app.categories?.map((category, index) => (
-              <Fragment key={category.category_id + index}>
-                <InfoBox>
-                  <InfoBoxTitle>Category</InfoBoxTitle>
-                  <Category
-                    className="flex h-full flex-col items-center justify-center space-y-2 overflow-hidden text-center md:space-y-1"
-                    category_icon_name={category.category_icon_name}
-                    category_slug={category.category_slug}
-                    category_name={category.category_name}
-                  />
-                </InfoBox>
-                <InfoBoxSeperator />
-              </Fragment>
-            ))
-          ) : (
-            <>
-              <InfoBox>
-                <InfoBoxTitle>Category</InfoBoxTitle>
-                <span className="flex h-full items-center justify-center text-center text-xs text-muted-foreground">
-                  No Categories yet
-                </span>
-              </InfoBox>
-              <InfoBoxSeperator />
-            </>
+        <div
+          className={cn(
+            "flex h-20 w-full min-w-max shrink-0 flex-row items-center max-sm:justify-between",
+            containerCN
           )}
-
-          <InfoBox>
-            <InfoBoxTitle>Pricing</InfoBoxTitle>
-            <Pricing
-              data={app}
-              className="flex h-full cursor-default flex-col items-center justify-center overflow-hidden text-center text-muted-foreground"
-            />
-          </InfoBox>
+        >
+          {children}
         </div>
       </div>
     </div>
   )
 }
 
-const InfoBoxSeperator = ({ className }: { className?: string }) => {
+export const InfoBoxSeperator = ({ className }: { className?: string }) => {
   return (
     <Separator
       orientation="vertical"
@@ -137,7 +159,7 @@ type InfoBoxProps = {
   className?: string
 }
 
-const InfoBox = ({ children, className }: InfoBoxProps) => {
+export const InfoBox = ({ children, className }: InfoBoxProps) => {
   return (
     <div
       className={cn(
@@ -150,11 +172,11 @@ const InfoBox = ({ children, className }: InfoBoxProps) => {
   )
 }
 
-const InfoBoxTitle = ({ children, className }: InfoBoxProps) => {
+export const InfoBoxTitle = ({ children, className }: InfoBoxProps) => {
   return (
     <span
       className={cn(
-        "text-nowrap text-xs uppercase text-muted-foreground ",
+        "text-nowrap text-xs uppercase text-muted-foreground",
         className
       )}
     >
@@ -218,7 +240,7 @@ export const Category = ({
     <Link
       href={`/ai-apps/categories/${category_slug}`}
       className={cn(
-        "text-center text-muted-foreground  underline-offset-4 hover:text-primary hover:underline",
+        "text-center text-muted-foreground underline-offset-4 hover:text-primary hover:underline",
         className
       )}
     >

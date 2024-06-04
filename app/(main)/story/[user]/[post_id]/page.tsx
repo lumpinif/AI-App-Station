@@ -72,6 +72,7 @@ export default async function StoryPage({
           {...post}
           user={user}
           authorProfile={post.profiles}
+          postCategories={post.categories}
           post_content={post.post_content as JSONContent}
         />
         <div className="flex w-full items-center justify-center text-sm text-border">

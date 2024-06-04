@@ -12,12 +12,14 @@ type AuthorCardProps = {
   avatarCN?: string
   className?: string
   authorNameCN?: string
+  children?: React.ReactNode
   post_created_at: Posts["created_at"]
 }
 
 export const AuthorCard: React.FC<AuthorCardProps> = ({
   author,
   InfoCN,
+  children,
   avatarCN,
   className,
   authorNameCN,
@@ -49,6 +51,7 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
           {/* TODO:IMPLEMENT READ TIME SOMEWHERE ELSE*/}
           {/* <span>6 min read</span> */}
           <span>{moment(post_created_at).format("MMM Do YYYY")}</span>
+          {children}
         </div>
       </div>
     </div>
