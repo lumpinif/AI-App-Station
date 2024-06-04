@@ -247,12 +247,14 @@ export const useStorySaveAndPublish = ({
     const author_slug = getPostAuthorSlug(profile)
 
     const promises = []
+    let changesMade = false
 
     if (setPublishButtonState) {
       setPublishButtonState("loading")
     }
 
     if (post_description !== defaultDescription) {
+      changesMade = true
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
@@ -264,6 +266,7 @@ export const useStorySaveAndPublish = ({
       topics !== defaultTopics &&
       _.isEqual(topics, defaultTopics) === false
     ) {
+      changesMade = true
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
@@ -275,6 +278,7 @@ export const useStorySaveAndPublish = ({
       postCategories !== defaultPostCategoriesWithoutIcon &&
       _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
     ) {
+      changesMade = true
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
@@ -285,6 +289,7 @@ export const useStorySaveAndPublish = ({
       post_image_src !== defaultImageSrc &&
       _.isEqual(post_image_src, defaultImageSrc) === false
     ) {
+      changesMade = true
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
@@ -313,7 +318,12 @@ export const useStorySaveAndPublish = ({
         }
         router.push(`/story/${author_slug}/${post_id}`)
       }
-    } else {
+    }
+
+    if (!changesMade) {
+      if (setPublishButtonState) {
+        setPublishButtonState("idle")
+      }
       router.push(`/story/${author_slug}/${post_id}`)
     }
   }
@@ -329,12 +339,14 @@ export const useStorySaveAndPublish = ({
     postCategories?: Option[]
   ) => {
     const promises = []
+    let changesMade = false
 
     if (setSaveButtonState) {
       setSaveButtonState("loading")
     }
 
     if (post_description !== defaultDescription) {
+      changesMade = true
       if (setSaveButtonState) {
         setSaveButtonState("loading")
       }
@@ -346,6 +358,7 @@ export const useStorySaveAndPublish = ({
       topics !== defaultTopics &&
       _.isEqual(topics, defaultTopics) === false
     ) {
+      changesMade = true
       if (setSaveButtonState) {
         setSaveButtonState("loading")
       }
@@ -357,6 +370,7 @@ export const useStorySaveAndPublish = ({
       postCategories !== defaultPostCategoriesWithoutIcon &&
       _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
     ) {
+      changesMade = true
       if (setSaveButtonState) {
         setSaveButtonState("loading")
       }
@@ -367,6 +381,7 @@ export const useStorySaveAndPublish = ({
       post_image_src !== defaultImageSrc &&
       _.isEqual(post_image_src, defaultImageSrc) === false
     ) {
+      changesMade = true
       if (setSaveButtonState) {
         setSaveButtonState("loading")
       }
@@ -388,7 +403,12 @@ export const useStorySaveAndPublish = ({
         }
         router.push(`/user/stories`)
       }
-    } else {
+    }
+
+    if (!changesMade) {
+      if (setSaveButtonState) {
+        setSaveButtonState("idle")
+      }
       router.push(`/user/stories`)
     }
   }
