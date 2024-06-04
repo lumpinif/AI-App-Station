@@ -78,29 +78,29 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
 
   return (
     <StoryContentWrapper>
-      <div>
-        {/* POST TITLE */}
-        <StoryContentTitle
-          post_content={post_content}
-          firstHeading={firstHeading}
-        />
+      {/* POST TITLE */}
+      <StoryContentTitle
+        post_content={post_content}
+        firstHeading={firstHeading}
+      />
 
-        <span className="flex flex-col gap-y-4">
-          {/* TOPICS BADGE */}
-          <StoryTopicsBadge topics={topics} />
-
-          {/* TODO: CONSIDER IMPLEMENT THE CATEGORIES LATER */}
-          {/* POST CATEGORIES
+      <span className="flex flex-col gap-y-2 pb-4">
+        {/* TODO: CONSIDER IMPLEMENT THE CATEGORIES LATER */}
+        {/* POST CATEGORIES
           <StoryPostCategories postCategories={postCategories} /> */}
 
-          {/* POST DESCRIPTION */}
-          {post_description ? (
-            <span className="text-sm italic text-muted-foreground">
-              {post_description}
-            </span>
-          ) : null}
-        </span>
-      </div>
+        {/* TOPICS BADGE */}
+        <StoryTopicsBadge topics={topics} />
+        {/* POST DESCRIPTION */}
+        {post_description ? (
+          <span className="text-sm italic text-muted-foreground">
+            {post_description} Lorem ipsum dolor sit amet consectetur,
+            adipisicing elit. Ut rerum maxime eligendi sequi, odit mollitia
+            delectus eos. Commodi reiciendis repellat ex id nulla. Itaque at
+            reiciendis culpa quae aperiam cupiditate!
+          </span>
+        ) : null}
+      </span>
 
       {/* POST HEADER */}
       <StoryContentHeader>

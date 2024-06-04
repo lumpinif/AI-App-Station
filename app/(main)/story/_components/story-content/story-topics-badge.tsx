@@ -15,7 +15,13 @@ export const StoryTopicsBadge: React.FC<StoryTopicsBadgeProps> = ({
       {topics.length > 0 ? (
         <div className="flex items-center gap-x-2">
           {topics.map((topic) => (
-            <Badge key={topic.topic_id}>{topic.topic_name}</Badge>
+            <Badge
+              key={topic.topic_id}
+              variant={"outline"}
+              className="dark:border-0 dark:shadow-outline"
+            >
+              {topic.topic_name}
+            </Badge>
           ))}
         </div>
       ) : null}
