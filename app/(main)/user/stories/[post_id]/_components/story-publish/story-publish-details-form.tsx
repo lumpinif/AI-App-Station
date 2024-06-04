@@ -136,7 +136,7 @@ export const StoryPublishDetailsForm: React.FC<
                   <FormControl>
                     <PostPublishPreview
                       onChange={field.onChange}
-                      post_image_src={post_image_src}
+                      post_image_src={field.value}
                       postImagesWithUrls={postImagesPublicUrls}
                     />
                   </FormControl>
