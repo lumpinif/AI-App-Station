@@ -25,7 +25,7 @@ export const StoryEditButton: React.FC<StoryEditButtonProps> = ({
   }
 
   return (
-    <div className="flex w-full items-center justify-end gap-x-2">
+    <div className="flex w-full items-center justify-end gap-x-1">
       {!isPublished ? (
         <Button
           size={"label"}
