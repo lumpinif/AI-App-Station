@@ -46,8 +46,15 @@ export default async function StoryPage({
   const orderBy = searchParams?.orderBy as keyof Post_Comments | undefined
 
   const { post, error: getPostError } = await getPostById(params.post_id)
+  const {
+    data: { user },
+    error: getUserError,
+  } = await getUserData()
 
-  if (!post) {
+  const isAuthor = post?.post_author_id === user?.id
+  const isPublished = post?.post_publish_status === "published"
+
+  if (!post || !(isPublished || isAuthor)) {
     notFound()
   }
 
@@ -55,11 +62,6 @@ export default async function StoryPage({
   if (getPostError) {
     console.error(getPostError)
   }
-
-  const {
-    data: { user },
-    error: getUserError,
-  } = await getUserData()
 
   if (getUserError) {
     console.error("Error fetching user data: ", getUserError)
