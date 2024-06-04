@@ -8,6 +8,7 @@ import { WriteNewStoryButton } from "./story-content/write-new-story-button"
 
 const StoryPageTitle = () => {
   const currentPath = usePathname()
+  const isNewStoryPath = currentPath === "/story/new"
 
   const pageTitle =
     currentPath === "/story"
@@ -17,6 +18,10 @@ const StoryPageTitle = () => {
         : "Story"
 
   const pageHref = currentPath === "/story" ? "/story" : "#"
+
+  if (isNewStoryPath) {
+    return null
+  }
 
   return (
     <PageTitle title={pageTitle} href={pageHref}>
