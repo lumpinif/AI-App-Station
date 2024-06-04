@@ -55,8 +55,8 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
 
         if (isToast) {
           toast.success("Copied to clipboard", {
-            description: url,
-            duration: 1500,
+            // description: url,
+            duration: 2000,
           })
         }
         setTimeout(() => {

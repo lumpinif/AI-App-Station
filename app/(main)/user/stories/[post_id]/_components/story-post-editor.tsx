@@ -43,6 +43,7 @@ type StoryPostEditorProps = {
   post_author_id: Posts["post_author_id"]
   post_image_src: Posts["post_image_src"]
   post_description: Posts["post_description"]
+  post_publish_status: Posts["post_publish_status"]
 }
 
 export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
@@ -57,6 +58,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_author_id,
   post_image_src,
   post_description,
+  post_publish_status,
   postImagesPublicUrls,
 }) => {
   const toastId = useNewStoryToastStore((state) => state.toastId)
@@ -214,6 +216,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
           postCategories={postCategories}
           post_image_src={post_image_src}
           post_description={post_description}
+          post_publish_status={post_publish_status}
           postImagesPublicUrls={postImagesPublicUrls}
           isEdited={isEdited && postTitle !== "Untitled"}
           className="sticky top-0 z-40 w-full bg-background/60 py-2 backdrop-blur-sm"

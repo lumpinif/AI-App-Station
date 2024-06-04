@@ -31,10 +31,10 @@ export const StoryPublishActions: React.FC<StoryPublishActionsProps> = ({
     <div className="flex items-center justify-end gap-x-4 max-sm:flex-col max-sm:gap-y-4">
       <SpinnerButton
         type="button"
-        id="story-publish-button"
         size={"label"}
         withSuccess={true}
         // variant={"default"}
+        id="story-publish-button"
         buttonState={publishButtonState}
         onClick={handlePublishClick}
         successElement={<span>Published</span>}
@@ -51,10 +51,10 @@ export const StoryPublishActions: React.FC<StoryPublishActionsProps> = ({
 
       <SpinnerButton
         type="button"
-        id="story-save-button"
         size={"label"}
         variant={"ghost"}
         withSuccess={true}
+        id="story-save-button"
         onClick={handleSaveClick}
         buttonState={saveButtonState}
         successElement={<span>Saved</span>}

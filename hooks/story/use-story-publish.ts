@@ -248,6 +248,10 @@ export const useStorySaveAndPublish = ({
 
     const promises = []
 
+    if (setPublishButtonState) {
+      setPublishButtonState("loading")
+    }
+
     if (post_description !== defaultDescription) {
       if (setPublishButtonState) {
         setPublishButtonState("loading")
@@ -307,9 +311,10 @@ export const useStorySaveAndPublish = ({
             setPublishButtonState("idle")
           }, 2000)
         }
-
         router.push(`/story/${author_slug}/${post_id}`)
       }
+    } else {
+      router.push(`/story/${author_slug}/${post_id}`)
     }
   }
 
@@ -324,6 +329,10 @@ export const useStorySaveAndPublish = ({
     postCategories?: Option[]
   ) => {
     const promises = []
+
+    if (setSaveButtonState) {
+      setSaveButtonState("loading")
+    }
 
     if (post_description !== defaultDescription) {
       if (setSaveButtonState) {
@@ -348,8 +357,8 @@ export const useStorySaveAndPublish = ({
       postCategories !== defaultPostCategoriesWithoutIcon &&
       _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
     ) {
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
+      if (setSaveButtonState) {
+        setSaveButtonState("loading")
       }
       promises.push(handleUpdatePostCategories(postCategories, post_id))
     }
@@ -358,8 +367,8 @@ export const useStorySaveAndPublish = ({
       post_image_src !== defaultImageSrc &&
       _.isEqual(post_image_src, defaultImageSrc) === false
     ) {
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
+      if (setSaveButtonState) {
+        setSaveButtonState("loading")
       }
       promises.push(updatePostImageSrc(post_id, post_image_src))
     }
@@ -379,6 +388,8 @@ export const useStorySaveAndPublish = ({
         }
         router.push(`/user/stories`)
       }
+    } else {
+      router.push(`/user/stories`)
     }
   }
 

@@ -12,7 +12,11 @@ import { StoryPublishDetailsForm } from "./story-publish-details-form"
 
 type StoryPublishModalProps = ButtonProps & {
   topics?: Topics[]
+  isEmpty?: boolean
   postTitle: string
+  isEdited?: boolean
+  saveStatus: string
+  isRetrying: boolean
   post_id: Posts["post_id"]
   postCategories?: Categories[]
   postImagesPublicUrls: string[]
@@ -20,31 +24,50 @@ type StoryPublishModalProps = ButtonProps & {
   post_image_src: Posts["post_image_src"]
   post_author_id: Posts["post_author_id"]
   post_description: Posts["post_description"]
+  post_publish_status: Posts["post_publish_status"]
 }
 
 export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
   topics,
   post_id,
+  isEmpty,
+  isEdited,
   postTitle,
+  saveStatus,
+  isRetrying,
   allCategories,
   postCategories,
   post_author_id,
   post_image_src,
   post_description,
+  post_publish_status,
   postImagesPublicUrls,
   ...props
 }) => {
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
 
+  const draft = post_publish_status === "draft"
+  const pending = post_publish_status === "pending"
+  const published = post_publish_status === "published"
+  const unpublished = post_publish_status === "unpublished"
+
+  const buttonLabel = published
+    ? "Published"
+    : draft
+      ? "Draft"
+      : pending
+        ? "Pending"
+        : "Unpublished"
+
   return (
     <>
       <ResponsiveContentModal
-        title={`Publish ${postTitle.toUpperCase()}`}
         drawerHeight="h-[98%]"
         isOpen={isPublishModalOpen}
         shouldScaleBackground={true}
         withDefaultDialogClose={false}
         onChange={setIsPublishModalOpen}
+        title={`Publish ${postTitle.toUpperCase()}`}
         drawerContentClassName="outline-none rounded-t-3xl"
         dialogContentClassName="w-full max-w-full h-full border-0 outline-none"
       >
@@ -79,9 +102,14 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
         variant={"ghost"}
         onClick={() => setIsPublishModalOpen(true)}
         className="rounded-full border px-4 active:scale-[.98] dark:border-0 dark:shadow-outline"
+        disabled={saveStatus === "saving" || isRetrying || isEmpty || !isEdited}
         {...props}
       >
-        Publish
+        {!isEdited
+          ? buttonLabel
+          : post_publish_status === "published"
+            ? "Publish Changes"
+            : "Publish"}
       </Button>
     </>
   )

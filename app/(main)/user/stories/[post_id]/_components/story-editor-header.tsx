@@ -23,6 +23,7 @@ type StoryEditorHeaderProps = {
   post_image_src: Posts["post_image_src"]
   post_author_id: Posts["post_author_id"]
   post_description: Posts["post_description"]
+  post_publish_status: Posts["post_publish_status"]
 }
 
 export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
@@ -41,6 +42,7 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
   post_image_src,
   isEdited = false,
   post_description,
+  post_publish_status,
   postImagesPublicUrls,
 }) => {
   return (
@@ -66,17 +68,19 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
         {isEmpty ? null : (
           <StoryPublishModal
             topics={topics}
+            isEmpty={isEmpty}
             post_id={post_id}
+            isEdited={isEdited}
             postTitle={postTitle}
+            isRetrying={isRetrying}
+            saveStatus={saveStatus}
             allCategories={allCategories}
             post_image_src={post_image_src}
             postCategories={postCategories}
             post_author_id={post_author_id}
             post_description={post_description}
+            post_publish_status={post_publish_status}
             postImagesPublicUrls={postImagesPublicUrls}
-            disabled={
-              saveStatus === "saving" || isRetrying || isEmpty || !isEdited
-            }
           />
         )}
       </div>
