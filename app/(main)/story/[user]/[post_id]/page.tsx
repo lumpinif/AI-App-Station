@@ -13,6 +13,7 @@ import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import StoryCommentSection from "../../_components/comment/story-comment-section"
 import { StoryContentHeroImage } from "../../_components/story-content/story-content-hero-image"
 import { StoryEditorContent } from "../../_components/story-content/story-editor-content"
+import { StoryEditButton } from "../../_components/story-edit-button"
 
 // Generate segments for both [user] and [post_id]
 // export async function generateStaticParams() {
@@ -66,6 +67,12 @@ export default async function StoryPage({
 
   return (
     <>
+      <StoryEditButton
+        user={user}
+        post_id={post.post_id}
+        post_author_id={post.post_author_id}
+        post_publish_status={post.post_publish_status}
+      />
       <StoryContentHeroImage post_image_src={post.post_image_src} />
       <main className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
         <StoryEditorContent
