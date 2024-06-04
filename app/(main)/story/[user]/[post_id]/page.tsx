@@ -11,27 +11,28 @@ import { getPostAuthorSlug } from "@/lib/utils"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import StoryCommentSection from "../../_components/comment/story-comment-section"
+import { StoryContentHeroImage } from "../../_components/story-content/story-content-hero-image"
 import { StoryEditorContent } from "../../_components/story-content/story-editor-content"
 
 // Generate segments for both [user] and [post_id]
-export async function generateStaticParams() {
-  const { data: allPosts, error } = await supabase
-    .from("posts")
-    .select("*,profiles(*)")
-    .returns<PostDetails[]>()
+// export async function generateStaticParams() {
+//   const { data: allPosts, error } = await supabase
+//     .from("posts")
+//     .select("*,profiles(*)")
+//     .returns<PostDetails[]>()
 
-  if (error) {
-    throw new Error("Error fetching data: " + error.message)
-  }
+//   if (error) {
+//     throw new Error("Error fetching data: " + error.message)
+//   }
 
-  if (allPosts)
-    return allPosts.map((post) => ({
-      user: getPostAuthorSlug(post.profiles),
-      post_id: post.post_id,
-    }))
+//   if (allPosts)
+//     return allPosts.map((post) => ({
+//       user: getPostAuthorSlug(post.profiles),
+//       post_id: post.post_id,
+//     }))
 
-  return []
-}
+//   return []
+// }
 
 export default async function StoryPage({
   params,
@@ -64,21 +65,24 @@ export default async function StoryPage({
   }
 
   return (
-    <main className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
-      <StoryEditorContent
-        {...post}
-        user={user}
-        authorProfile={post.profiles}
-        post_content={post.post_content as JSONContent}
-      />
-      <Suspense fallback={<LoadingSpinner />}>
-        <StoryCommentSection
+    <>
+      <StoryContentHeroImage post_image_src={post.post_image_src} />
+      <main className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
+        <StoryEditorContent
+          {...post}
           user={user}
-          c_order={c_order}
-          orderBy={orderBy}
-          post_id={post.post_id}
+          authorProfile={post.profiles}
+          post_content={post.post_content as JSONContent}
         />
-      </Suspense>
-    </main>
+        <Suspense fallback={<LoadingSpinner />}>
+          <StoryCommentSection
+            user={user}
+            c_order={c_order}
+            orderBy={orderBy}
+            post_id={post.post_id}
+          />
+        </Suspense>
+      </main>
+    </>
   )
 }

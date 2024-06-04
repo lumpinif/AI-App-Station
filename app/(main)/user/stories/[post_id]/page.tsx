@@ -3,7 +3,6 @@ import { getUserData } from "@/server/auth"
 import { getAllCategories } from "@/server/data/supabase-actions"
 import { getPostImagesWithUrls } from "@/server/queries/supabase/editor/publish/stories"
 import { getPostById } from "@/server/queries/supabase/stories"
-import { JSONContent } from "novel"
 
 import { Posts } from "@/types/db_tables"
 import StoryContentWrapper from "@/app/(main)/story/_components/story-content/story-content-wrapper"
@@ -62,11 +61,6 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     post.post_id,
     post.post_author_id
   )
-
-  // TODO: HANDLE ERROR LOADING POST IMAGES IN A BETTER WAY
-  // if (postImagesPublicUrls.length === 0) {
-  //   return <div>Error loading post images.</div>
-  // }
 
   const plainPostContent = JSON.parse(JSON.stringify(post.post_content))
 

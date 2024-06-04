@@ -30,12 +30,12 @@ export const WriteNewStoryButton: React.FC<WriteNewStoryButtonProps> = ({
 
   return (
     <SpinnerButton
-      onClick={isUserLogged ? handleCreateNewStory : openAccountModal}
-      isLoading={isLoading}
-      variant={variant}
       size={size}
+      variant={variant}
+      isLoading={isLoading}
       className={cn("w-28 text-sm", spinnerButtonCN)}
       motionClassName={motionClassName}
+      onClick={isUserLogged ? handleCreateNewStory : openAccountModal}
     >
       {children ? (
         children

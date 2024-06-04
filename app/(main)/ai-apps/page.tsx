@@ -22,64 +22,55 @@ const OPTIONS_APPSCARDSCAROUSEL: EmblaOptionsType = {
 }
 
 const AIAppsMainPage = async () => {
-  try {
-    // Fetch posts data
-    const { posts: heroPosts, error: heroPostsError } = await getAllPosts(true)
-    const { posts: allPosts, error: allPostsError } = await getAllPosts()
+  // Fetch posts data
+  const { posts: heroPosts, error: heroPostsError } = await getAllPosts(true)
+  const { posts: allPosts, error: allPostsError } = await getAllPosts()
+  // Fetch apps data
+  const { apps: appsWithCategories, error: appsWithCategoriesError } =
+    await getAppsWithCatWithOrderBy("likes_count")
 
-    // Fetch apps data
-
-    const { apps: appsWithCategories, error: appsWithCategoriesError } =
-      await getAppsWithCatWithOrderBy("likes_count")
-
-    // Handle errors and log them
-    if (heroPostsError || allPostsError || appsWithCategoriesError) {
-      console.error("Error fetching data:", {
-        heroPostsError,
-        allPostsError,
-
-        appsWithCategoriesError,
-      })
-      return notFound()
-    }
-
-    // Check if data exists
-    if (!allPosts || !heroPosts || !appsWithCategories) {
-      return notFound()
-    }
-
-    return (
-      <section className="flex flex-col gap-y-4">
-        <AiAppsPagesTitle />
-        <Suspense fallback={<div>Loading...</div>}>
-          <NewPostsCarousel
-            posts={heroPosts}
-            isAutpPlay={true}
-            isWheelGestures={true}
-            isIndicator={true}
-          />
-        </Suspense>
-        {/* TODO: REBUILD THE CAROUSEL HERE WITH REFINED DATA SOURCE */}
-        <Suspense fallback={<div>Loading...</div>}>
-          <NewPostsCarousel posts={allPosts} className="md:basis-1/2" />
-        </Suspense>
-        <div className="mt-4">
-          <AppCardsCarousel
-            title="Top Paid Apps"
-            data={appsWithCategories}
-            className="md:basis-1/2 lg:basis-1/3"
-            isMarginRight={true}
-            options={OPTIONS_APPSCARDSCAROUSEL}
-            hiddenOnCanNotScroll
-          />
-        </div>
-      </section>
-    )
-  } catch (error) {
-    // Catch and log any unexpected errors
-    console.error("Unexpected error:", error)
+  // Handle errors and log them
+  if (heroPostsError || allPostsError || appsWithCategoriesError) {
+    console.error("Error fetching data:", {
+      heroPostsError,
+      allPostsError,
+      appsWithCategoriesError,
+    })
     return notFound()
   }
+
+  // Check if data exists
+  if (!allPosts || !heroPosts || !appsWithCategories) {
+    return notFound()
+  }
+
+  return (
+    <section className="flex flex-col gap-y-4">
+      <AiAppsPagesTitle />
+      <Suspense fallback={<div>Loading...</div>}>
+        <NewPostsCarousel
+          posts={heroPosts}
+          isAutpPlay={true}
+          isWheelGestures={true}
+          isIndicator={true}
+        />
+      </Suspense>
+      {/* TODO: REBUILD THE CAROUSEL HERE WITH REFINED DATA SOURCE */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <NewPostsCarousel posts={allPosts} className="md:basis-1/2" />
+      </Suspense>
+      <div className="mt-4">
+        <AppCardsCarousel
+          title="Top Paid Apps"
+          data={appsWithCategories}
+          className="md:basis-1/2 lg:basis-1/3"
+          isMarginRight={true}
+          options={OPTIONS_APPSCARDSCAROUSEL}
+          hiddenOnCanNotScroll
+        />
+      </div>
+    </section>
+  )
 }
 
 export default AIAppsMainPage

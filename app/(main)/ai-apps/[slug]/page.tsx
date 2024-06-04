@@ -33,24 +33,25 @@ export type AppPageProps = {
   searchParams: SearchParams
 }
 
+// DEPRECATED: This function is not used anymore
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams() {
-  const { data: allApps, error } = await supabase
-    .from("apps")
-    .select("*,profiles(*)")
-    .returns<Apps[]>()
+// export async function generateStaticParams() {
+//   const { data: allApps, error } = await supabase
+//     .from("apps")
+//     .select("*,profiles(*)")
+//     .returns<Apps[]>()
 
-  if (error) {
-    throw new Error("Error fetching data: " + error.message)
-  }
+//   if (error) {
+//     throw new Error("Error fetching data: " + error.message)
+//   }
 
-  if (allApps)
-    return allApps.map((app) => ({
-      slug: app.app_slug,
-    }))
+//   if (allApps)
+//     return allApps.map((app) => ({
+//       slug: app.app_slug,
+//     }))
 
-  return []
-}
+//   return []
+// }
 
 export default async function AiAppsMainPage({
   params,
@@ -120,7 +121,7 @@ export default async function AiAppsMainPage({
               <div className="flex w-full justify-between">
                 <AppTitleWithDescription
                   {...app}
-                  className=" w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
+                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
                   titleSize="3xl"
                   titleClassname="md:text-4xl leading-[0.8]"
                   titleFont="bold"
