@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 type StoryPublishPreviewProps = {
+  disabled?: boolean
   postImagesWithUrls: string[]
   onChange?: (value: string) => void
   post_image_src: Posts["post_image_src"]
@@ -19,6 +20,7 @@ const previewImageContainer = cn(
 )
 
 export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
+  disabled,
   onChange,
   post_image_src,
   postImagesWithUrls,
@@ -52,7 +54,7 @@ export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
   )
 
   return (
-    <>
+    <div className="flex h-full flex-col justify-between gap-y-4">
       <div className="space-y-4">
         <div className="page-title-font text-2xl">Story Preview</div>
         {noImage ? (
@@ -61,6 +63,7 @@ export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
           <>
             {!isShowSelector ? (
               <PostPreviewImage
+                disabled={disabled}
                 previewImage={previewImage}
                 setIsShowSelector={setIsShowSelector}
               />
@@ -81,15 +84,17 @@ export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
         Note: Changes here will affect how your story appears in public places —
         not the contents of the story itself.
       </div>
-    </>
+    </div>
   )
 }
 
 type PostPreviewImageProps = {
+  disabled?: boolean
   previewImage: string
   setIsShowSelector: (value: boolean) => void
 }
 const PostPreviewImage: React.FC<PostPreviewImageProps> = ({
+  disabled,
   previewImage,
   setIsShowSelector,
 }) => {
@@ -112,6 +117,7 @@ const PostPreviewImage: React.FC<PostPreviewImageProps> = ({
         <Button
           size={"label"}
           variant={"ghost"}
+          disabled={disabled}
           onClick={handleChangeClick}
           className={cn(
             "dark:glass-card-background font-page-title z-40 w-fit rounded-full border-0 bg-background/70 px-4 shadow-lg drop-shadow-lg backdrop-blur-xl transition-all duration-150 ease-out hover:shadow-xl active:scale-[.98] dark:shadow-outline dark:hover:-translate-y-px dark:hover:scale-[.99]"

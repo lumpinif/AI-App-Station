@@ -277,7 +277,10 @@ export const useStorySaveAndPublish = ({
       promises.push(handleUpdatePostCategories(postCategories, post_id))
     }
 
-    if (post_image_src !== defaultImageSrc) {
+    if (
+      post_image_src !== defaultImageSrc &&
+      _.isEqual(post_image_src, defaultImageSrc) === false
+    ) {
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }
@@ -351,7 +354,10 @@ export const useStorySaveAndPublish = ({
       promises.push(handleUpdatePostCategories(postCategories, post_id))
     }
 
-    if (post_image_src !== defaultImageSrc) {
+    if (
+      post_image_src !== defaultImageSrc &&
+      _.isEqual(post_image_src, defaultImageSrc) === false
+    ) {
       if (setPublishButtonState) {
         setPublishButtonState("loading")
       }

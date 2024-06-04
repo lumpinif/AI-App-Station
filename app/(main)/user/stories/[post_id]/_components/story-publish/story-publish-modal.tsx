@@ -39,7 +39,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
   return (
     <>
       <ResponsiveContentModal
-        title="Account"
+        title={`Publish ${postTitle.toUpperCase()}`}
         drawerHeight="h-[98%]"
         isOpen={isPublishModalOpen}
         shouldScaleBackground={true}

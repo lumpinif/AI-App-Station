@@ -127,24 +127,28 @@ export const StoryPublishDetailsForm: React.FC<
           className="grid gap-6 p-2 sm:grid-cols-2 sm:gap-10"
         >
           {/* LEFT PANEL */}
-          <div className="flex flex-col gap-y-6">
-            <FormField
-              control={form.control}
-              name="post_image_src"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <PostPublishPreview
-                      onChange={field.onChange}
-                      post_image_src={field.value}
-                      postImagesWithUrls={postImagesPublicUrls}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-xs sm:text-sm" />
-                </FormItem>
-              )}
-            />
-          </div>
+
+          <FormField
+            control={form.control}
+            name="post_image_src"
+            render={({ field }) => (
+              <FormItem className="h-full">
+                <FormControl>
+                  <PostPublishPreview
+                    onChange={field.onChange}
+                    post_image_src={field.value}
+                    postImagesWithUrls={postImagesPublicUrls}
+                    disabled={
+                      isSubmitting ||
+                      saveButtonState === "loading" ||
+                      publishButtonState === "loading"
+                    }
+                  />
+                </FormControl>
+                <FormMessage className="text-xs sm:text-sm" />
+              </FormItem>
+            )}
+          />
 
           {/* RIGHT PANEL */}
           <div className="flex flex-col justify-between">

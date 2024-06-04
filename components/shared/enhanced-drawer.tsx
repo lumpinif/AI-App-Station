@@ -106,7 +106,7 @@ export const EnhancedDrawerClose: React.FC<EnhancedDrawerProps> = ({
       )}
       {...props}
     >
-      {title}
+      <span className="max-w-sm truncate px-4">{title}</span>
 
       <DrawerClose
         asChild
