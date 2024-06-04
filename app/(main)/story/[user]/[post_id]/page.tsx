@@ -83,7 +83,7 @@ export default async function StoryPage({
           post_content={post.post_content as JSONContent}
         />
         <div className="flex w-full items-center justify-center text-sm text-border">
-          - end of story -
+          - end of the story -
         </div>
         <Suspense fallback={<LoadingSpinner />}>
           <StoryCommentSection
