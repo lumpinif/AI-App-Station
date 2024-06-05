@@ -39,7 +39,7 @@ export const SiteLogo = ({
     )}
   >
     <Link href="/" className={cn("text-nowrap font-medium lg:flex", linkCN)}>
-      AI App Station
+      AI App Station (Beta)
     </Link>
   </div>
 )

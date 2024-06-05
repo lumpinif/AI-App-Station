@@ -73,7 +73,7 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
       commandClassName="bg-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&_[cmdk-group-heading]]:text-primary dark:[&_[cmdk-group-heading]]:text-muted-foreground "
       className="h-[calc(100vh-3rem)] max-w-full rounded-2xl p-4 data-[state=closed]:max-md:slide-out-to-bottom-5 data-[state=open]:max-md:!slide-in-from-bottom-5 sm:max-w-lg sm:rounded-3xl md:top-1/3 md:h-[720px] md:max-w-xl lg:max-w-2xl xl:max-w-3xl"
     >
-      <div className="mb-2 border-b p-3 transition-all duration-150 ease-out [&_[cmdk-input-wrapper]]:rounded-full [&_[cmdk-input-wrapper]]:border-none focus-within:[&_[cmdk-input-wrapper]]:bg-muted">
+      <div className="mb-2 border-b p-3 transition-all duration-150 ease-out [&_[cmdk-input-wrapper]]:rounded-full [&_[cmdk-input-wrapper]]:border-none focus-within:[&_[cmdk-input-wrapper]]:bg-input">
         <CommandInput
           value={search}
           placeholder="Type a command or search..."

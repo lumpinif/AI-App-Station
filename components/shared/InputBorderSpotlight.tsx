@@ -2,11 +2,23 @@
 
 import { forwardRef, useRef, useState } from "react"
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement>
+import { cn } from "@/lib/utils"
+
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  className?: string
+}
 
 export const InputBorderSpotlight = forwardRef<HTMLInputElement, InputProps>(
   (
-    { name, type, placeholder, onChange, defaultValue, ...props }: InputProps,
+    {
+      name,
+      type,
+      onChange,
+      className,
+      placeholder,
+      defaultValue,
+      ...props
+    }: InputProps,
     ref
   ) => {
     const divRef = useRef<HTMLInputElement>(null)
@@ -55,7 +67,10 @@ export const InputBorderSpotlight = forwardRef<HTMLInputElement, InputProps>(
             placeholder={placeholder}
             type={type}
             name={name}
-            className="h-10 w-full cursor-default rounded-md border bg-background p-3.5 transition-colors  duration-500 placeholder:select-none focus:border-[rgb(59_130_246)] focus:outline-none"
+            className={cn(
+              "h-10 w-full cursor-default rounded-md border border-input bg-background p-3.5 transition-colors duration-500 placeholder:select-none focus:border-blue-600 focus:outline-none dark:bg-input",
+              className
+            )}
             onChange={onChange}
             defaultValue={defaultValue}
           />
@@ -63,12 +78,15 @@ export const InputBorderSpotlight = forwardRef<HTMLInputElement, InputProps>(
             ref={divRef}
             disabled
             style={{
-              border: "1px solid rgb(59 130 246)",
+              border: "1px solid",
               opacity,
               WebkitMaskImage: `radial-gradient(30% 30px at ${position.x}px ${position.y}px, black 45%, transparent)`,
             }}
             aria-hidden="true"
-            className="border-[rgb(59 130 246)] pointer-events-none absolute left-0 top-0 z-10 h-10 w-full cursor-default rounded-md border bg-transparent p-3.5 opacity-0  transition-opacity duration-500 placeholder:select-none"
+            className={cn(
+              "pointer-events-none absolute left-0 top-0 z-10 h-10 w-full cursor-default rounded-md border border-blue-600 bg-transparent p-3.5 opacity-0 transition-opacity duration-500 placeholder:select-none",
+              className
+            )}
           />
         </div>
       </>
