@@ -1,11 +1,18 @@
+import useAccountModal from "@/hooks/use-account-modal-store"
 import GithubLoginButton from "@/components/auth/signin/github-login-button"
 import GoogleLoginButton from "@/components/auth/signin/google-login-button"
 
-const SignInButtons = () => {
+const LogInButtons = () => {
+  const openAccountModal = useAccountModal((state) => state.openModal)
   return (
-    <div className="flex animate-magic-fade-in flex-col gap-y-2 opacity-0 [--animation-delay:400ms]">
+    <div className="flex animate-magic-fade-in flex-col gap-y-4 opacity-0 [--animation-delay:400ms]">
       <span className="select-none text-sm font-light text-muted-foreground">
-        Log in with
+        <span
+          onClick={openAccountModal}
+          className="border-b border-muted underline-offset-4 transition-all duration-200 ease-out hover:cursor-pointer hover:border-primary hover:text-primary"
+        >
+          Log in here
+        </span>{" "}
       </span>
       <div className="flex items-center gap-x-2">
         <GithubLoginButton
@@ -13,7 +20,9 @@ const SignInButtons = () => {
           variant={"outline"}
           className="w-32 active:scale-[.98] dark:border-0 dark:hover:bg-background dark:hover:shadow-outline"
         />
-        <span className="text-sm font-light text-muted-foreground">or</span>
+        <span className="text-sm font-light text-muted-foreground">
+          or with
+        </span>
         <GoogleLoginButton
           size={"label"}
           variant={"outline"}
@@ -24,4 +33,4 @@ const SignInButtons = () => {
   )
 }
 
-export default SignInButtons
+export default LogInButtons

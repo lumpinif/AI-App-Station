@@ -6,24 +6,26 @@ import GetStartButton from "../hero/get-start-button"
 import HeroDescription from "../hero/hero-description"
 import HeroImage from "../hero/hero-image"
 import IntroducingBadge from "../hero/introducing-badge"
-import SignInButtons from "../hero/signin-button"
+import LogInButtons from "../hero/signin-button"
 
 export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="container relative mx-auto mt-20 max-w-7xl px-6 text-center sm:mt-32 md:mt-40"
+      className="container relative mx-auto mt-20 max-w-7xl px-6 text-center sm:mt-32 md:mt-36"
     >
       <IntroducingBadge />
       <FlipWordsTitle />
       <HeroDescription />
-      <span className="mt-44 flex flex-col gap-y-4">
+      <span className="flex flex-col gap-y-4 sm:mt-32 md:mt-36">
         <GetStartButton />
         <p className="animate-magic-fade-in text-balance text-base font-light tracking-tight text-gray-400 opacity-0 [--animation-delay:400ms]">
-          Free and Easy to use with your managable accounts and collections.
+          Free and Easy to use with your accounts.
+          <br />
+          Like App Store but with more AIs.
         </p>
-        <span className="mt-5 flex items-center justify-center gap-x-4">
-          <SignInButtons />
+        <span className="mt-10 flex items-center justify-center gap-x-4">
+          <LogInButtons />
         </span>
       </span>
 
