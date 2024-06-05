@@ -6,9 +6,12 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { FcGoogle } from "react-icons/fc"
 import { toast } from "sonner"
 
+import { ButtonProps } from "@/components/ui/button"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
-const GoogleLoginButton = () => {
+type GooglebLoginButtonProps = ButtonProps & {}
+
+const GoogleLoginButton = ({ ...props }: GooglebLoginButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const params = useSearchParams()
   const next = params.get("next") || "/ai-apps"
@@ -36,6 +39,7 @@ const GoogleLoginButton = () => {
       onClick={handleGoogleLogin}
       isLoading={isLoading}
       className="w-full rounded-full"
+      {...props}
     >
       Google
       <FcGoogle className="ml-2 h-5 w-5" />

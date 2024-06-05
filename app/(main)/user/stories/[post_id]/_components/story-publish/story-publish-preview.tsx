@@ -120,7 +120,7 @@ const PostPreviewImage: React.FC<PostPreviewImageProps> = ({
           disabled={disabled}
           onClick={handleChangeClick}
           className={cn(
-            "dark:glass-card-background font-page-title z-40 w-fit rounded-full border-0 bg-background/70 px-4 shadow-lg drop-shadow-lg backdrop-blur-xl transition-all duration-150 ease-out hover:shadow-xl active:scale-[.98] dark:shadow-outline dark:hover:-translate-y-px dark:hover:scale-[.99]"
+            "dark:glass-card-background page-title-font z-40 w-fit rounded-full border-0 bg-background/70 px-4 shadow-lg drop-shadow-lg backdrop-blur-xl transition-all duration-150 ease-out hover:shadow-xl active:scale-[.98] dark:shadow-outline dark:hover:-translate-y-px dark:hover:scale-[.99]"
           )}
         >
           Change the preview

@@ -178,6 +178,49 @@ module.exports = {
             opacity: 0.15,
           },
         },
+        // MagicUI
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
+        "image-glow": {
+          "0%": {
+            opacity: "0",
+            "animation-timing-function": "cubic-bezier(0.74, 0.25, 0.76, 1)",
+          },
+          "10%": {
+            opacity: "0.7",
+            "animation-timing-function": "cubic-bezier(0.12, 0.01, 0.08, 0.99)",
+          },
+          "100%": {
+            opacity: "0.4",
+          },
+        },
+        "magic-fade-in": {
+          from: { opacity: "0", transform: "translateY(-10px)" },
+          to: { opacity: "1", transform: "none" },
+        },
+        "magic-fade-up": {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "none" },
+        },
+        shimmer: {
+          "0%, 90%, 100%": {
+            "background-position": "calc(-100% - var(--shimmer-width)) 0",
+          },
+          "30%, 60%": {
+            "background-position": "calc(100% + var(--shimmer-width)) 0",
+          },
+        },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        "marquee-vertical": {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
       },
       animation: {
         // spinner loader
@@ -203,6 +246,17 @@ module.exports = {
         flip: "flip 6s infinite steps(2, end)",
         rotate: "rotate 3s linear infinite both",
         ["infinite-slider"]: "infiniteSlider 20s linear infinite",
+
+        // MagicUI
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+        "image-glow": "image-glow 4100ms 600ms ease-out forwards",
+        "magic-fade-in":
+          "magic-fade-in 1000ms var(--animation-delay, 0ms) ease forwards",
+        "magic-fade-up":
+          "magic-fade-up 1000ms var(--animation-delay, 0ms) ease forwards",
+        shimmer: "shimmer 8s infinite",
+        marquee: "marquee var(--duration) infinite linear",
+        "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
       scale: {
         102: "1.02",

@@ -6,9 +6,12 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { GithubIcon } from "lucide-react"
 import { toast } from "sonner"
 
+import { ButtonProps } from "@/components/ui/button"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
-const GithubLoginButton = () => {
+type GithubLoginButtonProps = ButtonProps & {}
+
+const GithubLoginButton = ({ ...props }: GithubLoginButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const params = useSearchParams()
   const next = params.get("next") || "/ai-apps"
@@ -37,6 +40,7 @@ const GithubLoginButton = () => {
       isLoading={isLoading}
       onClick={handleGithubLogin}
       className="w-full rounded-full"
+      {...props}
     >
       Github
       <GithubIcon className="ml-2 h-5 w-5" />

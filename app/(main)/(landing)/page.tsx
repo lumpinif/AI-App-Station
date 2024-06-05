@@ -1,11 +1,11 @@
-import HeroSection from "@/components/landing/HeroSection"
+import CallToActionSection from "@/components/landing/magic-ui/cta-section"
+import HeroSection from "@/components/landing/magic-ui/hero-section"
 
 export default function LandingPage() {
   return (
-    <main className="flex flex-col">
-      <section className="min-h-dvh flex-1">
-        <HeroSection />
-      </section>
+    <main className="mx-auto min-h-dvh overflow-hidden">
+      <HeroSection />
+      <CallToActionSection />
     </main>
   )
 }

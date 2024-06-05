@@ -45,6 +45,16 @@
     --novel-highlight-orange: #faebdd;
     --novel-highlight-pink: #faf1f5;
     --novel-highlight-gray: #f1f1ef;
+
+    /* Magic UI */
+    /* Custom properties */
+    --navigation-height: 3.5rem;
+    /* --color-one: #ffbd7a;
+    --color-two: #fe8bbb;
+    --color-three: #9e7aff; */
+    --color-one: #7aaeff;
+    --color-two: #8bbdfe;
+    --color-three: #7affdf;
   }
 
   .dark {
