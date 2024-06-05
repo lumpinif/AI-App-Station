@@ -2,6 +2,7 @@
 
 import { ExternalLink } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 
 import { Dialog } from "../ui/dialog"
@@ -13,7 +14,6 @@ import {
   ResponsiveModalHeader,
   ResponsiveModalTitle,
   ResponsiveModalTrigger,
-  RootResponsiveModalProps,
 } from "../ui/responsive-modal"
 import { CopyButton } from "./copy-button"
 import { EnhancedDrawerClose } from "./enhanced-drawer"
@@ -24,8 +24,9 @@ type ShareModalProps = React.ComponentProps<typeof Dialog> &
     url: string
     title: string
     slug?: string
-    withTrigger?: boolean
     description?: string
+    withTrigger?: boolean
+    iconClassName?: string
     drawerCloseTitle?: string
     dialogDescription?: string
     children?: React.ReactNode
@@ -38,6 +39,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   children,
   withTrigger,
   description,
+  iconClassName,
   drawerCloseTitle,
   dialogDescription,
   ...props
@@ -52,7 +54,12 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         ) : (
           <ResponsiveModalTrigger asChild>
             <button className="group">
-              <ExternalLink className="size-4 stroke-1 text-muted-foreground transition-all duration-150 ease-out group-hover:text-primary md:size-6" />
+              <ExternalLink
+                className={cn(
+                  "size-4 stroke-1 text-muted-foreground transition-all duration-150 ease-out group-hover:text-primary md:size-6",
+                  iconClassName
+                )}
+              />
             </button>
           </ResponsiveModalTrigger>
         )}
@@ -75,8 +82,8 @@ export const ShareModal: React.FC<ShareModalProps> = ({
             description={description || ""}
           />
           <CopyButton
-            className="rounded-full"
             url={url}
+            className="rounded-full"
             isToast={isMobile ? false : true}
           />
         </div>

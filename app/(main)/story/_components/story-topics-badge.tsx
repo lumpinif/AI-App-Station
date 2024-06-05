@@ -9,16 +9,16 @@ export const StoryTopicsBadge: React.FC<StoryTopicsBadgeProps> = ({
   topics,
 }) => {
   if (!topics) return null
-
+  // TODO: IMPLMENTING THE LINK TO THE TOPICS PAGE
   return (
     <>
       {topics.length > 0 ? (
-        <div className="flex items-center gap-x-2">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
           {topics.map((topic) => (
             <Badge
-              key={topic.topic_id}
               variant={"outline"}
-              className="dark:border-0 dark:shadow-outline"
+              key={topic.topic_id}
+              className="text-sm font-normal text-muted-foreground dark:border-0 dark:shadow-outline"
             >
               {topic.topic_name}
             </Badge>

@@ -10,8 +10,8 @@ import { cn } from "@/lib/utils"
 import { defaultExtensions } from "@/components/editor/extensions"
 
 type ContentRendererProps = {
-  content: JSONContent | Json | string
   children?: React.ReactNode
+  content: JSONContent | Json | string
 }
 
 export const ContentRenderer: React.FC<ContentRendererProps> = ({

@@ -22,7 +22,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { LikeHeart } from "@/components/shared/like-heart"
-import { StoryShareButton } from "@/app/(main)/story/_components/story-content/story-share-button"
+import { StoryShareButton } from "@/app/(main)/story/_components/story-share-button"
 
 type FavoriteStoryCardDropdownProps = {
   user_id: User["id"]

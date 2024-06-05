@@ -30,9 +30,10 @@ export const StoryShareButton: React.FC<StoryShareButtonProps> = ({
   return (
     <ShareModal
       url={url}
+      iconClassName="md:size-4"
       withTrigger={withTrigger}
-      title={`"${post_title}" by ${author.full_name || author.email}`}
       drawerCloseTitle="Share this story with"
+      title={`"${post_title}" by ${author.full_name || author.email}`}
       dialogDescription="Share this story with your friends and family"
       {...props}
     >

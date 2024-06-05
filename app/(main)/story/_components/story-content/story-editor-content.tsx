@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import { User } from "@supabase/supabase-js"
 import _ from "lodash"
+import moment from "moment"
 import { JSONContent } from "novel"
 
 import {
@@ -15,17 +16,14 @@ import {
   EMPTY_CONTENT_STRING,
   UNTITLED_HEADING,
 } from "@/config/editor/editor-config"
+import { Separator } from "@/components/ui/separator"
 import { ContentRenderer } from "@/components/editor/content-renderer"
 
-import { AuthorCard } from "./story-author-card"
-import { StoryBookmarkButton } from "./story-bookmark-button"
-import { StoryCommentsBadge } from "./story-comments-badge"
-import { StoryContentHeader } from "./story-content-header"
-import { StoryContentTitle } from "./story-content-title"
+import { StoryActionsDropDown } from "../story-actions-dropdown"
+import { AuthorCard } from "../story-author-card"
+import { StoryPublishInfo } from "../story-publish-details"
+import { StoryTopicsBadge } from "../story-topics-badge"
 import StoryContentWrapper from "./story-content-wrapper"
-import { StoryLikeButton } from "./story-like-button"
-import { StoryShareButton } from "./story-share-button"
-import { StoryTopicsBadge } from "./story-topics-badge"
 
 type StoryEditorContentProps = {
   user: User | null
@@ -79,50 +77,66 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
   return (
     <StoryContentWrapper>
       {/* POST TITLE */}
-      <StoryContentTitle
+      {/* <StoryContentTitle
         post_content={post_content}
         firstHeading={firstHeading}
-      />
-
-      <span className="flex flex-col gap-y-2 pb-4">
-        {/* TODO: CONSIDER IMPLEMENT THE CATEGORIES LATER */}
-        {/* POST CATEGORIES
-          <StoryPostCategories postCategories={postCategories} /> */}
-
-        {/* TOPICS BADGE */}
-        <StoryTopicsBadge topics={topics} />
-        {/* POST DESCRIPTION */}
-        {post_description ? (
-          <span className="text-sm italic text-muted-foreground">
-            {post_description} Lorem ipsum dolor sit amet consectetur,
-            adipisicing elit. Ut rerum maxime eligendi sequi, odit mollitia
-            delectus eos. Commodi reiciendis repellat ex id nulla. Itaque at
-            reiciendis culpa quae aperiam cupiditate!
-          </span>
-        ) : null}
-      </span>
+      /> */}
+      <div className="flex flex-col gap-y-4">
+        <h1 className="page-title-font text-4xl sm:text-5xl">{post_title}</h1>
+        <span className="flex flex-col gap-y-2">
+          {/* TODO: CONSIDER IMPLEMENT THE CATEGORIES LATER */}
+          {/* POST CATEGORIES
+            <StoryPostCategories postCategories={postCategories} /> */}
+          {/* POST DESCRIPTION */}
+          {post_description ? (
+            <span className="text-base font-normal text-muted-foreground">
+              {post_description}
+            </span>
+          ) : null}
+        </span>
+      </div>
 
       {/* POST HEADER */}
-      <StoryContentHeader>
-        <AuthorCard
-          author={authorProfile}
+      <section className="flex w-full items-center gap-x-6 gap-y-6">
+        {/* Author */}
+        <div className="flex flex-col gap-y-2 sm:min-w-60 md:min-w-72">
+          <p className="text-xs text-muted-foreground sm:text-sm">Written by</p>
+          <AuthorCard
+            author={authorProfile}
+            post_created_at={post_created_at}
+          ></AuthorCard>
+        </div>
+
+        <StoryPublishInfo
           post_created_at={post_created_at}
-        ></AuthorCard>
-        <span className="flex items-center gap-x-2 md:gap-x-4">
-          <StoryCommentsBadge
-            post_id={post_id}
-            profile={authorProfile}
-            comments_count={comments_count}
-          />
-          <StoryLikeButton user={user} post_id={post_id} data={post_likes} />
-          <StoryBookmarkButton
+          post_publish_status={post_publish_status}
+        />
+      </section>
+
+      <div className="flex flex-col gap-y-6">
+        <div className="flex flex-col gap-x-4 gap-y-8 sm:flex-row sm:items-end sm:justify-between">
+          {/* TOPICS BADGE */}
+          <div className="flex flex-col gap-y-2 sm:max-w-md">
+            <p className="text-xs text-muted-foreground sm:text-sm">Topics</p>
+            <StoryTopicsBadge topics={topics} />
+          </div>
+
+          {/* Actions with drop down */}
+          <StoryActionsDropDown
             user={user}
             post_id={post_id}
-            data={post_bookmarks}
+            post_title={post_title}
+            post_likes={post_likes}
+            authorProfile={authorProfile}
+            post_bookmarks={post_bookmarks}
+            comments_count={comments_count}
+            post_publish_status={post_publish_status}
           />
-          <StoryShareButton post_title={post_title} author={authorProfile} />
-        </span>
-      </StoryContentHeader>
+        </div>
+
+        {/* Separator */}
+        <Separator className="bg-input sm:mt-20" />
+      </div>
 
       {/* POST CONTENT */}
       {!isEmpty && restContent.content.length > 0 ? (

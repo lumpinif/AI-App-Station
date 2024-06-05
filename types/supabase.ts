@@ -769,6 +769,41 @@ export type Database = {
           },
         ]
       }
+      reports: {
+        Row: {
+          created_at: string
+          report_description: string | null
+          report_id: string
+          report_title: string
+          report_url: string
+          submitted_by_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          report_description?: string | null
+          report_id?: string
+          report_title: string
+          report_url: string
+          submitted_by_user_id: string
+        }
+        Update: {
+          created_at?: string
+          report_description?: string | null
+          report_id?: string
+          report_title?: string
+          report_url?: string
+          submitted_by_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reports_submitted_by_user_id_fkey"
+            columns: ["submitted_by_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       topics: {
         Row: {
           submitted_by_user_id: string | null

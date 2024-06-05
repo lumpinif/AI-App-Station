@@ -7,7 +7,7 @@ import { PostDetails } from "@/types/db_tables"
 import { cn, getPostAuthorSlug, getPostContentPreview } from "@/lib/utils"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
-import { AuthorCard } from "@/app/(main)/story/_components/story-content/story-author-card"
+import { AuthorCard } from "@/app/(main)/story/_components/story-author-card"
 
 import { FavoriteStoryCardDropdown } from "./favorite-story-card-dropdown"
 

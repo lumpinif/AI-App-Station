@@ -1,5 +1,3 @@
-import moment from "moment"
-
 import { Posts, Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { AvatarIcon } from "@/components/auth/avatar/avatar-icon"
@@ -30,7 +28,7 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
       <UserHoverCard profile={author} sideOffset={10} align="start">
         <AvatarIcon
           profile={author}
-          className={cn("size-14 select-none", avatarCN)}
+          className={cn("size-10 select-none", avatarCN)}
         />
       </UserHoverCard>
       {/* Author and time Info */}
@@ -50,7 +48,7 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
           {/* {views_count && <span>{views_count}</span>} */}
           {/* TODO:IMPLEMENT READ TIME SOMEWHERE ELSE*/}
           {/* <span>6 min read</span> */}
-          <span>{moment(post_created_at).format("MMM Do YYYY")}</span>
+          {/* <span>{moment(post_created_at).format("MMM Do YYYY")}</span> */}
           {children}
         </div>
       </div>

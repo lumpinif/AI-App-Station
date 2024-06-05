@@ -1,5 +1,5 @@
 import StoryContentWrapper from "../_components/story-content/story-content-wrapper"
-import { WriteNewStoryButton } from "../_components/story-content/write-new-story-button"
+import { WriteNewStoryButton } from "../_components/write-new-story-button"
 
 export default function StoryPage() {
   return (

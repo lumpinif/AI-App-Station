@@ -12,7 +12,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="container relative mx-auto mt-20 max-w-7xl px-6 text-center sm:mt-32 md:mt-36"
+      className="container relative mx-auto mt-8 max-w-7xl px-6 text-center sm:mt-32 md:mt-36"
     >
       <IntroducingBadge />
       <FlipWordsTitle />
