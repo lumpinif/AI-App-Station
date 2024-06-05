@@ -27,9 +27,9 @@ const AccountModalTrigger = ({
   className,
   avatarClassName,
   profile: propProfile,
-  withAvartarUploader = false,
   isTriggerModal = true,
   isFetching: propIsFetching,
+  withAvartarUploader = false,
 }: AccountModalTriggerProps) => {
   const openAccountModal = useAccountModal((state) => state.openModal)
   const isModalOpen = useAccountModal((state) => state.isOpen)

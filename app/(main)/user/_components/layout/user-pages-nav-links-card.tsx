@@ -7,10 +7,10 @@ import { buttonVariants } from "@/components/ui/button"
 type UserPagesNavLinksCardProps = {
   className?: string
   itemIndex: number
-  link: UserLayoutRouteItemProps
   titleClassName?: string
   iconClassName?: string
   onClick?: () => void
+  link: UserLayoutRouteItemProps
 }
 
 export const UserPagesNavLinksCard: React.FC<UserPagesNavLinksCardProps> = ({

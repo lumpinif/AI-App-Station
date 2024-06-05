@@ -15,14 +15,32 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons/icons"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
+
+import NavMenuAuthDropdown from "./nav-menu-auth-dropdown"
+import { SiteLogo } from "./site-header"
 
 export function NavigationMenuBar() {
   const currentPath = usePathname()
   return (
     <NavigationMenu>
-      <NavigationMenuList className="glass-card-background mx-2 h-14 rounded-full p-2 text-foreground backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
+      <NavigationMenuList className="glass-card-background mx-2 h-14 rounded-full p-2 px-4 text-foreground backdrop-blur-lg transition-all duration-500 ease-in-out hover:opacity-100 dark:shadow-outline">
+        <NavigationMenuItem className="rounded-full">
+          <SiteLogo
+            className="w-full px-2 pr-4 sm:w-full"
+            linkCN="page-title-font inline animate-magic-fade-in text-balance bg-gradient-to-r hover:from-primary hover:to-primary hover:via-primary from-primary/75 via-primary to-primary/75 bg-clip-text !leading-tight text-transparent opacity-0 transition-all duration-500 ease-out [--animation-delay:500ms] dark:from-zinc-300 dark:via-zinc-400 dark:to-zinc-300 text-sm dark:from-10% dark:via-40% dark:to-100% hover:dark:from-zinc-300 hover:dark:via-zinc-300 hover:dark:to-zinc-300"
+          />
+        </NavigationMenuItem>
+
+        <NavigationMenuItem className="relative h-full rounded-full px-1">
+          <Separator
+            orientation="vertical"
+            className="absolute bottom-1/2 top-1/2 h-1/2 -translate-y-1/2"
+          />
+        </NavigationMenuItem>
+
         <NavigationMenuItem className="rounded-full">
           <NavigationMenuTrigger className="bg-transparent">
             Getting started
@@ -36,7 +54,7 @@ export function NavigationMenuBar() {
                     href="/"
                   >
                     <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium ">
+                    <div className="mb-2 mt-4 text-lg font-medium">
                       AI App Station
                     </div>
                     <p className="text-sm leading-tight dark:text-muted-foreground">
@@ -79,13 +97,15 @@ export function NavigationMenuBar() {
           </NavigationMenuItem>
         ))}
 
-        <NavigationMenuItem className="rounded-full">
-          <SearchCommandDialogTrigger className="flex items-center justify-center rounded-full" />
+        <NavigationMenuItem className="rounded-full pr-2">
+          <SearchCommandDialogTrigger
+            sideOffset={15}
+            tooltipSide="bottom"
+            className="flex items-center justify-center rounded-full"
+          />
         </NavigationMenuItem>
 
-        {/* <NavigationMenuItem className="rounded-full">
-          <ThemeToggle isDropDown />
-        </NavigationMenuItem> */}
+        <NavMenuAuthDropdown />
       </NavigationMenuList>
     </NavigationMenu>
   )

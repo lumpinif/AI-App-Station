@@ -6,14 +6,14 @@ import useSideNav from "@/hooks/use-side-nav-store"
 import { PageTitle } from "../../../../components/layout/page-title"
 
 type AiAppsPageTitleProps = {
-  isLayout?: boolean
-  title?: string
   href?: string
+  title?: string
+  isLayout?: boolean
 }
 
 const AiAppsPagesTitle = ({
-  isLayout = false,
   title = "Apps",
+  isLayout = false,
   href = "/ai-apps",
 }: AiAppsPageTitleProps) => {
   const isOpen = useSideNav((state) => state.isOpen)

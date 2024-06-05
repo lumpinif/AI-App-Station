@@ -25,7 +25,7 @@ export const PageTitle = ({
   className,
   backButtonCN,
   withBackButton = false,
-  withBorder: isBorder = true,
+  withBorder: isBorder = false,
   WithAccountModalTrigger = false,
 }: PageTitleProps) => {
   return (

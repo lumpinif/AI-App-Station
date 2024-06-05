@@ -14,20 +14,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 type ThemeToggleProps = {
-  isDropDown?: boolean
   isDirect?: boolean
   className?: string
+  isDropDown?: boolean
 }
 
 export function ThemeToggle({
+  className,
   isDropDown = false,
   isDirect = false,
-  className,
 }: ThemeToggleProps) {
-  const { theme, setTheme, resolvedTheme } = useTheme()
-
-  // Use the resolved theme if available, otherwise fall back to the theme
-  const currentTheme = resolvedTheme || theme
+  const { theme, setTheme, resolvedTheme, systemTheme } = useTheme()
 
   if (isDirect) {
     return (
@@ -54,7 +51,7 @@ export function ThemeToggle({
           <Button
             variant="ghost"
             size="icon"
-            className=" rounded-full border-none focus:outline-none"
+            className="rounded-full border-none focus:outline-none"
           >
             <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all focus:outline-none dark:-rotate-90 dark:scale-0" />
             <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all focus:outline-none dark:rotate-0 dark:scale-100" />
@@ -88,22 +85,44 @@ export function ThemeToggle({
     >
       <button
         type="button"
-        className="text-primary  dark:text-muted-foreground"
         onClick={() => setTheme("light")}
+        className={cn(
+          "text-muted-foreground",
+          theme === "light" ? "text-primary" : "text-muted-foreground"
+        )}
       >
-        <Sun size={18} className="stroke-[1.5px] dark:stroke-1" />
-      </button>
-
-      <button type="button" onClick={() => setTheme("system")}>
-        <Monitor size={18} className="stroke-1" />
+        <Sun
+          size={18}
+          className={cn(theme === "light" ? "stroke-[1.5]" : "stroke-1")}
+        />
       </button>
 
       <button
         type="button"
-        className="dark:text-primary"
-        onClick={() => setTheme("dark")}
+        onClick={() => setTheme("system")}
+        className={cn(
+          "text-muted-foreground",
+          theme === "system" ? "text-primary" : "text-muted-foreground"
+        )}
       >
-        <Moon size={18} className="stroke-1 dark:stroke-[1.5px]" />
+        <Monitor
+          size={18}
+          className={cn(theme === "system" ? "stroke-[1.5]" : "stroke-1")}
+        />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setTheme("dark")}
+        className={cn(
+          "text-muted-foreground",
+          theme === "dark" ? "text-primary" : "text-muted-foreground"
+        )}
+      >
+        <Moon
+          size={18}
+          className={cn(theme === "dark" ? "stroke-[1.5]" : "stroke-1")}
+        />
       </button>
     </div>
   )

@@ -20,14 +20,16 @@ export default function SearchCommandDialogTrigger({
   sideOffset,
   withTooltip = true,
   isCollapsed = true,
+  tooltipSide = "right",
 }: {
-  children?: React.ReactNode
   className?: string
   triggerCN?: string
-  iconClassName?: string
-  withTooltip?: boolean
   sideOffset?: number
+  withTooltip?: boolean
   isCollapsed?: boolean
+  iconClassName?: string
+  children?: React.ReactNode
+  tooltipSide?: "left" | "right" | "top" | "bottom"
 }) {
   const OpenSearchDialog = useSearchDialogStore(
     (state) => state.openSearchDialog
@@ -76,8 +78,8 @@ export default function SearchCommandDialogTrigger({
         </TooltipTrigger>
         {withTooltip && (
           <TooltipContent
+            side={tooltipSide}
             sideOffset={sideOffset}
-            side="right"
             className="flex items-center gap-2 dark:bg-foreground dark:text-background"
           >
             Search

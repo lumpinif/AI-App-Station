@@ -20,7 +20,7 @@ export const gridItemVariants = cva(
 )
 
 export const cardVariants = cva(
-  "flex w-full items-center justify-between select-none overflow-hidden hover:bg-accent active:bg-accent bg-card cursor-pointer p-2 transition-all duration-150 ease-out px-4",
+  "flex w-full items-center justify-between select-none overflow-hidden hover:bg-accent active:bg-accent bg-card cursor-pointer p-2 transition-all duration-150 ease-out px-4 ",
   {
     variants: {
       variant: {
