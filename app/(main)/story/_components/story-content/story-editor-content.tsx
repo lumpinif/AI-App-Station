@@ -97,7 +97,7 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
       </div>
 
       {/* POST HEADER */}
-      <section className="flex w-full items-center gap-x-6 gap-y-6">
+      <section className="flex w-full flex-wrap items-center gap-x-6 gap-y-6">
         {/* Author */}
         <div className="flex flex-col gap-y-2 sm:min-w-60 md:min-w-72">
           <p className="text-xs text-muted-foreground sm:text-sm">Written by</p>
@@ -117,7 +117,6 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
         <div className="flex flex-col gap-x-4 gap-y-8 sm:flex-row sm:items-end sm:justify-between">
           {/* TOPICS BADGE */}
           <div className="flex flex-col gap-y-2 sm:max-w-md">
-            <p className="text-xs text-muted-foreground sm:text-sm">Topics</p>
             <StoryTopicsBadge topics={topics} />
           </div>
 

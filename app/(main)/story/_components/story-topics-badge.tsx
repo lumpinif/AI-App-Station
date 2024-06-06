@@ -8,10 +8,11 @@ type StoryTopicsBadgeProps = {
 export const StoryTopicsBadge: React.FC<StoryTopicsBadgeProps> = ({
   topics,
 }) => {
-  if (!topics) return null
+  if (!topics || topics.length === 0) return null
   // TODO: IMPLMENTING THE LINK TO THE TOPICS PAGE
   return (
     <>
+      <p className="text-xs text-muted-foreground sm:text-sm">Topics</p>
       {topics.length > 0 ? (
         <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
           {topics.map((topic) => (
