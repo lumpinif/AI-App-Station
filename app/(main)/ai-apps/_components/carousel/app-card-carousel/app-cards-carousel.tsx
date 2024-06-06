@@ -5,7 +5,7 @@ import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { AppWithCategories } from "@/types/db_tables"
+import { AppDetails, AppWithCategories } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -20,12 +20,12 @@ import AppCard from "../../cards/app-card"
 
 type AppCardsCarouselProps = {
   title: string
-  data: AppWithCategories[]
   className?: string
-  isMarginRight?: boolean
-  options?: EmblaOptionsType
   isAutpPlay?: boolean
+  isMarginRight?: boolean
+  data: AppDetails[]
   isWheelGestures?: boolean
+  options?: EmblaOptionsType
   hiddenOnCanNotScroll?: boolean
 }
 
@@ -33,7 +33,7 @@ const PLUGIN_AUTOPLAY = Autoplay({ playOnInit: true, delay: 4500 })
 const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
 // Utility function to chunk the data into groups of three
-const chunkDataIntoGroups = (data: AppWithCategories[]) => {
+const chunkDataIntoGroups = (data: AppDetails[]) => {
   const groups = []
   for (let i = 0; i < data.length; i += 3) {
     groups.push(data.slice(i, i + 3))
@@ -42,14 +42,14 @@ const chunkDataIntoGroups = (data: AppWithCategories[]) => {
 }
 
 const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
-  title,
   data,
-  className,
+  title,
   options,
+  className,
   isAutpPlay = false,
   isMarginRight = false,
-  hiddenOnCanNotScroll = false,
   isWheelGestures = true,
+  hiddenOnCanNotScroll = false,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false)
 

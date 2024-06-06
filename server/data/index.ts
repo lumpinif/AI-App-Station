@@ -5,5 +5,5 @@ export { UpdateAppByDescription } from "./supabase-actions"
 export { getAllPosts } from "../queries/supabase/stories"
 
 export { getAllApps } from "./supabase-actions"
-export { getAppsWithCatWithOrderBy } from "./supabase-actions"
+export { getAppsWithOrderBy } from "./supabase-actions"
 export { getAppBySlug } from "./supabase-actions"

@@ -343,18 +343,23 @@ export async function getAllApps(orderBy?: keyof Apps) {
   return { apps, error }
 }
 
-export async function getAppsWithCatWithOrderBy(orderBy?: keyof Apps) {
+export async function getAppsWithOrderBy(orderBy?: keyof Apps) {
   const supabase = await createSupabaseServerClient()
 
-  let query = supabase.from("apps").select(`*, categories(*)`).match({
-    app_publish_status: "published",
-  })
+  let query = supabase
+    .from("apps")
+    .select(
+      "*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*)"
+    )
+    .match({
+      app_publish_status: "published",
+    })
 
   if (orderBy) {
     query = query.order(orderBy, { ascending: false })
   }
 
-  let { data: apps, error } = await query
+  let { data: apps, error } = await query.returns<AppDetails[]>()
 
   // error handling
   if (error) return { apps: null, error: getErrorMessage(error) }

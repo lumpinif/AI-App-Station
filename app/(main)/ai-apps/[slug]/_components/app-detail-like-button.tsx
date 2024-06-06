@@ -14,10 +14,11 @@ import { cn } from "@/lib/utils"
 import useAccountModal from "@/hooks/use-account-modal-store"
 
 type AppDetailLikeButtonProps = {
-  app_id: AppDetails["app_id"]
   data: App_likes[]
-  className?: string
   user: User | null
+  className?: string
+  withCount?: boolean
+  app_id: AppDetails["app_id"]
 }
 
 type LikeState = {
@@ -29,6 +30,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   user,
   app_id,
   className,
+  withCount = true,
   data: app_likes,
 }) => {
   const router = useRouter()
@@ -74,35 +76,40 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
     { leading: true, trailing: true }
   )
 
-  const handleLikes = async () => {
-    if (!user?.id) {
-      toast.error("Please login to like a app.")
-      openAccountModal()
-      return
-    }
+  const handleLikes = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
 
-    if (isUserLiked) {
-      handleRemoveLikeDebounced(user)
-      setOptimisticLikeState({
-        isUserLiked: !isUserLiked,
-        appLikesCount: appLikesCount - 1,
-      })
-    } else {
-      handleLikeDebounced(user)
-      setOptimisticLikeState({
-        isUserLiked: !isUserLiked,
-        appLikesCount: appLikesCount + 1,
-      })
-    }
+    startTransition(() => {
+      if (!user?.id) {
+        toast.error("Please login to like a app.")
+        openAccountModal()
+        return
+      }
 
-    router.refresh()
+      if (isUserLiked) {
+        handleRemoveLikeDebounced(user)
+        setOptimisticLikeState({
+          isUserLiked: !isUserLiked,
+          appLikesCount: appLikesCount - 1,
+        })
+      } else {
+        handleLikeDebounced(user)
+        setOptimisticLikeState({
+          isUserLiked: !isUserLiked,
+          appLikesCount: appLikesCount + 1,
+        })
+      }
+
+      router.refresh()
+    })
   }
 
   return (
     <div className={cn("flex items-center space-x-1 md:space-x-2")}>
       <button
         className={cn("group rounded-full")}
-        onClick={() => startTransition(() => handleLikes())}
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleLikes(e)}
       >
         <Heart
           className={cn(
@@ -112,7 +119,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
           )}
         />
       </button>
-      {appLikesCount > 0 && (
+      {appLikesCount > 0 && withCount && (
         <span className="text-sm font-medium text-muted-foreground">
           {numeral(optimisticLikeState.appLikesCount).format("0.[0]a")}
         </span>

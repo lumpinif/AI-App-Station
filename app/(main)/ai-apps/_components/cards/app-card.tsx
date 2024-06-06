@@ -1,6 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 
-import { AppWithCategories } from "@/types/db_tables"
+import { App_likes, AppDetails, AppWithCategories } from "@/types/db_tables"
+import { useUserData } from "@/hooks/react-hooks/use-user"
 import { Separator } from "@/components/ui/separator"
 
 import { AppCardActions } from "./_components/app-card-actions"
@@ -8,22 +10,24 @@ import { AppIcon } from "./_components/app-icon"
 import { AppTitleWithDescription } from "./_components/app-title-description"
 import { AppCommentsBadge } from "./app-comments-badge"
 
-type AppCardWithIndex = AppWithCategories & {
+type AppCardWithIndex = AppDetails & {
   index: number
 }
 
-const MemoizedAppCardActions = React.memo(AppCardActions)
-
 const AppCard: React.FC<AppCardWithIndex> = ({
-  app_id,
-  app_title,
-  description,
-  categories,
-  app_slug,
-  comments_count,
-  app_icon_src,
   index,
+  app_id,
+  app_slug,
+  app_title,
+  app_likes,
+  categories,
+  description,
+  app_icon_src,
+  app_bookmarks,
+  comments_count,
 }) => {
+  const { data: user } = useUserData()
+
   return (
     <div key={app_id} className="flex items-center justify-between gap-x-2">
       <div className="flex items-center justify-center">
@@ -40,12 +44,17 @@ const AppCard: React.FC<AppCardWithIndex> = ({
             app_slug={app_slug}
             app_title={app_title}
             description={description}
-            className="w-20 flex-1"
+            className="w-20 flex-1 select-none"
           />
           <div className="flex flex-none flex-col items-end gap-y-2">
-            <span className="hidden sm:flex">
-              <MemoizedAppCardActions />
-            </span>
+            <AppCardActions
+              user={user}
+              app_id={app_id}
+              app_slug={app_slug}
+              app_likes={app_likes}
+              app_bookmarks={app_bookmarks}
+            />
+
             <div className="flex w-fit items-center justify-end gap-x-2 sm:justify-between">
               {comments_count > 0 && (
                 <AppCommentsBadge

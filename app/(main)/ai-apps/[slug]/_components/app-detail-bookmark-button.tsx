@@ -8,15 +8,16 @@ import { cn } from "@/lib/utils"
 import { useAppBookmark } from "@/hooks/app/use-app-bookmark"
 
 type AppDetailBookmarkButtonProps = {
-  app_id: AppDetails["app_id"]
-  data: App_bookmarks[]
-  className?: string
   user: User | null
+  className?: string
+  withCount?: boolean
+  data: App_bookmarks[]
+  app_id: AppDetails["app_id"]
 }
 
 export const AppDetailBookmarkButton: React.FC<
   AppDetailBookmarkButtonProps
-> = ({ user, app_id, className, data: app_bookmarks }) => {
+> = ({ user, app_id, className, withCount = true, data: app_bookmarks }) => {
   const { isPending, handleBookmarks, optimisticBookmarkState } =
     useAppBookmark(user, app_id, app_bookmarks)
 
@@ -32,7 +33,7 @@ export const AppDetailBookmarkButton: React.FC<
           )}
         />
       </button>
-      {optimisticBookmarkState.bookmarksCount > 0 && (
+      {optimisticBookmarkState.bookmarksCount > 0 && withCount && (
         <span className="text-sm font-medium text-muted-foreground">
           {optimisticBookmarkState.bookmarksCount}
         </span>
