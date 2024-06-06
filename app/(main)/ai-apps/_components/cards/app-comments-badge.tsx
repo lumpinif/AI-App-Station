@@ -8,12 +8,14 @@ import { cn } from "@/lib/utils"
 type AppCommentsBadgeProps = {
   className?: string
   app_slug: Apps["app_slug"]
+  iconClassName?: string
   comments_count: Apps["comments_count"]
 }
 
 export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
   app_slug,
   className,
+  iconClassName,
   comments_count,
 }) => {
   const commentsCount = comments_count > 0 ? comments_count : 0
@@ -27,9 +29,10 @@ export const AppCommentsBadge: React.FC<AppCommentsBadgeProps> = ({
       <div className="m-0 flex items-center gap-x-1 p-0">
         <MessageCircle
           className={cn(
-            "transition-color size-4 fill-primary stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-blue-500 sm:group-hover:text-blue-500"
+            "transition-color size-4 fill-primary stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-blue-500 sm:group-hover:text-blue-500",
             // TODO: IMPLEMENT THIS LATE WITH CHECK IF COMMENTED BY USER
             // commentsCount > 0 && "fill-blue-500 text-blue-500"
+            iconClassName
           )}
         />
         {commentsCount > 0 ? (

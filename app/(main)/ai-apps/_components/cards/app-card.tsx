@@ -38,15 +38,15 @@ const AppCard: React.FC<AppCardWithIndex> = ({
         />
       </div>
 
-      <div className="flex w-full flex-1 flex-col gap-y-2">
-        <div className="flex items-center justify-between">
+      <div className="flex h-full w-full flex-1 flex-col gap-y-2">
+        <div className="flex items-start justify-between">
           <AppTitleWithDescription
             app_slug={app_slug}
             app_title={app_title}
             description={description}
-            className="w-20 flex-1 select-none"
+            className="w-40 flex-1 select-none pr-1 xl:pr-2"
           />
-          <div className="flex flex-none flex-col items-end gap-y-2">
+          <div className="flex h-full flex-none flex-col items-end gap-y-2">
             <AppCardActions
               user={user}
               app_id={app_id}
@@ -59,6 +59,7 @@ const AppCard: React.FC<AppCardWithIndex> = ({
               {comments_count > 0 && (
                 <AppCommentsBadge
                   app_slug={app_slug}
+                  iconClassName="size-3"
                   comments_count={comments_count}
                   className="text-muted-foreground"
                 />
