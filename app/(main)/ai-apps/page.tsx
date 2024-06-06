@@ -66,7 +66,7 @@ const AIAppsMainPage = async () => {
       <div className="mt-4">
         <AppCardsCarousel
           user={user}
-          title="Top Paid Apps"
+          title="Most popular"
           isMarginRight={true}
           hiddenOnCanNotScroll
           data={appsWithOrderby}
