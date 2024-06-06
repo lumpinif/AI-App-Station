@@ -29,7 +29,7 @@ export const StoryLikeButton: React.FC<StoryLikeButtonProps> = ({
   )
 
   return (
-    <div className={cn("flex items-center space-x-1 md:space-x-2")}>
+    <div className={cn("flex items-center gap-x-1")}>
       <button className={cn("group rounded-full")} onClick={handleLikes}>
         <LikeHeart
           className={className}

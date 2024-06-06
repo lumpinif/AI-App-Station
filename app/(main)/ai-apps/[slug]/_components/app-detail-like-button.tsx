@@ -18,6 +18,7 @@ type AppDetailLikeButtonProps = {
   user: User | null
   className?: string
   withCount?: boolean
+  iconClassName?: string
   app_id: AppDetails["app_id"]
 }
 
@@ -30,6 +31,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   user,
   app_id,
   className,
+  iconClassName,
   withCount = true,
   data: app_likes,
 }) => {
@@ -106,7 +108,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
   }
 
   return (
-    <div className={cn("flex items-center space-x-1 md:space-x-2")}>
+    <div className={cn("flex items-center gap-x-1", className)}>
       <button
         className={cn("group rounded-full")}
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleLikes(e)}
@@ -115,7 +117,7 @@ export const AppDetailLikeButton: React.FC<AppDetailLikeButtonProps> = ({
           className={cn(
             "transition-color size-4 stroke-current stroke-[1.5] text-muted-foreground outline-none duration-200 ease-out sm:group-hover:fill-rose-500 sm:group-hover:text-rose-500",
             optimisticLikeState.isUserLiked && "fill-current text-rose-500",
-            className
+            iconClassName
           )}
         />
       </button>

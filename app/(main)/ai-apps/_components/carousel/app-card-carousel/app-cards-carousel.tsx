@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useMemo } from "react"
+import { User } from "@supabase/supabase-js"
 import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
@@ -20,6 +21,7 @@ import AppCard from "../../cards/app-card"
 
 type AppCardsCarouselProps = {
   title: string
+  user?: User | null
   className?: string
   isAutpPlay?: boolean
   isMarginRight?: boolean
@@ -43,6 +45,7 @@ const chunkDataIntoGroups = (data: AppDetails[]) => {
 
 const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   data,
+  user,
   title,
   options,
   className,
@@ -84,7 +87,12 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
               className={cn("flex flex-col gap-y-5", className)}
             >
               {group.map((app, appIndex) => (
-                <AppCard key={app.app_id} index={appIndex} {...app} />
+                <AppCard
+                  key={app.app_id}
+                  user={user}
+                  index={appIndex}
+                  {...app}
+                />
               ))}
             </CarouselItem>
           ))}

@@ -22,7 +22,7 @@ export const AppDetailBookmarkButton: React.FC<
     useAppBookmark(user, app_id, app_bookmarks)
 
   return (
-    <div className={cn("flex items-center space-x-1 md:space-x-2")}>
+    <div className={cn("flex items-center gap-x-1")}>
       <button className={cn("group rounded-full")} onClick={handleBookmarks}>
         <Bookmark
           className={cn(

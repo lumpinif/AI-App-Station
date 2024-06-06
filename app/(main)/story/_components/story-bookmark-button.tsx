@@ -24,7 +24,7 @@ export const StoryBookmarkButton: React.FC<StoryBookmarkProps> = ({
     useStoryBookmark(user, post_id, post_bookmarks)
 
   return (
-    <div className={cn("flex items-center space-x-1 md:space-x-2")}>
+    <div className={cn("flex items-center gap-x-1")}>
       <button className={cn("group rounded-full")} onClick={handleBookmarks}>
         <Bookmark
           className={cn(

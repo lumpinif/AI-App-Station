@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
+import { getUserData } from "@/server/auth"
 import { getAllPosts } from "@/server/data"
 import { getAppsWithOrderBy } from "@/server/data/supabase-actions"
 import { EmblaOptionsType } from "embla-carousel"
@@ -18,6 +19,13 @@ import NewPostsCarousel from "./_components/carousel/posts-carousel/new-posts-ca
 // )
 
 const AIAppsMainPage = async () => {
+  // Fetch User
+
+  const {
+    data: { user },
+    error: getUserError,
+  } = await getUserData()
+
   // Fetch posts data
   const { posts: allPosts, error: allPostsError } = await getAllPosts()
   const { posts: heroPosts, error: heroPostsError } = await getAllPosts(true)
@@ -44,12 +52,12 @@ const AIAppsMainPage = async () => {
     <section className="flex flex-col gap-y-4">
       <AiAppsPagesTitle />
       <Suspense fallback={<div>Loading...</div>}>
-        {/* <NewPostsCarousel
+        <NewPostsCarousel
           posts={heroPosts}
           isAutpPlay={true}
           isWheelGestures={true}
           isIndicator={true}
-        /> */}
+        />
       </Suspense>
       {/* TODO: REBUILD THE CAROUSEL HERE WITH REFINED DATA SOURCE */}
       <Suspense fallback={<div>Loading...</div>}>
@@ -57,6 +65,7 @@ const AIAppsMainPage = async () => {
       </Suspense>
       <div className="mt-4">
         <AppCardsCarousel
+          user={user}
           title="Top Paid Apps"
           isMarginRight={true}
           hiddenOnCanNotScroll
