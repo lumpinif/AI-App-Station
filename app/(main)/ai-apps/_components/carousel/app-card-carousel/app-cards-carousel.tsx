@@ -21,11 +21,12 @@ import AppCard from "../../cards/app-card"
 
 type AppCardsCarouselProps = {
   title: string
+  maxItems?: number
+  data: AppDetails[]
   user?: User | null
   className?: string
   isAutpPlay?: boolean
   isMarginRight?: boolean
-  data: AppDetails[]
   isWheelGestures?: boolean
   options?: EmblaOptionsType
   hiddenOnCanNotScroll?: boolean
@@ -35,10 +36,24 @@ const PLUGIN_AUTOPLAY = Autoplay({ playOnInit: true, delay: 4500 })
 const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
 // Utility function to chunk the data into groups of three
-const chunkDataIntoGroups = (data: AppDetails[]) => {
+const chunkDataIntoGroups = (data: AppDetails[], maxItems?: number) => {
+  if (!Array.isArray(data)) {
+    // throw new Error("Data should be an array")
+    return []
+  }
+
+  data.forEach((item, index) => {
+    if (typeof item !== "object" || item === null) {
+      throw new Error(`Item at index ${index} should be an object`)
+    }
+    // Add more checks here for the properties of AppDetails if necessary
+  })
+
+  const items = maxItems ? data.slice(0, maxItems) : data
+
   const groups = []
-  for (let i = 0; i < data.length; i += 3) {
-    groups.push(data.slice(i, i + 3))
+  for (let i = 0; i < items.length; i += 3) {
+    groups.push(items.slice(i, i + 3))
   }
   return groups
 }
@@ -49,6 +64,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   title,
   options,
   className,
+  maxItems = 15,
   isAutpPlay = false,
   isMarginRight = false,
   isWheelGestures = true,
@@ -63,16 +79,30 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
     return activePlugins
   }, [isAutpPlay, isWheelGestures])
 
-  const dataGroups = useMemo(() => chunkDataIntoGroups(data), [data])
+  const dataGroups = useMemo(
+    () => chunkDataIntoGroups(data, maxItems),
+    [data, maxItems]
+  )
+
+  if (!dataGroups.length)
+    return (
+      <div className="mb-4 flex flex-col gap-y-4">
+        {/* <Separator /> */}
+        <h2 className="page-title-font text-2xl">{title}</h2>
+        <div className="text-center text-muted-foreground">
+          Sorry, we currently got nothing to show for{" "}
+          <h2 className="page-title-font text-2xl">{title}</h2> It should be
+          fixed shortly, please come back later
+        </div>
+      </div>
+    )
 
   return (
     <div className="relative mx-auto h-full w-full max-w-full">
       {/* Carousel Title */}
       <div className="mb-4 flex flex-col gap-y-4">
-        <Separator />
-        <h2 className="text-2xl font-semibold leading-tight tracking-tight">
-          {title}
-        </h2>
+        {/* <Separator /> */}
+        <h2 className="page-title-font text-2xl">{title}</h2>
       </div>
       <Carousel
         opts={{ align: "start", duration: 25, skipSnaps: true, ...options }}

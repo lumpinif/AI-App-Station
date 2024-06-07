@@ -16,7 +16,8 @@ import {
 import { Database, Enums, Tables } from "@/types/supabase"
 
 // Type definitions for database tables
-export type Column<T extends keyof Database["public"]["Tables"]> =
+export type Table = keyof Database["public"]["Tables"]
+export type TableColumns<T extends Table> =
   Database["public"]["Tables"][T]["Row"]
 
 // App related tables
@@ -27,6 +28,16 @@ export type App_likes = Tables<"app_likes">
 export type Apps = Tables<"apps">
 export type Apps_Categories = Tables<"apps_categories">
 export type App_Developers = Tables<"apps_developers">
+
+export type AppRefrencedTables = Extract<
+  Table,
+  | "profiles"
+  | "app_likes"
+  | "developers"
+  | "categories"
+  | "app_comments"
+  | "app_bookmarks"
+>
 
 // Category , developer and label tables
 export type Categories = Tables<"categories">
@@ -64,12 +75,15 @@ export type AppWithCategoriesAndDevelopers = Apps &
   AppWithCategories &
   AppWithDevelopers
 
+export type AppRefrencedFields = {
+  profiles: Profiles
+  app_likes: App_likes[]
+  app_bookmarks: App_bookmarks[]
+}
+
 export type AppDetails = Apps &
-  AppWithCategoriesAndDevelopers & {
-    profiles: Profiles
-    app_likes: App_likes[]
-    app_bookmarks: App_bookmarks[]
-  }
+  AppWithCategoriesAndDevelopers &
+  AppRefrencedFields
 
 // Post details with categories and other related data
 export type PostWithProfile = Posts & {

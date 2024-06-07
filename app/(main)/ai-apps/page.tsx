@@ -3,13 +3,14 @@ import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAllPosts } from "@/server/data"
 import { getAppsWithOrderBy } from "@/server/data/supabase-actions"
-import { EmblaOptionsType } from "embla-carousel"
+import { getAppsByConfig } from "@/server/queries/supabase/apps"
 
+import { Apps } from "@/types/db_tables"
 import { OPTIONS_APPSCARDSCAROUSEL } from "@/config/carousels"
 
 import AiAppsPagesTitle from "./_components/ai-apps-page-title"
 import AppCardsCarousel from "./_components/carousel/app-card-carousel/app-cards-carousel"
-import NewPostsCarousel from "./_components/carousel/posts-carousel/new-posts-carousel"
+import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 
 // Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
 // TODO: CHECK IF DYNAMIC IMPORT IS GOOD FOR PERFORMANCE BEFORE PRODUCTION
@@ -18,62 +19,82 @@ import NewPostsCarousel from "./_components/carousel/posts-carousel/new-posts-ca
 //   { ssr: true }
 // )
 
+const fetchApps = async () => {}
+
+const fetchPosts = async ({
+  is_hero_featured,
+}: {
+  is_hero_featured?: boolean
+} = {}) => {
+  const { posts, error: getPostsError } = await getAllPosts({
+    is_hero_featured: is_hero_featured,
+  })
+
+  if (getPostsError) {
+    console.error("Error fetching posts:", {
+      getPostsError,
+    })
+    return notFound()
+  }
+
+  if (!posts) {
+    return { posts: [] }
+  }
+
+  return { posts }
+}
+
 const AIAppsMainPage = async () => {
   // Fetch User
-
   const {
     data: { user },
     error: getUserError,
   } = await getUserData()
 
-  // Fetch posts data
-  const { posts: allPosts, error: allPostsError } = await getAllPosts()
-  const { posts: heroPosts, error: heroPostsError } = await getAllPosts(true)
-  // Fetch apps data
-  const { apps: appsWithOrderby, error: appsWithOrderbyError } =
-    await getAppsWithOrderBy("likes_count")
-
-  // Handle errors and log them
-  if (heroPostsError || allPostsError || appsWithOrderbyError) {
-    console.error("Error fetching data:", {
-      heroPostsError,
-      allPostsError,
-      appsWithCategoriesError: appsWithOrderbyError,
+  if (getUserError) {
+    console.error("Error fetching user data:", {
+      getUserError,
     })
-    return notFound()
   }
 
-  // Check if data exists
-  if (!allPosts || !heroPosts || !appsWithOrderby) {
-    return notFound()
-  }
+  // Fetch posts data
+  const { posts: allPosts } = await fetchPosts()
+  const { posts: heroPosts } = await fetchPosts({
+    is_hero_featured: true,
+  })
+
+  // Fetch apps data
+
+  // const { apps: topfree } = await getAppsByConfig()
 
   return (
-    <section className="flex flex-col gap-y-4">
-      <AiAppsPagesTitle />
-      <Suspense fallback={<div>Loading...</div>}>
-        <NewPostsCarousel
-          posts={heroPosts}
-          isAutpPlay={true}
-          isWheelGestures={true}
-          isIndicator={true}
-        />
-      </Suspense>
-      {/* TODO: REBUILD THE CAROUSEL HERE WITH REFINED DATA SOURCE */}
-      <Suspense fallback={<div>Loading...</div>}>
-        {/* <NewPostsCarousel posts={allPosts} className="md:basis-1/2" /> */}
-      </Suspense>
+    <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 lg:my-10">
+      {/* <AiAppsPagesTitle /> */}
+
+      {/* Hero Posts Carousel */}
+      {/* <PostsCarousel
+        posts={heroPosts}
+        title="Hero Posts"
+        isAutpPlay={true}
+        isIndicator={true}
+        isWheelGestures={true}
+      /> */}
+
       <div className="mt-4">
         <AppCardsCarousel
           user={user}
-          title="Most popular"
+          maxItems={15}
+          title="Top free"
           isMarginRight={true}
           hiddenOnCanNotScroll
-          data={appsWithOrderby}
+          data={[]}
           options={OPTIONS_APPSCARDSCAROUSEL}
           className="md:basis-1/2 lg:basis-1/3"
         />
       </div>
+
+      {/* All Posts Carousel */}
+      {/* <PostsCarousel posts={allPosts} className="md:basis-1/2" /> */}
     </section>
   )
 }

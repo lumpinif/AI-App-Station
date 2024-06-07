@@ -1,90 +1,121 @@
 "use client"
 
-import React, { Suspense, useMemo } from "react"
-import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
+import { useMemo, useState } from "react"
+import { EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { Posts } from "@/types/db_tables"
+import { PostWithProfile } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import useMediaQuery from "@/hooks/use-media-query"
 import {
   Carousel,
-  CarouselContent,
-  CarouselItem,
+  CarouselIndicator,
+  CarouselMainContainer,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+  CarouselThumbsContainer,
+  SliderMainItem,
+} from "@/components/ui/extended-carousel"
 
-import PostCard from "../../cards/post-card"
+import { PostCard } from "../../cards/new-post-card"
 
 type PostsCarouselProps = {
-  data: Posts[]
+  title?: string
   className?: string
-  isMarginRight?: boolean
-  options?: EmblaOptionsType
   isAutpPlay?: boolean
+  isIndicator?: boolean
+  posts: PostWithProfile[]
   isWheelGestures?: boolean
 }
 
-const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
-  playOnInit: true,
-  delay: 4500,
-})
-const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
-
-// TODO: REMOVE THIS BEFORE PRODUCTION IF IT IS UNUSED
 const PostsCarousel: React.FC<PostsCarouselProps> = ({
-  data,
+  title,
+  posts,
   className,
-  options,
-  isAutpPlay = false,
-  isMarginRight = false,
-  isWheelGestures = true,
+  isAutpPlay,
+  isIndicator,
+  isWheelGestures,
 }) => {
-  const [isHovered, setIsHovered] = React.useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const { isMobile } = useMediaQuery()
+
+  const PLUGIN_AUTOPLAY: EmblaPluginType = Autoplay({
+    playOnInit: true,
+    delay: 5000,
+  })
+  const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
   const plugins = useMemo(() => {
     const activePlugins: EmblaPluginType[] = []
     if (isAutpPlay) activePlugins.push(PLUGIN_AUTOPLAY)
     if (isWheelGestures) activePlugins.push(PLUGIN_WHEELGESTURES)
     return activePlugins
-  }, [isAutpPlay, isWheelGestures])
+  }, [PLUGIN_AUTOPLAY, PLUGIN_WHEELGESTURES, isAutpPlay, isWheelGestures])
 
-  // TODO:REMOVE THIS CAROUSEL IT IS DEPRECATED //
+  if (!posts.length)
+    return (
+      <div className="text-center text-muted-foreground">
+        No data to display for {title} right now please come back later.
+      </div>
+    )
 
   return (
-    <div className="relative mx-auto h-full w-full max-w-full">
-      <Carousel
-        opts={{ align: "start", duration: 25, dragThreshold: 5, ...options }}
-        plugins={plugins}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <CarouselContent className={isMarginRight ? "mr-6" : ""}>
-          <Suspense fallback={"Loading..."}>
-            {data.map((post, index) => (
-              <CarouselItem key={index} className={cn("", className)}>
-                <PostCard post={post} />
-              </CarouselItem>
-            ))}
-          </Suspense>
-        </CarouselContent>
-        <CarouselPrevious
-          variant={"tag"}
-          className={cn(
-            "left-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
-            isHovered ? "" : "hidden"
-          )}
-        />
+    <Carousel
+      carouselOptions={{
+        loop: true,
+        align: "start",
+        duration: 25,
+        dragThreshold: 5,
+      }}
+      plugins={plugins}
+      onMouseEnter={() => {
+        if (!isMobile) setIsHovered(true)
+      }}
+      onMouseLeave={() => {
+        if (!isMobile) setIsHovered(false)
+      }}
+    >
+      <div className="relative">
+        <CarouselMainContainer className="h-96 space-x-4">
+          {posts.map((post, index) => (
+            <SliderMainItem
+              key={index}
+              className={cn("bg-transparent", className)}
+            >
+              <div className="relative flex size-full items-center justify-center rounded-2xl bg-card">
+                <PostCard
+                  post={post}
+                  // post_image_src={`https://picsum.photos/600/350?v=${index}`}
+                />
+              </div>
+            </SliderMainItem>
+          ))}
+        </CarouselMainContainer>
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+          <CarouselThumbsContainer className="gap-x-2">
+            {isIndicator &&
+              Array.from({ length: posts.length }).map((_, index) => (
+                <CarouselIndicator key={index} index={index} />
+              ))}
+          </CarouselThumbsContainer>
+        </div>
         <CarouselNext
           variant={"tag"}
           className={cn(
-            "right-0 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
+            "right-0 z-20 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-l",
             isHovered ? "" : "hidden"
           )}
         />
-      </Carousel>
-    </div>
+        <CarouselPrevious
+          variant={"tag"}
+          className={cn(
+            "left-0 z-20 size-10 h-full rounded-none from-background/80 to-transparent transition-colors duration-150 ease-out hover:bg-gradient-to-r",
+            isHovered ? "" : "hidden"
+          )}
+        />
+      </div>
+    </Carousel>
   )
 }
 

@@ -8,8 +8,12 @@ import { PostDetails, Posts, PostWithProfile } from "@/types/db_tables"
 import { getErrorMessage } from "@/lib/handle-error"
 import { getPostAuthorSlug } from "@/lib/utils"
 
+type getAllPostsProps = {
+  is_hero_featured?: boolean
+}
+
 // fetch Posts
-export async function getAllPosts(only_is_hero_featured: boolean = false) {
+export async function getAllPosts({ is_hero_featured }: getAllPostsProps = {}) {
   noStore()
   const supabase = await createSupabaseServerClient()
 
@@ -22,8 +26,8 @@ export async function getAllPosts(only_is_hero_featured: boolean = false) {
     .match({ post_publish_status: "published" })
     .order("created_at", { ascending: false })
 
-  if (only_is_hero_featured) {
-    query.eq("is_hero_featured", only_is_hero_featured)
+  if (is_hero_featured) {
+    query.eq("is_hero_featured", is_hero_featured)
   }
 
   // TODO: CHECK THE TYPES OF RETURNS IF IT IS TOO HEAVY AND NECESSARY
