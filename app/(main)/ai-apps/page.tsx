@@ -5,7 +5,7 @@ import { getAllPosts } from "@/server/data"
 
 import AiAppsPagesTitle from "./_components/ai-apps-page-title"
 import { AppCardsCarouselLayout } from "./_components/ai-apps-page/app-cards-carousel-layout.tsx"
-import { CollectionsNav } from "./_components/ai-apps-page/collections-nav"
+import { MainPageCollectionsNav } from "./_components/ai-apps-page/main-page-collections-nav"
 import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 
 // Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
@@ -70,7 +70,7 @@ const AIAppsMainPage = async () => {
         isWheelGestures={true}
       />
 
-      <CollectionsNav />
+      <MainPageCollectionsNav />
 
       {/* TODO: UPDATE THE LOADING SKELETON */}
       <Suspense fallback={<div>Loading...</div>}>

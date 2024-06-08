@@ -32,12 +32,14 @@ export type NavItemProps = {
   inMainNav?: boolean
 }
 
-export type SIDENAVROUTESProps = {
+export type SIDENAVROUTE = {
   title: string
   icon?: LucideIcon | IconType
   href: string
   items: NavItemProps[]
-}[]
+}
+
+export type SIDENAVROUTESProps = SIDENAVROUTE[]
 
 export const MAINROUTES: NavItemProps[] = [
   {
