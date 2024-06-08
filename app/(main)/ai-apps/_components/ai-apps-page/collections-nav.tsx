@@ -23,7 +23,7 @@ export const CollectionsNav: React.FC<CollectionsNavProps> = ({}) => {
               <Link
                 href={item.href}
                 key={index}
-                className="transition-all duration-300 ease-out active:scale-[.98]"
+                className="w-fit transition-all duration-300 ease-out active:scale-[.98]"
               >
                 <div className="flex items-center text-primary/90 transition-all duration-300 ease-out hover:text-primary">
                   {item.icon ? (
