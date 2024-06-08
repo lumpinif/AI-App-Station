@@ -67,11 +67,11 @@ const AIAppsMainPage = async () => {
 
       {/* TODO: UPDATE THE LOADING SKELETON */}
       <Suspense fallback={<div>Loading...</div>}>
-        <AppCardsCarouselLayout user={user} />
+        <AppCardsCarouselLayout user={user} indexToInsert={2}>
+          {/* All Posts Carousel */}
+          <PostsCarousel posts={allPosts} className="md:basis-1/2" />
+        </AppCardsCarouselLayout>
       </Suspense>
-
-      {/* All Posts Carousel */}
-      {/* <PostsCarousel posts={allPosts} className="md:basis-1/2" /> */}
     </section>
   )
 }

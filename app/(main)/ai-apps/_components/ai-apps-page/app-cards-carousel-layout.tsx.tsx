@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import { getAppsByConfig } from "@/server/queries/supabase/apps"
 import { User } from "@supabase/supabase-js"
 
@@ -26,33 +27,38 @@ const fetchApps = async () => {
 
 type AppCardsCarouselLayoutProps = {
   user?: User | null
+  indexToInsert?: number
+  children?: React.ReactNode
 }
 
 export const AppCardsCarouselLayout: React.FC<
   AppCardsCarouselLayoutProps
-> = async ({ user }) => {
+> = async ({ user, children, indexToInsert }) => {
   // Fetch apps data
   const appsData = await fetchApps()
 
   return (
     <>
       {appsData.map(({ title, apps, error }, index) => (
-        <div key={index} className="mt-4">
-          <AppCardsCarousel
-            data={apps}
-            user={user}
-            title={title}
-            error={error}
-            maxItems={15}
-            hiddenOnCanNotScroll
-            isMarginRight={true}
-            options={OPTIONS_APPSCARDSCAROUSEL}
-            className={"md:basis-1/2 lg:basis-1/3"}
-            chunkSize={title === "Featured Apps" ? 1 : 3}
-            appCardVariant={title === "Featured Apps" ? "featured" : ""}
-            // lg:basis-1/3
-          />
-        </div>
+        <Fragment key={index}>
+          <div key={index} className="mt-4">
+            <AppCardsCarousel
+              data={apps}
+              user={user}
+              title={title}
+              error={error}
+              maxItems={15}
+              hiddenOnCanNotScroll
+              isMarginRight={true}
+              options={OPTIONS_APPSCARDSCAROUSEL}
+              className={"md:basis-1/2 lg:basis-1/3"}
+              chunkSize={title === "Featured Apps" ? 1 : 3}
+              appCardVariant={title === "Featured Apps" ? "featured" : ""}
+              // lg:basis-1/3
+            />
+          </div>
+          {index === indexToInsert && children}
+        </Fragment>
       ))}
     </>
   )
