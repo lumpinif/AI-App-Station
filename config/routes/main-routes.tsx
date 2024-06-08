@@ -234,8 +234,13 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         items: [],
       },
       {
-        title: "Photo & Video",
-        href: "/ai-apps/categories/photo-video",
+        title: "Photo",
+        href: "/ai-apps/categories/photo",
+        items: [],
+      },
+      {
+        title: "Video",
+        href: "/ai-apps/categories/video",
         items: [],
       },
       {

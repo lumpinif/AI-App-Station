@@ -100,6 +100,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseUploadURL = `${supabaseUrl}/storage/v1/upload/resumable`
 
+  // TODO: IMPORTANT: FIGURE OUT IF IT IS CAN BE UPLOAD ONE BY ONE
   const [uppy] = useState(() =>
     new Uppy({
       id: "screenshots-uploader",
@@ -109,6 +110,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
         maxFileSize: 5 * 1024 * 1024,
       },
     }).use(Tus, {
+      limit: 1,
       endpoint: supabaseUploadURL,
       headers: {
         authorization: `Bearer ${access_token}`,

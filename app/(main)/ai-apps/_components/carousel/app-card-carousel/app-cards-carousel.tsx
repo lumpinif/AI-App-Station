@@ -24,6 +24,7 @@ type AppCardsCarouselProps = {
   maxItems?: number
   data: AppDetails[]
   user?: User | null
+  error?: string | null
   className?: string
   isAutpPlay?: boolean
   isMarginRight?: boolean
@@ -65,6 +66,7 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   options,
   className,
   maxItems = 15,
+  error: fetchError,
   isAutpPlay = false,
   isMarginRight = false,
   isWheelGestures = true,
@@ -84,16 +86,19 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
     [data, maxItems]
   )
 
-  if (!dataGroups.length)
+  if (!dataGroups.length || fetchError)
     return (
       <div className="mb-4 flex flex-col gap-y-4">
         {/* <Separator /> */}
         <h2 className="page-title-font text-2xl">{title}</h2>
-        <div className="text-center text-muted-foreground">
-          Sorry, we currently got nothing to show for{" "}
-          <h2 className="page-title-font text-2xl">{title}</h2> It should be
+        <div className="mx-auto w-fit rounded-2xl border p-4 text-center text-xs text-muted-foreground">
+          Sorry, we currently got nothing to show for
+          <h2 className="page-title-font text-base">{title}</h2> It should be
           fixed shortly, please come back later
         </div>
+        <p className="text-center text-xs text-muted-foreground">
+          {fetchError && `Error: ${fetchError}`}
+        </p>
       </div>
     )
 

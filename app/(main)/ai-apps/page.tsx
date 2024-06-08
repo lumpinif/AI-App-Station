@@ -6,6 +6,7 @@ import { getAppsWithOrderBy } from "@/server/data/supabase-actions"
 import { getAppsByConfig } from "@/server/queries/supabase/apps"
 
 import { Apps } from "@/types/db_tables"
+import appFetchConfig from "@/config/apps-fetch/apps-fetch-config"
 import { OPTIONS_APPSCARDSCAROUSEL } from "@/config/carousels"
 
 import AiAppsPagesTitle from "./_components/ai-apps-page-title"
@@ -19,7 +20,16 @@ import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 //   { ssr: true }
 // )
 
-const fetchApps = async () => {}
+const fetchApps = async () => {
+  const results = await Promise.all(
+    appFetchConfig.map((config) => getAppsByConfig({ config }))
+  )
+  return appFetchConfig.map((config, index) => ({
+    title: config.title,
+    apps: results[index].apps || [],
+    error: results[index].getAppsByCategoryError || null,
+  }))
+}
 
 const fetchPosts = async ({
   is_hero_featured,
@@ -65,33 +75,37 @@ const AIAppsMainPage = async () => {
 
   // Fetch apps data
 
-  // const { apps: topfree } = await getAppsByConfig()
+  // Fetch apps data
+  const appsData = await fetchApps()
 
   return (
     <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 lg:my-10">
-      {/* <AiAppsPagesTitle /> */}
+      <AiAppsPagesTitle title="Browse AI Apps" />
 
       {/* Hero Posts Carousel */}
-      {/* <PostsCarousel
+      <PostsCarousel
         posts={heroPosts}
         title="Hero Posts"
         isAutpPlay={true}
         isIndicator={true}
         isWheelGestures={true}
-      /> */}
+      />
 
-      <div className="mt-4">
-        <AppCardsCarousel
-          user={user}
-          maxItems={15}
-          title="Top free"
-          isMarginRight={true}
-          hiddenOnCanNotScroll
-          data={[]}
-          options={OPTIONS_APPSCARDSCAROUSEL}
-          className="md:basis-1/2 lg:basis-1/3"
-        />
-      </div>
+      {appsData.map(({ title, apps, error }, index) => (
+        <div key={index} className="mt-4">
+          <AppCardsCarousel
+            data={apps}
+            user={user}
+            title={title}
+            error={error}
+            maxItems={15}
+            hiddenOnCanNotScroll
+            isMarginRight={true}
+            options={OPTIONS_APPSCARDSCAROUSEL}
+            className="md:basis-1/2 lg:basis-1/3"
+          />
+        </div>
+      ))}
 
       {/* All Posts Carousel */}
       {/* <PostsCarousel posts={allPosts} className="md:basis-1/2" /> */}

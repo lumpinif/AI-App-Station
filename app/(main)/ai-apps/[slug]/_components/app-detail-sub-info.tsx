@@ -37,7 +37,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
   copy_right,
   developers,
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   const refCollapsible = useRef<HTMLDivElement>(null)
 
@@ -100,7 +100,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
 
         {app_url && (
           <CollapsibleItem>
-            <span className="cursor-default text-muted-foreground ">
+            <span className="cursor-default text-muted-foreground">
               App Url
             </span>
             <span>

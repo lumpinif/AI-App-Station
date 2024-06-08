@@ -50,12 +50,12 @@ async function fetchAppsByCategory(
     await getAppsByConfig({
       config: {
         title: "Newest Added",
-        // column: "created_at",
-        // order: "desc",
-        order: {
-          column: "created_at",
-          options: { ascending: false },
-        },
+        order: [
+          {
+            column: "created_at",
+            options: { ascending: false },
+          },
+        ],
         limit: {
           limit: 15,
         },
