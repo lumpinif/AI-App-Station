@@ -2,14 +2,14 @@ import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAllPosts } from "@/server/data"
-import { getAppsWithOrderBy } from "@/server/data/supabase-actions"
 import { getAppsByConfig } from "@/server/queries/supabase/apps"
 
-import { Apps } from "@/types/db_tables"
 import appFetchConfig from "@/config/apps-fetch/apps-fetch-config"
 import { OPTIONS_APPSCARDSCAROUSEL } from "@/config/carousels"
 
 import AiAppsPagesTitle from "./_components/ai-apps-page-title"
+import { AppCardsCarouselLayout } from "./_components/ai-apps-page/app-cards-carousel-layout.tsx"
+import { CollectionsNav } from "./_components/ai-apps-page/collections-nav"
 import AppCardsCarousel from "./_components/carousel/app-card-carousel/app-cards-carousel"
 import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 
@@ -74,12 +74,10 @@ const AIAppsMainPage = async () => {
   })
 
   // Fetch apps data
-
-  // Fetch apps data
   const appsData = await fetchApps()
 
   return (
-    <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 lg:my-10">
+    <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
       <AiAppsPagesTitle title="Browse AI Apps" />
 
       {/* Hero Posts Carousel */}
@@ -91,21 +89,12 @@ const AIAppsMainPage = async () => {
         isWheelGestures={true}
       />
 
-      {appsData.map(({ title, apps, error }, index) => (
-        <div key={index} className="mt-4">
-          <AppCardsCarousel
-            data={apps}
-            user={user}
-            title={title}
-            error={error}
-            maxItems={15}
-            hiddenOnCanNotScroll
-            isMarginRight={true}
-            options={OPTIONS_APPSCARDSCAROUSEL}
-            className="md:basis-1/2 lg:basis-1/3"
-          />
-        </div>
-      ))}
+      <CollectionsNav />
+
+      {/* TODO: UPDATE THE LOADING SKELETON */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <AppCardsCarouselLayout user={user} />
+      </Suspense>
 
       {/* All Posts Carousel */}
       {/* <PostsCarousel posts={allPosts} className="md:basis-1/2" /> */}

@@ -89,8 +89,10 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   if (!dataGroups.length || fetchError)
     return (
       <div className="mb-4 flex flex-col gap-y-4">
-        {/* <Separator /> */}
-        <h2 className="page-title-font text-2xl">{title}</h2>
+        <span className="flex flex-col gap-y-2">
+          <h2 className="page-title-font text-2xl">{title}</h2>
+          <Separator className="bg-input" />
+        </span>
         <div className="mx-auto w-fit rounded-2xl border p-4 text-center text-xs text-muted-foreground">
           Sorry, we currently got nothing to show for
           <h2 className="page-title-font text-base">{title}</h2> It should be
@@ -103,11 +105,14 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
     )
 
   return (
-    <div className="relative mx-auto h-full w-full max-w-full">
+    <div className="relative mx-auto flex h-full w-full max-w-full flex-col gap-y-6">
       {/* Carousel Title */}
-      <div className="mb-4 flex flex-col gap-y-4">
+      <div className="flex flex-col gap-y-4">
         {/* <Separator /> */}
-        <h2 className="page-title-font text-2xl">{title}</h2>
+        <span className="flex flex-col gap-y-2">
+          <h2 className="page-title-font text-2xl">{title}</h2>
+          <Separator className="bg-input" />
+        </span>
       </div>
       <Carousel
         opts={{ align: "start", duration: 25, skipSnaps: true, ...options }}
