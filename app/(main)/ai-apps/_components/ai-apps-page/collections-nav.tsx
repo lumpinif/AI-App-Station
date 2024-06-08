@@ -25,7 +25,7 @@ export const CollectionsNav: React.FC<CollectionsNavProps> = ({}) => {
                 key={index}
                 className="transition-all duration-300 ease-out active:scale-[.98]"
               >
-                <div className="flex items-center">
+                <div className="flex items-center text-primary/90 transition-all duration-300 ease-out hover:text-primary">
                   {item.icon ? (
                     item.title !== "GPTs" ? (
                       <item.icon className="size-8 stroke-[1.5px]" />
@@ -36,7 +36,7 @@ export const CollectionsNav: React.FC<CollectionsNavProps> = ({}) => {
                     <BoxSelect className="size-8" />
                   )}
 
-                  <div className="ml-2 text-lg font-medium tracking-tight text-primary/80 transition-all duration-300 ease-out hover:text-primary lg:ml-4 lg:text-2xl">
+                  <div className="ml-2 text-lg font-medium tracking-tight transition-all duration-300 ease-out lg:ml-4 lg:text-2xl">
                     {item.title}
                   </div>
                 </div>

@@ -2,15 +2,10 @@ import { Suspense } from "react"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAllPosts } from "@/server/data"
-import { getAppsByConfig } from "@/server/queries/supabase/apps"
-
-import appFetchConfig from "@/config/apps-fetch/apps-fetch-config"
-import { OPTIONS_APPSCARDSCAROUSEL } from "@/config/carousels"
 
 import AiAppsPagesTitle from "./_components/ai-apps-page-title"
 import { AppCardsCarouselLayout } from "./_components/ai-apps-page/app-cards-carousel-layout.tsx"
 import { CollectionsNav } from "./_components/ai-apps-page/collections-nav"
-import AppCardsCarousel from "./_components/carousel/app-card-carousel/app-cards-carousel"
 import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 
 // Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
@@ -19,17 +14,6 @@ import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 //   () => import("./_components/carousel/app-card-carousel/app-cards-carousel"),
 //   { ssr: true }
 // )
-
-const fetchApps = async () => {
-  const results = await Promise.all(
-    appFetchConfig.map((config) => getAppsByConfig({ config }))
-  )
-  return appFetchConfig.map((config, index) => ({
-    title: config.title,
-    apps: results[index].apps || [],
-    error: results[index].getAppsByCategoryError || null,
-  }))
-}
 
 const fetchPosts = async ({
   is_hero_featured,
@@ -72,9 +56,6 @@ const AIAppsMainPage = async () => {
   const { posts: heroPosts } = await fetchPosts({
     is_hero_featured: true,
   })
-
-  // Fetch apps data
-  const appsData = await fetchApps()
 
   return (
     <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
