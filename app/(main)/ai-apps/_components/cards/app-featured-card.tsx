@@ -22,7 +22,7 @@ export const AppFeaturedCard: React.FC<AppFeaturedCardProps> = ({
   user,
 }) => {
   return (
-    <div className="dark:shadow-top relative flex h-full w-full flex-col gap-y-6 rounded-xl border border-border/10 bg-card/30 p-2 py-6 shadow-sm transition-all duration-200 ease-out hover:shadow-md sm:p-4 sm:py-8">
+    <div className="relative flex h-full w-full flex-col gap-y-6 rounded-xl border border-border/10 bg-card/30 p-2 py-6 shadow-sm transition-all duration-200 ease-out hover:shadow-md dark:shadow-top sm:p-4 sm:py-8">
       <span className="absolute left-4 top-4 select-none text-sm font-medium text-muted-foreground">
         Featured
       </span>
@@ -90,7 +90,7 @@ export const AppFeaturedCard: React.FC<AppFeaturedCardProps> = ({
       {app.categories && (
         <FavoriteAppCardCategories
           categories={app.categories}
-          className="mx-auto flex max-w-72 flex-wrap items-center justify-center gap-x-2 gap-y-2"
+          className="mx-auto flex max-w-72 select-none flex-wrap items-center justify-center gap-x-2 gap-y-2"
         />
       )}
 
@@ -100,7 +100,7 @@ export const AppFeaturedCard: React.FC<AppFeaturedCardProps> = ({
             app_slug={app.app_slug}
             iconClassName="size-3"
             comments_count={app.comments_count}
-            className="text-muted-foreground"
+            className="select-none text-muted-foreground"
           />
         )}
 
@@ -109,6 +109,7 @@ export const AppFeaturedCard: React.FC<AppFeaturedCardProps> = ({
           app_id={app.app_id}
           data={app.app_likes}
           iconClassName="size-3"
+          className="select-none"
         />
       </span>
     </div>
