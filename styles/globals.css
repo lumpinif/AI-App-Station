@@ -162,7 +162,7 @@
   * {
     @apply border-border;
     /* min-w-0  */
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
   }
 
   /* html {
