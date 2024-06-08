@@ -20,7 +20,7 @@ export const CollectionsGrid: React.FC<CollectionsGridProps> = ({
             className="w-fit transition-all duration-300 ease-out active:scale-[.98]"
           >
             <div className="flex items-center text-primary/90 transition-all duration-300 ease-out hover:text-primary">
-              <span className="flex size-14 items-center justify-center rounded-xl shadow-md transition-all duration-300 ease-out hover:shadow-lg dark:border dark:border-border/50 dark:hover:shadow-outline">
+              <span className="flex size-14 items-center justify-center rounded-xl border shadow-md transition-all duration-300 ease-out hover:shadow-lg dark:border-border/50 dark:hover:shadow-outline">
                 {item.icon ? (
                   item.title !== "GPTs" ? (
                     <item.icon className="size-8 stroke-[1.5px]" />
