@@ -4,37 +4,41 @@ import { Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 
 type AppTitleWithDescriptionProps = {
+  isLink?: boolean
+  className?: string
+  isTruncate?: boolean
+  linkClassName?: string
+  descriptionCN?: string
+  titleClassname?: string
+  children?: React.ReactNode
   app_slug: Apps["app_slug"]
   app_title: Apps["app_title"]
+  descriptionClassname?: string
   description: Apps["description"]
-  className?: string
+  descriptionSize?: "sm" | "base" | "md" | "lg"
   titleSize?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl"
   titleFont?: "semi-bold" | "bold" | "medium" | "regular" | "light"
-  descriptionSize?: "sm" | "base" | "md" | "lg"
   descriptionFont?: "bold" | "semi-bold" | "medium" | "regular" | "light"
-  isTruncate?: boolean
-  isLink?: boolean
-  titleClassname?: string
-  descriptionClassname?: string
-  children?: React.ReactNode
 }
 
 export const AppTitleWithDescription: React.FC<
   AppTitleWithDescriptionProps
 > = ({
+  children,
   app_slug,
   app_title,
-  description,
-  className,
-  titleSize,
-  titleClassname,
   titleFont,
+  titleSize,
+  className,
+  description,
+  descriptionCN,
+  linkClassName,
+  isLink = true,
+  titleClassname,
   descriptionSize,
   descriptionFont,
-  descriptionClassname,
   isTruncate = true,
-  isLink = true,
-  children,
+  descriptionClassname,
 }) => {
   const titleElement = (
     <h4
@@ -72,7 +76,10 @@ export const AppTitleWithDescription: React.FC<
             href={{
               pathname: `/ai-apps/${app_slug}`,
             }}
-            className="w-fit active:text-blue-600 sm:hover:text-blue-500"
+            className={cn(
+              "w-fit active:text-blue-600 sm:hover:text-blue-500",
+              linkClassName
+            )}
             passHref
           >
             {children ? (

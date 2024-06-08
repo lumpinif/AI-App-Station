@@ -20,8 +20,18 @@ const appFetchConfig: AppFetchConfig[] = [
         column: "likes_count",
         options: { ascending: false },
       },
+    ],
+    limit: {
+      limit: 15,
+    },
+    filters: [],
+    innerJoinTables: [],
+  },
+  {
+    title: "Featured Apps",
+    order: [
       {
-        column: "comments_count",
+        column: "likes_count",
         options: { ascending: false },
       },
     ],
@@ -29,7 +39,7 @@ const appFetchConfig: AppFetchConfig[] = [
       limit: 15,
     },
     filters: [],
-    innerJoinTables: [],
+    innerJoinTables: ["app_likes"],
   },
   {
     title: "Most Popular",

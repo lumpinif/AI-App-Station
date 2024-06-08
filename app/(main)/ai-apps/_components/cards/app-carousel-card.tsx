@@ -1,9 +1,7 @@
-import React, { useState } from "react"
-import { DotsHorizontalIcon } from "@radix-ui/react-icons"
+import React from "react"
 import { User } from "@supabase/supabase-js"
 
-import { App_likes, AppDetails, AppWithCategories } from "@/types/db_tables"
-import { useUserData } from "@/hooks/react-hooks/use-user"
+import { AppDetails } from "@/types/db_tables"
 import { Separator } from "@/components/ui/separator"
 
 import { AppDetailLikeButton } from "../../[slug]/_components/app-detail-like-button"
@@ -17,7 +15,7 @@ type AppCardWithIndex = AppDetails & {
   index: number
 }
 
-const AppCard: React.FC<AppCardWithIndex> = ({
+const AppCarouselCard: React.FC<AppCardWithIndex> = ({
   user,
   index,
   app_id,
@@ -78,10 +76,10 @@ const AppCard: React.FC<AppCardWithIndex> = ({
             {/* <AppCardCatLabel categories={categories} /> */}
           </div>
         </div>
-        {index < 2 && <Separator />}
+        {index < 2 && <Separator className="bg-input" />}
       </div>
     </div>
   )
 }
 
-export default AppCard
+export default AppCarouselCard

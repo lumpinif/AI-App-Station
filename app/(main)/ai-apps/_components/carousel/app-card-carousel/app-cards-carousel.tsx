@@ -16,17 +16,21 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Separator } from "@/components/ui/separator"
+import { FavoriteAppCard } from "@/app/(main)/user/_components/bookmark-favorites/_components/apps/favorite-app-card"
 
-import AppCard from "../../cards/app-card"
+import AppCarouselCard from "../../cards/app-carousel-card"
+import { AppFeaturedCard } from "../../cards/app-featured-card"
 
 type AppCardsCarouselProps = {
   title: string
   maxItems?: number
   data: AppDetails[]
   user?: User | null
-  error?: string | null
+  chunkSize?: number
   className?: string
   isAutpPlay?: boolean
+  error?: string | null
+  appCardVariant?: string
   isMarginRight?: boolean
   isWheelGestures?: boolean
   options?: EmblaOptionsType
@@ -37,7 +41,11 @@ const PLUGIN_AUTOPLAY = Autoplay({ playOnInit: true, delay: 4500 })
 const PLUGIN_WHEELGESTURES = WheelGesturesPlugin({})
 
 // Utility function to chunk the data into groups of three
-const chunkDataIntoGroups = (data: AppDetails[], maxItems?: number) => {
+const chunkDataIntoGroups = (
+  data: AppDetails[],
+  maxItems?: number,
+  chunkSize: number = 3
+) => {
   if (!Array.isArray(data)) {
     // throw new Error("Data should be an array")
     return []
@@ -53,8 +61,8 @@ const chunkDataIntoGroups = (data: AppDetails[], maxItems?: number) => {
   const items = maxItems ? data.slice(0, maxItems) : data
 
   const groups = []
-  for (let i = 0; i < items.length; i += 3) {
-    groups.push(items.slice(i, i + 3))
+  for (let i = 0; i < items.length; i += chunkSize) {
+    groups.push(items.slice(i, i + chunkSize))
   }
   return groups
 }
@@ -65,7 +73,9 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   title,
   options,
   className,
+  chunkSize,
   maxItems = 15,
+  appCardVariant,
   error: fetchError,
   isAutpPlay = false,
   isMarginRight = false,
@@ -82,8 +92,8 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
   }, [isAutpPlay, isWheelGestures])
 
   const dataGroups = useMemo(
-    () => chunkDataIntoGroups(data, maxItems),
-    [data, maxItems]
+    () => chunkDataIntoGroups(data, maxItems, chunkSize),
+    [chunkSize, data, maxItems]
   )
 
   if (!dataGroups.length || fetchError)
@@ -126,14 +136,18 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
               key={index}
               className={cn("flex flex-col gap-y-5", className)}
             >
-              {group.map((app, appIndex) => (
-                <AppCard
-                  key={app.app_id}
-                  user={user}
-                  index={appIndex}
-                  {...app}
-                />
-              ))}
+              {group.map((app, appIndex) =>
+                appCardVariant === "featured" ? (
+                  <AppFeaturedCard key={app.app_id} app={app} user={user} />
+                ) : (
+                  <AppCarouselCard
+                    key={app.app_id}
+                    user={user}
+                    index={appIndex}
+                    {...app}
+                  />
+                )
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>

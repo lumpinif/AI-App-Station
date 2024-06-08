@@ -8,13 +8,6 @@ import { AppCardsCarouselLayout } from "./_components/ai-apps-page/app-cards-car
 import { MainPageCollectionsNav } from "./_components/ai-apps-page/main-page-collections-nav"
 import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 
-// Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
-// TODO: CHECK IF DYNAMIC IMPORT IS GOOD FOR PERFORMANCE BEFORE PRODUCTION
-// const AppCardsCarousel = dynamic(
-//   () => import("./_components/carousel/app-card-carousel/app-cards-carousel"),
-//   { ssr: true }
-// )
-
 const fetchPosts = async ({
   is_hero_featured,
 }: {

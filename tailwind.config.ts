@@ -268,7 +268,7 @@ module.exports = {
           // "0px 1px 0.5px 0px rgba(255 , 255, 255,0.15) inset, 0px 1.551px 1.201px 0px rgba(255, 255, 255, 0.10) inset, 1.15px 0px 1.551px 0px rgba(255, 255, 255, 0.20) inset",
 
           "inset 0.5px 0.8px 1.25px rgba(255, 255, 255, 0.125), inset 0px 0.8px 1.2px rgba(255, 255, 255, 0.10), inset 0.8px 0px 0.8px rgba(255, 255, 255, 0.15);",
-
+        top: "inset 0px 1px 1px rgba(255, 255, 255, 0.10)",
         "outline-light":
           "0px 1px 0.5px 0px rgba(0, 0, 0,0.15) inset, 0px 1.551px 1.201px 0px rgba(0, 0, 0, 0.10) inset, 1.15px 0px 1.551px 0px rgba(0, 0, 0, 0.20) inset",
         "inner-outline":

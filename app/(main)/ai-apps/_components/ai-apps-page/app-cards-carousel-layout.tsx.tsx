@@ -6,6 +6,13 @@ import { OPTIONS_APPSCARDSCAROUSEL } from "@/config/carousels"
 
 import AppCardsCarousel from "../carousel/app-card-carousel/app-cards-carousel"
 
+// Dynamically import the components with 'ssr: false' to prevent them from rendering on the server
+// TODO: CHECK IF DYNAMIC IMPORT IS GOOD FOR PERFORMANCE BEFORE PRODUCTION
+// const AppCardsCarousel = dynamic(
+//   () => import("./_components/carousel/app-card-carousel/app-cards-carousel"),
+//   { ssr: true }
+// )
+
 const fetchApps = async () => {
   const results = await Promise.all(
     appFetchConfig.map((config) => getAppsByConfig({ config }))
@@ -40,7 +47,10 @@ export const AppCardsCarouselLayout: React.FC<
             hiddenOnCanNotScroll
             isMarginRight={true}
             options={OPTIONS_APPSCARDSCAROUSEL}
-            className="md:basis-1/2 lg:basis-1/3"
+            className={"md:basis-1/2 lg:basis-1/3"}
+            chunkSize={title === "Featured Apps" ? 1 : 3}
+            appCardVariant={title === "Featured Apps" ? "featured" : ""}
+            // lg:basis-1/3
           />
         </div>
       ))}

@@ -1,13 +1,14 @@
+/* eslint-disable tailwindcss/classnames-order */
 "use client"
 
-import React, { useState } from "react"
+import React from "react"
 import Link from "next/link"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { User } from "@supabase/supabase-js"
-import { Bookmark, ChevronRight, SquareArrowOutUpRight } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 
 import { App_bookmarks, App_likes, Apps } from "@/types/db_tables"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,10 +21,12 @@ import { AppDetailLikeButton } from "../../../[slug]/_components/app-detail-like
 
 type AppCardActionsProps = {
   user?: User | null
+  className?: string
   app_likes: App_likes[]
   app_id: Apps["app_id"]
   app_slug: Apps["app_slug"]
   app_bookmarks: App_bookmarks[]
+  DropdownMenuContentProps?: React.ComponentProps<typeof DropdownMenuContent>
 }
 
 export const AppCardActions: React.FC<AppCardActionsProps> = ({
@@ -31,7 +34,9 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({
   app_id,
   app_slug,
   app_likes,
+  className,
   app_bookmarks,
+  DropdownMenuContentProps,
 }) => {
   const handleClickNotClose: React.MouseEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault()
@@ -41,13 +46,19 @@ export const AppCardActions: React.FC<AppCardActionsProps> = ({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="rounded-full text-muted-foreground outline-none transition-all duration-200 ease-out focus:!ring-0 focus:ring-transparent data-[state=open]:bg-muted data-[state=open]:px-1 data-[state=open]:text-primary">
+        <DropdownMenuTrigger
+          className={cn(
+            "rounded-full text-muted-foreground outline-none transition-all duration-200 ease-out focus:!ring-0 focus:ring-transparent data-[state=open]:bg-muted data-[state=open]:px-1 data-[state=open]:text-primary",
+            className
+          )}
+        >
           <DotsHorizontalIcon className="size-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="end"
           sideOffset={10}
-          className="glass-card-background border backdrop-blur-md dark:border-none sm:shadow-outline"
+          className="glass-card-background dark:shadow-top border-0 backdrop-blur-3xl dark:border-none sm:shadow-outline"
+          {...DropdownMenuContentProps}
         >
           {/* LIKE */}
           <DropdownMenuItem onClick={handleClickNotClose}>
