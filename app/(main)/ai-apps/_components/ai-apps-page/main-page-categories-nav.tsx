@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { getAllCategories } from "@/server/data/supabase-actions"
+import { sampleSize } from "lodash"
 
 import { Separator } from "@/components/ui/separator"
 
@@ -28,7 +29,7 @@ export const MainPageCategoriesNav: React.FC<
       </section>
     )
 
-  const collectionItems = allCategories?.slice(0, 6)
+  const categoriesItems = sampleSize(allCategories, 6)
 
   return (
     <section className="hidden flex-col gap-y-4 sm:flex">
@@ -45,7 +46,7 @@ export const MainPageCategoriesNav: React.FC<
         <Separator className="bg-input" />
       </span>
 
-      <CategoriesGrid categoryItems={collectionItems} />
+      <CategoriesGrid categoryItems={categoriesItems} />
     </section>
   )
 }
