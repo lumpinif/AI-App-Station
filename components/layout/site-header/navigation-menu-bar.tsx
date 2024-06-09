@@ -84,20 +84,19 @@ export function NavigationMenuBar() {
             className="cursor-pointer select-none"
           >
             {route.href !== "/search" && (
-              <Link href={`${route.href}`} legacyBehavior>
-                <NavigationMenuLink
-                  className={cn(navigationMenuTriggerStyle(), {
-                    "!text-blue-500": currentPath.includes(`${route.href}`),
-                  })}
-                >
-                  {route.title}
-                </NavigationMenuLink>
+              <Link
+                href={`${route.href}`}
+                className={cn(navigationMenuTriggerStyle(), {
+                  "!text-blue-500": currentPath.includes(`${route.href}`),
+                })}
+              >
+                {route.title}
               </Link>
             )}
           </NavigationMenuItem>
         ))}
 
-        <NavigationMenuItem className="rounded-full pr-2">
+        <NavigationMenuItem className="rounded-full">
           <SearchCommandDialogTrigger
             sideOffset={15}
             tooltipSide="bottom"
