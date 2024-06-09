@@ -43,7 +43,7 @@ async function fetchAppsByCategory(
     }
   }
 
-  const { apps: appsByCategory, getAppsByCategoryError } =
+  const { apps: appsByCategory, getAppsByConfigError: getAppsByCategoryError } =
     await getAppsByConfig({
       config: {
         title: "Newest Added",

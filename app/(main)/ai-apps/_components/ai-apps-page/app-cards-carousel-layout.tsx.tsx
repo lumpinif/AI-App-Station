@@ -21,7 +21,7 @@ const fetchApps = async () => {
   return appFetchConfig.map((config, index) => ({
     title: config.title,
     apps: results[index].apps || [],
-    error: results[index].getAppsByCategoryError || null,
+    error: results[index].getAppsByConfigError || null,
   }))
 }
 

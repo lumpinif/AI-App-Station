@@ -66,7 +66,7 @@ export const AppFeaturedCard: React.FC<AppFeaturedCardProps> = ({
               {developer.developer_slug ? (
                 <Link
                   key={index}
-                  href={`ai-apps/${developer.developer_slug}`}
+                  href={`/ai-apps/developer/${developer.developer_slug}`}
                   className="flex items-center justify-center gap-x-2"
                 >
                   <span className="font-semibol">

@@ -288,7 +288,7 @@ const Developers = ({
             >
               {dev.developer_slug ? (
                 <Link
-                  href={dev.developer_slug}
+                  href={`developer/${dev.developer_slug}`}
                   className="select-none font-medium underline-offset-4 hover:cursor-pointer hover:text-primary hover:underline"
                 >
                   {dev.developer_name}

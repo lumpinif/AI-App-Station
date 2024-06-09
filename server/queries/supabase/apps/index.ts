@@ -98,15 +98,15 @@ export async function getAppsByConfig<T extends AppRefrencedTables>({
     query.limit(limit.limit, limit.options)
   }
 
-  const { data: apps, error: getAppsByCategoryError } =
+  const { data: apps, error: getAppsByConfigError } =
     await query.returns<AppDetails[]>()
 
-  if (getAppsByCategoryError) {
+  if (getAppsByConfigError) {
     console.error(
       "Error fetching apps by category",
-      getAppsByCategoryError.message
+      getAppsByConfigError.message
     )
-    return { getAppsByCategoryError: getAppsByCategoryError.message }
+    return { getAppsByConfigError: getAppsByConfigError.message }
   }
 
   return { apps }
