@@ -2,6 +2,7 @@ import Link from "next/link"
 import { getAllCategories } from "@/server/data/supabase-actions"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
+import { CategoriesGrid } from "../_components/categories-grid"
 
 export default async function CategoriesPage() {
   const { categories: allCategories, error: getAllCategoiresError } =
@@ -12,19 +13,24 @@ export default async function CategoriesPage() {
     console.error(getAllCategoiresError)
   }
 
+  if (!allCategories)
+    return (
+      <section className="flex flex-col gap-y-4">
+        <AiAppsPagesTitle
+          title={"No Categories found"}
+          href={`/ai-apps/categories`}
+        />
+        <span className="text-muted-foreground">
+          It should be fixed shortly
+        </span>
+      </section>
+    )
+
   return (
     <section className="flex flex-col gap-y-4">
-      <AiAppsPagesTitle title={"Categories"} href={`/ai-apps/categories`} />
+      <AiAppsPagesTitle title={"All Categories"} href={`/ai-apps/categories`} />
 
-      <div className="grid w-full sm:grid-cols-2 md:grid-cols-3">
-        {allCategories?.map((cat, index) => (
-          <div className="col-span-1" key={index}>
-            <Link href={`/ai-apps/categories/${cat.category_slug}`}>
-              {index}-{cat.category_name}
-            </Link>
-          </div>
-        ))}
-      </div>
+      <CategoriesGrid categoryItems={allCategories} />
     </section>
   )
 }

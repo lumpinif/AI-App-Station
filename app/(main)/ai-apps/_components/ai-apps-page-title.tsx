@@ -9,9 +9,11 @@ type AiAppsPageTitleProps = {
   href?: string
   title?: string
   isLayout?: boolean
+  className?: string
 }
 
 const AiAppsPagesTitle = ({
+  className,
   title = "Apps",
   isLayout = false,
   href = "/ai-apps",
@@ -22,7 +24,8 @@ const AiAppsPagesTitle = ({
     <div
       className={cn(
         "mb-2 w-full sm:mb-5",
-        !isOpen && isLayout ? "sm:pl-28" : `${isLayout && "sm:pl-52"}`
+        !isOpen && isLayout ? "sm:pl-28" : `${isLayout && "sm:pl-52"}`,
+        className
       )}
     >
       <PageTitle title={title} href={href} />

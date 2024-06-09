@@ -5,6 +5,7 @@ import { getAllPosts } from "@/server/data"
 
 import AiAppsPagesTitle from "./_components/ai-apps-page-title"
 import { AppCardsCarouselLayout } from "./_components/ai-apps-page/app-cards-carousel-layout.tsx"
+import { MainPageCategoriesNav } from "./_components/ai-apps-page/main-page-categories-nav"
 import { MainPageCollectionsNav } from "./_components/ai-apps-page/main-page-collections-nav"
 import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
 
@@ -52,7 +53,7 @@ const AIAppsMainPage = async () => {
 
   return (
     <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
-      <AiAppsPagesTitle title="Browse AI Apps" />
+      <AiAppsPagesTitle title="Browse AI Apps" className="sm:mb-2" />
 
       {/* Hero Posts Carousel */}
       <PostsCarousel
@@ -64,6 +65,11 @@ const AIAppsMainPage = async () => {
       />
 
       <MainPageCollectionsNav />
+
+      {/* TODO: UPDATE THE LOADING SKELETON */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <MainPageCategoriesNav />
+      </Suspense>
 
       {/* TODO: UPDATE THE LOADING SKELETON */}
       <Suspense fallback={<div>Loading...</div>}>

@@ -12,7 +12,7 @@ export const CollectionsGrid: React.FC<CollectionsGridProps> = ({
 }) => {
   return (
     <>
-      <div className="grid grid-cols-2 sm:gap-4 md:pr-4 lg:grid-cols-3 lg:gap-6 lg:pr-6">
+      <div className="grid gap-4 p-2 py-4 sm:grid-cols-2 md:pr-4 lg:grid-cols-3 lg:gap-6 lg:pr-6">
         {collectionItems?.map((item, index) => (
           <Link
             href={item.href}
