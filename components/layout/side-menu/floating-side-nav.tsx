@@ -71,8 +71,10 @@ const FloatingSideNav: React.FC = () => {
   return (
     <aside
       className={cn(
-        "cubic-bezier(0.32, 0.72, 0, 1) z-40 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-lg transition-all duration-500 md:flex md:flex-col",
-        !isOpen ? "-ml-6 rounded-[2.5rem]" : "-ml-4 mt-16"
+        "cubic-bezier(0.32, 0.72, 0, 1) z-40 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-xl transition-all duration-500 md:flex md:flex-col",
+        !isOpen
+          ? "3xl:-ml-32 rounded-[2.5rem] md:ml-0 2xl:-ml-16"
+          : "3xl:-ml-52 -ml-56 mt-16 md:-ml-2 lg:-ml-4 2xl:-ml-20"
       )}
     >
       <TooltipProvider>
@@ -137,17 +139,17 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
             className="flex items-center gap-2 dark:bg-foreground dark:text-background"
           >
             Open
-            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
+            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] opacity-100 dark:bg-muted-foreground/60 sm:flex">
               <span className="text-xs">⌘</span>space
             </kbd>
           </TooltipContent>
         )}
         <h1
-          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm  text-foreground opacity-100 duration-300 ${
+          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
             !isOpen && "scale-0"
           }`}
         >
-          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
+          <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] opacity-100 dark:bg-muted-foreground/60 sm:flex">
             <span className="text-xs">⌘</span>space
           </kbd>
         </h1>
@@ -171,7 +173,7 @@ export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
               !isOpen && "scale-0"
             }`}
           >
-            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
+            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] opacity-100 dark:bg-muted-foreground/60 sm:flex">
               <span className="text-xs">⌘</span>K
             </kbd>
           </h1>
@@ -191,7 +193,7 @@ export const SideMenuAuthTrigger: React.FC<SideNavToggleProps> = React.memo(
       <div className={cn("relative flex items-center justify-start")}>
         <AccountModalTrigger className={buttonClass} />
         <h1
-          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm  text-foreground opacity-100 duration-300 ${
+          className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
             !isOpen && "scale-0"
           }`}
         >

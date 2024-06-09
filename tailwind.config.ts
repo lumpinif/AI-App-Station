@@ -26,6 +26,9 @@ module.exports = {
       },
     },
     extend: {
+      screens: {
+        "3xl": "1800px",
+      },
       fontFamily: {
         sans: ["var(--font-geist-sans)"],
         mono: ["var(--font-geist-mono)"],
