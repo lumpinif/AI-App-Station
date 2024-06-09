@@ -103,7 +103,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               <SiteFooter />
             </main>
             <TailwindIndicator />
-            <SonnerToaster richColors position="bottom-left" closeButton />
+            <SonnerToaster richColors position="bottom-right" closeButton />
           </ThemeProvider>
         </QueryProvider>
         <SpeedInsights />
