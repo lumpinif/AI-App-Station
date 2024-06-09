@@ -77,7 +77,7 @@ export const AppTitleWithDescription: React.FC<
               pathname: `/ai-apps/${app_slug}`,
             }}
             className={cn(
-              "w-fit active:text-blue-600 sm:hover:text-blue-500",
+              "w-fit capitalize active:text-blue-600 sm:hover:text-blue-500",
               linkClassName
             )}
             passHref
@@ -94,7 +94,12 @@ export const AppTitleWithDescription: React.FC<
           {descriptionElement}
         </div>
       ) : (
-        <div className={cn("flex w-full min-w-0 flex-col gap-1", className)}>
+        <div
+          className={cn(
+            "flex w-full min-w-0 flex-col gap-1 capitalize",
+            className
+          )}
+        >
           {children ? (
             <span className="flex w-full items-center space-x-6">
               {titleElement}

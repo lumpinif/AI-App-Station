@@ -1,14 +1,11 @@
-import Link from "next/link"
-import {
-  getAllCategories,
-  getCategoryBySlug,
-} from "@/server/data/supabase-actions"
+import { getUserData } from "@/server/auth"
+import { getCategoryBySlug } from "@/server/data/supabase-actions"
 import { getAppsByConfig } from "@/server/queries/supabase/apps"
-import supabase from "@/utils/supabase/supabase"
 
 import { Categories } from "@/types/db_tables"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
+import { AppCarouselLgCard } from "../../_components/cards/app-carousel-lg-card"
 
 // export const dynamicParams = false
 
@@ -79,8 +76,10 @@ export default async function CategoryPage({
 }) {
   const { category: category_slug } = params
 
-  // TODO: REMOVE THIS BEFORE PRODUCTION
-  const { categories: allCategories } = await getAllCategories()
+  // Get user
+  const {
+    data: { user },
+  } = await getUserData()
 
   const { category: categoryBySlug, error: getCategoryBySlugError } =
     await getCategoryBySlug(category_slug)
@@ -118,25 +117,9 @@ export default async function CategoryPage({
 
       {appsByCategory?.length === 0 && <p>No apps found in this category.</p>}
 
-      <div className="flex flex-col gap-y-2">
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
         {appsByCategory?.map((app, index) => (
-          <div key={index}>
-            <h2>
-              {index + 1} - {app.app_title}
-            </h2>
-          </div>
-        ))}
-      </div>
-
-      {/* Temporary */}
-      <div className="border-t">
-        ALL CATEGORIES:{" "}
-        {allCategories?.map((cat, index) => (
-          <ul className="divide-y-2" key={index}>
-            <Link href={`/ai-apps/categories/${cat.category_slug}`}>
-              {index}-{cat.category_name}
-            </Link>
-          </ul>
+          <AppCarouselLgCard key={index} app={app} user={user} />
         ))}
       </div>
     </section>
