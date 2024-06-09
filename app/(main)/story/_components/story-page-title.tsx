@@ -24,12 +24,7 @@ const StoryPageTitle = () => {
   }
 
   return (
-    <PageTitle
-      withBackButton
-      title={pageTitle}
-      href={pageHref}
-      withBorder={false}
-    >
+    <PageTitle withBackButton title={""} href={pageHref} withBorder={false}>
       <WriteNewStoryButton
         variant={"ghost"}
         size={"label"}
