@@ -6,11 +6,9 @@ import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase-actions"
-import supabase from "@/utils/supabase/supabase"
 
 import { SearchParams } from "@/types/data-table"
-import { App_Comments, Apps } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import { App_Comments } from "@/types/db_tables"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
@@ -18,7 +16,6 @@ import { AppTitleWithDescription } from "../_components/cards/_components/app-ti
 import { AppCommentsBadge } from "../_components/cards/app-comments-badge"
 import { AppDetailBookmarkButton } from "./_components/app-detail-bookmark-button"
 import { AppDetailCarousel } from "./_components/app-detail-carousel"
-import { AppDetailHeroImage } from "./_components/app-detail-hero-image"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailLikeButton } from "./_components/app-detail-like-button"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
@@ -32,26 +29,6 @@ export type AppPageProps = {
   params: { slug: string }
   searchParams: SearchParams
 }
-
-// DEPRECATED: This function is not used anymore
-// Return a list of `params` to populate the [slug] dynamic segment
-// export async function generateStaticParams() {
-//   const { data: allApps, error } = await supabase
-//     .from("apps")
-//     .select("*,profiles(*)")
-//     .returns<Apps[]>()
-
-//   if (error) {
-//     throw new Error("Error fetching data: " + error.message)
-//   }
-
-//   if (allApps)
-//     return allApps.map((app) => ({
-//       slug: app.app_slug,
-//     }))
-
-//   return []
-// }
 
 export default async function AiAppsMainPage({
   params,
@@ -99,13 +76,13 @@ export default async function AiAppsMainPage({
       className="mb-8 mt-4 flex flex-col space-y-4 px-1 pb-8 sm:px-2 md:mt-6 lg:mt-8 xl:mt-12"
       suppressHydrationWarning
     >
-      {app.is_featured && (
+      {/* {app.is_featured && (
         <div
           className={cn("md:hidden", app.is_featured && "h-20 w-full sm:h-32")}
         >
           <AppDetailHeroImage />
         </div>
-      )}
+      )} */}
       <div className="flex flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
         <div className="flex w-full flex-col items-start space-y-6 md:space-y-12 lg:space-y-16">
           <div className="flex w-full items-start space-x-4 md:space-x-8 lg:space-x-14">

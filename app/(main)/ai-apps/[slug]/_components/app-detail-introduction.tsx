@@ -17,7 +17,7 @@ type AppDetailIntroductionProps = {
 export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
   introduction,
 }) => {
-  const [showAll, setShowAll] = useState(false)
+  const [showAll, setShowAll] = useState(true)
 
   if (!introduction || introduction === null) {
     return (
@@ -45,7 +45,7 @@ export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
         {showAll ? (
           <IntroductionEditorContent introduction={introduction} />
         ) : (
-          <ScrollArea className="relative h-[50rem] w-full p-2 pb-6">
+          <ScrollArea className="relative h-[60rem] w-full p-2 pb-6">
             <IntroductionEditorContent introduction={introduction} />
             <ProgressiveBlur className="h-20" />
           </ScrollArea>
