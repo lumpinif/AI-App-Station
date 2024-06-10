@@ -9,6 +9,8 @@ import {
 
 import { SearchParams } from "@/types/data-table"
 import { App_Comments } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
@@ -107,12 +109,22 @@ export default async function AiAppsMainPage({
                   isTruncate={false}
                   isLink={false}
                 />
-                <span className="flex h-fit items-center space-x-2 pr-2 md:pr-4">
+                <div
+                  className={cn(
+                    "h-fit items-center gap-x-2 text-muted-foreground",
+                    buttonVariants({
+                      variant: "outline",
+                      size: "label",
+                      className:
+                        "hidden w-fit shadow-sm hover:shadow-md dark:shadow-top sm:flex",
+                    })
+                  )}
+                >
                   <AppDetailShare {...app} />
-                </span>
+                </div>
               </div>
-              <span className="flex w-full items-end justify-between pr-4">
-                <span className="flex items-center gap-x-2 md:gap-x-6">
+              <div className="flex w-full items-end justify-between pr-4">
+                <div className="flex items-center gap-x-2 md:gap-x-6">
                   <AppLaunchButton
                     app_url={app.app_url}
                     className="hidden max-w-44 px-6 py-1 sm:flex sm:w-32 md:w-40"
@@ -132,9 +144,12 @@ export default async function AiAppsMainPage({
                       app_id={app.app_id}
                       data={app.app_bookmarks}
                     />
+                    <span className="flex sm:hidden">
+                      <AppDetailShare {...app} />
+                    </span>
                   </span>
-                </span>
-              </span>
+                </div>
+              </div>
             </div>
           </div>
           <AppDetailCarousel data={app} {...ratingData} className="py-4" />

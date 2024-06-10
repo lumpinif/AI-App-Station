@@ -11,6 +11,7 @@ import { ShareModal } from "@/components/shared/share-modal"
 type AppDetailShareProps = React.ComponentProps<typeof Dialog> &
   React.ComponentProps<typeof Drawer> & {
     withTrigger?: boolean
+    iconClassName?: string
     children?: React.ReactNode
     app_title: Apps["app_title"]
     description: Apps["description"]
@@ -21,6 +22,7 @@ export const AppDetailShare: React.FC<AppDetailShareProps> = ({
   app_title,
   description,
   withTrigger,
+  iconClassName,
   ...props
 }) => {
   const pathname = usePathname()
@@ -32,6 +34,7 @@ export const AppDetailShare: React.FC<AppDetailShareProps> = ({
       url={url}
       withTrigger={withTrigger}
       title={`${app_title}  |  `}
+      iconClassName={iconClassName}
       description={description as string}
       drawerCloseTitle="Share this app with"
       dialogDescription="Share this app with your friends and family"
