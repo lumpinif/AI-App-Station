@@ -9,6 +9,38 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      app_analytics: {
+        Row: {
+          app_slug: string
+          created_at: string
+          id: number
+          updated_at: string | null
+          view_count: number
+        }
+        Insert: {
+          app_slug: string
+          created_at?: string
+          id?: number
+          updated_at?: string | null
+          view_count?: number
+        }
+        Update: {
+          app_slug?: string
+          created_at?: string
+          id?: number
+          updated_at?: string | null
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "app_analytics_app_slug_fkey"
+            columns: ["app_slug"]
+            isOneToOne: true
+            referencedRelation: "apps"
+            referencedColumns: ["app_slug"]
+          },
+        ]
+      }
       app_bookmarks: {
         Row: {
           app_id: string
@@ -333,6 +365,7 @@ export type Database = {
           category_id: string
           category_name: string
           category_slug: string
+          created_at: string
           submitted_by_user_id: string | null
         }
         Insert: {
@@ -341,6 +374,7 @@ export type Database = {
           category_id?: string
           category_name: string
           category_slug: string
+          created_at?: string
           submitted_by_user_id?: string | null
         }
         Update: {
@@ -349,6 +383,7 @@ export type Database = {
           category_id?: string
           category_name?: string
           category_slug?: string
+          created_at?: string
           submitted_by_user_id?: string | null
         }
         Relationships: [
@@ -396,6 +431,38 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      post_analytics: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          updated_at: string | null
+          view_count: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          updated_at?: string | null
+          view_count?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          updated_at?: string | null
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_analytics_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "posts"
+            referencedColumns: ["post_id"]
           },
         ]
       }
@@ -872,6 +939,35 @@ export type Database = {
           },
         ]
       }
+      user_role: {
+        Row: {
+          created_at: string
+          role: Database["public"]["Enums"]["user_role_enum"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          role?: Database["public"]["Enums"]["user_role_enum"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          role?: Database["public"]["Enums"]["user_role_enum"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_role_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -891,10 +987,23 @@ export type Database = {
           rating_1_count: number
         }[]
       }
+      increment_app_view_count: {
+        Args: {
+          p_app_slug: string
+        }
+        Returns: undefined
+      }
+      increment_post_view_count: {
+        Args: {
+          p_post_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       pricing: "Free" | "In-app purchases" | "Free & In-app purchases" | "Paid"
       publish_status: "pending" | "published" | "draft" | "unpublished"
+      user_role_enum: "user" | "super_user" | "admin" | "super_admin"
     }
     CompositeTypes: {
       [_ in never]: never
