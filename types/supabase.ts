@@ -13,21 +13,21 @@ export type Database = {
         Row: {
           app_slug: string
           created_at: string
-          id: number
+          id: string
           updated_at: string | null
           view_count: number
         }
         Insert: {
           app_slug: string
           created_at?: string
-          id?: number
+          id?: string
           updated_at?: string | null
           view_count?: number
         }
         Update: {
           app_slug?: string
           created_at?: string
-          id?: number
+          id?: string
           updated_at?: string | null
           view_count?: number
         }
