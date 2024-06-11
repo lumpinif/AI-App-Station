@@ -53,7 +53,12 @@ const AIAppsMainPage = async () => {
 
   return (
     <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
-      <AiAppsPagesTitle title="Browse AI Apps" className="sm:mb-2" />
+      <AiAppsPagesTitle
+        className="sm:mb-2"
+        subtitlePos="bottom"
+        title="Browse AI Apps"
+        subtitle="Discover AI apps submitted by the community"
+      />
 
       {/* Hero Posts Carousel */}
       <PostsCarousel

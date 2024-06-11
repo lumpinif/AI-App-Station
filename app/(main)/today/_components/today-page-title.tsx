@@ -5,12 +5,7 @@ const TodayPageTitle = () => {
   const currentDate = getCurrentDateFormatted()
   return (
     <>
-      <PageTitle
-        withBorder
-        title="Today"
-        href="/today"
-        subtitle={currentDate}
-      />
+      <PageTitle withBorder title="Today" href="/today" date={currentDate} />
     </>
   )
 }

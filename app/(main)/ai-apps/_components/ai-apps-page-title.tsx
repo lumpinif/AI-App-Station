@@ -8,12 +8,16 @@ import { PageTitle } from "../../../../components/layout/page-title"
 type AiAppsPageTitleProps = {
   href?: string
   title?: string
+  subtitle?: string
   isLayout?: boolean
   className?: string
+  subtitlePos?: "top" | "bottom"
 }
 
 const AiAppsPagesTitle = ({
+  subtitle,
   className,
+  subtitlePos,
   title = "Apps",
   isLayout = false,
   href = "/ai-apps",
@@ -28,7 +32,12 @@ const AiAppsPagesTitle = ({
         className
       )}
     >
-      <PageTitle title={title} href={href} />
+      <PageTitle
+        title={title}
+        href={href}
+        subtitle={subtitle}
+        subtitlePos={subtitlePos}
+      />
     </div>
   )
 }

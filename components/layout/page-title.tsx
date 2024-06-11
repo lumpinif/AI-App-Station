@@ -8,22 +8,26 @@ import BackButton from "../shared/back-button"
 interface PageTitleProps {
   href?: string
   title: string
+  date?: string
   subtitle?: string
   className?: string
   withBorder?: boolean
   backButtonCN?: string
   withBackButton?: boolean
   children?: React.ReactNode
+  subtitlePos?: "top" | "bottom"
   WithAccountModalTrigger?: boolean
 }
 
 export const PageTitle = ({
   href,
+  date,
   title,
   children,
   subtitle,
   className,
   backButtonCN,
+  subtitlePos = "top",
   withBackButton = false,
   withBorder: isBorder = false,
   WithAccountModalTrigger = false,
@@ -43,21 +47,26 @@ export const PageTitle = ({
               <Link href={href}>
                 <div className="flex items-baseline gap-2">
                   <span className="page-title-font">{title}</span>
-                  {subtitle && (
+                  {date && (
                     <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
-                      {subtitle}
+                      {date}
                     </span>
                   )}
                 </div>
               </Link>
             ) : (
               <div className="flex flex-col">
-                {subtitle && (
+                {subtitle && subtitlePos === "top" && (
                   <span className="mt-2 text-sm font-medium text-muted-foreground">
                     {subtitle}
                   </span>
                 )}
                 <span className="page-title-font">{title}</span>
+                {subtitle && subtitlePos === "bottom" && (
+                  <span className="mt-2 text-sm font-medium text-muted-foreground">
+                    {subtitle}
+                  </span>
+                )}
               </div>
             )}
           </div>
@@ -65,24 +74,39 @@ export const PageTitle = ({
       ) : (
         <div className={cn("text-4xl", className)}>
           {href ? (
-            <Link href={href}>
+            <Link href={href} className="flex flex-col">
+              {subtitle && subtitlePos === "top" && (
+                <span className="mt-2 text-sm font-medium text-muted-foreground">
+                  {subtitle}
+                </span>
+              )}
               <div className="flex items-baseline gap-2">
                 <span className="page-title-font">{title}</span>
-                {subtitle && (
+                {date && (
                   <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
-                    {subtitle}
+                    {date}
                   </span>
                 )}
               </div>
+              {subtitle && subtitlePos === "bottom" && (
+                <span className="mt-2 text-sm font-medium text-muted-foreground">
+                  {subtitle}
+                </span>
+              )}
             </Link>
           ) : (
             <div className="flex flex-col">
-              {subtitle && (
+              {subtitle && subtitlePos === "top" && (
                 <span className="mt-2 text-sm font-medium text-muted-foreground">
                   {subtitle}
                 </span>
               )}
               <span className="page-title-font">{title}</span>
+              {subtitle && subtitlePos === "bottom" && (
+                <span className="mt-2 text-sm font-medium text-muted-foreground">
+                  {subtitle}
+                </span>
+              )}
             </div>
           )}
         </div>
