@@ -69,6 +69,15 @@ export const MAINROUTES: NavItemProps[] = [
     shortcutNumber: 3,
     inMainNav: true,
   },
+  {
+    id: "story",
+    href: "/stories",
+    title: "Stories",
+    discription: "Check out all the brilliant stories written by the community",
+    icon: Sparkles,
+    shortcutNumber: 4,
+    inMainNav: true,
+  },
   // {
   //   id: "discover",
   //   href: "/discover",

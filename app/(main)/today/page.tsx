@@ -5,6 +5,7 @@ import { Link } from "next-view-transitions"
 
 import photos from "@/config/dummy-photos"
 
+import TodayPageTitle from "./_components/today-page-title"
 import GridPanel from "./_components/widgets-grid/grid-panel"
 
 const TodayPage = () => {
@@ -20,7 +21,8 @@ const TodayPage = () => {
       {/* </main>  */}
 
       {/* <main className="relative flex h-full w-full"> */}
-      <main>
+      <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
+        <TodayPageTitle />
         {/* <GridPanel /> */}
         <ul className="grid auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {photos.map(({ id, imageSrc }) => (
@@ -37,7 +39,7 @@ const TodayPage = () => {
             </li>
           ))}
         </ul>
-      </main>
+      </section>
     </>
   )
 }
