@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { DotsHorizontalIcon, Pencil2Icon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
-import { Delete, Heart } from "lucide-react"
+import { Delete, Heart, LineChart } from "lucide-react"
 import moment from "moment"
 import numeral from "numeral"
 
@@ -168,13 +168,14 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
     {
       accessorKey: "views_count",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Views(WIP)" />
+        <DataTableColumnHeader column={column} title="Views" />
       ),
       cell: ({ row }) => {
         const views_count = row.original.views_count as Posts["views_count"]
         const formattedViewsCount = numeral(views_count).format("0.[0]a")
         return (
-          <span className="w-full truncate font-normal text-muted-foreground">
+          <span className="flex w-full items-center gap-x-1 truncate font-normal text-muted-foreground">
+            <LineChart className="size-4" />
             {formattedViewsCount}
           </span>
         )

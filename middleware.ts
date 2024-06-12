@@ -67,6 +67,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 }
 
 export const config = {
+  // TODO: CHECK THE CONFIG TO ENSURE THE UPDATE ANALYTICS IS CALLED FOR THE RIGHT TIMES
   matcher: [
     /*
      * Match all request paths except for the ones starting with:
