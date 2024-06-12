@@ -10,45 +10,57 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   // Update session
   let response = await updateSession(request)
 
-  // Update analytics
-  const pathname = request.nextUrl.pathname
-  const segments = pathname.split("/")
+  // Check if the request is a navigation request
+  const isNavigationRequest =
+    request.headers.get("Upgrade-Insecure-Requests") !== "1"
 
-  let post_id: Posts["post_id"] | null = null
-  let app_slug: Apps["app_slug"] | null = null
+  // Check if the request is not a prefetch request
+  const isPrefetchRequest =
+    request.headers.get("x-middleware-prefetch") ||
+    request.headers.has("x-minecraft-game-prefixed")
 
-  if (pathname.startsWith("/story/")) {
-    // Example URL: /story/felix-lyu/5618e70f-541d-40fe-a965-d425a47d5928
-    post_id = segments[3] // post_id
-  } else if (pathname.startsWith("/ai-apps/")) {
-    // Example URL: /ai-apps/chatgpt
-    app_slug = segments[2] // app_slug
-  }
+  // Only update analytics for navigation requests that are not prefetch requests
+  if (isNavigationRequest && !isPrefetchRequest) {
+    // Update analytics
+    const pathname = request.nextUrl.pathname
+    const segments = pathname.split("/")
 
-  if (post_id) {
-    // Update post analytics
-    event.waitUntil(
-      updatePostAnalytics(post_id)
-        // .then(() => {
-        //   console.log("View count incremented successfully")
-        // })
-        .catch((error) => {
-          console.error("Failed to increment post view count", error)
-        })
-    )
-  }
+    let post_id: Posts["post_id"] | null = null
+    let app_slug: Apps["app_slug"] | null = null
 
-  if (app_slug) {
-    // Update app analytics
-    event.waitUntil(
-      updateAppAnalytics(app_slug)
-        // .then(() => {
-        //   console.log("View count incremented successfully")
-        // })
-        .catch((error) => {
-          console.error("Failed to increment app view count", error)
-        })
-    )
+    if (pathname.startsWith("/story/")) {
+      // Example URL: /story/felix-lyu/5618e70f-541d-40fe-a965-d425a47d5928
+      post_id = segments[3] // post_id
+    } else if (pathname.startsWith("/ai-apps/")) {
+      // Example URL: /ai-apps/chatgpt
+      app_slug = segments[2] // app_slug
+    }
+
+    if (post_id) {
+      // Update post analytics
+      event.waitUntil(
+        updatePostAnalytics(post_id)
+          // .then(() => {
+          //   console.log("View count incremented successfully")
+          // })
+          .catch((error) => {
+            console.error("Failed to increment post view count", error)
+          })
+      )
+    }
+
+    if (app_slug) {
+      // Update app analytics
+      event.waitUntil(
+        updateAppAnalytics(app_slug)
+          // .then(() => {
+          //   console.log("View count incremented successfully")
+          // })
+          .catch((error) => {
+            console.error("Failed to increment app view count", error)
+          })
+      )
+    }
   }
 
   return response
