@@ -15,9 +15,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     request.headers.get("Upgrade-Insecure-Requests") !== "1"
 
   // Check if the request is not a prefetch request
-  const isPrefetchRequest =
-    request.headers.get("x-middleware-prefetch") ||
-    request.headers.has("x-minecraft-game-prefixed")
+  const isPrefetchRequest = request.headers.get("x-middleware-prefetch")
 
   // Only update analytics for navigation requests that are not prefetch requests
   if (isNavigationRequest && !isPrefetchRequest) {
@@ -78,4 +76,14 @@ export const config = {
      */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
+  // matcher: [
+  //   {
+  //     source:
+  //       "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  //     missing: [
+  //       { type: "header", key: "next-router-prefetch" },
+  //       { type: "header", key: "purpose", value: "prefetch" },
+  //     ],
+  //   },
+  // ],
 }
