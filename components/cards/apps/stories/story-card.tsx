@@ -65,7 +65,10 @@ export const StoryCard: React.FC<StoryCardProps> = ({ post, user_id }) => {
               <div className=""></div>
             ) : (
               post.topics?.slice(0, 3).map((topic, index) => (
-                <Link href={`/stories/topics/${topic.topic_slug}`}>
+                <Link
+                  key={post.post_id + index}
+                  href={`/stories/topics/${topic.topic_slug}`}
+                >
                   <Badge
                     key={post.post_id + index}
                     variant={"outline"}

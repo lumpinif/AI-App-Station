@@ -15,8 +15,8 @@ export const CollectionsGrid: React.FC<CollectionsGridProps> = ({
       <div className="grid gap-4 p-2 py-4 sm:grid-cols-2 md:pr-4 lg:grid-cols-3 lg:gap-6 lg:pr-6">
         {collectionItems?.map((item, index) => (
           <Link
-            href={item.href}
             key={index}
+            href={item.href}
             className="w-fit transition-all duration-300 ease-out active:scale-[.98]"
           >
             <div className="flex items-center text-primary/90 transition-all duration-300 ease-out hover:text-primary">

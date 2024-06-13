@@ -18,7 +18,10 @@ export const StoryTopicsBadge: React.FC<StoryTopicsBadgeProps> = ({
       {topics.length > 0 ? (
         <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
           {topics.map((topic) => (
-            <Link href={`/stories/topics/${topic.topic_slug}`}>
+            <Link
+              key={topic.topic_id}
+              href={`/stories/topics/${topic.topic_slug}`}
+            >
               <Badge
                 variant={"outline"}
                 key={topic.topic_id}

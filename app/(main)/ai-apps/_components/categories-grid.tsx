@@ -19,8 +19,8 @@ export const CategoriesGrid: React.FC<CategoriesGridProps> = ({
       <div className="grid gap-4 p-2 sm:grid-cols-2 md:pr-4 lg:grid-cols-3 lg:gap-6 lg:pr-6">
         {categoryItems?.map((cat, index) => (
           <Link
-            href={`/ai-apps/categories/${cat.category_slug}`}
             key={index}
+            href={`/ai-apps/categories/${cat.category_slug}`}
             className="w-fit transition-all duration-300 ease-out active:scale-[.98]"
           >
             <div className="flex items-center text-primary/90 transition-all duration-300 ease-out hover:text-primary">

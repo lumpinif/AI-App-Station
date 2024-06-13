@@ -12,8 +12,8 @@ export const TopicsGrid: React.FC<TopicsGridProps> = ({ topics }) => {
       <div className="grid grid-cols-2 gap-4 p-2 md:pr-4 lg:grid-cols-3 lg:gap-6 lg:pr-6">
         {topics?.map((topic, index) => (
           <Link
-            href={`/stories/topics/${topic.topic_slug}`}
             key={index}
+            href={`/stories/topics/${topic.topic_slug}`}
             className="w-fit transition-all duration-300 ease-out active:scale-[.98]"
           >
             <div className="flex items-center text-primary/90 transition-all duration-300 ease-out hover:text-primary">
