@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import { Topics } from "@/types/db_tables"
 import { Badge } from "@/components/ui/badge"
 
@@ -16,13 +18,15 @@ export const StoryTopicsBadge: React.FC<StoryTopicsBadgeProps> = ({
       {topics.length > 0 ? (
         <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
           {topics.map((topic) => (
-            <Badge
-              variant={"outline"}
-              key={topic.topic_id}
-              className="text-sm font-normal text-muted-foreground dark:border-0 dark:shadow-outline"
-            >
-              {topic.topic_name}
-            </Badge>
+            <Link href={`/stories/topics/${topic.topic_slug}`}>
+              <Badge
+                variant={"outline"}
+                key={topic.topic_id}
+                className="text-sm font-normal text-muted-foreground hover:cursor-pointer active:scale-[.98] dark:border-0 dark:shadow-outline"
+              >
+                {topic.topic_name}
+              </Badge>
+            </Link>
           ))}
         </div>
       ) : null}

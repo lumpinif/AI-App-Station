@@ -65,13 +65,15 @@ export const StoryCard: React.FC<StoryCardProps> = ({ post, user_id }) => {
               <div className=""></div>
             ) : (
               post.topics?.slice(0, 3).map((topic, index) => (
-                <Badge
-                  key={post.post_id + index}
-                  variant={"outline"}
-                  className="select-none border-border/40 hover:border-border/0 hover:bg-card hover:shadow-outline"
-                >
-                  {topic.topic_name}
-                </Badge>
+                <Link href={`/stories/topics/${topic.topic_slug}`}>
+                  <Badge
+                    key={post.post_id + index}
+                    variant={"outline"}
+                    className="select-none border-border/40 hover:cursor-pointer hover:border-border/0 hover:bg-card hover:shadow-outline active:scale-[.98]"
+                  >
+                    {topic.topic_name}
+                  </Badge>
+                </Link>
               ))
             )}
           </div>
