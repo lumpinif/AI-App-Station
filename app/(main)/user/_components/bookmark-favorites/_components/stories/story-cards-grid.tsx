@@ -1,8 +1,7 @@
 import { User } from "@supabase/supabase-js"
 
+import { StoryCard } from "@/components/cards/apps/stories/story-card"
 import { getFavoritePosts } from "@/app/(main)/user/_server/favorites/data"
-
-import { FavoriteStoryCard } from "./favorite-story-card"
 
 type StoryCardsGridProps = {
   user_id: User["id"]
@@ -39,11 +38,7 @@ export const StoryCardsGrid: React.FC<StoryCardsGridProps> = async ({
       {favoritePosts.map((favorite) => {
         if (!favorite) return null // Type guard to handle potential null values
         return (
-          <FavoriteStoryCard
-            key={favorite.post_id}
-            favoritePost={favorite}
-            user_id={user_id}
-          />
+          <StoryCard post={favorite} user_id={user_id} key={favorite.post_id} />
         )
       })}
     </div>

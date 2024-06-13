@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { getAllCategories } from "@/server/data/supabase-actions"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"

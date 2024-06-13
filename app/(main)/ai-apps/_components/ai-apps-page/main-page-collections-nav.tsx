@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { BoxSelect } from "lucide-react"
 
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 import { Separator } from "@/components/ui/separator"

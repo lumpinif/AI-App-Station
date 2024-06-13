@@ -164,6 +164,7 @@ export async function getFavoritePosts(
   const collection =
     collectionType === "bookmark" ? "post_bookmarks" : "post_likes"
 
+  // TODO: CONSIDER FETCH ALL FAVORITES POSTS IN ONE QUERY
   try {
     const { data: favoritePostIds, error: getFavoritePostIdsError } =
       await supabase

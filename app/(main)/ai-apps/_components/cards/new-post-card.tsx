@@ -82,7 +82,7 @@ const ImageText = ({
     >
       <span className="flex flex-col space-y-2">
         <span className="text-xs font-medium uppercase leading-none tracking-wide text-primary mix-blend-difference md:text-sm">
-          {post_label} what to watch
+          {post_label}
         </span>
         <span className="w-full text-wrap text-2xl font-semibold leading-none 2xl:text-3xl">
           {post_title}

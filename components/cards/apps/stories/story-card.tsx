@@ -9,19 +9,14 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
 import { AuthorCard } from "@/app/(main)/story/_components/story-author-card"
 
-import { FavoriteStoryCardDropdown } from "./favorite-story-card-dropdown"
+import { StoryCardDropDown } from "./story-card-dropdown"
 
-type FavoriteStoryCardProps = {
+type StoryCardProps = {
+  post: PostDetails
   user_id: User["id"]
-  favoritePost: PostDetails
 }
 
-export const FavoriteStoryCard: React.FC<FavoriteStoryCardProps> = ({
-  user_id,
-  favoritePost,
-}) => {
-  const { ...post } = favoritePost
-
+export const StoryCard: React.FC<StoryCardProps> = ({ post, user_id }) => {
   const contentPreview = getPostContentPreview(
     post.post_content as JSONContent,
     40
@@ -37,7 +32,7 @@ export const FavoriteStoryCard: React.FC<FavoriteStoryCardProps> = ({
           <Image
             fill
             alt={"Feature Image"}
-            src={"/images/Feature-thumbnail.png"}
+            src={post.post_image_src || "/images/Feature-thumbnail.png"}
             className={cn("rounded-lg object-cover object-center")}
           />
         </AspectRatio>
@@ -65,21 +60,23 @@ export const FavoriteStoryCard: React.FC<FavoriteStoryCardProps> = ({
 
         {/* Topics and Actions */}
         <span className="flex w-full items-center justify-between">
-          {!post.topics?.length ? (
-            <div className=""></div>
-          ) : (
-            post.topics?.slice(0, 3).map((topic, index) => (
-              <Badge
-                key={post.post_id + index}
-                variant={"outline"}
-                className="border-border/40 hover:border-border/0 hover:bg-card hover:shadow-outline"
-              >
-                {topic.topic_name}
-              </Badge>
-            ))
-          )}
+          <div className="flex items-center gap-x-2">
+            {!post.topics?.length ? (
+              <div className=""></div>
+            ) : (
+              post.topics?.slice(0, 3).map((topic, index) => (
+                <Badge
+                  key={post.post_id + index}
+                  variant={"outline"}
+                  className="select-none border-border/40 hover:border-border/0 hover:bg-card hover:shadow-outline"
+                >
+                  {topic.topic_name}
+                </Badge>
+              ))
+            )}
+          </div>
 
-          <FavoriteStoryCardDropdown
+          <StoryCardDropDown
             user_id={user_id}
             post_id={post.post_id}
             post_likes={post.post_likes}

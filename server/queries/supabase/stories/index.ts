@@ -1,12 +1,11 @@
 "use server"
 
-import { unstable_noStore as noStore, revalidatePath } from "next/cache"
-import { getUserData, getUserProfile } from "@/server/auth"
+import { unstable_noStore as noStore } from "next/cache"
+import { getUserData } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { PostDetails, Posts, PostWithProfile } from "@/types/db_tables"
+import { PostDetails, Posts, PostWithProfile, Topics } from "@/types/db_tables"
 import { getErrorMessage } from "@/lib/handle-error"
-import { getPostAuthorSlug } from "@/lib/utils"
 
 type getAllPostsProps = {
   is_hero_featured?: boolean
@@ -79,4 +78,48 @@ export async function createNewPost() {
     .single<PostWithProfile>()
 
   return { newStory, error }
+}
+
+export async function getAllTopics() {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: topics, error } = await supabase.from("topics").select("*")
+
+  // error handling
+  if (error) return { error: getErrorMessage(error) }
+
+  return { topics, error }
+}
+
+export async function getTopicBySlug(topic_slug: Topics["topic_slug"]) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: topic, error } = await supabase
+    .from("topics")
+    .select("*")
+    .eq("topic_slug", topic_slug)
+
+  // error handling
+  if (error) return { error: getErrorMessage(error) }
+
+  return { topic, error }
+}
+
+export async function getPostByTopicSlug(topic_slug: Topics["topic_slug"]) {
+  const supabase = await createSupabaseServerClient()
+
+  let { data: posts, error } = await supabase
+    .from("posts")
+    .select(
+      `*, categories(*), topics!inner(*), profiles(*), post_likes(*), post_bookmarks(*)`
+    )
+    .eq("post_publish_status", "published")
+    .eq("topics.topic_slug", topic_slug)
+    .order("likes_count", { ascending: false })
+    .returns<PostDetails[]>()
+
+  // error handling
+  if (error) return { posts: null, error: getErrorMessage(error) }
+
+  return { posts, error }
 }

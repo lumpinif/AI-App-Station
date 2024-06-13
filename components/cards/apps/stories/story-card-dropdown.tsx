@@ -24,16 +24,19 @@ import {
 import { LikeHeart } from "@/components/shared/like-heart"
 import { StoryShareButton } from "@/app/(main)/story/_components/story-share-button"
 
-type FavoriteStoryCardDropdownProps = {
+type StoryCardDropDownProps = {
   user_id: User["id"]
   post_id: Posts["post_id"]
   post_likes: Post_likes[]
   authorProfile: Profiles
 }
 
-export const FavoriteStoryCardDropdown: React.FC<
-  FavoriteStoryCardDropdownProps
-> = ({ user_id, post_id, post_likes, authorProfile }) => {
+export const StoryCardDropDown: React.FC<StoryCardDropDownProps> = ({
+  user_id,
+  post_id,
+  post_likes,
+  authorProfile,
+}) => {
   const [showShareDialog, setShowShareDialog] = useState(false)
   const { optimisticLikeState, handleLikes, isPending } = useStoryLike(
     user_id,
