@@ -30,7 +30,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({
             class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
           },
         }}
-        slotAfter={<ImageResizer />}
+        // slotAfter={<ImageResizer />}
       >
         {children}
       </EditorContent>
