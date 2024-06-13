@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils"
 import BackButton from "@/components/shared/back-button"
 
-import { ImageElement } from "../../_components/cards/new-post-card"
+import { ImageElement } from "../../_components/cards/post-card"
 
 type AppDetailHeroImageProps = { className?: string }
 
@@ -24,7 +24,7 @@ export const AppDetailHeroImage: React.FC<AppDetailHeroImageProps> = ({
           className="select-none rounded-none"
         />
       </div>
-      <div className="absolute bottom-0 w-fit rounded-tr-lg  bg-background p-1 px-2">
+      <div className="absolute bottom-0 w-fit rounded-tr-lg bg-background p-1 px-2">
         <span className="select-none text-xs font-medium tracking-wide text-muted-foreground">
           Featured
         </span>

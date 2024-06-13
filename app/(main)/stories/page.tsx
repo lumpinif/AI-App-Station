@@ -4,6 +4,7 @@ import { PageTitle } from "@/components/layout/page-title"
 import LoadingFallback from "@/components/shared/loading-fallback"
 
 import { FeaturedStoriesCarousel } from "./_components/post-carousel/featured-stories-carousel"
+import { StoriesCarouselLayout } from "./_components/post-carousel/stories-carousel-layout"
 import { StoriesPageTopicNav } from "./_components/topics/stories-page-topic-nav"
 
 export default function StoriesPage() {
@@ -21,6 +22,10 @@ export default function StoriesPage() {
 
       <Suspense fallback={<LoadingFallback />}>
         <StoriesPageTopicNav />
+      </Suspense>
+
+      <Suspense fallback={<LoadingFallback />}>
+        <StoriesCarouselLayout />
       </Suspense>
     </section>
   )

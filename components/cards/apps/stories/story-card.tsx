@@ -31,7 +31,7 @@ export const StoryCard: React.FC<StoryCardProps> = ({ post, user_id }) => {
         <AspectRatio ratio={16 / 9} className="rounded-lg shadow-md">
           <Image
             fill
-            alt={"Feature Image"}
+            alt={`Story ${post.post_slug} thumbnail image`}
             src={post.post_image_src || "/images/Feature-thumbnail.png"}
             className={cn("rounded-lg object-cover object-center")}
           />

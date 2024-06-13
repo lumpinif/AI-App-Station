@@ -1,14 +1,21 @@
 import moment from "moment"
 
 import { Posts } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 
 type StoryPublishInfoProps = {
+  className?: string
+  publishStatusCN?: string
+  showStatusLable?: boolean
   post_created_at: Posts["created_at"]
   post_publish_status: Posts["post_publish_status"]
 }
 
 export const StoryPublishInfo: React.FC<StoryPublishInfoProps> = ({
+  className,
+  publishStatusCN,
   post_created_at,
+  showStatusLable = true,
   post_publish_status,
 }) => {
   let statusText
@@ -30,17 +37,17 @@ export const StoryPublishInfo: React.FC<StoryPublishInfoProps> = ({
   }
 
   return (
-    <>
-      <div className="flex flex-col gap-y-2">
+    <div className={cn("flex flex-col gap-y-2", className)}>
+      {showStatusLable && (
         <p className="text-xs text-muted-foreground sm:text-sm">
           {post_publish_status === "published" ? "Published on" : "Status"}
         </p>
-        <p className="py-2 font-medium text-primary">
-          {post_publish_status === "published"
-            ? moment(post_created_at).format("MMM Do YYYY")
-            : statusText}
-        </p>
-      </div>
-    </>
+      )}
+      <p className={cn("py-2 font-medium text-primary", publishStatusCN)}>
+        {post_publish_status === "published"
+          ? moment(post_created_at).format("MMM Do YYYY")
+          : statusText}
+      </p>
+    </div>
   )
 }

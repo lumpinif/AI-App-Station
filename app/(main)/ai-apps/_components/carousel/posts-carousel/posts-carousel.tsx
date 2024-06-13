@@ -5,7 +5,7 @@ import { EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { PostWithProfile } from "@/types/db_tables"
+import { PostDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
 import {
@@ -17,16 +17,19 @@ import {
   CarouselThumbsContainer,
   SliderMainItem,
 } from "@/components/ui/extended-carousel"
+import { IosStylePostCard } from "@/app/(main)/stories/_components/post-carousel/ios-style-post-card"
 
-import { PostCard } from "../../cards/new-post-card"
+import { PostCard } from "../../cards/post-card"
 
 type PostsCarouselProps = {
   title?: string
   className?: string
   isAutpPlay?: boolean
   containerCN?: string
+  error?: string | null
   isIndicator?: boolean
-  posts: PostWithProfile[]
+  postCardVariant?: string
+  posts: PostDetails[]
   isWheelGestures?: boolean
 }
 
@@ -38,6 +41,8 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
   isIndicator,
   containerCN,
   isWheelGestures,
+  postCardVariant,
+  error: fetchError,
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const { isMobile } = useMediaQuery()
@@ -57,8 +62,15 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
 
   if (!posts.length)
     return (
-      <div className="text-center text-muted-foreground">
-        No data to display for {title} right now please come back later.
+      <div className="mb-4 flex flex-col gap-y-4">
+        <div className="mx-auto w-fit rounded-2xl border p-4 text-center text-xs text-muted-foreground">
+          Sorry, we currently got nothing to show for
+          <h2 className="page-title-font text-base">{title}</h2> It should be
+          fixed shortly, please come back later
+        </div>
+        <p className="text-center text-xs text-muted-foreground">
+          {fetchError && `Error: ${fetchError}`}
+        </p>
       </div>
     )
 
@@ -85,11 +97,13 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
               key={index}
               className={cn("bg-transparent", className)}
             >
-              <div className="relative flex size-full items-center justify-center rounded-2xl bg-card">
-                <PostCard
-                  post={post}
-                  // post_image_src={`https://picsum.photos/600/350?v=${index}`}
-                />
+              <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                {postCardVariant === "hero" ? (
+                  <PostCard post={post} />
+                ) : (
+                  // <PostCarouselCard post={post} />
+                  <IosStylePostCard post={post} />
+                )}
               </div>
             </SliderMainItem>
           ))}

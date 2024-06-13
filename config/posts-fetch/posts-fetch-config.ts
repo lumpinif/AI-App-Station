@@ -28,18 +28,20 @@ const postFetchConfig: PostFetchConfig[] = [
     innerJoinTables: [],
   },
   {
-    title: "Featured Stories",
+    title: "Newest Added",
+
     order: [
       {
-        column: "likes_count",
+        column: "created_at",
         options: { ascending: false },
       },
     ],
+
     limit: {
       limit: 15,
     },
     filters: [],
-    innerJoinTables: ["post_likes"],
+    innerJoinTables: [],
   },
   {
     title: "Most Popular",
@@ -59,22 +61,7 @@ const postFetchConfig: PostFetchConfig[] = [
     filters: [],
     innerJoinTables: [],
   },
-  {
-    title: "Newest Added",
 
-    order: [
-      {
-        column: "created_at",
-        options: { ascending: false },
-      },
-    ],
-
-    limit: {
-      limit: 15,
-    },
-    filters: [],
-    innerJoinTables: [],
-  },
   // Add more configurations as needed
 ]
 

@@ -5,15 +5,17 @@ import { cn } from "@/lib/utils"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 
 type StoryContentHeroImageProps = {
+  className?: string
   post_image_src: Posts["post_image_src"]
 }
 
 export const StoryContentHeroImage: React.FC<StoryContentHeroImageProps> = ({
+  className,
   post_image_src,
 }) => {
   if (!post_image_src || post_image_src === "") return null
   return (
-    <div className="mx-auto my-5 mb-10 max-w-5xl">
+    <div className={cn("mx-auto my-5 mb-10 max-w-5xl", className)}>
       <AspectRatio ratio={16 / 9} className="relative">
         <Image
           fill

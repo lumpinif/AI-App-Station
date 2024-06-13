@@ -6,7 +6,7 @@ import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 
-import { AppDetails, AppWithCategories } from "@/types/db_tables"
+import { AppDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import {
   Carousel,
@@ -16,7 +16,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Separator } from "@/components/ui/separator"
-import { FavoriteAppCard } from "@/app/(main)/user/_components/bookmark-favorites/_components/apps/favorite-app-card"
 
 import AppCarouselCard from "../../cards/app-carousel-card"
 import { AppFeaturedCard } from "../../cards/app-featured-card"

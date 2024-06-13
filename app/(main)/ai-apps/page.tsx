@@ -69,6 +69,7 @@ const AIAppsMainPage = async () => {
         isAutpPlay={true}
         isIndicator={true}
         isWheelGestures={true}
+        postCardVariant="hero"
         containerCN="h-[30rem]"
       />
 
@@ -83,7 +84,11 @@ const AIAppsMainPage = async () => {
       <Suspense fallback={<LoadingFallback />}>
         <AppCardsCarouselLayout user={user} indexToInsert={2}>
           {/* All Posts Carousel */}
-          <PostsCarousel posts={allPosts} className="md:basis-1/2" />
+          <PostsCarousel
+            posts={allPosts}
+            postCardVariant="hero"
+            className="md:basis-1/2"
+          />
         </AppCardsCarouselLayout>
       </Suspense>
     </section>
