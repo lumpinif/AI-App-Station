@@ -35,9 +35,9 @@ export default async function UserLayout({
   return (
     <main className="container relative h-full md:pt-4">
       <ResizeableSideBar
+        navCollapsedSize={5}
         defaultLayout={defaultLayout}
         defaultCollapsed={defaultCollapsed}
-        navCollapsedSize={5}
       >
         <ScrollArea className="h-[calc(100svh-6rem)] w-full pr-1 sm:pr-2">
           <UserPagesWrapper>{children}</UserPagesWrapper>
