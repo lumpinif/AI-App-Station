@@ -15,9 +15,10 @@ import { PostFetchConfig } from "@/types/fetch-configs/types-post-fetch-config"
 const postFetchConfig: PostFetchConfig[] = [
   {
     title: "Trending",
+    // TODO: CHECK THE FETCH CONFIG LOGIC
     order: [
       {
-        column: "likes_count",
+        column: "views_count",
         options: { ascending: false },
       },
     ],

@@ -18,6 +18,7 @@ import {
   SliderMainItem,
 } from "@/components/ui/extended-carousel"
 import { IosStylePostCard } from "@/app/(main)/stories/_components/post-carousel/ios-style-post-card"
+import { PostCarouselCard } from "@/app/(main)/stories/_components/post-carousel/post-carousel-card"
 
 import { PostCard } from "../../cards/post-card"
 

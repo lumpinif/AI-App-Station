@@ -76,6 +76,7 @@
     "embla-carousel-autoplay": "^8.1.3",
     "embla-carousel-react": "^8.1.3",
     "embla-carousel-wheel-gestures": "8.0.1",
+    "fast-average-color": "^9.4.0",
     "framer-motion": "^11.2.10",
     "geist": "^1.3.0",
     "lodash": "^4.17.21",
