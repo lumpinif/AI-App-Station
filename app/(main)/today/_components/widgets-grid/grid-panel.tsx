@@ -6,6 +6,7 @@ import { stagger, useAnimate } from "framer-motion"
 import { siteConfig } from "@/config/dummy-config"
 import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
+import LoadingFallback from "@/components/shared/loading-fallback"
 
 import Equipments from "../bento-grid/2-panels/equipments"
 import WidgetItem from "./widget-item"
@@ -42,7 +43,7 @@ const GridPanel = () => {
       className="grid w-full auto-rows-[192px] grid-cols-3 gap-6 bg-blue-200/20 py-6"
     >
       <WidgetItem>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<LoadingFallback />}>
           {/* <UserCard className="hover:bg-card-hover" /> */}
         </Suspense>
       </WidgetItem>

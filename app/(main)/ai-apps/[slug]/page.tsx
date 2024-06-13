@@ -11,7 +11,7 @@ import { SearchParams } from "@/types/data-table"
 import { App_Comments } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import LoadingFallback from "@/components/shared/loading-fallback"
 
 import { AppIcon } from "../_components/cards/_components/app-icon"
 import { AppTitleWithDescription } from "../_components/cards/_components/app-title-description"
@@ -168,7 +168,7 @@ export default async function AiAppsMainPage({
 
             <AppDetailReviews {...ratingData} />
 
-            <Suspense fallback={<LoadingSpinner />}>
+            <Suspense fallback={<LoadingFallback />}>
               <AppDetailCommentSection
                 user={user}
                 app_id={app.app_id}

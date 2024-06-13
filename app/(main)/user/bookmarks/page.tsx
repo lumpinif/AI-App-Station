@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { getUserData } from "@/server/auth"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import LoadingFallback from "@/components/shared/loading-fallback"
 
 import { AppCardsGrid } from "../_components/bookmark-favorites/_components/apps/app-cards-grid"
 import { StoryCardsGrid } from "../_components/bookmark-favorites/_components/stories/story-cards-grid"
@@ -32,7 +32,7 @@ export default async function BookmarksPage() {
           value="apps"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<LoadingFallback />}>
             <AppCardsGrid user_id={user.id} collectionType="bookmark" />
           </Suspense>
         </TabsContent>
@@ -40,7 +40,7 @@ export default async function BookmarksPage() {
           value="stories"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<LoadingFallback />}>
             <StoryCardsGrid user_id={user.id} collectionType="bookmark" />
           </Suspense>
         </TabsContent>

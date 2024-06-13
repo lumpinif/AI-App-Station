@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 
 import { PageTitle } from "@/components/layout/page-title"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import LoadingFallback from "@/components/shared/loading-fallback"
 
 import { FeaturedStoriesCarousel } from "./_components/post-carousel/featured-stories-carousel"
 import { StoriesPageTopicNav } from "./_components/topics/stories-page-topic-nav"
@@ -15,11 +15,11 @@ export default function StoriesPage() {
         title="Browse Stories"
         subtitle="Discover brilliant stories written by the community"
       />
-      <Suspense fallback={<LoadingSpinner className="size-4" />}>
+      <Suspense fallback={<LoadingFallback />}>
         <FeaturedStoriesCarousel />
       </Suspense>
 
-      <Suspense fallback={<LoadingSpinner className="size-4" />}>
+      <Suspense fallback={<LoadingFallback />}>
         <StoriesPageTopicNav />
       </Suspense>
     </section>

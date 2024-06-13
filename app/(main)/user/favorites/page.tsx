@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { getUserData } from "@/server/auth"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import LoadingFallback from "@/components/shared/loading-fallback"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import { AppCardsGrid } from "../_components/bookmark-favorites/_components/apps/app-cards-grid"
@@ -33,7 +34,7 @@ export default async function FavoritesPage() {
           value="apps"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<LoadingFallback />}>
             <AppCardsGrid user_id={user.id} />
           </Suspense>
         </TabsContent>
@@ -41,7 +42,7 @@ export default async function FavoritesPage() {
           value="stories"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
         >
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<LoadingFallback />}>
             <StoryCardsGrid user_id={user.id} />
           </Suspense>
         </TabsContent>

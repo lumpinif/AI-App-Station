@@ -3,6 +3,8 @@ import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAllPosts } from "@/server/data"
 
+import LoadingFallback from "@/components/shared/loading-fallback"
+
 import AiAppsPagesTitle from "./_components/ai-apps-page-title"
 import { AppCardsCarouselLayout } from "./_components/ai-apps-page/app-cards-carousel-layout.tsx"
 import { MainPageCategoriesNav } from "./_components/ai-apps-page/main-page-categories-nav"
@@ -72,12 +74,12 @@ const AIAppsMainPage = async () => {
       <MainPageCollectionsNav />
 
       {/* TODO: UPDATE THE LOADING SKELETON */}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingFallback />}>
         <MainPageCategoriesNav />
       </Suspense>
 
       {/* TODO: UPDATE THE LOADING SKELETON */}
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingFallback />}>
         <AppCardsCarouselLayout user={user} indexToInsert={2}>
           {/* All Posts Carousel */}
           <PostsCarousel posts={allPosts} className="md:basis-1/2" />
