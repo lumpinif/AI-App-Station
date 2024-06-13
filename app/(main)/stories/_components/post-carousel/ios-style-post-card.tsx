@@ -26,8 +26,10 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({ post }) => {
 
   if (isLoading) {
     return (
-      <div className="relative flex h-[430px] w-full select-none items-center justify-center overflow-hidden outline-none">
-        <LoadingSpinner />
+      <div className="size-full overflow-hidden">
+        <div className="relative flex h-[430px] select-none items-center justify-center overflow-hidden outline-none">
+          <LoadingSpinner className="mx-auto my-auto w-fit" />
+        </div>
       </div>
     )
   }
@@ -65,7 +67,7 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({ post }) => {
           <div className="px-4 pt-0">
             <h2
               className={cn(
-                "max-w-40 text-left text-4xl font-extrabold uppercase leading-none text-primary drop-shadow-2xl sm:max-w-52",
+                "max-w-32 text-left text-4xl font-extrabold uppercase leading-none text-primary drop-shadow-2xl sm:max-w-52",
                 color.isDark ? "text-white" : "text-zinc-900"
               )}
             >
