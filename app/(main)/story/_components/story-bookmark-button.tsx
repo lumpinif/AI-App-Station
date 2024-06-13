@@ -3,13 +3,13 @@
 import { User } from "@supabase/supabase-js"
 import { Bookmark } from "lucide-react"
 
-import { Post_Bookmarks, Posts } from "@/types/db_tables"
+import { Post_bookmarks, Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { useStoryBookmark } from "@/hooks/story/use-story-bookmark"
 
 type StoryBookmarkProps = {
   post_id: Posts["post_id"]
-  data: Post_Bookmarks[]
+  data: Post_bookmarks[]
   className?: string
   user: User | null
 }

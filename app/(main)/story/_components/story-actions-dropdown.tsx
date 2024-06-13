@@ -3,7 +3,7 @@
 import { User } from "@supabase/supabase-js"
 import { Ellipsis, FlagTriangleRight, SquarePen } from "lucide-react"
 
-import { Post_Bookmarks, Post_likes, Posts, Profiles } from "@/types/db_tables"
+import { Post_bookmarks, Post_likes, Posts, Profiles } from "@/types/db_tables"
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import {
@@ -26,7 +26,7 @@ type StoryActionsDropDownProps = {
   post_likes: Post_likes[]
   post_id: Posts["post_id"]
   post_title: Posts["post_title"]
-  post_bookmarks: Post_Bookmarks[]
+  post_bookmarks: Post_bookmarks[]
   comments_count: Posts["comments_count"]
   post_publish_status: Posts["post_publish_status"]
 }

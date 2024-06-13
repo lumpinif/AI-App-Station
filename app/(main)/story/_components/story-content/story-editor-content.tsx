@@ -6,7 +6,7 @@ import { JSONContent } from "novel"
 
 import {
   Categories,
-  Post_Bookmarks,
+  Post_bookmarks,
   Post_likes,
   Posts,
   Profiles,
@@ -34,7 +34,7 @@ type StoryEditorContentProps = {
   post_id: Posts["post_id"]
   post_title: Posts["post_title"]
   created_at: Posts["created_at"]
-  post_bookmarks: Post_Bookmarks[]
+  post_bookmarks: Post_bookmarks[]
   postCategories?: Categories[]
   comments_count: Posts["comments_count"]
   post_description: Posts["post_description"]

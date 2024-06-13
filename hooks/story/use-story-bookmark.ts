@@ -5,7 +5,7 @@ import { User } from "@supabase/supabase-js"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { Post_Bookmarks, Posts } from "@/types/db_tables"
+import { Post_bookmarks, Posts } from "@/types/db_tables"
 import { BookmarkState } from "@/types/shared"
 
 import useAccountModal from "../use-account-modal-store"
@@ -13,7 +13,7 @@ import useAccountModal from "../use-account-modal-store"
 export const useStoryBookmark = (
   user: User | null,
   post_id: Posts["post_id"],
-  post_bookmarks: Post_Bookmarks[]
+  post_bookmarks: Post_bookmarks[]
 ) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()

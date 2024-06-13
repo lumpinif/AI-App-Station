@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import { getAppsByConfig } from "@/server/queries/supabase/apps"
+import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 import { User } from "@supabase/supabase-js"
 
 import appFetchConfig from "@/config/apps-fetch/apps-fetch-config"

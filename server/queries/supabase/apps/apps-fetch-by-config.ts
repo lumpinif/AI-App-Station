@@ -102,10 +102,7 @@ export async function getAppsByConfig<T extends AppRefrencedTables>({
     await query.returns<AppDetails[]>()
 
   if (getAppsByConfigError) {
-    console.error(
-      "Error fetching apps by category",
-      getAppsByConfigError.message
-    )
+    console.error("Error fetching apps by config", getAppsByConfigError.message)
     return { getAppsByConfigError: getAppsByConfigError.message }
   }
 

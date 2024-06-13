@@ -45,12 +45,23 @@ export type Developers = Tables<"developers">
 export type Topics = Tables<"topics">
 
 // Post related tables
+
+export type PostRefrencedTables = Extract<
+  Table,
+  | "topics"
+  | "profiles"
+  | "post_likes"
+  | "categories"
+  | "post_comments"
+  | "post_bookmarks"
+>
+
 export type Post_Comment_likes = Tables<"post_comment_likes">
 export type Post_Comments = Tables<"post_comments">
 export type Post_likes = Tables<"post_likes">
 export type Posts = Tables<"posts">
 export type Posts_Categories = Tables<"posts_categories">
-export type Post_Bookmarks = Tables<"post_bookmarks">
+export type Post_bookmarks = Tables<"post_bookmarks">
 
 // Profile and user collection tables
 export type Profiles = Tables<"profiles">
@@ -110,8 +121,14 @@ export type PostDetails = Posts &
   PostWithTopics &
   PostWithCategoriesAndProfiles & {
     post_likes: Post_likes[]
-    post_bookmarks: Post_Bookmarks[]
+    post_bookmarks: Post_bookmarks[]
   }
+
+export type PostRefrencedFields = {
+  profiles: Profiles
+  post_likes: Post_likes[]
+  post_bookmarks: Post_bookmarks[]
+}
 
 // Comment related types
 export type CommentWithProfile = App_Comments &

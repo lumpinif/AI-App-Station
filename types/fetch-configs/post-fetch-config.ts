@@ -1,6 +1,6 @@
-import { AppDetailsSelectFields } from "@/server/queries/supabase/apps/apps-fetch-by-config"
+import { PostDetailsSelectFields } from "@/server/queries/supabase/stories/posts-fetch-by-config"
 
-import { AppRefrencedTables, Apps } from "../db_tables"
+import { PostRefrencedTables, Posts } from "../db_tables"
 
 /*
   Filters
@@ -37,16 +37,16 @@ type Supabase_Operators =
   | "contains"
   | "containedBy"
 
-// TODO: CONSIDER TYPE SAFETY FOR column it can be for example "likes_count" or "apps.app_id"
+// TODO: CONSIDER TYPE SAFETY FOR column it can be for example "likes_count" or "posts.post_id"
 type FilterType = {
-  column: keyof Apps & string
+  column: keyof Posts & string
   operator: Supabase_Operators
   value: any
 }
 
 type Order = {
-  column: keyof Apps & string
-  options: { referencedTable?: AppRefrencedTables; ascending: boolean }
+  column: keyof Posts & string
+  options: { referencedTable?: PostRefrencedTables; ascending: boolean }
 }
 
 type Limit = {
@@ -67,11 +67,11 @@ type Or = {
   }
 }
 
-export type AppFetchConfig = {
+export type PostFetchConfig = {
   title: string
   order: Order[]
   limit?: Limit
   filters?: FilterType[]
   orFilters?: Or[]
-  innerJoinTables?: AppDetailsSelectFields[]
+  innerJoinTables?: PostDetailsSelectFields[]
 }
