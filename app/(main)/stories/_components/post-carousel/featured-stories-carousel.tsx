@@ -43,6 +43,7 @@ export const FeaturedStoriesCarousel: React.FC<
         isIndicator={true}
         isWheelGestures={true}
         title="Featured Stories"
+        containerCN="h-[30rem]"
       />
     </>
   )

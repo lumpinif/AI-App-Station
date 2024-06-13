@@ -69,6 +69,7 @@ const AIAppsMainPage = async () => {
         isAutpPlay={true}
         isIndicator={true}
         isWheelGestures={true}
+        containerCN="h-[30rem]"
       />
 
       <MainPageCollectionsNav />

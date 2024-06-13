@@ -24,6 +24,7 @@ type PostsCarouselProps = {
   title?: string
   className?: string
   isAutpPlay?: boolean
+  containerCN?: string
   isIndicator?: boolean
   posts: PostWithProfile[]
   isWheelGestures?: boolean
@@ -35,6 +36,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
   className,
   isAutpPlay,
   isIndicator,
+  containerCN,
   isWheelGestures,
 }) => {
   const [isHovered, setIsHovered] = useState(false)
@@ -77,7 +79,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
       }}
     >
       <div className="relative">
-        <CarouselMainContainer className="h-96 space-x-4">
+        <CarouselMainContainer className={cn("h-96 space-x-4", containerCN)}>
           {posts.map((post, index) => (
             <SliderMainItem
               key={index}
