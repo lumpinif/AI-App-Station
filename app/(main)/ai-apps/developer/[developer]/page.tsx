@@ -1,5 +1,5 @@
 import { getUserData } from "@/server/auth"
-import { getAppsByConfig } from "@/server/queries/supabase/apps"
+import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 import { getDeveloper } from "@/server/queries/supabase/developer"
 
 import { Developers } from "@/types/db_tables"
