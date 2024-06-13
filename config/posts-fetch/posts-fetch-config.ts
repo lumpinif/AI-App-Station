@@ -1,6 +1,6 @@
 // postFetchConfig.ts
 
-import { PostFetchConfig } from "@/types/fetch-configs/post-fetch-config"
+import { PostFetchConfig } from "@/types/fetch-configs/types-post-fetch-config"
 
 /**
  * Documentation of the useage of postFetchConfig

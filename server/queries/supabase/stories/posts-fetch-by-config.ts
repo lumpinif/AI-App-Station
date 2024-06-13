@@ -11,7 +11,7 @@ import {
   PostWithTopicsAndCategories,
   TableColumns,
 } from "@/types/db_tables"
-import { PostFetchConfig } from "@/types/fetch-configs/post-fetch-config"
+import { PostFetchConfig } from "@/types/fetch-configs/types-post-fetch-config"
 import { Tables } from "@/types/supabase"
 
 // stay here

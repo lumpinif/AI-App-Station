@@ -9,7 +9,7 @@ import {
   AppWithCategoriesAndDevelopers,
   TableColumns,
 } from "@/types/db_tables"
-import { AppFetchConfig } from "@/types/fetch-configs/app-fetch-config"
+import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
 import { Tables } from "@/types/supabase"
 
 // stay here

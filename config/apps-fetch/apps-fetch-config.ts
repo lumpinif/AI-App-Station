@@ -1,6 +1,6 @@
 // appFetchConfig.ts
 
-import { AppFetchConfig } from "@/types/fetch-configs/app-fetch-config"
+import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
 
 /**
  * Documentation of the useage of appFetchConfig
