@@ -11,11 +11,13 @@ type AiAppsPageTitleProps = {
   subtitle?: string
   isLayout?: boolean
   className?: string
+  children?: React.ReactNode
   subtitlePos?: "top" | "bottom"
 }
 
 const AiAppsPagesTitle = ({
   subtitle,
+  children,
   className,
   subtitlePos,
   title = "Apps",
@@ -33,11 +35,13 @@ const AiAppsPagesTitle = ({
       )}
     >
       <PageTitle
-        title={title}
         href={href}
+        title={title}
         subtitle={subtitle}
         subtitlePos={subtitlePos}
-      />
+      >
+        {children}
+      </PageTitle>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAllPosts } from "@/server/data"
@@ -10,6 +11,7 @@ import { AppCardsCarouselLayout } from "./_components/ai-apps-page/app-cards-car
 import { MainPageCategoriesNav } from "./_components/ai-apps-page/main-page-categories-nav"
 import { MainPageCollectionsNav } from "./_components/ai-apps-page/main-page-collections-nav"
 import PostsCarousel from "./_components/carousel/posts-carousel/posts-carousel"
+import { SeeAllButton } from "./_components/see-all-button"
 
 const fetchPosts = async ({
   is_hero_featured,
@@ -56,11 +58,17 @@ const AIAppsMainPage = async () => {
   return (
     <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
       <AiAppsPagesTitle
-        className="sm:mb-2"
+        className=""
         subtitlePos="bottom"
         title="Browse AI Apps"
         subtitle="Discover AI apps submitted by the community"
-      />
+      >
+        <SeeAllButton
+          href="/ai-apps/all"
+          buttonTitle={"See All Apps"}
+          className="hidden sm:flex"
+        />
+      </AiAppsPagesTitle>
 
       {/* Hero Posts Carousel */}
       <PostsCarousel
@@ -70,7 +78,6 @@ const AIAppsMainPage = async () => {
         isIndicator={true}
         isWheelGestures={true}
         postCardVariant="hero"
-        containerCN="h-[30rem]"
       />
 
       <MainPageCollectionsNav />
@@ -86,11 +93,17 @@ const AIAppsMainPage = async () => {
           {/* All Posts Carousel */}
           <PostsCarousel
             posts={allPosts}
-            postCardVariant="hero"
+            postCardVariant="md:basis-1/2"
             className="md:basis-1/2"
           />
         </AppCardsCarouselLayout>
       </Suspense>
+
+      <SeeAllButton
+        href="/ai-apps/all"
+        className="ml-auto"
+        buttonTitle={"See All Apps"}
+      />
     </section>
   )
 }

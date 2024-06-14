@@ -24,6 +24,7 @@ import { PostCard } from "../../cards/post-card"
 
 type PostsCarouselProps = {
   title?: string
+  isLoop?: boolean
   className?: string
   posts: PostDetails[]
   isAutpPlay?: boolean
@@ -41,6 +42,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
   isAutpPlay,
   isIndicator,
   containerCN,
+  isLoop = true,
   isWheelGestures,
   postCardVariant,
   error: fetchError,
@@ -78,7 +80,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
   return (
     <Carousel
       carouselOptions={{
-        loop: true,
+        loop: isLoop,
         align: "start",
         duration: 25,
         dragThreshold: 5,
@@ -92,7 +94,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
       }}
     >
       <div className="relative">
-        <CarouselMainContainer className={cn("h-96 space-x-4", containerCN)}>
+        <CarouselMainContainer className={cn("h-fit space-x-4", containerCN)}>
           {posts.map((post, index) => (
             <SliderMainItem
               key={index}

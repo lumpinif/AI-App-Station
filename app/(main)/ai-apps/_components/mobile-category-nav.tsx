@@ -6,9 +6,11 @@ import { ChevronDown, ChevronRight } from "lucide-react"
 
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 import { cn } from "@/lib/utils"
+import { Separator } from "@/components/ui/separator"
 
 import { AppSubmitButton } from "../../../../components/submit/app-submit-button"
 import { TagsCarousel } from "./carousel/mobile-nav-carousel/tags-carousel"
+import { SeeAllButton } from "./see-all-button"
 
 export function MobileCategoryNav() {
   const router = useRouter()
@@ -30,7 +32,7 @@ export function MobileCategoryNav() {
         />
       )}
       <div className="flex flex-col">
-        <div className="scrollbar-none flex items-center justify-between overflow-x-auto py-1">
+        <div className="scrollbar-none flex items-center justify-between overflow-x-auto">
           <div className="flex gap-x-2">
             {SIDENAVROUTES.map((route) => (
               <div
@@ -67,12 +69,20 @@ export function MobileCategoryNav() {
                 )}
               </div>
             ))}
+            {/* See All Button */}
+            {!isShowAllAppsTab && (
+              <SeeAllButton
+                href="/ai-apps/all"
+                buttonTitle={"See All Apps"}
+                className="w-fit pt-1 text-xs"
+              />
+            )}
           </div>
-          <div className="group flex items-center">
+          <div className="group flex items-center gap-x-1">
             <AppSubmitButton
               variant={"default"}
               size={"label"}
-              className="w-fit border"
+              className="w-fit"
             />
           </div>
         </div>
@@ -94,22 +104,31 @@ const AllAppsTab = ({
   handleTabSelection: (href: string) => void
 }) => {
   return (
-    <div
-      className={cn(
-        "relative flex w-fit cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
-        className,
-        pathname === `/ai-apps`
-          ? "border-primary text-primary"
-          : "text-muted-foreground hover:text-primary"
-      )}
-      style={{
-        WebkitTapHighlightColor: "transparent",
-      }}
-      onClick={() => {
-        handleTabSelection(`/ai-apps`)
-      }}
-    >
-      <span className="text-xs">All Apps</span>
+    <div className="flex items-center gap-x-2">
+      <div
+        className={cn(
+          "relative flex w-fit cursor-pointer items-center gap-x-1 whitespace-nowrap transition-colors ease-out focus-visible:ring-4 focus-visible:ring-ring",
+          className,
+          pathname === `/ai-apps`
+            ? "border-primary text-primary"
+            : "text-muted-foreground hover:text-primary"
+        )}
+        style={{
+          WebkitTapHighlightColor: "transparent",
+        }}
+        onClick={() => {
+          handleTabSelection(`/ai-apps`)
+        }}
+      >
+        <span className="text-xs">Browse Apps</span>
+      </div>
+      <Separator orientation="vertical" className="h-2" />
+      {/* See All Apps */}
+      <SeeAllButton
+        href="/ai-apps/all"
+        buttonTitle={"See All Apps"}
+        className="w-fit text-xs text-muted-foreground hover:text-primary active:text-primary"
+      />
     </div>
   )
 }

@@ -32,7 +32,7 @@ export enum CarouselSize {
 const getCarouselSizeClass = (index: number) => {
   switch (index % 3) {
     case 0:
-      return CarouselSize.Full
+      return CarouselSize.Third
     case 1:
       return CarouselSize.Half
     case 2:
@@ -69,8 +69,9 @@ export const StoriesCarouselLayout: React.FC<
               posts={posts}
               title={title}
               error={error}
+              isLoop={false}
               isAutpPlay={false}
-              isIndicator={true}
+              isIndicator={false}
               containerCN="h-fit"
               isWheelGestures={true}
               className={getCarouselSizeClass(index)}
