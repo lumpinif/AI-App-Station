@@ -8,11 +8,14 @@ import { PostDetails, Posts, PostWithProfile, Topics } from "@/types/db_tables"
 import { getErrorMessage } from "@/lib/handle-error"
 
 type getAllPostsProps = {
+  orderBy?: keyof Posts
   is_hero_featured?: boolean
 }
 
 // fetch Posts
-export async function getAllPosts({ is_hero_featured }: getAllPostsProps = {}) {
+export async function getAllPosts(
+  { orderBy, is_hero_featured }: getAllPostsProps = { orderBy: "views_count" }
+) {
   noStore()
   const supabase = await createSupabaseServerClient()
 
@@ -23,10 +26,13 @@ export async function getAllPosts({ is_hero_featured }: getAllPostsProps = {}) {
     )
     // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE PRODUCTION
     .match({ post_publish_status: "published" })
-    .order("created_at", { ascending: false })
 
   if (is_hero_featured) {
     query.eq("is_hero_featured", is_hero_featured)
+  }
+
+  if (orderBy) {
+    query.order(orderBy, { ascending: false })
   }
 
   // TODO: CHECK THE TYPES OF RETURNS IF IT IS TOO HEAVY AND NECESSARY

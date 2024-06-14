@@ -7,7 +7,6 @@ import { AppDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { FavoriteAppCardCategories } from "@/app/(main)/user/_components/bookmark-favorites/_components/apps/favorite-app-card-categories"
 
 import { AppDetailLikeButton } from "../../[slug]/_components/app-detail-like-button"
 import AppCardActions from "./_components/app-card-actions"

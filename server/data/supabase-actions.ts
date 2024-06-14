@@ -325,11 +325,13 @@ export async function getAllApps(orderBy?: keyof Apps) {
 
   let query = supabase
     .from("apps")
-    .select(`*,categories(*),developers(*)`)
+    .select(
+      `*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*)`
+    )
     .match({
       app_publish_status: "published",
     })
-    .returns<AppWithCategoriesAndDevelopers[]>()
+    .returns<AppDetails[]>()
 
   if (orderBy) {
     query = query.order(orderBy, { ascending: false })
