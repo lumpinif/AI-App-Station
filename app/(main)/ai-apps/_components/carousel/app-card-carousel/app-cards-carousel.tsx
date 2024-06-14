@@ -1,13 +1,16 @@
 "use client"
 
 import React, { useMemo } from "react"
+import { useRouter } from "next/navigation"
 import { User } from "@supabase/supabase-js"
 import { EmblaOptionsType, EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
+import { Loader2 } from "lucide-react"
 
 import { AppDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   Carousel,
   CarouselContent,
@@ -95,6 +98,8 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
     [chunkSize, data, maxItems]
   )
 
+  const router = useRouter()
+
   if (!dataGroups.length || fetchError)
     return (
       <div className="mb-4 flex flex-col gap-y-4">
@@ -102,11 +107,21 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
           <h2 className="page-title-font text-2xl">{title}</h2>
           <Separator className="bg-input" />
         </span>
-        <div className="mx-auto w-fit rounded-2xl border p-4 text-center text-xs text-muted-foreground">
-          Sorry, we currently got nothing to show for
-          <h2 className="page-title-font text-base">{title}</h2> It should be
-          fixed shortly, please come back later
+        <div className="flex flex-col justify-center gap-y-2">
+          <div className="mx-auto w-fit rounded-2xl p-4 text-center text-xs text-muted-foreground">
+            Sorry, we currently got nothing to show for
+            <h2 className="page-title-font text-base">{title}</h2> It should be
+            fixed shortly, please come back later
+          </div>
+          <Button
+            size={"label"}
+            className="mx-auto w-fit active:scale-[.98]"
+            onClick={() => router.refresh()}
+          >
+            Reload
+          </Button>
         </div>
+
         <p className="text-center text-xs text-muted-foreground">
           {fetchError && `Error: ${fetchError}`}
         </p>

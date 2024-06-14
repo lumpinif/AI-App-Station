@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
 import { EmblaPluginType } from "embla-carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
@@ -8,6 +9,7 @@ import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 import { PostDetails } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import useMediaQuery from "@/hooks/use-media-query"
+import { Button } from "@/components/ui/button"
 import {
   Carousel,
   CarouselIndicator,
@@ -63,7 +65,9 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
     return activePlugins
   }, [PLUGIN_AUTOPLAY, PLUGIN_WHEELGESTURES, isAutpPlay, isWheelGestures])
 
-  if (!posts.length)
+  const router = useRouter()
+
+  if (!posts.length || fetchError)
     return (
       <div className="mb-4 flex flex-col gap-y-4">
         <div className="mx-auto w-fit rounded-2xl border p-4 text-center text-xs text-muted-foreground">
@@ -71,6 +75,13 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
           <h2 className="page-title-font text-base">{title}</h2> It should be
           fixed shortly, please come back later
         </div>
+        <Button
+          size={"label"}
+          className="mx-auto w-fit active:scale-[.98]"
+          onClick={() => router.refresh()}
+        >
+          Reload
+        </Button>
         <p className="text-center text-xs text-muted-foreground">
           {fetchError && `Error: ${fetchError}`}
         </p>
