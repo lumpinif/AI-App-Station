@@ -42,9 +42,9 @@ export const FeaturedStoriesCarousel: React.FC<
         isAutpPlay={true}
         isIndicator={true}
         isWheelGestures={true}
+        containerCN="h-fit"
         postCardVariant="hero"
         title="Featured Stories"
-        containerCN="h-[30rem]"
       />
     </>
   )

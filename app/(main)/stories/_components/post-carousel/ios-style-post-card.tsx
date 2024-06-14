@@ -12,17 +12,37 @@ import { Badge } from "@/components/ui/badge"
 import { AvatarIcon } from "@/components/auth/avatar/avatar-icon"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
+import { CarouselSize } from "./stories-carousel-layout"
+
 type IosStylePostCardProps = {
   post: PostDetails
+  postCardVariant?: string
 }
 
-export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({ post }) => {
+export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({
+  post,
+  postCardVariant,
+}) => {
   const { isMobile, isTablet, isDesktop } = useMediaQuery()
-  const sliceSize = isMobile ? 2 : isTablet ? 2 : isDesktop ? 3 : 4
-  const topics = post.topics?.slice(0, sliceSize)
 
   const imageSrc = post.post_image_src || "/images/Feature-thumbnail.png"
   const { color, isLoading } = useAverageColor(imageSrc, true)
+
+  const fullCard = postCardVariant === CarouselSize.Full || "hero"
+  const halfCard = postCardVariant === CarouselSize.Half
+  const thirdCard = postCardVariant === CarouselSize.Third
+
+  const sliceSize = isMobile
+    ? 2
+    : (isTablet && halfCard) || thirdCard
+      ? 2
+      : isDesktop && halfCard
+        ? 4
+        : isDesktop && thirdCard
+          ? 3
+          : 5
+
+  const topics = post.topics?.slice(0, sliceSize)
 
   if (isLoading) {
     return (
@@ -46,12 +66,15 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({ post }) => {
           fill
           alt={`Story ${post.post_slug} thumbnail image`}
           src={post.post_image_src || "/images/Feature-thumbnail.png"}
-          className={cn("size-full object-cover object-center")}
+          className={cn(
+            "size-full object-cover object-center",
+            imageSrc === "/images/Feature-thumbnail.png" && "blur brightness-90"
+          )}
         />
         {/* overlay */}
         <div
-          className="absolute inset-x-0 bottom-0 h-full w-full"
           style={{ backgroundColor: color.rgba, opacity: 0.25 }}
+          className={cn("absolute inset-x-0 bottom-0 h-full w-full")}
         />
         {/* Content */}
         <div
@@ -67,11 +90,17 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({ post }) => {
           <div className="px-4 pt-0">
             <h2
               className={cn(
-                "max-w-32 text-left text-4xl font-extrabold uppercase leading-none text-primary drop-shadow-2xl sm:max-w-52",
+                "w-full max-w-48 text-balance text-left text-4xl font-extrabold uppercase leading-none text-primary drop-shadow-2xl sm:max-w-sm sm:text-5xl",
+                fullCard && "md:max-w-md md:text-5xl lg:max-w-lg xl:max-w-3xl",
+                halfCard &&
+                  "md:max-w-48 md:text-3xl lg:max-w-sm lg:text-4xl xl:max-w-md",
+                thirdCard && "md:max-w-44 md:text-3xl lg:max-w-56 xl:max-w-80",
                 color.isDark ? "text-white" : "text-zinc-900"
               )}
             >
-              {post.post_title.substring(0, 50)}
+              {post.post_title.length > 45
+                ? post.post_title.substring(0, 45) + "..."
+                : post.post_title}
             </h2>
           </div>
 
@@ -99,8 +128,9 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({ post }) => {
                 <p className="text-nowrap">{post.profiles.full_name}</p>
                 <p
                   className={cn(
-                    "text-sm font-normal text-primary",
-                    color.isDark ? "text-white" : "text-zinc-900"
+                    "text-nowrap text-sm font-normal text-primary",
+                    color.isDark ? "text-white" : "text-zinc-900",
+                    sliceSize > 1 && "text-xs"
                   )}
                 >
                   {moment(post.created_at).format("MMM Do YYYY")}

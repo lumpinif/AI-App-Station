@@ -23,6 +23,25 @@ type StoriesCarouselLayoutProps = {
   children?: React.ReactNode
 }
 
+export enum CarouselSize {
+  Full = "md:basis-full",
+  Half = "md:basis-1/2",
+  Third = "md:basis-1/2 lg:basis-1/3",
+}
+
+const getCarouselSizeClass = (index: number) => {
+  switch (index % 3) {
+    case 0:
+      return CarouselSize.Full
+    case 1:
+      return CarouselSize.Half
+    case 2:
+      return CarouselSize.Third
+    default:
+      return CarouselSize.Full
+  }
+}
+
 export const StoriesCarouselLayout: React.FC<
   StoriesCarouselLayoutProps
 > = async ({ user, indexToInsert, children }) => {
@@ -32,7 +51,7 @@ export const StoriesCarouselLayout: React.FC<
   return (
     <>
       {postsData.map(({ title, posts, error }, index) => (
-        <Fragment>
+        <Fragment key={index}>
           <div
             key={index}
             className="relative mx-auto flex h-full w-full max-w-full flex-col gap-y-6"
@@ -54,13 +73,8 @@ export const StoriesCarouselLayout: React.FC<
               isIndicator={true}
               containerCN="h-fit"
               isWheelGestures={true}
-              className={
-                index % 3 === 0
-                  ? ""
-                  : index % 3 === 1
-                    ? "md:basis-1/2"
-                    : "md:basis-1/3"
-              }
+              className={getCarouselSizeClass(index)}
+              postCardVariant={getCarouselSizeClass(index)}
             />
           </div>
           {index === indexToInsert && children}

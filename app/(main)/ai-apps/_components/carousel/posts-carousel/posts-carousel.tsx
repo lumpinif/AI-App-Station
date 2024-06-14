@@ -25,12 +25,12 @@ import { PostCard } from "../../cards/post-card"
 type PostsCarouselProps = {
   title?: string
   className?: string
+  posts: PostDetails[]
   isAutpPlay?: boolean
   containerCN?: string
   error?: string | null
   isIndicator?: boolean
   postCardVariant?: string
-  posts: PostDetails[]
   isWheelGestures?: boolean
 }
 
@@ -99,12 +99,17 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
               className={cn("bg-transparent", className)}
             >
               <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
-                {postCardVariant === "hero" ? (
+                {/* {postCardVariant === "hero" ? (
                   <PostCard post={post} />
                 ) : (
-                  // <PostCarouselCard post={post} />
-                  <IosStylePostCard post={post} />
-                )}
+                 <PostCarouselCard post={post} /> */}
+
+                <IosStylePostCard
+                  post={post}
+                  postCardVariant={postCardVariant}
+                />
+
+                {/* )} */}
               </div>
             </SliderMainItem>
           ))}
