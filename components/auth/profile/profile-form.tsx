@@ -51,8 +51,7 @@ const profileFormSchema = z.object({
     })
     .max(USER_NAME_MAX_LENGTH, {
       message: "Username must not be longer than 15 characters.",
-    })
-    .nullable(),
+    }),
   user_bio: z.string().max(USER_BIO_MAX_LENGTH).nullable(),
   user_location: z.string().max(USER_LOCATION_MAX_LENGTH).nullable(),
   user_website: websiteValidator.nullable().or(z.literal("")),
@@ -128,6 +127,13 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
         return "Profile updated"
       },
       error: (error) => {
+        if (
+          error.message.includes(
+            "duplicate key value violates unique constraint"
+          )
+        ) {
+          return "Username already exists. Please choose a different username."
+        }
         return error.message || "Error updating profile"
       },
     })

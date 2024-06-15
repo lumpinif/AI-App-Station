@@ -15,7 +15,7 @@ export async function updateUserProfile(
   // Iterate over formData and update empty strings to null
   for (let key in formData) {
     if (formData[key as keyof typeof formData] === "") {
-      formData[key as keyof typeof formData] = null
+      formData[key as keyof typeof formData] = null || ""
     }
   }
 
