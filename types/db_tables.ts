@@ -62,14 +62,19 @@ export type Post_likes = Tables<"post_likes">
 export type Posts = Tables<"posts">
 export type Posts_Categories = Tables<"posts_categories">
 export type Post_bookmarks = Tables<"post_bookmarks">
+export type Post_of_the_day = Tables<"post_of_the_day">
+export type Daily_post = Tables<"daily_post">
 
 // Profile and user collection tables
 export type Profiles = Tables<"profiles">
+export type Profile_role = Tables<"profile_role">
 export type User_Collections = Tables<"user_collections">
 
 // Enum types
 export type Publish_Status = Enums<"publish_status">
 export type Pricing = Enums<"pricing">
+export type Post_type = Enums<"post_type">
+export type User_role = Enums<"user_role_enum">
 
 // Type definitions for combined types
 
@@ -123,6 +128,14 @@ export type PostDetails = Posts &
     post_likes: Post_likes[]
     post_bookmarks: Post_bookmarks[]
   }
+
+export type PostOfTheDay = Post_of_the_day & {
+  posts: PostDetails
+}
+
+export type DailyPost = Daily_post & {
+  posts: PostDetails
+}
 
 export type PostRefrencedFields = {
   profiles: Profiles

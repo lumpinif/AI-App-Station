@@ -1,8 +1,10 @@
 // useAverageColor.ts
-import { useEffect, useState } from "react"
-import { FastAverageColor } from "fast-average-color"
+import { useEffect, useMemo, useState } from "react"
+import { FastAverageColor, FastAverageColorResult } from "fast-average-color"
 
-const fac = new FastAverageColor()
+export type AverageColor = Partial<FastAverageColorResult> & {
+  colorEnd: string
+}
 
 const useAverageColor = (imageSrc: string, isBottom: boolean) => {
   const [color, setColor] = useState<{
@@ -12,6 +14,8 @@ const useAverageColor = (imageSrc: string, isBottom: boolean) => {
     isDark: boolean
   }>({ rgb: "", rgba: "", colorEnd: "", isDark: false })
   const [isLoading, setIsLoading] = useState(true)
+
+  const fac = useMemo(() => new FastAverageColor(), [])
 
   useEffect(() => {
     const img = new Image()
@@ -44,7 +48,7 @@ const useAverageColor = (imageSrc: string, isBottom: boolean) => {
         console.error("Failed to load image:", imageSrc)
       }
     }
-  }, [imageSrc, isBottom])
+  }, [fac, imageSrc, isBottom])
 
   return { color, isLoading }
 }

@@ -396,6 +396,45 @@ export type Database = {
           },
         ]
       }
+      daily_post: {
+        Row: {
+          created_at: string
+          created_on: string
+          dpost_id: string
+          posted_by: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_on?: string
+          dpost_id?: string
+          posted_by?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_on?: string
+          dpost_id?: string
+          posted_by?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "daily_post_dpost_id_fkey"
+            columns: ["dpost_id"]
+            isOneToOne: true
+            referencedRelation: "posts"
+            referencedColumns: ["post_id"]
+          },
+          {
+            foreignKeyName: "daily_post_posted_by_fkey"
+            columns: ["posted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_name"]
+          },
+        ]
+      }
       developers: {
         Row: {
           developer_email: string | null
@@ -635,10 +674,40 @@ export type Database = {
           },
         ]
       }
+      post_of_the_day: {
+        Row: {
+          created_at: string
+          created_on: string
+          pod_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_on?: string
+          pod_id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_on?: string
+          pod_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_of_the_day_pod_id_fkey"
+            columns: ["pod_id"]
+            isOneToOne: true
+            referencedRelation: "posts"
+            referencedColumns: ["post_id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           comments_count: number
           created_at: string
+          created_on: string
           is_hero_featured: boolean | null
           likes_count: number
           post_author_id: string
@@ -659,6 +728,7 @@ export type Database = {
         Insert: {
           comments_count?: number
           created_at?: string
+          created_on?: string
           is_hero_featured?: boolean | null
           likes_count?: number
           post_author_id: string
@@ -679,6 +749,7 @@ export type Database = {
         Update: {
           comments_count?: number
           created_at?: string
+          created_on?: string
           is_hero_featured?: boolean | null
           likes_count?: number
           post_author_id?: string
@@ -786,6 +857,35 @@ export type Database = {
           },
         ]
       }
+      profile_role: {
+        Row: {
+          created_at: string
+          role: Database["public"]["Enums"]["user_role_enum"]
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          role?: Database["public"]["Enums"]["user_role_enum"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          role?: Database["public"]["Enums"]["user_role_enum"]
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_role_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -796,7 +896,7 @@ export type Database = {
           user_bio: string | null
           user_id: string
           user_location: string | null
-          user_name: string | null
+          user_name: string
           user_pronouns: string | null
           user_website: string | null
         }
@@ -809,7 +909,7 @@ export type Database = {
           user_bio?: string | null
           user_id: string
           user_location?: string | null
-          user_name?: string | null
+          user_name: string
           user_pronouns?: string | null
           user_website?: string | null
         }
@@ -822,7 +922,7 @@ export type Database = {
           user_bio?: string | null
           user_id?: string
           user_location?: string | null
-          user_name?: string | null
+          user_name?: string
           user_pronouns?: string | null
           user_website?: string | null
         }
@@ -939,35 +1039,6 @@ export type Database = {
           },
         ]
       }
-      user_role: {
-        Row: {
-          created_at: string
-          role: Database["public"]["Enums"]["user_role_enum"] | null
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          role?: Database["public"]["Enums"]["user_role_enum"] | null
-          updated_at?: string | null
-          user_id?: string
-        }
-        Update: {
-          created_at?: string
-          role?: Database["public"]["Enums"]["user_role_enum"] | null
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "user_role_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "profiles"
-            referencedColumns: ["user_id"]
-          },
-        ]
-      }
     }
     Views: {
       [_ in never]: never
@@ -1001,6 +1072,7 @@ export type Database = {
       }
     }
     Enums: {
+      post_type: "normal" | "daily post" | "post of the day" | "editor choice"
       pricing: "Free" | "In-app purchases" | "Free & In-app purchases" | "Paid"
       publish_status: "pending" | "published" | "draft" | "unpublished"
       user_role_enum: "user" | "super_user" | "admin" | "super_admin"
