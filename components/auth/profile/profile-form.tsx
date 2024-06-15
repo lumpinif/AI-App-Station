@@ -141,10 +141,15 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        className="space-y-8"
+        onSubmit={form.handleSubmit(onSubmit)}
+        onKeyUp={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
         <FormField
-          control={form.control}
           name="full_name"
+          control={form.control}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="flex items-center justify-between text-muted-foreground">
@@ -159,6 +164,8 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
                 placeholder="Beff Jezos"
                 {...field}
                 value={field.value ?? ""}
+                onKeyUp={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
               />
               <FormDescription>
                 This is your public display name.
@@ -186,6 +193,8 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
                   placeholder="beff_jezos"
                   {...field}
                   value={field.value ?? ""}
+                  onKeyUp={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => e.stopPropagation()}
                 />
               </FormControl>
               <FormDescription>This is your user name.</FormDescription>
@@ -213,6 +222,8 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
                   className="resize-none"
                   {...field}
                   value={field.value ?? ""}
+                  onKeyUp={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => e.stopPropagation()}
                 />
               </FormControl>
               <FormMessage />
@@ -238,6 +249,8 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
                   placeholder="Where are you at?"
                   {...field}
                   value={field.value ?? ""}
+                  onKeyUp={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => e.stopPropagation()}
                 />
               </FormControl>
               <FormMessage />
@@ -263,6 +276,8 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
                   placeholder="Website of yourself or your company"
                   {...field}
                   value={field.value ?? ""}
+                  onKeyUp={(e) => e.stopPropagation()}
+                  onKeyDown={(e) => e.stopPropagation()}
                 />
               </FormControl>
               <FormMessage />
@@ -272,8 +287,9 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
 
         <Button
           type="submit"
-          disabled={isSubmitting || !isValid}
+          data-dismiss="modal"
           className="w-full"
+          disabled={isSubmitting || !isValid || !isDirty}
         >
           Update profile
         </Button>

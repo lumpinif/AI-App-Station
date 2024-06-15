@@ -13,11 +13,13 @@ export async function updateUserProfile(
   const supabase = await createSupabaseServerClient()
 
   // Iterate over formData and update empty strings to null
-  for (let key in formData) {
-    if (formData[key as keyof typeof formData] === "") {
-      formData[key as keyof typeof formData] = null || ""
-    }
-  }
+  // for (let key in formData) {
+  //   if (key !== ("user_name" as keyof typeof formData)) {
+  //     if (formData[key as keyof typeof formData] === "") {
+  //       formData[key as keyof typeof formData] = null ||""
+  //     }
+  //   }
+  // }
 
   try {
     const { error } = await supabase
