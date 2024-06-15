@@ -7,16 +7,16 @@ import { DailyPost } from "@/types/db_tables"
 import { getCurrentDateFormatted } from "@/lib/utils"
 import useAverageColor from "@/hooks/use-average-color"
 
-import { ActiveIosStyleCard } from "./active-ios-style-card"
-import { IosStyleCard } from "./ios-style-card"
+import { ActiveIosStyleDPCard } from "./active-ios-style-dp-card"
+import { IosStyleDPCard } from "./ios-style-dp-card"
 
-type IosStyleCardWithoutDragProps = {
+type IosStyleDailyPostCardProps = {
   dailyPost: DailyPost
 }
 
-export const IosStyleCardWithoutDrag: React.FC<
-  IosStyleCardWithoutDragProps
-> = ({ dailyPost }) => {
+export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
+  dailyPost,
+}) => {
   const [activeCard, setActiveCard] = useState<DailyPost | null>(null)
   const imageSrc =
     dailyPost.posts.post_image_src || "/images/Feature-thumbnail.png"
@@ -36,11 +36,11 @@ export const IosStyleCardWithoutDrag: React.FC<
 
   return (
     <div className="w-full">
-      <IosStyleCard
+      <IosStyleDPCard
         color={color}
         dailyPost={dailyPost}
         currentDate={currentDate}
-        post_card_title="Editor's Daily AI Newsletter"
+        post_card_title="AI News of the Day"
         setActiveCard={setActiveCard}
       />
 
@@ -57,11 +57,11 @@ export const IosStyleCardWithoutDrag: React.FC<
 
       <AnimatePresence>
         {activeCard ? (
-          <ActiveIosStyleCard
+          <ActiveIosStyleDPCard
             color={color}
             activeCard={activeCard}
             currentDate={currentDate}
-            post_card_title="Editor's Daily AI Newsletter"
+            post_card_title="Editor's Daily AI News"
             setActiveCard={setActiveCard}
           />
         ) : null}

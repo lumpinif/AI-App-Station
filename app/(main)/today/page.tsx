@@ -1,4 +1,3 @@
-import { IosStyleCardWithoutDrag } from "../stories/_components/post-card/ios-style-card-without-drag"
 import TodayPageTitle from "./_components/today-page-title"
 import { DailyPost } from "./daily-post/_components/daily-post"
 
@@ -17,7 +16,6 @@ const TodayPage = () => {
           <div className="">Featured Apps</div>
           <div className="">Featured Posts</div>
         </div>
-        <IosStyleCardWithoutDrag />
       </section>
     </>
   )

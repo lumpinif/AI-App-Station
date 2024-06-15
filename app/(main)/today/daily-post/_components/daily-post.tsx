@@ -1,6 +1,6 @@
 import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post"
 
-import { DailyPostCard } from "./daily-post-card"
+import { IosStyleDailyPostCard } from "./ios-style-daily-post"
 
 const fetchDailyPost = async () => {
   try {
@@ -40,7 +40,7 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
         <div className="">Post Title:{dailyPost.posts.post_title}</div>
         <div className="">Posted by:{dailyPost.posted_by}</div>
         <div className="">Posted on:{dailyPost.created_on}</div>
-        <DailyPostCard dailyPost={dailyPost} />
+        <IosStyleDailyPostCard dailyPost={dailyPost} />
       </div>
     </>
   )

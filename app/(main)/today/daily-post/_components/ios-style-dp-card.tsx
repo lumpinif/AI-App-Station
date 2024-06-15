@@ -1,16 +1,14 @@
 "use client"
 
-import Image from "next/image"
-import Link from "next/link"
 import { motion } from "framer-motion"
 import { X } from "lucide-react"
 
 import { DailyPost } from "@/types/db_tables"
-import { cn, getCurrentDateFormatted } from "@/lib/utils"
-import useAverageColor, { AverageColor } from "@/hooks/use-average-color"
+import { cn } from "@/lib/utils"
+import { AverageColor } from "@/hooks/use-average-color"
 import { ContentRenderer } from "@/components/editor/content-renderer"
 
-type IosStyleCardProps = {
+type IosStyleDPCardProps = {
   color: AverageColor
   currentDate: string
   dailyPost: DailyPost
@@ -18,7 +16,7 @@ type IosStyleCardProps = {
   setActiveCard: (dailyPost: DailyPost | null) => void
 }
 
-export const IosStyleCard: React.FC<IosStyleCardProps> = ({
+export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
   color,
   dailyPost,
   currentDate,

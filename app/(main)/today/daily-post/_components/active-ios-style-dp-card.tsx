@@ -1,21 +1,20 @@
 "use client"
 
-import { Suspense, useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import Link from "next/link"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { X } from "lucide-react"
 import { useOnClickOutside } from "usehooks-ts"
 
 import { DailyPost } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
-import useAverageColor, { AverageColor } from "@/hooks/use-average-color"
+import { AverageColor } from "@/hooks/use-average-color"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ContentRenderer } from "@/components/editor/content-renderer"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import { CommentPreview } from "./comment-preview"
 
-type ActiveIosStyleCardProps = {
+type ActiveIosStyleDPCardProps = {
   color: AverageColor
   currentDate: string
   activeCard: DailyPost
@@ -23,7 +22,7 @@ type ActiveIosStyleCardProps = {
   setActiveCard: (dailyPost: DailyPost | null) => void
 }
 
-export const ActiveIosStyleCard: React.FC<ActiveIosStyleCardProps> = ({
+export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
   color,
   activeCard,
   currentDate,
@@ -71,13 +70,13 @@ export const ActiveIosStyleCard: React.FC<ActiveIosStyleCardProps> = ({
     <motion.div
       ref={ref}
       layoutId={`dp-card-${post_id}`}
-      className="card card-active fixed inset-5 z-50 m-0 mx-auto flex max-h-svh max-w-sm cursor-pointer select-none flex-col overflow-x-hidden rounded-none bg-background outline-none md:inset-10 md:max-w-xl lg:inset-24 xl:inset-28"
+      className="card card-active fixed inset-5 z-50 m-0 mx-auto flex max-h-svh max-w-sm select-none flex-col overflow-x-hidden rounded-none bg-background outline-none md:inset-10 md:max-w-xl lg:inset-24 xl:inset-28"
       style={{
         borderRadius: 10,
       }}
     >
       <ScrollArea className="h-full w-full" scrollHideDelay={0}>
-        <div className="card-inner relative h-[430px] md:h-[500px]">
+        <div className="card-inner relative z-50 h-[430px] md:h-[500px]">
           <motion.img
             alt="image"
             layoutId={`dp-card-image-${post_id}`}
@@ -102,7 +101,7 @@ export const ActiveIosStyleCard: React.FC<ActiveIosStyleCardProps> = ({
           <motion.label
             layoutId={`dp-card-label-${post_id}`}
             className={cn(
-              "absolute left-6 top-6 text-left text-lg font-semibold uppercase leading-[0.9]",
+              "absolute left-4 top-8 text-left text-lg font-semibold uppercase leading-[0.9]",
               color.isDark ? "text-white" : "text-zinc-900"
             )}
           >
@@ -129,8 +128,8 @@ export const ActiveIosStyleCard: React.FC<ActiveIosStyleCardProps> = ({
               layoutId={`dp-card-extra-info-${post_id}`}
               className="extra-info relative flex w-full items-center gap-2 bg-black/20 px-4 py-3 backdrop-blur-[2px]"
               style={{
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
               }}
             >
               <motion.img
@@ -154,7 +153,10 @@ export const ActiveIosStyleCard: React.FC<ActiveIosStyleCardProps> = ({
                 </motion.span>
                 <motion.span
                   layoutId={`dp-card-info-subtitle-${post_id}`}
-                  className="game-subtitle text-[12px] text-[#c4c5cd]"
+                  className={cn(
+                    "line-clamp-2 text-[12px] max-sm:max-w-[200px]",
+                    color.isDark ? "text-white/80" : "text-zinc-900"
+                  )}
                 >
                   {post_description}
                 </motion.span>
@@ -164,10 +166,12 @@ export const ActiveIosStyleCard: React.FC<ActiveIosStyleCardProps> = ({
                 layout
                 layoutId={`dp-card-button-${post_id}`}
                 className={cn(
-                  "get-button ml-auto rounded-full bg-muted px-4 py-1 text-sm font-semibold text-blue-500 dark:text-blue-400"
+                  "get-button ml-auto rounded-full bg-muted/80 px-4 py-1 text-sm font-semibold text-blue-500 dark:text-blue-500"
                 )}
               >
-                <Link href={`/today/daily-post`}>Go to the post</Link>
+                <Link href={`/today/daily-post`} className="text-nowrap">
+                  Go to the post
+                </Link>
               </motion.button>
             </motion.div>
           </motion.div>
@@ -188,9 +192,7 @@ export const ActiveIosStyleCard: React.FC<ActiveIosStyleCardProps> = ({
         </div>
 
         <div className="p-2 sm:p-4 md:p-6">
-          {/* <Suspense fallback={<LoadingSpinner />}> */}
           <CommentPreview post_id={post_id} />
-          {/* </Suspense> */}
         </div>
       </ScrollArea>
     </motion.div>

@@ -14,7 +14,7 @@ export async function getDailyPost() {
   const { data: post, error } = await supabase
     .from("daily_post")
     .select(
-      "*,posts(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*),post_comments(*, profiles(*),post_comment_likes(*)))"
+      "*,posts(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
     )
     .eq("created_on", currentDate)
     .single<DailyPost>()
