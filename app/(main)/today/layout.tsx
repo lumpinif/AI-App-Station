@@ -10,7 +10,7 @@ export default async function TodayPageLayout({
 }: TodayPageLayoutProps) {
   return (
     <ViewTransitions>
-      <main className="container flex flex-col">
+      <main className="container flex w-full flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
         {children}
         {/* {modal} */}
       </main>

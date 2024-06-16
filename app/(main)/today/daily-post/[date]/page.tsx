@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import { getUserData } from "@/server/auth"
 import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post"
+import { format } from "date-fns"
 import { JSONContent } from "novel"
 
 import { SearchParams } from "@/types/data-table"
@@ -9,6 +10,8 @@ import { LoadingSpinner } from "@/components/shared/loading-spinner"
 import StoryCommentSection from "@/app/(main)/story/_components/comment/story-comment-section"
 import { StoryContentHeroImage } from "@/app/(main)/story/_components/story-content/story-content-hero-image"
 import { StoryEditorContent } from "@/app/(main)/story/_components/story-content/story-editor-content"
+
+import { DatePicker } from "../_components/date-picker"
 
 export default async function DailyPostPagePage({
   params,
@@ -39,12 +42,16 @@ export default async function DailyPostPagePage({
     )
   }
 
-  const { posts: post } = dailyPost
+  const { posts: post, created_on } = dailyPost
 
   return (
-    <>
+    <main>
+      <DatePicker
+        post_title={post.post_title}
+        currentDate={new Date(created_on)}
+      />
       <StoryContentHeroImage post_image_src={post.post_image_src} />
-      <main className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
+      <section className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
         <StoryEditorContent
           {...post}
           user={user}
@@ -63,7 +70,7 @@ export default async function DailyPostPagePage({
             post_id={post.post_id}
           />
         </Suspense>
-      </main>
-    </>
+      </section>
+    </main>
   )
 }
