@@ -2,28 +2,12 @@ import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post
 
 import { IosStyleDailyPostCard } from "./ios-style-daily-post"
 
-const fetchDailyPost = async () => {
-  try {
-    const { post: dailyPost, error: getDailyPostError } = await getDailyPost()
-
-    if (getDailyPostError) {
-      console.error(`Error fetching daily post: ${getDailyPostError.message}`)
-      return { dailyPost: null, error: getDailyPostError }
-    }
-
-    return { dailyPost, error: getDailyPostError }
-  } catch (error) {
-    console.error(`Unexpected error fetching daily post: ${error}`)
-    return { dailyPost: null, error }
-  }
-}
-
 type DailyPostProps = {}
 
 export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
-  const { dailyPost, error } = await fetchDailyPost()
+  const { post: dailyPost, error: getDailyPostError } = await getDailyPost()
 
-  if (error) {
+  if (getDailyPostError) {
     return <div>Error fetching daily post, please try again.</div>
   }
 

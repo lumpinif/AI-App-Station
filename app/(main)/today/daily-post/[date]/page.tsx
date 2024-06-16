@@ -1,69 +1,45 @@
 import { Suspense } from "react"
-import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { getPostById } from "@/server/queries/supabase/stories"
+import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post"
 import { JSONContent } from "novel"
 
 import { SearchParams } from "@/types/data-table"
 import { Post_Comments } from "@/types/db_tables"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import StoryCommentSection from "@/app/(main)/story/_components/comment/story-comment-section"
+import { StoryContentHeroImage } from "@/app/(main)/story/_components/story-content/story-content-hero-image"
+import { StoryEditorContent } from "@/app/(main)/story/_components/story-content/story-editor-content"
 
-import StoryCommentSection from "../../_components/comment/story-comment-section"
-import { StoryContentHeroImage } from "../../_components/story-content/story-content-hero-image"
-import { StoryEditorContent } from "../../_components/story-content/story-editor-content"
-
-// Generate segments for both [user] and [post_id]
-// export async function generateStaticParams() {
-//   const { data: allPosts, error } = await supabase
-//     .from("posts")
-//     .select("*,profiles(*)")
-//     .returns<PostDetails[]>()
-
-//   if (error) {
-//     throw new Error("Error fetching data: " + error.message)
-//   }
-
-//   if (allPosts)
-//     return allPosts.map((post) => ({
-//       user: getPostAuthorSlug(post.profiles),
-//       post_id: post.post_id,
-//     }))
-
-//   return []
-// }
-
-export default async function StoryPage({
+export default async function DailyPostPagePage({
   params,
   searchParams,
 }: {
-  params: { user: string; post_id: string }
+  params: { date: string }
   searchParams: SearchParams
 }) {
   const c_order = searchParams?.c_order as "asc" | "desc" | undefined
   const orderBy = searchParams?.orderBy as keyof Post_Comments | undefined
 
-  const { post, error: getPostError } = await getPostById(params.post_id)
+  const { post: dailyPost, error: getDailyPostError } = await getDailyPost(
+    params.date
+  )
 
   const {
     data: { user },
     error: getUserError,
   } = await getUserData()
 
-  const isAuthor = post?.post_author_id === user?.id
-  const isPublished = post?.post_publish_status === "published"
-
-  if (!post || !(isPublished || isAuthor)) {
-    notFound()
+  if (getDailyPostError || getUserError) {
+    return <div>Error fetching daily post, please try again.</div>
   }
 
-  // TODO: HANDLE THE ERROR BEFORE PRODUCTION
-  if (getPostError) {
-    console.error(getPostError)
+  if (!dailyPost) {
+    return (
+      <div>No daily post found at this time. It should be fixed shortly.</div>
+    )
   }
 
-  if (getUserError) {
-    console.error("Error fetching user data: ", getUserError)
-  }
+  const { posts: post } = dailyPost
 
   return (
     <>

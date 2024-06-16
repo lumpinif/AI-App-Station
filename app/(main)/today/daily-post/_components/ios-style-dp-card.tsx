@@ -129,6 +129,7 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
             >
               {profiles.full_name || profiles.email}
             </motion.span>
+
             <motion.span
               layoutId={`dp-card-info-subtitle-${post_id}`}
               className={cn(
@@ -139,6 +140,7 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
               {post_description}
             </motion.span>
           </div>
+
           <motion.button
             layoutId={`dp-card-button-${post_id}`}
             className={cn(

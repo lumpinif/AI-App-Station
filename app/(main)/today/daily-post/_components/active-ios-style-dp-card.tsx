@@ -153,6 +153,7 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
                 >
                   {profiles.full_name || profiles.email}
                 </motion.span>
+
                 <motion.span
                   layoutId={`dp-card-info-subtitle-${post_id}`}
                   className={cn(
@@ -171,7 +172,10 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
                   "get-button ml-auto rounded-full bg-muted/80 px-4 py-1 text-sm font-semibold text-blue-500 dark:text-blue-500"
                 )}
               >
-                <Link href={`/today/daily-post`} className="text-nowrap">
+                <Link
+                  href={`/today/daily-post/${created_on}`}
+                  className="text-nowrap"
+                >
                   Go to the post
                 </Link>
               </motion.button>

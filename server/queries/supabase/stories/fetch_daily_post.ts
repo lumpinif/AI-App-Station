@@ -1,22 +1,24 @@
 "use server"
 
+import { unstable_noStore as noStore } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { DailyPost } from "@/types/db_tables"
+import { Daily_post, DailyPost } from "@/types/db_tables"
 
-export async function getDailyPost() {
+export async function getDailyPost(created_on?: Daily_post["created_on"]) {
+  noStore()
   const supabase = await createSupabaseServerClient()
 
   const currentDate = new Date().toISOString().split("T")[0]
   // console.log("🚀 ~ currentDate:", currentDate)
-  // 🚀 ~ currentDate: 2024-06-14
+  // 🚀 example ~ currentDate: 2024-06-15
 
   const { data: post, error } = await supabase
     .from("daily_post")
     .select(
       "*,posts(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
     )
-    .eq("created_on", currentDate)
+    .eq("created_on", created_on ? created_on : currentDate)
     .limit(1)
     .maybeSingle<DailyPost>()
 

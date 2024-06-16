@@ -38,8 +38,8 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
       <IosStyleDPCard
         color={color}
         dailyPost={dailyPost}
-        post_card_title="AI News of the Day"
         setActiveCard={setActiveCard}
+        post_card_title="AI News of the Day"
       />
 
       <AnimatePresence>
@@ -58,8 +58,8 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
           <ActiveIosStyleDPCard
             color={color}
             activeCard={activeCard}
-            post_card_title="Editor's Daily AI News"
             setActiveCard={setActiveCard}
+            post_card_title="Editor's Daily AI News"
           />
         ) : null}
       </AnimatePresence>
