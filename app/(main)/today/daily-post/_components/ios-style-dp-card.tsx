@@ -1,5 +1,6 @@
 "use client"
 
+import { format } from "date-fns"
 import { motion } from "framer-motion"
 import { X } from "lucide-react"
 
@@ -10,7 +11,6 @@ import { ContentRenderer } from "@/components/editor/content-renderer"
 
 type IosStyleDPCardProps = {
   color: AverageColor
-  currentDate: string
   dailyPost: DailyPost
   post_card_title: string
   setActiveCard: (dailyPost: DailyPost | null) => void
@@ -19,7 +19,6 @@ type IosStyleDPCardProps = {
 export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
   color,
   dailyPost,
-  currentDate,
   setActiveCard,
   post_card_title,
 }) => {
@@ -33,7 +32,10 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
       post_image_src,
       post_description,
     },
+    created_on,
   } = dailyPost
+
+  const currentPostDate = format(created_on, "EEEE MMMM dd")
 
   return (
     <motion.div
@@ -81,7 +83,7 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
           color.isDark ? "text-white" : "text-zinc-900"
         )}
       >
-        {currentDate}
+        {currentPostDate}
       </motion.label>
 
       <motion.div

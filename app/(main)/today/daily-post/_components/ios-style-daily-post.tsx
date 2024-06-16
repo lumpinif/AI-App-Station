@@ -21,7 +21,6 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
   const imageSrc =
     dailyPost.posts.post_image_src || "/images/Feature-thumbnail.png"
   const { color, isLoading } = useAverageColor(imageSrc, true)
-  const currentDate = getCurrentDateFormatted()
 
   useEffect(() => {
     function onKeyDown(event: { key: string }) {
@@ -39,7 +38,6 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
       <IosStyleDPCard
         color={color}
         dailyPost={dailyPost}
-        currentDate={currentDate}
         post_card_title="AI News of the Day"
         setActiveCard={setActiveCard}
       />
@@ -60,7 +58,6 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
           <ActiveIosStyleDPCard
             color={color}
             activeCard={activeCard}
-            currentDate={currentDate}
             post_card_title="Editor's Daily AI News"
             setActiveCard={setActiveCard}
           />

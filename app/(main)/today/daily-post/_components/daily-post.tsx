@@ -7,7 +7,7 @@ const fetchDailyPost = async () => {
     const { post: dailyPost, error: getDailyPostError } = await getDailyPost()
 
     if (getDailyPostError) {
-      console.error(`Error fetching daily post: ${getDailyPostError}`)
+      console.error(`Error fetching daily post: ${getDailyPostError.message}`)
       return { dailyPost: null, error: getDailyPostError }
     }
 
@@ -24,7 +24,7 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
   const { dailyPost, error } = await fetchDailyPost()
 
   if (error) {
-    return <div>Error fetching daily post</div>
+    return <div>Error fetching daily post, please try again.</div>
   }
 
   if (!dailyPost) {
@@ -36,10 +36,6 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
   return (
     <>
       <div className="flex flex-col gap-y-1">
-        Daily Post
-        <div className="">Post Title:{dailyPost.posts.post_title}</div>
-        <div className="">Posted by:{dailyPost.posted_by}</div>
-        <div className="">Posted on:{dailyPost.created_on}</div>
         <IosStyleDailyPostCard dailyPost={dailyPost} />
       </div>
     </>

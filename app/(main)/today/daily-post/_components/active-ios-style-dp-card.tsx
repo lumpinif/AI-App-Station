@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import Link from "next/link"
+import { format } from "date-fns"
 import { motion } from "framer-motion"
 import { X } from "lucide-react"
 import { useOnClickOutside } from "usehooks-ts"
@@ -16,7 +17,6 @@ import { CommentPreview } from "./comment-preview"
 
 type ActiveIosStyleDPCardProps = {
   color: AverageColor
-  currentDate: string
   activeCard: DailyPost
   post_card_title: string
   setActiveCard: (dailyPost: DailyPost | null) => void
@@ -25,7 +25,6 @@ type ActiveIosStyleDPCardProps = {
 export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
   color,
   activeCard,
-  currentDate,
   setActiveCard,
   post_card_title,
 }) => {
@@ -38,7 +37,10 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
       post_image_src,
       post_description,
     },
+    created_on,
   } = activeCard
+
+  const currentPostDate = format(created_on, "EEEE MMMM dd")
 
   const ref = useRef(null)
   useOnClickOutside(ref, () => setActiveCard(null))
@@ -105,7 +107,7 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
               color.isDark ? "text-white" : "text-zinc-900"
             )}
           >
-            {currentDate}
+            {currentPostDate}
           </motion.label>
 
           <motion.div

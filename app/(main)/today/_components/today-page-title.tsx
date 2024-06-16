@@ -1,3 +1,5 @@
+"use client"
+
 import { getCurrentDateFormatted } from "@/lib/utils"
 import { PageTitle } from "@/components/layout/page-title"
 

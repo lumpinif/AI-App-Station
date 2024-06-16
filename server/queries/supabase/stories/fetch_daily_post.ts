@@ -17,7 +17,22 @@ export async function getDailyPost() {
       "*,posts(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
     )
     .eq("created_on", currentDate)
-    .single<DailyPost>()
+    .limit(1)
+    .maybeSingle<DailyPost>()
+
+  // If no post is found for the current date, fetch the most recent post
+  if (!post && !error) {
+    const { data: post, error: getRecentPostEror } = await supabase
+      .from("daily_post")
+      .select(
+        "*,posts(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
+      )
+      .order("created_on", { ascending: false })
+      .limit(1)
+      .single<DailyPost>()
+
+    return { post, error: getRecentPostEror }
+  }
 
   return { post, error }
 }
