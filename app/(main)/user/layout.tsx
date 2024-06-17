@@ -15,12 +15,7 @@ export default async function UserLayout({
   // TODO: PROTECT ROUTE BEFORE PRODUCTION
   const {
     data: { user },
-    error: getUserError,
   } = await getUserData()
-
-  if (getUserError) {
-    console.error(getUserError)
-  }
 
   if (!user?.id) {
     redirect("/signin")

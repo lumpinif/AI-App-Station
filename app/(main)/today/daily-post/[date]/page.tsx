@@ -28,14 +28,13 @@ export default async function DailyPostPagePage({
 
   const {
     data: { user },
-    error: getUserError,
   } = await getUserData()
 
-  if (getDailyPostError || getUserError) {
+  if (getDailyPostError) {
     return (
       <div>
         Error fetching daily post, please try again. Error:
-        {getDailyPostError?.message} error:{getUserError?.message}
+        {getDailyPostError?.message}
       </div>
     )
   }

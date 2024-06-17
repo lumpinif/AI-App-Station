@@ -46,7 +46,6 @@ export default async function StoryPage({
 
   const {
     data: { user },
-    error: getUserError,
   } = await getUserData()
 
   const isAuthor = post?.post_author_id === user?.id
@@ -59,10 +58,6 @@ export default async function StoryPage({
   // TODO: HANDLE THE ERROR BEFORE PRODUCTION
   if (getPostError) {
     console.error(getPostError)
-  }
-
-  if (getUserError) {
-    console.error("Error fetching user data: ", getUserError)
   }
 
   return (

@@ -11,12 +11,7 @@ export default async function MainLayout({
 }) {
   const {
     data: { user },
-    error: getUserError,
   } = await getUserData()
-
-  if (getUserError) {
-    console.error(getUserError)
-  }
 
   return (
     <>

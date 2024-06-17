@@ -41,12 +41,7 @@ export default async function AiAppsMainPage({
 
   const {
     data: { user },
-    error: getUserError,
   } = await getUserData()
-
-  if (getUserError) {
-    console.error(getUserError)
-  }
 
   // TODO: ERROR HANDLING
   const { app, ratingData, error } = await getAppBySlug(params.slug)

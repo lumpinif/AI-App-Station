@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion"
 
 import { DailyPost } from "@/types/db_tables"
 import useAverageColor from "@/hooks/use-average-color"
+import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import { ActiveIosStyleDPCard } from "./active-ios-style-dp-card"
 import { IosStyleDPCard } from "./ios-style-dp-card"
@@ -31,6 +32,19 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          borderRadius: 20,
+        }}
+        className="flex size-full h-[430px] animate-magic-fade-in items-center justify-center border"
+      >
+        <LoadingSpinner />
+      </div>
+    )
+  }
 
   return (
     <div className="w-full">

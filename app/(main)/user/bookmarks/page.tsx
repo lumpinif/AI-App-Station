@@ -12,13 +12,15 @@ export const dynamic = "force-dynamic"
 export default async function BookmarksPage() {
   const {
     data: { user },
-    error,
+    error: getUserError,
   } = await getUserData()
+
   if (!user?.id) {
     return <div>Not logged in</div>
   }
-  if (error) {
-    return <div>Error: {error.message}</div>
+
+  if (getUserError) {
+    return <div>Auth Error: {getUserError.message}</div>
   }
 
   return (

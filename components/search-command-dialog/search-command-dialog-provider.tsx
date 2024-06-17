@@ -14,12 +14,7 @@ export async function SearchCommandDialogProvider() {
 
   const {
     data: { user },
-    error: getUserError,
   } = await getUserData()
-
-  if (getUserError) {
-    console.error(getUserError)
-  }
 
   return (
     <>

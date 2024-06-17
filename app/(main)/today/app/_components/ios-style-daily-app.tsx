@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion"
 
 import { DailyApp } from "@/types/db_tables"
 import useAverageColor from "@/hooks/use-average-color"
+import { LoadingSpinner } from "@/components/shared/loading-spinner"
 
 import { ActiveIosStyleDACard } from "./active-ios-style-da-card"
 import { IosStyleDACard } from "./ios-style-da-card"
@@ -40,6 +41,19 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          borderRadius: 20,
+        }}
+        className="flex size-full h-[430px] animate-magic-fade-up items-center justify-center border"
+      >
+        <LoadingSpinner />
+      </div>
+    )
+  }
 
   return (
     <div className="w-full">

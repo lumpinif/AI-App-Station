@@ -40,14 +40,7 @@ const AIAppsMainPage = async () => {
   // Fetch User
   const {
     data: { user },
-    error: getUserError,
   } = await getUserData()
-
-  if (getUserError) {
-    console.error("Error fetching user data:", {
-      getUserError,
-    })
-  }
 
   // Fetch posts data
   const { posts: allPosts } = await fetchPosts()
