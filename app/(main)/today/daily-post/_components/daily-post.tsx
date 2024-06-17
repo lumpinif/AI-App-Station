@@ -19,7 +19,12 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
 
   return (
     <>
-      <div className="flex flex-col gap-y-1">
+      <div
+        style={{
+          borderRadius: 20,
+        }}
+        className="flex flex-col gap-y-1"
+      >
         <IosStyleDailyPostCard dailyPost={dailyPost} />
       </div>
     </>

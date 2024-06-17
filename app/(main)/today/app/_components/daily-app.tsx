@@ -1,3 +1,7 @@
+import {
+  getScreenshotsFileNames,
+  getScreenshotsPublicUrls,
+} from "@/server/data/supabase-actions"
 import { getDailyApp } from "@/server/queries/supabase/apps/fetch-daily-app"
 
 import { IosStyleDailyAppCard } from "./ios-style-daily-app"
@@ -17,10 +21,34 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
     )
   }
 
+  // Get screenshots file names and public URLs of the daily app
+  const {
+    apps: { app_id, submitted_by_user_id },
+  } = dailyApp
+
+  const screenshotsFileNames = await getScreenshotsFileNames(
+    app_id,
+    submitted_by_user_id
+  )
+
+  const screenshotsPublicUrls = await getScreenshotsPublicUrls(
+    app_id,
+    submitted_by_user_id,
+    screenshotsFileNames || []
+  )
+
   return (
     <>
-      <div className="flex flex-col gap-y-1">
-        <IosStyleDailyAppCard dailyApp={dailyApp} />
+      <div
+        style={{
+          borderRadius: 20,
+        }}
+        className="flex flex-col gap-y-1"
+      >
+        <IosStyleDailyAppCard
+          dailyApp={dailyApp}
+          screenshotsPublicUrls={screenshotsPublicUrls}
+        />
       </div>
     </>
   )

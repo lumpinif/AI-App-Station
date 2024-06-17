@@ -41,8 +41,8 @@ export type RootResponsiveModalProps = BaseProps &
   }
 
 interface ResponsiveModalProps extends BaseProps {
-  className?: string
   asChild?: true
+  className?: string
 }
 
 // const desktop = "(min-width: 768px)"

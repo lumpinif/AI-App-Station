@@ -61,20 +61,19 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
   post_publish_status,
   postImagesPublicUrls,
 }) => {
-  const toastId = useNewStoryToastStore((state) => state.toastId)
-  const setToastId = useNewStoryToastStore((state) => state.setToastId)
-
   const initialContent = useMemo(
     () => post_content || defaultEditorContent,
     [post_content]
   )
-
   const isContentEmpty = _.isEqual(initialContent, EMPTY_CONTENT_STRING)
 
   const [charsCount, setCharsCount] = useState(0)
   const [isEmpty, setIsEmpty] = useState(isContentEmpty)
-  const [value, setValue] = useState<JSONContent>(initialContent)
   const [isEdited, setIsEdited] = useState<boolean>(false)
+  const [value, setValue] = useState<JSONContent>(initialContent)
+
+  const toastId = useNewStoryToastStore((state) => state.toastId)
+  const setToastId = useNewStoryToastStore((state) => state.setToastId)
 
   const isContentDefault =
     _.isEqual(value, defaultEditorContent) ||

@@ -13,6 +13,7 @@ type IosStyleDACardProps = {
   color: AverageColor
   dailyApp: DailyApp
   appIconSrc?: string
+  card_thumbnail: string
   app_card_title: string
   setActiveCard: (dailyApp: DailyApp | null) => void
 }
@@ -22,6 +23,7 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
   dailyApp,
   appIconSrc,
   setActiveCard,
+  card_thumbnail,
   app_card_title,
 }) => {
   const {
@@ -54,10 +56,12 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
           objectFit: "cover",
         }}
         layoutId={`da-card-image-${app_id}`}
-        src={"/images/Feature-thumbnail.png"}
-        // TODO: ADD CONDITIONAL WITH REAL IAMGE
+        src={card_thumbnail ? card_thumbnail : "/images/Feature-thumbnail.png"}
         className={cn(
-          "pointer-events-none z-50 size-full object-cover blur brightness-[.85]"
+          "pointer-events-none z-50 size-full object-cover",
+          card_thumbnail
+            ? "blur-[1px] brightness-[.85]"
+            : "blur brightness-[.85]"
         )}
       />
 
@@ -95,11 +99,11 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
           background: `linear-gradient(to bottom, rgba(${color.colorEnd},0) 0%, ${color.rgba} 55%, ${color.rgba} 100%)`,
         }}
       >
-        <div className="card-text px-4 pb-3 pt-0">
+        <div className="card-text z-50 px-4 pb-3 pt-0">
           <motion.h2
             layoutId={`da-card-heading-${app_id}`}
             className={cn(
-              "card-heading mb-1 max-w-44 text-left text-[40px] font-extrabold uppercase leading-[0.95] text-primary",
+              "card-heading z-50 mb-1 max-w-44 text-left text-[40px] font-extrabold uppercase leading-[0.95] text-primary",
               color.isDark ? "text-white" : "text-zinc-900"
             )}
           >
@@ -109,7 +113,7 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
 
         <motion.div
           layoutId={`da-card-extra-info-${app_id}`}
-          className="extra-info relative flex w-full items-center gap-2 bg-black/20 px-4 py-3 backdrop-blur-[2px]"
+          className="extra-info relative z-50 flex w-full items-center gap-2 bg-black/20 px-4 py-3 backdrop-blur-[2px]"
           style={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
         >
           <motion.img

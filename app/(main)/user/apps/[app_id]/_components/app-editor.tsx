@@ -86,9 +86,9 @@ export const AppEditor: React.FC<AppEditorProps> = ({
         {/* Screenshots */}
         <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
           <AppScreenshotsForm
+            app_id={app.app_id}
             screenshotsFileNames={screenshotsFileNames || []}
             screenshotsPublicUrls={screenshotsPublicUrls || []}
-            app_id={app.app_id}
             app_submitted_by_user_id={app.submitted_by_user_id}
             access_token={session?.access_token as string}
           />

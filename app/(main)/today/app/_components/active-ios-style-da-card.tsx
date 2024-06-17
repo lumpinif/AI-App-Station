@@ -13,7 +13,7 @@ import { AverageColor } from "@/hooks/use-average-color"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ContentRenderer } from "@/components/editor/content-renderer"
 
-import { DPCommentPreview } from "../../daily-post/_components/dp-comment-preview"
+import { DAScreenshotsCarousel } from "./da-card-screenshots-carousel"
 import { DACommentPreview } from "./da-comment-preview"
 
 type ActiveIosStyleDACardProps = {
@@ -21,6 +21,7 @@ type ActiveIosStyleDACardProps = {
   appIconSrc?: string
   activeCard: DailyApp
   app_card_title: string
+  screenshotsPublicUrls?: string[]
   setActiveCard: (dailyApp: DailyApp | null) => void
 }
 
@@ -30,6 +31,7 @@ export const ActiveIosStyleDACard: React.FC<ActiveIosStyleDACardProps> = ({
   appIconSrc,
   setActiveCard,
   app_card_title,
+  screenshotsPublicUrls,
 }) => {
   const {
     apps: { app_id, app_slug, profiles, app_title, description, introduction },
@@ -75,14 +77,11 @@ export const ActiveIosStyleDACard: React.FC<ActiveIosStyleDACardProps> = ({
     >
       <ScrollArea className="h-full w-full" scrollHideDelay={0}>
         <div className="card-inner relative z-50 h-[430px] md:h-[500px]">
-          <motion.img
-            alt="image"
-            layoutId={`da-card-image-${app_id}`}
-            src={"/images/Feature-thumbnail.png"}
-            style={{ borderRadius: 0, objectFit: "cover", filter: "blur(4px)" }}
-            // TODO: ADD CONDITIONAL WITH REAL IAMGE
-            className="pointer-events-none z-50 h-[430px] w-full max-w-sm bg-background object-cover brightness-75 md:h-full md:max-w-xl"
+          <DAScreenshotsCarousel
+            app_id={app_id}
+            screenshotsPublicUrls={screenshotsPublicUrls}
           />
+
           <motion.button
             aria-label="Close button"
             onClick={() => setActiveCard(null)}

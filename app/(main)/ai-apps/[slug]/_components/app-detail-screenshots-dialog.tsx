@@ -25,9 +25,9 @@ import {
 import { EnhancedDrawerClose } from "@/components/shared/enhanced-drawer"
 
 type AppDetailScreenshotsDialogProps = {
+  index?: number
   screenshot_url?: string
   screenshotsPublicUrls?: string[]
-  index?: number
 }
 
 export const AppDetailScreenshotsDialog: React.FC<
@@ -43,9 +43,9 @@ export const AppDetailScreenshotsDialog: React.FC<
       >
         <AspectRatio ratio={16 / 9}>
           <Image
-            // TODO: Add alt text
-            alt=""
+            // TODO: Add alt text brefore production
             fill
+            alt={`AI App Screenshot ${index}`}
             src={
               screenshot_url ? screenshot_url : `/images/image-not-found.png`
             }

@@ -11,10 +11,12 @@ import { IosStyleDACard } from "./ios-style-da-card"
 
 type IosStyleDailyAppCardProps = {
   dailyApp: DailyApp
+  screenshotsPublicUrls?: string[]
 }
 
 export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
   dailyApp,
+  screenshotsPublicUrls,
 }) => {
   const [activeCard, setActiveCard] = useState<DailyApp | null>(null)
 
@@ -22,7 +24,10 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
   const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/apps/`
   const appIconSrc = supabaseImageURL + dailyApp.apps.app_icon_src
 
-  const imageSrc = "/images/Feature-thumbnail.png"
+  const imageSrc = screenshotsPublicUrls
+    ? screenshotsPublicUrls[0]
+    : "/images/Feature-thumbnail.png"
+
   const { color, isLoading } = useAverageColor(imageSrc, true)
 
   useEffect(() => {
@@ -42,6 +47,7 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
         color={color}
         dailyApp={dailyApp}
         appIconSrc={appIconSrc}
+        card_thumbnail={imageSrc}
         setActiveCard={setActiveCard}
         app_card_title="App of the Day"
       />
@@ -65,6 +71,7 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
             appIconSrc={appIconSrc}
             setActiveCard={setActiveCard}
             app_card_title="App of the Day"
+            screenshotsPublicUrls={screenshotsPublicUrls}
           />
         ) : null}
       </AnimatePresence>

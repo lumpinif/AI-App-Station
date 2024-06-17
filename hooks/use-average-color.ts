@@ -23,17 +23,40 @@ const useAverageColor = (imageSrc: string, isBottom: boolean) => {
     img.crossOrigin = "anonymous"
     img.onload = () => {
       const height = img.naturalHeight
-      const size = 40
+      const size = 50
 
       const color = fac.getColor(
         img,
         isBottom
-          ? { top: height - size, height: size, algorithm: "dominant" }
-          : { height: size, algorithm: "dominant" }
+          ? {
+              mode: "speed",
+              height: size,
+              top: height - size,
+              algorithm: "dominant",
+              /*      ignoredColor: [
+                [255, 255, 255, 255], // white
+                [0, 0, 0, 255], // black
+              ], */
+            }
+          : {
+              height: size,
+              mode: "speed",
+              algorithm: "dominant",
+              /*    ignoredColor: [
+                [255, 255, 255, 255], // white
+                [0, 0, 0, 255], // black
+              ], */
+            }
       )
       // const colorEnd = `rgba(${[...color.value.slice(0, 3), 0].join(",")})`
 
-      const dominantColor = fac.getColor(img, { algorithm: "dominant" })
+      const dominantColor = fac.getColor(img, {
+        step: 1,
+        left: 10,
+        mode: "speed",
+        // top: height - size,
+        algorithm: "dominant",
+      })
 
       setColor({
         rgb: color.rgb,
