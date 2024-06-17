@@ -21,6 +21,7 @@ export default function StoriesPage() {
         href="/stories"
         subtitlePos="bottom"
         title="Browse Stories"
+        className="animate-fade-down"
         subtitle="Discover brilliant stories written by the community"
       >
         <SeeAllButton

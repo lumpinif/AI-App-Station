@@ -51,9 +51,9 @@ const AIAppsMainPage = async () => {
   return (
     <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
       <AiAppsPagesTitle
-        className=""
         subtitlePos="bottom"
-        title="Browse AI Apps"
+        title="Discover AI Apps"
+        className="animate-fade-up"
         subtitle="Discover AI apps submitted by the community"
       >
         <SeeAllButton
