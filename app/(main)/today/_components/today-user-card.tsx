@@ -2,8 +2,6 @@
 
 import { useRouter } from "next/navigation"
 
-import { cardVariants } from "@/lib/constants"
-import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
@@ -36,7 +34,7 @@ export const TodayUserCard: React.FC<UserCardProps> = ({}) => {
           borderRadius: 20,
         }}
         onClick={handleAvartarModalTriggerClick}
-        className="relative hidden cursor-pointer flex-col items-center justify-center gap-y-1 overflow-hidden border bg-card/50 transition-all duration-200 ease-out hover:bg-card active:scale-[.98] dark:border-none dark:shadow-outline sm:flex"
+        className="relative hidden animate-magic-fade-up cursor-pointer flex-col items-center justify-center gap-y-1 overflow-hidden border bg-card/50 transition-all duration-200 ease-out hover:bg-card active:scale-[.98] dark:border-none dark:shadow-outline sm:flex"
       >
         <AccountModalTrigger
           profile={profile}
@@ -55,7 +53,7 @@ export const TodayUserCard: React.FC<UserCardProps> = ({}) => {
         style={{
           borderRadius: 20,
         }}
-        className="relative hidden flex-col gap-y-1 overflow-hidden border bg-card/50 transition-all duration-200 ease-out hover:bg-card active:scale-[.98] dark:border-none dark:shadow-outline sm:flex"
+        className="relative hidden animate-magic-fade-up flex-col gap-y-1 overflow-hidden border bg-card/50 transition-all duration-200 ease-out hover:bg-card active:scale-[.98] dark:border-none dark:shadow-outline sm:flex"
       >
         <UserCard
           accountModalTriggerCN="size-28"
