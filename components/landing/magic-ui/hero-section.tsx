@@ -1,18 +1,22 @@
 /* eslint-disable tailwindcss/classnames-order */
 "use client"
 
+import { cn } from "@/lib/utils"
+
 import { FlipWordsTitle } from "../aceternity-ui/flip-words-title"
 import GetStartButton from "../hero/get-start-button"
 import HeroDescription from "../hero/hero-description"
-import HeroImage from "../hero/hero-image"
 import IntroducingBadge from "../hero/introducing-badge"
 import LogInButtons from "../hero/signin-button"
 
-export default function HeroSection() {
+export default function HeroSection({ className }: { className?: string }) {
   return (
     <section
       id="hero"
-      className="container relative mx-auto mt-8 max-w-7xl px-6 text-center sm:mt-32 md:mt-36"
+      className={cn(
+        "container relative mx-auto mt-8 max-w-7xl px-6 text-center sm:mt-32 md:mt-36",
+        className
+      )}
     >
       <IntroducingBadge />
       <FlipWordsTitle />
@@ -28,8 +32,6 @@ export default function HeroSection() {
           <LogInButtons />
         </span>
       </span>
-
-      <HeroImage />
     </section>
   )
 }

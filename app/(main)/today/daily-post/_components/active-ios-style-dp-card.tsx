@@ -71,11 +71,11 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
   return (
     <motion.div
       ref={ref}
-      layoutId={`dp-card-${post_id}`}
-      className="card card-active fixed inset-5 z-50 m-0 mx-auto flex max-h-svh max-w-sm select-none flex-col overflow-x-hidden rounded-none bg-background outline-none md:inset-10 md:max-w-xl lg:inset-24 xl:inset-28"
       style={{
         borderRadius: 10,
       }}
+      layoutId={`dp-card-${post_id}`}
+      className="card card-active fixed inset-5 bottom-0 z-50 m-0 mx-auto flex max-h-svh max-w-sm select-none flex-col overflow-x-hidden rounded-none bg-background outline-none md:inset-10 md:max-w-xl lg:inset-24 xl:inset-28"
     >
       <ScrollArea className="h-full w-full" scrollHideDelay={0}>
         <div className="card-inner relative z-50 h-[430px] md:h-[500px]">

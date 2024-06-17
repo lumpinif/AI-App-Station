@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useId, useRef, useState } from "react"
-import Link from "next/link"
 import { motion, useAnimation, useInView } from "framer-motion"
 import {
   BarChart,
@@ -128,18 +127,18 @@ export default function CallToActionSection() {
   return (
     <section id="cta">
       <div className="py-14">
-        <div className="flex w-full flex-col items-center justify-center">
-          <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+        <div className="container flex w-full flex-col items-center justify-center p-4">
+          <div className="relative flex w-full max-w-[1000px] flex-col items-center justify-center overflow-hidden rounded-[2rem]">
             <Marquee
               reverse
-              className="-delay-[200ms] [--duration:10s]"
-              repeat={5}
+              className="-delay-[200ms] [--duration:20s]"
+              repeat={4}
             >
               {randomTiles1.map((review, idx) => (
                 <Card key={idx} {...review} />
               ))}
             </Marquee>
-            <Marquee reverse className="[--duration:25s]" repeat={5}>
+            <Marquee reverse className="[--duration:30s]" repeat={4}>
               {randomTiles2.map((review, idx) => (
                 <Card key={idx} {...review} />
               ))}
@@ -147,60 +146,43 @@ export default function CallToActionSection() {
             <Marquee
               reverse
               className="-delay-[200ms] [--duration:20s]"
-              repeat={5}
-            >
-              {randomTiles1.map((review, idx) => (
-                <Card key={idx} {...review} />
-              ))}
-            </Marquee>
-            <Marquee reverse className="[--duration:30s]" repeat={5}>
-              {randomTiles2.map((review, idx) => (
-                <Card key={idx} {...review} />
-              ))}
-            </Marquee>
-            <Marquee
-              reverse
-              className="-delay-[200ms] [--duration:20s]"
-              repeat={5}
+              repeat={4}
             >
               {randomTiles3.map((review, idx) => (
                 <Card key={idx} {...review} />
               ))}
             </Marquee>
-            <Marquee reverse className="[--duration:30s]" repeat={5}>
+            <Marquee reverse className="[--duration:30s]" repeat={4}>
               {randomTiles4.map((review, idx) => (
                 <Card key={idx} {...review} />
               ))}
             </Marquee>
             <div className="absolute z-10">
               <div className="mx-auto size-24 rounded-[2rem] border bg-white/10 p-3 shadow-2xl backdrop-blur-md dark:bg-black/10 lg:size-32">
-                <HeartHandshake className="mx-auto size-16 text-black dark:text-white lg:size-24" />
+                <HeartHandshake className="mx-auto size-16 text-primary lg:size-24" />
               </div>
               <div className="z-10 mt-4 flex flex-col items-center text-center text-primary">
                 <h1 className="text-3xl font-bold lg:text-4xl">
-                  Stop wasting time on design.
+                  Stop wasting time on.
                 </h1>
-                <p className="mt-2">
-                  Start your 7-day free trial. No credit card required.
-                </p>
-                <Link
-                  href="/ai-apps"
+                <p className="mt-2">Free to browse all the ai apps.</p>
+                <a
+                  href="/"
                   className={cn(
                     buttonVariants({
                       size: "lg",
                       variant: "outline",
-                      className: "bg-white/10 shadow-2xl backdrop-blur-md",
                     }),
                     "group mt-4 rounded-[2rem] px-6"
                   )}
                 >
                   Get Started
                   <ChevronRight className="ml-1 size-4 transition-all duration-300 ease-out group-hover:translate-x-1" />
-                </Link>
+                </a>
               </div>
-              <div className="bg-backtround absolute inset-0 -z-10 rounded-full bg-background opacity-40 blur-xl" />
+              <div className="absolute inset-0 -z-10 rounded-full bg-white opacity-40 blur-xl dark:bg-black" />
             </div>
-            <div className="to-backtround absolute inset-x-0 bottom-0 h-full bg-gradient-to-b from-transparent to-background to-70%" />
+            <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-b from-transparent to-background to-70% dark:to-background" />
           </div>
         </div>
       </div>
