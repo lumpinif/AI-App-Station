@@ -1,3 +1,5 @@
+import { BoxSelect } from "lucide-react"
+
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
@@ -28,13 +30,37 @@ export default function CollectionPage({
     (route) => route.title === "Collections"
   )
 
+  const collectionItems = collectionRoutes?.items
   const pathTitle =
-    collectionRoutes?.items.find((item) => item.href.includes(collection))
-      ?.title ?? collection.charAt(0).toUpperCase() + collection.slice(1)
+    collectionItems?.find((item) => item.href.includes(collection))?.title ??
+    collection.charAt(0).toUpperCase() + collection.slice(1)
+
+  const collectionItem = collectionItems?.find((item) =>
+    item.href.includes(collection)
+  )
+
+  if (!collectionItem) {
+    return <div className="text-muted-foreground">No such collection ...</div>
+  }
+
+  const icon = (
+    <span className="flex size-14 items-center justify-center rounded-xl border shadow-md transition-all duration-300 ease-out hover:shadow-lg dark:border-border/50 dark:hover:shadow-outline">
+      {collectionItem.icon ? (
+        collectionItem.title !== "GPTs" ? (
+          <collectionItem.icon className="size-8 stroke-[1.5px]" />
+        ) : (
+          <collectionItem.icon size={28} className="size-8" />
+        )
+      ) : (
+        <BoxSelect className="size-8" />
+      )}
+    </span>
+  )
 
   return (
     <section className="flex flex-col gap-y-4">
       <AiAppsPagesTitle
+        icon={icon}
         title={pathTitle}
         href={`/ai-apps/collections/${collection}`}
       />

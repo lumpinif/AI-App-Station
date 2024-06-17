@@ -13,6 +13,7 @@ interface PageTitleProps {
   className?: string
   withBorder?: boolean
   backButtonCN?: string
+  icon?: React.ReactNode
   withBackButton?: boolean
   children?: React.ReactNode
   subtitlePos?: "top" | "bottom"
@@ -21,6 +22,7 @@ interface PageTitleProps {
 
 export const PageTitle = ({
   href,
+  icon,
   date,
   title,
   children,
@@ -46,7 +48,10 @@ export const PageTitle = ({
             {href ? (
               <Link href={href}>
                 <div className="flex items-baseline gap-2">
-                  <span className="page-title-font">{title}</span>
+                  <span className="page-title-font flex items-center gap-x-2">
+                    {icon}
+                    {title}
+                  </span>
                   {date && (
                     <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
                       {date}
@@ -61,7 +66,10 @@ export const PageTitle = ({
                     {subtitle}
                   </span>
                 )}
-                <span className="page-title-font">{title}</span>
+                <span className="page-title-font flex items-center gap-x-2">
+                  {icon}
+                  {title}
+                </span>
                 {subtitle && subtitlePos === "bottom" && (
                   <span className="mt-2 text-sm font-medium text-muted-foreground">
                     {subtitle}
@@ -81,7 +89,10 @@ export const PageTitle = ({
                 </span>
               )}
               <div className="flex items-baseline gap-2">
-                <span className="page-title-font">{title}</span>
+                <span className="page-title-font flex items-center gap-x-2">
+                  {icon}
+                  {title}
+                </span>
                 {date && (
                   <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
                     {date}
@@ -101,7 +112,10 @@ export const PageTitle = ({
                   {subtitle}
                 </span>
               )}
-              <span className="page-title-font">{title}</span>
+              <span className="page-title-font flex items-center gap-x-2">
+                {icon}
+                {title}
+              </span>
               {subtitle && subtitlePos === "bottom" && (
                 <span className="mt-2 text-sm font-medium text-muted-foreground">
                   {subtitle}
