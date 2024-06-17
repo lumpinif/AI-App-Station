@@ -28,6 +28,7 @@ export type App_likes = Tables<"app_likes">
 export type Apps = Tables<"apps">
 export type Apps_Categories = Tables<"apps_categories">
 export type App_Developers = Tables<"apps_developers">
+export type Daily_app = Tables<"daily_app">
 
 export type AppRefrencedTables = Extract<
   Table,
@@ -100,6 +101,10 @@ export type AppRefrencedFields = {
 export type AppDetails = Apps &
   AppWithCategoriesAndDevelopers &
   AppRefrencedFields
+
+export type DailyApp = Daily_app & {
+  apps: AppDetails
+}
 
 // Post details with categories and other related data
 export type PostWithProfile = Posts & {

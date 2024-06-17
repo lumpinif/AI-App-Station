@@ -1,8 +1,7 @@
 import { getPostComments } from "@/server/queries/supabase/comments/post_comments"
-import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { useQuery } from "@tanstack/react-query"
 
-import { PostCommentWithProfile, Posts } from "@/types/db_tables"
+import { Posts } from "@/types/db_tables"
 
 export default function useDailyPostComments(post_id: Posts["post_id"]) {
   return useQuery({

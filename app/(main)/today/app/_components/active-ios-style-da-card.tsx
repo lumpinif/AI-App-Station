@@ -7,40 +7,36 @@ import { motion } from "framer-motion"
 import { X } from "lucide-react"
 import { useOnClickOutside } from "usehooks-ts"
 
-import { DailyPost } from "@/types/db_tables"
+import { DailyApp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { AverageColor } from "@/hooks/use-average-color"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ContentRenderer } from "@/components/editor/content-renderer"
 
-import { DPCommentPreview } from "./dp-comment-preview"
+import { DPCommentPreview } from "../../daily-post/_components/dp-comment-preview"
+import { DACommentPreview } from "./da-comment-preview"
 
-type ActiveIosStyleDPCardProps = {
+type ActiveIosStyleDACardProps = {
   color: AverageColor
-  activeCard: DailyPost
-  post_card_title: string
-  setActiveCard: (dailyPost: DailyPost | null) => void
+  appIconSrc?: string
+  activeCard: DailyApp
+  app_card_title: string
+  setActiveCard: (dailyApp: DailyApp | null) => void
 }
 
-export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
+export const ActiveIosStyleDACard: React.FC<ActiveIosStyleDACardProps> = ({
   color,
   activeCard,
+  appIconSrc,
   setActiveCard,
-  post_card_title,
+  app_card_title,
 }) => {
   const {
-    posts: {
-      post_id,
-      profiles,
-      post_title,
-      post_content,
-      post_image_src,
-      post_description,
-    },
+    apps: { app_id, app_slug, profiles, app_title, description, introduction },
     created_on,
   } = activeCard
 
-  const currentPostDate = format(created_on, "EEEE MMMM dd")
+  const currentAppDate = format(created_on, "EEEE MMMM dd")
 
   const ref = useRef(null)
   useOnClickOutside(ref, () => setActiveCard(null))
@@ -71,7 +67,7 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
   return (
     <motion.div
       ref={ref}
-      layoutId={`dp-card-${post_id}`}
+      layoutId={`da-card-${app_id}`}
       className="card card-active fixed inset-5 z-50 m-0 mx-auto flex max-h-svh max-w-sm select-none flex-col overflow-x-hidden rounded-none bg-background outline-none md:inset-10 md:max-w-xl lg:inset-24 xl:inset-28"
       style={{
         borderRadius: 10,
@@ -81,15 +77,16 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
         <div className="card-inner relative z-50 h-[430px] md:h-[500px]">
           <motion.img
             alt="image"
-            layoutId={`dp-card-image-${post_id}`}
-            src={post_image_src || "/images/Feature-thumbnail.png"}
-            style={{ borderRadius: 0, objectFit: "cover" }}
-            className="pointer-events-none z-50 h-[430px] w-full max-w-sm bg-background object-cover md:h-full md:max-w-xl"
+            layoutId={`da-card-image-${app_id}`}
+            src={"/images/Feature-thumbnail.png"}
+            style={{ borderRadius: 0, objectFit: "cover", filter: "blur(4px)" }}
+            // TODO: ADD CONDITIONAL WITH REAL IAMGE
+            className="pointer-events-none z-50 h-[430px] w-full max-w-sm bg-background object-cover brightness-75 md:h-full md:max-w-xl"
           />
           <motion.button
             aria-label="Close button"
             onClick={() => setActiveCard(null)}
-            layoutId={`dp-card-close-button-${post_id}`}
+            layoutId={`da-card-close-button-${app_id}`}
             className="close-button absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-[50%] bg-black/20 text-primary backdrop-blur-sm"
           >
             <X
@@ -101,17 +98,17 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
           </motion.button>
 
           <motion.label
-            layoutId={`dp-card-label-${post_id}`}
+            layoutId={`da-card-label-${app_id}`}
             className={cn(
               "absolute left-4 top-8 text-left text-lg font-semibold uppercase leading-[0.9]",
               color.isDark ? "text-white" : "text-zinc-900"
             )}
           >
-            {currentPostDate}
+            {currentAppDate}
           </motion.label>
 
           <motion.div
-            layoutId={`dp-card-content-${post_id}`}
+            layoutId={`da-card-content-${app_id}`}
             className="card-content active-card-content absolute bottom-0 left-0 right-0"
             style={{
               borderBottomLeftRadius: 0,
@@ -120,18 +117,18 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
           >
             <div className="card-text px-4 pb-3 pt-0">
               <motion.h2
-                layoutId={`dp-card-heading-${post_id}`}
+                layoutId={`da-card-heading-${app_id}`}
                 layout
                 className={cn(
                   "card-heading leading- mb-1 max-w-44 text-left text-[40px] font-extrabold uppercase leading-[0.95] text-primary",
                   color.isDark ? "text-white" : "text-zinc-900"
                 )}
               >
-                {post_card_title}
+                {app_card_title}
               </motion.h2>
             </div>
             <motion.div
-              layoutId={`dp-card-extra-info-${post_id}`}
+              layoutId={`da-card-extra-info-${app_id}`}
               className="extra-info relative flex w-full items-center gap-2 bg-black/20 px-4 py-3 backdrop-blur-[2px]"
               style={{
                 borderBottomLeftRadius: 0,
@@ -141,46 +138,46 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
               <motion.img
                 width={40}
                 height={40}
-                className="rounded-[8px]"
-                alt={`author-${profiles.full_name}-avatar`}
-                layoutId={`dp-card-author-avatar-${post_id}`}
-                src={profiles?.avatar_url || "@/images/Feature-thumbnail.png"}
+                alt={`${app_title} app-icon`}
+                layoutId={`da-card-app-icon-${app_id}`}
+                src={appIconSrc || "/images/app-icon-grid-32.png"}
+                className={cn(
+                  "aspect-square select-none rounded-[8px] bg-white shadow-sm",
+                  appIconSrc ? "p-1" : ""
+                )}
               />
 
               <div className="desc-wrapper flex flex-col items-start">
                 <motion.span
-                  layoutId={`dp-card-info-title-${post_id}`}
+                  layoutId={`da-card-info-title-${app_id}`}
                   className={cn(
                     "line-clamp-1 text-[12px] font-semibold",
                     color.isDark ? "text-white" : "text-zinc-900"
                   )}
                 >
-                  {profiles.full_name || profiles.email}
+                  {app_title}
                 </motion.span>
 
                 <motion.span
-                  layoutId={`dp-card-info-subtitle-${post_id}`}
+                  layoutId={`da-card-info-subtitle-${app_id}`}
                   className={cn(
                     "line-clamp-2 text-[12px] max-sm:max-w-[200px]",
                     color.isDark ? "text-white/80" : "text-zinc-900"
                   )}
                 >
-                  {post_description}
+                  {description}
                 </motion.span>
               </div>
 
               <motion.button
                 layout
-                layoutId={`dp-card-button-${post_id}`}
+                layoutId={`da-card-button-${app_id}`}
                 className={cn(
                   "get-button ml-auto rounded-full bg-muted/80 px-4 py-1 text-sm font-semibold text-blue-500 dark:text-blue-500"
                 )}
               >
-                <Link
-                  href={`/today/daily-post/${created_on}`}
-                  className="text-nowrap"
-                >
-                  Go to the post
+                <Link href={`/ai-apps/${app_slug}`} className="text-nowrap">
+                  Go to the app
                 </Link>
               </motion.button>
             </motion.div>
@@ -189,10 +186,10 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
 
         <motion.div
           className="relative max-w-full"
-          layoutId={`dp-card-post-content-${post_id}`}
+          layoutId={`da-card-app-content-${app_id}`}
         >
           <ContentRenderer
-            content={post_content}
+            content={introduction}
             className="px-2 sm:px-4 md:px-6"
           />
         </motion.div>
@@ -202,7 +199,7 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
         </div>
 
         <div className="p-2 sm:p-4 md:p-6">
-          <DPCommentPreview post_id={post_id} />
+          <DACommentPreview app_id={app_id} />
         </div>
       </ScrollArea>
     </motion.div>

@@ -396,6 +396,45 @@ export type Database = {
           },
         ]
       }
+      daily_app: {
+        Row: {
+          created_at: string
+          created_on: string
+          dapp_id: string
+          submitted_by: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_on?: string
+          dapp_id?: string
+          submitted_by: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_on?: string
+          dapp_id?: string
+          submitted_by?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "daily_app_dapp_id_fkey"
+            columns: ["dapp_id"]
+            isOneToOne: true
+            referencedRelation: "apps"
+            referencedColumns: ["app_id"]
+          },
+          {
+            foreignKeyName: "daily_app_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["user_name"]
+          },
+        ]
+      }
       daily_post: {
         Row: {
           created_at: string

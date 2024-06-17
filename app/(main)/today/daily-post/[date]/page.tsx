@@ -1,7 +1,6 @@
 import { Suspense } from "react"
 import { getUserData } from "@/server/auth"
 import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post"
-import { format } from "date-fns"
 import { JSONContent } from "novel"
 
 import { SearchParams } from "@/types/data-table"

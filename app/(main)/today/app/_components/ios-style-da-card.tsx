@@ -4,38 +4,32 @@ import { format } from "date-fns"
 import { motion } from "framer-motion"
 import { X } from "lucide-react"
 
-import { DailyPost } from "@/types/db_tables"
+import { DailyApp } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { AverageColor } from "@/hooks/use-average-color"
 import { ContentRenderer } from "@/components/editor/content-renderer"
 
-type IosStyleDPCardProps = {
+type IosStyleDACardProps = {
   color: AverageColor
-  dailyPost: DailyPost
-  post_card_title: string
-  setActiveCard: (dailyPost: DailyPost | null) => void
+  dailyApp: DailyApp
+  appIconSrc?: string
+  app_card_title: string
+  setActiveCard: (dailyApp: DailyApp | null) => void
 }
 
-export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
+export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
   color,
-  dailyPost,
+  dailyApp,
+  appIconSrc,
   setActiveCard,
-  post_card_title,
+  app_card_title,
 }) => {
   const {
-    posts: {
-      post_id,
-      profiles,
-      post_title,
-      post_label,
-      post_content,
-      post_image_src,
-      post_description,
-    },
+    apps: { app_id, profiles, app_title, description, introduction },
     created_on,
-  } = dailyPost
+  } = dailyApp
 
-  const currentPostDate = format(created_on, "EEEE MMMM dd")
+  const currentAppDate = format(created_on, "EEEE MMMM dd")
 
   return (
     <motion.div
@@ -43,8 +37,8 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
       style={{
         borderRadius: 20,
       }}
-      layoutId={`dp-card-${post_id}`}
-      onClick={() => setActiveCard(dailyPost)}
+      layoutId={`da-card-${app_id}`}
+      onClick={() => setActiveCard(dailyApp)}
       className="card relative mx-auto my-0 h-[430px] max-w-sm cursor-pointer select-none overflow-hidden rounded-xl bg-background outline-none md:max-w-md"
     >
       {/* overlay */}
@@ -55,16 +49,22 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
 
       <motion.img
         alt="image"
-        style={{ borderRadius: 20 }}
-        layoutId={`dp-card-image-${post_id}`}
-        src={post_image_src! || "@/images/Feature-thumbnail.png"}
-        className="pointer-events-none z-50 size-full object-cover"
+        style={{
+          borderRadius: 20,
+          objectFit: "cover",
+        }}
+        layoutId={`da-card-image-${app_id}`}
+        src={"/images/Feature-thumbnail.png"}
+        // TODO: ADD CONDITIONAL WITH REAL IAMGE
+        className={cn(
+          "pointer-events-none z-50 size-full object-cover blur brightness-[.85]"
+        )}
       />
 
       <motion.button
         aria-hidden
         tabIndex={-1}
-        layoutId={`dp-card-close-button-${post_id}`}
+        layoutId={`da-card-close-button-${app_id}`}
         className="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-[50%] bg-black/20 text-primary backdrop-blur-sm"
         style={{ opacity: 0 }}
       >
@@ -77,17 +77,17 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
       </motion.button>
 
       <motion.label
-        layoutId={`dp-card-label-${post_id}`}
+        layoutId={`da-card-label-${app_id}`}
         className={cn(
           "absolute right-4 top-4 text-left text-lg font-semibold uppercase leading-[0.9]",
           color.isDark ? "text-white" : "text-zinc-900"
         )}
       >
-        {currentPostDate}
+        {currentAppDate}
       </motion.label>
 
       <motion.div
-        layoutId={`dp-card-content-${post_id}`}
+        layoutId={`da-card-content-${app_id}`}
         className="card-content absolute bottom-0 left-0 right-0"
         style={{
           borderBottomLeftRadius: 20,
@@ -97,54 +97,57 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
       >
         <div className="card-text px-4 pb-3 pt-0">
           <motion.h2
-            layoutId={`dp-card-heading-${post_id}`}
+            layoutId={`da-card-heading-${app_id}`}
             className={cn(
               "card-heading mb-1 max-w-44 text-left text-[40px] font-extrabold uppercase leading-[0.95] text-primary",
               color.isDark ? "text-white" : "text-zinc-900"
             )}
           >
-            {post_card_title}
+            {app_card_title}
           </motion.h2>
         </div>
 
         <motion.div
-          layoutId={`dp-card-extra-info-${post_id}`}
+          layoutId={`da-card-extra-info-${app_id}`}
           className="extra-info relative flex w-full items-center gap-2 bg-black/20 px-4 py-3 backdrop-blur-[2px]"
           style={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
         >
           <motion.img
             width={40}
             height={40}
-            className="rounded-[8px]"
-            alt={`author-${profiles.full_name}-avatar`}
-            layoutId={`dp-card-author-avatar-${post_id}`}
-            src={profiles?.avatar_url || "@/images/Feature-thumbnail.png"}
+            alt={`${app_title} app-icon`}
+            layoutId={`da-card-app-icon-${app_id}`}
+            src={appIconSrc || "/images/app-icon-grid-32.png"}
+            className={cn(
+              "aspect-square select-none rounded-[8px] bg-white shadow-sm",
+              appIconSrc ? "p-1" : ""
+            )}
           />
 
           <div className="desc-wrapper flex flex-col items-start">
             <motion.span
-              layoutId={`dp-card-info-title-${post_id}`}
+              layoutId={`da-card-info-title-${app_id}`}
               className={cn(
                 "line-clamp-1 text-[12px] font-semibold",
                 color.isDark ? "text-white" : "text-zinc-900"
               )}
             >
-              {profiles.full_name || profiles.email}
+              {app_title}
             </motion.span>
 
             <motion.span
-              layoutId={`dp-card-info-subtitle-${post_id}`}
+              layoutId={`da-card-info-subtitle-${app_id}`}
               className={cn(
                 "line-clamp-2 text-[12px]",
                 color.isDark ? "text-white/80" : "text-zinc-900"
               )}
             >
-              {post_description}
+              {description}
             </motion.span>
           </div>
 
           <motion.button
-            layoutId={`dp-card-button-${post_id}`}
+            layoutId={`da-card-button-${app_id}`}
             className={cn(
               "get-button ml-auto rounded-full bg-muted/60 px-4 py-1 text-sm font-semibold text-primary",
               color.isDark ? "text-white" : "text-zinc-900"
@@ -157,10 +160,10 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
 
       <motion.div
         className="relative flex-1"
-        layoutId={`dp-card-post-content-${post_id}`}
+        layoutId={`da-card-app-content-${app_id}`}
         style={{ opacity: 0 }}
       >
-        <ContentRenderer content={post_content} />
+        <ContentRenderer content={introduction} />
       </motion.div>
     </motion.div>
   )

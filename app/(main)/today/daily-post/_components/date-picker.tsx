@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
 
 import { Posts } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
@@ -15,8 +15,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import BackButton from "@/components/shared/back-button"
-
-import TodayPageTitle from "../../_components/today-page-title"
 
 type DatePickerProps = {
   currentDate: Date
@@ -42,10 +40,10 @@ export function DatePicker({ post_title, currentDate }: DatePickerProps) {
   return (
     <div className="mx-auto flex max-w-5xl items-center justify-between">
       <BackButton />
+
       {/* <span className="text-base font-semibold tracking-[-.016em] text-muted-foreground md:tracking-[-.024em]">
         {format(currentDate, "EEEE MMMM dd")}
       </span> */}
-
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -56,7 +54,7 @@ export function DatePicker({ post_title, currentDate }: DatePickerProps) {
               !date && "text-muted-foreground"
             )}
           >
-            {/* <CalendarIcon className="mr-2 h-4 w-4" /> */}
+            <CalendarIcon className="mr-2 h-4 w-4" />
             {date ? (
               <span>{format(date, "PPP")}</span>
             ) : (

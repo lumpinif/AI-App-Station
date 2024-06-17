@@ -3,22 +3,26 @@
 import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 
-import { DailyPost } from "@/types/db_tables"
+import { DailyApp } from "@/types/db_tables"
 import useAverageColor from "@/hooks/use-average-color"
 
-import { ActiveIosStyleDPCard } from "./active-ios-style-dp-card"
-import { IosStyleDPCard } from "./ios-style-dp-card"
+import { ActiveIosStyleDACard } from "./active-ios-style-da-card"
+import { IosStyleDACard } from "./ios-style-da-card"
 
-type IosStyleDailyPostCardProps = {
-  dailyPost: DailyPost
+type IosStyleDailyAppCardProps = {
+  dailyApp: DailyApp
 }
 
-export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
-  dailyPost,
+export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
+  dailyApp,
 }) => {
-  const [activeCard, setActiveCard] = useState<DailyPost | null>(null)
-  const imageSrc =
-    dailyPost.posts.post_image_src || "/images/Feature-thumbnail.png"
+  const [activeCard, setActiveCard] = useState<DailyApp | null>(null)
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/apps/`
+  const appIconSrc = supabaseImageURL + dailyApp.apps.app_icon_src
+
+  const imageSrc = "/images/Feature-thumbnail.png"
   const { color, isLoading } = useAverageColor(imageSrc, true)
 
   useEffect(() => {
@@ -34,11 +38,12 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
 
   return (
     <div className="w-full">
-      <IosStyleDPCard
+      <IosStyleDACard
         color={color}
-        dailyPost={dailyPost}
+        dailyApp={dailyApp}
+        appIconSrc={appIconSrc}
         setActiveCard={setActiveCard}
-        post_card_title="AI News of the Day"
+        app_card_title="App of the Day"
       />
 
       <AnimatePresence>
@@ -54,11 +59,12 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
 
       <AnimatePresence>
         {activeCard ? (
-          <ActiveIosStyleDPCard
+          <ActiveIosStyleDACard
             color={color}
             activeCard={activeCard}
+            appIconSrc={appIconSrc}
             setActiveCard={setActiveCard}
-            post_card_title="AI News of the Day"
+            app_card_title="App of the Day"
           />
         ) : null}
       </AnimatePresence>
