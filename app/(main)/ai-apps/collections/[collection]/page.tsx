@@ -1,9 +1,7 @@
 import { getUserData } from "@/server/auth"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
-import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { BoxSelect } from "lucide-react"
 
-import { AppDetails } from "@/types/db_tables"
 import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 
