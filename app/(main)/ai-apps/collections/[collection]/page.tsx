@@ -1,8 +1,14 @@
+import { getUserData } from "@/server/auth"
+import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
+import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { BoxSelect } from "lucide-react"
 
+import { AppDetails } from "@/types/db_tables"
+import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
+import { AppCarouselLgCard } from "../../_components/cards/app-carousel-lg-card"
 
 // export const dynamicParams = false // Set to false to generate static params
 
@@ -20,12 +26,34 @@ import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 //   return []
 // }
 
-export default function CollectionPage({
+async function fetchAppsByCollectionConfig(config?: AppFetchConfig) {
+  if (!config) {
+    return {
+      appsByCollectionConfig: null,
+      getAppsError: "No config provided",
+    }
+  }
+
+  const { apps: appsByCollectionConfig, getAppsByConfigError: getAppsError } =
+    await getAppsByConfig({
+      config,
+    })
+
+  return { appsByCollectionConfig, getAppsError }
+}
+
+export default async function CollectionPage({
   params,
 }: {
   params: { collection: string }
 }) {
+  // Get user
+  const {
+    data: { user },
+  } = await getUserData()
+
   const { collection } = params
+
   const collectionRoutes = SIDENAVROUTES.find(
     (route) => route.title === "Collections"
   )
@@ -41,6 +69,18 @@ export default function CollectionPage({
 
   if (!collectionItem) {
     return <div className="text-muted-foreground">No such collection ...</div>
+  }
+
+  const { appsByCollectionConfig, getAppsError } =
+    await fetchAppsByCollectionConfig(collectionItem?.fetchConfig)
+
+  if (getAppsError) {
+    return (
+      <section className="flex flex-col gap-y-4 text-muted-foreground">
+        <p>Sorry, there was an error loading apps by this collection.</p>
+        <p>Error: {getAppsError}</p>
+      </section>
+    )
   }
 
   const icon = (
@@ -64,6 +104,15 @@ export default function CollectionPage({
         title={pathTitle}
         href={`/ai-apps/collections/${collection}`}
       />
+      {appsByCollectionConfig?.length === 0 && (
+        <p>No apps found in this collection.</p>
+      )}
+
+      <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+        {appsByCollectionConfig?.map((app, index) => (
+          <AppCarouselLgCard key={index} app={app} user={user} />
+        ))}
+      </div>
     </section>
   )
 }

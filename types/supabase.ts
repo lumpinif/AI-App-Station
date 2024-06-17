@@ -214,6 +214,7 @@ export type Database = {
         Row: {
           app_icon_src: string | null
           app_id: string
+          app_image_src: string | null
           app_publish_status: Database["public"]["Enums"]["publish_status"]
           app_slug: string
           app_title: string
@@ -224,6 +225,7 @@ export type Database = {
           description: string | null
           introduction: Json | null
           is_featured: boolean | null
+          is_gpt: boolean
           likes_count: number
           pricing: Database["public"]["Enums"]["pricing"] | null
           submitted_by_user_id: string
@@ -233,6 +235,7 @@ export type Database = {
         Insert: {
           app_icon_src?: string | null
           app_id?: string
+          app_image_src?: string | null
           app_publish_status?: Database["public"]["Enums"]["publish_status"]
           app_slug: string
           app_title: string
@@ -243,6 +246,7 @@ export type Database = {
           description?: string | null
           introduction?: Json | null
           is_featured?: boolean | null
+          is_gpt?: boolean
           likes_count?: number
           pricing?: Database["public"]["Enums"]["pricing"] | null
           submitted_by_user_id: string
@@ -252,6 +256,7 @@ export type Database = {
         Update: {
           app_icon_src?: string | null
           app_id?: string
+          app_image_src?: string | null
           app_publish_status?: Database["public"]["Enums"]["publish_status"]
           app_slug?: string
           app_title?: string
@@ -262,6 +267,7 @@ export type Database = {
           description?: string | null
           introduction?: Json | null
           is_featured?: boolean | null
+          is_gpt?: boolean
           likes_count?: number
           pricing?: Database["public"]["Enums"]["pricing"] | null
           submitted_by_user_id?: string

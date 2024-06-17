@@ -19,6 +19,8 @@ import {
 import { IconType } from "react-icons/lib"
 import { RiOpenaiFill } from "react-icons/ri"
 
+import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
+
 export type NavItemProps = {
   id?: string
   title: string
@@ -30,6 +32,7 @@ export type NavItemProps = {
   shortcutNumber?: number
   discription?: string
   inMainNav?: boolean
+  fetchConfig?: AppFetchConfig
 }
 
 export type SIDENAVROUTE = {
@@ -140,6 +143,26 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         items: [],
         icon: Paintbrush2,
         shortcutNumber: 1,
+        fetchConfig: {
+          title: "AI Apps for Create",
+          order: [
+            {
+              column: "likes_count",
+              options: { ascending: false },
+            },
+          ],
+          // limit: {
+          //   limit: 15,
+          // },
+          orFilters: [
+            {
+              filters:
+                "category_slug.eq.writing,category_slug.eq.llm,category_slug.eq.video,category_slug.eq.photo,category_slug.eq.3d,category_slug.eq.graphics-design,category_slug.eq.music",
+              options: { referencedTable: "categories" },
+            },
+          ],
+          innerJoinTables: ["categories"],
+        },
       },
       // {
       //   title: "Discovery",
@@ -155,6 +178,26 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         items: [],
         icon: Hammer,
         shortcutNumber: 2,
+        fetchConfig: {
+          title: "AI Apps for Develop",
+          order: [
+            {
+              column: "likes_count",
+              options: { ascending: false },
+            },
+          ],
+          // limit: {
+          //   limit: 15,
+          // },
+          orFilters: [
+            {
+              filters:
+                "category_slug.eq.productivity,category_slug.eq.llm,category_slug.eq.utilities,category_slug.eq.develop,category_slug.eq.3d,category_slug.eq.graphics-design",
+              options: { referencedTable: "categories" },
+            },
+          ],
+          innerJoinTables: ["categories"],
+        },
       },
       {
         title: "Design",
@@ -162,6 +205,26 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         items: [],
         icon: PencilRuler,
         shortcutNumber: 3,
+        fetchConfig: {
+          title: "AI Apps for Design",
+          order: [
+            {
+              column: "likes_count",
+              options: { ascending: false },
+            },
+          ],
+          // limit: {
+          //   limit: 15,
+          // },
+          orFilters: [
+            {
+              filters:
+                "category_slug.eq.video,category_slug.eq.utilities,category_slug.eq.photo,category_slug.eq.3d,category_slug.eq.graphics-design",
+              options: { referencedTable: "categories" },
+            },
+          ],
+          innerJoinTables: ["categories"],
+        },
       },
       {
         title: "GPTs",
@@ -169,6 +232,20 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         items: [],
         icon: RiOpenaiFill,
         shortcutNumber: 4,
+        fetchConfig: {
+          title: "GPTs AI Apps",
+          order: [
+            {
+              column: "likes_count",
+              options: { ascending: false },
+            },
+          ],
+          // limit: {
+          //   limit: 15,
+          // },
+          filters: [{ column: "is_gpt", operator: "eq", value: true }],
+          innerJoinTables: [],
+        },
       },
       {
         title: "Work",
@@ -176,6 +253,26 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         items: [],
         icon: Briefcase,
         shortcutNumber: 5,
+        fetchConfig: {
+          title: "AI Apps for Work",
+          order: [
+            {
+              column: "likes_count",
+              options: { ascending: false },
+            },
+          ],
+          // limit: {
+          //   limit: 15,
+          // },
+          orFilters: [
+            {
+              filters:
+                "category_slug.eq.bussiness,category_slug.eq.video,category_slug.eq.utilities,category_slug.eq.photo,category_slug.eq.llm,category_slug.eq.graphics-design,category_slug.eq.productivity,category_slug.eq.finance",
+              options: { referencedTable: "categories" },
+            },
+          ],
+          innerJoinTables: ["categories"],
+        },
       },
     ],
   },

@@ -48,7 +48,7 @@ export const PageTitle = ({
             {href ? (
               <Link href={href}>
                 <div className="flex items-baseline gap-2">
-                  <span className="page-title-font flex items-center gap-x-2">
+                  <span className="page-title-font flex items-center gap-x-2 sm:gap-x-4">
                     {icon}
                     {title}
                   </span>
@@ -66,7 +66,7 @@ export const PageTitle = ({
                     {subtitle}
                   </span>
                 )}
-                <span className="page-title-font flex items-center gap-x-2">
+                <span className="page-title-font flex items-center gap-x-2 sm:gap-x-4">
                   {icon}
                   {title}
                 </span>
@@ -89,7 +89,7 @@ export const PageTitle = ({
                 </span>
               )}
               <div className="flex items-baseline gap-2">
-                <span className="page-title-font flex items-center gap-x-2">
+                <span className="page-title-font flex items-center gap-x-2 sm:gap-x-4">
                   {icon}
                   {title}
                 </span>
@@ -112,7 +112,7 @@ export const PageTitle = ({
                   {subtitle}
                 </span>
               )}
-              <span className="page-title-font flex items-center gap-x-2">
+              <span className="page-title-font flex items-center gap-x-2 sm:gap-x-4">
                 {icon}
                 {title}
               </span>
@@ -130,7 +130,7 @@ export const PageTitle = ({
         (children && (
           <div
             className={cn(
-              children && "flex items-center gap-x-2",
+              children && "flex items-center gap-x-2 sm:gap-x-4",
               WithAccountModalTrigger && "sm:hidden"
             )}
           >
