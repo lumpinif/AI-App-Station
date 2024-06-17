@@ -39,7 +39,7 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
         style={{
           borderRadius: 20,
         }}
-        className="flex size-full h-[430px] animate-magic-fade-in items-center justify-center border"
+        className="flex size-full h-[430px] animate-magic-fade-in items-center justify-center bg-card/50"
       >
         <LoadingSpinner />
       </div>
