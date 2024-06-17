@@ -73,7 +73,7 @@ const AccountModalContent = () => {
             size={"label"}
             variant={"ghost"}
             className={cn(
-              "rounded-lg font-normal text-red-600 hover:text-red-500 dark:text-red-500 max-sm:hidden"
+              "w-20 rounded-lg font-normal text-red-600 hover:text-red-500 dark:text-red-500 max-sm:hidden"
             )}
           />
         </span>
