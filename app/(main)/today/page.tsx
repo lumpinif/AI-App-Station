@@ -10,7 +10,7 @@ const TodayPage = () => {
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
         <DailyPost />
         <DailyApp />
-        <div className="">Story of Today</div>
+        {/* <div className="">Story of Today</div> */}
         <div className="">New Stories</div>
         <div className="">New App</div>
         <div className="">Featured Apps</div>

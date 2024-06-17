@@ -58,7 +58,10 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
         style={{ borderRadius: 20 }}
         layoutId={`dp-card-image-${post_id}`}
         src={post_image_src! || "@/images/Feature-thumbnail.png"}
-        className="pointer-events-none z-50 size-full object-cover"
+        className={cn(
+          "pointer-events-none z-50 size-full object-cover",
+          post_image_src ? "brightness-[.85]" : "blur brightness-[.85]"
+        )}
       />
 
       <motion.button
@@ -88,7 +91,7 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
 
       <motion.div
         layoutId={`dp-card-content-${post_id}`}
-        className="card-content absolute bottom-0 left-0 right-0"
+        className="card-content absolute bottom-0 left-0 right-0 pt-32"
         style={{
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,

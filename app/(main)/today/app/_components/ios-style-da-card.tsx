@@ -92,18 +92,18 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
 
       <motion.div
         layoutId={`da-card-content-${app_id}`}
-        className="card-content absolute bottom-0 left-0 right-0"
+        className="card-content absolute bottom-0 left-0 right-0 pt-32"
         style={{
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
           background: `linear-gradient(to bottom, rgba(${color.colorEnd},0) 0%, ${color.rgba} 55%, ${color.rgba} 100%)`,
         }}
       >
-        <div className="card-text z-50 px-4 pb-3 pt-0">
+        <div className="card-text px-4 pb-3 pt-0">
           <motion.h2
             layoutId={`da-card-heading-${app_id}`}
             className={cn(
-              "card-heading z-50 mb-1 max-w-44 text-left text-[40px] font-extrabold uppercase leading-[0.95] text-primary",
+              "card-heading mb-1 max-w-44 text-left text-[40px] font-extrabold uppercase leading-[0.95] text-primary",
               color.isDark ? "text-white" : "text-zinc-900"
             )}
           >
@@ -113,7 +113,7 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
 
         <motion.div
           layoutId={`da-card-extra-info-${app_id}`}
-          className="extra-info relative z-50 flex w-full items-center gap-2 bg-black/20 px-4 py-3 backdrop-blur-[2px]"
+          className="extra-info relative flex w-full items-center gap-2 bg-black/20 px-4 py-3 backdrop-blur-[2px]"
           style={{ borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
         >
           <motion.img
