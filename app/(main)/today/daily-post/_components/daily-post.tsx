@@ -8,7 +8,12 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
   const { post: dailyPost, error: getDailyPostError } = await getDailyPost()
 
   if (getDailyPostError) {
-    return <div>Error fetching daily post, please try again.</div>
+    return (
+      <div>
+        Error fetching daily post, please try again. Error:{" "}
+        {getDailyPostError.message}
+      </div>
+    )
   }
 
   if (!dailyPost) {

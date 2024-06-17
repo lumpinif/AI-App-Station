@@ -12,7 +12,12 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
   const { app: dailyApp, error: getDailyAppError } = await getDailyApp()
 
   if (getDailyAppError) {
-    return <div>Error fetching daily post, please try again.</div>
+    return (
+      <div>
+        Error fetching daily app, please try again. error:
+        {getDailyAppError.message}
+      </div>
+    )
   }
 
   if (!dailyApp) {
