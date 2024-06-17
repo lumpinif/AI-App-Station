@@ -3,7 +3,9 @@ import { getAllPosts } from "@/server/queries/supabase/stories"
 
 import PostsCarousel from "@/app/(main)/ai-apps/_components/carousel/posts-carousel/posts-carousel"
 
-type FeaturedStoriesCarouselProps = {}
+type FeaturedStoriesCarouselProps = {
+  className?: string
+}
 
 const fetchPosts = async ({
   is_hero_featured,
@@ -30,7 +32,7 @@ const fetchPosts = async ({
 
 export const FeaturedStoriesCarousel: React.FC<
   FeaturedStoriesCarouselProps
-> = async ({}) => {
+> = async ({ className }) => {
   const { posts: heroPosts } = await fetchPosts({
     is_hero_featured: true,
   })
@@ -43,6 +45,7 @@ export const FeaturedStoriesCarousel: React.FC<
         isIndicator={true}
         isWheelGestures={true}
         containerCN="h-fit"
+        className={className}
         postCardVariant="hero"
         title="Featured Stories"
       />

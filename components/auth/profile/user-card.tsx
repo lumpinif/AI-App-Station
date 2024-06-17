@@ -7,29 +7,29 @@ import useAccountModal from "@/hooks/use-account-modal-store"
 import AccountModalTrigger from "../auth-modal/account-modal-trigger"
 
 type NewUserCardProps = {
-  className?: string
   avatarCN?: string
-  accountModalTriggerCN?: string
-  profileContainerCN?: string
+  className?: string
+  isWithLink?: boolean
   profileNameCN?: string
   profileEmailCN?: string
   isTriggerModal?: boolean
-  isWithLink?: boolean
+  profileContainerCN?: string
   withAvartarUploader?: boolean
   display?: "user_name" | "email"
+  accountModalTriggerCN?: string
 }
 
 export const UserCard: React.FC<NewUserCardProps> = ({
-  className,
   avatarCN,
-  accountModalTriggerCN,
-  profileContainerCN,
+  className,
   profileNameCN,
-  profileEmailCN,
   isTriggerModal,
-  isWithLink = true,
-  withAvartarUploader = false,
+  profileEmailCN,
   display = "email",
+  isWithLink = true,
+  profileContainerCN,
+  accountModalTriggerCN,
+  withAvartarUploader = false,
 }) => {
   const { isFetching, data: profile } = useUserProfile()
   const closeAccountModal = useAccountModal((state) => state.closeModal)
@@ -63,8 +63,8 @@ export const UserCard: React.FC<NewUserCardProps> = ({
         </Link>
       ) : (
         <div
-          className={cn("flex items-center overflow-hidden", className)}
           onClick={closeAccountModal}
+          className={cn("flex items-center overflow-hidden", className)}
         >
           <AccountModalTrigger
             withAvartarUploader={withAvartarUploader}
@@ -73,6 +73,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
             isFetching={isFetching}
             isTriggerModal={isTriggerModal}
           />
+
           <div className={cn("flex flex-1 flex-col", profileContainerCN)}>
             <span className={profileNameCN}>{profile?.full_name}</span>
             <span className={profileEmailCN}>
