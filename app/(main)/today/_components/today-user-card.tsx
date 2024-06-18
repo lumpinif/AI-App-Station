@@ -34,7 +34,7 @@ export const TodayUserCard: React.FC<UserCardProps> = ({}) => {
           borderRadius: 20,
         }}
         onClick={handleAvartarModalTriggerClick}
-        className="relative hidden animate-magic-fade-up cursor-pointer flex-col items-center justify-center gap-y-1 overflow-hidden border bg-card/50 transition-all duration-200 ease-out hover:bg-card active:scale-[.98] dark:border-none dark:shadow-outline sm:flex"
+        className="relative hidden cursor-pointer flex-col items-center justify-center gap-y-1 overflow-hidden border bg-card/50 transition-all duration-200 ease-out hover:bg-card active:scale-[.98] dark:border-none dark:shadow-outline sm:flex"
       >
         <AccountModalTrigger
           profile={profile}

@@ -16,6 +16,7 @@ export const FlipWords = ({
 }) => {
   const [currentWord, setCurrentWord] = useState(words[0])
   const [isAnimating, setIsAnimating] = useState<boolean>(false)
+  const [isFirstRender, setIsFirstRender] = useState<boolean>(true)
 
   // thanks for the fix Julian - https://github.com/Julian-AT
   const startAnimation = useCallback(() => {
@@ -25,11 +26,18 @@ export const FlipWords = ({
   }, [currentWord, words])
 
   useEffect(() => {
-    if (!isAnimating)
-      setTimeout(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false)
+      return
+    }
+
+    if (!isAnimating) {
+      const timer = setTimeout(() => {
         startAnimation()
       }, duration)
-  }, [isAnimating, duration, startAnimation])
+      return () => clearTimeout(timer)
+    }
+  }, [isAnimating, duration, startAnimation, isFirstRender])
 
   return (
     <AnimatePresence
@@ -47,41 +55,40 @@ export const FlipWords = ({
           y: 0,
         }}
         transition={{
-          duration: 1.6,
+          duration: 0.5,
           ease: "easeInOut",
           type: "spring",
-          stiffness: 110,
+          stiffness: 40,
           damping: 15,
         }}
         exit={{
           opacity: 0,
-          y: -40,
-          x: 40,
-          scale: 1.5,
+          y: -20,
+          x: 30,
+          scale: 1.25,
           filter: "blur(5px)",
           position: "absolute",
         }}
         className={cn(
-          "relative z-10 inline-block px-2 text-left text-neutral-900 dark:text-neutral-100",
+          "relative z-10 inline-block px-2 text-left text-primary",
           className
         )}
+        // style={{ overflow: "hidden" }}
         key={currentWord}
       >
         {currentWord.split("").map((char, charIndex) => (
-          <React.Fragment key={char + charIndex}>
-            <motion.span
-              key={char + charIndex}
-              initial={{ opacity: 0, y: 10, filter: "blur(5px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{
-                delay: charIndex * 0.09,
-                duration: 1.4,
-              }}
-              className="inline-block"
-            >
-              {char === " " ? "\u00A0" : char}
-            </motion.span>
-          </React.Fragment>
+          <motion.span
+            key={char + charIndex}
+            initial={{ opacity: 0, y: 10, filter: "blur(5px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{
+              delay: charIndex * 0.08,
+              duration: 0.4,
+            }}
+            className="inline-block"
+          >
+            {char === " " ? "\u00A0" : char}
+          </motion.span>
         ))}
       </motion.div>
     </AnimatePresence>

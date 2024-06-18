@@ -42,18 +42,18 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          borderRadius: 20,
-        }}
-        className="flex size-full h-[430px] animate-magic-fade-up items-center justify-center bg-card/50"
-      >
-        <LoadingSpinner />
-      </div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div
+  //       style={{
+  //         borderRadius: 20,
+  //       }}
+  //       className="flex size-full h-[430px] animate-magic-fade-up items-center justify-center bg-card/50"
+  //     >
+  //       <LoadingSpinner />
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="w-full">

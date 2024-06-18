@@ -21,7 +21,7 @@ export default function StoriesPage() {
         href="/stories"
         subtitlePos="bottom"
         title="Browse Stories"
-        className="animate-fade-down"
+        // className="animate-fade-down"
         subtitle="Discover brilliant stories written by the community"
       >
         <SeeAllButton
@@ -31,17 +31,17 @@ export default function StoriesPage() {
         />
       </PageTitle>
 
-      <Suspense fallback={<LoadingFallback />}>
-        <FeaturedStoriesCarousel />
-      </Suspense>
+      {/* <Suspense fallback={<LoadingFallback />}> */}
+      <FeaturedStoriesCarousel />
+      {/* </Suspense> */}
 
-      <Suspense fallback={<LoadingFallback />}>
-        <StoriesPageTopicNav />
-      </Suspense>
+      {/* <Suspense fallback={<LoadingFallback />}> */}
+      <StoriesPageTopicNav />
+      {/* </Suspense> */}
 
-      <Suspense fallback={<LoadingFallback />}>
-        <StoriesCarouselLayout />
-      </Suspense>
+      {/* <Suspense fallback={<LoadingFallback />}> */}
+      <StoriesCarouselLayout />
+      {/* </Suspense> */}
 
       <SeeAllButton
         href="/stories/all"

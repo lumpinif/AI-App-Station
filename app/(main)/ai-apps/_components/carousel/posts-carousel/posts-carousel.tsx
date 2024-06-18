@@ -108,7 +108,7 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
               key={index}
               className={cn("bg-transparent", className)}
             >
-              <div className="relative flex size-full animate-magic-fade-in items-center justify-center overflow-hidden rounded-2xl bg-card">
+              <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
                 {/* {postCardVariant === "hero" ? (
                   <PostCard post={post} />
                 ) : (

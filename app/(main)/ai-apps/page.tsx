@@ -53,7 +53,7 @@ const AIAppsMainPage = async () => {
       <AiAppsPagesTitle
         subtitlePos="bottom"
         title="Discover AI Apps"
-        className="animate-fade-up"
+        // className="animate-fade-up"
         subtitle="Discover AI apps submitted by the community"
       >
         <SeeAllButton
