@@ -22,7 +22,7 @@ export function FlipWordsTitle() {
         <br className="sm:hidden" />
         <FlipWords
           words={words}
-          duration={10000}
+          duration={8000}
           className="mx-4 rounded-3xl hover:dark:shadow-outline"
         />
         <br className="sm:hidden" />
