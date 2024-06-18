@@ -93,7 +93,10 @@ export function ThemeToggle({
       >
         <Sun
           size={18}
-          className={cn(theme === "light" ? "stroke-[1.5]" : "stroke-1")}
+          className={cn(
+            "stroke-[1.5]",
+            theme === "light" ? "stroke-[1.5]" : "stroke-[1.5]"
+          )}
         />
       </button>
 
@@ -107,7 +110,10 @@ export function ThemeToggle({
       >
         <Monitor
           size={18}
-          className={cn(theme === "system" ? "stroke-[1.5]" : "stroke-1")}
+          className={cn(
+            "stroke-[1.5]",
+            theme === "system" ? "stroke-[1.5]" : "stroke-[1.5]"
+          )}
         />
       </button>
 
@@ -121,7 +127,10 @@ export function ThemeToggle({
       >
         <Moon
           size={18}
-          className={cn(theme === "dark" ? "stroke-[1.5]" : "stroke-1")}
+          className={cn(
+            "stroke-[1.5]",
+            theme === "dark" ? "stroke-[1.5]" : "stroke-[1.5]"
+          )}
         />
       </button>
     </div>
