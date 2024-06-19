@@ -6,11 +6,12 @@ import { FlipWords } from "./flip-words"
 export function FlipWordsTitle() {
   const words = [
     "best & free",
-    "beautiful",
-    "powerful",
-    "updated",
-    "extensive",
-    "omniscient",
+    "fast growing",
+    "daily updated",
+    "pretty & simple",
+    "powerful & easy",
+    // "extensive",
+    // "omniscient",
   ]
 
   return (
