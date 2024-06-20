@@ -28,11 +28,11 @@ export const CommentListWrapper: React.FC<CommentListWrapperProps> = ({
 
   return (
     <div
+      id={`comment-${String(comment.comment_id)}`}
       className={cn(
-        "relative flex space-x-4 rounded-lg p-4 transition-all duration-100 ease-out sm:hover:bg-muted sm:dark:hover:bg-muted/20 ",
+        "relative flex space-x-4 rounded-lg p-4 transition-all duration-100 ease-out max-sm:flex-wrap sm:hover:bg-muted sm:dark:hover:bg-muted/20",
         isHighlighted && "bg-blue-200/30 dark:bg-blue-200/20"
       )}
-      id={`comment-${String(comment.comment_id)}`}
     >
       {children}
     </div>

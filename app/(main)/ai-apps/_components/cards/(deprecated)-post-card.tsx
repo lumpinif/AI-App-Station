@@ -22,7 +22,6 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
     <Link
       href={`/story/${getPostAuthorSlug(post.profiles)}/${post.post_id}`}
-      scroll={false}
       passHref
       className="size-full rounded-2xl"
     >

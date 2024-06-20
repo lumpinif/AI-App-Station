@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils"
 import BackButton from "@/components/shared/back-button"
 
-import { ImageElement } from "../../_components/cards/post-card"
+import { ImageElement } from "../../_components/cards/(deprecated)-post-card"
 
 type AppDetailHeroImageProps = { className?: string }
 

@@ -56,7 +56,6 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({
 
   return (
     <Link
-      scroll={false}
       href={`/story/${getPostAuthorSlug(post.profiles)}/${post.post_id}`}
       className="size-full overflow-hidden"
     >

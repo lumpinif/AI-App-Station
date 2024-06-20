@@ -109,17 +109,10 @@ const PostsCarousel: React.FC<PostsCarouselProps> = ({
               className={cn("bg-transparent", className)}
             >
               <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
-                {/* {postCardVariant === "hero" ? (
-                  <PostCard post={post} />
-                ) : (
-                 <PostCarouselCard post={post} /> */}
-
                 <IosStylePostCard
                   post={post}
                   postCardVariant={postCardVariant}
                 />
-
-                {/* )} */}
               </div>
             </SliderMainItem>
           ))}

@@ -44,7 +44,7 @@ export const CommentCard: React.FC<CommentProps> = ({
       </div>
       <div className="flex w-full flex-col space-y-4">
         <div className="flex w-full flex-1 flex-col gap-y-2">
-          <div className="flex items-center justify-between ">
+          <div className="flex items-center justify-between">
             <div className="flex flex-col space-y-2">
               {comment.rating && comment.rating > 0 && (
                 <Rating
@@ -56,7 +56,7 @@ export const CommentCard: React.FC<CommentProps> = ({
                 />
               )}
               <div className="flex flex-col space-y-3">
-                <div className="flex max-w-full items-center space-x-2">
+                <div className="flex max-w-full items-center space-x-2 max-sm:flex-wrap">
                   <h4 className="flex-none font-semibold">
                     {comment.profiles.user_name
                       ? comment.profiles.user_name
@@ -76,7 +76,7 @@ export const CommentCard: React.FC<CommentProps> = ({
                     </span>
                   </div>
                   <div className="flex flex-none items-center space-x-2 text-nowrap text-xs md:text-sm">
-                    <span className="h-1 w-1 rounded-full bg-muted-foreground " />
+                    <span className="h-1 w-1 rounded-full bg-muted-foreground" />
                     {comment.updated_at &&
                     moment().diff(moment(comment.updated_at), "minute", true) <
                       30 &&
@@ -84,7 +84,7 @@ export const CommentCard: React.FC<CommentProps> = ({
                       <div className="flex items-center gap-x-2">
                         <span className="relative text-muted-foreground/60">
                           Just Updated
-                          <span className="absolute -right-2 top-1 h-1 w-1 rounded-full bg-green-600 " />
+                          <span className="absolute -right-2 top-1 h-1 w-1 rounded-full bg-green-600" />
                         </span>
                       </div>
                     ) : (

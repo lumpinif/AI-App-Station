@@ -14,7 +14,6 @@ type PostCarouselCardProps = {
 export const PostCarouselCard: React.FC<PostCarouselCardProps> = ({ post }) => {
   return (
     <Link
-      scroll={false}
       href={`/story/${getPostAuthorSlug(post.profiles)}/${post.post_id}`}
       className="relative size-full overflow-hidden rounded-2xl"
     >
