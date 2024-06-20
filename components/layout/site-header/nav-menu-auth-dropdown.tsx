@@ -34,12 +34,15 @@ const NavMenuAuthDropdown = () => {
               avatarClassName="size-7"
               isTriggerModal={false}
             />
-            <NavigationMenuContent>
-              <ul className="p-4 md:w-[400px] lg:w-[500px]">
-                <AccountModalContent />
-              </ul>
-            </NavigationMenuContent>
           </NavigationMenuTrigger>
+          <NavigationMenuContent
+          // disableOutsidePointerEvents={true}
+          // onPointerLeave={() => console.log("pointer outside")}
+          >
+            <ul className="p-4 md:w-[400px] lg:w-[500px]">
+              <AccountModalContent />
+            </ul>
+          </NavigationMenuContent>
         </NavigationMenuItem>
       ) : null}
     </>

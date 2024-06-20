@@ -1,7 +1,5 @@
 import { useState } from "react"
 
-import { cardVariants } from "@/lib/constants"
-import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import { ButtonProps } from "@/components/ui/button"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"

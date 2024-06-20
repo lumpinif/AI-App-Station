@@ -18,7 +18,7 @@ export const AccountModalNavLinks: React.FC<AccountModalNavLinksProps> = ({
   return (
     <div
       className={cn(
-        "rounded-lg transition-all duration-150 ease-out hover:shadow-md max-sm:shadow-sm sm:space-y-1 sm:bg-transparent",
+        "rounded-lg transition-all duration-150 ease-out hover:shadow-top max-sm:shadow-sm sm:space-y-1 sm:bg-transparent",
         className
       )}
     >

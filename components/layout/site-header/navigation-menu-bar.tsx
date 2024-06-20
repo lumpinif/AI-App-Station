@@ -19,6 +19,7 @@ import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons/icons"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
+import NavAuthDropdown from "./nav-auth-dropdown"
 import NavMenuAuthDropdown from "./nav-menu-auth-dropdown"
 import { SiteLogo } from "./site-header"
 
@@ -58,9 +59,9 @@ export function NavigationMenuBar() {
                       AI App Station
                     </div>
                     <p className="text-sm leading-tight dark:text-muted-foreground">
-                      Beautifully designed components that you can copy and
-                      paste into your apps. Accessible. Customizable. Open
-                      Source.
+                      A collection of best selected AI apps or tools and stories
+                      all within an fast expending platform. Updated,
+                      prospective and activie.
                     </p>
                   </Link>
                 </NavigationMenuLink>
@@ -104,7 +105,8 @@ export function NavigationMenuBar() {
           />
         </NavigationMenuItem>
 
-        <NavMenuAuthDropdown />
+        {/* <NavMenuAuthDropdown /> */}
+        <NavAuthDropdown />
       </NavigationMenuList>
     </NavigationMenu>
   )
