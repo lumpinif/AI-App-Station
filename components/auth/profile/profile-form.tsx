@@ -134,7 +134,7 @@ export function ProfileForm({ onFormSubmitted, ...profile }: ProfileFormProps) {
         ) {
           return "Username already exists. Please choose a different username."
         }
-        return error.message || "Error updating profile"
+        return error || "Error updating profile"
       },
     })
   }

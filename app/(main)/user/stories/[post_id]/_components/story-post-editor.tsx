@@ -130,6 +130,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
           const { error: draftStoryError } = await draftStory(post_id)
           if (draftStoryError) {
             console.error("Failed to draft story:", draftStoryError)
+            throw draftStoryError
           }
         }
 

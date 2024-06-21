@@ -1,8 +1,13 @@
 "use client"
 
 import { useTransition } from "react"
-import { signUpWithEmailAndPassword } from "@/server/auth"
+import { useRouter } from "next/navigation"
+import {
+  signInWithEmailAndPassword,
+  signUpWithEmailAndPassword,
+} from "@/server/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -39,6 +44,9 @@ export default function RegisterForm() {
   const [isPending, startTransition] = useTransition()
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
+  const router = useRouter()
+  const queryClient = useQueryClient()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -54,22 +62,70 @@ export default function RegisterForm() {
       const { data, error: signUpError } =
         await signUpWithEmailAndPassword(signUpData)
 
-      if (signUpError?.message) {
+      if (signUpError?.name || signUpError?.message || signUpError?.status) {
         if (
-          signUpError.name === "AuthApiSignUpError" &&
-          signUpError.message === "Email rate limit exceeded" &&
-          signUpError.status === 429
+          signUpError.name === "AuthApiSignUpError" ||
+          ("AuthApiError" &&
+            signUpError.message === "Email rate limit exceeded" &&
+            signUpError.status === 429)
         ) {
           // Display a user-friendly message to inform the user about the email rate limit issue
           toast.error(
             "Sorry, we are currently experiencing issues with email delivery. Please try again later."
           )
+        } else if (
+          signUpError.name === "AuthApiError" &&
+          signUpError.message === "User already registered" &&
+          signUpError.status === 422
+        ) {
+          const reSignInProcess = async (
+            signUpData: z.infer<typeof FormSchema>
+          ) => {
+            const signInData = {
+              email: signUpData.email,
+              password: signUpData.password,
+            }
+
+            const { data: signedInExistUser, error: signInError } =
+              await signInWithEmailAndPassword(signInData)
+
+            if (signInError) {
+              throw new Error(signInError.message)
+            }
+
+            if (!signedInExistUser.session?.user.id) {
+              throw new Error("Failed to sign in existing user")
+            }
+
+            return signedInExistUser
+          }
+
+          toast.promise(reSignInProcess(signUpData), {
+            loading: "Signing in existing user...",
+            success: (signedInExistUser) => {
+              router.refresh()
+              queryClient.invalidateQueries({
+                queryKey: ["profile"],
+                exact: true,
+              })
+              closeAccountModal()
+              return `${signedInExistUser.session?.user.email} successfully signed in!`
+            },
+            error: (error) => {
+              return error || "Failed to sign in existing user"
+            },
+          })
         } else {
           toast.error("Error Registering!", {
             description: signUpError.name + signUpError.message,
           })
         }
       } else {
+        router.refresh()
+        queryClient.invalidateQueries({
+          queryKey: ["profile"],
+          exact: true,
+        })
         closeAccountModal()
         toast.success("Successfully Registered!", {
           description: "Welcome " + data?.user?.email,

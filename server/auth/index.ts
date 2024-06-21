@@ -19,10 +19,11 @@ export async function signUpWithEmailAndPassword(signUpData: {
 
   if (data) {
     revalidatePath("/", "layout")
+    revalidatePath("/user", "layout")
   }
 
   // Serialize and parse the `data` object
-  const serializedData = JSON.parse(JSON.stringify(data))
+  // const serializedData = JSON.parse(JSON.stringify(data))
 
   // Create a plain object representation of the error
   const errorData = signUpError
@@ -34,7 +35,7 @@ export async function signUpWithEmailAndPassword(signUpData: {
       }
     : null
 
-  return { data: serializedData, error: errorData }
+  return { data, error: errorData }
 }
 
 export async function signInWithEmailAndPassword(signInData: {
@@ -48,12 +49,13 @@ export async function signInWithEmailAndPassword(signInData: {
     password: signInData.password,
   })
 
-  if (data) {
+  if (data.session || data.user) {
     revalidatePath("/", "layout")
+    revalidatePath("/user", "layout")
   }
 
   // Serialize and parse the `data` object
-  const serializedData = JSON.parse(JSON.stringify(data))
+  // const serializedData = JSON.parse(JSON.stringify(data))
 
   // Create a plain object representation of the error
   const errorData = signInError
@@ -65,7 +67,7 @@ export async function signInWithEmailAndPassword(signInData: {
       }
     : null
 
-  return { data: serializedData, error: errorData }
+  return { data, error: errorData }
 }
 
 export async function signOut() {

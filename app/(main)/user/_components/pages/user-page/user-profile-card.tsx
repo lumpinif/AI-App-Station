@@ -14,7 +14,11 @@ import { UserLocation } from "./user-location"
 import { UserProfileEditForm } from "./user-profile-edit/user-profile-edit-form"
 import { UserWebsite } from "./user-website"
 
-export const UserProfileCard = ({ className }: { className?: string }) => {
+type UserProfileCardProps = {
+  className?: string
+}
+
+export const UserProfileCard = ({ className }: UserProfileCardProps) => {
   const [isProfileEditModalOpen, setIsProfileEditModalOpen] = useState(false)
 
   const { data: profile } = useUserProfile()
@@ -39,6 +43,7 @@ export const UserProfileCard = ({ className }: { className?: string }) => {
           onFormSubmitted={() => setIsProfileEditModalOpen(false)}
         />
       </ResponsiveContentModal>
+
       <div className={cn("relative bg-background", className)}>
         <div className="flex flex-col space-y-4 sm:space-y-6">
           {/* User card and edit button */}

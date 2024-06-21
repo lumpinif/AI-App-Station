@@ -1,8 +1,10 @@
 "use client"
 
 import { useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { signInWithEmailAndPassword } from "@/server/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -31,6 +33,9 @@ export default function SignInForm() {
   const [isPending, startTransition] = useTransition()
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
+  const router = useRouter()
+  const queryClient = useQueryClient()
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -55,9 +60,18 @@ export default function SignInForm() {
             description: error.message,
           })
         }
-      } else {
+
+        return
+      }
+
+      if (data?.user?.email) {
+        router.refresh()
+        queryClient.invalidateQueries({
+          queryKey: ["profile"],
+          exact: true,
+        })
         closeAccountModal()
-        toast.success("Successfully Signed In !", {
+        toast.success("Successfully Signed In!", {
           description: "Welcome back " + data?.user?.email,
         })
       }

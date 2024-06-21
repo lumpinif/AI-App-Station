@@ -56,7 +56,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
               {display === "email" ? (
                 profile?.email
               ) : (
-                <span>@{profile?.user_name}</span>
+                <span>{profile?.user_name}</span>
               )}
             </span>
           </div>
@@ -75,12 +75,14 @@ export const UserCard: React.FC<NewUserCardProps> = ({
           />
 
           <div className={cn("flex flex-1 flex-col", profileContainerCN)}>
-            <span className={profileNameCN}>{profile?.full_name}</span>
+            <span className={profileNameCN}>
+              {profile?.full_name ?? profile?.email}
+            </span>
             <span className={profileEmailCN}>
               {display === "email" ? (
                 profile?.email
               ) : (
-                <span>@{profile?.user_name}</span>
+                <span>{profile?.user_name}</span>
               )}
             </span>
           </div>

@@ -107,7 +107,7 @@ const AppSubmitForm = () => {
       error: (error) => {
         setIsLoading(false)
         setexistingError(error.message)
-        return error.message || "Error creating new app"
+        return error || "Error creating new app"
       },
     })
   }

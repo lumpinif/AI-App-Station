@@ -1,5 +1,4 @@
 import React from "react"
-import { Construction } from "lucide-react"
 
 import { InDevNotice } from "@/components/shared/in-dev-notice"
 
@@ -7,7 +6,7 @@ import { UserProfileCard } from "./user-profile-card"
 
 type UserPage = {}
 
-export const UserProfilePage: React.FC<UserPage> = ({}) => {
+export const UserProfilePage: React.FC<UserPage> = async ({}) => {
   return (
     <section className="flex w-full flex-col sm:gap-4 sm:py-4">
       {/* Main */}

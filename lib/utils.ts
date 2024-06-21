@@ -69,7 +69,11 @@ export function getSiteUrl() {
   if (process.env.NODE_ENV === "development") {
     return process.env.NEXT_PUBLIC_DEV_URL || "http://localhost:3000"
   } else {
-    return process.env.NEXT_PUBLIC_PRO_URL || "https://aiappstation.com"
+    return (
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.NEXT_PUBLIC_PRO_URL ||
+      "https://aiappstation.com"
+    )
   }
 }
 

@@ -53,22 +53,25 @@ export async function updateSession(request: NextRequest) {
       },
     }
   )
-  // const { data } = await supabase.auth.getUser()
-  // const url = new URL(request.url)
-  // if (data?.user) {
-  //   if (url.pathname === "/signin" || "/signout") {
-  //     return NextResponse.redirect(new URL("/", request.url))
-  //   }
-  //   return response
-  // } else {
-  //   if (url.pathname === "/user") {
-  //     return NextResponse.redirect(
-  //       new URL("/signin?next=" + url.pathname, request.url)
-  //     )
-  //   }
-  //   return response
-  // }
-  await supabase.auth.getUser()
 
+  const { data } = await supabase.auth.getUser()
+
+  const url = new URL(request.url)
+
+  if (data?.user) {
+    if (url.pathname === "/signin" || url.pathname === "/signout") {
+      return NextResponse.redirect(new URL("/today", request.url))
+    }
+    return response
+  } else {
+    if (url.pathname === "/user") {
+      return NextResponse.redirect(
+        new URL("/signin?next=" + url.pathname, request.url)
+      )
+    }
+    return response
+  }
+
+  // await supabase.auth.getUser()
   return response
 }

@@ -20,13 +20,6 @@ const initUser: Record<keyof Profiles, string> = {
   user_pronouns: "",
 }
 
-export default function useUserProfile() {
-  return useQuery({
-    queryKey: ["profile"],
-    queryFn: fetchUserProfile,
-  })
-}
-
 export function useUserData() {
   return useQuery({
     queryKey: ["user_data"],
@@ -34,14 +27,11 @@ export function useUserData() {
   })
 }
 
-async function fetchUserProfile() {
-  const { profile, error: getUserProfileError } = await getUserProfile()
-
-  if (getUserProfileError) {
-    toast.error("Error loading profile! Please try again later.")
-  }
-
-  return profile || initUser
+export default function useUserProfile() {
+  return useQuery({
+    queryKey: ["profile"],
+    queryFn: fetchUserProfile,
+  })
 }
 
 async function fetchUserData() {
@@ -55,4 +45,14 @@ async function fetchUserData() {
   }
 
   return user
+}
+
+async function fetchUserProfile() {
+  const { profile, error: getUserProfileError } = await getUserProfile()
+
+  if (getUserProfileError) {
+    toast.error("Error loading profile! Please try again later.")
+  }
+
+  return profile || initUser
 }
