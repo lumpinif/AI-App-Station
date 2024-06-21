@@ -14,7 +14,7 @@ type GooglebLoginButtonProps = ButtonProps & {}
 const GoogleLoginButton = ({ ...props }: GooglebLoginButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const params = useSearchParams()
-  const next = params.get("next") || "/ai-apps"
+  const next = params.get("next") || "/today"
 
   async function handleGoogleLogin() {
     setIsLoading(true)

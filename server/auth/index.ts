@@ -1,20 +1,25 @@
 "use server"
 
-import { error } from "console"
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Profiles } from "@/types/db_tables"
 
-export async function signUpWithEmailAndPassword(signUpData: {
-  email: string
-  password: string
-}) {
+export async function signUpWithEmailAndPassword(
+  signUpData: {
+    email: string
+    password: string
+  },
+  redirectPath?: string
+) {
   const supabase = await createSupabaseServerClient()
 
   const { data, error: signUpError } = await supabase.auth.signUp({
     email: signUpData.email,
     password: signUpData.password,
+    options: {
+      emailRedirectTo: redirectPath,
+    },
   })
 
   if (data) {

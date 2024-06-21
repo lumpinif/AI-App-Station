@@ -1,7 +1,7 @@
 "use client"
 
 import { useTransition } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import {
   signInWithEmailAndPassword,
   signUpWithEmailAndPassword,
@@ -44,6 +44,9 @@ export default function RegisterForm() {
   const [isPending, startTransition] = useTransition()
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
+  const params = useSearchParams()
+  const next = params.get("next") || "/today"
+
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -59,8 +62,10 @@ export default function RegisterForm() {
   function onSubmitRegisterForm(signUpData: z.infer<typeof FormSchema>) {
     startTransition(async () => {
       //server action of signUpWithEmailAndPassword
-      const { data, error: signUpError } =
-        await signUpWithEmailAndPassword(signUpData)
+      const { data, error: signUpError } = await signUpWithEmailAndPassword(
+        signUpData,
+        next
+      )
 
       if (signUpError?.name || signUpError?.message || signUpError?.status) {
         if (
@@ -103,12 +108,12 @@ export default function RegisterForm() {
           toast.promise(reSignInProcess(signUpData), {
             loading: "Signing in existing user...",
             success: (signedInExistUser) => {
-              router.refresh()
               queryClient.invalidateQueries({
                 queryKey: ["profile"],
                 exact: true,
               })
               closeAccountModal()
+              router.push(next)
               return `${signedInExistUser.session?.user.email} successfully signed in!`
             },
             error: (error) => {
@@ -121,12 +126,12 @@ export default function RegisterForm() {
           })
         }
       } else {
-        router.refresh()
         queryClient.invalidateQueries({
           queryKey: ["profile"],
           exact: true,
         })
         closeAccountModal()
+        router.push("/user")
         toast.success("Successfully Registered!", {
           description: "Welcome " + data?.user?.email,
         })

@@ -57,10 +57,12 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getUser()
 
   const url = new URL(request.url)
+  const nextUrl = url.searchParams.get("next") || "/today"
 
   if (data?.user) {
+    // User is signed in
     if (url.pathname === "/signin" || url.pathname === "/signout") {
-      return NextResponse.redirect(new URL("/today", request.url))
+      return NextResponse.redirect(new URL(nextUrl, request.url))
     }
     return response
   } else {
