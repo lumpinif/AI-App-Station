@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useEffect, useState } from "react"
 import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { Monitor, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -24,14 +25,19 @@ export function ThemeToggle({
   isDropDown = false,
   isDirect = false,
 }: ThemeToggleProps) {
-  const { theme, setTheme, resolvedTheme, systemTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
+  const [clientTheme, setClientTheme] = useState(theme)
+
+  useEffect(() => {
+    setClientTheme(theme)
+  }, [theme])
 
   if (isDirect) {
     return (
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        onClick={() => setTheme(clientTheme === "light" ? "dark" : "light")}
         className={cn(
           "rounded-full active:scale-[.98] dark:hover:bg-foreground/10",
           className
@@ -88,14 +94,14 @@ export function ThemeToggle({
         onClick={() => setTheme("light")}
         className={cn(
           "text-muted-foreground",
-          theme === "light" ? "text-primary" : "text-muted-foreground"
+          clientTheme === "light" ? "text-primary" : ""
         )}
       >
         <Sun
           size={18}
           className={cn(
-            "stroke-[1.5]",
-            theme === "light" ? "stroke-[1.5]" : "stroke-[1.5]"
+            "stroke-[1]",
+            clientTheme === "light" ? "stroke-[1.5]" : ""
           )}
         />
       </button>
@@ -105,14 +111,14 @@ export function ThemeToggle({
         onClick={() => setTheme("system")}
         className={cn(
           "text-muted-foreground",
-          theme === "system" ? "text-primary" : "text-muted-foreground"
+          clientTheme === "system" ? "text-primary" : ""
         )}
       >
         <Monitor
           size={18}
           className={cn(
-            "stroke-[1.5]",
-            theme === "system" ? "stroke-[1.5]" : "stroke-[1.5]"
+            "stroke-[1]",
+            clientTheme === "system" ? "stroke-[1.5]" : ""
           )}
         />
       </button>
@@ -122,14 +128,14 @@ export function ThemeToggle({
         onClick={() => setTheme("dark")}
         className={cn(
           "text-muted-foreground",
-          theme === "dark" ? "text-primary" : "text-muted-foreground"
+          clientTheme === "dark" ? "text-primary" : ""
         )}
       >
         <Moon
           size={18}
           className={cn(
-            "stroke-[1.5]",
-            theme === "dark" ? "stroke-[1.5]" : "stroke-[1.5]"
+            "stroke-[1]",
+            clientTheme === "dark" ? "stroke-[1.5]" : ""
           )}
         />
       </button>
