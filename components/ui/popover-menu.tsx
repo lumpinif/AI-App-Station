@@ -27,7 +27,7 @@ export default function PopoverMenu({
   openedClassName,
 }: PopoverMenuProps) {
   const refMenu = React.useRef<HTMLDivElement>(null)
-  const { theme } = useTheme()
+  const { theme, systemTheme } = useTheme()
   const isAppSubmitModalOpen = useAppSubmitModalStore(
     (state) => state.isAppSubmitModalOpen
   )
@@ -40,7 +40,9 @@ export default function PopoverMenu({
   const transition = { duration, ease: [0.32, 0.72, 0, 1] }
 
   const backgroundColor =
-    theme === "dark" ? "rgb(10 10 10)" : "rgb(255 255 255)"
+    theme === "dark" || (theme === "system" && systemTheme === "dark")
+      ? "rgb(10 10 10)"
+      : "rgb(255 255 255)"
 
   const menuVariants = {
     open: {
@@ -134,7 +136,7 @@ export default function PopoverMenu({
       </AnimatePresence>
       <motion.button
         className={cn(
-          "absolute bottom-0  left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 text-muted-foreground outline-none hover:!bg-foreground/10 hover:text-foreground",
+          "absolute bottom-0 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 text-muted-foreground outline-none hover:!bg-foreground/10 hover:text-foreground",
           buttonClassName
         )}
         disabled={isPopoverOpen}
