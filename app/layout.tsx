@@ -6,6 +6,7 @@ import "@/styles/prosemirror.css"
 
 import { Metadata, Viewport } from "next"
 import QueryProvider from "@/provider/query-provider"
+import { Analytics } from "@vercel/analytics/react"
 import { GeistSans } from "geist/font/sans"
 
 import { siteConfig } from "@/config/site"
@@ -107,6 +108,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           </ThemeProvider>
         </QueryProvider>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   )
