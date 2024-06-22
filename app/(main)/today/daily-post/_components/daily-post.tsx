@@ -1,7 +1,6 @@
 import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post"
 
 import { DEFAULT_POST_IMAGE } from "@/lib/constants/site-constants"
-import { getAverageColor } from "@/lib/fast-average-color-node"
 import { getAverageColorOnServer } from "@/lib/get-average-color-on-server"
 
 import { IosStyleDailyPostCard } from "./ios-style-daily-post"

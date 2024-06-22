@@ -191,9 +191,6 @@ importers:
       fast-average-color:
         specifier: ^9.4.0
         version: 9.4.0
-      fast-average-color-node:
-        specifier: ^3.0.0
-        version: 3.0.0
       framer-motion:
         specifier: ^11.2.10
         version: 11.2.10(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3046,10 +3043,6 @@ packages:
 
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
-
-  fast-average-color-node@3.0.0:
-    resolution: {integrity: sha512-CgZR7u7YPq+LaQ+4/isMmJhoW5YyjSBLw3u3Y1pqM48DFB6Emg8Zh5hHG+zzrkKAZeaQiQr82yp4GHGquqfhaA==}
-    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
 
   fast-average-color@9.4.0:
     resolution: {integrity: sha512-bvM8vV6YwK07dPbzFz77zJaBcfF6ABVfgNwaxVgXc2G+o0e/tzLCF9WU8Ryp1r0Nkk6JuJNsWCzbb4cLOMlB+Q==}
@@ -8295,14 +8288,6 @@ snapshots:
   exifr@7.1.3: {}
 
   extend@3.0.2: {}
-
-  fast-average-color-node@3.0.0:
-    dependencies:
-      fast-average-color: 9.4.0
-      node-fetch: 2.7.0
-      sharp: 0.33.4
-    transitivePeerDependencies:
-      - encoding
 
   fast-average-color@9.4.0: {}
 

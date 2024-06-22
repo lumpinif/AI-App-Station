@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import Link from "next/link"
 
+import { Skeleton } from "@/components/ui/skeleton"
 import LoadingFallback from "@/components/shared/loading-fallback"
 
 import { FeaturedStoriesCarousel } from "../stories/_components/post-carousel/featured-stories-carousel"
@@ -17,13 +18,13 @@ const TodayPage = () => {
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         <TodayUserCard />
 
-        {/* <Suspense fallback={<LoadingFallback />}> */}
-        <DailyPost />
-        {/* </Suspense> */}
+        <Suspense fallback={<CardSkeleton />}>
+          <DailyPost />
+        </Suspense>
 
-        {/* <Suspense fallback={<LoadingFallback />}> */}
-        <DailyApp />
-        {/* </Suspense> */}
+        <Suspense fallback={<CardSkeleton />}>
+          <DailyApp />
+        </Suspense>
 
         {/* <div className="">Story of Today</div> */}
         {/* <div className="">New Stories</div> */}
@@ -45,3 +46,14 @@ const TodayPage = () => {
 }
 
 export default TodayPage
+
+function CardSkeleton() {
+  return (
+    <Skeleton
+      style={{
+        borderRadius: 20,
+      }}
+      className="h-[430px] w-full"
+    />
+  )
+}
