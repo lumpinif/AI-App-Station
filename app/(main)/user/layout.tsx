@@ -2,8 +2,6 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
 
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-
 import { UserPagesWrapper } from "./_components/layout/user-pages-wrapper"
 import { ResizeableSideBar } from "./_components/resizeable/resizeable-side-bar"
 
@@ -34,10 +32,10 @@ export default async function UserLayout({
         defaultLayout={defaultLayout}
         defaultCollapsed={defaultCollapsed}
       >
-        <ScrollArea className="h-[calc(100svh-6rem)] w-full pr-1 sm:pr-2">
-          <UserPagesWrapper>{children}</UserPagesWrapper>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+        {/* <ScrollArea className="h-[calc(100svh-6rem)] w-full pr-1 sm:pr-2"> */}
+        <UserPagesWrapper>{children}</UserPagesWrapper>
+        {/* <ScrollBar orientation="horizontal" /> */}
+        {/* </ScrollArea> */}
       </ResizeableSideBar>
     </main>
   )
