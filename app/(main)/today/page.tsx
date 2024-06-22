@@ -16,8 +16,15 @@ const TodayPage = () => {
 
       <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
         <TodayUserCard />
+
+        {/* <Suspense fallback={<LoadingFallback />}> */}
         <DailyPost />
+        {/* </Suspense> */}
+
+        {/* <Suspense fallback={<LoadingFallback />}> */}
         <DailyApp />
+        {/* </Suspense> */}
+
         {/* <div className="">Story of Today</div> */}
         {/* <div className="">New Stories</div> */}
         {/* <div className="">New App</div> */}

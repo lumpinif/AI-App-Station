@@ -5,8 +5,8 @@ import { motion } from "framer-motion"
 import { X } from "lucide-react"
 
 import { DailyApp } from "@/types/db_tables"
+import { AverageColor } from "@/lib/get-average-color-on-server"
 import { cn } from "@/lib/utils"
-import { AverageColor } from "@/hooks/use-average-color"
 import { ContentRenderer } from "@/components/editor/content-renderer"
 
 type IosStyleDACardProps = {

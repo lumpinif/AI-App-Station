@@ -191,6 +191,9 @@ importers:
       fast-average-color:
         specifier: ^9.4.0
         version: 9.4.0
+      fast-average-color-node:
+        specifier: ^3.0.0
+        version: 3.0.0
       framer-motion:
         specifier: ^11.2.10
         version: 11.2.10(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -218,6 +221,9 @@ importers:
       next-view-transitions:
         specifier: ^0.2.0
         version: 0.2.0(next@14.2.4(@babel/core@7.24.6)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      node-fetch:
+        specifier: ^3.3.2
+        version: 3.3.2
       novel:
         specifier: ^0.4.2
         version: 0.4.2(@tiptap/extension-code-block@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -227,6 +233,9 @@ importers:
       openai:
         specifier: ^4.47.2
         version: 4.47.2
+      optional:
+        specifier: ^0.1.4
+        version: 0.1.4
       progressive-blur:
         specifier: ^1.0.0
         version: 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3038,6 +3047,10 @@ packages:
   extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
 
+  fast-average-color-node@3.0.0:
+    resolution: {integrity: sha512-CgZR7u7YPq+LaQ+4/isMmJhoW5YyjSBLw3u3Y1pqM48DFB6Emg8Zh5hHG+zzrkKAZeaQiQr82yp4GHGquqfhaA==}
+    engines: {node: ^18.17.0 || ^20.3.0 || >=21.0.0}
+
   fast-average-color@9.4.0:
     resolution: {integrity: sha512-bvM8vV6YwK07dPbzFz77zJaBcfF6ABVfgNwaxVgXc2G+o0e/tzLCF9WU8Ryp1r0Nkk6JuJNsWCzbb4cLOMlB+Q==}
     engines: {node: '>= 12'}
@@ -4071,6 +4084,9 @@ packages:
   openai@4.47.2:
     resolution: {integrity: sha512-E3Wq9mYdDSLajmcJm9RO/lCegTKrQ7ilAkMbhob4UgGhTjHwIHI+mXNDNPl5+sGIUp2iVUkpoi772FjYa7JlqA==}
     hasBin: true
+
+  optional@0.1.4:
+    resolution: {integrity: sha512-gtvrrCfkE08wKcgXaVwQVgwEQ8vel2dc5DDBn9RLQZ3YtmtkBss6A2HY6BnJH4N/4Ku97Ri/SF8sNWE2225WJw==}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -8280,6 +8296,14 @@ snapshots:
 
   extend@3.0.2: {}
 
+  fast-average-color-node@3.0.0:
+    dependencies:
+      fast-average-color: 9.4.0
+      node-fetch: 2.7.0
+      sharp: 0.33.4
+    transitivePeerDependencies:
+      - encoding
+
   fast-average-color@9.4.0: {}
 
   fast-deep-equal@2.0.1: {}
@@ -9554,6 +9578,8 @@ snapshots:
       web-streams-polyfill: 3.3.3
     transitivePeerDependencies:
       - encoding
+
+  optional@0.1.4: {}
 
   optionator@0.9.4:
     dependencies:

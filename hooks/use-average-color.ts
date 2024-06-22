@@ -2,10 +2,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { FastAverageColor, FastAverageColorResult } from "fast-average-color"
 
-export type AverageColor = Partial<FastAverageColorResult> & {
-  colorEnd: string
-}
-
 const useAverageColor = (imageSrc: string, isBottom: boolean) => {
   const [color, setColor] = useState<{
     rgb: string

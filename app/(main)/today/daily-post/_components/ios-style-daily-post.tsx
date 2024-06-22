@@ -4,23 +4,21 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { DailyPost } from "@/types/db_tables"
-import useAverageColor from "@/hooks/use-average-color"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import { AverageColor } from "@/lib/get-average-color-on-server"
 
 import { ActiveIosStyleDPCard } from "./active-ios-style-dp-card"
 import { IosStyleDPCard } from "./ios-style-dp-card"
 
 type IosStyleDailyPostCardProps = {
   dailyPost: DailyPost
+  averageColor: AverageColor
 }
 
 export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
   dailyPost,
+  averageColor,
 }) => {
   const [activeCard, setActiveCard] = useState<DailyPost | null>(null)
-  const imageSrc =
-    dailyPost.posts.post_image_src || "/images/Feature-thumbnail.png"
-  const { color, isLoading } = useAverageColor(imageSrc, true)
 
   useEffect(() => {
     function onKeyDown(event: { key: string }) {
@@ -33,23 +31,10 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  // if (isLoading) {
-  //   return (
-  //     <div
-  //       style={{
-  //         borderRadius: 20,
-  //       }}
-  //       className="flex size-full h-[430px] items-center justify-center bg-card/50"
-  //     >
-  //       <LoadingSpinner />
-  //     </div>
-  //   )
-  // }
-
   return (
     <div className="w-full">
       <IosStyleDPCard
-        color={color}
+        color={averageColor}
         dailyPost={dailyPost}
         setActiveCard={setActiveCard}
         post_card_title="AI News of the Day"
@@ -69,7 +54,7 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
       <AnimatePresence>
         {activeCard ? (
           <ActiveIosStyleDPCard
-            color={color}
+            color={averageColor}
             activeCard={activeCard}
             setActiveCard={setActiveCard}
             post_card_title="AI News of the Day"

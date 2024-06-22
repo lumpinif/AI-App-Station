@@ -4,6 +4,9 @@ import {
 } from "@/server/data/supabase-actions"
 import { getDailyApp } from "@/server/queries/supabase/apps/fetch-daily-app"
 
+import { DEFAULT_POST_IMAGE } from "@/lib/constants/site-constants"
+import { getAverageColorOnServer } from "@/lib/get-average-color-on-server"
+
 import { IosStyleDailyAppCard } from "./ios-style-daily-app"
 
 type DailyAppProps = {}
@@ -12,18 +15,12 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
   const { app: dailyApp, error: getDailyAppError } = await getDailyApp()
 
   if (getDailyAppError) {
-    return (
-      <div>
-        Error fetching daily app, please try again. error:
-        {getDailyAppError.message}
-      </div>
-    )
+    console.error("Error fetching daily app:", getDailyAppError)
+    return <ErrorMessage message={getDailyAppError.message} />
   }
 
   if (!dailyApp) {
-    return (
-      <div>No daily post found at this time. It should be fixed shortly.</div>
-    )
+    return <NoAppMessage />
   }
 
   // Get screenshots file names and public URLs of the daily app
@@ -42,6 +39,12 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
     screenshotsFileNames || []
   )
 
+  const imageSrc = screenshotsPublicUrls
+    ? screenshotsPublicUrls[0]
+    : DEFAULT_POST_IMAGE
+
+  const averageColor = await getAverageColorOnServer(imageSrc, false)
+
   return (
     <>
       <div
@@ -52,9 +55,18 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
       >
         <IosStyleDailyAppCard
           dailyApp={dailyApp}
+          averageColor={averageColor}
           screenshotsPublicUrls={screenshotsPublicUrls}
         />
       </div>
     </>
   )
+}
+
+function ErrorMessage({ message }: { message: string }) {
+  return <div>Error fetching daily app, please try again. Error: {message}</div>
+}
+
+function NoAppMessage() {
+  return <div>No daily app found at this time. It should be fixed shortly.</div>
 }

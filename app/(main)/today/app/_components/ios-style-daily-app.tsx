@@ -4,19 +4,20 @@ import { useEffect, useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 
 import { DailyApp } from "@/types/db_tables"
-import useAverageColor from "@/hooks/use-average-color"
-import { LoadingSpinner } from "@/components/shared/loading-spinner"
+import { AverageColor } from "@/lib/get-average-color-on-server"
 
 import { ActiveIosStyleDACard } from "./active-ios-style-da-card"
 import { IosStyleDACard } from "./ios-style-da-card"
 
 type IosStyleDailyAppCardProps = {
   dailyApp: DailyApp
+  averageColor: AverageColor
   screenshotsPublicUrls?: string[]
 }
 
 export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
   dailyApp,
+  averageColor,
   screenshotsPublicUrls,
 }) => {
   const [activeCard, setActiveCard] = useState<DailyApp | null>(null)
@@ -29,8 +30,6 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
     ? screenshotsPublicUrls[0]
     : "/images/Feature-thumbnail.png"
 
-  const { color, isLoading } = useAverageColor(imageSrc, true)
-
   useEffect(() => {
     function onKeyDown(event: { key: string }) {
       if (event.key === "Escape") {
@@ -42,23 +41,10 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
-  // if (isLoading) {
-  //   return (
-  //     <div
-  //       style={{
-  //         borderRadius: 20,
-  //       }}
-  //       className="flex size-full h-[430px] animate-magic-fade-up items-center justify-center bg-card/50"
-  //     >
-  //       <LoadingSpinner />
-  //     </div>
-  //   )
-  // }
-
   return (
     <div className="w-full">
       <IosStyleDACard
-        color={color}
+        color={averageColor}
         dailyApp={dailyApp}
         appIconSrc={appIconSrc}
         card_thumbnail={imageSrc}
@@ -80,7 +66,7 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
       <AnimatePresence>
         {activeCard ? (
           <ActiveIosStyleDACard
-            color={color}
+            color={averageColor}
             activeCard={activeCard}
             appIconSrc={appIconSrc}
             setActiveCard={setActiveCard}
