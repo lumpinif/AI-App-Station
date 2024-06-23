@@ -37,20 +37,20 @@ const StoryCommentSection = async ({
   // TODO: HANDLE NO COMMENTS AND ERROR
   if (getAllCommentsError) {
     console.error(getAllCommentsError)
-    // return (
-    //   <section className="flex flex-col space-y-6 md:space-y-8">
-    //     <div className="flex items-center space-x-4">
-    //       <span className="font-medium tracking-wide">Error loading comments</span>
-    //       <p className="text-muted-foreground">
-    //         Please try again later.
-    //       </p>
-    //     </div>
-    //     <CommentFormButton<addPostCommentReturnType>
-    //       db_row_id={post_id}
-    //       commentReplyService={addPostComment}
-    //     />
-    //   </section>
-    // )
+    return (
+      <section className="flex flex-col space-y-6 md:space-y-8">
+        <div className="flex items-center space-x-4 max-sm:flex-col">
+          <span className="font-medium tracking-wide">
+            Error loading comments
+          </span>
+          <p className="text-muted-foreground">Please try again later.</p>
+        </div>
+        <CommentFormButton<addPostCommentReturnType>
+          db_row_id={post_id}
+          commentReplyService={addPostComment}
+        />
+      </section>
+    )
   }
 
   if (!postComments || postComments.length === 0)

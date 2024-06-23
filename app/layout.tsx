@@ -95,8 +95,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <main
-              className="relative flex min-h-dvh flex-col bg-background"
               vaul-drawer-wrapper=""
+              className="relative flex min-h-dvh flex-col bg-background"
             >
               <section className="min-h-dvh flex-1">
                 <section className="flex h-full flex-col">

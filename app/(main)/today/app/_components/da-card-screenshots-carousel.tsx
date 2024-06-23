@@ -6,7 +6,6 @@ import { motion } from "framer-motion"
 import { ImageIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
 import {
   Carousel,
   CarouselContent,
@@ -49,23 +48,19 @@ export const DAScreenshotsCarousel: React.FC<DAScreenshotsCarouselProps> = ({
                   <motion.img
                     style={{
                       borderRadius: 0,
+                      willChange: "transform",
                     }}
                     alt="daily app thumbnail image"
                     src={item ? item : `/images/image-not-found.png`}
-                    className="pointer-events-none z-50 h-full w-full max-w-sm bg-background object-cover brightness-75 md:h-full md:max-w-xl"
+                    className="pointer-events-none z-50 h-full w-full bg-background object-cover brightness-75"
                   />
                 </CarouselItem>
               ))
             : Array.from({ length: 6 }).map((_, index) => (
-                <CarouselItem
-                  key={index}
-                  className="bg-transparent md:basis-1/2 lg:basis-1/3"
-                >
-                  <AspectRatio ratio={16 / 9}>
-                    <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
-                      <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
-                    </div>
-                  </AspectRatio>
+                <CarouselItem key={index} className="h-full">
+                  <div className="relative flex size-full items-center justify-center overflow-hidden rounded-2xl bg-card">
+                    <ImageIcon className="size-3/4 stroke-muted stroke-[1.5px] opacity-50 transition-opacity duration-300 ease-out group-hover:opacity-100" />
+                  </div>
                 </CarouselItem>
               ))}
         </CarouselContent>

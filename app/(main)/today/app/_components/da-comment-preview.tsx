@@ -44,7 +44,7 @@ export const DACommentPreview: React.FC<DACommentPreviewProps> = ({
     console.error(getCommentsError)
     return (
       <section className="flex flex-col space-y-6 md:space-y-8">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 max-sm:flex-col">
           <span className="font-medium tracking-wide">
             Error loading comments
           </span>
@@ -80,7 +80,7 @@ export const DACommentPreview: React.FC<DACommentPreviewProps> = ({
 
   return (
     <section
-      id="story-comments-section"
+      id="app-comments-section"
       className="flex w-full flex-col space-y-6 md:space-y-8"
       suppressHydrationWarning
     >
@@ -99,7 +99,7 @@ export const DACommentPreview: React.FC<DACommentPreviewProps> = ({
       />
 
       {/* MOBILE DRAWER */}
-      <div className="sm:hidden" id="story-comments-section">
+      <div className="sm:hidden" id="app-comments-section">
         <CommentMobileDrawer firstComment={commentsList[0]}>
           <AppDetailCommentList
             commentsList={commentsList}

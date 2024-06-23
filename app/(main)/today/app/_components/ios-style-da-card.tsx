@@ -54,6 +54,7 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
         style={{
           borderRadius: 20,
           objectFit: "cover",
+          willChange: "transform",
         }}
         layoutId={`da-card-image-${app_id}`}
         src={card_thumbnail ? card_thumbnail : "/images/Feature-thumbnail.png"}

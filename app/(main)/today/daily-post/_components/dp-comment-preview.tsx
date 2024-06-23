@@ -44,7 +44,7 @@ export const DPCommentPreview: React.FC<DPCommentPreviewProps> = ({
     console.error(getCommentsError)
     return (
       <section className="flex flex-col space-y-6 md:space-y-8">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 max-sm:flex-col">
           <span className="font-medium tracking-wide">
             Error loading comments
           </span>

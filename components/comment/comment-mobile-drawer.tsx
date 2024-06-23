@@ -31,10 +31,14 @@ export const CommentMobileDrawer: React.FC<CommentMobileDrawerProps> = ({
           </span>
         </div>
       </EnhancedDrawerTrigger>
-      <EnhancedDrawerContent className="h-4/5 max-h-[calc(100vh-2rem)] rounded-t-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
+      <EnhancedDrawerContent
+        drawerHeight="h-[80%]"
+        shouldScaleBackground={true}
+        className="rounded-t-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+      >
         <EnhancedDrawerClose title="Ratings & Reviews" />
         {children}
-        <ProgressiveBlur className="h-24" />
+        {/* <ProgressiveBlur className="h-24" /> */}
       </EnhancedDrawerContent>
     </EnhancedDrawer>
   )

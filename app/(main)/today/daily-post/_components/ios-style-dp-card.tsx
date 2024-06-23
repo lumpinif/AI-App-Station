@@ -54,8 +54,15 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
       /> */}
 
       <motion.img
-        alt="image"
-        style={{ borderRadius: 20 }}
+        style={{
+          width: "100%",
+          height: "100%",
+          borderRadius: 0,
+          objectFit: "cover",
+          willChange: "transform",
+        }}
+        layout="preserve-aspect"
+        alt="daily AI news image"
         layoutId={`dp-card-image-${post_id}`}
         src={post_image_src! || "@/images/Feature-thumbnail.png"}
         className={cn(

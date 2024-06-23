@@ -7,6 +7,7 @@ import { User } from "@supabase/supabase-js"
 import { addAppCommentReturnType, App_Comments, Apps } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
 import { CommentFormButton } from "@/components/comment/comment-form-button"
 import { CommentListFilter } from "@/components/comment/comment-list-filter"
 import { CommentMobileDrawer } from "@/components/comment/comment-mobile-drawer"
@@ -33,20 +34,20 @@ const AppDetailCommentSection = async ({
   // TODO: HANDLE NO COMMENTS AND ERROR
   if (getAllCommentsError) {
     console.error(getAllCommentsError)
-    // return (
-    //   <section className="flex flex-col space-y-6 md:space-y-8">
-    //     <div className="flex items-center space-x-4">
-    //       <span className="font-medium tracking-wide">Error loading comments</span>
-    //       <p className="text-muted-foreground">
-    //         Please try again later.
-    //       </p>
-    //     </div>
-    //     <CommentFormButton<addPostCommentReturnType>
-    //       db_row_id={post_id}
-    //       commentReplyService={addPostComment}
-    //     />
-    //   </section>
-    // )
+    return (
+      <section className="flex flex-col space-y-6 md:space-y-8">
+        <div className="flex items-center space-x-4 max-sm:flex-col">
+          <span className="font-medium tracking-wide">
+            Error loading comments
+          </span>
+          <p className="text-muted-foreground">Please try again later.</p>
+        </div>
+        <CommentFormButton<addAppCommentReturnType>
+          db_row_id={app_id}
+          commentReplyService={addAppComment}
+        />
+      </section>
+    )
   }
 
   if (!appComments || appComments.length === 0)
@@ -103,7 +104,7 @@ const AppDetailCommentSection = async ({
       />
 
       {/* MOBILE DRAWER */}
-      <div className="sm:hidden" id="comments-section">
+      <div className="sm:hidden" id="app-comments-section">
         <CommentMobileDrawer firstComment={commentsList[0]}>
           <AppDetailCommentList
             commentsList={commentsList}

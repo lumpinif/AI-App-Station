@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
 
 import { DailyApp } from "@/types/db_tables"
 import { AverageColor } from "@/lib/get-average-color-on-server"
@@ -43,16 +43,17 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
 
   return (
     <div className="w-full">
-      <IosStyleDACard
-        color={averageColor}
-        dailyApp={dailyApp}
-        appIconSrc={appIconSrc}
-        card_thumbnail={imageSrc}
-        setActiveCard={setActiveCard}
-        app_card_title="App of the Day"
-      />
+      <LayoutGroup>
+        <IosStyleDACard
+          color={averageColor}
+          dailyApp={dailyApp}
+          appIconSrc={appIconSrc}
+          card_thumbnail={imageSrc}
+          setActiveCard={setActiveCard}
+          app_card_title="App of the Day"
+        />
 
-      <AnimatePresence>
+        {/* <AnimatePresence>
         {activeCard ? (
           <motion.div
             exit={{ opacity: 0 }}
@@ -61,20 +62,31 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
             className="fixed inset-0 z-50 bg-black/80"
           />
         ) : null}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
-      <AnimatePresence>
-        {activeCard ? (
-          <ActiveIosStyleDACard
-            color={averageColor}
-            activeCard={activeCard}
-            appIconSrc={appIconSrc}
-            setActiveCard={setActiveCard}
-            app_card_title="App of the Day"
-            screenshotsPublicUrls={screenshotsPublicUrls}
-          />
-        ) : null}
-      </AnimatePresence>
+        <AnimatePresence>
+          {activeCard ? (
+            <>
+              <motion.div
+                key="overlay"
+                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="fixed inset-0 z-50 bg-black/80"
+              />
+              <ActiveIosStyleDACard
+                key="active-da-card"
+                color={averageColor}
+                activeCard={activeCard}
+                appIconSrc={appIconSrc}
+                setActiveCard={setActiveCard}
+                app_card_title="App of the Day"
+                screenshotsPublicUrls={screenshotsPublicUrls}
+              />
+            </>
+          ) : null}
+        </AnimatePresence>
+      </LayoutGroup>
     </div>
   )
 }
