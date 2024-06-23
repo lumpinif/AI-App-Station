@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 
 import { DailyPost } from "@/types/db_tables"
 import { AverageColor } from "@/lib/get-average-color-on-server"
@@ -33,36 +33,34 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
 
   return (
     <div className="w-full">
-      <LayoutGroup>
-        <IosStyleDPCard
-          color={averageColor}
-          dailyPost={dailyPost}
-          setActiveCard={setActiveCard}
-          post_card_title="AI News of the Day"
-        />
+      <IosStyleDPCard
+        color={averageColor}
+        dailyPost={dailyPost}
+        setActiveCard={setActiveCard}
+        post_card_title="AI News of the Day"
+      />
 
-        <AnimatePresence>
-          {activeCard ? (
-            <>
-              <motion.div
-                key="overlay"
-                exit={{ opacity: 0 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="fixed inset-0 z-50 bg-black/80"
-              />
+      <AnimatePresence>
+        {activeCard ? (
+          <>
+            <motion.div
+              key="overlay"
+              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="fixed inset-0 z-50 bg-black/80"
+            />
 
-              <ActiveIosStyleDPCard
-                key="active-dp-card"
-                color={averageColor}
-                activeCard={activeCard}
-                setActiveCard={setActiveCard}
-                post_card_title="AI News of the Day"
-              />
-            </>
-          ) : null}
-        </AnimatePresence>
-      </LayoutGroup>
+            <ActiveIosStyleDPCard
+              key="active-dp-card"
+              color={averageColor}
+              activeCard={activeCard}
+              setActiveCard={setActiveCard}
+              post_card_title="AI News of the Day"
+            />
+          </>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }

@@ -77,7 +77,7 @@ export const ActiveIosStyleDACard: React.FC<ActiveIosStyleDACardProps> = ({
           borderRadius: 10,
         }}
         layoutId={`da-card-${app_id}`}
-        className="card card-active relative flex h-[98svh] w-full max-w-lg transform-gpu flex-col overflow-hidden rounded-lg bg-background shadow-lg outline-none sm:h-[90svh] md:max-w-2xl lg:max-w-3xl 2xl:max-w-4xl"
+        className="card card-active relative flex h-[98vh] w-full max-w-lg transform-gpu flex-col overflow-hidden rounded-lg bg-background shadow-lg outline-none sm:h-[90vh] md:max-w-2xl lg:max-w-3xl 2xl:max-w-4xl"
       >
         <ScrollArea className="w-ful h-full" scrollHideDelay={0}>
           <div className="card-inner relative z-50 h-[430px] transform-gpu md:h-[500px]">
