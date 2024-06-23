@@ -4,5 +4,7 @@
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["class:\\s*?[\"'`]([^\"'`]*).*?,"]
-  ]
+  ],
+  "CodeGPT.apiKey": "CodeGPT Plus Beta",
+  "CodeGPT.Autocomplete.provider": "CodeGPT Plus - Plus"
 }

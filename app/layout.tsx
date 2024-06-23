@@ -17,11 +17,11 @@ import { SiteHeader } from "@/components/layout/site-header/site-header"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("http://localhost:3000"), // Set the base URL here
   title: {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
+  metadataBase: new URL(siteConfig.url), // Set the base URL here
   description: siteConfig.description,
   keywords: [
     "AI App Store",
@@ -29,14 +29,10 @@ export const metadata: Metadata = {
     "AI Directory",
     "AI Navigation",
     "AI News",
-    "AI Reels",
     "AI Today",
     "Next.js",
-    "React",
-    "Tailwind CSS",
-    "Server Components",
-    "Radix UI",
-    "Shadcn UI",
+    "Supabase",
+    "App Store",
   ],
   authors: siteConfig.authors,
   creator: siteConfig.creator,
@@ -55,6 +51,13 @@ export const metadata: Metadata = {
         alt: siteConfig.name,
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: "@felixlyu_1018",
   },
   icons: {
     icon: "/favicon.ico",

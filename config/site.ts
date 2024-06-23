@@ -2,15 +2,14 @@ export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
   name: "AI App Station",
-  creator: "OpenmindAI",
+  creator: "Felix Lu",
   authors: [{ name: "Felix Lu", url: "" }],
   url: "https://aiappstation.com",
-  ogImage: "https://aiappstation.com",
+  ogImage: "https://aiappstation.com/og.jpg",
   description:
-    "Stay ahead of the curve with cutting-edge solutions in the age of AI with Today's news, the newest AI Apps with collections, categories, and stories completely for FREE.",
+    "A collection of best selected AI apps or tools and stories all within an fast expending platform. Updated, prospective and activie.",
   links: {
-    twitter: "",
-    github: "",
-    docs: "",
+    twitter: "https://twitter.com/felixlyu_1018",
+    github: "https://github.com/AI-App-Station",
   },
 }
