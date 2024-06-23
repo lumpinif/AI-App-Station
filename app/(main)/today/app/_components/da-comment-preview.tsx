@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { addAppComment } from "@/server/queries/supabase/comments/app_comments"
 
 import { addAppCommentReturnType, Apps } from "@/types/db_tables"
@@ -5,18 +6,21 @@ import { cn } from "@/lib/utils"
 import useDailyAppComments from "@/hooks/react-hooks/use-daily-app-comments"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { CommentCard } from "@/components/comment/comment-card"
 import { CommentFormButton } from "@/components/comment/comment-form-button"
 import { CommentMobileDrawer } from "@/components/comment/comment-mobile-drawer"
 import AppDetailCommentList from "@/app/(main)/ai-apps/[slug]/_components/comment/app-detail-comment-list"
 
 type DACommentPreviewProps = {
   app_id: Apps["app_id"]
+  app_slug: Apps["app_slug"]
   // c_order?: "asc" | "desc"
   // orderBy?: keyof App_Comments
 }
 
 export const DACommentPreview: React.FC<DACommentPreviewProps> = ({
   app_id,
+  app_slug,
 }) => {
   const { data: profile } = useUserProfile()
   const { data, error: useDACError } = useDailyAppComments(app_id)
@@ -99,13 +103,33 @@ export const DACommentPreview: React.FC<DACommentPreviewProps> = ({
       />
 
       {/* MOBILE DRAWER */}
-      <div className="sm:hidden" id="app-comments-section">
-        <CommentMobileDrawer firstComment={commentsList[0]}>
+      <div className="sm:hidden">
+        {/* <CommentMobileDrawer firstComment={commentsList[0]}>
           <AppDetailCommentList
             commentsList={commentsList}
             className="mb-6 w-full p-4"
           />
-        </CommentMobileDrawer>
+        </CommentMobileDrawer> */}
+
+        {/* Trigger Link */}
+        <button
+          type="button"
+          className="flex w-full flex-col space-y-2 active:scale-[.98]"
+        >
+          <Link
+            scroll={false}
+            className="w-full text-nowrap"
+            href={`/ai-apps/${app_slug}#app-comments-section`}
+          >
+            <CommentCard
+              comment={commentsList[0]}
+              className="w-full cursor-pointer rounded-lg bg-muted p-4 dark:bg-muted/20"
+            />
+            <span className="cursor-pointer text-end text-xs text-muted-foreground/60 ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
+              tap to check more
+            </span>
+          </Link>
+        </button>
       </div>
 
       {/* DESKTOP COMMENT LIST*/}

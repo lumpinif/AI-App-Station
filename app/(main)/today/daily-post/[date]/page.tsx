@@ -11,6 +11,7 @@ import { StoryContentHeroImage } from "@/app/(main)/story/_components/story-cont
 import { StoryEditorContent } from "@/app/(main)/story/_components/story-content/story-editor-content"
 
 import { DatePicker } from "../_components/date-picker"
+import ScrollToComments from "./scroll-to-comments"
 
 export default async function DailyPostPagePage({
   params,
@@ -65,14 +66,16 @@ export default async function DailyPostPagePage({
         <div className="flex w-full items-center justify-center text-sm text-border">
           - end of the story -
         </div>
-        <Suspense fallback={<LoadingSpinner />}>
-          <StoryCommentSection
-            user={user}
-            c_order={c_order}
-            orderBy={orderBy}
-            post_id={post.post_id}
-          />
-        </Suspense>
+        <ScrollToComments>
+          <Suspense fallback={<LoadingSpinner />}>
+            <StoryCommentSection
+              user={user}
+              c_order={c_order}
+              orderBy={orderBy}
+              post_id={post.post_id}
+            />
+          </Suspense>
+        </ScrollToComments>
       </section>
     </main>
   )

@@ -64,15 +64,15 @@ export const CommentCard: React.FC<CommentProps> = ({
                   </h4>
                   <div className="min-w-0 max-w-36 overflow-hidden text-ellipsis md:max-w-60">
                     <span className="whitespace-nowrap text-xs text-muted-foreground md:text-sm">
-                      <Link
+                      {/* <Link
                         href={""}
                         className="underline-offset-2 hover:underline"
-                      >
-                        @
-                        {comment.profiles.user_name
-                          ? comment.profiles.user_name
-                          : `user_${comment.profiles.user_id.slice(-5)}`}
-                      </Link>
+                      > */}
+                      @
+                      {comment.profiles.user_name
+                        ? comment.profiles.user_name
+                        : `user_${comment.profiles.user_id.slice(-5)}`}
+                      {/* </Link> */}
                     </span>
                   </div>
                   <div className="flex flex-none items-center space-x-2 text-nowrap text-xs md:text-sm">

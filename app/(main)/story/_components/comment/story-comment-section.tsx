@@ -91,7 +91,6 @@ const StoryCommentSection = async ({
     <section
       id="story-comments-section"
       className="flex w-full flex-col space-y-6 md:space-y-8"
-      suppressHydrationWarning
     >
       {/* COMMENT SECTION HEADER */}
       <div className="flex w-full items-center space-x-4">
@@ -108,7 +107,7 @@ const StoryCommentSection = async ({
       />
 
       {/* MOBILE DRAWER */}
-      <div className="sm:hidden" id="story-comments-section">
+      <div className="sm:hidden">
         <CommentMobileDrawer firstComment={commentsList[0]}>
           <StoryCommentList
             commentsList={commentsList}

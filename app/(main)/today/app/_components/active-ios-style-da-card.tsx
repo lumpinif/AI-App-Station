@@ -202,7 +202,7 @@ export const ActiveIosStyleDACard: React.FC<ActiveIosStyleDACardProps> = ({
           </div>
 
           <div className="p-2 pb-10 sm:p-4 md:p-6">
-            <DACommentPreview app_id={app_id} />
+            <DACommentPreview app_id={app_id} app_slug={app_slug} />
           </div>
         </ScrollArea>
       </motion.div>

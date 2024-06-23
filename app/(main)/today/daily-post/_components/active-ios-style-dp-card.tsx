@@ -188,8 +188,8 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
                   )}
                 >
                   <Link
-                    href={`/today/daily-post/${created_on}`}
                     className="text-nowrap"
+                    href={`/today/daily-post/${created_on}`}
                   >
                     Go to the post
                   </Link>
@@ -213,7 +213,7 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
           </div>
 
           <div className="p-2 pb-10 sm:p-4 md:p-6">
-            <DPCommentPreview post_id={post_id} />
+            <DPCommentPreview post_id={post_id} created_on={created_on} />
           </div>
         </ScrollArea>
       </motion.div>
