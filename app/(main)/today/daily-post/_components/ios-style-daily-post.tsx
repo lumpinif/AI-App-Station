@@ -31,6 +31,8 @@ export const IosStyleDailyPostCard: React.FC<IosStyleDailyPostCardProps> = ({
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
+  // TODO: CONSIDER THIS TRANSFORM transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)
+
   return (
     <div className="w-full">
       <IosStyleDPCard

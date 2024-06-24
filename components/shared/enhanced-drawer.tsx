@@ -33,8 +33,6 @@ export const EnhancedDrawer: React.FC<
   nested,
   ...props
 }) => {
-  const [snap, setSnap] = useState<number | string | null>("500px")
-
   if (nested) {
     return (
       <DrawerPrimitive.NestedRoot
@@ -82,9 +80,7 @@ export const EnhancedDrawerContent: React.FC<EnhancedDrawerProps> = ({
   return (
     <DrawerContent className={cn(className, drawerHeight)} {...props}>
       {isContentOverflow ? (
-        <>
-          <div className="no-scrollbar flex-1 overflow-y-auto">{children}</div>
-        </>
+        <div className="no-scrollbar flex-1 overflow-y-auto">{children}</div>
       ) : (
         <div className="flex-1">{children}</div>
       )}

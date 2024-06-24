@@ -56,7 +56,7 @@ export const CommentCard: React.FC<CommentProps> = ({
                 />
               )}
               <div className="flex flex-col space-y-3">
-                <div className="flex max-w-full items-center space-x-2 max-sm:flex-wrap">
+                <div className="flex max-w-full flex-wrap items-center space-x-2">
                   <h4 className="flex-none font-semibold">
                     {comment.profiles.user_name
                       ? comment.profiles.user_name

@@ -176,6 +176,11 @@
     @apply bg-background text-foreground max-w-[100dvw] overflow-x-hidden m-0;
   } */
 
+  html {
+    @apply scroll-smooth;
+    height: -webkit-fill-available;
+  }
+
   body {
     @apply scroll-smooth bg-background text-foreground antialiased;
     /* font-feature-settings: "rlig" 1, "calt" 1; */

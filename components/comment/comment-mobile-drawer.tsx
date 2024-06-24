@@ -19,7 +19,10 @@ export const CommentMobileDrawer: React.FC<CommentMobileDrawerProps> = ({
   firstComment,
 }) => {
   return (
-    <EnhancedDrawer>
+    <EnhancedDrawer
+      disablePreventScroll={true}
+      setBackgroundColorOnScale={true}
+    >
       <EnhancedDrawerTrigger asChild>
         <div className="flex flex-col space-y-2">
           <CommentCard
@@ -34,7 +37,7 @@ export const CommentMobileDrawer: React.FC<CommentMobileDrawerProps> = ({
       <EnhancedDrawerContent
         drawerHeight="h-[80%]"
         shouldScaleBackground={true}
-        className="rounded-t-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+        className="z-50 rounded-t-3xl ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
       >
         <EnhancedDrawerClose title="Ratings & Reviews" />
         {children}

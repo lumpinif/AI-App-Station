@@ -69,8 +69,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
+    { media: "(prefers-color-scheme: light)", color: "#f0f0f4" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0d0d" },
   ],
 }
 
@@ -81,9 +81,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head />
       <body
         className={cn(
-          "flex flex-col bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased",
           GeistSans.variable
         )}
       >
@@ -94,13 +95,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
             defaultTheme="system"
             disableTransitionOnChange
           >
-            <SiteHeader />
-            <div vaul-drawer-wrapper="" className="min-h-screen">
-              <main className="grow">{children}</main>
+            <div vaul-drawer-wrapper="">
+              <section className="relative flex min-h-screen flex-col bg-background">
+                <SiteHeader />
+                <main className="flex-1">{children}</main>
+                <SiteFooter />
+              </section>
+              <TailwindIndicator />
+              <SonnerToaster richColors position="bottom-right" />
             </div>
-            <SiteFooter />
-            <TailwindIndicator />
-            <SonnerToaster richColors position="bottom-right" />
           </ThemeProvider>
         </QueryProvider>
         <SpeedInsights />
