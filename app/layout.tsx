@@ -78,34 +78,25 @@ interface RootLayoutProps {
   children: React.ReactNode
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-dvh bg-background font-sans antialiased",
-          GeistSans.variable
-        )}
-      >
+      <body className={cn("font-sans antialiased", GeistSans.variable)}>
         <QueryProvider>
           <ThemeProvider
+            enableSystem
             attribute="class"
             defaultTheme="system"
-            enableSystem
             disableTransitionOnChange
           >
-            <main
+            <div
               vaul-drawer-wrapper=""
-              className="relative flex min-h-dvh flex-col bg-background"
+              className="relative flex min-h-screen flex-col bg-background"
             >
-              <section className="min-h-dvh flex-1">
-                <section className="flex h-full flex-col">
-                  <SiteHeader />
-                  <main className="mb-2 h-full flex-1">{children}</main>
-                </section>
-              </section>
+              <SiteHeader />
+              <main className="grow">{children}</main>
               <SiteFooter />
-            </main>
+            </div>
             <TailwindIndicator />
             <SonnerToaster richColors position="bottom-right" />
           </ThemeProvider>

@@ -131,9 +131,8 @@ export default function RegisterForm() {
           exact: true,
         })
         closeAccountModal()
-        router.push("/user")
-        toast.success("Successfully Registered!", {
-          description: "Welcome " + data?.user?.email,
+        toast.success("Please confirm your email to sign in", {
+          description: "Check " + data?.user?.email + " for confirmation email",
         })
       }
     })
