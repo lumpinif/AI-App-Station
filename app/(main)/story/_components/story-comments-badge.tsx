@@ -33,7 +33,7 @@ export const StoryCommentsBadge: React.FC<StoryCommentsBadgeProps> = ({
       <div className="m-0 flex items-center gap-x-1 p-0">
         <MessageCircle
           className={cn(
-            "size-4 fill-blue-400 stroke-0 text-muted-foreground outline-none transition-all duration-200 ease-out dark:fill-primary sm:group-hover:fill-blue-500 sm:group-hover:text-blue-500"
+            "size-4 stroke-1 text-muted-foreground outline-none transition-all duration-200 ease-out sm:group-hover:fill-blue-500 sm:group-hover:text-blue-500"
             // TODO: IMPLEMENT THIS LATE WITH CHECK IF COMMENTED BY USER
             // commentsCount > 0 && "fill-blue-500 text-blue-500"
           )}

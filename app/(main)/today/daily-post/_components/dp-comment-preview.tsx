@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { addPostComment } from "@/server/queries/supabase/comments/post_comments"
 
 import { addPostCommentReturnType, Posts } from "@/types/db_tables"
@@ -84,7 +85,6 @@ export const DPCommentPreview: React.FC<DPCommentPreviewProps> = ({
 
   return (
     <section
-      id="story-comments-section"
       className="flex w-full flex-col space-y-6 md:space-y-8"
       suppressHydrationWarning
     >
@@ -112,14 +112,13 @@ export const DPCommentPreview: React.FC<DPCommentPreviewProps> = ({
         </CommentMobileDrawer> */}
 
         {/* Trigger Link */}
-        <button
-          type="button"
-          className="flex w-full flex-col space-y-2 active:scale-[.98]"
+        <Link
+          className="w-full text-nowrap"
+          href={`/today/daily-post/${created_on}/#comments-section`}
         >
-          <Link
-            scroll={false}
-            className="w-full text-nowrap"
-            href={`/today/daily-post/${created_on}#story-comments-section`}
+          <button
+            type="button"
+            className="flex w-full flex-col space-y-2 active:scale-[.98]"
           >
             <CommentCard
               comment={commentsList[0]}
@@ -128,8 +127,8 @@ export const DPCommentPreview: React.FC<DPCommentPreviewProps> = ({
             <span className="cursor-pointer text-end text-xs text-muted-foreground/60 ring-offset-background focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0">
               tap to check more
             </span>
-          </Link>
-        </button>
+          </button>
+        </Link>
       </div>
 
       {/* DESKTOP COMMENT LIST*/}

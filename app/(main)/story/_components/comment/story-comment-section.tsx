@@ -93,7 +93,7 @@ const StoryCommentSection = async ({
       className="flex w-full flex-col space-y-6 md:space-y-8"
     >
       {/* COMMENT SECTION HEADER */}
-      <div className="flex w-full items-center space-x-4">
+      <div className="flex w-full items-center space-x-4" id="comments-section">
         <span className="font-medium tracking-wide">
           {postComments.length} Comments
         </span>

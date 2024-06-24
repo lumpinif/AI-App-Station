@@ -16,9 +16,13 @@ const ScrollToComments = ({ children }: ScrollToCommentsProps) => {
     if (hash.includes(`story-comments-section`)) {
       scrollToSection(`story-comments-section`)
     }
+
+    if (hash.includes(`comments-section`)) {
+      scrollToSection(`comments-section`)
+    }
   }, [hash])
 
-  return <section id="story-comments-section">{children}</section>
+  return <>{children}</>
 }
 
 export default ScrollToComments
