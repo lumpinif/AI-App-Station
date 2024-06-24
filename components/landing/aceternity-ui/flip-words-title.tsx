@@ -8,8 +8,8 @@ export function FlipWordsTitle() {
     "best & free",
     "fast growing",
     "daily updated",
-    "pretty & simple",
-    "powerful & easy",
+    // "pretty & simple",
+    // "powerful & easy",
     // "extensive",
     // "omniscient",
   ]
@@ -23,7 +23,7 @@ export function FlipWordsTitle() {
         <br className="sm:hidden" />
         <FlipWords
           words={words}
-          duration={8500}
+          duration={6500}
           className="mx-4 rounded-3xl hover:dark:shadow-outline"
         />
         <br className="sm:hidden" />
