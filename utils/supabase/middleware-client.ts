@@ -59,7 +59,7 @@ export async function updateSession(request: NextRequest) {
   const url = new URL(request.url)
   const nextUrl = url.searchParams.get("next") || "/today"
 
-  if (data?.user) {
+  if (data?.user?.id) {
     // User is signed in
     if (url.pathname === "/signin" || url.pathname === "/signout") {
       return NextResponse.redirect(new URL(nextUrl, request.url))

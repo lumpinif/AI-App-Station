@@ -81,7 +81,12 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("font-sans antialiased", GeistSans.variable)}>
+      <body
+        className={cn(
+          "flex flex-col bg-background font-sans antialiased",
+          GeistSans.variable
+        )}
+      >
         <QueryProvider>
           <ThemeProvider
             enableSystem
@@ -89,14 +94,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             defaultTheme="system"
             disableTransitionOnChange
           >
-            <div
-              vaul-drawer-wrapper=""
-              className="relative flex min-h-screen flex-col bg-background"
-            >
-              <SiteHeader />
+            <SiteHeader />
+            <div vaul-drawer-wrapper="" className="min-h-screen">
               <main className="grow">{children}</main>
-              <SiteFooter />
             </div>
+            <SiteFooter />
             <TailwindIndicator />
             <SonnerToaster richColors position="bottom-right" />
           </ThemeProvider>

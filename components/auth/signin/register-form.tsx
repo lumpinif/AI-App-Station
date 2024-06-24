@@ -126,6 +126,8 @@ export default function RegisterForm() {
           })
         }
       } else {
+        //TODO: CURRENTLY HAVE BUG WITH THE EXISITING USER SIGN UP
+
         queryClient.invalidateQueries({
           queryKey: ["profile"],
           exact: true,
