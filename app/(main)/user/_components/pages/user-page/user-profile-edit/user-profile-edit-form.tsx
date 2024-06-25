@@ -1,5 +1,6 @@
 import { Profiles } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import { cn, getUserRoleName } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 import { UserAvatar } from "@/components/auth/avatar/user-avatar"
 import { ProfileForm } from "@/components/auth/profile/profile-form"
 
@@ -14,6 +15,8 @@ export const UserProfileEditForm: React.FC<UserProfileEditFormProps> = ({
   className,
   onFormSubmitted,
 }) => {
+  const userRoleName = getUserRoleName(profile.profile_role?.role)
+
   return (
     <section
       className={cn(
@@ -21,8 +24,16 @@ export const UserProfileEditForm: React.FC<UserProfileEditFormProps> = ({
         className
       )}
     >
-      <UserAvatar withAvatarUploader profile={profile} className="size-16" />
-      <div className="text-muted-foreground">{profile.email}</div>
+      <div className="flex items-center justify-between">
+        <UserAvatar withAvatarUploader profile={profile} className="size-16" />
+        <div className="flex flex-col-reverse items-end justify-between gap-x-2 gap-y-2 text-muted-foreground">
+          <span>{profile.email}</span>
+          <Badge className="max-w-fit select-none text-nowrap">
+            {userRoleName}
+          </Badge>
+        </div>
+      </div>
+
       <ProfileForm {...profile} onFormSubmitted={onFormSubmitted} />
     </section>
   )

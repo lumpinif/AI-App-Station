@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge"
 import * as z from "zod"
 
 import {
+  Profile_role,
   Profiles,
   TCommentParentId,
   TCommentWithProfile,
@@ -200,4 +201,42 @@ export const getPostContentPreview = (
   const firstFewWords = fullText.split(/\s+/).slice(0, numberOfWords).join(" ")
 
   return firstFewWords
+}
+
+export const checkIsUserAdmin = (role?: Profile_role["role"]) => {
+  if (!role) {
+    return false
+  }
+
+  if (role) {
+    return role === "super_admin" || role === "admin"
+  }
+}
+
+export const checkIsSuperUser = (role?: Profile_role["role"]) => {
+  if (!role) {
+    return false
+  }
+
+  if (role) {
+    return role === "super_user" || role === "super_admin" || role === "admin"
+  }
+}
+
+export const getUserRoleName = (role?: Profile_role["role"]) => {
+  if (!role) {
+    return "User"
+  }
+
+  if (role) {
+    if (role === "super_admin") {
+      return "Super Admin"
+    } else if (role === "admin") {
+      return "Admin"
+    } else if (role === "super_user") {
+      return "Super User"
+    } else {
+      return "User"
+    }
+  }
 }

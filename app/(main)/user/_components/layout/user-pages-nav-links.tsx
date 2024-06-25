@@ -1,7 +1,8 @@
 import React from "react"
 
 import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
-import { cn } from "@/lib/utils"
+import { checkIsSuperUser, checkIsUserAdmin, cn } from "@/lib/utils"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Separator } from "@/components/ui/separator"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
@@ -12,7 +13,6 @@ type UserPagesNavLinksProps = {
   className?: string
   isCollapsed?: boolean
   withSeparator?: boolean
-
   UserPagesNavLinksCardCN?: string
 }
 
@@ -20,9 +20,14 @@ export const UserPagesNavLinks: React.FC<UserPagesNavLinksProps> = ({
   className,
   isCollapsed,
   withSeparator = true,
-
   UserPagesNavLinksCardCN,
 }) => {
+  const { data: profile } = useUserProfile()
+  const userRole = profile?.profile_role?.role
+
+  const isAdmin = checkIsUserAdmin(userRole)
+  const isSuperUser = checkIsSuperUser(userRole)
+
   return (
     <nav
       className={cn(
@@ -41,9 +46,11 @@ export const UserPagesNavLinks: React.FC<UserPagesNavLinksProps> = ({
               <React.Fragment key={itemIndex}>
                 {link.title === "Search" ? (
                   <SearchCommandDialogTrigger iconClassName="stroke-[1.5px]" />
-                ) : (
+                ) : link.title === "Daily Posts" && (isAdmin || isSuperUser) ? (
                   <UserPagesNavLinksIcon link={link} itemIndex={itemIndex} />
-                )}
+                ) : link.title !== "Daily Posts" ? (
+                  <UserPagesNavLinksIcon link={link} itemIndex={itemIndex} />
+                ) : null}
               </React.Fragment>
             ) : (
               <React.Fragment key={itemIndex}>
@@ -52,13 +59,19 @@ export const UserPagesNavLinks: React.FC<UserPagesNavLinksProps> = ({
                     isCollapsed={false}
                     withTooltip={false}
                   />
-                ) : (
+                ) : link.title === "Daily Posts" && (isAdmin || isSuperUser) ? (
                   <UserPagesNavLinksCard
                     itemIndex={itemIndex}
                     link={link}
                     className={UserPagesNavLinksCardCN}
                   />
-                )}
+                ) : link.title !== "Daily Posts" ? (
+                  <UserPagesNavLinksCard
+                    itemIndex={itemIndex}
+                    link={link}
+                    className={UserPagesNavLinksCardCN}
+                  />
+                ) : null}
               </React.Fragment>
             )
           )}

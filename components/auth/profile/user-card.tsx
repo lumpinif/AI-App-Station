@@ -1,8 +1,15 @@
 import Link from "next/link"
+import { BadgeCheck } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { checkIsSuperUser, cn, getUserRoleName } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 import AccountModalTrigger from "../auth-modal/account-modal-trigger"
 
@@ -34,8 +41,12 @@ export const UserCard: React.FC<NewUserCardProps> = ({
   const { isFetching, data: profile } = useUserProfile()
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
+  const userRole = profile?.profile_role?.role
+  const isSuperUser = checkIsSuperUser(userRole)
+  const userRoleName = getUserRoleName(userRole)
+
   return (
-    <>
+    <TooltipProvider>
       {isWithLink ? (
         <Link
           href="/user"
@@ -51,12 +62,14 @@ export const UserCard: React.FC<NewUserCardProps> = ({
             isTriggerModal={isTriggerModal}
           />
           <div className={cn("flex flex-1 flex-col", profileContainerCN)}>
-            <span className={profileNameCN}>{profile?.full_name}</span>
+            <span className={cn("flex items-center gap-x-1", profileNameCN)}>
+              {profile?.full_name ?? profile?.email}
+            </span>
             <span className={profileEmailCN}>
               {display === "email" ? (
                 profile?.email
               ) : (
-                <span>{profile?.user_name}</span>
+                <span>@{profile?.user_name}</span>
               )}
             </span>
           </div>
@@ -75,19 +88,29 @@ export const UserCard: React.FC<NewUserCardProps> = ({
           />
 
           <div className={cn("flex flex-1 flex-col", profileContainerCN)}>
-            <span className={profileNameCN}>
+            <span className={cn("flex items-center gap-x-1", profileNameCN)}>
               {profile?.full_name ?? profile?.email}
+              {isSuperUser && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <BadgeCheck className="size-4 fill-blue-600 stroke-background" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Your account is {userRoleName}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
             </span>
             <span className={profileEmailCN}>
               {display === "email" ? (
                 profile?.email
               ) : (
-                <span>{profile?.user_name}</span>
+                <span>@{profile?.user_name}</span>
               )}
             </span>
           </div>
         </div>
       )}
-    </>
+    </TooltipProvider>
   )
 }

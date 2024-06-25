@@ -67,7 +67,9 @@ export type Post_of_the_day = Tables<"post_of_the_day">
 export type Daily_post = Tables<"daily_post">
 
 // Profile and user collection tables
-export type Profiles = Tables<"profiles">
+export type Profiles = Tables<"profiles"> & {
+  profile_role?: Profile_role | null
+}
 export type Profile_role = Tables<"profile_role">
 export type User_Collections = Tables<"user_collections">
 
@@ -76,6 +78,11 @@ export type Publish_Status = Enums<"publish_status">
 export type Pricing = Enums<"pricing">
 export type Post_type = Enums<"post_type">
 export type User_role = Enums<"user_role_enum">
+
+// User related
+export type ProfileWithRole = Profiles & {
+  profile_role: Profile_role
+}
 
 // Type definitions for combined types
 

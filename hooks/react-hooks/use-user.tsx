@@ -6,7 +6,7 @@ import { toast } from "sonner"
 
 import { Profiles } from "@/types/db_tables"
 
-const initUser: Record<keyof Profiles, string> = {
+const initUser: Profiles = {
   user_id: "",
   email: "",
   user_name: "",
@@ -51,7 +51,9 @@ async function fetchUserProfile() {
   const { profile, error: getUserProfileError } = await getUserProfile()
 
   if (getUserProfileError) {
-    toast.error("Error loading profile! Please try again later.")
+    toast.error("Error loading profile! Please try again later.", {
+      description: getUserProfileError.message,
+    })
   }
 
   return profile || initUser

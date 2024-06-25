@@ -45,7 +45,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
                 )}
                 onClick={handleResizeHandleClick}
               >
-                <ArrowRightFromLine className="stroke-[1.5px]  text-muted-foreground" />
+                <ArrowRightFromLine className="stroke-[1.5px] text-muted-foreground" />
               </div>
             </TooltipTrigger>
             <TooltipContent
@@ -53,7 +53,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
               className="flex items-center gap-2 text-xs dark:bg-foreground dark:text-background"
             >
               Toggle Sidebar
-              <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px]  opacity-100 dark:bg-muted-foreground/60 sm:flex">
+              <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] opacity-100 dark:bg-muted-foreground/60 sm:flex">
                 <span className="text-xs">⌘</span>space
               </kbd>
             </TooltipContent>
@@ -107,7 +107,12 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
       </div>
 
       <UserPagesNavLinks isCollapsed={isCollapsed} />
-      <PopoverMenu className="absolute bottom-12 left-5" />
+
+      <PopoverMenu
+        className="absolute bottom-1/4 left-5"
+        buttonClassName="group-[[data-collapsed=false]]:left-10"
+        openedClassName="group-[[data-collapsed=false]]:bottom-20 group-[[data-collapsed=false]]:left-0"
+      />
     </div>
   )
 }

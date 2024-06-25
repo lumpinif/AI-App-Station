@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { Profiles } from "@/types/db_tables"
+import { Profiles, ProfileWithRole } from "@/types/db_tables"
 
 export async function signUpWithEmailAndPassword(
   signUpData: {
@@ -114,15 +114,39 @@ export async function getUserProfile() {
   if (user?.id) {
     const { data: profile, error } = await supabase
       .from("profiles")
-      .select("*")
+      .select(`*,profile_role(*)`)
       .eq("user_id", user.id)
-      .single()
+      .maybeSingle()
 
     return { profile, error }
   }
 
   revalidatePath("/", "layout")
   revalidatePath("/user", "layout")
+
+  return { profile: null }
+}
+
+export async function getUserRole() {
+  const supabase = await createSupabaseServerClient()
+
+  const {
+    data: { user },
+  } = await getUserData()
+
+  // Check if user is super_admin, admin, or super_user, if so which means he or she is a verified author
+  if (user?.id) {
+    let { data: profile, error } = await supabase
+      .from("profiles")
+      .select(`*,profile_role!inner(*)`)
+      .eq("user_id", user.id)
+      .or("role.eq.super_admin,role.eq.admin,role.eq.super_user", {
+        referencedTable: "profile_role",
+      })
+      .maybeSingle<ProfileWithRole>()
+
+    return { profile, error }
+  }
 
   return { profile: null }
 }

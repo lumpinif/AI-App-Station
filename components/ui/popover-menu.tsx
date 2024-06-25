@@ -91,6 +91,7 @@ export default function PopoverMenu({
   const buttonVariants = {
     open: {
       opacity: 0,
+      rotate: 90,
       backgroundColor: "hsl(var(--transparent))",
       transition: {
         duration: duration / 2,

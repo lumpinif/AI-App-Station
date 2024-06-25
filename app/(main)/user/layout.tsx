@@ -33,7 +33,9 @@ export default async function UserLayout({
         defaultCollapsed={defaultCollapsed}
       >
         {/* <ScrollArea className="h-[calc(100svh-6rem)] w-full pr-1 sm:pr-2"> */}
+
         <UserPagesWrapper>{children}</UserPagesWrapper>
+
         {/* <ScrollBar orientation="horizontal" /> */}
         {/* </ScrollArea> */}
       </ResizeableSideBar>

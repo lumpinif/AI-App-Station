@@ -1,5 +1,6 @@
 import {
   Bookmark,
+  CalendarFold,
   FileText,
   Heart,
   LayoutDashboard,
@@ -70,6 +71,13 @@ export const userLayoutRoutes: UserLayoutRouteProps[] = [
         label: "",
         icon: FileText,
         description: "Table of stories you posted",
+      },
+      {
+        title: "Daily Posts",
+        href: "/user/daily-posts",
+        label: "",
+        icon: CalendarFold,
+        description: "Table of daily posts you created",
       },
     ],
   },
