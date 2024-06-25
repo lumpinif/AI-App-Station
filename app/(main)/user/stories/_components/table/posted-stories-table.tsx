@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 
 import { DataTableFilterField } from "@/types/data-table"
-import { PostWithProfile } from "@/types/db_tables"
+import { PostDetails, PostWithProfile } from "@/types/db_tables"
 import { getStatusIcon } from "@/lib/get-status-icon"
 import { useDataTable } from "@/hooks/data-table/use-data-table"
 import { DataTable } from "@/components/data-table/data-table"
@@ -14,7 +14,7 @@ import { StoriesTableFloatingBar } from "./posted-stories-floating-bar"
 import { StoriesTableToolbarActions } from "./posted-stories-table-toolbar-actions"
 
 interface PostedStoriesTableProps {
-  posts: PostWithProfile[]
+  posts: PostDetails[]
   pageCount: number
   totalPostsCount: number
 }

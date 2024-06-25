@@ -20,6 +20,7 @@ export const postsSearchParamsSchema = z.object({
   from: z.string().optional(),
   to: z.string().optional(),
   operator: z.enum(["and", "or"]).optional(),
+  by_field: z.string().optional(),
 })
 
 export const mutiSelectorOptionSchema = z.object({

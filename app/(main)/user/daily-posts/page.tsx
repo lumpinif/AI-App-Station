@@ -1,4 +1,4 @@
-import { getPostedStories } from "@/server/queries/supabase/stories/table/post-table-services copy"
+import { getPostedStories } from "@/server/queries/supabase/stories/table/post-table-services"
 
 import { SearchParams } from "@/types/data-table"
 import { postsSearchParamsSchema } from "@/lib/validations"
@@ -13,9 +13,6 @@ export default async function DailyPostsPagePage({
 
   const { posts, pageCount, totalPostsCount } = await getPostedStories({
     searchParams: search,
-    innerTable: {
-      table: "post_of_the_day",
-    },
   })
 
   return (

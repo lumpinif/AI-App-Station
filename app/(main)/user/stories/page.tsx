@@ -15,7 +15,9 @@ type UserPageProps = {
 export default async function UserStoriesPage({ searchParams }: UserPageProps) {
   const search = postsSearchParamsSchema.parse(searchParams)
 
-  const { posts, pageCount, totalPostsCount } = await getPostedStories(search)
+  const { posts, pageCount, totalPostsCount } = await getPostedStories({
+    searchParams: search,
+  })
 
   return (
     <main>

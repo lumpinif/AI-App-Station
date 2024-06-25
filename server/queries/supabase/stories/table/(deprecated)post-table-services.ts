@@ -3,30 +3,15 @@
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
+import { Row } from "@tanstack/react-table"
 import * as z from "zod"
 
-import {
-  PostDetails,
-  PostRefrencedTables,
-  Posts,
-  TableColumns,
-} from "@/types/db_tables"
-import { Tables } from "@/types/supabase"
+import { Posts, PostWithProfile } from "@/types/db_tables"
 import { postsSearchParamsSchema } from "@/lib/validations"
 
-import { PostDetailsSelectFields } from "../posts-fetch-by-config"
-
-type getPostedStoriesProps<T extends PostRefrencedTables> = {
+export async function getPostedStories(
   searchParams: z.infer<typeof postsSearchParamsSchema>
-  innerTable?: {
-    table: T
-  }
-}
-
-export async function getPostedStories<T extends PostRefrencedTables>({
-  searchParams,
-  innerTable,
-}: getPostedStoriesProps<T>) {
+) {
   noStore()
   const {
     page,
@@ -50,28 +35,6 @@ export async function getPostedStories<T extends PostRefrencedTables>({
     return { posts: [], pageCount: 0, totalPostsCount: 0 }
   }
 
-  const baseFields = [
-    "topics",
-    "profiles",
-    "categories",
-    "post_likes",
-    "post_bookmarks",
-  ]
-
-  let innerT: T
-  if (innerTable?.table) {
-    innerT = innerTable.table
-    baseFields.push(innerT)
-  }
-
-  const selectFields = ["*"]
-    .concat(
-      baseFields.map((field) =>
-        field === innerT ? `${field}!inner(*)` : `${field}(*)`
-      )
-    )
-    .join(", ")
-
   try {
     // Offset to paginate the results
     const offset = (page - 1) * per_page
@@ -90,7 +53,7 @@ export async function getPostedStories<T extends PostRefrencedTables>({
     // Build the filter query based on the search parameters
     const query = supabase
       .from("posts")
-      .select(selectFields, { count: "exact" })
+      .select("*,profiles(*)", { count: "exact" })
       .match({ post_author_id: user.id })
       .order(column, { ascending: order === "asc" })
 
@@ -128,7 +91,11 @@ export async function getPostedStories<T extends PostRefrencedTables>({
     query.range(offset, offset + per_page - 1)
 
     // Execute the query and get the results
-    const { data: posts, error, count } = await query.returns<PostDetails[]>()
+    const {
+      data: posts,
+      error,
+      count,
+    } = await query.returns<PostWithProfile[]>()
 
     if (error) {
       throw new Error(`Failed to fetch posted stories: ${error.message}`)
@@ -142,7 +109,7 @@ export async function getPostedStories<T extends PostRefrencedTables>({
     const { count: totalPostsCount, error: totalPostsCountError } =
       await supabase
         .from("posts")
-        .select(selectFields, { count: "exact", head: true })
+        .select("*", { count: "exact", head: true })
         .match({ post_author_id: user.id })
 
     if (totalPostsCountError) {
