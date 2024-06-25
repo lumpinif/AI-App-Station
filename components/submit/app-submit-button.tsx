@@ -9,7 +9,6 @@ import { Button, ButtonProps } from "@/components/ui/button"
 
 type AppSubmitButtonProps = ButtonProps & {
   children?: React.ReactNode
-
   className?: string
 }
 
@@ -24,8 +23,8 @@ export const AppSubmitButton: React.FC<AppSubmitButtonProps> = ({
   return (
     <>
       <Button
-        variant={variant}
         size={size}
+        variant={variant}
         onClick={handleAppSubmitButtonClick}
         className={cn("w-28 text-sm", className)}
       >

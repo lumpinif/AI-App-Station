@@ -71,7 +71,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -45 }}
             className={cn(
-              "flex w-full items-center justify-center space-x-2 text-nowrap",
+              "flex w-full items-center justify-center gap-x-2 text-nowrap",
               motionClassName,
               buttonState === "loading" && loadingElement ? "text-primary" : ""
             )}
@@ -98,7 +98,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -45 }}
           className={cn(
-            "flex w-full items-center justify-center space-x-2 text-nowrap",
+            "flex w-full items-center justify-center gap-x-2 text-nowrap",
             motionClassName
           )}
         >

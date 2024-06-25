@@ -40,7 +40,7 @@ export function DataTable<TData>({
 }: DataTableProps<TData>) {
   return (
     <div className="w-full space-y-2.5 overflow-x-auto p-1">
-      <div className="rounded-md border">
+      <div className="rounded-md border shadow-sm dark:border-border/20">
         <Table
         // {...{
         //   style: {
@@ -71,6 +71,7 @@ export function DataTable<TData>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
+                  className="dark:border-border/20"
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -92,9 +93,9 @@ export function DataTable<TData>({
               <TableRow>
                 <TableCell
                   colSpan={table.getAllColumns().length}
-                  className="h-24 text-center"
+                  className="page-title-font text-center text-xl sm:h-60 md:h-80 lg:h-96"
                 >
-                  No results.
+                  No results
                 </TableCell>
               </TableRow>
             )}

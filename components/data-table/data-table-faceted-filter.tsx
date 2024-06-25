@@ -40,16 +40,18 @@ export function DataTableFacetedFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
           size="sm"
-          className="h-8 text-nowrap border-dashed"
+          variant="outline"
+          className="group h-8 text-nowrap border-dashed"
         >
           {title === "Daily Posts" ? (
-            <CalendarFold className="mr-2 size-4" />
+            <CalendarFold className="mr-2 size-4 text-muted-foreground transition-all duration-200 ease-out group-hover:text-primary" />
           ) : (
-            <PlusCircledIcon className="mr-2 size-4" />
+            <PlusCircledIcon className="mr-2 size-4 text-muted-foreground transition-all duration-200 ease-out group-hover:text-primary" />
           )}
-          {title}
+          <span className="text-muted-foreground transition-all duration-200 ease-out group-hover:text-primary">
+            {title}
+          </span>
           {selectedValues?.size > 0 && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
@@ -123,6 +125,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                       <option.icon
                         className={cn(
                           "mr-2 size-4 text-muted-foreground",
+                          option.value === "published" && "text-green-600",
                           getStatusColor(
                             option.value as
                               | "pending"
@@ -134,10 +137,33 @@ export function DataTableFacetedFilter<TData, TValue>({
                         aria-hidden="true"
                       />
                     )}
-                    <span>{option.label}</span>
+                    <span
+                      className={cn(
+                        getStatusColor(
+                          option.value as
+                            | "pending"
+                            | "published"
+                            | "draft"
+                            | "unpublished"
+                        )
+                      )}
+                    >
+                      {option.label}
+                    </span>
                     {option.withCount &&
                       column?.getFacetedUniqueValues()?.get(option.value) && (
-                        <span className="ml-auto flex size-4 items-center justify-center font-mono text-xs">
+                        <span
+                          className={cn(
+                            "ml-auto flex size-4 items-center justify-center font-mono text-xs",
+                            getStatusColor(
+                              option.value as
+                                | "pending"
+                                | "published"
+                                | "draft"
+                                | "unpublished"
+                            )
+                          )}
+                        >
                           {column?.getFacetedUniqueValues().get(option.value)}
                         </span>
                       )}

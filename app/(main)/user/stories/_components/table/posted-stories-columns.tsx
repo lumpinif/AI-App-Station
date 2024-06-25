@@ -84,7 +84,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostDetails>[] {
             <Link
               href={`/story/${post_author_slug}/${post_id}`}
               className={cn(
-                "w-full font-normal underline-offset-2 hover:text-blue-500 hover:underline"
+                "w-fit text-base font-normal !tracking-wide underline-offset-4 hover:text-blue-500 hover:underline sm:font-medium"
               )}
             >
               {post_title}
@@ -104,15 +104,28 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostDetails>[] {
         if (!status) return null
 
         const Icon = getStatusIcon(status)
+        const isPublished = status === "published"
         const statusColor = getStatusColor(status)
 
         return (
           <div className={cn("flex w-fit items-center bg-transparent")}>
             <Icon
-              className={cn("mr-2 size-4", statusColor)}
+              className={cn(
+                "mr-2 size-4",
+                isPublished && "text-green-600",
+                statusColor
+              )}
               aria-hidden="true"
             />
-            <span className={cn("font-normal capitalize")}>{status}</span>
+            <span
+              className={cn(
+                "font-normal capitalize text-muted-foreground",
+                isPublished && "text-green-600",
+                statusColor
+              )}
+            >
+              {status}
+            </span>
           </div>
         )
       },
@@ -125,7 +138,13 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostDetails>[] {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Created At" />
       ),
-      cell: ({ cell }) => moment(cell.getValue() as Date).format("MMM D, YYYY"),
+      cell: ({ cell }) => {
+        return (
+          <span className="text-muted-foreground">
+            {moment(cell.getValue() as Date).format("MMM D, YYYY")}
+          </span>
+        )
+      },
     },
     {
       accessorKey: "likes_count",

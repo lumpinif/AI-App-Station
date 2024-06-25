@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { DotsHorizontalIcon, Pencil2Icon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
@@ -89,11 +90,30 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
       ),
       cell: ({ row }) => {
         const app_title = row.original.app_title as Apps["app_title"]
+        const app_slug = row.original.app_slug as Apps["app_slug"]
+        const publish_status = row.original.app_publish_status as Publish_Status
+        const isPublished = publish_status === "published"
 
         return (
           <div className="flex max-w-60">
-            {/* {app_title && <Badge variant="outline">{app_title}</Badge>} */}
-            <span className="w-full truncate font-normal">{app_title}</span>
+            {isPublished ? (
+              <Link
+                href={`/ai-apps/${app_slug}`}
+                className={cn(
+                  "w-fit truncate text-base font-normal !tracking-wide hover:text-blue-500 hover:underline sm:font-medium"
+                )}
+              >
+                <span>{app_title}</span>
+              </Link>
+            ) : (
+              <span
+                className={cn(
+                  "w-fit truncate text-base font-normal !tracking-wide text-muted-foreground sm:font-medium"
+                )}
+              >
+                {app_title}
+              </span>
+            )}
           </div>
         )
       },
@@ -109,15 +129,28 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
         if (!status) return null
 
         const Icon = getStatusIcon(status)
+        const isPublished = status === "published"
         const statusColor = getStatusColor(status)
 
         return (
           <div className={cn("flex w-fit items-center bg-transparent")}>
             <Icon
-              className={cn("mr-2 size-4 text-muted-foreground", statusColor)}
+              className={cn(
+                "mr-2 size-4 text-muted-foreground",
+                isPublished && "text-green-600",
+                statusColor
+              )}
               aria-hidden="true"
             />
-            <span className={cn("font-normal capitalize")}>{status}</span>
+            <span
+              className={cn(
+                "font-normal capitalize text-muted-foreground",
+                isPublished && "text-green-600",
+                statusColor
+              )}
+            >
+              {status}
+            </span>
           </div>
         )
       },
@@ -130,7 +163,13 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Created At" />
       ),
-      cell: ({ cell }) => moment(cell.getValue() as Date).format("MMM D, YYYY"),
+      cell: ({ cell }) => {
+        return (
+          <span className="text-muted-foreground">
+            {moment(cell.getValue() as Date).format("MMM D, YYYY")}
+          </span>
+        )
+      },
     },
     {
       accessorKey: "likes_count",
