@@ -1,11 +1,14 @@
 "use client"
 
 import { useMemo } from "react"
+import { CalendarFold } from "lucide-react"
 
 import { DataTableFilterField } from "@/types/data-table"
-import { PostDetails, PostWithProfile } from "@/types/db_tables"
+import { PostDetails, PostDetailsWithRefrencedFields } from "@/types/db_tables"
 import { getStatusIcon } from "@/lib/get-status-icon"
+import { checkIsSuperUser } from "@/lib/utils"
 import { useDataTable } from "@/hooks/data-table/use-data-table"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar"
 
@@ -24,9 +27,9 @@ export function PostedStoriesTable({
   pageCount,
   totalPostsCount,
 }: PostedStoriesTableProps) {
-  // Feature flags for showcasing some additional features. Feel free to remove them.
-
-  // const { featureFlags } = useTasksTable()
+  // get user profile
+  const { data: profile } = useUserProfile()
+  const isSuperUser = checkIsSuperUser(profile?.profile_role?.role)
 
   // Memoize the columns so they don't re-render on every render
   const columns = useMemo(() => getPostedStoriesTableColumns(), [])
@@ -42,7 +45,7 @@ export function PostedStoriesTable({
    * @prop {React.ReactNode} [icon] - An optional icon to display next to the label.
    * @prop {boolean} [withCount] - An optional boolean to display the count of the filter option.
    */
-  const filterFields: DataTableFilterField<PostWithProfile>[] = [
+  const filterFields: DataTableFilterField<PostDetailsWithRefrencedFields>[] = [
     {
       label: "Title",
       value: "post_title",
@@ -80,6 +83,20 @@ export function PostedStoriesTable({
     },
   ]
 
+  if (isSuperUser) {
+    filterFields.push({
+      label: "Daily Posts",
+      value: "by_field",
+      options: [
+        {
+          label: "show daily posts only",
+          value: "post_of_the_day",
+          icon: CalendarFold,
+        },
+      ],
+    })
+  }
+
   const { table } = useDataTable({
     data: posts,
     columns,
@@ -108,6 +125,8 @@ export function PostedStoriesTable({
           <TasksTableToolbarActions table={table} />
         </DataTableAdvancedToolbar>
       ) : ( */}
+      {/* )} */}
+
       <DataTableToolbar
         table={table}
         filterFields={filterFields}
@@ -115,7 +134,7 @@ export function PostedStoriesTable({
       >
         <StoriesTableToolbarActions table={table} />
       </DataTableToolbar>
-      {/* )} */}
+
       <DataTable
         table={table}
         floatingBar={

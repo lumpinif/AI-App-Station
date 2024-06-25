@@ -2,10 +2,12 @@
 
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
+import { getUserProfile } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
 import { PostDetails, PostRefrencedTables, Posts } from "@/types/db_tables"
+import { checkIsSuperUser } from "@/lib/utils"
 import { postsSearchParamsSchema } from "@/lib/validations"
 
 type getPostedStoriesProps<T extends PostRefrencedTables> = {
@@ -34,12 +36,20 @@ export async function getPostedStories<T extends PostRefrencedTables>({
 
   const supabase = await createSupabaseServerClient()
 
-  // get the user
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  // get the user profile and check the user role
+  const { profile, error: getUserProfileError } = await getUserProfile()
 
-  if (!user || !user.id) {
+  if (getUserProfileError) {
+    console.error("Error loading profile:", getUserProfileError)
+    throw new Error(`Failed to fetch user profile: ${getUserProfileError}`)
+  }
+
+  // check the user role identity
+  const user_id = profile?.user_id
+  const user_role = profile?.profile_role?.role
+  const isSuperUser = checkIsSuperUser(user_role)
+
+  if (!profile || !profile.user_id) {
     return { posts: [], pageCount: 0, totalPostsCount: 0 }
   }
 
@@ -52,12 +62,13 @@ export async function getPostedStories<T extends PostRefrencedTables>({
   ]
 
   let innerT: T
-  if (innerTable?.table) {
+  if (innerTable?.table && isSuperUser) {
     innerT = innerTable.table
     baseFields.push(innerT)
   }
 
-  if (by_field) baseFields.push(by_field as string)
+  // TODO: ENSURE THE TYPE SAFETY OF THE by_field
+  if (by_field && isSuperUser) baseFields.push(by_field as string)
 
   const selectFields = ["*"]
     .concat(
@@ -88,7 +99,7 @@ export async function getPostedStories<T extends PostRefrencedTables>({
     const query = supabase
       .from("posts")
       .select(selectFields, { count: "exact" })
-      .match({ post_author_id: user.id })
+      .match({ post_author_id: user_id })
       .order(column, { ascending: order === "asc" })
 
     // Apply filters based on the search parameters
@@ -140,7 +151,7 @@ export async function getPostedStories<T extends PostRefrencedTables>({
       await supabase
         .from("posts")
         .select(selectFields, { count: "exact", head: true })
-        .match({ post_author_id: user.id })
+        .match({ post_author_id: user_id })
 
     if (totalPostsCountError) {
       throw new Error(

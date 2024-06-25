@@ -4,7 +4,7 @@ import {
   FileTextIcon,
   LapTimerIcon,
 } from "@radix-ui/react-icons"
-import { EyeOff, FileClock, FileText, Rocket } from "lucide-react"
+import { CalendarFold, EyeOff, FileClock, FileText, Rocket } from "lucide-react"
 
 import { Apps } from "@/types/db_tables"
 

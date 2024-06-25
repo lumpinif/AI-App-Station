@@ -22,13 +22,13 @@ export default async function UserStoriesPage({ searchParams }: UserPageProps) {
   return (
     <main>
       <DateRangePicker
-        PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
+        align="start"
+        className="p-1"
+        sideOffset={10}
         triggerSize="sm"
         triggerVariant={"outline"}
+        PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
         triggerClassName="mr-auto w-64 text-muted-foreground"
-        align="start"
-        sideOffset={10}
-        className="p-1"
       />
 
       <Suspense

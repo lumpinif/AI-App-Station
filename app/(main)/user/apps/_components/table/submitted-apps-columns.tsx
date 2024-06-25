@@ -48,7 +48,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="translate-y-0.5"
+          className="translate-y-0.5 border border-muted-foreground/50 shadow-inner-outline transition-all duration-100 ease-out hover:border-muted-foreground active:scale-[.90] dark:border-border/50 dark:shadow-none dark:hover:border-border"
         />
       ),
       cell: ({ row }) => (
@@ -56,7 +56,7 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="translate-y-0.5"
+          className="translate-y-0.5 border border-muted-foreground/50 shadow-inner-outline transition-all duration-150 ease-out hover:border-muted-foreground dark:border-border/50 dark:shadow-none dark:hover:border-border"
         />
       ),
       enableSorting: false,

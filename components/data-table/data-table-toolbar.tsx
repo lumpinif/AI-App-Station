@@ -70,6 +70,7 @@ export function DataTableToolbar<TData>({
                 </div>
               )
           )}
+
         {filterableColumns.length > 0 &&
           filterableColumns.map(
             (column) =>
@@ -84,6 +85,7 @@ export function DataTableToolbar<TData>({
                 />
               )
           )}
+
         {isFiltered && (
           <Button
             aria-label="Reset filters"
@@ -96,6 +98,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
+
       <div className="flex items-center gap-2">
         {children}
         <DataTableViewOptions table={table} columnsTitles={columnsTitles} />

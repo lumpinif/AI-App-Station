@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { DownloadIcon, ReloadIcon } from "@radix-ui/react-icons"
 import { type Table } from "@tanstack/react-table"
 
-import { PostWithProfile } from "@/types/db_tables"
+import { PostDetails, PostWithProfile } from "@/types/db_tables"
 import { exportTableToCSV } from "@/lib/export"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button"
 import { DeleteStoriesDialog } from "./posted-stories-actions-dialog"
 
 interface StoriesTableToolbarActionsProps {
-  table: Table<PostWithProfile>
+  table: Table<PostDetails>
 }
 
 export function StoriesTableToolbarActions({
@@ -58,7 +58,7 @@ export function StoriesTableToolbarActions({
         disabled={isRefreshing}
       >
         <ReloadIcon
-          className={cn("mr-1 size-4", isRefreshing && " animate-spin")}
+          className={cn("mr-1 size-4", isRefreshing && "animate-spin")}
           aria-hidden="true"
         />
         Reload

@@ -8,12 +8,7 @@ import { Delete, Heart, LineChart } from "lucide-react"
 import moment from "moment"
 import numeral from "numeral"
 
-import {
-  Posts,
-  PostWithProfile,
-  Profiles,
-  Publish_Status,
-} from "@/types/db_tables"
+import { PostDetails, Posts, Profiles, Publish_Status } from "@/types/db_tables"
 import { getStatusColor, getStatusIcon } from "@/lib/get-status-icon"
 import { cn, getPostAuthorSlug } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -39,7 +34,7 @@ import {
   UnpublishStoriesDialog,
 } from "./posted-stories-actions-dialog"
 
-export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
+export function getPostedStoriesTableColumns(): ColumnDef<PostDetails>[] {
   return [
     {
       id: "select",
@@ -52,7 +47,7 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
           }
           onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
           aria-label="Select all"
-          className="translate-y-0.5"
+          className="translate-y-0.5 border border-muted-foreground/50 shadow-inner-outline transition-all duration-100 ease-out hover:border-muted-foreground active:scale-[.90] dark:border-border/50 dark:shadow-none dark:hover:border-border"
         />
       ),
       cell: ({ row }) => (
@@ -60,32 +55,17 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostWithProfile>[] {
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
-          className="translate-y-0.5"
+          className="translate-y-0.5 border border-muted-foreground/50 shadow-inner-outline transition-all duration-150 ease-out hover:border-muted-foreground dark:border-border/50 dark:shadow-none dark:hover:border-border"
         />
       ),
       enableSorting: false,
       enableHiding: false,
     },
-    // {
-    //   accessorKey: "app_icon_src",
-    //   size: 20,
-    //   header: "Icon",
-    //   cell: ({ row }) => {
-    //     const app_title = row.original.app_title as Apps["app_title"]
-    //     const app_slug = row.original.app_slug as Apps["app_slug"]
-    //     const app_icon_src = row.original.app_icon_src as Apps["app_icon_src"]
-
-    //     return (
-    //       <AppIcon
-    //         size={10}
-    //         className="rounded-lg"
-    //         app_title={app_title}
-    //         app_slug={app_slug}
-    //         app_icon_src={app_icon_src}
-    //       />
-    //     )
-    //   },
-    // },
+    {
+      accessorKey: "by_field",
+      enableHiding: false,
+      enableSorting: false,
+    },
     {
       accessorKey: "post_title",
       header: ({ column }) => (

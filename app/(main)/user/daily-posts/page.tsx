@@ -2,23 +2,37 @@ import { getPostedStories } from "@/server/queries/supabase/stories/table/post-t
 
 import { SearchParams } from "@/types/data-table"
 import { postsSearchParamsSchema } from "@/lib/validations"
+import { DateRangePicker } from "@/components/shared/date-range-picker"
 
 type UserPageProps = {
   searchParams: SearchParams
 }
-export default async function DailyPostsPagePage({
-  searchParams,
-}: UserPageProps) {
+export default async function DailyPostsPage({ searchParams }: UserPageProps) {
   const search = postsSearchParamsSchema.parse(searchParams)
 
-  const { posts, pageCount, totalPostsCount } = await getPostedStories({
+  const {
+    posts: postOfTheDay,
+    pageCount,
+    totalPostsCount,
+  } = await getPostedStories({
     searchParams: search,
+    innerTable: {
+      table: "post_of_the_day",
+    },
   })
 
   return (
     <>
-      {posts.map((post) => post.post_title)}
-      <span>Total posts: {posts.length}</span>
+      <DateRangePicker
+        align="start"
+        sideOffset={10}
+        triggerSize="sm"
+        triggerVariant={"outline"}
+        PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
+        triggerClassName="mr-auto w-64 text-muted-foreground"
+      />
+      {postOfTheDay.map((post) => post.post_title)}
+      <span>Total posts: {postOfTheDay.length}</span>
       <span>Total pageCount:{pageCount}</span>
       <span>Total totalPostsCount:{totalPostsCount}</span>
     </>

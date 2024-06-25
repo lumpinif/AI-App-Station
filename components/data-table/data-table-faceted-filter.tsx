@@ -1,5 +1,6 @@
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons"
 import type { Column } from "@tanstack/react-table"
+import { CalendarFold } from "lucide-react"
 
 import { Option } from "@/types/data-table"
 import { getStatusColor } from "@/lib/get-status-icon"
@@ -38,8 +39,16 @@ export function DataTableFacetedFilter<TData, TValue>({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <PlusCircledIcon className="mr-2 size-4" />
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 text-nowrap border-dashed"
+        >
+          {title === "Daily Posts" ? (
+            <CalendarFold className="mr-2 size-4" />
+          ) : (
+            <PlusCircledIcon className="mr-2 size-4" />
+          )}
           {title}
           {selectedValues?.size > 0 && (
             <>
@@ -76,7 +85,7 @@ export function DataTableFacetedFilter<TData, TValue>({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[12.5rem] p-0" align="start">
+      <PopoverContent className="w-fit p-1" align="start">
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>

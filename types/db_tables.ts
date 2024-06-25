@@ -153,7 +153,13 @@ export type PostRefrencedFields = {
   profiles: Profiles
   post_likes: Post_likes[]
   post_bookmarks: Post_bookmarks[]
+  post_of_the_day?: Post_of_the_day
 }
+
+export type PostDetailsWithRefrencedFields = PostDetails &
+  Partial<PostRefrencedFields> & {
+    by_field?: string
+  }
 
 // Comment related types
 export type CommentWithProfile = App_Comments &

@@ -13,7 +13,7 @@ import { Row } from "@tanstack/react-table"
 import { RotateCw, SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
-import { PostWithProfile } from "@/types/db_tables"
+import { PostDetails } from "@/types/db_tables"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -31,7 +31,7 @@ export async function deleteStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<PostWithProfile>[]
+  rows: Row<PostDetails>[]
   onSuccess?: () => void
 }) {
   try {
@@ -65,7 +65,7 @@ export async function unpublishStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<PostWithProfile>[]
+  rows: Row<PostDetails>[]
   onSuccess?: () => void
 }) {
   try {
@@ -100,7 +100,7 @@ export async function publishStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<PostWithProfile>[]
+  rows: Row<PostDetails>[]
   onSuccess?: () => void
 }) {
   try {
@@ -135,7 +135,7 @@ export async function draftStories({
   rows,
   onSuccess,
 }: {
-  rows: Row<PostWithProfile>[]
+  rows: Row<PostDetails>[]
   onSuccess?: () => void
 }) {
   try {
@@ -168,7 +168,7 @@ export async function draftStories({
 
 interface StoryActionDialogProps
   extends React.ComponentPropsWithoutRef<typeof AlertDialog> {
-  posts: Row<PostWithProfile>[]
+  posts: Row<PostDetails>[]
   onSuccess?: () => void
   showTrigger?: boolean
   triggerClassName?: string

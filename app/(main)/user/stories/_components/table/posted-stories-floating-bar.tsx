@@ -2,7 +2,7 @@ import * as React from "react"
 import { Cross2Icon, DownloadIcon, TrashIcon } from "@radix-ui/react-icons"
 import { type Table } from "@tanstack/react-table"
 
-import { PostWithProfile } from "@/types/db_tables"
+import { PostDetails } from "@/types/db_tables"
 import { exportTableToCSV } from "@/lib/export"
 import { getStatusColor, getStatusIcon } from "@/lib/get-status-icon"
 import { cn } from "@/lib/utils"
@@ -23,7 +23,7 @@ import {
 } from "./posted-stories-actions-dialog"
 
 interface StoriesTableFloatingBarProps {
-  table: Table<PostWithProfile>
+  table: Table<PostDetails>
 }
 
 export function StoriesTableFloatingBar({
