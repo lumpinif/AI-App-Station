@@ -46,7 +46,6 @@ export type Developers = Tables<"developers">
 export type Topics = Tables<"topics">
 
 // Post related tables
-
 export type PostRefrencedTables = Extract<
   Table,
   | "topics"
@@ -55,6 +54,7 @@ export type PostRefrencedTables = Extract<
   | "categories"
   | "post_comments"
   | "post_bookmarks"
+  | "post_of_the_day"
 >
 
 export type Post_Comment_likes = Tables<"post_comment_likes">
