@@ -20,24 +20,85 @@ type ThemeToggleProps = {
   isDropDown?: boolean
 }
 
+function ClientSideThemeToggle({
+  theme,
+  setTheme,
+  className,
+}: {
+  theme: string | undefined
+  setTheme: (theme: string) => void
+  className?: string
+}) {
+  return (
+    <div
+      className={cn(
+        "dark:glass-card-background flex w-fit flex-row items-center space-x-4 rounded-full p-2 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline",
+        className
+      )}
+    >
+      <button
+        type="button"
+        onClick={() => setTheme("light")}
+        className={cn(
+          "text-muted-foreground",
+          theme === "light" ? "text-primary" : ""
+        )}
+      >
+        <Sun
+          size={18}
+          className={cn("stroke-[1]", theme === "light" ? "stroke-[1.5]" : "")}
+        />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setTheme("system")}
+        className={cn(
+          "text-muted-foreground",
+          theme === "system" ? "text-primary" : ""
+        )}
+      >
+        <Monitor
+          size={18}
+          className={cn("stroke-[1]", theme === "system" ? "stroke-[1.5]" : "")}
+        />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setTheme("dark")}
+        className={cn(
+          "text-muted-foreground",
+          theme === "dark" ? "text-primary" : ""
+        )}
+      >
+        <Moon
+          size={18}
+          className={cn("stroke-[1]", theme === "dark" ? "stroke-[1.5]" : "")}
+        />
+      </button>
+    </div>
+  )
+}
+
 export function ThemeToggle({
   className,
   isDropDown = false,
   isDirect = false,
 }: ThemeToggleProps) {
   const { theme, setTheme } = useTheme()
-  const [clientTheme, setClientTheme] = useState(theme)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setClientTheme(theme)
-  }, [theme])
+    setMounted(true)
+  }, [])
 
   if (isDirect) {
     return (
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setTheme(clientTheme === "light" ? "dark" : "light")}
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         className={cn(
           "rounded-full active:scale-[.98] dark:hover:bg-foreground/10",
           className
@@ -82,63 +143,15 @@ export function ThemeToggle({
     )
   }
 
+  if (!mounted) {
+    return null
+  }
+
   return (
-    <div
-      className={cn(
-        "dark:glass-card-background flex w-fit flex-row items-center space-x-4 rounded-full p-2 text-muted-foreground transition-all duration-150 ease-out dark:shadow-outline",
-        className
-      )}
-    >
-      <button
-        type="button"
-        onClick={() => setTheme("light")}
-        className={cn(
-          "text-muted-foreground",
-          clientTheme === "light" ? "text-primary" : ""
-        )}
-      >
-        <Sun
-          size={18}
-          className={cn(
-            "stroke-[1]",
-            clientTheme === "light" ? "stroke-[1.5]" : ""
-          )}
-        />
-      </button>
-
-      <button
-        type="button"
-        onClick={() => setTheme("system")}
-        className={cn(
-          "text-muted-foreground",
-          clientTheme === "system" ? "text-primary" : ""
-        )}
-      >
-        <Monitor
-          size={18}
-          className={cn(
-            "stroke-[1]",
-            clientTheme === "system" ? "stroke-[1.5]" : ""
-          )}
-        />
-      </button>
-
-      <button
-        type="button"
-        onClick={() => setTheme("dark")}
-        className={cn(
-          "text-muted-foreground",
-          clientTheme === "dark" ? "text-primary" : ""
-        )}
-      >
-        <Moon
-          size={18}
-          className={cn(
-            "stroke-[1]",
-            clientTheme === "dark" ? "stroke-[1.5]" : ""
-          )}
-        />
-      </button>
-    </div>
+    <ClientSideThemeToggle
+      theme={theme}
+      setTheme={setTheme}
+      className={className}
+    />
   )
 }
