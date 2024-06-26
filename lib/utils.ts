@@ -223,7 +223,7 @@ export const checkIsSuperUser = (role?: Profile_role["role"]) => {
   }
 }
 
-export const getUserRoleName = (role?: Profile_role["role"]) => {
+export const getProfileRoleName = (role?: Profile_role["role"]) => {
   if (!role) {
     return "User"
   }

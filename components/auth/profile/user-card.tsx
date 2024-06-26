@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { BadgeCheck } from "lucide-react"
 
-import { checkIsSuperUser, cn, getUserRoleName } from "@/lib/utils"
+import { checkIsSuperUser, cn, getProfileRoleName } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import {
@@ -43,7 +43,7 @@ export const UserCard: React.FC<NewUserCardProps> = ({
 
   const userRole = profile?.profile_role?.role
   const isSuperUser = checkIsSuperUser(userRole)
-  const userRoleName = getUserRoleName(userRole)
+  const userRoleName = getProfileRoleName(userRole)
 
   return (
     <TooltipProvider>

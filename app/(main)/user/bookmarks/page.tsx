@@ -4,6 +4,7 @@ import { getUserData } from "@/server/auth"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import LoadingFallback from "@/components/shared/loading-fallback"
 
+import { AppsStoriesTabs } from "../_components/bookmark-favorites/_components/apps-stories-tabs"
 import { AppCardsGrid } from "../_components/bookmark-favorites/_components/apps/app-cards-grid"
 import { StoryCardsGrid } from "../_components/bookmark-favorites/_components/stories/story-cards-grid"
 
@@ -25,11 +26,7 @@ export default async function BookmarksPage() {
 
   return (
     <div className="w-full">
-      <Tabs defaultValue="apps" className="w-full">
-        <TabsList>
-          <TabsTrigger value="apps">Apps</TabsTrigger>
-          <TabsTrigger value="stories">Stories</TabsTrigger>
-        </TabsList>
+      <AppsStoriesTabs>
         <TabsContent
           value="apps"
           className="focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -46,7 +43,7 @@ export default async function BookmarksPage() {
             <StoryCardsGrid user_id={user.id} collectionType="bookmark" />
           </Suspense>
         </TabsContent>
-      </Tabs>
+      </AppsStoriesTabs>
     </div>
   )
 }

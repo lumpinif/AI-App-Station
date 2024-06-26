@@ -1,5 +1,5 @@
 import { Profiles } from "@/types/db_tables"
-import { cn, getUserRoleName } from "@/lib/utils"
+import { cn, getProfileRoleName } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { UserAvatar } from "@/components/auth/avatar/user-avatar"
 import { ProfileForm } from "@/components/auth/profile/profile-form"
@@ -15,7 +15,7 @@ export const UserProfileEditForm: React.FC<UserProfileEditFormProps> = ({
   className,
   onFormSubmitted,
 }) => {
-  const userRoleName = getUserRoleName(profile.profile_role?.role)
+  const userRoleName = getProfileRoleName(profile.profile_role?.role)
 
   return (
     <section
