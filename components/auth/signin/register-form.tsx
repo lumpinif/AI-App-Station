@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { getSiteUrl } from "@/lib/utils"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import {
   Form,
@@ -46,6 +47,7 @@ export default function RegisterForm() {
 
   const params = useSearchParams()
   const next = params.get("next") || "/today"
+  const redirectPath = getSiteUrl() + next
 
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -64,7 +66,7 @@ export default function RegisterForm() {
       //server action of signUpWithEmailAndPassword
       const { data, error: signUpError } = await signUpWithEmailAndPassword(
         signUpData,
-        next
+        redirectPath
       )
 
       if (signUpError?.name || signUpError?.message || signUpError?.status) {
