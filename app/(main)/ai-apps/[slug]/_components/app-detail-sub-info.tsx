@@ -39,7 +39,6 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
   developers,
 }) => {
   const [isOpen, setIsOpen] = useState(true)
-
   const refCollapsible = useRef<HTMLDivElement>(null)
 
   // useClickOutside<HTMLDivElement>(refCollapsible, () => {
@@ -72,9 +71,9 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
         </h2>
         <CollapsibleTrigger asChild className="outline-none">
           <Button
+            size={"xs"}
             variant="ghost"
-            size={"icon"}
-            className="h-9 w-9 rounded-full p-0 outline-none transition-all duration-200 ease-out"
+            className="rounded-full p-0 outline-none transition-all duration-200 ease-out"
           >
             {!isOpen ? (
               <ChevronRight className="size-4 text-muted-foreground" />

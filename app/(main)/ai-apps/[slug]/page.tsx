@@ -20,6 +20,7 @@ import { AppDetailBookmarkButton } from "./_components/app-detail-bookmark-butto
 import { AppDetailCarousel } from "./_components/app-detail-carousel"
 import { AppDetailIntroduction } from "./_components/app-detail-introduction"
 import { AppDetailLikeButton } from "./_components/app-detail-like-button"
+import { AppDetailRelevantApps } from "./_components/app-detail-relevant-apps"
 import { AppDetailReviews } from "./_components/app-detail-reviews"
 import { AppDetailScreenshots } from "./_components/app-detail-screenshots"
 import { AppDetailShare } from "./_components/app-detail-share"
@@ -148,6 +149,8 @@ export default async function AiAppsMainPage({
             </div>
           </div>
           <AppDetailCarousel data={app} {...ratingData} className="py-4" />
+
+          {/* Mobile Launch Button*/}
           <AppLaunchButton
             app_url={app.app_url}
             className="mx-auto w-full max-w-xl border dark:border-0 dark:shadow-outline dark:outline-none sm:hidden"
@@ -172,8 +175,9 @@ export default async function AiAppsMainPage({
               />
             </Suspense>
           </div>
-          <div className="mt-6 xl:mt-0">
+          <div className="mt-6 flex flex-col space-y-6 md:space-y-12 lg:space-y-16 xl:mt-0">
             <AppDetailSubInfo {...app} {...app.profiles} {...app.developers} />
+            <AppDetailRelevantApps app={app} />
           </div>
         </div>
       </div>
