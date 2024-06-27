@@ -51,9 +51,9 @@ export const ProjectsCommandGroup: React.FC<ProjectsCommandGroupProps> = ({
           isLoading={isLoading}
           variant={"ghost"}
           className="h-11 w-full !px-2 hover:bg-transparent"
-          motionClassName="justify-start space-x-0"
+          motionClassName="justify-start gap-x-0"
         >
-          <Plus className="mr-2 h-4 w-4 text-muted-foreground md:mr-4" />
+          <Plus className="mr-2 size-4 stroke-[1.5px] text-muted-foreground md:mr-4" />
           <span className="font-normal">Create New Story</span>
         </SpinnerButton>
       </CommandItem>

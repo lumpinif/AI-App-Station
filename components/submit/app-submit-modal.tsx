@@ -30,10 +30,10 @@ export const AppSubmitModal: React.FC<AppSubmitModalProps> = ({ user }) => {
     <ResponsiveContentModal
       isOpen={isSubmitModalOpen}
       onChange={onChange}
-      drawerContentClassName="outline-none rounded-t-3xl"
-      drawerHeight="h-[55%]"
-      dialogContentClassName="max-w-xl rounded-2xl border-0 outline-none"
       title="Submit an app"
+      drawerHeight="h-[60%]"
+      drawerContentClassName="outline-none rounded-t-3xl"
+      dialogContentClassName="max-w-2xl rounded-2xl border border-border dark:border-0 outline-none dark:shadow-top"
     >
       {user?.id ? (
         <AppSubmitPage />
