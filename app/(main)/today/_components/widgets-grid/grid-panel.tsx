@@ -4,8 +4,8 @@ import { Suspense, useEffect } from "react"
 import { stagger, useAnimate } from "framer-motion"
 
 import { siteConfig } from "@/config/dummy-config"
-import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
+import { cardVariants } from "@/lib/variants"
 import LoadingFallback from "@/components/shared/loading-fallback"
 
 import Equipments from "../bento-grid/2-panels/equipments"

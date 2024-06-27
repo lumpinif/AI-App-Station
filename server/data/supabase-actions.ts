@@ -28,7 +28,7 @@ const getErrorMessage = (error: unknown) => {
   return message
 }
 
-// TODO: CHECK ALL THE ERROR HANDLING BEFORE PRODUCTION
+// TODO: CHECK ALL THE ERROR HANDLING
 
 export async function GetAppByAppIdUserId(
   app_id: Apps["app_id"],
@@ -819,7 +819,7 @@ export async function getScreenshotsPublicUrls(
     if (data) screenshotsPublicUrls.push(data.publicUrl)
   })
 
-  // TODO: TEST ANOTHER APPROACH BEFORE PRODUCTION CHECK OUT GET POST IMAGES FUNCTIONS
+  // TODO: TEST ANOTHER APPROACH, CHECK OUT GET POST IMAGES FUNCTIONS
   // const screenshotsPublicUrls = await Promise.all(
   //   fileNames.map(async (fileName) => {
   //     const { data } = await supabase.storage

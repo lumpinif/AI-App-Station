@@ -55,9 +55,15 @@ export default async function StoryPage({
     notFound()
   }
 
-  // TODO: HANDLE THE ERROR BEFORE PRODUCTION
+  // TODO: HANDLE THE ERROR
   if (getPostError) {
     console.error(getPostError)
+    return (
+      <div className="flex flex-col text-muted-foreground">
+        <p>Error getting this post: {getPostError}</p>
+        <p>Please try again</p>
+      </div>
+    )
   }
 
   return (

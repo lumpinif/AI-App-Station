@@ -8,11 +8,25 @@ export default async function AllTopicsPage() {
   const { topics: allTopics, error: getAllTopicsError } = await getAllTopics()
 
   if (getAllTopicsError) {
-    // TODO: HANDLE ERROR BEFORE PRODUCTION
     console.error(getAllTopicsError)
+    return (
+      <section className="flex flex-col gap-y-4">
+        <PageTitle
+          href="/stories"
+          subtitlePos="bottom"
+          title="Error getting topics"
+          subtitle="All topics about the stories written by the community"
+        />
+
+        <span className="text-muted-foreground">
+          It should be fixed shortly
+        </span>
+        <p>Error: {getAllTopicsError}</p>
+      </section>
+    )
   }
 
-  if (!allTopics)
+  if (!allTopics) {
     return (
       <section className="flex flex-col gap-y-4">
         <PageTitle
@@ -27,6 +41,7 @@ export default async function AllTopicsPage() {
         </span>
       </section>
     )
+  }
 
   return (
     <section className="flex flex-col gap-y-4">

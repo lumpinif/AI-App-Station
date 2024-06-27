@@ -3,8 +3,7 @@ import { PostgrestError } from "@supabase/supabase-js"
 import { toast } from "sonner"
 import { z } from "zod"
 
-// TODO: MOVE THIS TO SOMEWHERE ELSE
-// TODO: CHECK ALL THE ERROR HANDLING BEFORE PRODUCTION
+// TODO: CHECK ALL THE ERROR HANDLING
 export function getErrorMessage(err: unknown | PostgrestError) {
   const unknownError = "Something went wrong, please try again later."
 

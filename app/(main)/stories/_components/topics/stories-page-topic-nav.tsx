@@ -15,18 +15,26 @@ export const StoriesPageTopicNav: React.FC<
   const { topics: allTopics, error: getAllTopicsError } = await getAllTopics()
 
   if (getAllTopicsError) {
-    // TODO: HANDLE ERROR BEFORE PRODUCTION
     console.error(getAllTopicsError)
+    return (
+      <section className="flex flex-col gap-y-4 text-muted-foreground">
+        <span className="text-muted-foreground">
+          It should be fixed shortly
+        </span>
+        <p>Error: {getAllTopicsError}</p>
+      </section>
+    )
   }
 
-  if (!allTopics)
+  if (!allTopics) {
     return (
-      <section className="flex flex-col gap-y-4">
+      <section className="flex flex-col gap-y-4 text-muted-foreground">
         <span className="text-muted-foreground">
           It should be fixed shortly
         </span>
       </section>
     )
+  }
 
   const topicItems = sampleSize(allTopics, 6)
 

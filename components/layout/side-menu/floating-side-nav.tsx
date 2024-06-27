@@ -73,8 +73,8 @@ const FloatingSideNav: React.FC = () => {
       className={cn(
         "cubic-bezier(0.32, 0.72, 0, 1) z-40 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-xl transition-all duration-500 md:flex md:flex-col",
         !isOpen
-          ? "3xl:-ml-32 rounded-[2.5rem] md:ml-0 2xl:-ml-16"
-          : "3xl:-ml-52 -ml-56 mt-16 md:-ml-2 lg:-ml-4 2xl:-ml-20"
+          ? "rounded-[2.5rem] md:ml-0 2xl:-ml-16 3xl:-ml-32"
+          : "-ml-56 mt-16 md:-ml-2 lg:-ml-4 2xl:-ml-20 3xl:-ml-52"
       )}
     >
       <TooltipProvider>
@@ -84,7 +84,6 @@ const FloatingSideNav: React.FC = () => {
             {isOpen && <SearchTrigger isOpen={isOpen} />}
             <FloatingSideNavContent items={SIDENAVROUTES} isOpen={isOpen} />
             {!isOpen && <SearchTrigger isOpen={isOpen} />}
-            {/* TODO: Consider remove the theme toggle before production */}
             <SideNavThemeToggle isOpen={isOpen} />
             <SideMenuAuthTrigger isOpen={isOpen} />
           </div>

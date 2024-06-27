@@ -8,8 +8,19 @@ export default async function CategoriesPage() {
     await getAllCategories()
 
   if (getAllCategoiresError) {
-    // TODO: HANDLE ERROR BEFORE PRODUCTION
     console.error(getAllCategoiresError)
+    return (
+      <section className="flex flex-col gap-y-4">
+        <AiAppsPagesTitle
+          title={"No Categories found"}
+          href={`/ai-apps/categories`}
+        />
+        <span className="text-muted-foreground">
+          It should be fixed shortly
+        </span>
+        <p>Error: {getAllCategoiresError}</p>
+      </section>
+    )
   }
 
   if (!allCategories)

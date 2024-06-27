@@ -1,5 +1,5 @@
-import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
+import { cardVariants } from "@/lib/variants"
 import { Separator } from "@/components/ui/separator"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"

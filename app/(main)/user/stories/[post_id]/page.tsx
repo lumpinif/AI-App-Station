@@ -13,7 +13,6 @@ type PostEditPageProps = {
   params: { post_id: string }
 }
 
-// TODO: CONSIDER IMPLMENTING THIS AS A BETTER APPROACH FOR FETCHING DATA IN PAGE.TSX FILES BEFORE PRODUCTION
 async function fetchPostImages(
   post_id: Posts["post_id"],
   post_author_id: Posts["post_author_id"]

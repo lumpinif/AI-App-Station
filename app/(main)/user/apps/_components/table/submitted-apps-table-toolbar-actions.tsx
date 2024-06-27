@@ -50,8 +50,6 @@ export function SubmittedAppsTableToolbarActions({
           onSuccess={() => table.toggleAllPageRowsSelected(false)}
         />
       ) : null}
-      {/* TODO: IMPORTANT- CREATE THE CREATE APP DIALOG BEFORE PRODUCTION */}
-      {/* <CreateTaskDialog prevTasks={table.getFilteredRowModel().rows} /> */}
 
       <AppSubmitButton
         size={"label"}

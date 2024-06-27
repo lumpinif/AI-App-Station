@@ -50,12 +50,7 @@ export async function removeEmptyPostContent(
       return { error: updateError }
     }
 
-    // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION CONSIDER USE AUTHOR ID TO GET THE PROFILE NAME FOR THE ROUTE SEGEMENT
-
-    // ${nameToSlug(profiles?.full_name ? profiles?.full_name : profiles?.email || "")}
-
     revalidatePath(`/story/${getPostAuthorSlug(profiles)}/${post_id}`)
-
     revalidatePath(`/user/stories/${post_id}`)
 
     return { error: updateError }
@@ -87,10 +82,7 @@ export async function insertPostContent(
       return { error: error }
     }
 
-    // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
-
     revalidatePath(`/story/${getPostAuthorSlug(profiles)}/${post_id}`)
-
     revalidatePath(`/user/stories/${post_id}`)
 
     return { error }
@@ -124,10 +116,7 @@ export async function updatePostTitle(
       return { error: error }
     }
 
-    // TODO: CHECK THE REVALIDATE PATHS BEFORE PRODUCTION
-
     revalidatePath(`/story/${getPostAuthorSlug(profiles)}/${post_id}`)
-
     revalidatePath(`/user/stories/${post_id}`)
 
     return { error }

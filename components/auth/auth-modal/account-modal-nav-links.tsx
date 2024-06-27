@@ -1,8 +1,8 @@
 import React from "react"
 
 import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
-import { cardVariants } from "@/lib/constants"
 import { cn } from "@/lib/utils"
+import { cardVariants } from "@/lib/variants"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import { UserPagesNavLinksCard } from "@/app/(main)/user/_components/layout/user-pages-nav-links-card"
 

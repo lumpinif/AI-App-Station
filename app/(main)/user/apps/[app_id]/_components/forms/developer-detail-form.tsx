@@ -38,7 +38,7 @@ type DeveloerpDetailFormProps = {
   developer_email: Developers["developer_email"]
 }
 
-// TODO: CHECK THE SCHEMA BEFORE PRODUCTION
+// TODO: CHECK THE SCHEMA
 const formSchema = z.object({
   developer_email: z
     .string()

@@ -24,7 +24,6 @@ export async function getAllPosts(
     .select(
       "*, categories(*), topics(*), profiles(*), post_likes(*), post_bookmarks(*)"
     )
-    // TODO: IMPORTANT - CHECK THE PUBULISH STATUS OF THE POSTS BEFORE PRODUCTION
     .match({ post_publish_status: "published" })
 
   if (is_hero_featured) {
