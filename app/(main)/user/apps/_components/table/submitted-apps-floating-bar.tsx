@@ -73,13 +73,13 @@ export function SubmittedAppsTableFloatingBar({
         onOpenChange={setShowUnpublishAppDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
-      <PublishAppsDialog
+      {/* <PublishAppsDialog
         apps={rows}
         showTrigger={false}
         open={showPublishAppDialog}
         onOpenChange={setShowPublishAppDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
-      />
+      /> */}
       <DraftAppsDialog
         apps={rows}
         showTrigger={false}
@@ -120,13 +120,16 @@ export function SubmittedAppsTableFloatingBar({
             <Separator orientation="vertical" className="hidden h-5 sm:block" />
             <div className="flex items-center gap-1.5">
               <Tooltip>
-                <TooltipTrigger asChild>
+                <TooltipTrigger className="cursor-not-allowed">
                   <Button
-                    variant="secondary"
                     size="icon"
+                    disabled={
+                      true
+                      // isPending
+                    }
+                    variant="secondary"
                     className="size-7 border"
                     onClick={() => setShowPublishAppDialog(true)}
-                    disabled={isPending}
                   >
                     <PublishIcon
                       className={cn("size-4", PublishStatusColor)}
@@ -137,7 +140,7 @@ export function SubmittedAppsTableFloatingBar({
                 <TooltipContent className="border bg-background font-semibold text-foreground">
                   <p
                     className={PublishStatusColor}
-                  >{`Publish ${rows.length > 1 ? "Apps" : "App"}`}</p>
+                  >{`Please publish ${rows.length > 1 ? "apps" : "app"} in the edit`}</p>
                 </TooltipContent>
               </Tooltip>
 

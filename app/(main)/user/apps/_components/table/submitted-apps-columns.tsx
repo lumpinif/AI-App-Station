@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { DotsHorizontalIcon, Pencil2Icon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { Delete, Heart, LineChart } from "lucide-react"
@@ -236,12 +235,12 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
               open={showUnpublishAppDialog}
               onOpenChange={setShowUnpublishAppDialog}
             />
-            <PublishAppsDialog
+            {/* <PublishAppsDialog
               apps={[row]}
               showTrigger={false}
               open={showPublishAppDialog}
               onOpenChange={setShowPublishAppDialog}
-            />
+            /> */}
             <DraftAppsDialog
               apps={[row]}
               showTrigger={false}
@@ -280,19 +279,6 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                     <DropdownMenuSubContent>
                       <DropdownMenuItem
                         className="active:scale-[0.98]"
-                        onSelect={() => setShowPublishAppDialog(true)}
-                        disabled={
-                          row.original.app_publish_status === "published"
-                        }
-                      >
-                        <PublishIcon
-                          className={cn("mr-2 size-4", PublishStatusColor)}
-                        />
-                        <span>Publish the app</span>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem
-                        className="active:scale-[0.98]"
                         onSelect={() => setShowDraftAppDialog(true)}
                         disabled={row.original.app_publish_status === "draft"}
                       >
@@ -313,6 +299,20 @@ export function getSubmittedAppsTableColumns(): ColumnDef<Apps>[] {
                           className={cn("mr-2 size-4", UnpublishStatusColor)}
                         />
                         <span>Unpublish the app</span>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        disabled={
+                          true
+                          // row.original.post_publish_status === "published"
+                        }
+                        className="active:scale-[0.98]"
+                        onSelect={() => setShowPublishAppDialog(true)}
+                      >
+                        <PublishIcon
+                          className={cn("mr-2 size-4", PublishStatusColor)}
+                        />
+                        <span>Publish the app in the Edit</span>
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>

@@ -213,12 +213,12 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostDetails>[] {
               open={showUnpublishStoryDialog}
               onOpenChange={setShowUnpublishStoryDialog}
             />
-            <PublishStoriesDialog
+            {/* <PublishStoriesDialog
               posts={[row]}
               showTrigger={false}
               open={showPublishStoryDialog}
               onOpenChange={setShowPublishStoryDialog}
-            />
+            /> */}
             <DraftStoriesDialog
               posts={[row]}
               showTrigger={false}
@@ -268,19 +268,6 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostDetails>[] {
 
                       <DropdownMenuItem
                         className="active:scale-[0.98]"
-                        onSelect={() => setShowPublishStoryDialog(true)}
-                        disabled={
-                          row.original.post_publish_status === "published"
-                        }
-                      >
-                        <PublishIcon
-                          className={cn("mr-2 size-4", PublishStatusColor)}
-                        />
-                        <span>Publish the story</span>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem
-                        className="active:scale-[0.98]"
                         onSelect={() => setShowUnpublishStoryDialog(true)}
                         disabled={
                           row.original.post_publish_status === "unpublished"
@@ -290,6 +277,20 @@ export function getPostedStoriesTableColumns(): ColumnDef<PostDetails>[] {
                           className={cn("mr-2 size-4", UnpublishStatusColor)}
                         />
                         <span>Unpublish the story</span>
+                      </DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        className="active:scale-[0.98]"
+                        onSelect={() => setShowPublishStoryDialog(true)}
+                        disabled={
+                          true
+                          // row.original.post_publish_status === "published"
+                        }
+                      >
+                        <PublishIcon
+                          className={cn("mr-2 size-4", PublishStatusColor)}
+                        />
+                        <span>Publish the story in the edit</span>
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>

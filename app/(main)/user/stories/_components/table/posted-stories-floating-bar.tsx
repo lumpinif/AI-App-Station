@@ -75,13 +75,13 @@ export function StoriesTableFloatingBar({
         onOpenChange={setShowUnpublishStoryDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
       />
-      <PublishStoriesDialog
+      {/* <PublishStoriesDialog
         posts={rows}
         showTrigger={false}
         open={showPublishStoryDialog}
         onOpenChange={setShowPublishStoryDialog}
         onSuccess={() => table.toggleAllRowsSelected(false)}
-      />
+      /> */}
       <DraftStoriesDialog
         posts={rows}
         showTrigger={false}
@@ -121,13 +121,16 @@ export function StoriesTableFloatingBar({
             <Separator orientation="vertical" className="hidden h-5 sm:block" />
             <div className="flex items-center gap-1.5">
               <Tooltip>
-                <TooltipTrigger asChild>
+                <TooltipTrigger className="cursor-not-allowed">
                   <Button
-                    variant="secondary"
                     size="icon"
+                    disabled={
+                      true
+                      // isPending
+                    }
+                    variant="secondary"
                     className="size-7 border"
                     onClick={() => setShowPublishStoryDialog(true)}
-                    disabled={isPending}
                   >
                     <PublishIcon
                       className={cn("size-4", PublishStatusColor)}
@@ -138,7 +141,7 @@ export function StoriesTableFloatingBar({
                 <TooltipContent className="border bg-background font-semibold text-foreground">
                   <p
                     className={PublishStatusColor}
-                  >{`Publish ${rows.length > 1 ? "Stories" : "Story"}`}</p>
+                  >{`Please publish ${rows.length > 1 ? "stories" : "story"} in the edit`}</p>
                 </TooltipContent>
               </Tooltip>
 
