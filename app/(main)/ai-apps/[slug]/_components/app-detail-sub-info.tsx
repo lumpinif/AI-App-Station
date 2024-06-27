@@ -57,8 +57,8 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
 
   return (
     <Collapsible
-      ref={refCollapsible}
       open={isOpen}
+      ref={refCollapsible}
       onOpenChange={setIsOpen}
       className="w-full space-y-2 xl:w-56"
     >
@@ -93,7 +93,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
             <UserHoverCard
               avatar_url={avatar_url}
               user_joined={user_joined}
-              user_name={submitted_by}
+              full_name={submitted_by}
             />
           </CollapsibleItem>
         )}
