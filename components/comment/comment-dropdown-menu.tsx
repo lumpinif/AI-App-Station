@@ -135,7 +135,7 @@ export const CommentDropDownMenu = <V extends (...args: any) => any>({
               lot!
             </p>
           </span>
-          <ReportForm className="my-4" comment={comment} />
+          <ReportForm reportType="comment" comment={comment} />
         </DialogContent>
       </Dialog>
     </>

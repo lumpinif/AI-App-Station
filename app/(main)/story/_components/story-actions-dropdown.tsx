@@ -78,6 +78,7 @@ export const StoryActionsDropDown: React.FC<StoryActionsDropDownProps> = ({
                     </AlertDialogTrigger>
                   </DropdownMenuItem>
                 ) : null}
+
                 {/* REPORT */}
                 <DropdownMenuItem className="text-muted-foreground hover:text-primary">
                   <DialogTrigger className="flex w-full items-center justify-between">
@@ -97,7 +98,7 @@ export const StoryActionsDropDown: React.FC<StoryActionsDropDownProps> = ({
                   lot!
                 </p>
               </span>
-              <ReportForm className="my-4" />
+              <ReportForm reportType="post" />
             </DialogContent>
 
             <StoryEditDialogContent

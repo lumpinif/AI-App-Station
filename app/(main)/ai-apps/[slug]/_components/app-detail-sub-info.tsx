@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { ChevronDown, ChevronRight } from "lucide-react"
+import { ChevronDown, ChevronRight, FlagTriangleRight } from "lucide-react"
 import moment from "moment"
 
 import { Apps, Developers, Profiles } from "@/types/db_tables"
@@ -13,6 +13,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import { ReportDialog } from "@/components/feedback-report/report-dialog"
 
 import { UserHoverCard } from "./user-hover-card"
 
@@ -156,11 +157,16 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
           <span>{moment(lastUpdated).fromNow()}</span>
         </CollapsibleItem>
 
-        <CollapsibleItem>
-          <span className="cursor-default text-muted-foreground">
-            Report this page
-          </span>
-          <span>report@aiappstation.com</span>
+        <CollapsibleItem className="group">
+          <ReportDialog reportType="app">
+            <span className="text-muted-foreground transition-all duration-200 ease-out group-hover:text-red-500">
+              Report this app
+            </span>
+            <FlagTriangleRight
+              aria-hidden="true"
+              className="size-4 text-muted-foreground opacity-0 transition-all duration-200 ease-out group-hover:text-red-500 group-hover:opacity-100"
+            />
+          </ReportDialog>
         </CollapsibleItem>
       </CollapsibleContent>
     </Collapsible>

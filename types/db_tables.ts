@@ -30,6 +30,9 @@ export type Apps_Categories = Tables<"apps_categories">
 export type App_Developers = Tables<"apps_developers">
 export type Daily_app = Tables<"daily_app">
 
+// Management related tables
+export type Reports = Tables<"reports">
+
 export type AppRefrencedTables = Extract<
   Table,
   | "profiles"
@@ -79,6 +82,7 @@ export type Publish_Status = Enums<"publish_status">
 export type Pricing = Enums<"pricing">
 export type Post_type = Enums<"post_type">
 export type User_role = Enums<"user_role_enum">
+export type Report_type = Enums<"report_type">
 
 // User related
 export type ProfileWithRole = Profiles & {

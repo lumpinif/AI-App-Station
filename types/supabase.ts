@@ -990,6 +990,7 @@ export type Database = {
           report_description: string | null
           report_id: string
           report_title: string
+          report_type: Database["public"]["Enums"]["report_type"] | null
           report_url: string
           submitted_by_user_id: string
         }
@@ -998,6 +999,7 @@ export type Database = {
           report_description?: string | null
           report_id?: string
           report_title: string
+          report_type?: Database["public"]["Enums"]["report_type"] | null
           report_url: string
           submitted_by_user_id: string
         }
@@ -1006,6 +1008,7 @@ export type Database = {
           report_description?: string | null
           report_id?: string
           report_title?: string
+          report_type?: Database["public"]["Enums"]["report_type"] | null
           report_url?: string
           submitted_by_user_id?: string
         }
@@ -1123,6 +1126,7 @@ export type Database = {
       post_type: "normal" | "daily post" | "post of the day" | "editor choice"
       pricing: "Free" | "In-app purchases" | "Free & In-app purchases" | "Paid"
       publish_status: "pending" | "published" | "draft" | "unpublished"
+      report_type: "app" | "post" | "comment"
       user_role_enum: "user" | "super_user" | "admin" | "super_admin"
     }
     CompositeTypes: {

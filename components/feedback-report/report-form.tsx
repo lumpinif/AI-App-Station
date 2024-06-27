@@ -1,12 +1,11 @@
 import { usePathname, useRouter } from "next/navigation"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { createBrowserClient } from "@supabase/ssr"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { TCommentWithProfile } from "@/types/db_tables"
+import { Report_type, Reports, TCommentWithProfile } from "@/types/db_tables"
 import { cn, getSiteUrl } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 
@@ -24,8 +23,9 @@ import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 
 type ReportFormProps = {
-  urlProp?: string
   className?: string
+  reportType: Report_type
+  urlProp?: Reports["report_url"]
   comment?: TCommentWithProfile
 }
 
@@ -53,6 +53,7 @@ export const ReportForm: React.FC<ReportFormProps> = ({
   urlProp,
   comment,
   className,
+  reportType,
 }) => {
   const { data: profile } = useUserProfile()
   const currentPath = usePathname()
@@ -93,17 +94,14 @@ export const ReportForm: React.FC<ReportFormProps> = ({
       return toast.error("You need to be logged in to submit a report")
     }
 
-    const report_title = comment?.comment_id
-      ? `(Comment) ${form_report_title}`
-      : form_report_title
-
     const supabase = createSupabaseBrowserClient()
 
     const { error } = await supabase.from("reports").insert([
       {
+        report_type: reportType,
         report_url: form_report_url,
         report_description: report_description_with_comment + form_description,
-        report_title: report_title,
+        report_title: form_report_title,
         submitted_by_user_id: profile?.user_id,
       },
     ])
@@ -125,7 +123,7 @@ export const ReportForm: React.FC<ReportFormProps> = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={cn("space-y-8", className)}
+          className={cn("my-4 space-y-8", className)}
         >
           <FormField
             control={form.control}
