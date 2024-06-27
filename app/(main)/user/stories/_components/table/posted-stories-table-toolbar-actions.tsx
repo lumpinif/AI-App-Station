@@ -73,7 +73,7 @@ export function StoriesTableToolbarActions({
         <ReloadIcon
           aria-hidden="true"
           className={cn(
-            "mr-1 size-4 text-muted-foreground transition-all duration-200 ease-out group-hover:text-primary",
+            "mr-1 size-4 text-muted-foreground group-hover:text-primary",
             isRefreshing && "animate-spin"
           )}
         />

@@ -446,6 +446,7 @@ export type Database = {
           created_at: string
           created_on: string
           dpost_id: string
+          is_archived: boolean
           posted_by: string
           updated_at: string | null
         }
@@ -453,6 +454,7 @@ export type Database = {
           created_at?: string
           created_on?: string
           dpost_id?: string
+          is_archived?: boolean
           posted_by?: string
           updated_at?: string | null
         }
@@ -460,6 +462,7 @@ export type Database = {
           created_at?: string
           created_on?: string
           dpost_id?: string
+          is_archived?: boolean
           posted_by?: string
           updated_at?: string | null
         }

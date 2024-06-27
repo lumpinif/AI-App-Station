@@ -7,7 +7,7 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
 import { PostDetails, PostRefrencedTables, Posts } from "@/types/db_tables"
-import { checkIsSuperUser } from "@/lib/utils"
+import { checkIsSuperUser, getPostAuthorSlug } from "@/lib/utils"
 import { postsSearchParamsSchema } from "@/lib/validations"
 
 type getPostedStoriesProps<T extends PostRefrencedTables> = {
@@ -229,25 +229,24 @@ export async function unpublishStory(post_id: Posts["post_id"]) {
 export async function publishStory(post_id: Posts["post_id"]) {
   try {
     const supabase = await createSupabaseServerClient()
+    const { profile } = await getUserProfile()
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-
-    if (!user?.id) {
-      throw new Error("Unauthorized!")
+    if (!profile?.user_id) {
+      throw new Error("User session not found")
     }
+    const author_slug = getPostAuthorSlug(profile)
 
     const { error } = await supabase
       .from("posts")
       .update({ post_publish_status: "published" })
       .match({
         post_id,
-        post_author_id: user.id,
+        post_author_id: profile.user_id,
       })
 
     revalidatePath(`/`)
     revalidatePath(`/user/stories/${post_id}`)
+    revalidatePath(`/story/${author_slug}/${post_id}`)
 
     return { error: error ?? null } // Return { error: null } if no error occurs
   } catch (error) {

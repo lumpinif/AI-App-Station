@@ -7,7 +7,7 @@ import { JSONContent } from "novel"
 import { toast } from "sonner"
 import { useDebouncedCallback } from "use-debounce"
 
-import { Categories, PostDetails, Posts, Topics } from "@/types/db_tables"
+import { Categories, PostDetails, Posts } from "@/types/db_tables"
 import {
   defaultEditorContent,
   defaultEditorContentWithoutHeading,
@@ -31,36 +31,20 @@ import {
 import { StoryEditorHeader } from "./story-editor-header"
 
 type StoryPostEditorProps = {
-  topics?: Topics[]
+  post: PostDetails
   post_content: JSONContent
-  post_id: Posts["post_id"]
-  postCategories?: Categories[]
-  post_slug: Posts["post_slug"]
   postImagesPublicUrls: string[]
-  post_title: Posts["post_title"]
-  profiles: PostDetails["profiles"]
   allCategories?: Categories[] | null
-  post_author_id: Posts["post_author_id"]
-  post_image_src: Posts["post_image_src"]
-  post_description: Posts["post_description"]
-  post_publish_status: Posts["post_publish_status"]
 }
 
 export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
-  topics,
-  post_id,
-  profiles,
-  post_slug,
-  post_title,
+  post,
   post_content,
   allCategories,
-  postCategories,
-  post_author_id,
-  post_image_src,
-  post_description,
-  post_publish_status,
   postImagesPublicUrls,
 }) => {
+  const { post_id, profiles, post_slug, post_title, post_author_id } = post
+
   const initialContent = useMemo(
     () => post_content || defaultEditorContent,
     [post_content]
@@ -79,7 +63,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     _.isEqual(value, defaultEditorContent) ||
     _.isEqual(value, defaultEditorContentWithoutHeading)
 
-  const { currentTitle: postTitle } = useUpdateContentHeading({
+  const { currentTitle } = useUpdateContentHeading({
     content: value,
     profiles: profiles,
     defaultTitle: post_title,
@@ -203,22 +187,16 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
     <TooltipProvider>
       <section className="relative w-full flex-col">
         <StoryEditorHeader
-          topics={topics}
+          post={post}
           isEmpty={isEmpty}
-          post_id={post_id}
-          postTitle={postTitle}
           isRetrying={isRetrying}
           saveStatus={saveStatus}
           charsCount={charsCount}
           handleRetry={handleRetry}
+          currentTitle={currentTitle}
           allCategories={allCategories}
-          post_author_id={post_author_id}
-          postCategories={postCategories}
-          post_image_src={post_image_src}
-          post_description={post_description}
-          post_publish_status={post_publish_status}
           postImagesPublicUrls={postImagesPublicUrls}
-          isEdited={isEdited && postTitle !== "Untitled"}
+          isEdited={isEdited && currentTitle !== "Untitled"}
           className="sticky top-0 z-40 w-full bg-background/60 py-2 backdrop-blur-sm"
         />
         {memoizedNovelEditor}

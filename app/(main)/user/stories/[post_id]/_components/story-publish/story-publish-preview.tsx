@@ -46,7 +46,7 @@ export const PostPublishPreview: React.FC<StoryPublishPreviewProps> = ({
         previewImageContainer
       )}
     >
-      <p>
+      <p className="text-balance text-center">
         Include high-quality images in your story to make it more inviting to
         readers.
       </p>

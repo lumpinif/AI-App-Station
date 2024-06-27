@@ -55,6 +55,7 @@ export type PostRefrencedTables = Extract<
   | "post_comments"
   | "post_bookmarks"
   | "post_of_the_day"
+  | "daily_post"
 >
 
 export type Post_Comment_likes = Tables<"post_comment_likes">
@@ -139,6 +140,8 @@ export type PostDetails = Posts &
   PostWithCategoriesAndProfiles & {
     post_likes: Post_likes[]
     post_bookmarks: Post_bookmarks[]
+    daily_post?: Daily_post
+    post_of_the_day?: Post_of_the_day
   }
 
 export type PostOfTheDay = Post_of_the_day & {
@@ -154,6 +157,7 @@ export type PostRefrencedFields = {
   post_likes: Post_likes[]
   post_bookmarks: Post_bookmarks[]
   post_of_the_day?: Post_of_the_day
+  daily_post?: Daily_post
 }
 
 export type PostDetailsWithRefrencedFields = PostDetails &

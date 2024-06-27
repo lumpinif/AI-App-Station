@@ -4,13 +4,16 @@ import {
   insertCategories,
 } from "@/server/data/supabase-actions"
 import {
+  archiveDailyPost,
   checkExistingTopics,
+  createNewDailyPost,
   getAllTopics,
   insertPostCategories,
   insertPostTopics,
   insertTopics,
   removePostCategories,
   removePostTopics,
+  unarchiveDailyPost,
   updatePostDescription,
   updatePostImageSrc,
 } from "@/server/queries/supabase/editor/publish/stories"
@@ -18,13 +21,25 @@ import { publishStory } from "@/server/queries/supabase/stories/table/post-table
 import _ from "lodash"
 import { toast } from "sonner"
 
-import { Categories, Posts, Profiles, Topics } from "@/types/db_tables"
-import { getPostAuthorSlug, nameToSlug } from "@/lib/utils"
+import {
+  Categories,
+  Daily_post,
+  Posts,
+  Profiles,
+  Topics,
+} from "@/types/db_tables"
+import {
+  checkIsSuperUser,
+  getPostAuthorSlug,
+  isPostgrestError,
+  nameToSlug,
+} from "@/lib/utils"
 import { Option } from "@/components/ui/multiple-selector"
 import { dynamicLucidIconProps } from "@/components/icons/lucide-icon"
 
 type TopicsMutiSelectorProps = {
   topics?: Topics[]
+  daily_post?: Daily_post
   postCategories?: Categories[]
   allCategories?: Categories[] | null
   defaultDescription?: Posts["post_description"]
@@ -35,6 +50,16 @@ type TopicsMutiSelectorProps = {
     React.SetStateAction<"idle" | "loading" | "success">
   >
   defaultImageSrc?: Posts["post_image_src"]
+}
+
+type PublishOrSaveValues = {
+  post_id: Posts["post_id"]
+  post_image_src: Posts["post_image_src"]
+  post_description: Posts["post_description"]
+  is_daily_post_checked?: boolean
+  topics?: Option[]
+  profile?: Profiles
+  postCategories?: Option[]
 }
 
 export const searchAllTopics = async (value: string): Promise<Option[]> => {
@@ -61,6 +86,7 @@ export const searchAllTopics = async (value: string): Promise<Option[]> => {
 
 export const useStorySaveAndPublish = ({
   topics,
+  daily_post,
   allCategories,
   postCategories,
   defaultImageSrc,
@@ -99,6 +125,9 @@ export const useStorySaveAndPublish = ({
       id: category.category_id,
       icon: category.category_icon_name as dynamicLucidIconProps,
     })) || []
+
+  const defaultIsDailyPostChecked =
+    daily_post?.dpost_id !== undefined && daily_post.is_archived === false
 
   const handleUpdateTopics = async (
     topics: Option[],
@@ -236,119 +265,40 @@ export const useStorySaveAndPublish = ({
     }
   }
 
-  const handlePublish = async (
-    post_id: Posts["post_id"],
-    post_image_src: Posts["post_image_src"],
-    post_description: Posts["post_description"],
-    topics?: Option[],
-    profile?: Profiles,
-    postCategories?: Option[]
+  const handlePublishOrSave = async (
+    saveOrPublish: "save" | "publish",
+    {
+      post_id,
+      post_image_src,
+      post_description,
+      is_daily_post_checked,
+      topics,
+      profile,
+      postCategories,
+    }: PublishOrSaveValues
   ) => {
+    const isSaving = saveOrPublish === "save"
+    const isPublishing = saveOrPublish === "publish"
+
     const author_slug = getPostAuthorSlug(profile)
+    const isSuperUser = checkIsSuperUser(profile?.profile_role?.role)
+
+    const isDailyPost = daily_post?.dpost_id !== undefined
+    const isDailyPostArchived = !!daily_post?.is_archived
 
     const promises = []
     let changesMade = false
 
-    if (setPublishButtonState) {
+    if (isPublishing && setPublishButtonState) {
       setPublishButtonState("loading")
-    }
-
-    if (post_description !== defaultDescription) {
-      changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
-      promises.push(updatePostDescription(post_id, post_description))
-    }
-
-    if (
-      topics &&
-      topics !== defaultTopics &&
-      _.isEqual(topics, defaultTopics) === false
-    ) {
-      changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
-      promises.push(handleUpdateTopics(topics, post_id))
-    }
-
-    if (
-      postCategories &&
-      postCategories !== defaultPostCategoriesWithoutIcon &&
-      _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
-    ) {
-      changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
-      promises.push(handleUpdatePostCategories(postCategories, post_id))
-    }
-
-    if (
-      post_image_src !== defaultImageSrc &&
-      _.isEqual(post_image_src, defaultImageSrc) === false
-    ) {
-      changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
-      promises.push(updatePostImageSrc(post_id, post_image_src))
-    }
-
-    if (promises.length > 0) {
-      try {
-        await Promise.all(promises)
-        const { error: publishStoryError } = await publishStory(post_id)
-        if (publishStoryError) {
-          toast.error("Failed to publish story, please try again later.")
-        }
-        if (setPublishButtonState) {
-          setPublishButtonState("success")
-        }
-      } catch (error) {
-        if (setPublishButtonState) {
-          setPublishButtonState("idle")
-        }
-      } finally {
-        if (setPublishButtonState) {
-          setTimeout(() => {
-            setPublishButtonState("idle")
-          }, 2000)
-        }
-        router.push(`/story/${author_slug}/${post_id}`)
-      }
-    }
-
-    if (!changesMade) {
-      if (setPublishButtonState) {
-        setPublishButtonState("idle")
-      }
-      router.push(`/story/${author_slug}/${post_id}`)
-    }
-  }
-
-  // TODO: CONSIDER COMBINE TWO HANDLE FUNCTIONS INTO ONE
-
-  const handleSave = async (
-    post_id: Posts["post_id"],
-    post_image_src: Posts["post_image_src"],
-    post_description: Posts["post_description"],
-    topics?: Option[],
-    profile?: Profiles,
-    postCategories?: Option[]
-  ) => {
-    const promises = []
-    let changesMade = false
-
-    if (setSaveButtonState) {
+    } else if (isSaving && setSaveButtonState) {
       setSaveButtonState("loading")
     }
 
     if (post_description !== defaultDescription) {
       changesMade = true
-      if (setSaveButtonState) {
-        setSaveButtonState("loading")
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
       }
       promises.push(updatePostDescription(post_id, post_description))
     }
@@ -359,8 +309,8 @@ export const useStorySaveAndPublish = ({
       _.isEqual(topics, defaultTopics) === false
     ) {
       changesMade = true
-      if (setSaveButtonState) {
-        setSaveButtonState("loading")
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
       }
       promises.push(handleUpdateTopics(topics, post_id))
     }
@@ -371,8 +321,8 @@ export const useStorySaveAndPublish = ({
       _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
     ) {
       changesMade = true
-      if (setSaveButtonState) {
-        setSaveButtonState("loading")
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
       }
       promises.push(handleUpdatePostCategories(postCategories, post_id))
     }
@@ -382,42 +332,129 @@ export const useStorySaveAndPublish = ({
       _.isEqual(post_image_src, defaultImageSrc) === false
     ) {
       changesMade = true
-      if (setSaveButtonState) {
-        setSaveButtonState("loading")
+      if (setPublishButtonState) {
+        setPublishButtonState("loading")
       }
       promises.push(updatePostImageSrc(post_id, post_image_src))
+    }
+
+    // handle daily post changes
+    if (isSuperUser && is_daily_post_checked !== defaultIsDailyPostChecked) {
+      // Flag indicating changes made
+      changesMade = true
+
+      // Set publish button state to loading if the function is provided
+      if (isPublishing && setPublishButtonState) {
+        setPublishButtonState("loading")
+      } else if (isSaving && setSaveButtonState) {
+        setSaveButtonState("loading")
+      }
+
+      // Check if the daily post is checked by default
+      if (defaultIsDailyPostChecked) {
+        // Archive daily post if it's a daily post and not archived
+        if (isDailyPost && !isDailyPostArchived) {
+          promises.push(archiveDailyPost(daily_post.dpost_id))
+        }
+      } else {
+        // When daily post is not checked by default, handle the unarchiving or creating new daily post
+
+        // Unarchive daily post if it is a daily post and currently archived
+        if (isDailyPost && isDailyPostArchived) {
+          promises.push(unarchiveDailyPost(daily_post.dpost_id))
+        }
+
+        // Create a new daily post if the checkbox is checked and it's not currently a daily post
+        if (is_daily_post_checked && !isDailyPost) {
+          promises.push(createNewDailyPost(post_id))
+        }
+      }
     }
 
     if (promises.length > 0) {
       try {
         await Promise.all(promises)
-        if (setSaveButtonState) {
+
+        // if publishing
+        if (isPublishing) {
+          const { error: publishStoryError } = await publishStory(post_id)
+          if (publishStoryError) {
+            let errorDescription = ""
+
+            if (typeof publishStoryError === "string") {
+              errorDescription = publishStoryError
+            } else if (isPostgrestError(publishStoryError)) {
+              errorDescription = publishStoryError.message
+            }
+
+            toast.error("Failed to publish story, please try again later.", {
+              description: errorDescription,
+            })
+          }
+          router.push(`/story/${author_slug}/${post_id}`)
+        } else if (isSaving) {
+          router.push(`/user/stories`)
+        }
+
+        if (isPublishing && setPublishButtonState) {
+          setPublishButtonState("success")
+          toast.success("Story published successfully")
+        } else if (isSaving && setSaveButtonState) {
           setSaveButtonState("success")
+          toast.success("Story saved successfully")
         }
       } catch (error) {
+        let errorMessage = ""
+
+        if (typeof error === "string") {
+          errorMessage = error
+        } else if (isPostgrestError(error)) {
+          errorMessage = error.message
+        }
+
+        toast.error(
+          `Something went wrong while ${isPublishing ? "publishing" : isSaving ? "saving" : "handling"} this story.`,
+          {
+            description: errorMessage,
+          }
+        )
+
+        if (isPublishing && setPublishButtonState) {
+          setPublishButtonState("idle")
+        } else if (isSaving && setSaveButtonState) {
+          setSaveButtonState("idle")
+        }
       } finally {
-        if (setSaveButtonState) {
+        if (isPublishing && setPublishButtonState) {
+          setTimeout(() => {
+            setPublishButtonState("idle")
+          }, 2000)
+        } else if (isSaving && setSaveButtonState) {
           setTimeout(() => {
             setSaveButtonState("idle")
           }, 2000)
         }
-        router.push(`/user/stories`)
       }
     }
 
     if (!changesMade) {
-      if (setSaveButtonState) {
+      if (isPublishing && setPublishButtonState) {
+        setPublishButtonState("idle")
+        router.push(`/story/${author_slug}/${post_id}`)
+      } else if (isSaving && setSaveButtonState) {
         setSaveButtonState("idle")
+        router.push(`/user/stories`)
       }
-      router.push(`/user/stories`)
     }
   }
 
+  // TODO: CONSIDER COMBINE TWO HANDLE FUNCTIONS INTO ONE
+
   return {
-    handleSave,
-    handlePublish,
     defaultTopics,
+    handlePublishOrSave,
     allCategoriesOptions,
     defaultPostCategories,
+    defaultIsDailyPostChecked,
   }
 }

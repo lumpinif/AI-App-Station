@@ -50,7 +50,7 @@ export async function getPostById(post_id: Posts["post_id"]) {
   let { data: post, error } = await supabase
     .from("posts")
     .select(
-      `*, categories(*), topics(*), profiles(*), post_likes(*), post_bookmarks(*)`
+      `*, categories(*), topics(*), profiles(*), post_likes(*), post_bookmarks(*),daily_post(*),post_of_the_day(*)`
     )
     .match({ post_id })
     .single<PostDetails>()

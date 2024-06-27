@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { X } from "lucide-react"
 
-import { Categories, Posts, Topics } from "@/types/db_tables"
+import { Categories, PostDetails } from "@/types/db_tables"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { ResponsiveModalClose } from "@/components/ui/responsive-modal"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
@@ -11,40 +11,30 @@ import ResponsiveContentModal from "@/components/shared/responsive-content-modal
 import { StoryPublishDetailsForm } from "./story-publish-details-form"
 
 type StoryPublishModalProps = ButtonProps & {
-  topics?: Topics[]
+  post: PostDetails
   isEmpty?: boolean
-  postTitle: string
   isEdited?: boolean
   saveStatus: string
   isRetrying: boolean
-  post_id: Posts["post_id"]
-  postCategories?: Categories[]
+  currentTitle: string
   postImagesPublicUrls: string[]
   allCategories?: Categories[] | null
-  post_image_src: Posts["post_image_src"]
-  post_author_id: Posts["post_author_id"]
-  post_description: Posts["post_description"]
-  post_publish_status: Posts["post_publish_status"]
 }
 
 export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
-  topics,
-  post_id,
+  post,
   isEmpty,
   isEdited,
-  postTitle,
   saveStatus,
   isRetrying,
+  currentTitle,
   allCategories,
-  postCategories,
-  post_author_id,
-  post_image_src,
-  post_description,
-  post_publish_status,
   postImagesPublicUrls,
   ...props
 }) => {
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
+
+  const { post_publish_status } = post
 
   const draft = post_publish_status === "draft"
   const pending = post_publish_status === "pending"
@@ -67,7 +57,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
         shouldScaleBackground={true}
         withDefaultDialogClose={false}
         onChange={setIsPublishModalOpen}
-        title={`Publish ${postTitle.toUpperCase()}`}
+        title={`Publish ${currentTitle.toUpperCase()}`}
         drawerContentClassName="outline-none rounded-t-3xl"
         dialogContentClassName="w-full max-w-full h-full border-0 outline-none"
       >
@@ -80,13 +70,9 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
           </div>
 
           <StoryPublishDetailsForm
-            topics={topics}
-            post_id={post_id}
-            postTitle={postTitle}
+            post={post}
+            currentTitle={currentTitle}
             allCategories={allCategories}
-            post_image_src={post_image_src}
-            postCategories={postCategories}
-            post_description={post_description}
             postImagesPublicUrls={postImagesPublicUrls}
           />
 

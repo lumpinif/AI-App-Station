@@ -28,7 +28,7 @@ export const DailyPostsCardsGrid: React.FC<DailyPostsCardsGridProps> = async ({
   } = await getPostedStories({
     searchParams: searchParams,
     innerTable: {
-      table: "post_of_the_day",
+      table: "daily_post",
     },
   })
 

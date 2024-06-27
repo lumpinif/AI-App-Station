@@ -1,3 +1,4 @@
+import { PostgrestError } from "@supabase/supabase-js"
 import { clsx, type ClassValue } from "clsx"
 import { format, parseISO } from "date-fns"
 import { JSONContent } from "novel"
@@ -239,4 +240,8 @@ export const getProfileRoleName = (role?: Profile_role["role"]) => {
       return "User"
     }
   }
+}
+
+export function isPostgrestError(error: any): error is PostgrestError {
+  return (error as PostgrestError).message !== undefined
 }

@@ -90,7 +90,7 @@ export function PostedStoriesTable({
       options: [
         {
           label: "show daily posts only",
-          value: "post_of_the_day",
+          value: "daily_post",
           icon: CalendarFold,
         },
       ],

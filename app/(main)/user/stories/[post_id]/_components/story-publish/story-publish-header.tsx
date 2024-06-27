@@ -6,7 +6,7 @@ export const StoryPublishHeader: React.FC<StoryPublishHeaderProps> = ({
   return (
     <div className="flex flex-col gap-y-4 sm:gap-y-6">
       <span className="page-title-font text-2xl">
-        <span className="font-normal">Publishing:</span> {postTitle}
+        <span className="text-muted-foreground">Publishing:</span> {postTitle}
       </span>
     </div>
   )

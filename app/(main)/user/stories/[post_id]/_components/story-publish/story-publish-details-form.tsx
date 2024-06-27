@@ -5,20 +5,22 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Categories, Posts, Topics } from "@/types/db_tables"
+import { Categories, PostDetails } from "@/types/db_tables"
 import { SpinnerButtonCopyType } from "@/types/shared"
-import { cn } from "@/lib/utils"
+import { checkIsSuperUser, cn } from "@/lib/utils"
 import { mutiSelectorOptionSchema } from "@/lib/validations"
 import useUserProfile from "@/hooks/react-hooks/use-user"
 import { useStorySaveAndPublish } from "@/hooks/story/use-story-publish"
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { Switch } from "@/components/ui/switch"
 
 import { StoryCategoriesMultiSelector } from "./story-categories-multi-selector"
 import { StoryDescriptionFormTextarea } from "./story-description-form-textarea"
@@ -28,14 +30,10 @@ import { PostPublishPreview } from "./story-publish-preview"
 import { StoryTopicsMultiSelector } from "./story-topics-multi-selector"
 
 type StoryPublishDetailsFormProps = {
-  topics?: Topics[]
-  postTitle: string
-  post_id: Posts["post_id"]
+  post: PostDetails
+  currentTitle: string
   postImagesPublicUrls: string[]
-  postCategories?: Categories[]
   allCategories?: Categories[] | null
-  post_image_src: Posts["post_image_src"]
-  post_description: Posts["post_description"]
 }
 
 const formSchema = z.object({
@@ -46,34 +44,38 @@ const formSchema = z.object({
   topics: z.array(mutiSelectorOptionSchema).optional(),
   postCategories: z.array(mutiSelectorOptionSchema).optional(),
   post_image_src: z.string().nullable(),
+  is_daily_post_checked: z.boolean().default(false).optional(),
 })
 
 export const StoryPublishDetailsForm: React.FC<
   StoryPublishDetailsFormProps
-> = ({
-  topics,
-  post_id,
-  postTitle,
-  allCategories,
-  post_image_src,
-  postCategories,
-  post_description,
-  postImagesPublicUrls,
-}) => {
-  const { data: profile } = useUserProfile()
+> = ({ post, currentTitle, allCategories, postImagesPublicUrls }) => {
   const [publishButtonState, setPublishButtonState] =
     useState<keyof SpinnerButtonCopyType>("idle")
   const [saveButtonState, setSaveButtonState] =
     useState<keyof SpinnerButtonCopyType>("idle")
 
   const {
-    handleSave,
-    handlePublish,
+    topics,
+    post_id,
+    categories: postCategories,
+    post_image_src,
+    post_description,
+    daily_post,
+  } = post
+
+  const { data: profile } = useUserProfile()
+  const isSuperUser = checkIsSuperUser(profile?.profile_role?.role)
+
+  const {
     defaultTopics,
+    handlePublishOrSave,
     allCategoriesOptions,
     defaultPostCategories,
+    defaultIsDailyPostChecked,
   } = useStorySaveAndPublish({
     topics,
+    daily_post,
     allCategories,
     postCategories,
     setSaveButtonState,
@@ -86,10 +88,11 @@ export const StoryPublishDetailsForm: React.FC<
     mode: "onChange",
     resolver: zodResolver(formSchema),
     defaultValues: {
-      post_description: post_description,
       topics: defaultTopics,
-      postCategories: defaultPostCategories,
       post_image_src: post_image_src,
+      post_description: post_description,
+      postCategories: defaultPostCategories,
+      is_daily_post_checked: defaultIsDailyPostChecked,
     },
   })
 
@@ -98,25 +101,19 @@ export const StoryPublishDetailsForm: React.FC<
   const { isSubmitting } = form.formState
 
   function onPublish(values: z.infer<typeof formSchema>) {
-    handlePublish(
+    handlePublishOrSave("publish", {
       post_id,
-      values.post_image_src,
-      values.post_description,
-      values.topics,
       profile,
-      values.postCategories
-    )
+      ...values,
+    })
   }
 
   function onSave(values: z.infer<typeof formSchema>) {
-    handleSave(
+    handlePublishOrSave("save", {
       post_id,
-      values.post_image_src,
-      values.post_description,
-      values.topics,
       profile,
-      values.postCategories
-    )
+      ...values,
+    })
   }
 
   return (
@@ -153,10 +150,11 @@ export const StoryPublishDetailsForm: React.FC<
           {/* RIGHT PANEL */}
           <div className="flex flex-col justify-between">
             <div className="flex h-full flex-col justify-between gap-y-4">
-              <StoryPublishHeader postTitle={postTitle} />
+              <StoryPublishHeader postTitle={currentTitle} />
               {/* RIGHT FORMS */}
               <div className="flex h-full flex-1 flex-col justify-between space-y-8 transition-all duration-150 ease-in-out">
                 <div className="flex flex-col space-y-8">
+                  {/* Description */}
                   <FormField
                     control={form.control}
                     name="post_description"
@@ -204,6 +202,7 @@ export const StoryPublishDetailsForm: React.FC<
                     )}
                   />
 
+                  {/* Topics */}
                   <FormField
                     control={form.control}
                     name="topics"
@@ -235,6 +234,7 @@ export const StoryPublishDetailsForm: React.FC<
                     )}
                   />
 
+                  {/* Categories */}
                   <FormField
                     control={form.control}
                     name="postCategories"
@@ -264,6 +264,34 @@ export const StoryPublishDetailsForm: React.FC<
                       </FormItem>
                     )}
                   />
+
+                  {/* Daily post*/}
+                  {isSuperUser && (
+                    <FormField
+                      control={form.control}
+                      name="is_daily_post_checked"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm transition-all duration-150 ease-out hover:shadow-md dark:border-0 dark:shadow-outline">
+                          <div className="space-y-0.5">
+                            <FormLabel className="page-title-font">
+                              Is it a daily Post ?
+                            </FormLabel>
+                            <FormDescription>
+                              Set this post as the daily post to show on the
+                              today page
+                            </FormDescription>
+                          </div>
+                          <FormControl>
+                            <Switch
+                              checked={field.value}
+                              className="data-[state=checked]:bg-green-600"
+                              onCheckedChange={field.onChange}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  )}
                 </div>
 
                 <StoryPublishActions

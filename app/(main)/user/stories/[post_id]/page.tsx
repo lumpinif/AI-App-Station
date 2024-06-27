@@ -68,9 +68,9 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     <StoryContentWrapper>
       <StoryPostEditor
         {...post}
+        post={post}
         allCategories={categories}
         post_content={plainPostContent}
-        postCategories={post.categories}
         postImagesPublicUrls={postImagesPublicUrls}
       />
     </StoryContentWrapper>

@@ -4,10 +4,11 @@ import { revalidatePath } from "next/cache"
 import { getUserProfile } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import { Categories, Posts, Topics } from "@/types/db_tables"
+import { Categories, Daily_post, Posts, Topics } from "@/types/db_tables"
 import { getErrorMessage } from "@/lib/handle-error"
 import {
   capitalizeFirstLetter,
+  checkIsSuperUser,
   getPostAuthorSlug,
   nameToSlug,
 } from "@/lib/utils"
@@ -451,4 +452,115 @@ export async function updatePostImageSrc(
   }
 
   return { updatedImageSrc }
+}
+
+export async function archiveDailyPost(dpost_id: Daily_post["dpost_id"]) {
+  const supabase = await createSupabaseServerClient()
+  const { profile } = await getUserProfile()
+
+  if (!profile?.user_id) {
+    throw new Error("User session not found")
+  }
+
+  const author_slug = getPostAuthorSlug(profile)
+  const isSuperUser = checkIsSuperUser(profile.profile_role?.role)
+
+  if (!isSuperUser) {
+    throw new Error(
+      "Unauthorized: User is not a verified user to perform this action"
+    )
+  }
+
+  const { data, error } = await supabase
+    .from("daily_post")
+    .update({
+      is_archived: true,
+      posted_by: profile.user_name,
+    })
+    .match({ dpost_id: dpost_id })
+    .select()
+
+  revalidatePath("/")
+  revalidatePath(`/user/stories/${dpost_id}`)
+  revalidatePath(`/story/${author_slug}/${dpost_id}`)
+
+  if (error) {
+    throw new Error(`Failed to archive the daily post, ${error.message}`)
+  }
+
+  return { data, error }
+}
+
+export async function unarchiveDailyPost(dpost_id: Daily_post["dpost_id"]) {
+  const supabase = await createSupabaseServerClient()
+  const { profile } = await getUserProfile()
+
+  if (!profile?.user_id) {
+    throw new Error("User session not found")
+  }
+
+  const author_slug = getPostAuthorSlug(profile)
+  const isSuperUser = checkIsSuperUser(profile.profile_role?.role)
+
+  if (!isSuperUser) {
+    throw new Error(
+      "Unauthorized: User is not a verified user to perform this action"
+    )
+  }
+
+  const { data, error } = await supabase
+    .from("daily_post")
+    .update({
+      is_archived: false,
+      posted_by: profile.user_name,
+    })
+    .match({ dpost_id: dpost_id })
+    .select()
+
+  revalidatePath("/")
+  revalidatePath(`/user/stories/${dpost_id}`)
+  revalidatePath(`/story/${author_slug}/${dpost_id}`)
+
+  if (error) {
+    throw new Error(`Failed to unarchive the daily post, ${error.message}`)
+  }
+
+  return { data, error }
+}
+
+export async function createNewDailyPost(post_id: Posts["post_id"]) {
+  const supabase = await createSupabaseServerClient()
+  const { profile } = await getUserProfile()
+
+  if (!profile?.user_id) {
+    throw new Error("User session not found")
+  }
+
+  const author_slug = getPostAuthorSlug(profile)
+  const isSuperUser = checkIsSuperUser(profile.profile_role?.role)
+
+  if (!isSuperUser) {
+    throw new Error(
+      "Unauthorized: User is not a verified user to perform this action"
+    )
+  }
+
+  const { data, error } = await supabase
+    .from("daily_post")
+    .insert({
+      dpost_id: post_id,
+      posted_by: profile.user_name,
+      is_archived: false,
+    })
+    .select()
+
+  revalidatePath("/")
+  revalidatePath(`/user/stories/${post_id}`)
+  revalidatePath(`/story/${author_slug}/${post_id}`)
+
+  if (error) {
+    throw new Error(`Failed to create the daily post, ${error.message}`)
+  }
+
+  return { data, error }
 }
