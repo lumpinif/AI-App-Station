@@ -64,9 +64,17 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
 }
 
 function ErrorMessage({ message }: { message: string }) {
-  return <div>Error fetching daily app, please try again. Error: {message}</div>
+  return (
+    <div className="flex h-[430px] items-center justify-center text-balance rounded-2xl border p-6 text-center text-muted-foreground dark:border-0 dark:shadow-top">
+      Error fetching daily app, please try again. Error: {message}
+    </div>
+  )
 }
 
 function NoAppMessage() {
-  return <div>No daily app found at this time. It should be fixed shortly.</div>
+  return (
+    <div className="flex h-[430px] items-center justify-center text-balance rounded-2xl border p-6 text-center text-muted-foreground dark:border-0 dark:shadow-top">
+      Sorry. No daily app found at this time. It should be fixed shortly.
+    </div>
+  )
 }

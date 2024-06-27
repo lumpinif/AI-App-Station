@@ -16,9 +16,13 @@ export async function getDailyPost(created_on?: Daily_post["created_on"]) {
   const { data: post, error } = await supabase
     .from("daily_post")
     .select(
-      "*,posts(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
+      "*,posts!inner(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
     )
-    .eq("created_on", created_on ? created_on : currentDate)
+    .match({
+      created_on: created_on ? created_on : currentDate,
+      is_archived: false,
+      "posts.post_publish_status": "published",
+    })
     .limit(1)
     .maybeSingle<DailyPost>()
 
@@ -27,11 +31,12 @@ export async function getDailyPost(created_on?: Daily_post["created_on"]) {
     const { data: post, error: getRecentPostEror } = await supabase
       .from("daily_post")
       .select(
-        "*,posts(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
+        "*,posts!inner(*,topics(*),profiles(*),categories(*),post_likes(*),post_bookmarks(*))"
       )
       .order("created_on", { ascending: false })
+      .match({ is_archived: false, "posts.post_publish_status": "published" })
       .limit(1)
-      .single<DailyPost>()
+      .maybeSingle<DailyPost>()
 
     return { post, error: getRecentPostEror }
   }

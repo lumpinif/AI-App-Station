@@ -15,7 +15,7 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
     return <ErrorMessage message={getDailyPostError.message} />
   }
 
-  if (!dailyPost) {
+  if (!dailyPost?.dpost_id) {
     return <NoPostMessage />
   }
 
@@ -41,12 +41,16 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
 
 function ErrorMessage({ message }: { message: string }) {
   return (
-    <div>Error fetching daily post, please try again. Error: {message}</div>
+    <div className="flex h-[430px] items-center justify-center text-balance rounded-2xl border p-6 text-center text-muted-foreground dark:border-0 dark:shadow-top">
+      Error fetching dailys post, please try again. Error: {message}
+    </div>
   )
 }
 
 function NoPostMessage() {
   return (
-    <div>No daily post found at this time. It should be fixed shortly.</div>
+    <div className="flex h-[430px] items-center justify-center text-balance rounded-2xl border p-6 text-center text-muted-foreground dark:border-0 dark:shadow-top">
+      Sorry. No daily posts found at this time. It should be fixed shortly.
+    </div>
   )
 }

@@ -16,9 +16,12 @@ export async function getDailyApp(created_on?: Daily_app["created_on"]) {
   const { data: app, error } = await supabase
     .from("daily_app")
     .select(
-      "*,apps(*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*))"
+      "*,apps!inner(*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*))"
     )
-    .eq("created_on", created_on ? created_on : currentDate)
+    .match({
+      created_on: created_on ? created_on : currentDate,
+      "apps.app_publish_status": "published",
+    })
     .limit(1)
     .maybeSingle<DailyApp>()
 
@@ -27,11 +30,12 @@ export async function getDailyApp(created_on?: Daily_app["created_on"]) {
     const { data: app, error: getRecentAppEror } = await supabase
       .from("daily_app")
       .select(
-        "*,apps(*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*))"
+        "*,apps!inner(*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*))"
       )
       .order("created_on", { ascending: false })
+      .eq("apps.app_publish_status", "published")
       .limit(1)
-      .single<DailyApp>()
+      .maybeSingle<DailyApp>()
 
     return { app, error: getRecentAppEror }
   }

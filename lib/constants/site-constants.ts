@@ -1,3 +1,3 @@
 export const PROTECTED_PATHS = ["/user"]
 
-export const DEFAULT_POST_IMAGE = "/images/Feature-thumbnail.png"
+export const DEFAULT_POST_IMAGE = "public/images/Feature-thumbnail.png"
