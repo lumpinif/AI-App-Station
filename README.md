@@ -1,15 +1,10 @@
-# OpenmindAI App Store
+# AI App Station
 
 ## Usage
 
 ## Features
 
-- Next.js 13 App Directory
-- Radix UI Primitives
-- Tailwind CSS
-- Icons from [Lucide](https://lucide.dev)
-- Dark mode with `next-themes`
-- Tailwind CSS class sorting, merging and linting.
+- Next.js 14 App Directory
 
 ## License
 
