@@ -18,25 +18,24 @@ import { ReportDialog } from "@/components/feedback-report/report-dialog"
 import { UserHoverCard } from "./user-hover-card"
 
 type AppDetailSubInfoProps = {
-  full_name: Profiles["full_name"]
-  created_at: Profiles["created_at"]
-  avatar_url: Profiles["avatar_url"]
-  updated_at: Apps["updated_at"]
   app_url: Apps["app_url"]
   pricing: Apps["pricing"]
-  copy_right: Apps["copy_right"]
   developers?: Developers[]
+  app_author_profile: Profiles
+  updated_at: Apps["updated_at"]
+  copy_right: Apps["copy_right"]
+  full_name: Profiles["full_name"]
+  avatar_url: Profiles["avatar_url"]
 }
 
 export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
-  full_name: submitted_by,
-  created_at: user_joined,
-  avatar_url,
-  updated_at: lastUpdated,
   app_url,
   pricing,
   copy_right,
   developers,
+  app_author_profile,
+  full_name: submitted_by,
+  updated_at: lastUpdated,
 }) => {
   const [isOpen, setIsOpen] = useState(true)
   const refCollapsible = useRef<HTMLDivElement>(null)
@@ -90,11 +89,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
             <span className="cursor-default text-muted-foreground">
               Submitted By
             </span>
-            <UserHoverCard
-              avatar_url={avatar_url}
-              user_joined={user_joined}
-              full_name={submitted_by}
-            />
+            <UserHoverCard profile={app_author_profile} />
           </CollapsibleItem>
         )}
 

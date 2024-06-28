@@ -7,7 +7,6 @@ import {
   getProfileRoleName,
   timeConverter,
 } from "@/lib/utils"
-import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   HoverCard,
@@ -23,35 +22,26 @@ import {
 import { Icons } from "@/components/icons/icons"
 
 type UserHoverCardProps = {
+  profile?: Profiles
   triggerClassName?: string
-  full_name?: Profiles["full_name"]
-  avatar_url?: Profiles["avatar_url"]
-  user_joined?: Profiles["created_at"]
 }
 
 export const UserHoverCard: React.FC<UserHoverCardProps> = ({
-  full_name: propFullName,
-  avatar_url: propAvatarUrl,
-  user_joined: propUserJoined,
+  profile,
   triggerClassName,
 }) => {
-  // TODO: BEFORE PRODUCTION REMOVE USING THE PROFILE, SHOULD GET SUBMITTER DATA FROM THE PARENT PROPS
-  const { data: profile } = useUserProfile()
-
+  // TODO: REPLACE THIS HOVER CARD WITH THE ONE FROM THE STORY
   const {
     user_bio,
     user_name,
     user_location,
-    full_name: profileFullName = "",
-    avatar_url: profileAvatarUrl = "",
-    created_at: profileUserJoined = "",
+    full_name,
+    avatar_url,
+    created_at,
     profile_role,
   } = profile || {}
 
-  const full_name = propFullName || profileFullName
-  const avatar_url = propAvatarUrl || profileAvatarUrl
-  const user_joined = propUserJoined || profileUserJoined
-
+  const user_joined = created_at
   const displayName = full_name || user_name
   const isSuperUser = checkIsSuperUser(profile_role?.role)
   const profileRoleName = getProfileRoleName(profile_role?.role)

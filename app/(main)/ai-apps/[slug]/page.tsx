@@ -259,7 +259,12 @@ export default async function AiAppsMainPage({
             </Suspense>
           </div>
           <div className="mt-6 flex flex-col space-y-6 md:space-y-12 lg:space-y-16 xl:mt-0">
-            <AppDetailSubInfo {...app} {...app.profiles} {...app.developers} />
+            <AppDetailSubInfo
+              {...app}
+              {...app.profiles}
+              {...app.developers}
+              app_author_profile={app.profiles}
+            />
             <AppDetailRelevantApps app={app} />
           </div>
         </div>

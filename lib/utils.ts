@@ -23,7 +23,11 @@ export function getCurrentDateFormatted(): string {
   return formattedDate
 }
 
-export function timeConverter(dateString: string): string {
+export function timeConverter(dateString?: string): string {
+  if (!dateString) {
+    return ""
+  }
+
   const isoString = dateString.replace(" ", "T")
   const date = parseISO(isoString)
   const formattedDate = format(date, "dd MMM yyyy")
