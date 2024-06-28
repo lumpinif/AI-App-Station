@@ -4,13 +4,15 @@ import { type VariantProps } from "class-variance-authority"
 import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
-import { gridItemVariants } from "@/lib/variants"
 
-export type GridItemProps = { children: React.ReactNode } & VariantProps<
-  typeof gridItemVariants
->
+// import { gridItemVariants } from "@/lib/variants"
 
-const GridItem = ({ size, children }: GridItemProps) => {
+export type GridItemProps = { children: React.ReactNode }
+// & VariantProps<
+//   typeof gridItemVariants
+// >
+
+const GridItem = ({ children }: GridItemProps) => {
   return (
     <motion.div
       initial={{
@@ -18,12 +20,12 @@ const GridItem = ({ size, children }: GridItemProps) => {
         y: 120,
         opacity: 0,
       }}
-      className={cn(
-        gridItemVariants({
-          size,
-          className: "transition-colors duration-75 ease-in-out",
-        })
-      )}
+      // className={cn(
+      //   gridItemVariants({
+      //     size,
+      //     className: "transition-colors duration-75 ease-in-out",
+      //   })
+      // )}
     >
       {children}
     </motion.div>

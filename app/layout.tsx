@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     "AI Navigation",
     "AI News",
     "AI Today",
+    "AI Tools",
     "Next.js",
     "Supabase",
     "App Store",

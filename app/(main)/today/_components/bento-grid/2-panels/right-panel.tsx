@@ -46,7 +46,7 @@ const RightPanel = () => {
         return (
           <GridItem
             key={item.title + item.type + index}
-            size="1" // {item.layout}
+            // size="1" // {item.layout}
             // TODO: Fix the layout issue
           >
             {item.type === "social" ? (
