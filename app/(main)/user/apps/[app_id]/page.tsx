@@ -1,13 +1,16 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { getUserData, getUserSession } from "@/server/auth"
 import {
   getAllCategories,
-  GetAppByAppIdUserId,
+  getAppByAppIdUserId,
   getAppIconFileName,
   getAppIconUrl,
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
 } from "@/server/data/supabase-actions"
+
+import { Apps } from "@/types/db_tables"
 
 import { AppEditor } from "./_components/app-editor"
 import { AppEditingPageWrapper } from "./_components/app-editor-wrapper"
@@ -16,11 +19,49 @@ type SubmittedAppIdPageProps = {
   params: { app_id: string }
 }
 
-const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
+async function fetchAppByAppIdUserId(
+  app_id: Apps["app_id"],
+  user_id: Apps["submitted_by_user_id"]
+) {
+  const { app, error } = await getAppByAppIdUserId(app_id, user_id)
+
+  return { app, error }
+}
+
+async function fetchUser() {
   const {
     data: { user },
     error: getUserDataError,
   } = await getUserData()
+
+  return { user, getUserDataError }
+}
+
+export async function generateMetadata({
+  params,
+}: SubmittedAppIdPageProps): Promise<Metadata> {
+  const { user } = await fetchUser()
+
+  if (!user) {
+    return {}
+  }
+
+  const { app } = await fetchAppByAppIdUserId(params.app_id, user.id)
+
+  if (!app) {
+    return {}
+  }
+
+  const app_title = app?.app_title
+
+  return {
+    title: `Submitting - ${app_title}`,
+    description: `In the editor mode for ${app_title}`,
+  }
+}
+
+const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
+  const { user, getUserDataError } = await fetchUser()
 
   const {
     data: { session },
@@ -36,7 +77,7 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
     return redirect("/ai-apps")
   }
 
-  const { app, error } = await GetAppByAppIdUserId(params.app_id, user.id)
+  const { app, error } = await getAppByAppIdUserId(params.app_id, user.id)
 
   if (!app) {
     return redirect("/ai-apps")

@@ -1,28 +1,19 @@
+import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 import { BoxSelect } from "lucide-react"
 
 import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
+import { siteConfig } from "@/config/site"
+import { getSiteUrl } from "@/lib/utils"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 import { AppCarouselLgCard } from "../../_components/cards/app-carousel-lg-card"
 
-// export const dynamicParams = false // Set to false to generate static params
-
-// Return a list of `params` to populate the [collection] dynamic segment
-// export function generateStaticParams() {
-//   const collectionRoutes = SIDENAVROUTES.find(
-//     (route) => route.title === "Collections"
-//   )
-//   if (collectionRoutes) {
-//     const collectionParams = collectionRoutes.items.map((item) => ({
-//       collection: item.href.split("/").pop(), // Extract the collection from the href
-//     }))
-//     return collectionParams
-//   }
-//   return []
-// }
+interface CollectionPageProps {
+  params: { collection: string }
+}
 
 async function fetchAppsByCollectionConfig(config?: AppFetchConfig) {
   if (!config) {
@@ -40,11 +31,63 @@ async function fetchAppsByCollectionConfig(config?: AppFetchConfig) {
   return { appsByCollectionConfig, getAppsError }
 }
 
-export default async function CollectionPage({
+function getCollectionItem(collection: string) {
+  const collectionRoutes = SIDENAVROUTES.find(
+    (route) => route.title === "Collections"
+  )
+
+  const collectionItems = collectionRoutes?.items
+  const collectionTitle =
+    collectionItems?.find((item) => item.href.includes(collection))?.title ??
+    collection.charAt(0).toUpperCase() + collection.slice(1)
+
+  const collectionItem = collectionItems?.find((item) =>
+    item.href.includes(collection)
+  )
+
+  return { collectionItem, collectionTitle }
+}
+
+export async function generateMetadata({
   params,
-}: {
-  params: { collection: string }
-}) {
+}: CollectionPageProps): Promise<Metadata> {
+  const { collectionItem, collectionTitle } = getCollectionItem(
+    params.collection
+  )
+
+  if (!collectionItem || !collectionTitle) {
+    return {}
+  }
+
+  const ogImage = siteConfig.ogImage
+
+  return {
+    title: `Collection - ${collectionTitle}`,
+    description: `AI Apps by collection - ${collectionTitle}`,
+    openGraph: {
+      title: `Collection - ${collectionTitle}`,
+      description: `AI Apps by collection - ${collectionTitle}`,
+      type: "article",
+      url: getSiteUrl() + `/ai-apps/collections/${params.collection}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} | Collection - ${collectionTitle}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Collection - ${collectionTitle}`,
+      description: `AI Apps by collection - ${collectionTitle}`,
+      images: [ogImage],
+    },
+  }
+}
+
+export default async function CollectionPage({ params }: CollectionPageProps) {
   // Get user
   const {
     data: { user },
@@ -52,18 +95,7 @@ export default async function CollectionPage({
 
   const { collection } = params
 
-  const collectionRoutes = SIDENAVROUTES.find(
-    (route) => route.title === "Collections"
-  )
-
-  const collectionItems = collectionRoutes?.items
-  const pathTitle =
-    collectionItems?.find((item) => item.href.includes(collection))?.title ??
-    collection.charAt(0).toUpperCase() + collection.slice(1)
-
-  const collectionItem = collectionItems?.find((item) =>
-    item.href.includes(collection)
-  )
+  const { collectionItem, collectionTitle } = getCollectionItem(collection)
 
   if (!collectionItem) {
     return <div className="text-muted-foreground">No such collection ...</div>
@@ -99,7 +131,7 @@ export default async function CollectionPage({
     <section className="flex flex-col gap-y-4">
       <AiAppsPagesTitle
         icon={icon}
-        title={pathTitle}
+        title={collectionTitle}
         href={`/ai-apps/collections/${collection}`}
       />
       {appsByCollectionConfig?.length === 0 && (

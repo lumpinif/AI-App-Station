@@ -1,8 +1,15 @@
+import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
 import { getAllPosts } from "@/server/queries/supabase/stories"
 
 import { StoryCard } from "@/components/cards/apps/stories/story-card"
 import { PageTitle } from "@/components/layout/page-title"
+
+export const metadata: Metadata = {
+  title: "All Stories about AI",
+  description:
+    "Brilliant stories about AI, written by talented authors and creators.",
+}
 
 export default async function AllStoriesPagePage() {
   // Get user

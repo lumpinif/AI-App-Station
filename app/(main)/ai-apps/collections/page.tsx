@@ -1,7 +1,15 @@
+import { Metadata } from "next"
+
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
 import { CollectionsGrid } from "../_components/collections-grid"
+
+export const metadata: Metadata = {
+  title: "All Collections",
+  description:
+    "Useful AI Apps submitted by talented authors and creators like you. Updated, prospective and active.",
+}
 
 export default function CollectionsPage() {
   const collectionRoutes = SIDENAVROUTES.find(

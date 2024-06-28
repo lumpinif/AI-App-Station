@@ -1,8 +1,15 @@
+import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
 import { getAllApps } from "@/server/data"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
 import { AppCarouselLgCard } from "../_components/cards/app-carousel-lg-card"
+
+export const metadata: Metadata = {
+  title: "Discover All AI Apps",
+  description:
+    "Useful AI Apps submitted by talented authors and creators like you. Updated, prospective and active.",
+}
 
 export default async function AllAppsPagePage() {
   // Get user

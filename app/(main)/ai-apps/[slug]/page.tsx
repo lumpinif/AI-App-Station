@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAppBySlug } from "@/server/data"
@@ -8,8 +9,9 @@ import {
 } from "@/server/data/supabase-actions"
 
 import { SearchParams } from "@/types/data-table"
-import { App_Comments } from "@/types/db_tables"
-import { cn } from "@/lib/utils"
+import { App_Comments, AppDetails } from "@/types/db_tables"
+import { siteConfig } from "@/config/site"
+import { cn, getSiteUrl } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import LoadingFallback from "@/components/shared/loading-fallback"
 
@@ -33,6 +35,94 @@ export type AppPageProps = {
   searchParams: SearchParams
 }
 
+// Get the app
+async function fetchAppBySlug(params: { slug: string }) {
+  const {
+    app,
+    ratingData,
+    error: getAppBySlugError,
+  } = await getAppBySlug(params.slug)
+
+  return { app, ratingData, getAppBySlugError }
+}
+
+// Get screenshots of the app
+async function fetchAppScreenshots(app: AppDetails) {
+  const screenshotsFileNames = await getScreenshotsFileNames(
+    app.app_id,
+    app.submitted_by_user_id
+  )
+
+  const screenshotsPublicUrls = await getScreenshotsPublicUrls(
+    app.app_id,
+    app.submitted_by_user_id,
+    screenshotsFileNames || []
+  )
+
+  return screenshotsPublicUrls
+}
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: AppPageProps): Promise<Metadata> {
+  const { app } = await fetchAppBySlug({ slug: params.slug })
+
+  if (!app) {
+    return {}
+  }
+
+  const screenshotsPublicUrls = await fetchAppScreenshots(app)
+
+  const app_title = app?.app_title
+  const app_icon_src = app?.app_icon_src
+  const app_description = app?.description
+  const app_slug = app?.app_slug
+  const submitter = app?.profiles.full_name || app?.profiles.user_name
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/apps/`
+  const appIconSrc = supabaseImageURL + app_icon_src
+
+  const site_icon_src = appIconSrc || siteConfig.siteIcon
+
+  const ogImage = screenshotsPublicUrls[0] || siteConfig.ogImage
+
+  return {
+    title: `${app_title} - ${app_description}`,
+    description: `${app_title} - ${app_description}`,
+    icons: {
+      icon: [
+        {
+          url: site_icon_src,
+          href: site_icon_src,
+        },
+      ],
+    },
+    openGraph: {
+      title: `${app_title}`,
+      description: `${app_title} - ${app_description}`,
+      type: "article",
+      url: getSiteUrl() + `/ai-apps/${app_slug}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} | ${app_title}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${app_title} - ${app_description}`,
+      description: `${app_description}`,
+      images: [ogImage],
+      creator: `Submitted by ${submitter}`,
+    },
+  }
+}
+
 export default async function AiAppsMainPage({
   params,
   searchParams,
@@ -44,30 +134,23 @@ export default async function AiAppsMainPage({
     data: { user },
   } = await getUserData()
 
-  // TODO: ERROR HANDLING
-  const { app, ratingData, error } = await getAppBySlug(params.slug)
+  const { app, ratingData, getAppBySlugError } = await fetchAppBySlug({
+    slug: params.slug,
+  })
 
-  if (error) {
-    console.error(error)
+  // TODO: REFACTOR ERROR HANDLING
+  if (getAppBySlugError) {
+    console.error(getAppBySlugError)
+    return notFound()
   }
-  //TODO: HANDLING APP NOT FOUND
+  //TODO: REFACTOR HANDLING APP NOT FOUND
   if (!app) {
     notFound()
   }
 
   // TODO: ADD HERO FEATURED LOGIC PROP AND THE IMAGE
 
-  // Get screenshots
-  const screenshotsFileNames = await getScreenshotsFileNames(
-    app.app_id,
-    app.submitted_by_user_id
-  )
-
-  const screenshotsPublicUrls = await getScreenshotsPublicUrls(
-    app.app_id,
-    app.submitted_by_user_id,
-    screenshotsFileNames || []
-  )
+  const screenshotsPublicUrls = await fetchAppScreenshots(app)
 
   return (
     <main

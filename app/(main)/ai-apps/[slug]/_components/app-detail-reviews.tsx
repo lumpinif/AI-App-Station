@@ -8,13 +8,13 @@ import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
 
 type AppDetailReviewsProps = {
-  rating_score: number
-  rating_count: number
-  rating_5_count: number
-  rating_4_count: number
-  rating_3_count: number
-  rating_2_count: number
-  rating_1_count: number
+  rating_score?: number
+  rating_count?: number
+  rating_5_count?: number
+  rating_4_count?: number
+  rating_3_count?: number
+  rating_2_count?: number
+  rating_1_count?: number
 }
 
 export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
@@ -26,6 +26,18 @@ export const AppDetailReviews: React.FC<AppDetailReviewsProps> = ({
   rating_2_count,
   rating_1_count,
 }) => {
+  if (
+    !rating_score ||
+    !rating_count ||
+    !rating_5_count ||
+    !rating_4_count ||
+    !rating_3_count ||
+    !rating_2_count ||
+    !rating_1_count
+  ) {
+    return null
+  }
+
   const formattedRatingCount = numeral(rating_count).format("0.[0]a")
 
   const rating_5_percentage = (rating_5_count / rating_count) * 100

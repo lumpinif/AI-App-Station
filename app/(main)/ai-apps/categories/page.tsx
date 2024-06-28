@@ -1,7 +1,14 @@
+import { Metadata } from "next"
 import { getAllCategories } from "@/server/data/supabase-actions"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
 import { CategoriesGrid } from "../_components/categories-grid"
+
+export const metadata: Metadata = {
+  title: "All Categories",
+  description:
+    "Useful AI Apps submitted by talented authors and creators like you. Updated, prospective and active.",
+}
 
 export default async function CategoriesPage() {
   const { categories: allCategories, error: getAllCategoiresError } =

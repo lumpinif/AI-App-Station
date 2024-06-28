@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
@@ -34,6 +35,12 @@ const fetchPosts = async ({
   }
 
   return { posts }
+}
+
+export const metadata: Metadata = {
+  title: "Discover AI Apps",
+  description:
+    "Useful AI Apps submitted by talented authors and creators like you. Updated, prospective and active.",
 }
 
 const AIAppsMainPage = async () => {
@@ -80,15 +87,15 @@ const AIAppsMainPage = async () => {
         <MainPageCategoriesNav />
       </Suspense>
 
+      {/* All Posts Carousel */}
       {/* TODO: UPDATE THE LOADING SKELETON */}
       <Suspense fallback={<LoadingFallback />}>
         <AppCardsCarouselLayout user={user} indexToInsert={2}>
-          {/* All Posts Carousel */}
-          <PostsCarousel
+          {/* <PostsCarousel
             posts={allPosts}
             postCardVariant="md:basis-1/2"
             className="md:basis-1/2"
-          />
+          /> */}
         </AppCardsCarouselLayout>
       </Suspense>
 

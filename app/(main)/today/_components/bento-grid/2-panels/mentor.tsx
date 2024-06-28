@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { GridItemInterface } from "@/config/dummy-config"
+import { GridItemInterface } from "@/config/_dummy-config"
 
 const Mentor = ({ item }: { item: GridItemInterface }) => {
   return (

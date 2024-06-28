@@ -35,6 +35,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
   user_joined: propUserJoined,
   triggerClassName,
 }) => {
+  // TODO: BEFORE PRODUCTION REMOVE USING THE PROFILE, SHOULD GET SUBMITTER DATA FROM THE PARENT PROPS
   const { data: profile } = useUserProfile()
 
   const {

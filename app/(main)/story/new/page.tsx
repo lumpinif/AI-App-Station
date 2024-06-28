@@ -1,5 +1,13 @@
+import { Metadata } from "next"
+
 import StoryContentWrapper from "../_components/story-content/story-content-wrapper"
 import { WriteNewStoryButton } from "../_components/write-new-story-button"
+
+export const metadata: Metadata = {
+  title: "Write a new story",
+  description:
+    "Write a new story for AI News and Apps. Share your brilliant mind and knowledge with the world.",
+}
 
 export default function StoryPage() {
   return (

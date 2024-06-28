@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { stagger, useAnimate } from "framer-motion"
 
-import { siteConfig } from "@/config/dummy-config"
+import { siteConfig } from "@/config/_dummy-config"
 
 import Equipments from "./equipments"
 import GridItem from "./grid-item"

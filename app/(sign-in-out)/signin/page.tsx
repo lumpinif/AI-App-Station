@@ -1,10 +1,17 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { SearchParams } from "@/types/data-table"
+import { siteConfig } from "@/config/site"
 import { PROTECTED_PATHS } from "@/lib/constants/site-constants"
 import LoginCard from "@/components/auth/signin/login-card"
 import BackButton from "@/components/shared/back-button"
+
+export const metadata: Metadata = {
+  title: `Sign in to ${siteConfig.name}`,
+  description: "Sign in page of the app ${siteConfig.name}",
+}
 
 // Check if the URL includes any of the protected paths
 const isProtectedPath = (searchParams: SearchParams) => {

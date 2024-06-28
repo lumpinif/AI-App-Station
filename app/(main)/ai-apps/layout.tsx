@@ -1,11 +1,20 @@
+import { Metadata } from "next"
+
 import AiAppsPageWrapper from "@/components/layout/side-menu/ai-apps-page-wrapper"
 
 import FloatingSideNav from "../../../components/layout/side-menu/floating-side-nav"
 import { MobileCategoryNav } from "./_components/mobile-category-nav"
 
+export const metadata: Metadata = {
+  title: "Discover AI Apps",
+  description:
+    "Useful AI Apps submitted by talented authors and creators like you. Updated, prospective and active.",
+}
+
 interface AiAppsLayoutProps {
   children: React.ReactNode
 }
+
 export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
   return (
     <>

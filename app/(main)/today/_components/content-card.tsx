@@ -1,12 +1,12 @@
 import Image from "next/image"
 
-import { Photo } from "@/config/dummy-photos"
+import { Photo } from "@/config/_dummy-photos"
 
 export default function ContentCard({ photo }: { photo: Photo }) {
   return (
     <>
       <section className="flex w-full flex-col p-2 sm:p-4">
-        <div className="grid w-full gap-4 lg:grid-cols-2 ">
+        <div className="grid w-full gap-4 lg:grid-cols-2">
           {/* Left Image Area */}
           <div className="relative hidden w-full border lg:col-span-1 lg:flex lg:items-center lg:justify-center">
             <div className="top-1/2 w-1/5 -translate-y-1/2 lg:fixed">
@@ -21,7 +21,7 @@ export default function ContentCard({ photo }: { photo: Photo }) {
           </div>
 
           {/* Content Area */}
-          <div className="h-[2000px] w-full  p-2 px-4 lg:col-span-1">
+          <div className="h-[2000px] w-full p-2 px-4 lg:col-span-1">
             <Image
               alt=""
               src={photo.imageSrc}

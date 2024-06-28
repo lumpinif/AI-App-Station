@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -9,6 +10,10 @@ import { AppCardsGrid } from "../_components/bookmark-favorites/_components/apps
 import { StoryCardsGrid } from "../_components/bookmark-favorites/_components/stories/story-cards-grid"
 
 export const dynamic = "force-dynamic"
+
+export const metadata: Metadata = {
+  title: "Your Bookmarks | AI Stories and AI Apps",
+}
 
 export default async function BookmarksPage() {
   const {

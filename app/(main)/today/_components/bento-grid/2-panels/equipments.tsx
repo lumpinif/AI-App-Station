@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { GridItemInterface } from "@/config/dummy-config"
+import { GridItemInterface } from "@/config/_dummy-config"
 
 import styles from "./styles.module.css"
 

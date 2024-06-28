@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { getUserProfile } from "@/server/auth"
 
 import { SearchParams } from "@/types/data-table"
@@ -10,6 +11,11 @@ import { DailyPostsCardsGrid } from "./_components/daily-posts-cards-grid"
 type UserPageProps = {
   searchParams: SearchParams
 }
+
+export const metadata: Metadata = {
+  title: "Your daily stories | AI Stories and AI Apps",
+}
+
 export default async function DailyPostsPage({ searchParams }: UserPageProps) {
   const search = postsSearchParamsSchema.parse(searchParams)
 

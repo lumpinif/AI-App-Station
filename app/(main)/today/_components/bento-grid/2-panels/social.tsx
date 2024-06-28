@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { GridItemInterface } from "@/config/dummy-config"
+import { GridItemInterface } from "@/config/_dummy-config"
 
 import Button from "./button"
 

@@ -30,7 +30,7 @@ const getErrorMessage = (error: unknown) => {
 
 // TODO: CHECK ALL THE ERROR HANDLING
 
-export async function GetAppByAppIdUserId(
+export async function getAppByAppIdUserId(
   app_id: Apps["app_id"],
   user_id: Apps["submitted_by_user_id"]
 ) {
@@ -404,6 +404,7 @@ export async function getCategoryBySlug(
     .from("categories")
     .select("*")
     .eq("category_slug", category_slug)
+    .maybeSingle()
 
   // error handling
   if (error) return { error: getErrorMessage(error) }

@@ -1,8 +1,15 @@
+import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
+import { siteConfig } from "@/config/site"
 import SignOutButton from "@/components/auth/signout/sign-out-button"
 import BackButton from "@/components/shared/back-button"
+
+export const metadata: Metadata = {
+  title: `Sign out to ${siteConfig.name}`,
+  description: "Sign out page of the app ${siteConfig.name}",
+}
 
 const SignOutPage = async () => {
   const supabase = await createSupabaseServerClient()

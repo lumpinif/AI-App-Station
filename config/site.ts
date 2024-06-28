@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig
 export const siteConfig = {
   name: "AI App Station",
   creator: "Felix Lu",
-  authors: [{ name: "Felix Lu", url: "" }],
+  authors: [{ name: "Felix Lu", url: "", twitter: "@felixlyu_1018" }],
   url: "https://aiappstation.com",
   ogImage: "https://aiappstation.com/og.jpg",
   description:
@@ -12,4 +12,5 @@ export const siteConfig = {
     twitter: "https://twitter.com/felixlyu_1018",
     github: "https://github.com/AI-App-Station",
   },
+  siteIcon: "https://aiappstation.com/favicon.ico",
 }

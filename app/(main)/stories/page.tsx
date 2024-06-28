@@ -1,12 +1,17 @@
-import { Suspense } from "react"
+import { Metadata } from "next"
 
 import { PageTitle } from "@/components/layout/page-title"
-import LoadingFallback from "@/components/shared/loading-fallback"
 
 import { SeeAllButton } from "../ai-apps/_components/see-all-button"
 import { FeaturedStoriesCarousel } from "./_components/post-carousel/featured-stories-carousel"
 import { StoriesCarouselLayout } from "./_components/post-carousel/stories-carousel-layout"
 import { StoriesPageTopicNav } from "./_components/topics/stories-page-topic-nav"
+
+export const metadata: Metadata = {
+  title: "Discover Stories about AI",
+  description:
+    "Brilliant stories about AI, written by talented authors and creators.",
+}
 
 export default function StoriesPage() {
   return (

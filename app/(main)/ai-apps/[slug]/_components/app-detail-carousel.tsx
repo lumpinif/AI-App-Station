@@ -16,8 +16,8 @@ import LucideIcon, {
 type AppDetailCarouselProps = {
   data: AppDetails
   className?: string
-  rating_score: number
-  rating_count: number
+  rating_score?: number
+  rating_count?: number
 }
 
 export const AppDetailCarousel: React.FC<AppDetailCarouselProps> = ({
@@ -199,7 +199,7 @@ const RatingsAndReviews = ({
   rating_score,
   className,
 }: {
-  rating_score: number
+  rating_score?: number
   className?: string
 }) => {
   return (

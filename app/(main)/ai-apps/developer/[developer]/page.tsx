@@ -1,11 +1,18 @@
+import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 import { getDeveloper } from "@/server/queries/supabase/developer"
 
 import { Developers } from "@/types/db_tables"
+import { siteConfig } from "@/config/site"
+import { getSiteUrl } from "@/lib/utils"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 import { AppCarouselLgCard } from "../../_components/cards/app-carousel-lg-card"
+
+interface DeveloperPageProps {
+  params: { developer: string }
+}
 
 async function fetchAppsByDeveloper(
   developer_slug?: Developers["developer_slug"]
@@ -44,11 +51,52 @@ async function fetchAppsByDeveloper(
   return { appsByDeveloper, getAppsByConfigError }
 }
 
-export default async function DeveloperPage({
+async function fetchDeveloper(developer_slug: Developers["developer_slug"]) {
+  const { developer, getDeveloperError } = await getDeveloper(developer_slug)
+
+  return { developer, getDeveloperError }
+}
+
+export async function generateMetadata({
   params,
-}: {
-  params: { developer: string }
-}) {
+}: DeveloperPageProps): Promise<Metadata> {
+  const { developer } = await fetchDeveloper(params.developer)
+
+  if (!developer) {
+    return {}
+  }
+
+  const developer_name = developer.developer_name
+
+  const ogImage = siteConfig.ogImage
+
+  return {
+    title: `Developer - ${developer_name}`,
+    description: `AI Apps by - ${developer_name}`,
+    openGraph: {
+      title: `Developer - ${developer_name}`,
+      description: `AI Apps by - ${developer_name}`,
+      type: "article",
+      url: getSiteUrl() + `/ai-apps/developer/${params.developer}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} | Developer - ${developer_name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Developer - ${developer_name}`,
+      description: `AI Apps by - ${developer_name}`,
+      images: [ogImage],
+    },
+  }
+}
+
+export default async function DeveloperPage({ params }: DeveloperPageProps) {
   const { developer: developer_slug } = params
 
   // Get user
@@ -56,7 +104,7 @@ export default async function DeveloperPage({
     data: { user },
   } = await getUserData()
 
-  const { developer, getDeveloperError } = await getDeveloper(developer_slug)
+  const { developer, getDeveloperError } = await fetchDeveloper(developer_slug)
 
   if (getDeveloperError) {
     console.error("Failed to fetch developer:", getDeveloperError)

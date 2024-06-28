@@ -15,7 +15,7 @@ export async function getDeveloper(
     .from("developers")
     .select("*")
     .eq("developer_slug", developer_slug)
-    .single()
+    .maybeSingle()
 
   if (getDeveloperError) {
     console.error("Error fetching developer", getDeveloperError)

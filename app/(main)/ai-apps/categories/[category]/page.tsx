@@ -1,37 +1,64 @@
+import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
 import { getCategoryBySlug } from "@/server/data/supabase-actions"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 
 import { Categories } from "@/types/db_tables"
+import { siteConfig } from "@/config/site"
+import { getSiteUrl } from "@/lib/utils"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 import { AppCarouselLgCard } from "../../_components/cards/app-carousel-lg-card"
 
-// export const dynamicParams = false
+interface CategoryPageProps {
+  params: { category: string }
+}
 
-// Return a list of `params` to populate the [category] dynamic segment
-// export async function generateStaticParams() {
-//   let { data: allCategories, error } = await supabase
-//     .from("categories")
-//     .select("*")
-//     .returns<Categories[]>()
+export async function generateMetadata({
+  params,
+}: CategoryPageProps): Promise<Metadata> {
+  const { categoryBySlug } = await fetchAllCategories(params.category)
 
-//   if (error) {
-//     throw new Error(error.message)
-//   }
+  if (!categoryBySlug) {
+    return {}
+  }
 
-//   if (!allCategories) {
-//     return []
-//   }
+  const category_name = categoryBySlug?.category_name
 
-//   if (allCategories) {
-//     const categoryParams = allCategories.map((cat) => ({
-//       category: cat.category_slug,
-//     }))
-//     return categoryParams
-//   }
-//   return []
-// }
+  const ogImage = siteConfig.ogImage
+
+  return {
+    title: `Category - ${category_name}`,
+    description: `AI Apps by category - ${category_name}`,
+    openGraph: {
+      title: `Category - ${category_name}`,
+      description: `AI Apps by category - ${category_name}`,
+      type: "article",
+      url: getSiteUrl() + `/ai-apps/categories/${params.category}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${siteConfig.name} | Category - ${category_name}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Category - ${category_name}`,
+      description: `AI Apps by category - ${category_name}`,
+      images: [ogImage],
+    },
+  }
+}
+
+async function fetchAllCategories(category: string) {
+  const { category: categoryBySlug, error: getCategoryBySlugError } =
+    await getCategoryBySlug(category)
+
+  return { categoryBySlug, getCategoryBySlugError }
+}
 
 async function fetchAppsByCategory(
   category_slug?: Categories["category_slug"]
@@ -69,11 +96,7 @@ async function fetchAppsByCategory(
   return { appsByCategory, getAppsByCategoryError }
 }
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: { category: string }
-}) {
+export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category: category_slug } = params
 
   // Get user
@@ -81,8 +104,8 @@ export default async function CategoryPage({
     data: { user },
   } = await getUserData()
 
-  const { category: categoryBySlug, error: getCategoryBySlugError } =
-    await getCategoryBySlug(category_slug)
+  const { categoryBySlug, getCategoryBySlugError } =
+    await fetchAllCategories(category_slug)
 
   if (getCategoryBySlugError) {
     console.error("Failed to fetch category by slug:", getCategoryBySlugError)
@@ -106,7 +129,7 @@ export default async function CategoryPage({
   }
 
   const pageTitle =
-    (categoryBySlug && categoryBySlug[0]?.category_name) || "Category"
+    (categoryBySlug && categoryBySlug?.category_name) || "Category"
 
   return (
     <section className="flex flex-col gap-y-4">

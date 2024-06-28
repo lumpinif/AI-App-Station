@@ -1,3 +1,4 @@
+import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
 import { getAllCategories } from "@/server/data/supabase-actions"
@@ -28,6 +29,29 @@ async function fetchPostImages(
   }
 }
 
+async function fetchPostById(post_id: Posts["post_id"]) {
+  const { post, error: getPostError } = await getPostById(post_id)
+
+  return { post, getPostError }
+}
+
+export async function generateMetadata({
+  params,
+}: PostEditPageProps): Promise<Metadata> {
+  const { post } = await fetchPostById(params.post_id)
+
+  if (!post) {
+    return {}
+  }
+
+  const post_title = post?.post_title
+
+  return {
+    title: `Editing - ${post_title}`,
+    description: `In the editor mode for ${post_title}`,
+  }
+}
+
 export default async function PostEditPage({ params }: PostEditPageProps) {
   const {
     data: { user },
@@ -43,7 +67,7 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
     return redirect("/signin")
   }
 
-  const { post, error: getPostError } = await getPostById(params.post_id)
+  const { post, getPostError } = await fetchPostById(params.post_id)
 
   if (getPostError) {
     console.error(getPostError)

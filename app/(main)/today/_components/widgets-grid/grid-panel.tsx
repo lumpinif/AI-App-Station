@@ -3,7 +3,7 @@
 import { Suspense, useEffect } from "react"
 import { stagger, useAnimate } from "framer-motion"
 
-import { siteConfig } from "@/config/dummy-config"
+import { siteConfig } from "@/config/_dummy-config"
 import { cn } from "@/lib/utils"
 import { cardVariants } from "@/lib/variants"
 import LoadingFallback from "@/components/shared/loading-fallback"
