@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 
+import { siteConfig } from "@/config/site"
 import BackButton from "@/components/shared/back-button"
 import PageTransition from "@/components/shared/page-transition"
 
@@ -8,7 +9,7 @@ interface SubmitPageLayoutProps {
 }
 
 export const metadata: Metadata = {
-  title: "Submit the AI App",
+  title: { default: "Submit the AI App", template: `%s | ${siteConfig.name}` },
   description: "Help us to expand our knowledge for the whole world.",
 }
 

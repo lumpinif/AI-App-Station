@@ -1,8 +1,10 @@
 import { Metadata } from "next"
 import { ViewTransitions } from "next-view-transitions"
 
+import { siteConfig } from "@/config/site"
+
 export const metadata: Metadata = {
-  title: "Stories about AI",
+  title: { default: "Stories about AI", template: `%s | ${siteConfig.name}` },
   description:
     "Brilliant stories about AI, written by talented authors and creators.",
 }

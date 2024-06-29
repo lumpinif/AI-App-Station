@@ -7,7 +7,7 @@ import SignOutButton from "@/components/auth/signout/sign-out-button"
 import BackButton from "@/components/shared/back-button"
 
 export const metadata: Metadata = {
-  title: `Sign out to ${siteConfig.name}`,
+  title: `Sign out from ${siteConfig.name}`,
   description: "Sign out page of the app ${siteConfig.name}",
 }
 
