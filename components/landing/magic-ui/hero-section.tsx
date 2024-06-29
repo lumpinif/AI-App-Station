@@ -1,7 +1,10 @@
 /* eslint-disable tailwindcss/classnames-order */
 "use client"
 
+import { User } from "@supabase/supabase-js"
+
 import { cn } from "@/lib/utils"
+import SignOutButton from "@/components/auth/signout/sign-out-button"
 
 import { FlipWordsTitle } from "../aceternity-ui/flip-words-title"
 import GetStartButton from "../hero/get-start-button"
@@ -9,7 +12,13 @@ import HeroDescription from "../hero/hero-description"
 import IntroducingBadge from "../hero/introducing-badge"
 import LogInButtons from "../hero/signin-button"
 
-export default function HeroSection({ className }: { className?: string }) {
+export default function HeroSection({
+  user,
+  className,
+}: {
+  user: User | null
+  className?: string
+}) {
   return (
     <section
       id="hero"
@@ -29,7 +38,7 @@ export default function HeroSection({ className }: { className?: string }) {
           Like App Store but with more AIs.
         </p>
         <span className="mt-10 flex items-center justify-center gap-x-4">
-          <LogInButtons />
+          {user?.id ? null : <LogInButtons />}
         </span>
       </span>
     </section>
