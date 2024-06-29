@@ -1,13 +1,18 @@
 import { Metadata } from "next"
 import { ViewTransitions } from "next-view-transitions"
 
+import { siteConfig } from "@/config/site"
+
 interface TodayPageLayoutProps {
   children: React.ReactNode
   // modal: React.ReactNode
 }
 
 export const metadata: Metadata = {
-  title: "Today's AI News and Apps for you",
+  title: {
+    default: "Today's AI News and Apps for you",
+    template: `%s | ${siteConfig.name}`,
+  },
   description:
     "AI News of the Day, and AI App of the Day. Carefully curated by talented authors and creators. Daily updated.",
 }

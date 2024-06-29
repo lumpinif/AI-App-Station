@@ -38,8 +38,8 @@ export async function generateMetadata({
       images: [
         {
           url: ogImage,
-          width: 1200,
-          height: 630,
+          width: 1400,
+          height: 800,
           alt: `${siteConfig.name} | Category - ${category_name}`,
         },
       ],

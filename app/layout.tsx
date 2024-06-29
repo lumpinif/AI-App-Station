@@ -19,7 +19,7 @@ import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
+    template: `%s | ${siteConfig.name}`,
   },
   metadataBase: new URL(siteConfig.url), // Set the base URL here
   description: siteConfig.description,
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
+        width: 1400,
+        height: 800,
         alt: siteConfig.name,
       },
     ],

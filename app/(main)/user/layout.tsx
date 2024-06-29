@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { getUserProfile } from "@/server/auth"
 
+import { siteConfig } from "@/config/site"
 import { getProfileRoleName } from "@/lib/utils"
 
 import { UserPagesWrapper } from "./_components/layout/user-pages-wrapper"
@@ -25,7 +26,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const profileRoleName = getProfileRoleName(profile.profile_role?.role)
 
   return {
-    title: `${profileRoleName} - ${profile_display_name}`,
+    title: {
+      default: `${profileRoleName} - ${profile_display_name}`,
+      template: `%s | ${siteConfig.name}`,
+    },
     description: `${profileRoleName} User dashboard for ${profile_display_name}`,
   }
 }
