@@ -91,20 +91,20 @@ const appFetchConfig: AppFetchConfig[] = [
     ],
     innerJoinTables: [],
   },
-  {
-    title: "Top Paid",
-    order: [
-      {
-        column: "likes_count",
-        options: { ascending: false },
-      },
-    ],
-    limit: {
-      limit: 15,
-    },
-    filters: [{ operator: "eq", column: "pricing", value: "Paid" }],
-    innerJoinTables: [],
-  },
+  // {
+  //   title: "Top Paid",
+  //   order: [
+  //     {
+  //       column: "likes_count",
+  //       options: { ascending: false },
+  //     },
+  //   ],
+  //   limit: {
+  //     limit: 15,
+  //   },
+  //   filters: [{ operator: "eq", column: "pricing", value: "Paid" }],
+  //   innerJoinTables: [],
+  // },
   {
     title: "Top Free & In-App Purchases",
     order: [
