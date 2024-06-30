@@ -95,25 +95,27 @@ export const AppIntroductionEditor: React.FC<AppIntroductionEditorProps> = ({
   const memoizedNovelEditor = useMemo(
     () => (
       <NovelEditor
-        uploadTo="introduction"
         bucketName={"apps"}
         content_id={app_id}
-        user_id={submitted_by_user_id}
         initialValue={value}
-        onChange={handleEditorDebouncedSave}
+        content_slug={app_slug}
+        uploadTo="introduction"
+        saveStatus={saveStatus}
         setSaveStatus={setSaveStatus}
         setCharsCount={setCharsCount}
-        saveStatus={saveStatus}
+        user_id={submitted_by_user_id}
+        onChange={handleEditorDebouncedSave}
         className="border border-dashed border-muted-foreground dark:border-border md:p-8 md:py-4 lg:p-12 lg:py-6"
       />
     ),
     [
+      value,
       app_id,
-      handleEditorDebouncedSave,
+      app_slug,
       saveStatus,
       setSaveStatus,
       submitted_by_user_id,
-      value,
+      handleEditorDebouncedSave,
     ]
   )
 

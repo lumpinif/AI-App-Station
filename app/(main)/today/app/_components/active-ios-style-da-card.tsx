@@ -19,9 +19,9 @@ import { DACommentPreview } from "./da-comment-preview"
 
 type ActiveIosStyleDACardProps = {
   color: AverageColor
-  appIconSrc?: string
   activeCard: DailyApp
   app_card_title: string
+  appIconSrc?: string | null
   screenshotsPublicUrls?: string[]
   setActiveCard: (dailyApp: DailyApp | null) => void
 }

@@ -50,11 +50,13 @@ async function fetchAppBySlug(params: { slug: string }) {
 async function fetchAppScreenshots(app: AppDetails) {
   const screenshotsFileNames = await getScreenshotsFileNames(
     app.app_id,
+    app.app_slug,
     app.submitted_by_user_id
   )
 
   const screenshotsPublicUrls = await getScreenshotsPublicUrls(
     app.app_id,
+    app.app_slug,
     app.submitted_by_user_id,
     screenshotsFileNames || []
   )
@@ -80,11 +82,7 @@ export async function generateMetadata({
   const app_slug = app?.app_slug
   const submitter = app?.profiles.full_name || app?.profiles.user_name
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/apps/`
-  const appIconSrc = supabaseImageURL + app_icon_src
-
-  const site_icon_src = appIconSrc || siteConfig.siteIcon
+  const site_icon_src = app_icon_src || siteConfig.siteIcon
 
   const ogImage = screenshotsPublicUrls[0] || siteConfig.ogImage
 

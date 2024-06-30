@@ -23,13 +23,9 @@ export const AppIcon: React.FC<AppIconProps> = ({
   isLink = true,
   externalLink,
 }) => {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/apps/`
-  const appIconSrc = supabaseImageURL + app_icon_src
-
   const ImageElement = (
     <Image
-      src={app_icon_src ? appIconSrc : "/images/app-icon-grid-32.png"}
+      src={app_icon_src ? app_icon_src : "/images/app-icon-grid-32.png"}
       width={200}
       height={200}
       alt={app_title || "App Logo"}

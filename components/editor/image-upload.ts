@@ -4,14 +4,24 @@ import { toast } from "sonner"
 
 import { Apps, Posts } from "@/types/db_tables"
 
-const onUpload = async (
-  file: File,
-  bucketName: string,
-  uploadTo: string,
-  content_id?: Apps["app_id"] | Posts["post_id"],
+type OnUploadProps = {
+  file: File
+  uploadTo: string
+  bucketName: string
+  content_id?: Apps["app_id"] | Posts["post_id"]
+  content_slug: Apps["app_slug"] | Posts["post_slug"]
   user_id?: Apps["submitted_by_user_id"] | Posts["post_author_id"]
-) => {
-  const uploadPath = `${content_id}/${user_id}/${uploadTo}/${file.name}`
+}
+
+const onUpload = async ({
+  file,
+  user_id,
+  uploadTo,
+  bucketName,
+  content_id,
+  content_slug,
+}: OnUploadProps) => {
+  const uploadPath = `${content_slug}/${content_id}/${user_id}/${uploadTo}/${file.name}`
 
   return new Promise<string>((resolve, reject) => {
     const supabase = createSupabaseBrowserClient()
@@ -47,21 +57,31 @@ const onUpload = async (
   })
 }
 
-export const createUploadFn = (
-  bucketName: string,
-  uploadTo: string,
-  content_id: Apps["app_id"] | Posts["post_id"],
-  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
-) => {
+type CreateUploadFnProps = Omit<OnUploadProps, "file">
+
+export const createUploadFn = ({
+  user_id,
+  uploadTo,
+  bucketName,
+  content_id,
+  content_slug,
+}: CreateUploadFnProps) => {
   return createImageUpload({
     onUpload: (file) =>
-      onUpload(file, bucketName, uploadTo, content_id, user_id),
+      onUpload({
+        file,
+        user_id,
+        uploadTo,
+        bucketName,
+        content_id,
+        content_slug,
+      }),
     validateFn: (file) => {
       if (!file.type.includes("image/")) {
         toast.error("File type not supported.")
         return false
-      } else if (file.size / 1024 / 1024 > 20) {
-        toast.error("File size too big (max 20MB).")
+      } else if (file.size / 1024 / 1024 > 10) {
+        toast.error("File size too big (max 10MB).")
         return false
       }
       return true

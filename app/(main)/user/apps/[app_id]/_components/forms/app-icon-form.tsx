@@ -40,19 +40,21 @@ import {
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 type AppIconFormProps = {
-  app_id: Apps["app_id"]
-  app_submitted_by_user_id: Apps["submitted_by_user_id"]
   access_token: string
+  app_id: Apps["app_id"]
   appIconFileName: string
   appIconPublicUrl: string
+  app_slug: Apps["app_slug"]
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
 }
 
 export const AppIconForm: React.FC<AppIconFormProps> = ({
   app_id,
-  app_submitted_by_user_id,
+  app_slug,
   access_token,
   appIconFileName,
   appIconPublicUrl,
+  app_submitted_by_user_id,
 }) => {
   const { data: profile } = useUserProfile()
   const router = useRouter()
@@ -63,7 +65,8 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   const hasAppIconFileName = appIconFileName !== "" && appIconFileName !== null
   const hasAppIconUrl = appIconPublicUrl !== "" && appIconPublicUrl !== null
   const supabase = createSupabaseBrowserClient()
-  const bucketNameApp = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP
+  const bucketNameApp =
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP || "apps"
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseUploadURL = `${supabaseUrl}/storage/v1/upload/resumable`
 
@@ -93,9 +96,12 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   uppy.on("file-added", async (file) => {
     setUploadButton(true)
 
+    // TODO: ADD user name after user_id
     const supabaseMetadata = {
       bucketName: bucketNameApp,
       objectName:
+        app_slug +
+        "/" +
         app_id +
         "/" +
         app_submitted_by_user_id +
@@ -139,7 +145,12 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
 
   const handleUpload = () => {
     if (uppy.getFiles().length !== 0) {
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/${bucketNameApp}/`
+
       const app_icon_src =
+        app_slug +
+        "/" +
         app_id +
         "/" +
         app_submitted_by_user_id +
@@ -147,11 +158,14 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
         "icon" +
         "/" +
         uppy.getFiles()[0].name
+
+      const appIconSrc = supabaseImageURL + app_icon_src
+
       setIsUploading(!isUploading)
       uppy.upload().then(async () => {
         const { error } = await supabase
           .from("apps")
-          .update({ app_icon_src: app_icon_src })
+          .update({ app_icon_src: appIconSrc })
           .eq("app_id", app_id)
           .eq("submitted_by_user_id", app_submitted_by_user_id)
 
@@ -168,8 +182,9 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
     setIsRefreshingIcon(!isRefreshingIcon)
     const response = await deleteAppIcon(
       app_id,
-      app_submitted_by_user_id,
-      appIconFileName
+      app_slug,
+      appIconFileName,
+      app_submitted_by_user_id
     )
 
     if (response) {

@@ -2,6 +2,8 @@
 
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
+import { getUserData } from "@/server/auth"
+import { deleteFolders } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
@@ -127,7 +129,7 @@ export async function deleteApp(
 
     const {
       data: { user },
-    } = await supabase.auth.getUser()
+    } = await getUserData()
 
     if (!user?.id) return { error: "User not found" }
 
@@ -135,6 +137,27 @@ export async function deleteApp(
       app_id,
       submitted_by_user_id: user.id,
     })
+
+    if (!error) {
+      const bucketNameApp =
+        process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!!
+      const foldersPath = `${app_slug}/${app_id}/${user.id}`
+
+      // remove the corresponding app storage folders and files
+      const { error: deleteFoldersError } = await deleteFolders({
+        foldersPath,
+        bucketName: bucketNameApp,
+      })
+
+      if (deleteFoldersError) {
+        console.error("Error deleting folders:", deleteFoldersError)
+        // Decide how you want to handle this error. You might want to return it,
+        // or perhaps set it in the error variable to be returned at the end of the function.
+        return {
+          error: `An error occurred while deleting the app.${deleteFoldersError}`,
+        }
+      }
+    }
 
     revalidatePath(`/ai-apps/${app_slug}`)
     revalidatePath(`/user/apps/${app_id}`)
@@ -147,6 +170,7 @@ export async function deleteApp(
     return { error: "An error occurred while deleting the app." } // Return a generic error message
   }
 }
+
 export async function unpublishApp(
   app_id: Apps["app_id"],
   app_slug: Apps["app_slug"]

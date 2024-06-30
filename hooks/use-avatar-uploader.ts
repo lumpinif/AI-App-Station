@@ -28,7 +28,7 @@ export function useAvatarUploader(
     }
 
     const file = event.target.files[0]
-    const filePath = `${profile?.user_id}/${file.name}`
+    const filePath = `${profile.user_name}/${profile?.user_id}/${file.name}`
 
     const onUploadSuccess = async (avatarPublicUrl: string) => {
       const { updateProfileError } = await updateProfileAvatar(
@@ -62,6 +62,7 @@ export function useAvatarUploader(
       const { error: uploadError } = await supabase.storage
         .from(bucketName)
         .upload(filePath, file, { upsert: true })
+
       if (uploadError) {
         setIsUploading(false)
         throw new Error(uploadError.message)

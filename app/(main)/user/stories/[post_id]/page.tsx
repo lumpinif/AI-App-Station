@@ -16,11 +16,12 @@ type PostEditPageProps = {
 
 async function fetchPostImages(
   post_id: Posts["post_id"],
+  post_slug: Posts["post_slug"],
   post_author_id: Posts["post_author_id"]
 ) {
   try {
     const { postImagesFileNames, postImagesPublicUrls } =
-      await getPostImagesWithUrls(post_id, post_author_id)
+      await getPostImagesWithUrls(post_id, post_slug, post_author_id)
     return { postImagesFileNames, postImagesPublicUrls }
   } catch (error) {
     console.error("Error fetching post images and URLs:", error)
@@ -82,6 +83,7 @@ export default async function PostEditPage({ params }: PostEditPageProps) {
 
   const { postImagesFileNames, postImagesPublicUrls } = await fetchPostImages(
     post.post_id,
+    post.post_slug,
     post.post_author_id
   )
 

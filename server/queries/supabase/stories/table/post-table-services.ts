@@ -3,6 +3,7 @@
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getUserProfile } from "@/server/auth"
+import { deleteFolders } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
@@ -170,7 +171,10 @@ export async function getPostedStories<T extends PostRefrencedTables>({
   }
 }
 
-export async function deleteStory(post_id: Posts["post_id"]) {
+export async function deleteStory(
+  post_id: Posts["post_id"],
+  post_slug: Posts["post_slug"]
+) {
   try {
     const supabase = await createSupabaseServerClient()
 
@@ -184,6 +188,28 @@ export async function deleteStory(post_id: Posts["post_id"]) {
       post_id,
       post_author_id: user.id,
     })
+
+    // REMOVE THE STORAGE FILES OF THE STORY
+    if (!error) {
+      const bucketNameApp =
+        process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_STORY!!
+      const foldersPath = `${post_slug}/${post_id}/${user.id}`
+
+      // remove the corresponding app storage folders and files
+      const { error: deleteFoldersError } = await deleteFolders({
+        foldersPath,
+        bucketName: bucketNameApp,
+      })
+
+      if (deleteFoldersError) {
+        console.error("Error deleting folders:", deleteFoldersError)
+        // Decide how you want to handle this error. You might want to return it,
+        // or perhaps set it in the error variable to be returned at the end of the function.
+        return {
+          error: `An error occurred while deleting the app.${deleteFoldersError}`,
+        }
+      }
+    }
 
     revalidatePath(`/`)
     revalidatePath(`/user/stories/${post_id}`)

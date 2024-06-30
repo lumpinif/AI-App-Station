@@ -14,6 +14,7 @@ import { RotateCw, SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
 import { PostDetails } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,7 +38,10 @@ export async function deleteStories({
   try {
     await Promise.all(
       rows.map(async (row) => {
-        const result = await deleteStory(row.original.post_id)
+        const result = await deleteStory(
+          row.original.post_id,
+          row.original.post_slug
+        )
 
         if (result && result.error) {
           if (typeof result.error === "string") {
@@ -190,7 +194,7 @@ export function DeleteStoriesDialog({
           <Button
             variant="destructive"
             size="sm"
-            className={triggerClassName}
+            className={cn("text-nowrap", triggerClassName)}
             disabled={isDeletePending}
           >
             {isDeletePending ? (

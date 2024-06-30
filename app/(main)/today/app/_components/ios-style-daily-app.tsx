@@ -22,9 +22,7 @@ export const IosStyleDailyAppCard: React.FC<IosStyleDailyAppCardProps> = ({
 }) => {
   const [activeCard, setActiveCard] = useState<DailyApp | null>(null)
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseImageURL = `${supabaseUrl}/storage/v1/object/public/apps/`
-  const appIconSrc = supabaseImageURL + dailyApp.apps.app_icon_src
+  const appIconSrc = dailyApp.apps.app_icon_src
 
   const imageSrc = screenshotsPublicUrls
     ? screenshotsPublicUrls[0]

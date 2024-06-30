@@ -5,6 +5,8 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Profiles, ProfileWithRole } from "@/types/db_tables"
 
+import { deleteFolders } from "../data/supabase-actions"
+
 export async function signUpWithEmailAndPassword(
   signUpData: {
     email: string
@@ -183,10 +185,13 @@ export async function removeExistingAvatars(profile?: Profiles) {
   const supabase = await createSupabaseServerClient()
   const bucketName =
     process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_AVATAR || "avatars"
+
   const { data: allAvatars, error: listAllAvatarsError } =
-    await supabase.storage.from(bucketName).list(`${profile?.user_id}`, {
-      sortBy: { column: "name", order: "asc" },
-    })
+    await supabase.storage
+      .from(bucketName)
+      .list(`${profile?.user_name}/${profile?.user_id}`, {
+        sortBy: { column: "name", order: "asc" },
+      })
 
   if (listAllAvatarsError) {
     return { error: listAllAvatarsError }
@@ -198,7 +203,7 @@ export async function removeExistingAvatars(profile?: Profiles) {
       const { data: removedAvatars, error: removeExistingAvatarError } =
         await supabase.storage
           .from(bucketName)
-          .remove([`${profile?.user_id}/${avatar.name}`])
+          .remove([`${profile?.user_name}/${profile?.user_id}/${avatar.name}`])
 
       if (removeExistingAvatarError) {
         return { error: removeExistingAvatarError }
@@ -214,6 +219,8 @@ export async function removeExistingAvatars(profile?: Profiles) {
 }
 
 export async function resetAvatarUrl(profile?: Profiles) {
+  const bucketName =
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_AVATAR || "avatars"
   const {
     data: { user },
     error: getUserDataError,
@@ -251,6 +258,15 @@ export async function resetAvatarUrl(profile?: Profiles) {
       profile as Profiles,
       null
     )
+
+    const { error } = await deleteFolders({
+      foldersPath: `${profile?.user_name}/${profile?.user_id}`,
+      bucketName,
+    })
+
+    if (error) {
+      return { error }
+    }
 
     if (updateProfileError) {
       return { error: updateProfileError }
