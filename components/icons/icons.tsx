@@ -60,7 +60,6 @@ export const Icons = {
   search: Search,
   youtube: MonitorPlay,
   layout: LayoutTemplate,
-  logo: Square,
   user: FaUserAlt,
   // user: (props: LucideProps) => (
   //   <svg
