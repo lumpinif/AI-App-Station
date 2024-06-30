@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
@@ -42,4 +43,23 @@ export const SiteLogo = ({
       AI App Station (Beta)
     </Link>
   </div>
+)
+
+export const SiteIcon = ({ className }: { className?: string }) => (
+  <>
+    <Image
+      src="/logos/AI-logo@512x512.png"
+      alt="AI App Station"
+      width={32}
+      height={32}
+      className="rounded-lg drop-shadow-md dark:hidden"
+    />
+    <Image
+      src="/logos/AI-logo-dark@512x512.png"
+      alt="AI App Station"
+      width={32}
+      height={32}
+      className="hidden rounded-lg drop-shadow-md dark:flex"
+    />
+  </>
 )
