@@ -42,7 +42,7 @@ export const SocialShare: React.FC<SocialShareProps> = ({
   const WINDOW_H = 650
   const HASHTAG: string[] = ["AIAppStation", "AI", "Apps"]
   // TODO: DEFINE THIS LATER BEFORE PRODUCTION
-  const VIA = ""
+  const VIA = "@ai_app_station"
   const url =
     !urlProp || urlProp === ""
       ? `${getSiteUrl()}${pathname}` || `${window.location.origin}${pathname}`
