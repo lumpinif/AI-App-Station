@@ -1144,7 +1144,7 @@ export type Database = {
       post_type: "normal" | "daily post" | "post of the day" | "editor choice"
       pricing: "Free" | "In-app purchases" | "Free & In-app purchases" | "Paid"
       publish_status: "pending" | "published" | "draft" | "unpublished"
-      report_type: "app" | "post" | "comment"
+      report_type: "app" | "post" | "comment" | "feedback"
       user_role_enum: "user" | "super_user" | "admin" | "super_admin"
     }
     CompositeTypes: {

@@ -9,7 +9,7 @@ export const siteConfig = {
   description:
     "A collection of best selected AI apps, tools, and stories within a fast expending platform.  Updated, prospective and activie.",
   links: {
-    twitter: "https://twitter.com/felixlyu_1018",
+    twitter: "https://x.com/ai_app_station",
     github: "https://github.com/AI-App-Station",
   },
   siteIcon: "https://aiappstation.com/favicon-32x32.ico",

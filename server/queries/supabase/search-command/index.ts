@@ -1,3 +1,5 @@
+"use server"
+
 import { unstable_noStore as noStore } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
