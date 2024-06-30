@@ -25,16 +25,18 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
 
   // Get screenshots file names and public URLs of the daily app
   const {
-    apps: { app_id, submitted_by_user_id },
+    apps: { app_id, submitted_by_user_id, app_slug },
   } = dailyApp
 
   const screenshotsFileNames = await getScreenshotsFileNames(
     app_id,
+    app_slug,
     submitted_by_user_id
   )
 
   const screenshotsPublicUrls = await getScreenshotsPublicUrls(
     app_id,
+    app_slug,
     submitted_by_user_id,
     screenshotsFileNames || []
   )

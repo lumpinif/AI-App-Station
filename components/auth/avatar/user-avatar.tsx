@@ -52,7 +52,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
           avatarClassName={avatarClassName}
         />
       ) : (
-        <div className="flex w-full items-center justify-between space-x-2 sm:space-x-4">
+        <div className="flex w-full items-center justify-start space-x-2 sm:space-x-4">
           <Avatar
             className={cn(
               "relative flex items-center justify-center hover:cursor-pointer",
@@ -107,8 +107,8 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
           </Avatar>
           {!isDefaultAvatar && (
             <AvatarResetButton
-              setIsUploading={setIsUploading}
               profile={profile}
+              setIsUploading={setIsUploading}
               isDefaultAvatar={isDefaultAvatar}
             />
           )}

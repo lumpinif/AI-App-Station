@@ -90,22 +90,26 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
 
   const appIconFileName = await getAppIconFileName(
     app.app_id,
+    app.app_slug,
     app.submitted_by_user_id
   )
 
   const appIconUrl = await getAppIconUrl(
     app.app_id,
+    app.app_slug,
     app.submitted_by_user_id,
     appIconFileName || ""
   )
 
   const screenshotsFileNames = await getScreenshotsFileNames(
     app.app_id,
+    app.app_slug,
     app.submitted_by_user_id
   )
 
   const screenshotsPublicUrls = await getScreenshotsPublicUrls(
     app.app_id,
+    app.app_slug,
     app.submitted_by_user_id,
     screenshotsFileNames || []
   )

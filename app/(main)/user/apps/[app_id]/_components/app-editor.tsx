@@ -42,11 +42,12 @@ export const AppEditor: React.FC<AppEditorProps> = ({
           <div className="size-24 flex-none sm:size-32 md:size-40">
             <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
               <AppIconForm
-                appIconFileName={appIconFileName as string}
-                appIconPublicUrl={appIconUrl as string}
                 app_id={app.app_id}
-                app_submitted_by_user_id={app.submitted_by_user_id}
+                app_slug={app.app_slug}
+                appIconPublicUrl={appIconUrl as string}
+                appIconFileName={appIconFileName as string}
                 access_token={session?.access_token as string}
+                app_submitted_by_user_id={app.submitted_by_user_id}
               />
             </Suspense>
           </div>
@@ -87,10 +88,11 @@ export const AppEditor: React.FC<AppEditorProps> = ({
         <Suspense fallback={<Loader2 className="size-4 animate-spin" />}>
           <AppScreenshotsForm
             app_id={app.app_id}
+            app_slug={app.app_slug}
+            access_token={session?.access_token as string}
             screenshotsFileNames={screenshotsFileNames || []}
             screenshotsPublicUrls={screenshotsPublicUrls || []}
             app_submitted_by_user_id={app.submitted_by_user_id}
-            access_token={session?.access_token as string}
           />
         </Suspense>
 

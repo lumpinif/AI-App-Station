@@ -166,6 +166,7 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
         content_id={post_id}
         initialValue={value}
         saveStatus={saveStatus}
+        content_slug={post_slug}
         user_id={post_author_id}
         setSaveStatus={setSaveStatus}
         setCharsCount={setCharsCount}
@@ -174,12 +175,13 @@ export const StoryPostEditor: React.FC<StoryPostEditorProps> = ({
       />
     ),
     [
-      post_id,
-      post_author_id,
       value,
-      handleEditorDebouncedSave,
-      setSaveStatus,
+      post_id,
+      post_slug,
       saveStatus,
+      setSaveStatus,
+      post_author_id,
+      handleEditorDebouncedSave,
     ]
   )
 

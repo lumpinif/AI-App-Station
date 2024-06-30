@@ -6,6 +6,8 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 import { AppDetails, Apps, Categories, Developers } from "@/types/db_tables"
 import { capitalizeFirstLetter, nameToSlug, normalizeString } from "@/lib/utils"
 
+import { getUserData } from "../auth"
+
 const getErrorMessage = (error: unknown) => {
   let message: string
 
@@ -770,6 +772,7 @@ export async function UpdateDevByUrlEmail(
 
 export async function getScreenshotsFileNames(
   app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"],
   app_submitted_by_user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
@@ -778,7 +781,7 @@ export async function getScreenshotsFileNames(
 
   const { data, error } = await supabase.storage
     .from(bucketName)
-    .list(`${app_id}/${app_submitted_by_user_id}/screenshots`, {
+    .list(`${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots`, {
       limit: 6,
       offset: 0,
       sortBy: { column: "created_at", order: "asc" },
@@ -797,6 +800,7 @@ export async function getScreenshotsFileNames(
 
 export async function getScreenshotsPublicUrls(
   app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"],
   app_submitted_by_user_id: Apps["submitted_by_user_id"],
   fileNames: string[]
 ) {
@@ -808,7 +812,7 @@ export async function getScreenshotsPublicUrls(
     const { data } = supabase.storage
       .from(bucketName)
       .getPublicUrl(
-        `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
+        `${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
       )
 
     if (data) screenshotsPublicUrls.push(data.publicUrl)
@@ -820,7 +824,7 @@ export async function getScreenshotsPublicUrls(
   //     const { data } = await supabase.storage
   //       .from(bucketName)
   //       .getPublicUrl(
-  //         `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
+  //         `${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
   //       )
   // if (!data) {
   //   throw new Error(`Failed to get public URL for ${data}`)
@@ -834,6 +838,7 @@ export async function getScreenshotsPublicUrls(
 
 export async function getAppIconFileName(
   app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"],
   app_submitted_by_user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
@@ -842,7 +847,7 @@ export async function getAppIconFileName(
 
   const { data, error } = await supabase.storage
     .from(bucketName)
-    .list(`${app_id}/${app_submitted_by_user_id}/icon`, {
+    .list(`${app_slug}/${app_id}/${app_submitted_by_user_id}/icon`, {
       limit: 1,
       offset: 0,
       sortBy: { column: "created_at", order: "asc" },
@@ -861,6 +866,7 @@ export async function getAppIconFileName(
 
 export async function getAppIconUrl(
   app_id: Apps["app_id"],
+  app_slug: Apps["app_slug"],
   app_submitted_by_user_id: Apps["submitted_by_user_id"],
   fileName: string
 ) {
@@ -869,23 +875,36 @@ export async function getAppIconUrl(
 
   const { data } = supabase.storage
     .from(bucketName)
-    .getPublicUrl(`${app_id}/${app_submitted_by_user_id}/icon/${fileName}`)
+    .getPublicUrl(
+      `${app_slug}/${app_id}/${app_submitted_by_user_id}/icon/${fileName}`
+    )
 
   return data.publicUrl
 }
 
 export async function deleteAppIcon(
+  app_id: Apps["app_id"],
   app_slug: Apps["app_slug"],
-  app_submitted_by_user_id: Apps["submitted_by_user_id"],
-  appIconFileName: string
+  appIconFileName: string,
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
+
+  // Check if the app_submitted_by_user_id is associated with the current user_id
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user?.id || user.id !== app_submitted_by_user_id) {
+    return
+  }
+
   try {
     const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
     const { data, error } = await supabase.storage
       .from(bucketName)
       .remove([
-        `${app_slug}/${app_submitted_by_user_id}/icon/${appIconFileName}`,
+        `${app_slug}/${app_id}/${app_submitted_by_user_id}/icon/${appIconFileName}`,
       ])
     // TODO: ERROR HANDLING
     if (error) {
@@ -897,7 +916,7 @@ export async function deleteAppIcon(
         .from("apps")
         .update({ app_icon_src: null })
         .eq("app_slug", app_slug)
-        .eq("submitted_by_user_id", app_submitted_by_user_id)
+        .eq("submitted_by_user_id", user?.id)
 
       // TODO: ERROR HANDLING
       if (error) {
@@ -917,17 +936,28 @@ export async function deleteAppIcon(
 }
 
 export async function deleteScreenshot(
+  app_id: Apps["app_id"],
   app_slug: Apps["app_slug"],
-  app_submitted_by_user_id: Apps["submitted_by_user_id"],
-  screenshotFileName: string
+  screenshotFileName: string,
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
 ) {
   const supabase = await createSupabaseServerClient()
+
+  // Check if the app_submitted_by_user_id is associated with the current user_id
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user?.id || user.id !== app_submitted_by_user_id) {
+    return
+  }
+
   try {
     const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
     const { data, error } = await supabase.storage
       .from(bucketName)
       .remove([
-        `${app_slug}/${app_submitted_by_user_id}/screenshots/${screenshotFileName}`,
+        `${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots/${screenshotFileName}`,
       ])
     // TODO: ERROR HANDLING
     if (error) {
@@ -947,43 +977,64 @@ export async function deleteScreenshot(
   }
 }
 
-// Handle app review submission
+// exp. const foldersPath = bucketNameApp + `${app_slug}/${app_id}/${user.id}`
 
-// export async function handleAppPubulish(app_id: App["app_id"]) {
-//   const supabase = await createSupabaseServerClient()
-//   const slug = await getSlugFromAppId(app_id)
+type DeleteFoldersProps = {
+  foldersPath: string
+  bucketName: string
+}
 
-//   try {
-//     const { error, data } = await supabase
-//       .from("apps")
-//       .select("ready_to_publish")
-//       .eq("app_id", app_id)
-//       .single()
+// IMPORTANT: THIS FUNCTION SHOULD BE ONLY USED AFTER CHECKING USER'S AUTHORIZATION WITH THE ITEM'S SUBMITTER TO BE DELETED
+export async function deleteFolders({
+  foldersPath,
+  bucketName,
+}: DeleteFoldersProps) {
+  const supabase = await createSupabaseServerClient()
 
-//     if (error) {
-//       console.error("Error check app review:", error)
-//       return { error: error }
-//     }
+  const {
+    data: { user },
+  } = await getUserData()
 
-//     if (data.ready_to_publish === false) {
-//       const updateResult = await supabase
-//         .from("apps")
-//         .update({ ready_to_publish: true })
-//         .eq("app_id", app_id)
+  if (!user?.id) {
+    return { error: "Unauthorized!" }
+  }
 
-//       if (updateResult.error) {
-//         console.error("Error handle app review:", updateResult.error)
-//         return { error: updateResult.error }
-//       }
+  try {
+    const { data: allItems, error: listError } = await supabase.storage
+      .from(bucketName)
+      .list(foldersPath)
 
-//       revalidatePath(`/ai-apps/${slug?.app_slug}`)
-//       revalidatePath(`/user/apps/${app_id}`)
-//     }
+    if (listError) {
+      console.error("Error listing items:", listError)
+      return { error: "An error occurred while listing items" }
+    }
 
-//     return { error }
-//   } catch (error) {
-//     if (error) {
-//       console.log(error)
-//     }
-//   }
-// }
+    const deletePromises = allItems.map(async (item) => {
+      const itemPath = `${foldersPath}/${item.name}`
+      if (item.id === null) {
+        // Recurse into subfolder
+        return deleteFolders({ foldersPath: itemPath, bucketName })
+      } else {
+        // Delete file
+        return supabase.storage.from(bucketName).remove([itemPath])
+      }
+    })
+
+    const results = await Promise.all(deletePromises)
+
+    // Log results
+    results.forEach((result, index) => {
+      const itemPath = `${foldersPath}/${allItems[index].name}`
+      if ("error" in result && result.error) {
+        console.error(`Error deleting ${itemPath}:`, result.error)
+      } else if ("data" in result && result.data) {
+        // console.log(`Successfully deleted ${itemPath}`)
+      }
+    })
+
+    return { error: null }
+  } catch (error) {
+    console.error("Unexpected error in deleteFolders:", error)
+    return { error: "An unexpected error occurred while deleting folders" }
+  }
+}

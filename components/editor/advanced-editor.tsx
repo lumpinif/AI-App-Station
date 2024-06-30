@@ -29,16 +29,17 @@ import { YoutubeSelector } from "./selectors/youtube-selector"
 import { slashCommand, suggestionItems } from "./slash-command"
 
 interface EditorProp {
-  content_id: Apps["app_id"] | Posts["post_id"]
-  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
-  bucketName: string
   uploadTo: string
-  onChange: (value: JSONContent) => void
-  setSaveStatus: (status: string) => void
-  initialValue?: JSONContent
+  bucketName: string
   className?: string
   saveStatus?: string
+  initialValue?: JSONContent
+  onChange: (value: JSONContent) => void
   setCharsCount?: (count: number) => void
+  setSaveStatus: (status: string) => void
+  content_id: Apps["app_id"] | Posts["post_id"]
+  content_slug: Apps["app_slug"] | Posts["post_slug"]
+  user_id: Apps["submitted_by_user_id"] | Posts["post_author_id"]
 }
 const NovelEditor = ({
   content_id,
@@ -50,9 +51,16 @@ const NovelEditor = ({
   initialValue,
   className,
   saveStatus,
+  content_slug,
   setCharsCount,
 }: EditorProp) => {
-  const uploadFn = createUploadFn(bucketName, uploadTo, content_id, user_id)
+  const uploadFn = createUploadFn({
+    user_id,
+    uploadTo,
+    bucketName,
+    content_id,
+    content_slug,
+  })
   const youtubeTriggerRef = useRef<HTMLDivElement>(null)
   const [openNode, setOpenNode] = useState(false)
   // const [openColor, setOpenColor] = useState(false)

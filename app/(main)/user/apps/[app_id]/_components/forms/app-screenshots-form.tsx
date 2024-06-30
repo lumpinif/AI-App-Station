@@ -60,11 +60,12 @@ import { AppDetailScreenshotsDialog } from "@/app/(main)/ai-apps/[slug]/_compone
 import { InfoPopover } from "./info-popover"
 
 type AppScreenshotsFormProps = {
-  app_id: Apps["app_id"]
-  app_submitted_by_user_id: Apps["submitted_by_user_id"]
   access_token: string
+  app_id: Apps["app_id"]
+  app_slug: Apps["app_slug"]
   screenshotsFileNames: string[]
   screenshotsPublicUrls: string[]
+  app_submitted_by_user_id: Apps["submitted_by_user_id"]
 }
 
 interface NetworkError extends Error {
@@ -73,10 +74,11 @@ interface NetworkError extends Error {
 
 export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   app_id,
-  app_submitted_by_user_id,
+  app_slug,
   access_token,
   screenshotsFileNames,
   screenshotsPublicUrls,
+  app_submitted_by_user_id,
 }) => {
   const router = useRouter()
   const { data: profile } = useUserProfile()
@@ -144,6 +146,8 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
     const supabaseMetadata = {
       bucketName: bucketNameApp,
       objectName:
+        app_slug +
+        "/" +
         app_id +
         "/" +
         app_submitted_by_user_id +
@@ -199,8 +203,9 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   const handleScreenshotDelete = async (screenshotFileName: string) => {
     const response = await deleteScreenshot(
       app_id,
-      app_submitted_by_user_id,
-      screenshotFileName
+      app_slug,
+      screenshotFileName,
+      app_submitted_by_user_id
     )
 
     if (response) {

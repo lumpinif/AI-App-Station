@@ -14,6 +14,7 @@ import { RotateCw, SquarePen } from "lucide-react"
 import { toast } from "sonner"
 
 import { Apps } from "@/types/db_tables"
+import { cn } from "@/lib/utils"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -196,7 +197,7 @@ export function DeleteAppsDialog({
           <Button
             variant="destructive"
             size="sm"
-            className={triggerClassName}
+            className={cn("text-nowrap", triggerClassName)}
             disabled={isDeletePending}
           >
             {isDeletePending ? (

@@ -6,6 +6,12 @@ import { X } from "lucide-react"
 import { Categories, PostDetails } from "@/types/db_tables"
 import { Button, ButtonProps } from "@/components/ui/button"
 import { ResponsiveModalClose } from "@/components/ui/responsive-modal"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import ResponsiveContentModal from "@/components/shared/responsive-content-modal"
 
 import { StoryPublishDetailsForm } from "./story-publish-details-form"
@@ -50,7 +56,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
         : "Unpublished"
 
   return (
-    <>
+    <TooltipProvider>
       <ResponsiveContentModal
         drawerHeight="h-[98%]"
         isOpen={isPublishModalOpen}
@@ -82,21 +88,31 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
               </div> */}
         </div>
       </ResponsiveContentModal>
-
-      <Button
-        size={"label"}
-        variant={"ghost"}
-        onClick={() => setIsPublishModalOpen(true)}
-        className="rounded-full border px-4 active:scale-[.98] dark:border-0 dark:shadow-outline"
-        disabled={saveStatus === "saving" || isRetrying || isEmpty || !isEdited}
-        {...props}
-      >
-        {!isEdited
-          ? buttonLabel
-          : post_publish_status === "published"
-            ? "Publish Changes"
-            : "Publish"}
-      </Button>
-    </>
+      <Tooltip>
+        <TooltipTrigger>
+          <Button
+            size={"label"}
+            variant={"ghost"}
+            onClick={() => setIsPublishModalOpen(true)}
+            className="rounded-full border px-4 active:scale-[.98] dark:border-0 dark:shadow-outline"
+            disabled={
+              saveStatus === "saving" || isRetrying || isEmpty || !isEdited
+            }
+            {...props}
+          >
+            {!isEdited
+              ? buttonLabel
+              : post_publish_status === "published"
+                ? "Publish Changes"
+                : "Publish"}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          {!isEdited
+            ? "Make some changes to publish"
+            : "Publish your story to make it live"}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }

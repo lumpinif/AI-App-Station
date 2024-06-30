@@ -334,57 +334,9 @@ export async function removePostCategories(
   }
 }
 
-export async function getPostImagesFileNames(
-  post_id: Posts["post_id"],
-  post_author_id: Posts["post_author_id"]
-) {
-  const supabase = await createSupabaseServerClient()
-  const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_STORY!
-
-  const { data: postImagesFileNames, error: getAllPostImagesError } =
-    await supabase.storage
-      .from(bucketName)
-      .list(`${post_id}/${post_author_id}/story`, {
-        limit: 100,
-        offset: 0,
-        sortBy: { column: "name", order: "asc" },
-      })
-
-  if (getAllPostImagesError) {
-    console.error("Error fetching post images:", getAllPostImagesError)
-    throw getAllPostImagesError
-  }
-
-  return { postImagesFileNames, getAllPostImagesError }
-}
-
-export async function getPostImagesPublicUrls(
-  post_id: Posts["post_id"],
-  post_author_id: Posts["post_author_id"],
-  postImagesFileNames: string[]
-) {
-  const supabase = await createSupabaseServerClient()
-  const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_STORY!
-
-  const postImagesPublicUrls = await Promise.all(
-    postImagesFileNames.map(async (fileName) => {
-      const { data: publicUrlData } = await supabase.storage
-        .from(bucketName)
-        .getPublicUrl(`${post_id}/${post_author_id}/story/${fileName}`)
-
-      if (!publicUrlData) {
-        throw new Error(`Failed to get public URL for ${fileName}`)
-      }
-
-      return publicUrlData.publicUrl
-    })
-  )
-
-  return postImagesPublicUrls
-}
-
 export async function getPostImagesWithUrls(
   post_id: Posts["post_id"],
+  post_slug: Posts["post_slug"],
   post_author_id: Posts["post_author_id"]
 ) {
   const supabase = await createSupabaseServerClient()
@@ -394,7 +346,7 @@ export async function getPostImagesWithUrls(
   const { data: postImagesFileNames, error: getAllPostImagesError } =
     await supabase.storage
       .from(bucketName)
-      .list(`${post_id}/${post_author_id}/story`, {
+      .list(`${post_slug}/${post_id}/${post_author_id}/story`, {
         limit: 100,
         offset: 0,
         sortBy: { column: "name", order: "asc" },
@@ -411,7 +363,9 @@ export async function getPostImagesWithUrls(
       const { name: fileName } = file
       const { data: publicUrlData } = await supabase.storage
         .from(bucketName)
-        .getPublicUrl(`${post_id}/${post_author_id}/story/${fileName}`)
+        .getPublicUrl(
+          `${post_slug}/${post_id}/${post_author_id}/story/${fileName}`
+        )
 
       if (!publicUrlData) {
         throw new Error(`Failed to get public URL for ${fileName}`)

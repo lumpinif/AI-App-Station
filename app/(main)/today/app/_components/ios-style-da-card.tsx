@@ -12,9 +12,9 @@ import { ContentRenderer } from "@/components/editor/content-renderer"
 type IosStyleDACardProps = {
   color: AverageColor
   dailyApp: DailyApp
-  appIconSrc?: string
   card_thumbnail: string
   app_card_title: string
+  appIconSrc?: string | null
   setActiveCard: (dailyApp: DailyApp | null) => void
 }
 
