@@ -521,6 +521,24 @@ export type Database = {
           },
         ]
       }
+      email_subscriptions: {
+        Row: {
+          created_at: string
+          email: string | null
+          esub_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          esub_id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          esub_id?: string
+        }
+        Relationships: []
+      }
       post_analytics: {
         Row: {
           created_at: string

@@ -28,7 +28,15 @@ import { InputBorderSpotlight } from "../../shared/InputBorderSpotlight"
 
 const FormSchema = z
   .object({
-    email: z.string().email(),
+    email: z
+      .string()
+      .email()
+      .min(1, {
+        message: "Email is required.",
+      })
+      .max(255, {
+        message: "Email must not be longer than 255 characters.",
+      }),
     password: z.string().min(6, {
       message: "Password is required.",
     }),

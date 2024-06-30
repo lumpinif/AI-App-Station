@@ -68,11 +68,12 @@ export const InputBorderSpotlight = forwardRef<HTMLInputElement, InputProps>(
             type={type}
             name={name}
             className={cn(
-              "h-10 w-full cursor-default rounded-md border border-input bg-background p-3.5 transition-colors duration-500 placeholder:select-none focus:border-blue-600 focus:outline-none dark:bg-input",
+              "h-10 w-full cursor-default rounded-md border border-input bg-background p-3.5 transition-colors duration-500 placeholder:select-none focus:border-blue-600 focus:outline-none disabled:text-muted-foreground dark:bg-input",
               className
             )}
             onChange={onChange}
             defaultValue={defaultValue}
+            disabled={props.disabled}
           />
           <input
             ref={divRef}
