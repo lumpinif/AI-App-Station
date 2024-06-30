@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { MAINROUTES } from "@/config/routes/main-routes"
+import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
@@ -20,8 +21,7 @@ import { Icons } from "@/components/icons/icons"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 import NavAuthDropdown from "./nav-auth-dropdown"
-import NavMenuAuthDropdown from "./nav-menu-auth-dropdown"
-import { SiteLogo } from "./site-header"
+import { SiteIcon, SiteLogo } from "./site-header"
 
 export function NavigationMenuBar() {
   const currentPath = usePathname()
@@ -54,26 +54,27 @@ export function NavigationMenuBar() {
                     className="flex h-full w-full select-none flex-col justify-end rounded-md p-6 no-underline outline-none hover:cursor-pointer"
                     href="/"
                   >
-                    <Icons.logo className="h-6 w-6" />
+                    <SiteIcon />
                     <div className="mb-2 mt-4 text-lg font-medium">
-                      AI App Station
+                      {siteConfig.name}
                     </div>
                     <p className="text-sm leading-tight dark:text-muted-foreground">
-                      A collection of best selected AI apps or tools and stories
-                      all within an fast expending platform. Updated,
-                      prospective and activie.
+                      {siteConfig.description}
                     </p>
                   </Link>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
+              <ListItem href="/today" title="Today">
+                AI News of the Day, and AI App of the Day. Carefully curated by
+                talented authors and creators. Daily updated.
               </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
+              <ListItem href="/ai-apps" title="AI Apps">
+                Useful AI Apps submitted by talented authors and creators like
+                you. Updated, prospective and active.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
+              <ListItem href="/stories" title="Stories">
+                Brilliant stories about AI, written by talented authors and
+                creators
               </ListItem>
             </ul>
           </NavigationMenuContent>
