@@ -17,10 +17,11 @@ type SpinnerButtonProps = ButtonProps & {
   loadingElement?: React.ReactNode
   successElement?: React.ReactNode
   buttonVariant?: ButtonProps["variant"]
-  buttonState?: "idle" | "loading" | "success"
+  buttonState?: "idle" | "loading" | "success" | "error"
   setButtonState?: React.Dispatch<
-    React.SetStateAction<"idle" | "loading" | "success">
+    React.SetStateAction<"idle" | "loading" | "success" | "error">
   >
+  errorElement?: React.ReactNode
 }
 
 export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
@@ -29,6 +30,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
   className,
   withSuccess,
   buttonState,
+  errorElement,
   buttonVariant,
   loadingElement,
   successElement,
@@ -42,6 +44,7 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
     idle: children,
     loading: loadingElement ? loadingElement : <LoadingSpinner size={16} />,
     success: successElement || undefined,
+    error: errorElement || undefined,
   } as const
 
   if (withSuccess && buttonState)
@@ -50,16 +53,16 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
         variant={
           buttonState === "success"
             ? "success"
-            : buttonVariant
-              ? buttonVariant
-              : "default"
+            : buttonState === "error"
+              ? "destructive"
+              : buttonVariant
+                ? buttonVariant
+                : "default"
         }
         className={cn(
           "relative select-none overflow-hidden",
           className,
-          !loadingElement
-            ? "disabled:bg-current"
-            : "disabled:bg-current dark:disabled:bg-inherit"
+          !loadingElement ? "" : "disabled:bg-current dark:disabled:bg-inherit"
         )}
         disabled={buttonState === "loading"}
         {...props}

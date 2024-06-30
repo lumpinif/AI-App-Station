@@ -1,13 +1,8 @@
-"use client"
-
-import { useState } from "react"
-
 import { Separator } from "@/components/ui/separator"
-import { InputBorderSpotlight } from "@/components/shared/InputBorderSpotlight"
-import { SpinnerButton } from "@/components/shared/spinner-button"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import { SiteLogo } from "../site-header/site-header"
+import { EmailSubscribeForm } from "./email-subscribe-form"
 
 const footerLinks: { id: number; title: string; url: string }[][] = [
   [
@@ -27,29 +22,6 @@ const footerLinks: { id: number; title: string; url: string }[][] = [
 // TODO:IMPLEMENT THE EMAIL SUBSCRIBE BEFORE PRODUCTION
 
 export function SiteFooter() {
-  const [email, setEmail] = useState("")
-  const [subButtonState, setSubButtonState] = useState<
-    "idle" | "loading" | "success"
-  >("idle")
-  const [isSubscribed, setIsSubscribed] = useState(false)
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault()
-    setSubButtonState("loading")
-    setEmail("")
-    setIsSubscribed(true)
-    // Reset the subscribed status after 2 seconds
-    setTimeout(() => {
-      setSubButtonState("success")
-      setIsSubscribed(false)
-    }, 2000)
-
-    setTimeout(() => {
-      setSubButtonState("idle")
-      setIsSubscribed(false)
-    }, 4000)
-  }
-
   return (
     <footer className="my-20 mt-40">
       <Separator className="container mx-auto bg-input" />
@@ -86,38 +58,7 @@ export function SiteFooter() {
           </div>
 
           <div className="flex items-center justify-between">
-            <div className="flex flex-col gap-y-2">
-              {/* <p className="text-lg font-bold">Contact us</p> */}
-
-              <div className="flex items-center gap-x-4">
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex items-center gap-x-4"
-                >
-                  <InputBorderSpotlight
-                    type="email"
-                    placeholder="beff@jezos.ai"
-                    className="dark:placeholder:text-muted"
-                  />
-
-                  <SpinnerButton
-                    type="submit"
-                    withSuccess
-                    buttonState={subButtonState}
-                    successElement={"Subscribed"}
-                    className="w-36 font-medium"
-                  >
-                    Subscribe
-                  </SpinnerButton>
-                </form>
-              </div>
-
-              <p className="max-w-sm text-xs text-muted-foreground dark:text-muted">
-                By submitting your email address, you agree to receive AI App
-                Station’s newsletters. For more information, please read our
-                privacy policy. You can always withdraw your consent.
-              </p>
-            </div>
+            <EmailSubscribeForm />
           </div>
         </div>
       </section>
