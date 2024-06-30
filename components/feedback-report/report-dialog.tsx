@@ -1,3 +1,5 @@
+"use client"
+
 import { FlagTriangleRight } from "lucide-react"
 
 import { Report_type, TCommentWithProfile } from "@/types/db_tables"
@@ -41,11 +43,15 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
       <DialogContent className="flex max-w-sm flex-col gap-y-6 rounded-2xl dark:shadow-outline sm:max-w-2xl sm:p-10 sm:px-14">
         <span>
           <h2 className="page-title-font text-2xl sm:text-3xl">
-            Reporting this {reportType}
+            {reportType === "feedback"
+              ? `Feedback`
+              : `Reporting this ${reportType}`}
           </h2>
           <p className="text-muted-foreground">
-            Thanks for taking the time to fill out this report! It means a lot
-            to us!
+            {reportType === "feedback"
+              ? `This website is still in development. I'd love to hear your feedback on it so that it can be improved. It's highly appreciated.`
+              : `Thanks for taking the time to fill out this report! It means a lot
+            to us!`}
           </p>
         </span>
         <ReportForm

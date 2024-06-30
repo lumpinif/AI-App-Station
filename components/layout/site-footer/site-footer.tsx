@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { ReportDialog } from "@/components/feedback-report/report-dialog"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
 import { SiteLogo } from "../site-header/site-header"
@@ -26,9 +28,9 @@ export function SiteFooter() {
     <footer className="my-20 mt-40">
       <Separator className="container mx-auto bg-input" />
       <section className="container py-16">
-        <div className="mx-auto flex flex-col gap-x-5 gap-y-10 md:items-start md:justify-between lg:flex-row lg:px-10 xl:px-0">
-          <div className="flex w-full items-start justify-between gap-y-2 sm:flex-col sm:gap-y-6 md:w-1/2 lg:w-1/3">
-            <div className="flex flex-col items-start justify-start gap-y-2">
+        <div className="mx-auto flex h-full flex-col gap-x-5 gap-y-10 md:items-start md:justify-between lg:flex-row lg:px-10 xl:px-0">
+          <div className="flex h-full w-full items-start justify-between gap-y-2 sm:flex-col sm:gap-y-6 md:w-1/2 lg:w-1/3">
+            <div className="flex h-full flex-col items-start justify-between gap-y-2">
               <SiteLogo
                 className="w-full sm:w-full"
                 linkCN="page-title-font inline animate-magic-fade-in text-balance bg-gradient-to-r hover:from-primary hover:to-primary hover:via-primary from-primary/75 via-primary to-primary/75 bg-clip-text !leading-tight text-transparent opacity-0 transition-all duration-500 ease-out [--animation-delay:500ms] dark:from-zinc-300 dark:via-zinc-400 dark:to-zinc-300 text-sm dark:from-10% dark:via-40% dark:to-100% hover:dark:from-zinc-300 hover:dark:via-zinc-300 hover:dark:to-zinc-300 text-xl"
@@ -37,13 +39,22 @@ export function SiteFooter() {
               <p className="text-muted-foreground">Best place to find an AI.</p>
             </div>
 
-            <div>
+            <div className="flex flex-col items-end gap-y-2 sm:flex-row sm:gap-x-4">
               <ThemeToggle />
+              <ReportDialog reportType="feedback">
+                <Button
+                  size={"sm"}
+                  variant={"outline"}
+                  className="glass-card-background rounded-full text-sm text-muted-foreground shadow-top"
+                >
+                  Send us feedback
+                </Button>
+              </ReportDialog>
             </div>
           </div>
 
-          <div className="flex items-center justify-start gap-x-10">
-            {footerLinks.map((column, columnIndex) => (
+          {/* <div className="flex items-center justify-start gap-x-10"> */}
+          {/* {footerLinks.map((column, columnIndex) => (
               <ul key={columnIndex} className="flex flex-col gap-y-2">
                 {column.map((link) => (
                   <li
@@ -55,7 +66,8 @@ export function SiteFooter() {
                 ))}
               </ul>
             ))}
-          </div>
+              */}
+          {/* </div> */}
 
           <div className="flex items-center justify-between">
             <EmailSubscribeForm />

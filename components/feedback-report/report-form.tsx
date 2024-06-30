@@ -91,7 +91,7 @@ export const ReportForm: React.FC<ReportFormProps> = ({
     report_title: form_report_title,
   }: z.infer<typeof reportFormSchema>) => {
     if (!profile?.user_id) {
-      return toast.error("You need to be logged in to submit a report")
+      return toast.error("Please sign in to submit a feedback or report.")
     }
 
     const supabase = createSupabaseBrowserClient()
@@ -136,7 +136,11 @@ export const ReportForm: React.FC<ReportFormProps> = ({
                 <FormControl>
                   <Input
                     className="border-0 bg-card/10 outline-none focus-within:bg-card focus:ring-0 focus:!ring-transparent"
-                    placeholder="what is the problem?"
+                    placeholder={
+                      reportType === "feedback"
+                        ? "What did you like about this website? What could be better?"
+                        : "what is the problem?"
+                    }
                     {...field}
                   />
                 </FormControl>
@@ -174,7 +178,7 @@ export const ReportForm: React.FC<ReportFormProps> = ({
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel className="page-title-font text-base">
-                  Report Url
+                  {reportType === "feedback" ? "Url" : "Report Url"}
                 </FormLabel>
                 <FormControl>
                   <Input
