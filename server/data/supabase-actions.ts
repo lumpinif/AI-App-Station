@@ -3,13 +3,7 @@
 import { revalidatePath, unstable_noStore } from "next/cache"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
-import {
-  AppDetails,
-  Apps,
-  AppWithCategoriesAndDevelopers,
-  Categories,
-  Developers,
-} from "@/types/db_tables"
+import { AppDetails, Apps, Categories, Developers } from "@/types/db_tables"
 import { capitalizeFirstLetter, nameToSlug, normalizeString } from "@/lib/utils"
 
 const getErrorMessage = (error: unknown) => {

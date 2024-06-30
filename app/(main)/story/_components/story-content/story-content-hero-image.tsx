@@ -15,7 +15,9 @@ export const StoryContentHeroImage: React.FC<StoryContentHeroImageProps> = ({
 }) => {
   if (!post_image_src || post_image_src === "") return null
   return (
-    <div className={cn("mx-auto my-5 mb-10 max-w-5xl", className)}>
+    <div
+      className={cn("mx-auto my-5 mb-10 max-w-5xl animate-reveal", className)}
+    >
       <AspectRatio ratio={16 / 9} className="relative">
         <Image
           fill
