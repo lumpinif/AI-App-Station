@@ -17,7 +17,6 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { Separator } from "@/components/ui/separator"
-import { Icons } from "@/components/icons/icons"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 import NavAuthDropdown from "./nav-auth-dropdown"
