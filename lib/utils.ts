@@ -96,8 +96,9 @@ export const websiteValidator = z
   .refine(
     (value) => {
       if (!value) return true // Allow empty string
+      // Improved URL pattern to allow paths, query parameters, and fragments
       const urlPattern =
-        /^(?:https?:\/\/)?(?:www\.)?[a-z0-9]+(?:\.[a-z0-9]+)*\.[a-z]{2,}$/i
+        /^(https?:\/\/)?((([a-z0-9-]+\.)+[a-z]{2,})|localhost)(:\d{1,5})?(\/[^\s]*)?$/i
       return urlPattern.test(value)
     },
     { message: "Please enter a valid URL." }
