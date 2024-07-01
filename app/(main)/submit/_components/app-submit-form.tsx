@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { SubmitApp } from "@/server/data"
+import { SubmitApp } from "@/server/queries/supabase/apps/apps-actions"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Rocket } from "lucide-react"
 import { useForm } from "react-hook-form"

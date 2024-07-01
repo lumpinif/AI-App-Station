@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { UpdateDevByUrlEmail } from "@/server/data/supabase-actions"
+import { UpdateDevByUrlEmail } from "@/server/queries/supabase/developer"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { useForm } from "react-hook-form"

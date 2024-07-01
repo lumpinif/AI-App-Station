@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { getAllCategories } from "@/server/data/supabase-actions"
+import { getAllCategories } from "@/server/queries/supabase/categories"
 import { sampleSize } from "lodash"
 
 import { Separator } from "@/components/ui/separator"

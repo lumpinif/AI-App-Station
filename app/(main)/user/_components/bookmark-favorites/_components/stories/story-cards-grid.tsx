@@ -1,7 +1,7 @@
+import { getFavoritePosts } from "@/server/queries/supabase/favorites/data"
 import { User } from "@supabase/supabase-js"
 
 import { StoryCard } from "@/components/cards/apps/stories/story-card"
-import { getFavoritePosts } from "@/app/(main)/user/_server/favorites/data"
 
 type StoryCardsGridProps = {
   user_id: User["id"]

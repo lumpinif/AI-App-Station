@@ -3,13 +3,14 @@
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getUserProfile } from "@/server/auth"
-import { deleteFolders } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
 import { PostDetails, PostRefrencedTables, Posts } from "@/types/db_tables"
 import { checkIsSuperUser, getPostAuthorSlug } from "@/lib/utils"
 import { postsSearchParamsSchema } from "@/lib/validations"
+
+import { deleteFolders } from "../../storage"
 
 type getPostedStoriesProps<T extends PostRefrencedTables> = {
   searchParams: z.infer<typeof postsSearchParamsSchema>

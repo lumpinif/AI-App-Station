@@ -1,8 +1,8 @@
+import { getDailyApp } from "@/server/queries/supabase/apps/fetch-daily-app"
 import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
-} from "@/server/data/supabase-actions"
-import { getDailyApp } from "@/server/queries/supabase/apps/fetch-daily-app"
+} from "@/server/queries/supabase/storage"
 
 import { DEFAULT_POST_IMAGE } from "@/lib/constants/site-constants"
 import { getAverageColorOnServer } from "@/lib/get-average-color-on-server"

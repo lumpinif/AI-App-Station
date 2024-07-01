@@ -1,6 +1,11 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import {
+  insertPostContent,
+  removeEmptyPostContent,
+  updatePostTitle,
+} from "@/server/queries/supabase/stories/editor"
 import { draftStory } from "@/server/queries/supabase/stories/table/post-table-services"
 import _ from "lodash"
 import { JSONContent } from "novel"
@@ -23,11 +28,6 @@ import useNewStoryToastStore from "@/hooks/use-story-toast-store"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
-import {
-  insertPostContent,
-  removeEmptyPostContent,
-  updatePostTitle,
-} from "../../../_server/stories"
 import { StoryEditorHeader } from "./story-editor-header"
 
 type StoryPostEditorProps = {

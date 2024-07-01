@@ -11,7 +11,7 @@ import "@uppy/core/dist/style.min.css"
 import "@uppy/dashboard/dist/style.min.css"
 
 import { useRouter } from "next/navigation"
-import { deleteAppIcon } from "@/server/data/supabase-actions"
+import { deleteAppIcon } from "@/server/queries/supabase/apps/editor"
 import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import Tus from "@uppy/tus"
 import { toast } from "sonner"

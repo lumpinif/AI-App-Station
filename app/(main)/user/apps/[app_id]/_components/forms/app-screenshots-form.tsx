@@ -3,7 +3,7 @@
 // TODO: THIS IS A LONG COMPONENT REFACTOR IT INTO SMALLER ONE
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { deleteScreenshot } from "@/server/data/supabase-actions"
+import { deleteScreenshot } from "@/server/queries/supabase/apps/editor"
 import { Uppy } from "@uppy/core"
 import { Dashboard } from "@uppy/react"
 import Tus from "@uppy/tus"

@@ -1,6 +1,10 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import {
+  insertIntroduction,
+  removeEmptyIntroduction,
+} from "@/server/queries/supabase/apps/editor"
 import _ from "lodash"
 import { JSONContent } from "novel"
 import { useDebouncedCallback } from "use-debounce"
@@ -16,7 +20,6 @@ import useRemoveContent from "@/hooks/editor/use-remove-content"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import NovelEditor from "@/components/editor/advanced-editor"
 
-import { insertIntroduction, removeEmptyIntroduction } from "../_server"
 import { IntroductionEditorHeader } from "./introduction-editor-header"
 
 type AppIntroductionEditorProps = {

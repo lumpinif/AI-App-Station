@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { updateUserProfile } from "@/server/queries/supabase/profile/data"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
 import { Control, useForm, useWatch } from "react-hook-form"
@@ -28,7 +29,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { updateUserProfile } from "@/app/(main)/user/_server/profile/data"
 
 const profileFormSchema = z.object({
   full_name: z

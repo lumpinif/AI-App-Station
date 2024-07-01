@@ -1,6 +1,6 @@
+import { getFavoriteApps } from "@/server/queries/supabase/favorites/data"
 import { User } from "@supabase/supabase-js"
 
-import { getFavoriteApps } from "../../../../_server/favorites/data"
 import { FavoriteAppCard } from "./favorite-app-card"
 
 type AppCardGridProps = {

@@ -3,12 +3,13 @@
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { getUserData } from "@/server/auth"
-import { deleteFolders } from "@/server/data/supabase-actions"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
 import { Apps } from "@/types/db_tables"
 import { appsSearchParamsSchema } from "@/lib/validations"
+
+import { deleteFolders } from "../storage"
 
 export async function getSubmittedApps(
   searchParams: z.infer<typeof appsSearchParamsSchema>

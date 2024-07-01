@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation"
 import {
   checkExistingCategories,
   insertCategories,
-} from "@/server/data/supabase-actions"
+} from "@/server/queries/supabase/categories"
 import {
   archiveDailyPost,
   checkExistingTopics,

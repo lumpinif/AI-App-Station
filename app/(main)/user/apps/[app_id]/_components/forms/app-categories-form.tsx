@@ -2,12 +2,14 @@
 
 import { useRef, useState } from "react"
 import {
+  insertAppsCategories,
+  removeAppsCategories,
+} from "@/server/queries/supabase/apps/editor"
+import {
   checkExistingCategories,
   getAllCategories,
-  insertAppsCategories,
   insertCategories,
-  removeAppsCategories,
-} from "@/server/data/supabase-actions"
+} from "@/server/queries/supabase/categories"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { TooltipTrigger } from "@radix-ui/react-tooltip"
 import { Check, Info, Loader2, Plus, Search, Tags, X } from "lucide-react"

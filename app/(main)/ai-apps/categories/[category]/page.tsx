@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
-import { getCategoryBySlug } from "@/server/data/supabase-actions"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
+import { getCategoryBySlug } from "@/server/queries/supabase/categories"
 
 import { Categories } from "@/types/db_tables"
 import { siteConfig } from "@/config/site"

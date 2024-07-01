@@ -1,8 +1,9 @@
 import { Metadata } from "next"
-import { getAllCategories } from "@/server/data/supabase-actions"
+
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
 import { CategoriesGrid } from "../_components/categories-grid"
+import { getAllCategories } from "@/server/queries/supabase/categories"
 
 export const metadata: Metadata = {
   title: "All Categories",

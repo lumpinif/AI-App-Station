@@ -2,12 +2,14 @@
 
 import { useRef, useState } from "react"
 import {
+  insertAppsDevelopers,
+  removeAppsDevelopers,
+} from "@/server/queries/supabase/apps/editor"
+import {
   checkExistingDevelopers,
   getAllDevelopers,
-  insertAppsDevelopers,
   insertDevelopers,
-  removeAppsDevelopers,
-} from "@/server/data/supabase-actions"
+} from "@/server/queries/supabase/developer"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   Check,

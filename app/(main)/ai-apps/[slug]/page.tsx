@@ -2,11 +2,11 @@ import { Suspense } from "react"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { getAppBySlug } from "@/server/data"
+import { getAppBySlug } from "@/server/queries/supabase/apps/apps-actions"
 import {
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
-} from "@/server/data/supabase-actions"
+} from "@/server/queries/supabase/storage"
 
 import { SearchParams } from "@/types/data-table"
 import { App_Comments, AppDetails } from "@/types/db_tables"

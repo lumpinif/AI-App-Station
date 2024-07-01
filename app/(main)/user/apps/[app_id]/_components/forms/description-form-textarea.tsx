@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { UpdateAppByDescription } from "@/server/data"
+import { UpdateAppByDescription } from "@/server/queries/supabase/apps/editor"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check, X } from "lucide-react"
 import { useForm } from "react-hook-form"

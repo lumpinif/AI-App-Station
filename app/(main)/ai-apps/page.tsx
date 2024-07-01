@@ -1,9 +1,8 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { getAllPosts } from "@/server/data"
+import { getAllPosts } from "@/server/queries/supabase/stories"
 
 import LoadingFallback from "@/components/shared/loading-fallback"
 

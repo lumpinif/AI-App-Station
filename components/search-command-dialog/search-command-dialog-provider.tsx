@@ -1,5 +1,6 @@
 import { getUserData } from "@/server/auth"
-import { getAllApps, getAllPosts } from "@/server/data"
+import { getAllApps } from "@/server/queries/supabase/apps/apps-actions"
+import { getAllPosts } from "@/server/queries/supabase/stories"
 
 import { SearchCommandDialog } from "./search-command-dialog"
 

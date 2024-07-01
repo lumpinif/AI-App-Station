@@ -5,7 +5,7 @@ import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Profiles, ProfileWithRole } from "@/types/db_tables"
 
-import { deleteFolders } from "../data/supabase-actions"
+import { deleteFolders } from "../queries/supabase/storage"
 
 export async function signUpWithEmailAndPassword(
   signUpData: {

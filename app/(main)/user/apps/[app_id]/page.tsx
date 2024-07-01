@@ -1,14 +1,14 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { getUserData, getUserSession } from "@/server/auth"
+import { getAppByAppIdUserId } from "@/server/queries/supabase/apps/apps-actions"
+import { getAllCategories } from "@/server/queries/supabase/categories"
 import {
-  getAllCategories,
-  getAppByAppIdUserId,
   getAppIconFileName,
   getAppIconUrl,
   getScreenshotsFileNames,
   getScreenshotsPublicUrls,
-} from "@/server/data/supabase-actions"
+} from "@/server/queries/supabase/storage"
 
 import { Apps } from "@/types/db_tables"
 

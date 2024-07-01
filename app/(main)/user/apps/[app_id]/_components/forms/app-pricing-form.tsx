@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { UpdateAppByPricing } from "@/server/data/supabase-actions"
+import { UpdateAppByPricing } from "@/server/queries/supabase/apps/editor"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CaretSortIcon } from "@radix-ui/react-icons"
 import { Check, Info } from "lucide-react"
@@ -147,7 +147,7 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
                       <FormControl>
                         <div
                           className={cn(
-                            "group flex w-fit cursor-pointer items-center justify-between ",
+                            "group flex w-fit cursor-pointer items-center justify-between",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -156,7 +156,7 @@ export const AppPricingForm: React.FC<AppPricingFormProps> = ({
                               {field.value}
                             </Badge>
                           ) : (
-                            <span className=" text-xs">+ Set pricing</span>
+                            <span className="text-xs">+ Set pricing</span>
                           )}
 
                           <Tooltip delayDuration={0}>

@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { getUserData } from "@/server/auth"
-import { getAllApps } from "@/server/data"
+import { getAllApps } from "@/server/queries/supabase/apps/apps-actions"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
 import { AppCarouselLgCard } from "../_components/cards/app-carousel-lg-card"

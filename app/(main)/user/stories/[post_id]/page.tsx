@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
 import { getUserData } from "@/server/auth"
-import { getAllCategories } from "@/server/data/supabase-actions"
+import { getAllCategories } from "@/server/queries/supabase/categories"
 import { getPostImagesWithUrls } from "@/server/queries/supabase/editor/publish/stories"
 import { getPostById } from "@/server/queries/supabase/stories"
 
