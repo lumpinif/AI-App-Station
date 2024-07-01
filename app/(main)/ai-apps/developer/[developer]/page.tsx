@@ -133,7 +133,7 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
     <section className="flex flex-col gap-y-4">
       <AiAppsPagesTitle
         title={pageTitle}
-        href={`/ai-apps/developers/${developer_slug}`}
+        href={`/ai-apps/developer/${developer_slug}`}
       />
 
       {appsByDeveloper?.length === 0 && <p>No apps found in this developer.</p>}
