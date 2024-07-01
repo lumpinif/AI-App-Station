@@ -40,7 +40,7 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
   const isDefaultAvatar =
     !profile?.avatar_url ||
     profile?.avatar_url === "" ||
-    user?.user_metadata.avatar_url === profile?.avatar_url
+    user?.user_metadata?.avatar_url === profile?.avatar_url
 
   return (
     <>

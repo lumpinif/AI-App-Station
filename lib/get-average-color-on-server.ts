@@ -10,6 +10,13 @@ export async function getAverageColorOnServer(
   imageSrc: string,
   isBottom?: boolean
 ) {
+  if (!imageSrc)
+    return {
+      rgb: "rgb(0, 0, 0)",
+      rgba: "rgba(0, 0, 0, 0)",
+      colorEnd: "0,0,0",
+      isDark: true,
+    }
   try {
     return await getAverageColor(imageSrc, {}, isBottom)
   } catch (error) {

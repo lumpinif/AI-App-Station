@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
-import { useUserData } from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import useAppSubmitToastStore from "@/hooks/use-app-toast-store"
 import { Button } from "@/components/ui/button"
@@ -42,7 +42,7 @@ const AppSubmitForm = () => {
   const openAccountModal = useAccountModal((state) => state.openModal)
 
   const setToastId = useAppSubmitToastStore((state) => state.setToastId)
-  const { data: user } = useUserData()
+  const { data: profile } = useUserProfile()
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -151,7 +151,7 @@ const AppSubmitForm = () => {
             isLoading={isLoading}
             disabled={!isValid || isSubmitting || isLoading}
             onClick={
-              !user?.id
+              !profile?.user_id
                 ? openAccountModal
                 : form.handleSubmit(handleSubmitNewApp)
             }

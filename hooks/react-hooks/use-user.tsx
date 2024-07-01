@@ -1,12 +1,13 @@
 "use client"
 
-import { getUserData, getUserProfile } from "@/server/auth"
+import { getUser, getUserProfile } from "@/server/auth"
+import { User } from "@supabase/supabase-js"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 import { Profiles } from "@/types/db_tables"
 
-const initUser: Profiles = {
+const initProfile: Profiles = {
   user_id: "",
   email: "",
   user_name: "",
@@ -18,6 +19,24 @@ const initUser: Profiles = {
   user_website: "",
   user_bio: "",
   user_pronouns: "",
+}
+
+const initUser: User = {
+  id: "",
+  app_metadata: {
+    provider: "",
+    providers: [],
+  },
+  user_metadata: {
+    avatar_url: "",
+    full_name: "",
+    user_location: "",
+    user_website: "",
+    user_bio: "",
+    user_pronouns: "",
+  },
+  aud: "",
+  created_at: "",
 }
 
 export function useUserData() {
@@ -35,16 +54,13 @@ export default function useUserProfile() {
 }
 
 async function fetchUserData() {
-  const {
-    data: { user },
-    error: getUserDataError,
-  } = await getUserData()
+  const { user, error: getUserDataError } = await getUser()
 
   if (getUserDataError) {
     toast.error("Error getting user data! Please try again later.")
   }
 
-  return user
+  return user || initUser
 }
 
 async function fetchUserProfile() {
@@ -56,5 +72,5 @@ async function fetchUserProfile() {
     })
   }
 
-  return profile || initUser
+  return profile || initProfile
 }

@@ -4,7 +4,7 @@ import { createNewPost } from "@/server/queries/supabase/stories"
 import { Rocket } from "lucide-react"
 import { toast } from "sonner"
 
-import { useUserData } from "@/hooks/react-hooks/use-user"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import useNewStoryToastStore from "@/hooks/use-story-toast-store"
 import { Button } from "@/components/ui/button"
 import { LoadingSpinner } from "@/components/shared/loading-spinner"
@@ -16,7 +16,7 @@ const useNewStory = (onSuccess?: () => void) => {
   const setToastId = useNewStoryToastStore((state) => state.setToastId)
   const closePopover = usePopoverStore((state) => state.closePopover)
 
-  const { data: user } = useUserData()
+  const { data: profile } = useUserProfile()
   const router = useRouter()
 
   const handleCreateNewStory = async () => {
@@ -76,7 +76,7 @@ const useNewStory = (onSuccess?: () => void) => {
     )
   }
 
-  const isUserLogged = !!user && user.id
+  const isUserLogged = !!profile && profile.user_id && profile.user_name
 
   return {
     isLoading,

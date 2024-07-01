@@ -1,4 +1,4 @@
-import { useUserData } from "./react-hooks/use-user"
+import useUserProfile from "./react-hooks/use-user"
 import useAccountModal from "./use-account-modal-store"
 import { useAppSubmitModalStore } from "./use-app-submit-modal-store"
 
@@ -8,8 +8,8 @@ const useSubmitApp = () => {
     (state) => state.openAppSubmitModal
   )
 
-  const { data: user } = useUserData()
-  const isUserLogged = !!user && user.id
+  const { data: profile } = useUserProfile()
+  const isUserLogged = !!profile && profile.user_id && profile.user_name
 
   const handleAppSubmitButtonClick = () => {
     if (isUserLogged) {

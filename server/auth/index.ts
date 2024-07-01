@@ -100,10 +100,27 @@ export async function getUserSession() {
   return supabase.auth.getSession()
 }
 
+// FLAG: THIS FUNCTION CAN TRIGGER ISSUES ON CLIENT COMPONENTS
+// TODO: CHECK AND RE-IMPLEMENT THIS FUNCTION TO BE ABLE TO USE ON BOTH CLIENT AND SERVER
 export async function getUserData() {
   const supabase = await createSupabaseServerClient()
   // Useabge: const { data:{user}, error } = await supabase.auth.getUser()
   return await supabase.auth.getUser()
+}
+
+export async function getUser() {
+  const supabase = await createSupabaseServerClient()
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser()
+
+  if (error) {
+    console.error("Error fetching user data:", error)
+    return { error }
+  }
+
+  return { user, error }
 }
 
 export async function getUserProfile() {
