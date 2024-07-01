@@ -8,12 +8,17 @@ import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog"
 import { ReportForm } from "./report-form"
 
+type DialogProps = React.ComponentPropsWithoutRef<typeof Dialog>
+type DialogTriggerProps = React.ComponentPropsWithoutRef<typeof DialogTrigger>
+
 type ReportDialogProps = {
   className?: string
   reportType: Report_type
   triggerClassName?: string
   children?: React.ReactNode
+  dialogProps?: DialogProps
   comment?: TCommentWithProfile
+  dialogTriggerProps?: DialogTriggerProps
 }
 
 export const ReportDialog: React.FC<ReportDialogProps> = ({
@@ -21,15 +26,18 @@ export const ReportDialog: React.FC<ReportDialogProps> = ({
   children,
   className,
   reportType,
+  dialogProps,
   triggerClassName,
+  dialogTriggerProps,
 }) => {
   return (
-    <Dialog>
+    <Dialog {...dialogProps}>
       <DialogTrigger
         className={cn(
           "flex w-full items-start justify-between",
           triggerClassName
         )}
+        {...dialogTriggerProps}
       >
         {children ? (
           children

@@ -22,8 +22,6 @@ const footerLinks: { id: number; title: string; url: string }[][] = [
   ],
 ]
 
-// TODO:IMPLEMENT THE EMAIL SUBSCRIBE BEFORE PRODUCTION
-
 export function SiteFooter() {
   return (
     <footer className="my-20 mt-40">
@@ -44,7 +42,10 @@ export function SiteFooter() {
               <ThemeToggle />
 
               <div className="flex">
-                <ReportDialog reportType="feedback">
+                <ReportDialog
+                  reportType="feedback"
+                  dialogTriggerProps={{ asChild: true }}
+                >
                   <Button
                     size={"sm"}
                     variant={"outline"}

@@ -183,15 +183,14 @@ export const EmailSubscribeForm: React.FC<EmailSubscribeFormProps> = ({
           </SpinnerButton>
         </form>
 
-        <p className="max-w-sm text-xs text-muted-foreground dark:text-muted">
+        <span className="max-w-sm text-xs text-muted-foreground dark:text-muted">
           By submitting your email address, you agree to receive AI App
           Station’s newsletters. For more information, please read our privacy
           policy or contact us at{" "}
           <p className="inline-block underline underline-offset-2 transition-all duration-300 ease-out hover:scale-102 hover:text-primary">
             support@aiappstation.com
           </p>
-          .
-        </p>
+        </span>
       </Form>
     </div>
   )
