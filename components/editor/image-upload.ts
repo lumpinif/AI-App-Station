@@ -80,8 +80,8 @@ export const createUploadFn = ({
       if (!file.type.includes("image/")) {
         toast.error("File type not supported.")
         return false
-      } else if (file.size / 1024 / 1024 > 10) {
-        toast.error("File size too big (max 10MB).")
+      } else if (file.size / 1024 / 1024 > 3) {
+        toast.error("File size too big (max 3MB).")
         return false
       }
       return true

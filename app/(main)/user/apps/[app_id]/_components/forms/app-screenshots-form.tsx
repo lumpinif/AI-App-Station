@@ -109,7 +109,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
       restrictions: {
         maxNumberOfFiles: allowedNumberOfImages,
         allowedFileTypes: ["image/*"],
-        maxFileSize: 5 * 1024 * 1024,
+        maxFileSize: 3 * 1024 * 1024,
       },
     }).use(Tus, {
       limit: 1,
