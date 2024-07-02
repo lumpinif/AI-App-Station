@@ -28,6 +28,22 @@ const appFetchConfig: AppFetchConfig[] = [
     innerJoinTables: [],
   },
   {
+    title: "Newest Added",
+
+    order: [
+      {
+        column: "created_at",
+        options: { ascending: false },
+      },
+    ],
+
+    limit: {
+      limit: 15,
+    },
+    filters: [],
+    innerJoinTables: [],
+  },
+  {
     title: "Featured Apps",
     order: [
       {
@@ -59,22 +75,7 @@ const appFetchConfig: AppFetchConfig[] = [
     filters: [],
     innerJoinTables: [],
   },
-  {
-    title: "Newest Added",
 
-    order: [
-      {
-        column: "created_at",
-        options: { ascending: false },
-      },
-    ],
-
-    limit: {
-      limit: 15,
-    },
-    filters: [],
-    innerJoinTables: [],
-  },
   {
     title: "Top Free",
     order: [
