@@ -72,7 +72,7 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({
         />
         {/* overlay */}
         <div
-          style={{ backgroundColor: color.rgba, opacity: 0.25 }}
+          style={{ backgroundColor: color.rgba, opacity: 0.35 }}
           className={cn("absolute inset-x-0 bottom-0 h-full w-full")}
         />
         {/* Content */}

@@ -58,7 +58,7 @@ const useAverageColor = (imageSrc: string, isBottom: boolean) => {
         rgb: color.rgb,
         rgba: color.rgba,
         colorEnd: `${[...color.value.slice(0, 3)].join(",")}`,
-        isDark: dominantColor.isDark,
+        isDark: color.isDark,
       })
 
       setIsLoading(false)

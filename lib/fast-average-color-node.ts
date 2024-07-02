@@ -84,32 +84,47 @@ export async function getAverageColor(
   }
 
   let pipe = sharp(input)
-
   const metadata = await pipe.metadata()
 
-  if (metadata.width && metadata.height) {
-    const size = prepareSizeAndPosition(
-      {
-        width: metadata.width,
-        height: metadata.height,
-      },
-      options
-    )
-
-    const left = options.left ?? 0
-    const top = isBottom
-      ? Math.max(0, metadata.height - size.srcHeight)
-      : options.top ?? 0
-
-    pipe = pipe
-      .extract({
-        left,
-        top,
-        width: size.srcWidth,
-        height: size.srcHeight,
-      })
-      .resize(size.destWidth, size.destHeight)
+  if (!metadata.width || !metadata.height) {
+    throw new Error("Unable to get image dimensions")
   }
+
+  // const size = prepareSizeAndPosition(
+  //   {
+  //     width: metadata.width,
+  //     height: metadata.height,
+  //   },
+  //   options
+  // )
+
+  const size = 50 // Matching the client-side size
+
+  const left = 0
+  const top = isBottom ? Math.max(0, metadata.height - size) : 0
+
+  // const left = options.left ?? 0
+  // const top = isBottom
+  //   ? Math.max(0, metadata.height - size.srcHeight)
+  //   : options.top ?? 0
+
+  // pipe = pipe
+  //   .extract({
+  //     left,
+  //     top,
+  //     width: size.srcWidth,
+  //     height: size.srcHeight,
+  //   })
+  //   .resize(size.destWidth, size.destHeight)
+
+  pipe = pipe
+    .extract({
+      left,
+      top,
+      width: metadata.width,
+      height: size,
+    })
+    .resize(metadata.width, size)
 
   const buffer = await pipe.ensureAlpha().raw().toBuffer()
   const pixelArray = new Uint8Array(buffer.buffer)
@@ -122,20 +137,10 @@ export async function getAverageColor(
     })
   )
 
-  // Get dominant color for isDark property
-  const dominantColor = fac.prepareResult(
-    fac.getColorFromArray4(pixelArray, {
-      step: 1,
-      left: 10,
-      mode: "precision",
-      algorithm: "dominant",
-    })
-  )
-
   return {
     rgb: color.rgb,
     rgba: color.rgba,
     colorEnd: color.value.slice(0, 3).join(","),
-    isDark: dominantColor.isDark,
+    isDark: color.isDark,
   }
 }
