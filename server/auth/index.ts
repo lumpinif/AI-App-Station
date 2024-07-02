@@ -133,7 +133,7 @@ export async function getUser() {
 
   if (error) {
     console.error("Error fetching user data:", error)
-    return { user, error }
+    // return { user, error }
   }
 
   return { user, error }
