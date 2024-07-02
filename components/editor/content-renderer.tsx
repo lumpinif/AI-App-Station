@@ -25,14 +25,14 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({
       <EditorContent
         editable={false}
         className={cn(
-          "max-w-full whitespace-normal break-words rounded-xl",
+          "w-full max-w-full whitespace-normal break-words rounded-xl",
           className
         )}
         {...(content && { initialContent: content as JSONContent })}
         extensions={[...defaultExtensions]}
         editorProps={{
           attributes: {
-            class: `prose dark:prose-invert prose-headings:font-title font-default focus:outline-none break-words whitespace-normal`,
+            class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
           },
         }}
         // slotAfter={<ImageResizer />}

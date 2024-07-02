@@ -199,7 +199,7 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
           </div>
 
           <motion.div
-            className="relative mx-auto max-w-full px-2"
+            className="relative max-w-full px-2"
             layoutId={`dp-card-post-content-${post_id}`}
           >
             <ContentRenderer
