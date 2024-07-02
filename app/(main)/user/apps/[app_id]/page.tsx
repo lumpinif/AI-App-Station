@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { getUserData, getUserSession } from "@/server/auth"
+import { getUserData, getUserSessionToken } from "@/server/auth"
 import { getAppByAppIdUserId } from "@/server/queries/supabase/apps/apps-actions"
 import { getAllCategories } from "@/server/queries/supabase/categories"
 import {
@@ -62,10 +62,7 @@ export async function generateMetadata({
 
 const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
   const { user, getUserDataError } = await fetchUser()
-
-  const {
-    data: { session },
-  } = await getUserSession()
+  const { token } = await getUserSessionToken()
 
   // TODO: HANDLE ERROR
   if (!user?.id) {
@@ -134,9 +131,9 @@ const SubmittedAppIdPage = async ({ params }: SubmittedAppIdPageProps) => {
       <AppEditor
         app={app}
         user={user}
-        session={session}
         appIconUrl={appIconUrl}
         categories={categories}
+        access_token={token as string}
         appIconFileName={appIconFileName}
         screenshotsFileNames={screenshotsFileNames}
         screenshotsPublicUrls={screenshotsPublicUrls}

@@ -83,7 +83,7 @@ export async function signOut() {
   //check if there is a session logged in
   const {
     data: { session },
-  } = await getUserSession()
+  } = await supabase.auth.getSession()
 
   if (session) {
     const { error } = await supabase.auth.signOut()
@@ -94,10 +94,26 @@ export async function signOut() {
   return null
 }
 
-export async function getUserSession() {
+export async function getUserSessionToken() {
   const supabase = await createSupabaseServerClient()
 
-  return supabase.auth.getSession()
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession()
+
+  if (error) {
+    console.error("Error fetching session:", error)
+    return { error }
+  }
+
+  const token = session?.access_token
+
+  if (!token) {
+    return { error: "No access token found" }
+  }
+
+  return { token, error }
 }
 
 // FLAG: THIS FUNCTION CAN TRIGGER ISSUES ON CLIENT COMPONENTS

@@ -16,8 +16,8 @@ import { AppIntroductionEditor } from "./introduction-editor/app-introduction-ed
 type AppEditorProps = {
   app: AppDetails
   user: User
-  session: Session | null
   appIconUrl: string
+  access_token: string
   categories: Categories[] | null | undefined
   appIconFileName: string | null
   screenshotsFileNames: string[] | null
@@ -27,9 +27,9 @@ type AppEditorProps = {
 export const AppEditor: React.FC<AppEditorProps> = ({
   app,
   user,
-  session,
   appIconUrl,
   categories,
+  access_token,
   appIconFileName,
   screenshotsFileNames,
   screenshotsPublicUrls,
@@ -44,9 +44,9 @@ export const AppEditor: React.FC<AppEditorProps> = ({
               <AppIconForm
                 app_id={app.app_id}
                 app_slug={app.app_slug}
+                access_token={access_token}
                 appIconPublicUrl={appIconUrl as string}
                 appIconFileName={appIconFileName as string}
-                access_token={session?.access_token as string}
                 app_submitted_by_user_id={app.submitted_by_user_id}
               />
             </Suspense>
@@ -89,7 +89,7 @@ export const AppEditor: React.FC<AppEditorProps> = ({
           <AppScreenshotsForm
             app_id={app.app_id}
             app_slug={app.app_slug}
-            access_token={session?.access_token as string}
+            access_token={access_token}
             screenshotsFileNames={screenshotsFileNames || []}
             screenshotsPublicUrls={screenshotsPublicUrls || []}
             app_submitted_by_user_id={app.submitted_by_user_id}
