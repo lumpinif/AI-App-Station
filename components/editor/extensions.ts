@@ -50,9 +50,10 @@ const placeholder = Placeholder.configure({
 })
 
 const tiptapLink = TiptapLink.configure({
+  protocols: ["ftp", "mailto"],
   HTMLAttributes: {
     class: cx(
-      "text-muted-foreground underline underline-offset-[3px] hover:text-primary transition-colors cursor-pointer"
+      "text-muted-foreground underline underline-offset-4 hover:text-primary transition-colors cursor-pointer text-wrap break-all whitespace-normal"
     ),
   },
 })

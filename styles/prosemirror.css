@@ -14,9 +14,9 @@
 }
 
 /* twitter embedding avatar margin issue */
-.prose :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+/* .prose :where(img):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   margin-top: 0 !important;
-}
+} */
 
 .ProseMirror h1 {
   @apply text-5xl;

@@ -23,19 +23,17 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
   const averageColor = await getAverageColorOnServer(imageSrc)
 
   return (
-    <>
-      <div
-        style={{
-          borderRadius: 20,
-        }}
-        className="flex flex-col gap-y-1"
-      >
-        <IosStyleDailyPostCard
-          dailyPost={dailyPost}
-          averageColor={averageColor}
-        />
-      </div>
-    </>
+    <div
+      style={{
+        borderRadius: 20,
+      }}
+      className="flex flex-col gap-y-1"
+    >
+      <IosStyleDailyPostCard
+        dailyPost={dailyPost}
+        averageColor={averageColor}
+      />
+    </div>
   )
 }
 

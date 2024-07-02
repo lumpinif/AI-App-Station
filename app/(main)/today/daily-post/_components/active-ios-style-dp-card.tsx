@@ -72,14 +72,14 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
   }, [activeCard])
 
   return (
-    <motion.div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+    <motion.div className="fixed inset-0 z-50 flex max-w-full items-end justify-center sm:items-center">
       <motion.div
         ref={ref}
         style={{
           borderRadius: 10,
         }}
         layoutId={`dp-card-${post_id}`}
-        className="card card-active relative flex h-full w-full max-w-lg transform-gpu flex-col overflow-hidden rounded-lg bg-background shadow-lg outline-none sm:h-[90vh] md:max-w-2xl lg:max-w-3xl 2xl:max-w-4xl"
+        className="card card-active relative flex h-full w-full max-w-full transform-gpu flex-col overflow-hidden rounded-lg bg-background shadow-lg outline-none sm:h-[90vh] sm:max-w-xl md:max-w-2xl lg:max-w-3xl 2xl:max-w-4xl"
       >
         <ScrollArea className="h-full w-full" scrollHideDelay={0}>
           <div className="card-inner relative z-50 h-[430px] transform-gpu select-none md:h-[500px]">
@@ -199,7 +199,7 @@ export const ActiveIosStyleDPCard: React.FC<ActiveIosStyleDPCardProps> = ({
           </div>
 
           <motion.div
-            className="relative max-w-full px-2"
+            className="relative mx-auto max-w-full px-2"
             layoutId={`dp-card-post-content-${post_id}`}
           >
             <ContentRenderer

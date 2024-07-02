@@ -97,11 +97,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <div vaul-drawer-wrapper="">
-              <section className="relative flex min-h-screen flex-col bg-background">
+              <div className="relative flex min-h-screen flex-col bg-background">
                 <SiteHeader />
                 <main className="flex-1">{children}</main>
                 <SiteFooter />
-              </section>
+              </div>
               <TailwindIndicator />
               <SonnerToaster richColors position="bottom-right" />
             </div>

@@ -39,13 +39,13 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
 
   return (
     <motion.div
-      whileTap={{ scale: 0.98 }}
       style={{
         borderRadius: 20,
       }}
+      whileTap={{ scale: 0.98 }}
       layoutId={`dp-card-${post_id}`}
       onClick={() => setActiveCard(dailyPost)}
-      className="card relative mx-auto my-0 h-[430px] max-w-sm cursor-pointer select-none overflow-hidden rounded-xl bg-background outline-none md:max-w-md"
+      className="card relative mx-auto my-0 h-[430px] w-full cursor-pointer select-none overflow-hidden rounded-xl bg-background outline-none md:max-w-md"
     >
       {/* overlay */}
       {/* <div
