@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { redirect } from "next/navigation"
-import { getUserData, getUserSessionToken } from "@/server/auth"
+import { getUser, getUserSessionToken } from "@/server/auth"
 import { getAppByAppIdUserId } from "@/server/queries/supabase/apps/apps-actions"
 import { getAllCategories } from "@/server/queries/supabase/categories"
 import {
@@ -29,10 +29,7 @@ async function fetchAppByAppIdUserId(
 }
 
 async function fetchUser() {
-  const {
-    data: { user },
-    error: getUserDataError,
-  } = await getUserData()
+  const { user, error: getUserDataError } = await getUser()
 
   return { user, getUserDataError }
 }

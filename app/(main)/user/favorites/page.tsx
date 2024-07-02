@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 
 import { TabsContent } from "@/components/ui/tabs"
 import LoadingFallback from "@/components/shared/loading-fallback"
@@ -16,10 +16,7 @@ export const metadata: Metadata = {
 }
 
 export default async function FavoritesPage() {
-  const {
-    data: { user },
-    error: getUserDataError,
-  } = await getUserData()
+  const { user, error: getUserDataError } = await getUser()
 
   if (!user?.id) {
     return <div>Not logged in</div>

@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 import { getCategoryBySlug } from "@/server/queries/supabase/categories"
 
@@ -100,9 +100,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category: category_slug } = params
 
   // Get user
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { categoryBySlug, getCategoryBySlugError } =
     await fetchAllCategories(category_slug)

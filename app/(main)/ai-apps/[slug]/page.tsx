@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAppBySlug } from "@/server/queries/supabase/apps/apps-actions"
 import {
   getScreenshotsFileNames,
@@ -128,9 +128,7 @@ export default async function AiAppsMainPage({
   const c_order = searchParams?.c_order as "asc" | "desc" | undefined
   const orderBy = searchParams?.orderBy as keyof App_Comments | undefined
 
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { app, ratingData, getAppBySlugError } = await fetchAppBySlug({
     slug: params.slug,
@@ -177,14 +175,14 @@ export default async function AiAppsMainPage({
               <div className="flex w-full justify-between">
                 <AppTitleWithDescription
                   {...app}
-                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
-                  titleSize="3xl"
-                  titleClassname="md:text-4xl leading-[0.8]"
-                  titleFont="bold"
-                  descriptionSize="sm"
-                  descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 md:text-base"
-                  isTruncate={false}
                   isLink={false}
+                  titleSize="3xl"
+                  titleFont="bold"
+                  isTruncate={false}
+                  descriptionSize="sm"
+                  titleClassname="md:text-4xl leading-[0.8]"
+                  className="w-full items-start text-ellipsis tracking-tight sm:tracking-wide md:gap-2 lg:gap-3 sm:[&>*:nth-child(1)]:hover:no-underline"
+                  descriptionClassname="tracking tracking-normal line-clamp-2 md:line-clamp-3 md:text-base"
                 />
                 <div
                   className={cn(

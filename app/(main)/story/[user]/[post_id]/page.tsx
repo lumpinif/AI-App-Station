@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getPostById } from "@/server/queries/supabase/stories"
 import { JSONContent } from "novel"
 
@@ -83,9 +83,7 @@ export default async function StoryPage({
     post_id: params.post_id,
   })
 
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const isAuthor = post?.post_author_id === user?.id
   const isPublished = post?.post_publish_status === "published"

@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post"
 import { JSONContent } from "novel"
 
@@ -82,9 +82,7 @@ export default async function DailyPostPage({
   const c_order = searchParams?.c_order as "asc" | "desc" | undefined
   const orderBy = searchParams?.orderBy as keyof Post_Comments | undefined
 
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { dailyPost, getDailyPostError } = await fetchDailyPost({
     date: params.date,

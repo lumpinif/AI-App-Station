@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAllApps } from "@/server/queries/supabase/apps/apps-actions"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
@@ -13,9 +13,7 @@ export const metadata: Metadata = {
 
 export default async function AllAppsPagePage() {
   // Get user
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { apps: allApps, error: getAllAppsError } = await getAllApps()
 

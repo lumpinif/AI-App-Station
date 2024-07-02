@@ -16,7 +16,7 @@ export default function HeroSection({
   user,
   className,
 }: {
-  user: User | null
+  user?: User | null
   className?: string
 }) {
   return (

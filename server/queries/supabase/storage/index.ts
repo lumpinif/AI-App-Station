@@ -1,6 +1,6 @@
 "use server"
 
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { Apps } from "@/types/db_tables"
@@ -18,9 +18,7 @@ export async function deleteFolders({
 }: DeleteFoldersProps) {
   const supabase = await createSupabaseServerClient()
 
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   if (!user?.id) {
     return { error: "Unauthorized!" }

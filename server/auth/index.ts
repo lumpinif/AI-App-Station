@@ -117,12 +117,12 @@ export async function getUserSessionToken() {
 }
 
 // FLAG: THIS FUNCTION CAN TRIGGER ISSUES ON CLIENT COMPONENTS
-// TODO: CHECK AND RE-IMPLEMENT THIS FUNCTION TO BE ABLE TO USE ON BOTH CLIENT AND SERVER
-export async function getUserData() {
-  const supabase = await createSupabaseServerClient()
-  // Useabge: const { data:{user}, error } = await supabase.auth.getUser()
-  return await supabase.auth.getUser()
-}
+// DEPRECATED: Use getUserData() instead. Directly returning function to client can cause issues.
+// export async function getUserData() {
+//   const supabase = await createSupabaseServerClient()
+//   // Useabge: const { data:{user}, error } = await supabase.auth.getUser()
+//   return await supabase.auth.getUser()
+// }
 
 export async function getUser() {
   const supabase = await createSupabaseServerClient()
@@ -133,7 +133,7 @@ export async function getUser() {
 
   if (error) {
     console.error("Error fetching user data:", error)
-    return { error }
+    return { user, error }
   }
 
   return { user, error }
@@ -142,9 +142,7 @@ export async function getUser() {
 export async function getUserProfile() {
   const supabase = await createSupabaseServerClient()
 
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   if (user?.id) {
     const { data: profile, error } = await supabase
@@ -165,9 +163,7 @@ export async function getUserProfile() {
 export async function getUserRole() {
   const supabase = await createSupabaseServerClient()
 
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   // Check if user is super_admin, admin, or super_user, if so which means he or she is a verified author
   if (user?.id) {
@@ -254,14 +250,7 @@ export async function removeExistingAvatars(profile?: Profiles) {
 export async function resetAvatarUrl(profile?: Profiles) {
   const bucketName =
     process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_AVATAR || "avatars"
-  const {
-    data: { user },
-    error: getUserDataError,
-  } = await getUserData()
-
-  if (getUserDataError) {
-    return { error: getUserDataError }
-  }
+  const { user } = await getUser()
 
   const oauth_avatar_url = user?.user_metadata.avatar_url
 

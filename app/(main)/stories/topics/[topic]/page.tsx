@@ -1,4 +1,4 @@
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import {
   getPostByTopicSlug,
   getTopicBySlug,
@@ -30,9 +30,7 @@ export default async function TopicPage({
   const { topic: topic_slug } = params
 
   // Get user
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { topic: topicBySlug, error: getTopicBySlugError } =
     await getTopicBySlug(topic_slug)

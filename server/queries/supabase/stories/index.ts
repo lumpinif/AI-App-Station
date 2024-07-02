@@ -1,7 +1,7 @@
 "use server"
 
 import { unstable_noStore as noStore } from "next/cache"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 
 import { PostDetails, Posts, PostWithProfile, Topics } from "@/types/db_tables"
@@ -63,10 +63,7 @@ export async function getPostById(post_id: Posts["post_id"]) {
 export async function createNewPost() {
   const supabase = await createSupabaseServerClient()
 
-  const {
-    data: { user },
-    error: getUserDataError,
-  } = await getUserData()
+  const { user, error: getUserDataError } = await getUser()
 
   if (!user || !user?.id) {
     return { error: new Error("User not found") }

@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 import { getDeveloper } from "@/server/queries/supabase/developer"
 
@@ -100,9 +100,7 @@ export default async function DeveloperPage({ params }: DeveloperPageProps) {
   const { developer: developer_slug } = params
 
   // Get user
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { developer, getDeveloperError } = await fetchDeveloper(developer_slug)
 

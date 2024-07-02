@@ -2,7 +2,7 @@
 
 // TODO: MOVE THIS INTO ALL DB_QUERIES FILE SECTIONS
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import createSupabaseServerClient from "@/utils/supabase/server-client"
 import * as z from "zod"
 
@@ -128,9 +128,7 @@ export async function deleteApp(
   try {
     const supabase = await createSupabaseServerClient()
 
-    const {
-      data: { user },
-    } = await getUserData()
+    const { user } = await getUser()
 
     if (!user?.id) return { error: "User not found" }
 

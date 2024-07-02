@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAllCategories } from "@/server/queries/supabase/categories"
 import { getPostImagesWithUrls } from "@/server/queries/supabase/editor/publish/stories"
 import { getPostById } from "@/server/queries/supabase/stories"
@@ -54,10 +54,7 @@ export async function generateMetadata({
 }
 
 export default async function PostEditPage({ params }: PostEditPageProps) {
-  const {
-    data: { user },
-    error: getUserDataError,
-  } = await getUserData()
+  const { user, error: getUserDataError } = await getUser()
 
   if (getUserDataError) {
     console.error(getUserDataError)

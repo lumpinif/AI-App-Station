@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-config"
 import { BoxSelect } from "lucide-react"
 
@@ -89,9 +89,7 @@ export async function generateMetadata({
 
 export default async function CollectionPage({ params }: CollectionPageProps) {
   // Get user
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { collection } = params
 

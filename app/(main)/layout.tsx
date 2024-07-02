@@ -1,4 +1,4 @@
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 
 import AccountModal from "@/components/auth/auth-modal/account-modal"
 import { SearchCommandDialogProvider } from "@/components/search-command-dialog/search-command-dialog-provider"
@@ -9,9 +9,7 @@ export default async function MainLayout({
 }: {
   children: React.ReactNode
 }) {
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   return (
     <>

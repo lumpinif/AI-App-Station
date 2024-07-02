@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAllPosts } from "@/server/queries/supabase/stories"
 
 import { StoryCard } from "@/components/cards/apps/stories/story-card"
@@ -13,9 +13,7 @@ export const metadata: Metadata = {
 
 export default async function AllStoriesPagePage() {
   // Get user
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   const { posts: allPosts, error: getAllPostsError } = await getAllPosts()
 

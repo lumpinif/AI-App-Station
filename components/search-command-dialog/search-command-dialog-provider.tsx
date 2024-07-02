@@ -1,4 +1,4 @@
-import { getUserData } from "@/server/auth"
+import { getUser } from "@/server/auth"
 import { getAllApps } from "@/server/queries/supabase/apps/apps-actions"
 import { getAllPosts } from "@/server/queries/supabase/stories"
 
@@ -13,9 +13,7 @@ export async function SearchCommandDialogProvider() {
     console.error(allAppsError, allPostsError)
   }
 
-  const {
-    data: { user },
-  } = await getUserData()
+  const { user } = await getUser()
 
   return (
     <>

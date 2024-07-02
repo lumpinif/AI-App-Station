@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/theme/theme-toggle"
 import LoginCard from "../signin/login-card"
 import AccountModalContent from "./account-modal-content"
 
-const AccountModal = ({ user }: { user: User | null }) => {
+const AccountModal = ({ user }: { user?: User | null }) => {
   const isOpen = useAccountModal((state) => state.isOpen)
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
