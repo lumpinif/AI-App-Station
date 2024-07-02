@@ -34,11 +34,19 @@ const useUpdateContentHeading = <T>({
       data.content &&
       data.content[0] &&
       data.content[0].type === "heading" &&
-      data.content[0].content &&
-      data.content[0].content[0] &&
-      data.content[0].content[0].text
+      data.content[0].content
     ) {
-      return data.content[0].content[0].text
+      // loop throught the data.content[0].content to concate every text from each object with type === 'text', including the space
+      let headingText = data.content[0].content
+        .reduce((acc, item) => {
+          if (item.type === "text") {
+            acc += item.text
+          }
+          return acc
+        }, "")
+        .trim()
+
+      return headingText
     }
     return null
   }, [])
