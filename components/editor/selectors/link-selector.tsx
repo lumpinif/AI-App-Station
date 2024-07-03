@@ -26,6 +26,7 @@ export function getUrlFromString(str: string) {
     return null
   }
 }
+
 interface LinkSelectorProps {
   open: boolean
   onOpenChange: (open: boolean) => void
@@ -39,7 +40,16 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
   useEffect(() => {
     inputRef.current && inputRef.current?.focus()
   })
+
   if (!editor) return null
+
+  // check if the current selection is in the first heading
+  const isFirstHeading = (): boolean | undefined => {
+    const { from } = editor.state.selection
+    const firstNode = editor.state.doc.firstChild
+    if (!firstNode) return undefined // Return `undefined` instead of `null`
+    return firstNode.type.name === "heading" && from < firstNode.nodeSize
+  }
 
   return (
     <Popover modal={true} open={open} onOpenChange={onOpenChange}>
@@ -47,6 +57,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
         <Button
           size="sm"
           variant="ghost"
+          disabled={isFirstHeading()}
           className="gap-2 rounded-none border-none"
         >
           <Link className="size-4" />
@@ -68,7 +79,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
             const url = getUrlFromString(input.value)
             url && editor.chain().focus().setLink({ href: url }).run()
           }}
-          className="flex  p-1 "
+          className="flex p-1"
         >
           <input
             ref={inputRef}
