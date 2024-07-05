@@ -75,7 +75,7 @@ export async function getScreenshotsFileNames(
 
   const { data, error } = await supabase.storage
     .from(bucketName)
-    .list(`${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots`, {
+    .list(`${app_id}/${app_submitted_by_user_id}/screenshots`, {
       limit: 6,
       offset: 0,
       sortBy: { column: "created_at", order: "asc" },
@@ -89,6 +89,7 @@ export async function getScreenshotsFileNames(
   if (data && data.length > 0) {
     return data?.map((item) => item.name)
   }
+
   return null
 }
 
@@ -106,7 +107,12 @@ export async function getScreenshotsPublicUrls(
     const { data } = supabase.storage
       .from(bucketName)
       .getPublicUrl(
-        `${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
+        `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`,
+        {
+          transform: {
+            quality: 80,
+          },
+        }
       )
 
     if (data) screenshotsPublicUrls.push(data.publicUrl)
@@ -118,7 +124,7 @@ export async function getScreenshotsPublicUrls(
   //     const { data } = await supabase.storage
   //       .from(bucketName)
   //       .getPublicUrl(
-  //         `${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
+  //         `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
   //       )
   // if (!data) {
   //   throw new Error(`Failed to get public URL for ${data}`)
@@ -141,7 +147,7 @@ export async function getAppIconFileName(
 
   const { data, error } = await supabase.storage
     .from(bucketName)
-    .list(`${app_slug}/${app_id}/${app_submitted_by_user_id}/icon`, {
+    .list(`${app_id}/${app_submitted_by_user_id}/icon`, {
       limit: 1,
       offset: 0,
       sortBy: { column: "created_at", order: "asc" },
@@ -169,9 +175,7 @@ export async function getAppIconUrl(
 
   const { data } = supabase.storage
     .from(bucketName)
-    .getPublicUrl(
-      `${app_slug}/${app_id}/${app_submitted_by_user_id}/icon/${fileName}`
-    )
+    .getPublicUrl(`${app_id}/${app_submitted_by_user_id}/icon/${fileName}`)
 
   return data.publicUrl
 }

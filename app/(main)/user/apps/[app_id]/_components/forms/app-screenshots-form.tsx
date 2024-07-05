@@ -117,7 +117,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
       headers: {
         authorization: `Bearer ${access_token}`,
       },
-      chunkSize: 6 * 1024 * 1024,
+      chunkSize: 3 * 1024 * 1024,
       allowedMetaFields: [
         "bucketName",
         "objectName",
@@ -143,18 +143,17 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
   uppy.on("file-added", async (file) => {
     setUploadButton(true)
 
+    // FLAG: avoid using app_slug as the folder name since it can be changed or possiblely not unique
     const supabaseMetadata = {
       bucketName: bucketNameApp,
       objectName:
-        app_slug +
-        "/" +
         app_id +
         "/" +
         app_submitted_by_user_id +
         "/" +
         "screenshots" +
         "/" +
-        file.name,
+        `${app_slug}-${file.name}`,
       contentType: file.type,
     }
 

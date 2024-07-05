@@ -21,7 +21,8 @@ const onUpload = async ({
   content_id,
   content_slug,
 }: OnUploadProps) => {
-  const uploadPath = `${content_slug}/${content_id}/${user_id}/${uploadTo}/${file.name}`
+  // FLAG: avoid using the content_slug as the folder name as it can be changed by the user
+  const uploadPath = `${content_id}/${user_id}/${uploadTo}/${content_slug}-${file.name}`
 
   return new Promise<string>((resolve, reject) => {
     const supabase = createSupabaseBrowserClient()
@@ -38,7 +39,11 @@ const onUpload = async ({
         } else {
           const { data: publicUrlData } = supabase.storage
             .from(bucketName)
-            .getPublicUrl(uploadPath)
+            .getPublicUrl(uploadPath, {
+              transform: {
+                quality: 80,
+              },
+            })
           const publicUrl = publicUrlData.publicUrl
 
           // Preload the image

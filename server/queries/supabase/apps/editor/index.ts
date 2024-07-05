@@ -482,9 +482,7 @@ export async function deleteAppIcon(
     const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET_APP!
     const { data, error } = await supabase.storage
       .from(bucketName)
-      .remove([
-        `${app_slug}/${app_id}/${app_submitted_by_user_id}/icon/${appIconFileName}`,
-      ])
+      .remove([`${app_id}/${app_submitted_by_user_id}/icon/${appIconFileName}`])
     // TODO: ERROR HANDLING
     if (error) {
       console.log(error)
@@ -536,7 +534,7 @@ export async function deleteScreenshot(
     const { data, error } = await supabase.storage
       .from(bucketName)
       .remove([
-        `${app_slug}/${app_id}/${app_submitted_by_user_id}/screenshots/${screenshotFileName}`,
+        `${app_id}/${app_submitted_by_user_id}/screenshots/${screenshotFileName}`,
       ])
     // TODO: ERROR HANDLING
     if (error) {

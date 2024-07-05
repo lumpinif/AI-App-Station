@@ -95,9 +95,7 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
             variant={"ghost"}
             onClick={() => setIsPublishModalOpen(true)}
             className="rounded-full border px-4 active:scale-[.98] dark:border-0 dark:shadow-outline"
-            disabled={
-              saveStatus === "saving" || isRetrying || isEmpty || !isEdited
-            }
+            disabled={saveStatus === "saving" || isRetrying || isEmpty}
             {...props}
           >
             {!isEdited
