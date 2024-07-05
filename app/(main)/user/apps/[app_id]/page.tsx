@@ -52,8 +52,8 @@ export async function generateMetadata({
   const app_title = app?.app_title
 
   return {
-    title: `Submitting - ${app_title}`,
-    description: `In the editor mode for ${app_title}`,
+    title: `Editing - ${app_title}`,
+    description: `In the editor of ${app_title}`,
   }
 }
 

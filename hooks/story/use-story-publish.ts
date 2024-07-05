@@ -28,6 +28,7 @@ import {
   Profiles,
   Topics,
 } from "@/types/db_tables"
+import { SpinnerButtonCopyType } from "@/types/shared"
 import {
   checkIsSuperUser,
   getPostAuthorSlug,
@@ -289,17 +290,23 @@ export const useStorySaveAndPublish = ({
     const promises = []
     let changesMade = false
 
+    // Set the appropriate button state to loading
     if (isPublishing && setPublishButtonState) {
       setPublishButtonState("loading")
     } else if (isSaving && setSaveButtonState) {
       setSaveButtonState("loading")
     }
 
+    const setAppropriateButtonState = (state: keyof SpinnerButtonCopyType) => {
+      if (isPublishing && setPublishButtonState) {
+        setPublishButtonState(state)
+      } else if (isSaving && setSaveButtonState) {
+        setSaveButtonState(state)
+      }
+    }
+
     if (post_description !== defaultDescription) {
       changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
       promises.push(updatePostDescription(post_id, post_description))
     }
 
@@ -309,9 +316,6 @@ export const useStorySaveAndPublish = ({
       _.isEqual(topics, defaultTopics) === false
     ) {
       changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
       promises.push(handleUpdateTopics(topics, post_id))
     }
 
@@ -321,9 +325,6 @@ export const useStorySaveAndPublish = ({
       _.isEqual(postCategories, defaultPostCategoriesWithoutIcon) === false
     ) {
       changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
       promises.push(handleUpdatePostCategories(postCategories, post_id))
     }
 
@@ -332,9 +333,6 @@ export const useStorySaveAndPublish = ({
       _.isEqual(post_image_src, defaultImageSrc) === false
     ) {
       changesMade = true
-      if (setPublishButtonState) {
-        setPublishButtonState("loading")
-      }
       promises.push(updatePostImageSrc(post_id, post_image_src))
     }
 
@@ -342,13 +340,6 @@ export const useStorySaveAndPublish = ({
     if (isSuperUser && is_daily_post_checked !== defaultIsDailyPostChecked) {
       // Flag indicating changes made
       changesMade = true
-
-      // Set publish button state to loading if the function is provided
-      if (isPublishing && setPublishButtonState) {
-        setPublishButtonState("loading")
-      } else if (isSaving && setSaveButtonState) {
-        setSaveButtonState("loading")
-      }
 
       // Check if the daily post is checked by default
       if (defaultIsDailyPostChecked) {
@@ -358,7 +349,6 @@ export const useStorySaveAndPublish = ({
         }
       } else {
         // When daily post is not checked by default, handle the unarchiving or creating new daily post
-
         // Unarchive daily post if it is a daily post and currently archived
         if (isDailyPost && isDailyPostArchived) {
           promises.push(unarchiveDailyPost(daily_post.dpost_id))
@@ -396,13 +386,10 @@ export const useStorySaveAndPublish = ({
           router.push(`/user/stories`)
         }
 
-        if (isPublishing && setPublishButtonState) {
-          setPublishButtonState("success")
-          toast.success("Story published successfully")
-        } else if (isSaving && setSaveButtonState) {
-          setSaveButtonState("success")
-          toast.success("Story saved successfully")
-        }
+        setAppropriateButtonState("success")
+        toast.success(
+          `Story ${isPublishing ? "published" : "saved"} successfully`
+        )
       } catch (error) {
         let errorMessage = ""
 
@@ -419,32 +406,19 @@ export const useStorySaveAndPublish = ({
           }
         )
 
-        if (isPublishing && setPublishButtonState) {
-          setPublishButtonState("idle")
-        } else if (isSaving && setSaveButtonState) {
-          setSaveButtonState("idle")
-        }
+        setAppropriateButtonState("idle")
       } finally {
-        if (isPublishing && setPublishButtonState) {
-          setTimeout(() => {
-            setPublishButtonState("idle")
-          }, 2000)
-        } else if (isSaving && setSaveButtonState) {
-          setTimeout(() => {
-            setSaveButtonState("idle")
-          }, 2000)
-        }
+        setTimeout(() => {
+          setAppropriateButtonState("idle")
+        }, 2000)
       }
-    }
-
-    if (!changesMade) {
-      if (isPublishing && setPublishButtonState) {
-        setPublishButtonState("idle")
+    } else if (!changesMade) {
+      if (isPublishing) {
         router.push(`/story/${author_slug}/${post_id}`)
-      } else if (isSaving && setSaveButtonState) {
-        setSaveButtonState("idle")
+      } else if (isSaving) {
         router.push(`/user/stories`)
       }
+      setAppropriateButtonState("idle")
     }
   }
 

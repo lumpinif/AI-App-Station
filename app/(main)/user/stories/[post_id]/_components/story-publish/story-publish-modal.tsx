@@ -98,16 +98,17 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
             disabled={saveStatus === "saving" || isRetrying || isEmpty}
             {...props}
           >
-            {!isEdited
+            {/* {!isEdited
               ? buttonLabel
               : post_publish_status === "published"
                 ? "Publish Changes"
-                : "Publish"}
+                : "Publish"} */}
+            Edit Preview
           </Button>
         </TooltipTrigger>
         <TooltipContent>
           {!isEdited
-            ? "Make some changes to publish"
+            ? "Make some changes to publish the story"
             : "Publish your story to make it live"}
         </TooltipContent>
       </Tooltip>

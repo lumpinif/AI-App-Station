@@ -26,7 +26,11 @@ export const IosStylePostCard: React.FC<IosStylePostCardProps> = ({
   const { isMobile, isTablet, isDesktop } = useMediaQuery()
 
   const imageSrc = post.post_image_src || "/images/Feature-thumbnail.png"
-  const { color, isLoading } = useAverageColor(imageSrc, true)
+  const {
+    color,
+    isLoading,
+    error: getColorError,
+  } = useAverageColor(imageSrc, true)
 
   const fullCard = postCardVariant === CarouselSize.Full || "hero"
   const halfCard = postCardVariant === CarouselSize.Half
