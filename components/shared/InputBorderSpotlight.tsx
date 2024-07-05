@@ -13,6 +13,7 @@ export const InputBorderSpotlight = forwardRef<HTMLInputElement, InputProps>(
     {
       name,
       type,
+      children,
       onChange,
       className,
       placeholder,
@@ -89,6 +90,7 @@ export const InputBorderSpotlight = forwardRef<HTMLInputElement, InputProps>(
               className
             )}
           />
+          {children}
         </div>
       </>
     )

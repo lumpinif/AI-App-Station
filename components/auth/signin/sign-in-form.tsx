@@ -1,10 +1,11 @@
 "use client"
 
-import { useTransition } from "react"
+import { useState, useTransition } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { signInWithEmailAndPassword } from "@/server/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useQueryClient } from "@tanstack/react-query"
+import { Eye, EyeOff } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -31,6 +32,7 @@ const FormSchema = z.object({
 
 export default function SignInForm() {
   const [isPending, startTransition] = useTransition()
+  const [isShowPassword, setIsShowPassword] = useState(false)
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
   const params = useSearchParams()
@@ -85,8 +87,8 @@ export default function SignInForm() {
     <>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmitSignin)}
           className="w-full space-y-6"
+          onSubmit={form.handleSubmit(onSubmitSignin)}
         >
           <FormField
             control={form.control}
@@ -107,18 +109,37 @@ export default function SignInForm() {
             )}
           />
           <FormField
-            control={form.control}
             name="password"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <InputBorderSpotlight
-                    placeholder="password"
                     {...field}
-                    type="password"
+                    className="pr-8"
+                    placeholder="password"
                     onChange={field.onChange}
-                  />
+                    type={!isShowPassword ? "password" : "text"}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setIsShowPassword(!isShowPassword)}
+                      className="absolute right-2 my-auto h-full text-nowrap text-muted transition-all duration-150 hover:text-muted-foreground"
+                    >
+                      {isShowPassword ? (
+                        <>
+                          <Eye className="size-4 stroke-1" />
+                          <p className="sr-only">show password</p>
+                        </>
+                      ) : (
+                        <>
+                          <EyeOff className="size-4 stroke-1" />
+                          <p className="sr-only">show password</p>
+                        </>
+                      )}
+                    </button>
+                  </InputBorderSpotlight>
                 </FormControl>
                 <FormMessage />
               </FormItem>
