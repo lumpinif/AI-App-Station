@@ -1,19 +1,25 @@
 import { Loader2, RotateCw } from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import { Posts } from "@/types/db_tables"
+import { getStatusColor } from "@/lib/get-status-icon"
+import { capitalizeFirstLetter, cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 type StoryEditorStatusProps = {
   saveStatus: string
   isRetrying: boolean
   handleRetry: () => void
+  post_publish_status: Posts["post_publish_status"]
 }
 
 export const StoryEditorStatus: React.FC<StoryEditorStatusProps> = ({
   saveStatus,
   isRetrying,
   handleRetry,
+  post_publish_status,
 }) => {
+  const statusColor = getStatusColor(post_publish_status!)
+
   return (
     <>
       {saveStatus === "Failed to save" && (
@@ -39,8 +45,8 @@ export const StoryEditorStatus: React.FC<StoryEditorStatusProps> = ({
       >
         {saveStatus === "saving" ? (
           <span className="flex items-center space-x-2">
-            <span>{saveStatus}</span>
             <Loader2 className="size-4 animate-spin" />
+            <span>{saveStatus}</span>
           </span>
         ) : (
           <>
@@ -55,6 +61,16 @@ export const StoryEditorStatus: React.FC<StoryEditorStatusProps> = ({
             )}
           </>
         )}
+      </div>
+
+      <div
+        className={cn(
+          "flex select-none rounded-lg bg-accent px-2 py-1 text-xs text-muted-foreground",
+          statusColor,
+          saveStatus === "Failed to save" && "bg-destructive"
+        )}
+      >
+        {capitalizeFirstLetter(post_publish_status)}
       </div>
     </>
   )

@@ -44,7 +44,9 @@ export const StoryEditorHeader: React.FC<StoryEditorHeaderProps> = ({
               saveStatus={saveStatus}
               isRetrying={isRetrying}
               handleRetry={handleRetry}
+              post_publish_status={post.post_publish_status}
             />
+
             <StoryEditorInfoPopover />
           </span>
           <span className="flex cursor-default select-none justify-end text-xs text-muted-foreground/80">

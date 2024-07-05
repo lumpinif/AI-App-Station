@@ -26,6 +26,7 @@ import {
   Daily_post,
   Posts,
   Profiles,
+  Publish_Status,
   Topics,
 } from "@/types/db_tables"
 import { SpinnerButtonCopyType } from "@/types/shared"
@@ -38,7 +39,7 @@ import {
 import { Option } from "@/components/ui/multiple-selector"
 import { dynamicLucidIconProps } from "@/components/icons/lucide-icon"
 
-type TopicsMutiSelectorProps = {
+type useStorySaveAndPublishProps = {
   topics?: Topics[]
   daily_post?: Daily_post
   postCategories?: Categories[]
@@ -51,6 +52,7 @@ type TopicsMutiSelectorProps = {
     React.SetStateAction<"idle" | "loading" | "success">
   >
   defaultImageSrc?: Posts["post_image_src"]
+  post_publish_status: Posts["post_publish_status"]
 }
 
 type PublishOrSaveValues = {
@@ -93,8 +95,9 @@ export const useStorySaveAndPublish = ({
   defaultImageSrc,
   defaultDescription,
   setSaveButtonState,
+  post_publish_status,
   setPublishButtonState,
-}: TopicsMutiSelectorProps) => {
+}: useStorySaveAndPublishProps) => {
   const router = useRouter()
 
   const defaultTopics: Option[] =
@@ -281,6 +284,8 @@ export const useStorySaveAndPublish = ({
     const isSaving = saveOrPublish === "save"
     const isPublishing = saveOrPublish === "publish"
 
+    const isPostPending = post_publish_status === "pending"
+
     const author_slug = getPostAuthorSlug(profile)
     const isSuperUser = checkIsSuperUser(profile?.profile_role?.role)
 
@@ -366,7 +371,7 @@ export const useStorySaveAndPublish = ({
         await Promise.all(promises)
 
         // if publishing
-        if (isPublishing) {
+        if (isPublishing && !isPostPending) {
           const { error: publishStoryError } = await publishStory(post_id)
           if (publishStoryError) {
             let errorDescription = ""
@@ -382,14 +387,20 @@ export const useStorySaveAndPublish = ({
             })
           }
           router.push(`/story/${author_slug}/${post_id}`)
+        } else if (isPublishing && isPostPending) {
+          router.push(`/user/stories`)
         } else if (isSaving) {
           router.push(`/user/stories`)
         }
 
         setAppropriateButtonState("success")
-        toast.success(
-          `Story ${isPublishing ? "published" : "saved"} successfully`
-        )
+        if (isPostPending) {
+          toast.success(`Story preview saved for pending`)
+        } else {
+          toast.success(
+            `Story ${isPublishing ? "published" : "saved"} successfully`
+          )
+        }
       } catch (error) {
         let errorMessage = ""
 

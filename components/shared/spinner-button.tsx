@@ -62,7 +62,11 @@ export const SpinnerButton: React.FC<SpinnerButtonProps> = ({
         className={cn(
           "relative select-none overflow-hidden",
           className,
-          !loadingElement ? "" : "disabled:bg-current dark:disabled:bg-inherit"
+          !loadingElement
+            ? ""
+            : buttonState === "success"
+              ? "disabled:bg-current dark:disabled:bg-inherit"
+              : ""
         )}
         disabled={buttonState === "loading"}
         {...props}

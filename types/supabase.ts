@@ -782,9 +782,7 @@ export type Database = {
           post_id: string
           post_image_src: string | null
           post_label: string | null
-          post_publish_status:
-            | Database["public"]["Enums"]["publish_status"]
-            | null
+          post_publish_status: Database["public"]["Enums"]["publish_status"]
           post_slug: string
           post_title: string
           posts_categories_id: string | null
@@ -803,9 +801,7 @@ export type Database = {
           post_id?: string
           post_image_src?: string | null
           post_label?: string | null
-          post_publish_status?:
-            | Database["public"]["Enums"]["publish_status"]
-            | null
+          post_publish_status?: Database["public"]["Enums"]["publish_status"]
           post_slug?: string
           post_title?: string
           posts_categories_id?: string | null
@@ -824,9 +820,7 @@ export type Database = {
           post_id?: string
           post_image_src?: string | null
           post_label?: string | null
-          post_publish_status?:
-            | Database["public"]["Enums"]["publish_status"]
-            | null
+          post_publish_status?: Database["public"]["Enums"]["publish_status"]
           post_slug?: string
           post_title?: string
           posts_categories_id?: string | null

@@ -58,10 +58,11 @@ export const StoryPublishDetailsForm: React.FC<
   const {
     topics,
     post_id,
-    categories: postCategories,
+    daily_post,
     post_image_src,
     post_description,
-    daily_post,
+    post_publish_status,
+    categories: postCategories,
   } = post
 
   const { data: profile } = useUserProfile()
@@ -82,6 +83,7 @@ export const StoryPublishDetailsForm: React.FC<
     setPublishButtonState,
     defaultImageSrc: post_image_src,
     defaultDescription: post_description,
+    post_publish_status: post_publish_status,
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -98,7 +100,7 @@ export const StoryPublishDetailsForm: React.FC<
 
   const descriptionWatch = form.watch("post_description")
 
-  const { isSubmitting } = form.formState
+  const { isSubmitting, isDirty } = form.formState
 
   function onPublish(values: z.infer<typeof formSchema>) {
     handlePublishOrSave("publish", {
@@ -295,9 +297,11 @@ export const StoryPublishDetailsForm: React.FC<
                 </div>
 
                 <StoryPublishActions
+                  isEdited={isDirty}
                   saveButtonState={saveButtonState}
                   handleSave={form.handleSubmit(onSave)}
                   publishButtonState={publishButtonState}
+                  post_publish_status={post_publish_status}
                   handlePublish={form.handleSubmit(onPublish)}
                 />
               </div>

@@ -41,19 +41,10 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false)
 
   const { post_publish_status } = post
-
-  const draft = post_publish_status === "draft"
-  const pending = post_publish_status === "pending"
-  const published = post_publish_status === "published"
-  const unpublished = post_publish_status === "unpublished"
-
-  const buttonLabel = published
-    ? "Published"
-    : draft
-      ? "Draft"
-      : pending
-        ? "Pending"
-        : "Unpublished"
+  const previewButtonLable =
+    post_publish_status === "published" || post_publish_status === "pending"
+      ? "Edit Preview"
+      : "Publish"
 
   return (
     <TooltipProvider>
@@ -94,22 +85,17 @@ export const StoryPublishModal: React.FC<StoryPublishModalProps> = ({
             size={"label"}
             variant={"ghost"}
             onClick={() => setIsPublishModalOpen(true)}
-            className="rounded-full border px-4 active:scale-[.98] dark:border-0 dark:shadow-outline"
+            className="text-nowrap rounded-full border px-4 active:scale-[.98] dark:border-0 dark:shadow-outline"
             disabled={saveStatus === "saving" || isRetrying || isEmpty}
             {...props}
           >
-            {/* {!isEdited
-              ? buttonLabel
-              : post_publish_status === "published"
-                ? "Publish Changes"
-                : "Publish"} */}
-            Edit Preview
+            {previewButtonLable}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
           {!isEdited
             ? "Make some changes to publish the story"
-            : "Publish your story to make it live"}
+            : "Update the story preview"}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

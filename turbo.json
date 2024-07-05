@@ -11,6 +11,11 @@
     "dev": {
       "persistent": true,
       "cache": false
+    },
+    "sync-db-types": {
+      "env": ["NEXT_SUPABASE_PROJECT_ID"],
+      "dependsOn": ["^sync-db-types"],
+      "outputs": ["types/supabase.ts"]
     }
   }
 }
