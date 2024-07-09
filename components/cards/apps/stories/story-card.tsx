@@ -60,7 +60,7 @@ export const StoryCard: React.FC<StoryCardProps> = ({ post, user_id }) => {
 
         {/* Topics and Actions */}
         <span className="flex w-full items-center justify-between">
-          <div className="flex items-center gap-x-2">
+          <div className="flex flex-wrap items-center gap-2">
             {!post.topics?.length ? (
               <div className=""></div>
             ) : (
@@ -72,7 +72,7 @@ export const StoryCard: React.FC<StoryCardProps> = ({ post, user_id }) => {
                   <Badge
                     key={post.post_id + index}
                     variant={"outline"}
-                    className="select-none border-border/40 hover:cursor-pointer hover:border-border/0 hover:bg-card hover:shadow-outline active:scale-[.98]"
+                    className="select-none text-nowrap border-border/40 hover:cursor-pointer hover:border-border/0 hover:bg-card hover:shadow-outline active:scale-[.98]"
                   >
                     {topic.topic_name}
                   </Badge>
