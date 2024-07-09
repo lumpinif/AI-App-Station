@@ -28,8 +28,8 @@ export default async function DailyPostsPage({ searchParams }: UserPageProps) {
   }
 
   return (
-    <div>
-      <UserPagesTitle className="mb-4 text-2xl font-semibold sm:text-3xl md:text-4xl">
+    <>
+      <UserPagesTitle className="text-2xl font-semibold sm:text-3xl md:text-4xl">
         <DateRangePicker
           align="end"
           sideOffset={10}
@@ -50,6 +50,6 @@ export default async function DailyPostsPage({ searchParams }: UserPageProps) {
         triggerClassName="mr-auto w-64 text-muted-foreground"
       />
       <DailyPostsCardsGrid searchParams={search} profile={profile} />
-    </div>
+    </>
   )
 }

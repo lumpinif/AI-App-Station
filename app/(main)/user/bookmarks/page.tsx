@@ -28,8 +28,8 @@ export default async function BookmarksPage() {
   }
 
   return (
-    <div className="w-full">
-      <UserPagesTitle className="mb-4 text-2xl font-semibold sm:text-3xl md:text-4xl" />
+    <>
+      <UserPagesTitle className="text-2xl font-semibold sm:text-3xl md:text-4xl" />
 
       <AppsStoriesTabs>
         <TabsContent
@@ -49,6 +49,6 @@ export default async function BookmarksPage() {
           </Suspense>
         </TabsContent>
       </AppsStoriesTabs>
-    </div>
+    </>
   )
 }

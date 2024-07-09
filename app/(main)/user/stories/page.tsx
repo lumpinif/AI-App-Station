@@ -21,11 +21,11 @@ export default async function UserStoriesPage({ searchParams }: UserPageProps) {
   })
 
   return (
-    <div>
+    <>
       <UserPagesTitle className="mb-4 text-2xl font-semibold sm:text-3xl md:text-4xl">
         <DateRangePicker
           align="end"
-          className="p-1"
+          className="hidden p-1 sm:flex"
           sideOffset={10}
           triggerSize="sm"
           triggerVariant={"outline"}
@@ -33,6 +33,16 @@ export default async function UserStoriesPage({ searchParams }: UserPageProps) {
           triggerClassName="mr-auto w-64 text-muted-foreground"
         />
       </UserPagesTitle>
+
+      <DateRangePicker
+        align="end"
+        className="p-1 sm:hidden"
+        sideOffset={10}
+        triggerSize="sm"
+        triggerVariant={"outline"}
+        PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
+        triggerClassName="mr-auto w-64 text-muted-foreground"
+      />
 
       <Suspense
         fallback={
@@ -51,6 +61,6 @@ export default async function UserStoriesPage({ searchParams }: UserPageProps) {
           totalPostsCount={totalPostsCount}
         />
       </Suspense>
-    </div>
+    </>
   )
 }

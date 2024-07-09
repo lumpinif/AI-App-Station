@@ -18,18 +18,28 @@ export default async function UserAppsPage({ searchParams }: UserPageProps) {
 
   const { apps, pageCount, totalAppsCount } = await getSubmittedApps(search)
   return (
-    <div>
-      <UserPagesTitle className="mb-4 text-2xl font-semibold sm:text-3xl md:text-4xl">
+    <>
+      <UserPagesTitle className="text-2xl font-semibold sm:text-3xl md:text-4xl">
         <DateRangePicker
           align="end"
           sideOffset={10}
-          className="p-1"
+          className="hidden p-1 sm:flex"
           triggerSize="sm"
           triggerVariant={"outline"}
           triggerClassName="mr-auto w-64 text-muted-foreground"
           PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
         />
       </UserPagesTitle>
+
+      <DateRangePicker
+        align="end"
+        sideOffset={10}
+        triggerSize="sm"
+        className="p-1 sm:hidden"
+        triggerVariant={"outline"}
+        PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
+        triggerClassName="mr-auto w-64 text-muted-foreground"
+      />
 
       <Suspense
         fallback={
@@ -56,6 +66,6 @@ export default async function UserAppsPage({ searchParams }: UserPageProps) {
           totalAppsCount={totalAppsCount}
         />
       </Suspense>
-    </div>
+    </>
   )
 }
