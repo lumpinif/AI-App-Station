@@ -8,6 +8,7 @@ import LoadingFallback from "@/components/shared/loading-fallback"
 import { AppsStoriesTabs } from "../_components/bookmark-favorites/_components/apps-stories-tabs"
 import { AppCardsGrid } from "../_components/bookmark-favorites/_components/apps/app-cards-grid"
 import { StoryCardsGrid } from "../_components/bookmark-favorites/_components/stories/story-cards-grid"
+import { UserPagesTitle } from "../_components/layout/user-pages-title"
 
 export const dynamic = "force-dynamic"
 
@@ -28,6 +29,8 @@ export default async function FavoritesPage() {
 
   return (
     <div className="w-full">
+      <UserPagesTitle className="mb-4 text-2xl font-semibold sm:text-3xl md:text-4xl" />
+
       <AppsStoriesTabs>
         <TabsContent
           value="apps"

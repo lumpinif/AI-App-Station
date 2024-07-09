@@ -17,8 +17,8 @@ export default function DPAnalyticsCards({
 }: DPAnalyticsCardsProps) {
   return (
     <div className={cn(className)}>
-      <ProfileRole profile_role={profile_role} />
       <TotalCountCard total={total} />
+      <ProfileRole profile_role={profile_role} />
     </div>
   )
 }
@@ -55,9 +55,9 @@ function ProfileRole({ profile_role }: DPAnalyticsCardsProps) {
       <div className="page-title-font w-full truncate text-nowrap text-center text-lg">
         {profileRoleName}
       </div>
-      <p className="relative text-center text-sm text-muted-foreground">
+      <p className="relative text-nowrap text-center text-sm text-muted-foreground">
         Verified Creator
-        <BadgeCheck className="absolute -top-1 right-0 size-4 fill-blue-600 stroke-background" />
+        {/* <BadgeCheck className="size-4 fill-blue-600 stroke-background" /> */}
       </p>
     </div>
   )

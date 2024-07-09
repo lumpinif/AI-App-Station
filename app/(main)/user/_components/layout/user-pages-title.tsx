@@ -10,9 +10,10 @@ import { PageTitle } from "@/components/layout/page-title"
 
 import { UserPagesMobileNavSheet } from "./user-pages-mobile-nav-sheet"
 
-type UserPagesTitleProps = { className?: string }
+type UserPagesTitleProps = { className?: string; children?: React.ReactNode }
 
 export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
+  children,
   className,
 }) => {
   const pathname = usePathname()
@@ -55,6 +56,8 @@ export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
         withBorder={false}
         subtitle={description}
         className={className}
-      />
+      >
+        {children}
+      </PageTitle>
     )
 }

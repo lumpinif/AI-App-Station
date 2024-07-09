@@ -6,6 +6,7 @@ import { postsSearchParamsSchema } from "@/lib/validations"
 import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
 import { DateRangePicker } from "@/components/shared/date-range-picker"
 
+import { UserPagesTitle } from "../_components/layout/user-pages-title"
 import { PostedStoriesTable } from "./_components/table/posted-stories-table"
 
 type UserPageProps = {
@@ -20,16 +21,18 @@ export default async function UserStoriesPage({ searchParams }: UserPageProps) {
   })
 
   return (
-    <main>
-      <DateRangePicker
-        align="start"
-        className="p-1"
-        sideOffset={10}
-        triggerSize="sm"
-        triggerVariant={"outline"}
-        PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
-        triggerClassName="mr-auto w-64 text-muted-foreground"
-      />
+    <div>
+      <UserPagesTitle className="mb-4 text-2xl font-semibold sm:text-3xl md:text-4xl">
+        <DateRangePicker
+          align="end"
+          className="p-1"
+          sideOffset={10}
+          triggerSize="sm"
+          triggerVariant={"outline"}
+          PopoverContentClassName="bg-card/70 p-4 backdrop-blur-lg"
+          triggerClassName="mr-auto w-64 text-muted-foreground"
+        />
+      </UserPagesTitle>
 
       <Suspense
         fallback={
@@ -48,6 +51,6 @@ export default async function UserStoriesPage({ searchParams }: UserPageProps) {
           totalPostsCount={totalPostsCount}
         />
       </Suspense>
-    </main>
+    </div>
   )
 }
