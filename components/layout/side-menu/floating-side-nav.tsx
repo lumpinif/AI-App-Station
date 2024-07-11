@@ -26,12 +26,25 @@ export const buttonClassBase =
   "flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-200 ease-out hover:cursor-pointer hover:bg-foreground/10 hover:text-foreground"
 
 const FloatingSideNav: React.FC = () => {
-  const isOpen = useSideNav((state) => state.isOpen)
   const router = useRouter()
+  const collectionRoutes = SIDENAVROUTES.find(
+    (route) => route.title === "Collections"
+  )
+  const collectionItems = collectionRoutes?.items
+  const isOpen = useSideNav((state) => state.isOpen)
 
   const handleKeyPress = (event: KeyboardEvent) => {
     if (isOpen) {
-      switch (event.code) {
+      const pressedKey = event.code
+      const matchingItem = collectionItems?.find(
+        (item) => `Digit${item.shortcutNumber}` === pressedKey
+      )
+
+      if (matchingItem) {
+        router.push(matchingItem.href)
+      }
+
+      /* switch (event.code) {
         case "Digit1":
           router.push("/ai-apps/collections/create")
           break
@@ -52,7 +65,7 @@ const FloatingSideNav: React.FC = () => {
           break
         default:
           break
-      }
+      } */
     }
   }
 
