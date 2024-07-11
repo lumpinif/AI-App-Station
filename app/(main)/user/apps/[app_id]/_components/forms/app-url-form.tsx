@@ -43,7 +43,7 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const form = useForm({
-    mode: "all",
+    mode: "onChange",
     // reValidateMode: "onChange",
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,7 +51,7 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
     },
   })
 
-  const { isSubmitting, isValid } = form.formState
+  const { isSubmitting, isValid, isDirty } = form.formState
   const toggleEdit = () => setIsEditing((current) => !current)
 
   const onSubmit = async ({ url }: z.infer<typeof formSchema>) => {
@@ -141,7 +141,7 @@ export const AppUrlForm: React.FC<AppUrlFormProps> = ({ app_id, app_url }) => {
                   </span>
                 </Button>
 
-                {app_url !== form.getValues("url") && (
+                {isDirty && (
                   <LoadingButton
                     loading={isSubmitting}
                     type="submit"
