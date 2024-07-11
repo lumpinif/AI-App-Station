@@ -34,6 +34,8 @@ export const metadata: Metadata = {
     "Next.js",
     "Supabase",
     "App Store",
+    "GPTs",
+    "Artifacts",
   ],
   authors: siteConfig.authors,
   creator: siteConfig.creator,

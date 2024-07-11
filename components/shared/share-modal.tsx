@@ -76,10 +76,10 @@ export const ShareModal: React.FC<ShareModalProps> = ({
         </ResponsiveModalHeader>
         <div className="flex w-full flex-col space-y-6 py-6 lg:space-y-10">
           <SocialShare
-            className="flex w-full flex-wrap items-center justify-center gap-6"
             url={url}
-            title={`AI App Station  |  ${title}`}
             description={description || ""}
+            title={`AI App Station  |  ${title}`}
+            className="flex w-full flex-wrap items-center justify-center gap-6"
           />
           <CopyButton
             url={url}

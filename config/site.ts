@@ -5,7 +5,7 @@ export const siteConfig = {
   creator: "Felix Lu",
   authors: [{ name: "Felix Lu", url: "", twitter: "@felixlyu_1018" }],
   url: "https://aiappstation.com",
-  ogImage: "https://aiappstation.com/og.jpg",
+  ogImage: "https://aiappstation.com/og.png",
   description:
     "A collection of best selected AI apps, tools, and stories within a fast expending platform.  Updated, prospective and activie.",
   links: {
