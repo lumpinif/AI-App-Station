@@ -95,7 +95,7 @@ export async function getAppBySlug(app_slug: string) {
   let { data: app, error } = await supabase
     .from("apps")
     .select(
-      `*,categories(*),profiles(*),developers(*),app_likes(*),app_bookmarks(*)`
+      `*,categories(*),profiles(*,profile_role(*)),developers(*),app_likes(*),app_bookmarks(*)`
     )
     .match({ app_slug: app_slug, app_publish_status: "published" })
     // .order("created_at", { ascending: false })

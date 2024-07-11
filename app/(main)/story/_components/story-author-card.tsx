@@ -2,7 +2,7 @@ import { Posts, Profiles } from "@/types/db_tables"
 import { cn } from "@/lib/utils"
 import { AvatarIcon } from "@/components/auth/avatar/avatar-icon"
 
-import { UserHoverCard } from "./user-hover-card"
+import { UserHoverCard } from "../../ai-apps/[slug]/_components/user-hover-card"
 
 type AuthorCardProps = {
   author: Profiles
@@ -23,9 +23,13 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
   authorNameCN,
   post_created_at,
 }) => {
+  console.log("🚀 ~ author:", author)
   return (
     <div className={cn("flex items-center gap-x-2 sm:gap-x-4", className)}>
-      <UserHoverCard profile={author} sideOffset={10} align="start">
+      <UserHoverCard
+        profile={author}
+        hoverCardContentProps={{ sideOffset: 10, align: "start" }}
+      >
         <AvatarIcon
           profile={author}
           className={cn("size-10 select-none", avatarCN)}
@@ -33,7 +37,10 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
       </UserHoverCard>
       {/* Author and time Info */}
       <div className={cn("flex flex-col", InfoCN)}>
-        <UserHoverCard profile={author} sideOffset={10} align="start">
+        <UserHoverCard
+          profile={author}
+          hoverCardContentProps={{ sideOffset: 10, align: "start" }}
+        >
           <div
             className={cn(
               "font-semibold underline-offset-4 hover:cursor-pointer hover:underline",

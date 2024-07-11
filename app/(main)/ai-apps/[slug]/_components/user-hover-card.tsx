@@ -1,4 +1,5 @@
-import { BadgeCheck, CalendarDays, MapPin } from "lucide-react"
+import Link from "next/link"
+import { BadgeCheck, CalendarDays, Globe, MapPin } from "lucide-react"
 
 import { Profiles } from "@/types/db_tables"
 import {
@@ -24,11 +25,19 @@ import { Icons } from "@/components/icons/icons"
 type UserHoverCardProps = {
   profile?: Profiles
   triggerClassName?: string
+  children?: React.ReactNode
+  hoverCardProps?: React.ComponentPropsWithoutRef<typeof HoverCard>
+  hoverCardContentProps?: React.ComponentPropsWithoutRef<
+    typeof HoverCardContent
+  >
 }
 
 export const UserHoverCard: React.FC<UserHoverCardProps> = ({
   profile,
+  children,
+  hoverCardProps,
   triggerClassName,
+  hoverCardContentProps,
 }) => {
   // TODO: REPLACE THIS HOVER CARD WITH THE ONE FROM THE STORY
   const {
@@ -36,6 +45,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
     user_name,
     user_location,
     full_name,
+    user_website,
     avatar_url,
     created_at,
     profile_role,
@@ -47,9 +57,11 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
   const profileRoleName = getProfileRoleName(profile_role?.role)
   const joinedTime = timeConverter(user_joined)
 
+  const userWebsite = user_website
+
   return (
-    <TooltipProvider>
-      <HoverCard openDelay={400} closeDelay={200}>
+    <TooltipProvider delayDuration={10}>
+      <HoverCard openDelay={200} closeDelay={200} {...hoverCardProps}>
         <HoverCardTrigger asChild>
           {/* <Link
           href={`/user/user_slug`}
@@ -59,26 +71,30 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
           )}
           target="_blank"
         > */}
-          <div
-            className={cn(
-              "w-fit cursor-default text-primary underline-offset-4 hover:underline",
-              triggerClassName
-            )}
-          >
-            <span className="flex items-center gap-x-1">
-              {displayName}
-              {isSuperUser && (
-                <Tooltip>
-                  <TooltipTrigger>
-                    <BadgeCheck className="size-3 fill-blue-600 stroke-background" />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{profileRoleName}</p>
-                  </TooltipContent>
-                </Tooltip>
+          {children ? (
+            children
+          ) : (
+            <div
+              className={cn(
+                "w-fit cursor-default text-primary underline-offset-4 hover:underline",
+                triggerClassName
               )}
-            </span>
-          </div>
+            >
+              <span className="flex items-center gap-x-1">
+                {displayName}
+                {isSuperUser && (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <BadgeCheck className="size-3 fill-blue-600 stroke-background" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{profileRoleName}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+              </span>
+            </div>
+          )}
           {/* </Link> */}
         </HoverCardTrigger>
         <HoverCardContent
@@ -86,6 +102,7 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
           sideOffset={15}
           alignOffset={-15}
           className="w-fit max-w-xs border border-border bg-background/70 shadow-md backdrop-blur-md dark:border-0 dark:shadow-outline"
+          {...hoverCardContentProps}
         >
           <div className="relative flex w-full justify-between gap-x-4 overflow-hidden">
             {/* Left section */}
@@ -107,18 +124,48 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
             <section className="flex h-full w-full flex-col justify-between space-y-2 overflow-hidden">
               <div className="h-full flex-1">
                 {/* Display name */}
-                <div className="flex items-center gap-x-1">
-                  <h4 className="text-sm font-semibold">{displayName}</h4>
-                  {isSuperUser && (
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <BadgeCheck className="size-3 fill-blue-600 stroke-background" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{profileRoleName}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
+                <div className="flex items-center justify-between gap-x-1">
+                  {/* TODO: CHANGE THE USER LINK AFTER BUILD THE USER PAGE */}
+
+                  {/* {userWebsite ? (
+                    <Link href={userWebsite}>
+                      <h4 className="hover:underline-offset-3 text-sm font-semibold hover:underline">
+                        {displayName}
+                      </h4>
+                    </Link>
+                  ) : (
+                    <h4 className="text-sm font-semibold">{displayName}</h4>
+                  )} */}
+                  <div className="flex items-center gap-x-1">
+                    <h4 className="text-sm font-semibold">{displayName}</h4>
+
+                    {isSuperUser && (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <BadgeCheck className="size-3 fill-blue-600 stroke-background" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{profileRoleName}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-x-1">
+                    {userWebsite && (
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Link href={userWebsite}>
+                            <Globe className="size-3 text-muted-foreground transition-all duration-150 ease-out hover:text-primary" />
+                          </Link>
+                        </TooltipTrigger>
+
+                        <TooltipContent>
+                          <p>User&rsquo;s website</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </div>
                 </div>
 
                 {/* User Bio */}
@@ -154,5 +201,44 @@ export const UserHoverCard: React.FC<UserHoverCardProps> = ({
         </HoverCardContent>
       </HoverCard>
     </TooltipProvider>
+  )
+}
+
+type HoverCardTriggerProps = {
+  displayName?: string
+  isSuperUser?: boolean
+  profileRoleName?: string
+  triggerClassName?: string
+  children?: React.ReactNode
+}
+
+export const HCTrigger: React.FC<HoverCardTriggerProps> = ({
+  children,
+  displayName,
+  isSuperUser,
+  profileRoleName,
+  triggerClassName,
+}) => {
+  return (
+    <div
+      className={cn(
+        "w-fit cursor-default text-primary underline-offset-4 hover:underline",
+        triggerClassName
+      )}
+    >
+      <span className="flex items-center gap-x-1">
+        {displayName}
+        {isSuperUser && (
+          <Tooltip>
+            <TooltipTrigger>
+              <BadgeCheck className="size-3 fill-blue-600 stroke-background" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{profileRoleName}</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+      </span>
+    </div>
   )
 }

@@ -104,7 +104,7 @@ export const StoryEditorContent: React.FC<StoryEditorContentProps> = ({
           <AuthorCard
             author={authorProfile}
             post_created_at={post_created_at}
-          ></AuthorCard>
+          />
         </div>
 
         <StoryPublishInfo
