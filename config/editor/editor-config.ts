@@ -1,4 +1,4 @@
-export const CHARS_LIMIT = 5000
+export const CHARS_LIMIT = 10000
 
 export const MAX_RETRY_ATTEMPTS = 3
 
