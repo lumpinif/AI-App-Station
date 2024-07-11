@@ -17,6 +17,8 @@ import { UploadImagesPlugin } from "novel/plugins"
 import AutoJoiner from "tiptap-extension-auto-joiner"
 import GlobalDragHandle from "tiptap-extension-global-drag-handle"
 
+import { CHARS_LIMIT } from "@/config/editor/editor-config"
+
 import { TweetExtension } from "./tweet-extension"
 
 const aiHighlight = AIHighlight
@@ -66,7 +68,7 @@ const youtube = Youtube.configure({
 })
 
 const characterCount = CharacterCount.configure({
-  limit: 5000,
+  limit: CHARS_LIMIT,
 })
 
 const tiptapImage = TiptapImage.extend({
