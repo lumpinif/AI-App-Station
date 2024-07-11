@@ -1,3 +1,4 @@
+import Artifacts from "@/public/logos/artifacts"
 import {
   Briefcase,
   Hammer,
@@ -139,6 +140,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
     items: [
       {
         title: "Create",
+        discription: "Apps for writing, llm, video, photo, 3D, and more",
         href: "/ai-apps/collections/create",
         items: [],
         icon: Paintbrush2,
@@ -174,6 +176,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
       // },
       {
         title: "Develop",
+        discription: "Apps for develop, productivity, utilities, and more",
         href: "/ai-apps/collections/develop",
         items: [],
         icon: Hammer,
@@ -201,6 +204,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
       },
       {
         title: "Design",
+        discription: "Apps for design, photo, video, 3D, and more",
         href: "/ai-apps/collections/design",
         items: [],
         icon: PencilRuler,
@@ -227,11 +231,40 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         },
       },
       {
+        title: "Artifacts",
+        discription:
+          "A list of Claude's Artifacts Shared by others, and you can share yours by submit an app and select artifacts as the category",
+        href: "/ai-apps/collections/artifacts",
+        items: [],
+        icon: Artifacts,
+        shortcutNumber: 4,
+        fetchConfig: {
+          title: "Claude's Artifacts AI Apps",
+          order: [
+            {
+              column: "likes_count",
+              options: { ascending: false },
+            },
+          ],
+          // limit: {
+          //   limit: 15,
+          // },
+          orFilters: [
+            {
+              filters: "category_slug.eq.artifacts,category_slug.eq.claude",
+              options: { referencedTable: "categories" },
+            },
+          ],
+          innerJoinTables: ["categories"],
+        },
+      },
+      {
         title: "GPTs",
+        discription: "A list of Openai's GPTs Shared by others",
         href: "/ai-apps/collections/gpts",
         items: [],
         icon: RiOpenaiFill,
-        shortcutNumber: 4,
+        shortcutNumber: 5,
         fetchConfig: {
           title: "GPTs AI Apps",
           order: [
@@ -243,16 +276,23 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
           // limit: {
           //   limit: 15,
           // },
-          filters: [{ column: "is_gpt", operator: "eq", value: true }],
-          innerJoinTables: [],
+          // filters: [{ column: "is_gpt", operator: "eq", value: true }],
+          orFilters: [
+            {
+              filters: "category_slug.eq.gpt,category_slug.eq.gpts",
+              options: { referencedTable: "categories" },
+            },
+          ],
+          innerJoinTables: ["categories"],
         },
       },
       {
         title: "Work",
+        discription: "Apps for work, productivity, finance, and more",
         href: "/ai-apps/collections/work",
         items: [],
         icon: Briefcase,
-        shortcutNumber: 5,
+        shortcutNumber: 6,
         fetchConfig: {
           title: "AI Apps for Work",
           order: [

@@ -7,6 +7,7 @@ import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
 import { SIDENAVROUTES } from "@/config/routes/main-routes"
 import { siteConfig } from "@/config/site"
 import { getSiteUrl } from "@/lib/utils"
+import { AppSubmitButton } from "@/components/submit/app-submit-button"
 
 import AiAppsPagesTitle from "../../_components/ai-apps-page-title"
 import { AppCarouselLgCard } from "../../_components/cards/app-carousel-lg-card"
@@ -125,6 +126,15 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
     </span>
   )
 
+  const description = (
+    <div className="flex items-center justify-between gap-x-2">
+      <span className="max-w-2xl select-none text-balance text-muted-foreground sm:line-clamp-2">
+        {collectionItem.discription}
+      </span>
+      <AppSubmitButton className="hidden sm:flex" />
+    </div>
+  )
+
   return (
     <section className="flex flex-col gap-y-4">
       <AiAppsPagesTitle
@@ -132,6 +142,9 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         title={collectionTitle}
         href={`/ai-apps/collections/${collection}`}
       />
+
+      {description}
+
       {appsByCollectionConfig?.length === 0 && (
         <p>No apps found in this collection.</p>
       )}
