@@ -59,7 +59,7 @@ export const IosStyleDACard: React.FC<IosStyleDACardProps> = ({
         layoutId={`da-card-image-${app_id}`}
         src={card_thumbnail ? card_thumbnail : "/images/Feature-thumbnail.png"}
         className={cn(
-          "pointer-events-none z-50 size-full object-cover",
+          "pointer-events-none z-50 size-full animate-reveal object-cover",
           card_thumbnail
             ? "blur-[1px] brightness-[.85]"
             : "blur brightness-[.85]"

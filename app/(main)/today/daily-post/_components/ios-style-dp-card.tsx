@@ -66,7 +66,7 @@ export const IosStyleDPCard: React.FC<IosStyleDPCardProps> = ({
         layoutId={`dp-card-image-${post_id}`}
         src={post_image_src! || "@/images/Feature-thumbnail.png"}
         className={cn(
-          "pointer-events-none z-50 size-full object-cover",
+          "pointer-events-none z-50 size-full animate-reveal object-cover",
           post_image_src ? "brightness-[.85]" : "blur brightness-[.85]"
         )}
       />

@@ -112,7 +112,7 @@ export default async function DailyPostPage({
         currentDate={new Date(created_on)}
       />
       <StoryContentHeroImage post_image_src={post.post_image_src} />
-      <section className="mx-auto mb-8 flex w-full max-w-4xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10">
+      <section className="mx-auto mb-8 flex w-full max-w-3xl flex-col space-y-6 rounded-lg sm:space-y-8 sm:px-6 sm:py-4 md:space-y-10 2xl:max-w-4xl">
         <StoryEditorContent
           {...post}
           user={user}
