@@ -83,8 +83,9 @@ export const ShareModal: React.FC<ShareModalProps> = ({
           />
           <CopyButton
             url={url}
+            isToast={false}
             className="rounded-full"
-            isToast={isMobile ? false : true}
+            // isToast={isMobile ? false : true}
           />
         </div>
       </ResponsiveModalContent>
