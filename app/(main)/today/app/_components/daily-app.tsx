@@ -7,7 +7,7 @@ import {
 import { DEFAULT_POST_IMAGE } from "@/lib/constants/site-constants"
 import { getAverageColorOnServer } from "@/lib/get-average-color-on-server"
 
-import { IosStyleDailyAppCard } from "./ios-style-daily-app"
+import { DailyAppCard } from "./daily-app-cards-modal/daily-app-card"
 
 type DailyAppProps = {}
 
@@ -55,7 +55,12 @@ export const DailyApp: React.FC<DailyAppProps> = async ({}) => {
         }}
         className="flex flex-col gap-y-1"
       >
-        <IosStyleDailyAppCard
+        {/* <IosStyleDailyAppCard
+          dailyApp={dailyApp}
+          averageColor={averageColor}
+          screenshotsPublicUrls={screenshotsPublicUrls}
+        /> */}
+        <DailyAppCard
           dailyApp={dailyApp}
           averageColor={averageColor}
           screenshotsPublicUrls={screenshotsPublicUrls}

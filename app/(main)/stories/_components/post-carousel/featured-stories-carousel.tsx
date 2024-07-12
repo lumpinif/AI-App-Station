@@ -41,7 +41,7 @@ export const FeaturedStoriesCarousel: React.FC<
     <>
       <PostsCarousel
         posts={heroPosts}
-        isAutpPlay={true}
+        isAutpPlay={false}
         isIndicator={true}
         isWheelGestures={true}
         containerCN="h-fit"

@@ -131,10 +131,10 @@ export async function getUser() {
     error,
   } = await supabase.auth.getUser()
 
-  if (error) {
+  /* if (error) {
     console.error("Error fetching user data:", error)
     // return { user, error }
-  }
+  } */
 
   return { user, error }
 }

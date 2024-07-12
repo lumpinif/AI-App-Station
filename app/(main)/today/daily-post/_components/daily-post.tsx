@@ -3,7 +3,7 @@ import { getDailyPost } from "@/server/queries/supabase/stories/fetch_daily_post
 import { DEFAULT_POST_IMAGE } from "@/lib/constants/site-constants"
 import { getAverageColorOnServer } from "@/lib/get-average-color-on-server"
 
-import { IosStyleDailyPostCard } from "./ios-style-daily-post"
+import { DailyPostCard } from "./daily-post-cards-modal/daily-post-card"
 
 type DailyPostProps = {}
 
@@ -29,10 +29,11 @@ export const DailyPost: React.FC<DailyPostProps> = async ({}) => {
       }}
       className="flex flex-col gap-y-1"
     >
-      <IosStyleDailyPostCard
+      {/* <IosStyleDailyPostCard
         dailyPost={dailyPost}
         averageColor={averageColor}
-      />
+      /> */}
+      <DailyPostCard dailyPost={dailyPost} averageColor={averageColor} />
     </div>
   )
 }

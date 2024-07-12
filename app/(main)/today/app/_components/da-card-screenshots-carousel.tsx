@@ -52,7 +52,7 @@ export const DAScreenshotsCarousel: React.FC<DAScreenshotsCarouselProps> = ({
                     }}
                     alt="daily app thumbnail image"
                     src={item ? item : `/images/image-not-found.png`}
-                    className="pointer-events-none z-50 h-full w-full bg-background object-cover brightness-75"
+                    className="pointer-events-none z-50 h-full w-full bg-background object-cover brightness-[.85]"
                   />
                 </CarouselItem>
               ))
