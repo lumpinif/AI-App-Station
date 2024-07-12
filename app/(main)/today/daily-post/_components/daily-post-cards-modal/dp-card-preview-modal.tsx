@@ -21,7 +21,7 @@ export const DPCardPreviewModal: React.FC<DPCardPreviewModalProps> = ({
     <ResponsiveContentModal
       isOpen={isOpen}
       onChange={onChange}
-      drawerHeight="h-[99%]"
+      drawerHeight="h-full"
       title="AI News of the Day"
       shouldScaleBackground={true}
       drawerContentClassName="outline-none rounded-t-3xl p-0"
