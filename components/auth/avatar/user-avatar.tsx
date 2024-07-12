@@ -36,9 +36,10 @@ export const UserAvatar: React.FC<UserAvatarProps> = ({
     onUpload
   )
   const { data: user } = useUserData()
+  const avatarUrl = profile?.avatar_url || ""
 
   const isDefaultAvatar =
-    !profile?.avatar_url ||
+    !avatarUrl ||
     profile?.avatar_url === "" ||
     user?.user_metadata?.avatar_url === profile?.avatar_url
 

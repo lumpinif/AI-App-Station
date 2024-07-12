@@ -16,6 +16,9 @@ export const AvatarIcon: React.FC<AvatarIconProps> = ({
   className,
   avatarClassName,
 }) => {
+  const avatarUrl = profile?.avatar_url || ""
+  const altText = profile?.full_name || profile?.user_name || "User"
+
   return (
     <Avatar
       className={cn(
@@ -25,8 +28,8 @@ export const AvatarIcon: React.FC<AvatarIconProps> = ({
       onClick={onClick}
     >
       <AvatarImage
-        src={`${profile.avatar_url}`}
-        alt={`${profile.full_name || profile.user_name || "User"}`}
+        src={avatarUrl}
+        alt={altText}
         className={cn(
           "h-full w-full animate-fade rounded-full object-cover",
           avatarClassName
