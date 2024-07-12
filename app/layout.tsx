@@ -83,7 +83,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head />
       <body
         className={cn(
@@ -91,24 +91,24 @@ export default function RootLayout({ children }: RootLayoutProps) {
           GeistSans.variable
         )}
       >
-        <QueryProvider>
-          <ThemeProvider
-            enableSystem
-            attribute="class"
-            defaultTheme="system"
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          enableSystem
+          attribute="class"
+          defaultTheme="system"
+          disableTransitionOnChange
+        >
+          <QueryProvider>
             <div vaul-drawer-wrapper="">
               <div className="relative flex min-h-screen flex-col bg-background">
                 <SiteHeader />
                 <main className="flex-1">{children}</main>
                 <SiteFooter />
               </div>
-              <TailwindIndicator />
-              <SonnerToaster richColors position="bottom-right" />
             </div>
-          </ThemeProvider>
-        </QueryProvider>
+            <SonnerToaster richColors position="bottom-right" />
+            <TailwindIndicator />
+          </QueryProvider>
+        </ThemeProvider>
         <SpeedInsights />
         <Analytics />
       </body>
