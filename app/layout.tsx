@@ -59,7 +59,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    images: [
+      siteConfig.twitterImage,
+      {
+        url: siteConfig.twitterImage,
+        width: 1400,
+        height: 800,
+        alt: siteConfig.name,
+      },
+    ],
     creator: siteConfig.authors[0].twitter,
   },
   icons: {
