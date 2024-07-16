@@ -27,7 +27,7 @@ export default async function AiAppsLayout({ children }: AiAppsLayoutProps) {
         <MobileCategoryNav />
       </div>
 
-      <div className="container relative h-full w-full">
+      <div className="container relative h-full w-full 3xl:!max-w-[80%]">
         {/* Floating Side Nav */}
         <nav className="fixed bottom-1/2 top-1/2 z-40 hidden w-fit -translate-y-1/2 flex-col justify-center md:flex">
           <FloatingSideNav />

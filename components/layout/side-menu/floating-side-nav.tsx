@@ -86,8 +86,8 @@ const FloatingSideNav: React.FC = () => {
       className={cn(
         "cubic-bezier(0.32, 0.72, 0, 1) z-40 hidden max-h-[calc(80svh)] w-fit rounded-3xl backdrop-blur-xl transition-all duration-500 md:flex md:flex-col",
         !isOpen
-          ? "rounded-[2.5rem] md:ml-0 2xl:-ml-16 3xl:-ml-32"
-          : "-ml-56 mt-16 md:-ml-2 lg:-ml-4 2xl:-ml-20 3xl:-ml-52"
+          ? "rounded-[2.5rem] md:ml-0 2xl:-ml-16 3xl:-ml-40"
+          : "-ml-56 mt-16 md:-ml-2 lg:-ml-4 2xl:-ml-20 3xl:-ml-60"
       )}
     >
       <TooltipProvider>
