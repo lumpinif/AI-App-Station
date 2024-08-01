@@ -68,14 +68,14 @@ const AIAppsMainPage = async () => {
       </AiAppsPagesTitle>
 
       {/* Hero Posts Carousel */}
-      <PostsCarousel
+      {/* <PostsCarousel
         posts={heroPosts}
         title="Hero Posts"
         isAutpPlay={true}
         isIndicator={true}
         isWheelGestures={true}
         postCardVariant="hero"
-      />
+      /> */}
 
       <MainPageCollectionsNav />
 

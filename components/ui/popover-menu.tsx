@@ -57,7 +57,7 @@ export default function PopoverMenu({
     },
     closed: {
       filter: "blur(3px)",
-      backgroundColor: "hsl(var(--background))",
+      backgroundColor: "hsl(var(--transparent))",
       bottom: 0,
       opacity: 1,
       width: "48px",
@@ -79,7 +79,7 @@ export default function PopoverMenu({
     },
     closed: {
       filter: "blur(4px)",
-      backgroundColor: "hsl(var(--background))",
+      backgroundColor: "hsl(var(--transparent))",
       opacity: 0,
       scale: 1,
       transition: {
@@ -137,7 +137,7 @@ export default function PopoverMenu({
       </AnimatePresence>
       <motion.button
         className={cn(
-          "absolute bottom-0 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 text-muted-foreground outline-none hover:!bg-foreground/10 hover:text-foreground",
+          "absolute bottom-2 left-4 flex h-12 w-12 items-center justify-center rounded-full p-2 text-muted-foreground outline-none hover:!bg-foreground/10 hover:text-foreground",
           buttonClassName
         )}
         disabled={isPopoverOpen}
