@@ -23,7 +23,6 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
   authorNameCN,
   post_created_at,
 }) => {
-  console.log("🚀 ~ author:", author)
   return (
     <div className={cn("flex items-center gap-x-2 sm:gap-x-4", className)}>
       <UserHoverCard
