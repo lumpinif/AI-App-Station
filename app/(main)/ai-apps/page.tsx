@@ -68,14 +68,14 @@ const AIAppsMainPage = async () => {
       </AiAppsPagesTitle>
 
       {/* Hero Posts Carousel */}
-      {/* <PostsCarousel
+      <PostsCarousel
         posts={heroPosts}
         title="Hero Posts"
         isAutpPlay={true}
         isIndicator={true}
         isWheelGestures={true}
         postCardVariant="hero"
-      /> */}
+      />
 
       <MainPageCollectionsNav />
 
@@ -88,11 +88,11 @@ const AIAppsMainPage = async () => {
       {/* TODO: UPDATE THE LOADING SKELETON */}
       <Suspense fallback={<LoadingFallback />}>
         <AppCardsCarouselLayout user={user} indexToInsert={2}>
-          {/* <PostsCarousel
+          <PostsCarousel
             posts={allPosts}
             postCardVariant="md:basis-1/2"
             className="md:basis-1/2"
-          /> */}
+          />
         </AppCardsCarouselLayout>
       </Suspense>
 

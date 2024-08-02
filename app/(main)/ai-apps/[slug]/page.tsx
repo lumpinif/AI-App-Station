@@ -235,7 +235,7 @@ export default async function AiAppsMainPage({
             className="mx-auto w-full max-w-xl border dark:border-0 dark:shadow-outline dark:outline-none sm:hidden"
           />
         </div>
-        <div className="flex w-full flex-col xl:flex-row xl:space-x-4">
+        <div className="flex w-full flex-col xl:flex-row xl:space-x-4 3xl:space-x-10">
           <div className="flex flex-1 flex-col space-y-6 md:space-y-12 lg:space-y-16">
             <AppDetailScreenshots
               screenshotsPublicUrls={screenshotsPublicUrls || []}
@@ -254,7 +254,7 @@ export default async function AiAppsMainPage({
               />
             </Suspense>
           </div>
-          <div className="mt-6 flex flex-col space-y-6 md:space-y-12 lg:space-y-16 xl:mt-0">
+          <div className="mt-6 flex flex-col space-y-6 md:space-y-12 lg:space-y-16 xl:mt-0 xl:w-56 3xl:w-80">
             <AppDetailSubInfo
               {...app}
               {...app.profiles}

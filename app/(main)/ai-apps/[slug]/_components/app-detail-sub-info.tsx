@@ -59,7 +59,7 @@ export const AppDetailSubInfo: React.FC<AppDetailSubInfoProps> = ({
       open={isOpen}
       ref={refCollapsible}
       onOpenChange={setIsOpen}
-      className="w-full space-y-2 xl:w-56"
+      className="w-full space-y-2"
     >
       <div className="flex items-center justify-between">
         <h2

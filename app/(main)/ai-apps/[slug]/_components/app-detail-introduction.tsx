@@ -35,7 +35,7 @@ export const AppDetailIntroduction: React.FC<AppDetailIntroductionProps> = ({
   return (
     <section className="flex flex-col space-y-4">
       <h1 className="page-title-font text-2xl">Introduction</h1>
-      <div className="relative w-full">
+      <div className="relative w-full 3xl:max-w-7xl">
         <button
           className="absolute -bottom-4 right-2 z-50 text-blue-500"
           onClick={() => setShowAll(!showAll)}

@@ -35,7 +35,7 @@ const AppDetailCommentSection = async ({
   if (getAllCommentsError) {
     console.error(getAllCommentsError)
     return (
-      <section className="flex flex-col space-y-6 md:space-y-8">
+      <section className="flex flex-col space-y-6 md:space-y-8 3xl:max-w-7xl">
         <div className="flex items-center space-x-4 max-sm:flex-col">
           <span className="font-medium tracking-wide">
             Error loading comments
@@ -52,7 +52,7 @@ const AppDetailCommentSection = async ({
 
   if (!appComments || appComments.length === 0)
     return (
-      <section className="flex flex-col space-y-6 md:space-y-8">
+      <section className="flex flex-col space-y-6 md:space-y-8 3xl:max-w-7xl">
         <div className="flex items-center space-x-4">
           <span className="font-medium tracking-wide">0 Comments</span>
           <p className="text-muted-foreground">
