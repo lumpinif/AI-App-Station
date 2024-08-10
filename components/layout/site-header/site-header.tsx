@@ -11,16 +11,16 @@ export async function SiteHeader() {
   return (
     <header className="relative max-w-full">
       <LogoAuthHeader />
-      <header className="flex items-center justify-center md:pt-14">
+      <header className="flex items-center justify-center">
         <MobileNav />
-        <FloatingNav />
+        {/* <FloatingNav /> */}
       </header>
     </header>
   )
 }
 
 export const LogoAuthHeader = () => (
-  <header className="container flex items-center justify-between space-x-4 py-4 sm:space-x-0 sm:py-6">
+  <header className="flex items-center justify-between p-4 md:hidden">
     <SiteLogo className="md:hidden" />
     <AccountModalTrigger className="md:hidden" />
   </header>

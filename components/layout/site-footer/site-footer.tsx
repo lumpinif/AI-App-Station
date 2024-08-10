@@ -11,13 +11,16 @@ const footerLinks: { id: number; title: string; url: string }[][] = [
   [
     { id: 1, title: "Twitter", url: siteConfig.links.twitter },
     { id: 2, title: "Github", url: siteConfig.links.github },
-    { id: 3, title: "User", url: "/user" },
+    { id: 3, title: "Submit apps", url: "/submit" },
+    { id: 4, title: "Write stories", url: "/story/new" },
     // { id: 4, title: "Story", url: "#" },
   ],
   [
-    { id: 5, title: "Today", url: "/today" },
-    { id: 6, title: "AI Apps", url: "/ai-apps" },
-    { id: 7, title: "Stories", url: "/stories" },
+    { id: 5, title: "AI Apps", url: "/ai-apps" },
+    { id: 6, title: "Stories", url: "/stories" },
+    { id: 7, title: "Profile", url: "/user" },
+    { id: 8, title: "For You", url: "/foryou" },
+
     // { id: 8, title: "More", url: "#" },
   ],
 ]
@@ -49,7 +52,7 @@ export function SiteFooter() {
                   <Button
                     size={"sm"}
                     variant={"outline"}
-                    className="glass-card-background rounded-full text-sm text-muted-foreground shadow-top"
+                    className="glass-card-background flex items-center justify-center rounded-full text-sm text-muted-foreground shadow-top"
                   >
                     Send us feedback
                   </Button>

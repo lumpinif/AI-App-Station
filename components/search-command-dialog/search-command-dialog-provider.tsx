@@ -1,8 +1,11 @@
+import dynamic from "next/dynamic"
 import { getUser } from "@/server/auth"
 import { getAllApps } from "@/server/queries/supabase/apps/apps-actions"
 import { getAllPosts } from "@/server/queries/supabase/stories"
 
-import { SearchCommandDialog } from "./search-command-dialog"
+const SearchCommandDialog = dynamic(() => import("./search-command-dialog"), {
+  ssr: false,
+})
 
 export async function SearchCommandDialogProvider() {
   const { apps: allApps, error: allAppsError } = await getAllApps()

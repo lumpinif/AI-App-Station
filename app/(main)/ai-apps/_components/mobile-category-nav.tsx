@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { ChevronDown, ChevronRight } from "lucide-react"
 
-import { SIDENAVROUTES } from "@/config/routes/main-routes"
+import { AIAPPSPAGENAVROUTES } from "@/config/routes/site-routes"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 
@@ -34,7 +34,7 @@ export function MobileCategoryNav() {
       <div className="flex flex-col">
         <div className="scrollbar-none flex items-center justify-between overflow-x-auto">
           <div className="flex gap-x-2">
-            {SIDENAVROUTES.map((route) => (
+            {AIAPPSPAGENAVROUTES.map((route) => (
               <div
                 key={route.title}
                 onClick={() => {

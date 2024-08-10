@@ -4,7 +4,7 @@ import { getAppsByConfig } from "@/server/queries/supabase/apps/apps-fetch-by-co
 import { BoxSelect } from "lucide-react"
 
 import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
-import { SIDENAVROUTES } from "@/config/routes/main-routes"
+import { AIAPPSPAGENAVROUTES } from "@/config/routes/site-routes"
 import { siteConfig } from "@/config/site"
 import { getSiteUrl } from "@/lib/utils"
 import { AppSubmitButton } from "@/components/submit/app-submit-button"
@@ -33,7 +33,7 @@ async function fetchAppsByCollectionConfig(config?: AppFetchConfig) {
 }
 
 function getCollectionItem(collection: string) {
-  const collectionRoutes = SIDENAVROUTES.find(
+  const collectionRoutes = AIAPPSPAGENAVROUTES.find(
     (route) => route.title === "Collections"
   )
 
@@ -129,7 +129,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   const description = (
     <div className="flex items-center justify-between gap-x-2">
       <span className="max-w-2xl select-none text-balance text-muted-foreground sm:line-clamp-2">
-        {collectionItem.discription}
+        {collectionItem.description}
       </span>
       <AppSubmitButton className="hidden sm:flex" />
     </div>

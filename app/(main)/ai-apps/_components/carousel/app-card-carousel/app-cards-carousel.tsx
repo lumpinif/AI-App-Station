@@ -129,7 +129,8 @@ const AppCardsCarousel: React.FC<AppCardsCarouselProps> = ({
     )
 
   return (
-    <div className="relative mx-auto flex h-full w-full max-w-full flex-col gap-y-6">
+    // mx-auto w-full max-w-full
+    <div className="relative flex h-full flex-col gap-y-6">
       {/* Carousel Title */}
       <div className="flex flex-col gap-y-4">
         {/* <Separator /> */}

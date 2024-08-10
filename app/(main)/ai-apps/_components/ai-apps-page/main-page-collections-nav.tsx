@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { SIDENAVROUTES } from "@/config/routes/main-routes"
+import { AIAPPSPAGENAVROUTES } from "@/config/routes/site-routes"
 import { Separator } from "@/components/ui/separator"
 
 import { CollectionsGrid } from "../collections-grid"
@@ -9,7 +9,7 @@ import { SeeAllButton } from "../see-all-button"
 type CollectionsNavProps = {}
 
 export const MainPageCollectionsNav: React.FC<CollectionsNavProps> = ({}) => {
-  const collectionRoutes = SIDENAVROUTES.find(
+  const collectionRoutes = AIAPPSPAGENAVROUTES.find(
     (route) => route.title === "Collections"
   )
 

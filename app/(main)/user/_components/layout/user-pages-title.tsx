@@ -20,7 +20,7 @@ export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
 
   if (pathname === "/user") {
     return (
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-4 md:py-0">
         <PageTitle title="User" withBorder={false} className={className} />
         <UserPagesMobileNavSheet />
       </div>

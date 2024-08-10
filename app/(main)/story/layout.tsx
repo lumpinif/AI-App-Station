@@ -6,7 +6,7 @@ interface StoryPageLayoutProps {
 
 const StoryPageLayout = ({ children }: StoryPageLayoutProps) => {
   return (
-    <div className="container flex w-full flex-col">
+    <div className="flex w-full flex-col">
       <StoryPageTitle />
       <main className="mt-5 flex-1">{children}</main>
     </div>

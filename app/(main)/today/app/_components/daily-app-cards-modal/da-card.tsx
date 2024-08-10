@@ -42,7 +42,7 @@ export const DACard: React.FC<DACardProps> = ({
         borderRadius: 20,
       }}
       onClick={onCardClick}
-      className="card relative mx-auto my-0 h-[430px] w-full cursor-pointer select-none overflow-hidden rounded-xl bg-background outline-none transition-all duration-200 ease-out active:scale-[0.98] md:max-w-md"
+      className="card relative mx-auto my-0 h-[430px] w-full cursor-pointer select-none overflow-hidden rounded-xl bg-background outline-none transition-all duration-200 ease-out active:scale-[0.98]"
     >
       <div
         style={{ backgroundColor: `rgb(${color.colorEnd})` }}

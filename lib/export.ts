@@ -70,8 +70,8 @@ export function exportTableToCSV<TData>(
 
             // Convert introduction JSON to string
             if (
-              column === "introduction" ||
-              ("post_content" && typeof cellValue === "object")
+              (column === "introduction" || column === "post_content") &&
+              typeof cellValue === "object"
             ) {
               cellValue = JSON.stringify(cellValue)
             }

@@ -18,7 +18,7 @@ import {
 
 import { UserPagesMobileNavSheet } from "./user-pages-mobile-nav-sheet"
 
-const isEditorRoute = (pathname: string) => {
+export const isEditorRoute = (pathname: string) => {
   // Regular expression pattern to match a UUID after '/stories/' or '/apps/'
   const uuidPattern =
     /\/(stories|apps)\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/
@@ -53,7 +53,7 @@ export const UserPagesBreadCrumb = () => {
 
   if (items.length > 0)
     return (
-      <div className="flex items-center justify-between gap-x-2">
+      <nav className="flex items-center justify-between gap-x-2">
         <Breadcrumb>
           <BreadcrumbList>
             {items.length > 0 && (
@@ -89,6 +89,12 @@ export const UserPagesBreadCrumb = () => {
           </BreadcrumbList>
         </Breadcrumb>
         <UserPagesMobileNavSheet />
-      </div>
+      </nav>
     )
+
+  return (
+    <nav className="flex w-full justify-end">
+      <UserPagesMobileNavSheet />
+    </nav>
+  )
 }

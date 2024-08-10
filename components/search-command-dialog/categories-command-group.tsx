@@ -1,7 +1,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 
-import { SIDENAVROUTES } from "@/config/routes/main-routes"
+import { AIAPPSPAGENAVROUTES } from "@/config/routes/site-routes"
 
 import { CommandGroup, CommandItem } from "../ui/command"
 
@@ -15,7 +15,7 @@ export const CategoriesCommandGroup: React.FC<AppsCommandGroupProps> = ({
   const router = useRouter()
   return (
     <CommandGroup heading="Categories">
-      {SIDENAVROUTES.filter((route) => route.title === "Categories").map(
+      {AIAPPSPAGENAVROUTES.filter((route) => route.title === "Categories").map(
         (navItem) => (
           <React.Fragment key={navItem.href}>
             {navItem.items.map((item) => (

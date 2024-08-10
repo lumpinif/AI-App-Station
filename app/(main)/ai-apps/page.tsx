@@ -53,7 +53,7 @@ const AIAppsMainPage = async () => {
   })
 
   return (
-    <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
+    <section className="flex w-full flex-col gap-y-4 lg:gap-y-8">
       <AiAppsPagesTitle
         subtitlePos="bottom"
         title="Discover AI Apps"

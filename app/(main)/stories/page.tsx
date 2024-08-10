@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function StoriesPage() {
   return (
-    <section className="flex flex-col gap-y-4 sm:my-4 md:my-8 md:gap-y-6 lg:my-10 lg:gap-y-8">
+    <section className="flex flex-col gap-y-4 md:gap-y-6 lg:gap-y-8">
       <SeeAllButton
         href="/stories/all"
         className="text-sm sm:hidden"

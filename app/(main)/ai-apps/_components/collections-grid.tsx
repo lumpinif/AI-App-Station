@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { BoxSelect } from "lucide-react"
 
-import { NavItemProps } from "@/config/routes/main-routes"
+import { NavItemProps } from "@/config/routes/site-routes"
 
 type CollectionsGridProps = {
   collectionItems?: NavItemProps[]

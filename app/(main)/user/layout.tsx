@@ -7,7 +7,6 @@ import { siteConfig } from "@/config/site"
 import { getProfileRoleName } from "@/lib/utils"
 
 import { UserPagesWrapper } from "./_components/layout/user-pages-wrapper"
-import { ResizeableSideBar } from "./_components/resizeable/resizeable-side-bar"
 
 async function fetchUser() {
   const { profile, error: getProfileError } = await getUserProfile()
@@ -62,19 +61,18 @@ export default async function UserLayout({
   const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined
 
   return (
-    <main className="container relative h-full md:pt-4">
-      <ResizeableSideBar
-        navCollapsedSize={5}
-        defaultLayout={defaultLayout}
-        defaultCollapsed={defaultCollapsed}
-      >
-        {/* <ScrollArea className="h-[calc(100svh-6rem)] w-full pr-1 sm:pr-2"> */}
-
-        <UserPagesWrapper>{children}</UserPagesWrapper>
-
-        {/* <ScrollBar orientation="horizontal" /> */}
-        {/* </ScrollArea> */}
-      </ResizeableSideBar>
-    </main>
+    <>
+      <UserPagesWrapper>{children}</UserPagesWrapper>
+      {/* <ResizeableSideBar
+          navCollapsedSize={4}
+          defaultLayout={defaultLayout}
+          defaultCollapsed={defaultCollapsed}
+        >
+          <ScrollArea className="h-[calc(100svh)] w-full">
+            <UserPagesWrapper>{children}</UserPagesWrapper>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </ResizeableSideBar> */}
+    </>
   )
 }

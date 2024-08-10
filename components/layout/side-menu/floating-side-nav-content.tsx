@@ -1,9 +1,8 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LucideIcon as LucideIconType } from "lucide-react"
 
-import { NavItemProps, SIDENAVROUTESProps } from "@/config/routes/main-routes"
+import { NavItemProps } from "@/config/routes/site-routes"
 import { cn } from "@/lib/utils"
 import useSideNav from "@/hooks/use-side-nav-store"
 
@@ -12,11 +11,16 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../../ui/collapsible"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../ui/tooltip"
 import { buttonClassBase } from "./floating-side-nav"
 
 type FloatingSideNavContentProps = {
-  items: SIDENAVROUTESProps
+  items: NavItemProps[]
   isOpen?: boolean
 }
 
@@ -32,7 +36,7 @@ export const FloatingSideNavContent: React.FC<FloatingSideNavContentProps> =
     // }, [pathname, CloseSideNav])
 
     return (
-      <div className="w-full">
+      <div className="w-full border">
         <div className="space-y-2.5">
           {items.map((item, index) => (
             <div
@@ -41,7 +45,7 @@ export const FloatingSideNavContent: React.FC<FloatingSideNavContentProps> =
               onClick={OpenSideNav}
             >
               <FloatingSideNavCollapsible item={item} isOpen={isOpen}>
-                {item.items?.length > 0 && (
+                {item.items && item.items?.length > 0 && (
                   <FloatingSideNavCollapsibleContent
                     items={item.items}
                     pathname={pathname}
@@ -148,42 +152,44 @@ const FloatingSideNavCollapsible: React.FC<FloatingSideNavCollapsibleProps> =
     const [isCollapsible, setIsCollapsible] = useState(true)
 
     return (
-      <Tooltip delayDuration={0}>
-        <Collapsible
-          open={isCollapsible && isOpen}
-          onOpenChange={setIsCollapsible}
-          className="w-[350px] space-y-2"
-        >
-          <div className="relative flex items-center justify-start">
-            <CollapsibleTrigger asChild>
-              <TooltipTrigger asChild>
-                <button className={buttonClassBase}>
-                  {item.icon && <item.icon className="size-6" />}
-                  <span className="sr-only">{item.title}</span>
-                </button>
-              </TooltipTrigger>
-            </CollapsibleTrigger>
-            {isOpen ? (
-              <Link
-                href={`${item.href}` || "/"}
-                className="absolute right-4 origin-left select-none text-nowrap text-sm text-foreground hover:cursor-pointer hover:text-foreground/80"
-              >
-                {item.title}
-              </Link>
-            ) : (
-              <TooltipContent
-                side="right"
-                className="flex items-center gap-4 dark:bg-foreground dark:text-background"
-              >
-                {item.title}
-              </TooltipContent>
-            )}
-          </div>
-          <CollapsibleContent className="space-y-2">
-            {children}
-          </CollapsibleContent>
-        </Collapsible>
-      </Tooltip>
+      <TooltipProvider>
+        <Tooltip delayDuration={0}>
+          <Collapsible
+            open={isCollapsible && isOpen}
+            onOpenChange={setIsCollapsible}
+            className="w-[350px] space-y-2"
+          >
+            <div className="relative flex items-center justify-start">
+              <CollapsibleTrigger asChild>
+                <TooltipTrigger asChild>
+                  <button className={buttonClassBase}>
+                    {item.icon && <item.icon className="size-6" />}
+                    <span className="sr-only">{item.title}</span>
+                  </button>
+                </TooltipTrigger>
+              </CollapsibleTrigger>
+              {isOpen ? (
+                <Link
+                  href={`${item.href}` || "/"}
+                  className="absolute right-4 origin-left select-none text-nowrap text-sm text-foreground hover:cursor-pointer hover:text-foreground/80"
+                >
+                  {item.title}
+                </Link>
+              ) : (
+                <TooltipContent
+                  side="right"
+                  className="flex items-center gap-4 dark:bg-foreground dark:text-background"
+                >
+                  {item.title}
+                </TooltipContent>
+              )}
+            </div>
+            <CollapsibleContent className="space-y-2">
+              {children}
+            </CollapsibleContent>
+          </Collapsible>
+        </Tooltip>
+      </TooltipProvider>
     )
   })
 

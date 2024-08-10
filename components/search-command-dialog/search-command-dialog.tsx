@@ -24,7 +24,7 @@ type SearchCommandDialogProps = {
   user?: User | null
 }
 
-export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
+const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
   user,
   apps: db_apps,
   posts: db_storys,
@@ -106,3 +106,5 @@ export const SearchCommandDialog: React.FC<SearchCommandDialogProps> = ({
     </CommandDialog>
   )
 }
+
+export default SearchCommandDialog

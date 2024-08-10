@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation"
 
-import { MAINROUTES } from "@/config/routes/main-routes"
+import { MAINROUTES } from "@/config/routes/site-routes"
 
 import { CommandGroup, CommandItem } from "../ui/command"
 

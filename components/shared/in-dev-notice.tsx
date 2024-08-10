@@ -18,7 +18,9 @@ export const InDevNotice: React.FC<InDevNoticeProps> = ({
   return (
     <div className={cn("page-title-font", className)}>
       <Construction className={cn("size-10 text-yellow-500", iconClassName)} />
-      <span>The {title} is currently still in active development ...</span>
+      {children || (
+        <span>The {title} is currently still in active development ...</span>
+      )}
     </div>
   )
 }

@@ -16,7 +16,7 @@ export default function StoriesLayout({
 }) {
   return (
     <ViewTransitions>
-      <main className="container">{children}</main>
+      <main>{children}</main>
     </ViewTransitions>
   )
 }

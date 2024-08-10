@@ -1,136 +1,145 @@
 import Artifacts from "@/public/logos/artifacts"
 import {
+  Bookmark,
   Briefcase,
+  CalendarFold,
+  DraftingCompass,
+  FileText,
   Hammer,
+  Heart,
   Home,
-  Layers,
   LayoutTemplate,
   Library,
+  ListTodo,
   LucideIcon,
+  Newspaper,
   Paintbrush2,
   PencilRuler,
   Search,
-  Sparkles,
   SquarePen,
   Tags,
   Upload,
-  UserCog,
-  Youtube,
+  User,
 } from "lucide-react"
 import { IconType } from "react-icons/lib"
 import { RiOpenaiFill } from "react-icons/ri"
 
+import { User_role } from "@/types/db_tables"
 import { AppFetchConfig } from "@/types/fetch-configs/types-app-fetch-config"
 
 export type NavItemProps = {
   id?: string
-  title: string
   href: string
-  items?: NavItemProps[]
+  title: string
   label?: string
   disabled?: boolean
-  icon?: LucideIcon | IconType
-  shortcutNumber?: number
-  discription?: string
+  fullTitle?: string
   inMainNav?: boolean
-  fetchConfig?: AppFetchConfig
-}
-
-export type SIDENAVROUTE = {
-  title: string
+  description?: string
+  inMobileNav?: boolean
+  items?: NavItemProps[]
+  shortcutNumber?: number
   icon?: LucideIcon | IconType
-  href: string
-  items: NavItemProps[]
+  fetchConfig?: AppFetchConfig
+  roleAllowed?: User_role[]
 }
-
-export type SIDENAVROUTESProps = SIDENAVROUTE[]
 
 export const MAINROUTES: NavItemProps[] = [
   {
-    id: "home",
-    href: "/",
-    title: "Home",
-    discription: "Home Page of AI App Station",
+    id: "foryou",
+    href: "/foryou",
+    title: "For You",
+    description: "Home Page of AI App Station with AI Apps for you",
     icon: Home,
     shortcutNumber: 1,
-    inMainNav: false,
-  },
-  {
-    id: "today",
-    href: "/today",
-    title: "Today",
-    discription: "Everything you need to new about AI today",
-    icon: LayoutTemplate,
-    shortcutNumber: 2,
     inMainNav: true,
+    inMobileNav: false,
+    disabled: true,
   },
   {
     id: "ai-apps",
     href: "/ai-apps",
     title: "AI Apps",
-    discription: "Check out all the most powerful AI Apps by collections",
-    icon: Layers,
-    shortcutNumber: 3,
+    fullTitle: "Discover AI Apps",
+    description: "Check out all the most powerful AI Apps by collections",
+    icon: DraftingCompass,
+    shortcutNumber: 2,
     inMainNav: true,
+    inMobileNav: true,
   },
   {
     id: "story",
     href: "/stories",
     title: "Stories",
-    discription: "Check out all the brilliant stories written by the community",
-    icon: Sparkles,
+    fullTitle: "Explore Stories",
+    description: "Check out all the brilliant stories written by the community",
+    icon: Newspaper,
+    shortcutNumber: 3,
+    inMainNav: true,
+    inMobileNav: true,
+  },
+  {
+    id: "user",
+    href: "/user",
+    title: "Profile",
+    fullTitle: "Your Profile",
+    description: "Manage your account",
+    icon: User,
     shortcutNumber: 4,
     inMainNav: true,
+    inMobileNav: false,
+  },
+  {
+    id: "today",
+    href: "/today",
+    title: "Today",
+    description: "Everything you need to new about AI today",
+    icon: LayoutTemplate,
+    shortcutNumber: 5,
+    inMainNav: true,
+    inMobileNav: true,
   },
   // {
   //   id: "discover",
   //   href: "/discover",
   //   title: "Discover",
-  //   discription:
+  //   description:
   //     "Check out all the most powerful AI Apps by scrolling reels just like TikTok",
   //   icon: Sparkles,
   //   shortcutNumber: 4,
   //   inMainNav: true,
   // },
-  // {
-  //   id: "search",
-  //   href: "/search",
-  //   title: "Search",
-  //   discription: "Search for the best AI apps for your needs",
-  //   icon: Search,
-  //   shortcutNumber: 4,
-  //   inMainNav: true,
-  // },
+  {
+    id: "search",
+    href: "/search",
+    title: "Search",
+    description: "Search for the best AI apps for your needs",
+    icon: Search,
+    shortcutNumber: 6,
+    inMainNav: false,
+    inMobileNav: false,
+  },
   {
     id: "create story",
     href: "/story/new",
     title: "Write Story",
-    discription: "Write brilliant stories for the whole world to see",
+    description: "Write brilliant stories for the whole world to see",
     icon: SquarePen,
-    shortcutNumber: 5,
+    shortcutNumber: 7,
     inMainNav: false,
   },
   {
     id: "submit",
     href: "/submit",
     title: "Submit App",
-    discription: "Submit best AI apps for the whole world to see",
+    description: "Submit best AI apps for the whole world to see",
     icon: Upload,
-    shortcutNumber: 6,
-    inMainNav: false,
-  },
-  {
-    id: "user",
-    href: "/user",
-    title: "Account",
-    discription: "Manage your account",
-    icon: UserCog,
-    shortcutNumber: 7,
+    shortcutNumber: 8,
     inMainNav: false,
   },
 ]
 
-export const SIDENAVROUTES: SIDENAVROUTESProps = [
+export const AIAPPSPAGENAVROUTES: NavItemProps[] = [
   // ***** IMPORTANT FOR UPDATING href AND shortcutNumber *****//
   // REMEMBER TO MANUELLY UPDATE THE FLOAITNG SIDE NAV COMPONENT CONFIG FOR THE ROUTES//
   {
@@ -140,7 +149,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
     items: [
       {
         title: "Create",
-        discription: "Apps for writing, llm, video, photo, 3D, and more",
+        description: "Apps for writing, llm, video, photo, 3D, and more",
         href: "/ai-apps/collections/create",
         items: [],
         icon: Paintbrush2,
@@ -176,7 +185,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
       // },
       {
         title: "Develop",
-        discription: "Apps for develop, productivity, utilities, and more",
+        description: "Apps for develop, productivity, utilities, and more",
         href: "/ai-apps/collections/develop",
         items: [],
         icon: Hammer,
@@ -204,7 +213,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
       },
       {
         title: "Design",
-        discription: "Apps for design, photo, video, 3D, and more",
+        description: "Apps for design, photo, video, 3D, and more",
         href: "/ai-apps/collections/design",
         items: [],
         icon: PencilRuler,
@@ -232,7 +241,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
       },
       {
         title: "Artifacts",
-        discription:
+        description:
           "A list of Claude's Artifacts Shared by others, and you can share yours by submit an app and select artifacts as the category",
         href: "/ai-apps/collections/artifacts",
         items: [],
@@ -260,7 +269,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
       },
       {
         title: "GPTs",
-        discription: "A list of Openai's GPTs Shared by others",
+        description: "A list of Openai's GPTs Shared by others",
         href: "/ai-apps/collections/gpts",
         items: [],
         icon: RiOpenaiFill,
@@ -288,7 +297,7 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
       },
       {
         title: "Work",
-        discription: "Apps for work, productivity, finance, and more",
+        description: "Apps for work, productivity, finance, and more",
         href: "/ai-apps/collections/work",
         items: [],
         icon: Briefcase,
@@ -423,5 +432,44 @@ export const SIDENAVROUTES: SIDENAVROUTESProps = [
         label: "New",
       },
     ],
+  },
+]
+
+export const USERPAGESNAVROUTES: NavItemProps[] = [
+  {
+    title: "Liked",
+    href: "/user/favorites",
+    icon: Heart,
+    description: "Your favorite apps or stories",
+    shortcutNumber: 1,
+  },
+  {
+    title: "Bookmarks",
+    href: "/user/bookmarks",
+    icon: Bookmark,
+    description: "Your bookmarked apps or stories",
+    shortcutNumber: 2,
+  },
+  {
+    title: "Submitted Apps",
+    href: "/user/apps",
+    icon: ListTodo,
+    description: "Table of apps your submitted",
+    shortcutNumber: 3,
+  },
+  {
+    title: "Posted Stories",
+    href: "/user/stories",
+    icon: FileText,
+    description: "Table of stories you posted",
+    shortcutNumber: 4,
+  },
+  {
+    title: "Daily Posts",
+    href: "/user/daily-posts",
+    icon: CalendarFold,
+    description: "Table of daily posts you created",
+    shortcutNumber: 5,
+    roleAllowed: ["admin", "super_admin", "super_user"],
   },
 ]

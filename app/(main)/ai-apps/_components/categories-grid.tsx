@@ -2,7 +2,6 @@ import Link from "next/link"
 import { BoxSelect } from "lucide-react"
 
 import { Categories } from "@/types/db_tables"
-import { NavItemProps } from "@/config/routes/main-routes"
 import LucideIcon, {
   dynamicLucidIconProps,
 } from "@/components/icons/lucide-icon"

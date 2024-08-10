@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { LOGIN_REDIRECT_PATH } from "@/lib/constants/site-constants"
 import { getSiteUrl } from "@/lib/utils"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import {
@@ -56,7 +57,7 @@ export default function RegisterForm() {
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
   const params = useSearchParams()
-  const next = params.get("next") || "/today"
+  const next = params.get("next") || LOGIN_REDIRECT_PATH
   const redirectPath = getSiteUrl() + next
 
   const router = useRouter()
@@ -81,10 +82,10 @@ export default function RegisterForm() {
 
       if (signUpError?.name || signUpError?.message || signUpError?.status) {
         if (
-          signUpError.name === "AuthApiSignUpError" ||
-          ("AuthApiError" &&
-            signUpError.message === "Email rate limit exceeded" &&
-            signUpError.status === 429)
+          (signUpError.name === "AuthApiSignUpError" ||
+            signUpError.name === "AuthApiError") &&
+          signUpError.message === "Email rate limit exceeded" &&
+          signUpError.status === 429
         ) {
           // Display a user-friendly message to inform the user about the email rate limit issue
           toast.error(

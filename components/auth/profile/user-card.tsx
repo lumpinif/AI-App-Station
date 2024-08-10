@@ -22,7 +22,7 @@ type NewUserCardProps = {
   isTriggerModal?: boolean
   profileContainerCN?: string
   withAvartarUploader?: boolean
-  display?: "user_name" | "email"
+  display?: "user_name" | "email" | "user_role"
   accountModalTriggerCN?: string
 }
 
@@ -64,10 +64,22 @@ export const UserCard: React.FC<NewUserCardProps> = ({
           <div className={cn("flex flex-1 flex-col", profileContainerCN)}>
             <span className={cn("flex items-center gap-x-1", profileNameCN)}>
               {profile?.full_name ?? profile?.email}
+              {isSuperUser && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <BadgeCheck className="size-4 fill-blue-600 stroke-background" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Your account is {userRoleName}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
             </span>
             <span className={profileEmailCN}>
               {display === "email" ? (
                 profile?.email
+              ) : display === "user_role" ? (
+                userRoleName
               ) : (
                 <span>@{profile?.user_name}</span>
               )}
@@ -104,6 +116,8 @@ export const UserCard: React.FC<NewUserCardProps> = ({
             <span className={profileEmailCN}>
               {display === "email" ? (
                 profile?.email
+              ) : display === "user_role" ? (
+                userRoleName
               ) : (
                 <span>@{profile?.user_name}</span>
               )}

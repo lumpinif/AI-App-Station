@@ -59,7 +59,7 @@
 
   .dark {
     /* --background: 240 10% 6%; */
-    --background: 210 1% 5%;
+    --background: 210 1% 7%;
     --foreground: 0 0% 99%;
 
     --card: 210 1% 10%;
@@ -212,6 +212,23 @@
   /* p {
     @apply mb-6;
   } */
+
+  /* Chrome, Edge, and Safari Scrollbar stylings */
+  *::-webkit-scrollbar {
+    @apply h-1 w-1;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply rounded-full bg-transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-full border-none bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply cursor-grab bg-muted active:cursor-grabbing;
+  }
 }
 
 @layer utilities {
@@ -253,6 +270,14 @@
     @apply absolute inline-flex h-9 w-9 items-center justify-center rounded-full border-4 border-background bg-muted text-center -indent-px font-mono text-base font-medium;
     @apply ml-[-50px] mt-[-4px];
     content: counter(step);
+  }
+
+  .tooltip-content {
+    @apply flex items-center gap-2 dark:bg-foreground dark:text-background;
+  }
+
+  .kbd {
+    @apply pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] opacity-100 dark:bg-muted-foreground/60 sm:flex;
   }
 }
 

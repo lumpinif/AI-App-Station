@@ -6,6 +6,7 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/browser-client"
 import { GithubIcon } from "lucide-react"
 import { toast } from "sonner"
 
+import { LOGIN_REDIRECT_PATH } from "@/lib/constants/site-constants"
 import { ButtonProps } from "@/components/ui/button"
 import { SpinnerButton } from "@/components/shared/spinner-button"
 
@@ -14,7 +15,7 @@ type GithubLoginButtonProps = ButtonProps & {}
 const GithubLoginButton = ({ ...props }: GithubLoginButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const params = useSearchParams()
-  const next = params.get("next") || "/today"
+  const next = params.get("next") || LOGIN_REDIRECT_PATH
 
   async function handleGithubLogin() {
     try {

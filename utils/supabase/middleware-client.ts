@@ -1,6 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server"
 import { createServerClient, type CookieOptions } from "@supabase/ssr"
 
+import { LOGIN_REDIRECT_PATH } from "@/lib/constants/site-constants"
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
@@ -57,7 +59,7 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getUser()
 
   const url = new URL(request.url)
-  const nextUrl = url.searchParams.get("next") || "/today"
+  const nextUrl = url.searchParams.get("next") || LOGIN_REDIRECT_PATH
 
   if (data?.user?.id) {
     // User is signed in

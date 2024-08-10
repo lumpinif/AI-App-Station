@@ -28,17 +28,17 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
   const { isTablet, isDesktop } = useMediaQuery()
   const leftPanelRef = useRef<ImperativePanelHandle>(null)
 
-  const mdMinSize = 15
-  const mdMaxSize = 20
+  const mdMinSize = 20
+  const mdMaxSize = 25
   const lgMinSize = 15
   const lgMaxSize = 20
 
-  const minSize = isDesktop ? lgMinSize : isTablet ? mdMinSize : 15
-  const maxSize = isDesktop ? lgMaxSize : isTablet ? mdMaxSize : 20
+  const minSize = isDesktop ? lgMinSize : isTablet ? mdMinSize : 10
+  const maxSize = isDesktop ? lgMaxSize : isTablet ? mdMaxSize : 15
 
   if (!defaultLayout) {
     // defaultLayout = [minSize, 100 - minSize]
-    defaultLayout = [265, 1095]
+    defaultLayout = [15, 85]
   }
 
   const isLeftPanelCollapsed = leftPanelRef?.current?.isCollapsed()
@@ -83,13 +83,13 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
             sizes
           )}`
         }}
-        className="items-stretch"
+        className="min-h-svh items-stretch"
       >
         <ResizablePanel
           ref={leftPanelRef}
           id="left-panel"
-          minSize={13}
-          maxSize={20}
+          minSize={minSize}
+          maxSize={maxSize}
           collapsible={true}
           defaultSize={defaultLayout[0]}
           collapsedSize={navCollapsedSize}
@@ -102,7 +102,7 @@ export const ResizeableSideBar: React.FC<ResizeableSideBarProps> = ({
             document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(false)}`
           }}
           className={cn(
-            "peer hidden flex-col items-center justify-center border-r border-border/30 transition-all duration-150 ease-in-out dark:border-border/10 md:flex",
+            "peer hidden flex-col items-center justify-center border-r border-border/30 bg-muted/50 transition-all duration-150 ease-in-out dark:border-border/10 dark:bg-muted/10 md:flex",
             isCollapsed ? `min-w-[50px]` : ""
           )}
         >

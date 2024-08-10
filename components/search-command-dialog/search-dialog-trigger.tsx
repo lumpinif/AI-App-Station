@@ -60,7 +60,9 @@ export default function SearchCommandDialogTrigger({
               children
             ) : !isCollapsed ? (
               <>
-                <Search className="mr-2 stroke-[1.5px] md:size-6" />
+                <Search
+                  className={cn("mr-2 stroke-[1.5px] md:size-6", iconClassName)}
+                />
                 <span className="font-normal">Search</span>
               </>
             ) : (

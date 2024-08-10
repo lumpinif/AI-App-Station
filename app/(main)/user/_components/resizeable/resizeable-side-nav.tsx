@@ -29,7 +29,7 @@ export const ResizeableSideNav: React.FC<NavProps> = ({
   return (
     <div
       data-collapsed={isCollapsed}
-      className="group flex h-full flex-col gap-4 py-2 data-[collapsed=true]:py-2"
+      className="group flex h-full w-full flex-col gap-4 p-4"
     >
       {isCollapsed && (
         <div className="grid gap-4 group-[[data-collapsed=true]]:justify-center">

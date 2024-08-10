@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { DesktopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { Monitor, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
@@ -120,22 +119,22 @@ export function ThemeToggle({
             size="icon"
             className="rounded-full border-none focus:outline-none"
           >
-            <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all focus:outline-none dark:-rotate-90 dark:scale-0" />
-            <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all focus:outline-none dark:rotate-0 dark:scale-100" />
+            <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all focus:outline-none dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all focus:outline-none dark:rotate-0 dark:scale-100" />
             <span className="sr-only">Toggle theme</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => setTheme("light")}>
-            <SunIcon className="mr-2" />
+            <Sun className="mr-2" />
             Light
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setTheme("dark")}>
-            <MoonIcon className="mr-2" />
+            <Moon className="mr-2" />
             Dark
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setTheme("system")}>
-            <DesktopIcon className="mr-2" />
+            <Monitor className="mr-2" />
             System
           </DropdownMenuItem>
         </DropdownMenuContent>

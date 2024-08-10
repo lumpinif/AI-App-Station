@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { ArrowLeftFromLine, ArrowRightFromLine } from "lucide-react"
+import React, { PropsWithChildren, useEffect } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { ChevronsLeft, ChevronsRight, Home, Newspaper } from "lucide-react"
 
-import { SIDENAVROUTES } from "@/config/routes/main-routes"
+import { AIAPPSPAGENAVROUTES } from "@/config/routes/site-routes"
 import { cn } from "@/lib/utils"
 import { useKeyPress } from "@/hooks/use-key-press"
 import useSideNav from "@/hooks/use-side-nav-store"
@@ -27,7 +27,11 @@ export const buttonClassBase =
 
 const FloatingSideNav: React.FC = () => {
   const router = useRouter()
-  const collectionRoutes = SIDENAVROUTES.find(
+  const currentPath = usePathname()
+
+  const isUserPage = currentPath.startsWith("/user")
+
+  const collectionRoutes = AIAPPSPAGENAVROUTES.find(
     (route) => route.title === "Collections"
   )
   const collectionItems = collectionRoutes?.items
@@ -43,29 +47,6 @@ const FloatingSideNav: React.FC = () => {
       if (matchingItem) {
         router.push(matchingItem.href)
       }
-
-      /* switch (event.code) {
-        case "Digit1":
-          router.push("/ai-apps/collections/create")
-          break
-        // case "Digit2":
-        //   router.push("/ai-apps/collections/discovery")
-        //   break
-        case "Digit2":
-          router.push("/ai-apps/collections/develop")
-          break
-        case "Digit3":
-          router.push("/ai-apps/collections/design")
-          break
-        case "Digit4":
-          router.push("/ai-apps/collections/gpts")
-          break
-        case "Digit5":
-          router.push("/ai-apps/collections/work")
-          break
-        default:
-          break
-      } */
     }
   }
 
@@ -76,40 +57,158 @@ const FloatingSideNav: React.FC = () => {
 
   const sideNavClass = cn(
     "cubic-bezier(0.32, 0.72, 0, 1) inline-flex flex-col gap-2.5 p-2.5 transition-all duration-500",
-    !isOpen
-      ? "w-20 rounded-[2.5rem] dark:bg-transparent"
-      : "dark:glass-card-background w-48 rounded-3xl bg-muted dark:shadow-outline"
+    !isOpen ? "w-20 dark:bg-transparent" : "w-48"
   )
 
   return (
-    <aside
-      className={cn(
-        "cubic-bezier(0.32, 0.72, 0, 1) z-40 hidden max-h-[calc(80svh)] w-fit backdrop-blur-xl transition-all duration-500 md:flex md:flex-col",
-        !isOpen
-          ? "4xl:-ml-44 rounded-[2.5rem] dark:shadow-outline 3xl:-ml-36"
-          : "4xl:-ml-56 mt-10 md:-ml-4 2xl:-ml-24 3xl:ml-[-200px]"
-      )}
-    >
+    <>
       <TooltipProvider>
-        <ScrollArea className="relative z-50 h-full w-full rounded-3xl">
-          <div className={sideNavClass}>
-            <SideNavToggle isOpen={isOpen} />
-            {isOpen && <SearchTrigger isOpen={isOpen} />}
-            <FloatingSideNavContent items={SIDENAVROUTES} isOpen={isOpen} />
-            {!isOpen && <SearchTrigger isOpen={isOpen} />}
-            <SideNavThemeToggle isOpen={isOpen} />
-            <SideMenuAuthTrigger isOpen={isOpen} />
-          </div>
-        </ScrollArea>
-        {!isOpen && <PopoverMenu className={!isOpen ? "!w-20" : "!w-48"} />}
+        <div
+          className={cn(
+            "relative hidden flex-none rounded-2xl bg-muted/20 md:flex",
+            !isOpen ? "md:w-[15%] lg:w-[12%]" : "md:w-1/4 lg:w-1/5"
+          )}
+        >
+          <nav
+            className={cn(
+              "group fixed bottom-1/2 top-1/2 z-40 hidden w-fit -translate-y-1/2 flex-col justify-center gap-y-2 md:ml-[2%] md:flex",
+              !isOpen ? "" : ""
+            )}
+          >
+            {!isOpen && (
+              <SideBarWrapper
+                isOpen={isOpen}
+                className={cn("opacity-0 !shadow-none group-hover:opacity-100")}
+              >
+                <div className={cn(sideNavClass)}>
+                  <SideNavToggle isOpen={isOpen} />
+                </div>
+              </SideBarWrapper>
+            )}
+
+            <SideBarWrapper isOpen={isOpen}>
+              <div className={cn(sideNavClass)}>
+                {isOpen && <SideNavToggle isOpen={isOpen} />}
+                <SideNavHome isOpen={isOpen} />
+                <SearchTrigger isOpen={isOpen} />
+                <SideNavStories isOpen={isOpen} />
+                <SideMenuAuthTrigger isOpen={isOpen} />
+              </div>
+            </SideBarWrapper>
+
+            {!isUserPage && (
+              <SideBarWrapper isOpen={isOpen} className="max-h-[calc(72svh)]">
+                <ScrollArea className="relative z-50 h-full w-full rounded-3xl">
+                  <div className={sideNavClass}>
+                    <FloatingSideNavContent
+                      items={AIAPPSPAGENAVROUTES}
+                      isOpen={isOpen}
+                    />
+                  </div>
+                </ScrollArea>
+                {!isOpen && (
+                  <PopoverMenu className={!isOpen ? "!w-20" : "!w-48"} />
+                )}
+              </SideBarWrapper>
+            )}
+          </nav>
+        </div>
       </TooltipProvider>
-    </aside>
+    </>
   )
 }
 
 interface SideNavToggleProps {
   isOpen?: boolean
 }
+
+export const SideNavHome: React.FC<SideNavToggleProps> = React.memo(
+  ({ isOpen }) => {
+    const router = useRouter()
+    const pathname = usePathname()
+
+    const buttonClass = cn(
+      buttonClassBase,
+      pathname === "/ai-apps" && "text-primary bg-foreground/10"
+    )
+
+    return (
+      <Tooltip delayDuration={0}>
+        <div className={cn("relative flex items-center justify-start")}>
+          <TooltipTrigger asChild>
+            <button
+              className={buttonClass}
+              onClick={() => router.push("/ai-apps")}
+            >
+              <Home className="stroke-[1.5]" />
+            </button>
+          </TooltipTrigger>
+          {!isOpen && (
+            <TooltipContent
+              side="right"
+              className="flex items-center gap-2 dark:bg-foreground dark:text-background"
+            >
+              Home
+            </TooltipContent>
+          )}
+          <h1
+            className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
+              !isOpen && "scale-0"
+            }`}
+          >
+            Home
+          </h1>
+        </div>
+      </Tooltip>
+    )
+  }
+)
+
+SideNavHome.displayName = "SideNavHome"
+
+export const SideNavStories: React.FC<SideNavToggleProps> = React.memo(
+  ({ isOpen }) => {
+    const router = useRouter()
+    const pathname = usePathname()
+
+    const buttonClass = cn(
+      buttonClassBase,
+      pathname === "/stories" && "text-primary bg-foreground/10"
+    )
+
+    return (
+      <Tooltip delayDuration={0}>
+        <div className={cn("relative flex items-center justify-start")}>
+          <TooltipTrigger asChild>
+            <button
+              className={buttonClass}
+              onClick={() => router.push("/stories")}
+            >
+              <Newspaper className="stroke-[1.5]" />
+            </button>
+          </TooltipTrigger>
+          {!isOpen && (
+            <TooltipContent
+              side="right"
+              className="flex items-center gap-2 dark:bg-foreground dark:text-background"
+            >
+              Stories
+            </TooltipContent>
+          )}
+          <h1
+            className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
+              !isOpen && "scale-0"
+            }`}
+          >
+            Stories
+          </h1>
+        </div>
+      </Tooltip>
+    )
+  }
+)
+
+SideNavStories.displayName = "SideNavStories"
 
 const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
   const ToggleSideNav = useSideNav((state) => state.ToggleSideNav)
@@ -142,7 +241,7 @@ const SideNavToggle: React.FC<SideNavToggleProps> = React.memo(({ isOpen }) => {
       <div className={cn("relative flex items-center justify-start")}>
         <TooltipTrigger asChild>
           <button onClick={ToggleSideNav} className={buttonClass}>
-            {!isOpen ? <ArrowRightFromLine /> : <ArrowLeftFromLine />}
+            {!isOpen ? <ChevronsRight /> : <ChevronsLeft />}
           </button>
         </TooltipTrigger>
         {!isOpen && (
@@ -177,20 +276,25 @@ export const SearchTrigger: React.FC<SideNavToggleProps> = React.memo(
     const buttonClass = cn(buttonClassBase)
 
     return (
-      <Tooltip delayDuration={0}>
-        <div className={cn("relative flex items-center justify-start")}>
-          <SearchCommandDialogTrigger className={buttonClass} sideOffset={10} />
-          <h1
-            className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
-              !isOpen && "scale-0"
-            }`}
-          >
-            <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] opacity-100 dark:bg-muted-foreground/60 sm:flex">
-              <span className="text-xs">⌘</span>K
-            </kbd>
-          </h1>
-        </div>
-      </Tooltip>
+      <TooltipProvider>
+        <Tooltip delayDuration={0}>
+          <div className={cn("relative flex items-center justify-start")}>
+            <SearchCommandDialogTrigger
+              className={buttonClass}
+              sideOffset={10}
+            />
+            <h1
+              className={`pointer-events-none absolute right-4 origin-left select-none text-nowrap text-sm text-foreground opacity-100 duration-300 ${
+                !isOpen && "scale-0"
+              }`}
+            >
+              <kbd className="pointer-events-none right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded bg-muted px-1.5 font-mono text-[10px] opacity-100 dark:bg-muted-foreground/60 sm:flex">
+                <span className="text-xs">⌘</span>K
+              </kbd>
+            </h1>
+          </div>
+        </Tooltip>
+      </TooltipProvider>
     )
   }
 )
@@ -238,5 +342,30 @@ export const SideNavThemeToggle: React.FC<SideNavToggleProps> = React.memo(
 )
 
 SideNavThemeToggle.displayName = "SideNavThemeToggle"
+
+type SideBarWrapperProps = PropsWithChildren<SideNavToggleProps> & {
+  className?: string
+}
+
+export const SideBarWrapper: React.FC<SideBarWrapperProps> = ({
+  isOpen,
+  children,
+  className,
+}) => {
+  return (
+    <aside
+      className={cn(
+        "cubic-bezier(0.32, 0.72, 0, 1) dark:glass-card-background z-40 hidden w-fit rounded-2xl backdrop-blur-xl transition-all duration-500 dark:shadow-outline md:flex md:flex-col",
+        !isOpen && "rounded-[2.5rem]",
+        /* !isOpen
+          ? "3xl:-ml-36 4xl:-ml-44"
+          : "md:-ml-4 2xl:-ml-24 3xl:ml-[-200px] 4xl:-ml-60", */
+        className
+      )}
+    >
+      {children}
+    </aside>
+  )
+}
 
 export default FloatingSideNav

@@ -12,7 +12,6 @@ import { GeistSans } from "geist/font/sans"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Toaster as SonnerToaster } from "@/components/ui/sonner"
-import { SiteFooter } from "@/components/layout/site-footer/site-footer"
 import { SiteHeader } from "@/components/layout/site-header/site-header"
 import { TailwindIndicator } from "@/components/theme/tailwind-indicator"
 
@@ -91,7 +90,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head />
       <body
         className={cn(
@@ -106,13 +105,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <QueryProvider>
-            <div vaul-drawer-wrapper="">
-              <div className="relative flex min-h-screen flex-col bg-background">
-                <SiteHeader />
-                <main className="flex-1">{children}</main>
-                <SiteFooter />
+            <main
+              vaul-drawer-wrapper=""
+              className="min-h-screen bg-background dark:md:bg-black"
+            >
+              <SiteHeader />
+              <div className="relative bg-background dark:md:bg-black">
+                {children}
               </div>
-            </div>
+            </main>
             <SonnerToaster richColors position="bottom-right" />
             <TailwindIndicator />
           </QueryProvider>

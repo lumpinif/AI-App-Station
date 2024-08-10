@@ -4,7 +4,7 @@ import React, { useCallback } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 
-import { NavItemProps, SIDENAVROUTES } from "@/config/routes/main-routes"
+import { AIAPPSPAGENAVROUTES, NavItemProps } from "@/config/routes/site-routes"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -29,7 +29,8 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
 
   // Optimization: useMemo to avoid unnecessary recalculations
   const filteredRoutes = React.useMemo(
-    () => SIDENAVROUTES.find((route) => currentPath.startsWith(route.href)),
+    () =>
+      AIAPPSPAGENAVROUTES.find((route) => currentPath.startsWith(route.href)),
     [currentPath]
   )
 
@@ -57,7 +58,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
                 variant: "tag",
                 size: "sm",
                 className:
-                  "relative rounded-full transition-colors duration-300 select-none",
+                  "relative select-none rounded-full transition-colors duration-300",
               })
             )}
             initial={{ color: "hsl(var(--muted-foreground))" }}
@@ -70,7 +71,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
                 buttonVariants({
                   variant: "default",
                   size: "sm",
-                  className: "rounded-full absolute inset-0 -z-10",
+                  className: "absolute inset-0 -z-10 rounded-full",
                 })
               )}
               transition={{

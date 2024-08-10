@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 
-import { SIDENAVROUTES } from "@/config/routes/main-routes"
+import { AIAPPSPAGENAVROUTES } from "@/config/routes/site-routes"
 
 import AiAppsPagesTitle from "../_components/ai-apps-page-title"
 import { CollectionsGrid } from "../_components/collections-grid"
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default function CollectionsPage() {
-  const collectionRoutes = SIDENAVROUTES.find(
+  const collectionRoutes = AIAPPSPAGENAVROUTES.find(
     (route) => route.title === "Collections"
   )
   const allCollectionItems = collectionRoutes?.items

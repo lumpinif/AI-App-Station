@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
 
+import { LOGIN_REDIRECT_PATH } from "@/lib/constants/site-constants"
 import useAccountModal from "@/hooks/use-account-modal-store"
 import {
   Form,
@@ -36,7 +37,7 @@ export default function SignInForm() {
   const closeAccountModal = useAccountModal((state) => state.closeModal)
 
   const params = useSearchParams()
-  const next = params.get("next") || "/today"
+  const next = params.get("next") || LOGIN_REDIRECT_PATH
 
   const router = useRouter()
   const queryClient = useQueryClient()

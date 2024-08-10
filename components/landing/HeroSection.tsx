@@ -21,7 +21,7 @@ export default HeroSection
 function LandingActions() {
   return (
     <div className="flex w-full min-w-[350px] items-center justify-center gap-4 text-center text-xl drop-shadow-sm">
-      <Link href="/today">
+      <Link href="/ai-apps">
         <Button className="w-28">Get Started</Button>
       </Link>
       <span className="flex text-xs text-muted-foreground sm:text-sm">or</span>
@@ -40,7 +40,7 @@ function Banner() {
       <div className="max-w-md font-semibold sm:max-w-fit md:text-2xl lg:text-3xl xl:text-4xl">
         Probably the last AI Apps & News Station you&apos;ll ever need.
       </div>{" "}
-      <div className="max-w-md text-xs  text-muted-foreground sm:max-w-xl sm:text-lg md:max-w-2xl md:text-xl lg:max-w-4xl">
+      <div className="max-w-md text-xs text-muted-foreground sm:max-w-xl sm:text-lg md:max-w-2xl md:text-xl lg:max-w-4xl">
         Stay ahead of the curve with cutting-edge solutions in the age of AI
         with Today&apos;s news, the newest AI Apps with collections, categories,
         and stories completely for{" "}
