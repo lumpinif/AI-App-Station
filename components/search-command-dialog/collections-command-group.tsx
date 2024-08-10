@@ -18,7 +18,7 @@ export const CollectionsCommandGroup: React.FC<
       {AIAPPSPAGENAVROUTES.filter((route) => route.title === "Collections").map(
         (navItem) => (
           <React.Fragment key={navItem.href}>
-            {navItem.items.map((item) => (
+            {navItem?.items?.map((item) => (
               <CommandItem
                 key={item.href}
                 // keywords={[Object.values(item).join(" ")]}

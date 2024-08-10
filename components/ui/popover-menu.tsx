@@ -60,6 +60,7 @@ export default function PopoverMenu({
       width: isMobile ? "100%" : "100%",
       // height: "auto",
       height: 180,
+      // height: "100%",
       borderRadius: "16px",
       // bottom: -15,
       padding: "0.25rem",
@@ -145,22 +146,30 @@ export default function PopoverMenu({
         )}
       </AnimatePresence>
 
-      <motion.button
-        className={cn(linkItemCN, !isOpen && "justify-center", buttonClassName)}
-        onClick={(e) => {
-          e.stopPropagation()
-          togglePopover()
-        }}
-        variants={buttonVariants}
-        initial="closed"
-        animate={isPopoverOpen ? "open" : "closed"}
-        whileTap={{ scale: 0.95 }}
-      >
-        <PlusIcon className={cn("h-6 w-6", iconCN)} />
-        <span className={cn(linkItemTextCN, !isOpen ? "scale-0" : "scale-100")}>
-          Create
-        </span>
-      </motion.button>
+      {!isPopoverOpen && (
+        <motion.button
+          className={cn(
+            linkItemCN,
+            !isOpen && "justify-center",
+            buttonClassName
+          )}
+          onClick={(e) => {
+            e.stopPropagation()
+            togglePopover()
+          }}
+          variants={buttonVariants}
+          initial="closed"
+          animate={isPopoverOpen ? "open" : "closed"}
+          whileTap={{ scale: 0.95 }}
+        >
+          <PlusIcon className={cn("h-6 w-6", iconCN)} />
+          <span
+            className={cn(linkItemTextCN, !isOpen ? "scale-0" : "scale-100")}
+          >
+            Create
+          </span>
+        </motion.button>
+      )}
     </div>
   )
 }

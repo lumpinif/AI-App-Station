@@ -58,7 +58,7 @@ export const PinnableSideMenuNavLinks: React.FC<PinnableSideMenuNavLinksPropsPro
           </React.Fragment>
         ))}
 
-        <PopoverMenu isOpen={isOpen} buttonClassName="left-0" />
+        <PopoverMenu isOpen={isOpen} />
 
         <SecondaryNavLinks
           isOpen={isOpen}

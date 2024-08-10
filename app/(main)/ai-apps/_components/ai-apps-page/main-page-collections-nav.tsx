@@ -13,7 +13,7 @@ export const MainPageCollectionsNav: React.FC<CollectionsNavProps> = ({}) => {
     (route) => route.title === "Collections"
   )
 
-  const collectionItems = collectionRoutes?.items.slice(0, 6)
+  const collectionItems = collectionRoutes?.items?.slice(0, 6)
 
   if (collectionItems)
     return (

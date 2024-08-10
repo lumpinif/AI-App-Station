@@ -115,7 +115,7 @@ export function TagsCarousel({ currentPath }: TagsCarouselProps) {
         >
           <CarouselContent className="relative">
             {renderLink("All")}
-            {filteredRoutes?.items.map((item) => renderLink(item))}
+            {filteredRoutes?.items?.map((item) => renderLink(item))}
           </CarouselContent>
 
           <CarouselPrevious
