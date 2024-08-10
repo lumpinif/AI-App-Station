@@ -106,7 +106,7 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
             <Skeleton className="ml-auto hidden h-7 w-[4.5rem] lg:flex" />
           ) : null}
         </div>
-        <div className="rounded-md border">
+        <div className="rounded-md border border-muted">
           <Table>
             <TableHeader>
               {Array.from({ length: 1 }).map((_, i) => (
@@ -145,7 +145,7 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
           </Table>
         </div>
         {withPagination ? (
-          <div className="flex w-full  items-center justify-between gap-4 overflow-auto p-1 sm:gap-8">
+          <div className="flex w-full items-center justify-between gap-4 overflow-auto p-1 sm:gap-8">
             <Skeleton className="h-7 w-40 shrink-0" />
             <div className="flex items-center gap-4 sm:gap-6 lg:gap-8">
               <div className="flex items-center space-x-2">

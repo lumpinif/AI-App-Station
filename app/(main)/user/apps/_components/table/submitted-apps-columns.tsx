@@ -31,7 +31,6 @@ import {
   DeleteAppsDialog,
   DraftAppsDialog,
   EditAppsDialog,
-  PublishAppsDialog,
   UnpublishAppsDialog,
 } from "./submitted-apps-actions-dialog"
 

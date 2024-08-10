@@ -49,7 +49,7 @@ export const PinnableSideMenu: React.FC<PinnableSideMenuProps> = ({
   const innerDivClassName = useMemo(
     () =>
       cn(
-        "overflow-y-auto overflow-x-hidden",
+        "overflow-hidden ",
         isOpen ? "translate-x-0" : "md:-translate-x-40 lg:translate-x-0",
         isPinned
           ? "rounded-none"
