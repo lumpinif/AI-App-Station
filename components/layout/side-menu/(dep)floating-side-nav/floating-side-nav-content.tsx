@@ -5,18 +5,18 @@ import { usePathname } from "next/navigation"
 import { NavItemProps } from "@/config/routes/site-routes"
 import { cn } from "@/lib/utils"
 import useSideNav from "@/hooks/use-side-nav-store"
-
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../../ui/collapsible"
+} from "@/components/ui/collapsible"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../ui/tooltip"
+} from "@/components/ui/tooltip"
+
 import { buttonClassBase } from "./floating-side-nav"
 
 type FloatingSideNavContentProps = {

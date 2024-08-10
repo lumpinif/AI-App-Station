@@ -11,7 +11,6 @@ import useSideNav from "@/hooks/use-side-nav-store"
 import PopoverMenu from "@/components/ui/popover-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import AccountModalTrigger from "@/components/auth/auth-modal/account-modal-trigger"
-import { FloatingSideNavContent } from "@/components/layout/side-menu/floating-side-nav-content"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 import { ThemeToggle } from "@/components/theme/theme-toggle"
 
@@ -20,7 +19,8 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../ui/tooltip"
+} from "../../../ui/tooltip"
+import { FloatingSideNavContent } from "./floating-side-nav-content"
 
 export const buttonClassBase =
   "flex h-12 w-12 translate-x-1.5 items-center justify-center rounded-full text-muted-foreground outline-none transition-all duration-200 ease-out hover:cursor-pointer hover:bg-foreground/10 hover:text-foreground"
