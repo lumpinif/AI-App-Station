@@ -3,14 +3,14 @@
 import React, { memo } from "react"
 
 import { SiteLogo } from "../../site-header/site-header"
-import { usePinnableSideMenu } from "./use-pinnable-side-menu"
 import { PinnableSideMenuNavLinks } from "./pinnable-side-menu-nav-links"
+import { usePinnableSideMenu } from "./use-pinnable-side-menu"
 
 const PinnableSideMenuContent: React.FC = () => {
   const { isPinned } = usePinnableSideMenu()
 
   return (
-    <div className="flex h-full w-full flex-col gap-y-2">
+    <div className="flex h-full w-full flex-col gap-y-2 overflow-hidden">
       {isPinned && <PinnedLogo />}
       <PinnableSideMenuNavLinks isPinned={isPinned} />
     </div>

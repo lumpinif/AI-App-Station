@@ -437,7 +437,7 @@ export const AIAPPSPAGENAVROUTES: NavItemProps[] = [
 
 export const USERPAGESNAVROUTES: NavItemProps[] = [
   {
-    title: "Liked",
+    title: "Your Liked",
     href: "/user/favorites",
     icon: Heart,
     description: "Your favorite apps or stories",

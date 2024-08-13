@@ -2,10 +2,7 @@
 
 import { usePathname } from "next/navigation"
 
-import {
-  UserLayoutRouteProps,
-  userLayoutRoutes,
-} from "@/config/routes/user-layout-routes"
+import { USERPAGESNAVROUTES } from "@/config/routes/site-routes"
 import { PageTitle } from "@/components/layout/page-title"
 
 import { UserPagesMobileNavSheet } from "./user-pages-mobile-nav-sheet"
@@ -27,37 +24,23 @@ export const UserPagesTitle: React.FC<UserPagesTitleProps> = ({
     )
   }
 
-  const matchedRoute = userLayoutRoutes.reduce<UserLayoutRouteProps | null>(
-    (matched, group) => {
-      if (matched) return matched
-
-      const matchedItem = group.items.find((item) => item.href === pathname)
-
-      if (matchedItem) {
-        return {
-          group: group.group,
-          items: [matchedItem],
-        }
-      }
-
-      return null
-    },
-    null
+  const matchedRoute = USERPAGESNAVROUTES.find(
+    (route) => route.href === pathname
   )
 
-  // Extract the title from the matched route
-  const title = matchedRoute?.items[0]?.title || null
-  const description = matchedRoute?.items[0]?.description || undefined
-
-  if (title !== null || title)
+  if (matchedRoute) {
     return (
       <PageTitle
-        title={title}
+        title={matchedRoute.title}
         withBorder={false}
-        subtitle={description}
+        subtitle={matchedRoute.description}
         className={className}
       >
         {children}
       </PageTitle>
     )
+  }
+
+  // If no route is matched, you might want to return null or a default title
+  return null
 }

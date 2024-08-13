@@ -1,9 +1,8 @@
 import React from "react"
 
-import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
-import { checkIsSuperUser, checkIsUserAdmin, cn } from "@/lib/utils"
+import { USERPAGESNAVROUTES } from "@/config/routes/site-routes"
+import { cn } from "@/lib/utils"
 import useUserProfile from "@/hooks/react-hooks/use-user"
-import { Separator } from "@/components/ui/separator"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 import { UserPagesNavLinksIcon } from "./use-pages-nav-links-icon"
@@ -25,8 +24,14 @@ export const UserPagesNavLinks: React.FC<UserPagesNavLinksProps> = ({
   const { data: profile } = useUserProfile()
   const userRole = profile?.profile_role?.role
 
-  const isAdmin = checkIsUserAdmin(userRole)
-  const isSuperUser = checkIsSuperUser(userRole)
+  const filteredRoutes = USERPAGESNAVROUTES.filter((link) => {
+    if (link.roleAllowed) {
+      return link.roleAllowed.includes(
+        userRole as "admin" | "super_admin" | "super_user"
+      )
+    }
+    return true
+  })
 
   return (
     <nav
@@ -35,48 +40,32 @@ export const UserPagesNavLinks: React.FC<UserPagesNavLinksProps> = ({
         className
       )}
     >
-      {userLayoutRoutes.map((group, groupIndex) => (
-        <React.Fragment key={groupIndex}>
-          {groupIndex > 0 && !isCollapsed && withSeparator && (
-            <Separator className="h-[0.5px] bg-border/50" />
-          )}
-          {group.items.map((link, itemIndex) =>
-            isCollapsed ? ( // if collapsed
-              // if link is search
-              <React.Fragment key={itemIndex}>
-                {link.title === "Search" ? (
-                  <SearchCommandDialogTrigger iconClassName="stroke-[1.5px]" />
-                ) : link.title === "Daily Posts" && (isAdmin || isSuperUser) ? (
-                  <UserPagesNavLinksIcon link={link} itemIndex={itemIndex} />
-                ) : link.title !== "Daily Posts" ? (
-                  <UserPagesNavLinksIcon link={link} itemIndex={itemIndex} />
-                ) : null}
-              </React.Fragment>
+      {filteredRoutes.map((link, itemIndex) =>
+        isCollapsed ? (
+          <React.Fragment key={itemIndex}>
+            {link.title.toLowerCase() === "search" ? (
+              <SearchCommandDialogTrigger iconClassName="stroke-[1.5px]" />
             ) : (
-              <React.Fragment key={itemIndex}>
-                {link.title === "Search" ? (
-                  <SearchCommandDialogTrigger
-                    isCollapsed={false}
-                    withTooltip={false}
-                  />
-                ) : link.title === "Daily Posts" && (isAdmin || isSuperUser) ? (
-                  <UserPagesNavLinksCard
-                    itemIndex={itemIndex}
-                    link={link}
-                    className={UserPagesNavLinksCardCN}
-                  />
-                ) : link.title !== "Daily Posts" ? (
-                  <UserPagesNavLinksCard
-                    itemIndex={itemIndex}
-                    link={link}
-                    className={UserPagesNavLinksCardCN}
-                  />
-                ) : null}
-              </React.Fragment>
-            )
-          )}
-        </React.Fragment>
-      ))}
+              <UserPagesNavLinksIcon link={link} itemIndex={itemIndex} />
+            )}
+          </React.Fragment>
+        ) : (
+          <React.Fragment key={itemIndex}>
+            {link.title.toLowerCase() === "search" ? (
+              <SearchCommandDialogTrigger
+                isCollapsed={false}
+                withTooltip={false}
+              />
+            ) : (
+              <UserPagesNavLinksCard
+                itemIndex={itemIndex}
+                link={link}
+                className={UserPagesNavLinksCardCN}
+              />
+            )}
+          </React.Fragment>
+        )
+      )}
     </nav>
   )
 }

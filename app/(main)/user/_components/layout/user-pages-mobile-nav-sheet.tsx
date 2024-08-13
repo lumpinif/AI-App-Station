@@ -2,9 +2,12 @@
 
 import React from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { PanelLeft } from "lucide-react"
 
-import { userLayoutRoutes } from "@/config/routes/user-layout-routes"
+import { USERPAGESNAVROUTES } from "@/config/routes/site-routes"
+import { cn } from "@/lib/utils"
+import useUserProfile from "@/hooks/react-hooks/use-user"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -12,6 +15,19 @@ import { SiteLogo } from "@/components/layout/site-header/site-header"
 import SearchCommandDialogTrigger from "@/components/search-command-dialog/search-dialog-trigger"
 
 export const UserPagesMobileNavSheet = () => {
+  const { data: profile } = useUserProfile()
+  const userRole = profile?.profile_role?.role
+  const currentPath = usePathname()
+
+  const filteredRoutes = USERPAGESNAVROUTES.filter((link) => {
+    if (link.roleAllowed) {
+      return link.roleAllowed.includes(
+        userRole as "admin" | "super_admin" | "super_user"
+      )
+    }
+    return true
+  })
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -31,39 +47,41 @@ export const UserPagesMobileNavSheet = () => {
         <nav className="grid gap-6 text-base font-medium">
           <Link
             href="#"
-            className="group flex shrink-0  items-center gap-4 rounded-full px-2.5 text-lg font-semibold md:text-base"
+            className="group flex shrink-0 items-center gap-4 rounded-full px-2.5 text-lg font-semibold md:text-base"
           >
             <SiteLogo />
             <span className="sr-only">AI App Station Logo</span>
           </Link>
-          {userLayoutRoutes.map((group, groupIndex) => (
-            <React.Fragment key={groupIndex}>
-              {groupIndex > 0 && <Separator className="h-[0.5px]" />}
 
-              {group.items.map((item, itemIndex) => (
-                <React.Fragment key={itemIndex}>
-                  {item.title === "Search" ? (
-                    // if the item title is Search
-                    <SearchCommandDialogTrigger
-                      triggerCN="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
-                      withTooltip={false}
-                    >
-                      <item.icon className="h-5 w-5 transition-all" />
-                      <span className="font-normal">{item.title}</span>
-                      <span className="sr-only">{item.title}</span>
-                    </SearchCommandDialogTrigger>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="flex items-center gap-4 px-2.5 font-normal text-muted-foreground hover:text-foreground"
-                    >
-                      <item.icon className="h-5 w-5 transition-all" />
-                      <span className="font-normal">{item.title}</span>
-                      <span className="sr-only">{item.title}</span>
-                    </Link>
+          <Separator />
+
+          {filteredRoutes.map((item, index) => (
+            <React.Fragment key={index}>
+              {item.title.toLowerCase() === "search" ? (
+                <SearchCommandDialogTrigger
+                  triggerCN="text-muted-foreground hover:text-foreground flex items-center gap-4 px-2.5 font-normal"
+                  withTooltip={false}
+                >
+                  {item.icon && <item.icon className="h-5 w-5" />}
+                  <span className="font-normal">{item.title}</span>
+                  <span className="sr-only">{item.title}</span>
+                </SearchCommandDialogTrigger>
+              ) : (
+                <Link
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-4 px-2.5 font-normal text-muted-foreground hover:text-foreground",
+                    "transition-all duration-200 ease-out",
+                    currentPath.startsWith(item.href)
+                      ? "font-medium text-blue-500"
+                      : "text-muted-foreground"
                   )}
-                </React.Fragment>
-              ))}
+                >
+                  {item.icon && <item.icon className="h-5 w-5" />}
+                  <span className="font-normal">{item.title}</span>
+                  <span className="sr-only">{item.title}</span>
+                </Link>
+              )}
             </React.Fragment>
           ))}
         </nav>

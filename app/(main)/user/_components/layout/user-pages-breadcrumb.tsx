@@ -3,10 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import {
-  UserLayoutRouteProps,
-  userLayoutRoutes,
-} from "@/config/routes/user-layout-routes"
+import { USERPAGESNAVROUTES } from "@/config/routes/site-routes"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,55 +26,33 @@ export const UserPagesBreadCrumb = () => {
   const pathname = usePathname()
 
   // Find the matching route based on the current pathname
-  const matchedRoute = userLayoutRoutes.reduce<UserLayoutRouteProps | null>(
-    (matched, group) => {
-      if (matched) return matched
-
-      const matchedItem = group.items.find((item) =>
-        pathname.startsWith(item.href)
-      )
-      if (matchedItem) {
-        return {
-          group: group.group,
-          items: [matchedItem],
-        }
-      }
-
-      return null
-    },
-    null
+  const matchedRoute = USERPAGESNAVROUTES.find((route) =>
+    pathname.startsWith(route.href)
   )
 
-  // Extract the group and item from the matched route
-  const { group, items } = matchedRoute || { group: "", items: [] }
-
-  if (items.length > 0)
+  if (matchedRoute) {
     return (
       <nav className="flex items-center justify-between gap-x-2">
         <Breadcrumb>
           <BreadcrumbList>
-            {items.length > 0 && (
-              <>
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link href="/user">User</Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link
-                      href={items[0].href}
-                      className={
-                        pathname === items[0].href ? "text-primary" : ""
-                      }
-                    >
-                      {items[0].title}
-                    </Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              </>
-            )}
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/user">User</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link
+                  href={matchedRoute.href}
+                  className={
+                    pathname === matchedRoute.href ? "text-primary" : ""
+                  }
+                >
+                  {matchedRoute.title}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
             {isEditorRoute(pathname) && (
               <>
                 <BreadcrumbSeparator />
@@ -91,6 +66,7 @@ export const UserPagesBreadCrumb = () => {
         <UserPagesMobileNavSheet />
       </nav>
     )
+  }
 
   return (
     <nav className="flex w-full justify-end">

@@ -1,11 +1,9 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef } from "react"
-import { useDebouncedCallback } from "use-debounce"
+import { useMemo } from "react"
 
 import { iosTransition } from "@/config/animations/ios-transition"
 import { cn } from "@/lib/utils"
-import useSideMenu from "@/hooks/use-side-menu"
 
 import { usePinnableSideMenu } from "./use-pinnable-side-menu"
 
@@ -30,7 +28,7 @@ export const PinnableSideMenu: React.FC<PinnableSideMenuProps> = ({
   )
 
   const menuHeight = useMemo(
-    () => (isPinned ? "h-full" : "h-fit max-h-[calc(65svh)]"),
+    () => (isPinned ? "h-full" : "h-fit min-h-fit max-h-[calc(65svh)]"),
     [isPinned]
   )
 
@@ -49,11 +47,11 @@ export const PinnableSideMenu: React.FC<PinnableSideMenuProps> = ({
   const innerDivClassName = useMemo(
     () =>
       cn(
-        "overflow-hidden ",
+        "overflow-hidden",
         isOpen ? "translate-x-0" : "md:-translate-x-40 lg:translate-x-0",
         isPinned
           ? "rounded-none"
-          : "rounded-[2.5rem] border bg-background backdrop-blur-xl hover:shadow-xl dark:border-none dark:shadow-outline",
+          : "rounded-[2.5rem] border bg-background backdrop-blur-xl hover:shadow-xl dark:border-none dark:shadow-outline overflow-y-auto",
         !isPinned && isOpen && "bg-muted/80",
         menuHeight,
         menuWidth,

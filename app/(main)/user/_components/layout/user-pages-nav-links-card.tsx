@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { UserLayoutRouteItemProps } from "@/config/routes/user-layout-routes"
+import { NavItemProps } from "@/config/routes/site-routes"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
@@ -10,7 +10,7 @@ type UserPagesNavLinksCardProps = {
   titleClassName?: string
   iconClassName?: string
   onClick?: () => void
-  link: UserLayoutRouteItemProps
+  link: NavItemProps
 }
 
 export const UserPagesNavLinksCard: React.FC<UserPagesNavLinksCardProps> = ({
@@ -32,9 +32,11 @@ export const UserPagesNavLinksCard: React.FC<UserPagesNavLinksCardProps> = ({
       )}
       onClick={onClick}
     >
-      <link.icon
-        className={cn("mr-2 stroke-[1.5px] md:size-6", iconClassName)}
-      />
+      {link.icon && (
+        <link.icon
+          className={cn("mr-2 stroke-[1.5px] md:size-6", iconClassName)}
+        />
+      )}
       <span className={cn("font-normal", titleClassName)}>{link.title}</span>
       {link.label && (
         <span className={cn("ml-auto font-normal text-muted-foreground")}>

@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { UserLayoutRouteItemProps } from "@/config/routes/user-layout-routes"
+import { NavItemProps } from "@/config/routes/site-routes"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/tooltip"
 
 type UserPagesNavLinksIconProps = {
-  link: UserLayoutRouteItemProps
+  link: NavItemProps
   itemIndex: number
   className?: string
 }
@@ -34,7 +34,7 @@ export const UserPagesNavLinksIcon: React.FC<UserPagesNavLinksIconProps> = ({
             className
           )}
         >
-          <link.icon className="stroke-[1.5px]" />
+          {link.icon && <link.icon className="stroke-[1.5px]" />}
           <span className="sr-only">{link.title}</span>
         </Link>
       </TooltipTrigger>
