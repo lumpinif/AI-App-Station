@@ -33,8 +33,13 @@ const useAverageColor = (imageSrc: string, isBottom: boolean) => {
         img.onload = () => {
           if (!isUnmounted) resolve()
         }
-        img.onerror = () => {
-          if (!isUnmounted) reject(new Error("Failed to load image"))
+        img.onerror = (event) => {
+          if (!isUnmounted) {
+            const err = new Error("Failed to load image")
+            // @ts-ignore: Event type is not properly recognized
+            err.event = event
+            reject(err)
+          }
         }
         img.src = imageSrc
         img.crossOrigin = "anonymous"
@@ -84,9 +89,16 @@ const useAverageColor = (imageSrc: string, isBottom: boolean) => {
       } catch (err) {
         if (!isUnmounted) {
           console.error("Error processing image:", err)
-          setError(
-            err instanceof Error ? err.message : "Failed to process image"
-          )
+          let errorMessage = "Failed to process image"
+          if (err instanceof Error) {
+            errorMessage = err.message
+            // @ts-ignore: Additional properties on error object
+            if (err.event) {
+              // @ts-ignore: Event properties
+              errorMessage += ` (Status: ${err.event.target.status}, URL: ${err.event.target.src})`
+            }
+          }
+          setError(errorMessage)
           setIsLoading(false)
         }
       }

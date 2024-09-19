@@ -108,22 +108,22 @@ importers:
         specifier: ^8.20.5
         version: 8.20.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tiptap/core':
-        specifier: ^2.7.2
+        specifier: ^2.5.9
         version: 2.7.2(@tiptap/pm@2.7.2)
       '@tiptap/extension-character-count':
-        specifier: ^2.7.2
+        specifier: ^2.5.9
         version: 2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2)
       '@tiptap/extension-document':
-        specifier: ^2.7.2
+        specifier: ^2.5.9
         version: 2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))
       '@tiptap/extension-youtube':
-        specifier: ^2.7.2
+        specifier: ^2.5.9
         version: 2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))
       '@tiptap/pm':
-        specifier: ^2.7.2
+        specifier: ^2.5.9
         version: 2.7.2
       '@tiptap/react':
-        specifier: ^2.7.2
+        specifier: ^2.5.9
         version: 2.7.2(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/lodash':
         specifier: ^4.17.7
@@ -222,8 +222,8 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       novel:
-        specifier: ^0.5.0
-        version: 0.5.0(@tiptap/extension-code-block@2.5.9(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2))(@types/react@18.3.7)(highlight.js@11.10.0)(lowlight@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.4.3
+        version: 0.4.3(@tiptap/extension-code-block@2.5.9(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2))(@types/react@18.3.7)(highlight.js@11.10.0)(lowlight@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       numeral:
         specifier: ^2.0.6
         version: 2.0.6
@@ -2868,10 +2868,6 @@ packages:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
 
-  commander@8.3.0:
-    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
-    engines: {node: '>= 12'}
-
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
@@ -3919,10 +3915,6 @@ packages:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
     engines: {node: '>=4.0'}
 
-  katex@0.16.11:
-    resolution: {integrity: sha512-RQrI8rlHY92OLf3rho/Ts8i/XvjgguEjOkO1BEXcU3N8BqPpSzBNwV/G0Ukr+P/l3ivvJUE/Fa/CwbS6HesGNQ==}
-    hasBin: true
-
   keycode@2.2.1:
     resolution: {integrity: sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg==}
 
@@ -4386,8 +4378,8 @@ packages:
     resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
 
-  novel@0.5.0:
-    resolution: {integrity: sha512-Wb4fGSQ7nGxgiZDs7XPeSjC/Kr6YPb4KxzxuJp+80W+lqqG0yu265yRPGROTUvJWcZtiLpWjMSwz978I1PTOww==}
+  novel@0.4.3:
+    resolution: {integrity: sha512-3a4Zt3GvpklMqpMZJlGJDwNRt188t8p/WYwDNdn3nKmQGM6U8Maq04ZL3MRVNm9K9OgAEIf1Dax0ki5wBWm15w==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -6457,7 +6449,7 @@ snapshots:
 
   '@radix-ui/primitive@1.0.0':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
 
   '@radix-ui/primitive@1.0.1':
     dependencies:
@@ -6572,7 +6564,7 @@ snapshots:
 
   '@radix-ui/react-compose-refs@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       react: 18.3.1
 
   '@radix-ui/react-compose-refs@1.0.1(@types/react@18.3.7)(react@18.3.1)':
@@ -6590,7 +6582,7 @@ snapshots:
 
   '@radix-ui/react-context@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       react: 18.3.1
 
   '@radix-ui/react-context@1.0.1(@types/react@18.3.7)(react@18.3.1)':
@@ -6608,7 +6600,7 @@ snapshots:
 
   '@radix-ui/react-dialog@1.0.0(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/primitive': 1.0.0
       '@radix-ui/react-compose-refs': 1.0.0(react@18.3.1)
       '@radix-ui/react-context': 1.0.0(react@18.3.1)
@@ -6681,7 +6673,7 @@ snapshots:
 
   '@radix-ui/react-dismissable-layer@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/primitive': 1.0.0
       '@radix-ui/react-compose-refs': 1.0.0(react@18.3.1)
       '@radix-ui/react-primitive': 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6734,7 +6726,7 @@ snapshots:
 
   '@radix-ui/react-focus-guards@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       react: 18.3.1
 
   '@radix-ui/react-focus-guards@1.0.1(@types/react@18.3.7)(react@18.3.1)':
@@ -6752,7 +6744,7 @@ snapshots:
 
   '@radix-ui/react-focus-scope@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-compose-refs': 1.0.0(react@18.3.1)
       '@radix-ui/react-primitive': 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-use-callback-ref': 1.0.0(react@18.3.1)
@@ -6805,7 +6797,7 @@ snapshots:
 
   '@radix-ui/react-id@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-use-layout-effect': 1.0.0(react@18.3.1)
       react: 18.3.1
 
@@ -6924,7 +6916,7 @@ snapshots:
 
   '@radix-ui/react-portal@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-primitive': 1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -6951,7 +6943,7 @@ snapshots:
 
   '@radix-ui/react-presence@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-compose-refs': 1.0.0(react@18.3.1)
       '@radix-ui/react-use-layout-effect': 1.0.0(react@18.3.1)
       react: 18.3.1
@@ -6980,7 +6972,7 @@ snapshots:
 
   '@radix-ui/react-primitive@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-slot': 1.0.0(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -7088,7 +7080,7 @@ snapshots:
 
   '@radix-ui/react-slot@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-compose-refs': 1.0.0(react@18.3.1)
       react: 18.3.1
 
@@ -7180,7 +7172,7 @@ snapshots:
 
   '@radix-ui/react-use-callback-ref@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       react: 18.3.1
 
   '@radix-ui/react-use-callback-ref@1.0.1(@types/react@18.3.7)(react@18.3.1)':
@@ -7198,7 +7190,7 @@ snapshots:
 
   '@radix-ui/react-use-controllable-state@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-use-callback-ref': 1.0.0(react@18.3.1)
       react: 18.3.1
 
@@ -7219,7 +7211,7 @@ snapshots:
 
   '@radix-ui/react-use-escape-keydown@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       '@radix-ui/react-use-callback-ref': 1.0.0(react@18.3.1)
       react: 18.3.1
 
@@ -7240,7 +7232,7 @@ snapshots:
 
   '@radix-ui/react-use-layout-effect@1.0.0(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.25.0
+      '@babel/runtime': 7.25.6
       react: 18.3.1
 
   '@radix-ui/react-use-layout-effect@1.0.1(@types/react@18.3.7)(react@18.3.1)':
@@ -8439,8 +8431,6 @@ snapshots:
   commander@10.0.1: {}
 
   commander@4.1.1: {}
-
-  commander@8.3.0: {}
 
   concat-map@0.0.1: {}
 
@@ -9687,10 +9677,6 @@ snapshots:
       object.assign: 4.1.5
       object.values: 1.2.0
 
-  katex@0.16.11:
-    dependencies:
-      commander: 8.3.0
-
   keycode@2.2.1: {}
 
   keycon@1.4.0:
@@ -10349,7 +10335,7 @@ snapshots:
 
   normalize-range@0.1.2: {}
 
-  novel@0.5.0(@tiptap/extension-code-block@2.5.9(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2))(@types/react@18.3.7)(highlight.js@11.10.0)(lowlight@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  novel@0.4.3(@tiptap/extension-code-block@2.5.9(@tiptap/core@2.7.2(@tiptap/pm@2.7.2))(@tiptap/pm@2.7.2))(@types/react@18.3.7)(highlight.js@11.10.0)(lowlight@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@radix-ui/react-slot': 1.1.0(@types/react@18.3.7)(react@18.3.1)
       '@tiptap/core': 2.7.2(@tiptap/pm@2.7.2)
@@ -10373,7 +10359,6 @@ snapshots:
       '@types/node': 18.15.3
       cmdk: 0.2.1(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       jotai: 2.9.2(@types/react@18.3.7)(react@18.3.1)
-      katex: 0.16.11
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-markdown: 8.0.7(@types/react@18.3.7)(react@18.3.1)

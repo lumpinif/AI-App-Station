@@ -15,7 +15,9 @@ export default function CollectionsPage() {
   const collectionRoutes = AIAPPSPAGENAVROUTES.find(
     (route) => route.title === "Collections"
   )
-  const allCollectionItems = collectionRoutes?.items
+  const allCollectionItems = collectionRoutes?.items?.map((item) => ({
+    ...item,
+  })) // Ensure plain objects
 
   if (!allCollectionItems)
     return (

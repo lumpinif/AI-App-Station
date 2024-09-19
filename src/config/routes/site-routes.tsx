@@ -1,4 +1,3 @@
-import Artifacts from "@/public/logos/artifacts"
 import {
   Bookmark,
   Briefcase,
@@ -21,6 +20,7 @@ import {
   Upload,
   User,
 } from "lucide-react"
+import Artifacts from "public/logos/artifacts"
 import { IconType } from "react-icons/lib"
 import { RiOpenaiFill } from "react-icons/ri"
 

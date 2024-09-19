@@ -15,12 +15,17 @@
     "tailwindcss/classnames-order": "off"
   },
   "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
+    },
     "tailwindcss": {
       "callees": ["cn"],
       "config": "tailwind.config.ts"
     },
     "next": {
-      "rootDir": ["./"]
+      "rootDir": ["./src"]
     }
   },
   "overrides": [

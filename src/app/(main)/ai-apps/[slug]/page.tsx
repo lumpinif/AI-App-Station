@@ -148,6 +148,9 @@ export default async function AiAppsMainPage({
 
   const screenshotsPublicUrls = await fetchAppScreenshots(app)
 
+  // Ensure introduction is a plain object
+  const introduction = JSON.parse(JSON.stringify(app.introduction))
+
   return (
     <main
       className="mb-8 mt-4 flex flex-col space-y-4 pb-8"
@@ -241,7 +244,7 @@ export default async function AiAppsMainPage({
               screenshotsPublicUrls={screenshotsPublicUrls || []}
             />
 
-            <AppDetailIntroduction introduction={app.introduction} />
+            <AppDetailIntroduction introduction={introduction} />
 
             <AppDetailReviews {...ratingData} />
 

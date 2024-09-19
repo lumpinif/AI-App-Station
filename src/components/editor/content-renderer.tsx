@@ -23,6 +23,7 @@ export const ContentRenderer: React.FC<ContentRendererProps> = ({
   return (
     <EditorRoot>
       <EditorContent
+        immediatelyRender={false}
         editable={false}
         className={cn(
           "w-full max-w-full whitespace-normal break-words rounded-xl",

@@ -77,6 +77,7 @@ const NovelEditor = ({
     <div className="relative w-full">
       <EditorRoot>
         <EditorContent
+          immediatelyRender={false}
           className={cn("whitespace-normal break-words rounded-xl", className)}
           {...(initialValue && { initialContent: initialValue })}
           extensions={[
