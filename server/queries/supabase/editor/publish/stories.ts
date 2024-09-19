@@ -363,11 +363,7 @@ export async function getPostImagesWithUrls(
       const { name: fileName } = file
       const { data: publicUrlData } = await supabase.storage
         .from(bucketName)
-        .getPublicUrl(`${post_id}/${post_author_id}/story/${fileName}`, {
-          transform: {
-            quality: 80,
-          },
-        })
+        .getPublicUrl(`${post_id}/${post_author_id}/story/${fileName}`)
 
       if (!publicUrlData) {
         throw new Error(`Failed to get public URL for ${fileName}`)

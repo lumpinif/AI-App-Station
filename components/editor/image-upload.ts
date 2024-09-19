@@ -39,11 +39,7 @@ const onUpload = async ({
         } else {
           const { data: publicUrlData } = supabase.storage
             .from(bucketName)
-            .getPublicUrl(uploadPath, {
-              transform: {
-                quality: 80,
-              },
-            })
+            .getPublicUrl(uploadPath)
           const publicUrl = publicUrlData.publicUrl
 
           // Preload the image

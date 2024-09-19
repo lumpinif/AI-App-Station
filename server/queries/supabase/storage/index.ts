@@ -107,12 +107,7 @@ export async function getScreenshotsPublicUrls(
     const { data } = supabase.storage
       .from(bucketName)
       .getPublicUrl(
-        `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`,
-        {
-          transform: {
-            quality: 80,
-          },
-        }
+        `${app_id}/${app_submitted_by_user_id}/screenshots/${fileName}`
       )
 
     if (data) screenshotsPublicUrls.push(data.publicUrl)
