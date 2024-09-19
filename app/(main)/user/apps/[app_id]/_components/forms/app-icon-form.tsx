@@ -123,7 +123,7 @@ export const AppIconForm: React.FC<AppIconFormProps> = ({
   useEffect(() => {
     uppy.on("complete", (result) => {
       setIsRefreshingIcon(!isRefreshingIcon)
-      if (result.successful.length > 0) {
+      if (result.successful?.length ?? 0 > 0) {
         toast.success("App Icon updated")
         router.refresh()
       } else {

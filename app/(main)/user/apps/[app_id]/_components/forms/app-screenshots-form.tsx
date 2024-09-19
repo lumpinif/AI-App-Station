@@ -172,7 +172,7 @@ export const AppScreenshotsForm: React.FC<AppScreenshotsFormProps> = ({
 
   useEffect(() => {
     uppy.on("complete", (result) => {
-      if (result.successful.length > 0) {
+      if (result.successful?.length ?? 0 > 0) {
         toast.success("Screenshots updated")
         router.refresh()
       }
