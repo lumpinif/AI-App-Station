@@ -1,6 +1,6 @@
-# AI App Station
+# AI App Station (Paused & Demo purpose only)
 
-## Usage
+> Note: This repo is paused on development
 
 ## Features
 
@@ -8,4 +8,4 @@
 
 ## License
 
-Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
+Licensed under the [Apache License 2.0](https://github.com/lumpinif/AI-App-Station/blob/main/LICENSE).
